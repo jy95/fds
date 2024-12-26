@@ -1,4 +1,4 @@
-package jy95.fhir.dosage.utils;
+package jy95.fhir.r4.dosage.utils;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,4 +1,4 @@
-package jy95.fhir.dosage.utils;
+package jy95.fhir.r4.dosage.utils;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

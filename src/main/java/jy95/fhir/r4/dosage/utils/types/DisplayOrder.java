@@ -1,4 +1,4 @@
-package jy95.fhir.dosage.utils.types;
+package jy95.fhir.r4.dosage.utils.types;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
