@@ -1,13 +1,11 @@
 package jy95.fhir.r4.dosage.utils.types;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+//import lombok.Getter;
+//import lombok.RequiredArgsConstructor;
 
 /**
  * Represents the available display orders
  */
-@Getter
-@RequiredArgsConstructor(staticName = "of")
 public enum DisplayOrder {
     /**
      * Display "method"
@@ -143,4 +141,8 @@ public enum DisplayOrder {
     TIMING_MODIFIER_EXTENSION("timingModifierExtension");
 
     private final String item;
+
+    DisplayOrder(String item) {
+        this.item = item;
+    }
 }
