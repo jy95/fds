@@ -8,13 +8,16 @@ import org.hl7.fhir.r4.model.TimeType;
 
 import jy95.fhir.r4.dosage.utils.functions.ListToString;
 import jy95.fhir.r4.dosage.utils.classes.AbstractTranslator;
+import jy95.fhir.r4.dosage.utils.types.DisplayOrder;
 
 public class TimeOfDay extends AbstractTranslator {
 
     private final ResourceBundle bundle;
+    private final DisplayOrder field;
 
     public TimeOfDay(ResourceBundle bundle){
         this.bundle = bundle;
+        this.field = DisplayOrder.TIME_OF_DAY;
     }
 
     public String convert(Dosage dosage) {
@@ -32,6 +35,11 @@ public class TimeOfDay extends AbstractTranslator {
 
     public boolean isPresent(Dosage dosage) {
         return !dosage.getTiming().getRepeat().getTimeOfDay().isEmpty();
+    }
+
+    @Override
+    public DisplayOrder getField() {
+        return this.field;
     }
 
     /**
