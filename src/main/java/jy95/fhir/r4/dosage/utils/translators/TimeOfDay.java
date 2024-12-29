@@ -4,7 +4,6 @@ import java.text.MessageFormat;
 import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
 
-import lombok.Getter;
 import org.hl7.fhir.r4.model.Dosage;
 import org.hl7.fhir.r4.model.TimeType;
 
@@ -15,12 +14,10 @@ import jy95.fhir.r4.dosage.utils.types.DisplayOrder;
 public class TimeOfDay extends AbstractTranslator {
 
     private final ResourceBundle bundle;
-    @Getter
-    private final DisplayOrder field;
 
     public TimeOfDay(ResourceBundle bundle){
+        super(DisplayOrder.TIME_OF_DAY);
         this.bundle = bundle;
-        this.field = DisplayOrder.TIME_OF_DAY;
     }
 
     @Override

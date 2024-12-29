@@ -14,12 +14,10 @@ import org.hl7.fhir.r4.model.Dosage;
 public class DayOfWeek extends AbstractTranslator {
 
     private final ResourceBundle bundle;
-    @Getter
-    private final DisplayOrder field;
 
     public DayOfWeek(ResourceBundle bundle){
+        super(DisplayOrder.DAY_OF_WEEK);
         this.bundle = bundle;
-        this.field = DisplayOrder.DAY_OF_WEEK;
     }
 
     @Override
