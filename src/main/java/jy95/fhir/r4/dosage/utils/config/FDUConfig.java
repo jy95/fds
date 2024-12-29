@@ -12,6 +12,7 @@ import java.util.function.Function;
 
 import org.hl7.fhir.r4.model.Quantity;
 import org.hl7.fhir.r4.model.CodeableConcept;
+import org.hl7.fhir.r4.model.Extension;
 
 // To provide a configuration with the
 @Getter
@@ -65,4 +66,9 @@ public class FDUConfig {
      * The choice to handle extension, local valueset, ... is thus under the hands of people ;)
      */
     @Builder.Default private Function<CodeableConcept, CompletableFuture<String>> fromCodeableConceptToString = DefaultImplementations::fromCodeableConceptToString;
+    /**
+     * Function to turn extension(s) into a string for humans.
+     * The choice to handle national extensions, ... is thus under the hands of people ;)
+     */
+    @Builder.Default private Function<List<Extension>, CompletableFuture<String>> fromExtensionsToString = DefaultImplementations::fromExtensionsToString;
 }

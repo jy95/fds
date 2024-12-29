@@ -2,9 +2,12 @@ package jy95.fhir.r4.dosage.utils.config;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.Objects;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.hl7.fhir.r4.model.CodeableConcept;
 import org.hl7.fhir.r4.model.Quantity;
+import org.hl7.fhir.r4.model.Extension;
 
 public class DefaultImplementations {
 
@@ -47,6 +50,20 @@ public class DefaultImplementations {
             var code = firstCode.getCode();
 
             return (Objects.nonNull(display)) ? display : code;
+        });
+    }
+
+    public static CompletableFuture<String> fromExtensionsToString(List<Extension> extensions) {
+        return CompletableFuture.supplyAsync(() -> {
+
+            if (extensions.isEmpty()) {
+                return null;
+            }
+
+            return extensions
+                    .stream()
+                    .map(Object::toString)
+                    .collect(Collectors.joining(" "));
         });
     }
 }
