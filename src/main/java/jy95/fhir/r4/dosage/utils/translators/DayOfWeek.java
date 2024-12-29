@@ -1,35 +1,31 @@
 package jy95.fhir.r4.dosage.utils.translators;
 
 import java.text.MessageFormat;
-import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
 
-import lombok.Getter;
 
 import jy95.fhir.r4.dosage.utils.functions.ListToString;
-import jy95.fhir.r4.dosage.utils.types.DisplayOrder;
 import jy95.fhir.r4.dosage.utils.classes.AbstractTranslator;
 import org.hl7.fhir.r4.model.Dosage;
+import jy95.fhir.r4.dosage.utils.config.FDUConfig;
 
 public class DayOfWeek extends AbstractTranslator {
 
-    private final ResourceBundle bundle;
-
-    public DayOfWeek(ResourceBundle bundle){
-        super(DisplayOrder.DAY_OF_WEEK);
-        this.bundle = bundle;
+    public DayOfWeek(FDUConfig config){
+        super(config);
     }
 
     @Override
     public CompletableFuture<String> convert(Dosage dosage) {
         return CompletableFuture.supplyAsync(() -> {
             var dayOfWeeks = dosage.getTiming().getRepeat().getDayOfWeek();
+            var bundle = this.getResources();
             var dayOfWeeksCodes = dayOfWeeks
                     .stream()
                     .map(day -> bundle.getString(day.getCode()))
                     .toList();
 
-            var dayOfWeeksAsString = ListToString.convert(this.bundle, dayOfWeeksCodes);
+            var dayOfWeeksAsString = ListToString.convert(bundle, dayOfWeeksCodes);
             var msg = bundle.getString("fields.dayOfWeek");
 
             return MessageFormat.format(msg, dayOfWeeks.size(), dayOfWeeksAsString);

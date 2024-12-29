@@ -8,14 +8,14 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-import jy95.fhir.r4.dosage.utils.classes.DosageUtils;
+import jy95.fhir.r4.dosage.utils.classes.Utils;
 
-public class DosageUtilsTest {
+public class UtilsTest {
 
     @Test
     void testContainsOnlySequentialInstructions_emptyList() {
         List<Dosage> dosages = new ArrayList<>();
-        assertTrue(DosageUtils.containsOnlySequentialInstructions(dosages));
+        assertTrue(Utils.containsOnlySequentialInstructions(dosages));
     }
 
     @Test
@@ -25,7 +25,7 @@ public class DosageUtilsTest {
                 createDosage(2),
                 createDosage(3)
         );
-        assertTrue(DosageUtils.containsOnlySequentialInstructions(dosages));
+        assertTrue(Utils.containsOnlySequentialInstructions(dosages));
     }
 
     @Test
@@ -35,7 +35,7 @@ public class DosageUtilsTest {
                 createDosage(2), // Missing sequence 2
                 createDosage(2)
         );
-        assertFalse(DosageUtils.containsOnlySequentialInstructions(dosages));
+        assertFalse(Utils.containsOnlySequentialInstructions(dosages));
     }
 
     @Test
@@ -43,13 +43,13 @@ public class DosageUtilsTest {
         List<Dosage> dosages = List.of(
                 new Dosage()
         );
-        assertTrue(DosageUtils.containsOnlySequentialInstructions(dosages));
+        assertTrue(Utils.containsOnlySequentialInstructions(dosages));
     }
 
     @Test
     void testGroupBySequence_emptyList() {
         List<Dosage> dosages = new ArrayList<>();
-        List<List<Dosage>> groups = DosageUtils.groupBySequence(dosages);
+        List<List<Dosage>> groups = Utils.groupBySequence(dosages);
         assertTrue(groups.isEmpty());
     }
 
@@ -60,7 +60,7 @@ public class DosageUtilsTest {
                 createDosage(2),
                 createDosage(3)
         );
-        List<List<Dosage>> groups = DosageUtils.groupBySequence(dosages);
+        List<List<Dosage>> groups = Utils.groupBySequence(dosages);
         assertEquals(3, groups.size());
         assertEquals(dosages.getFirst(), groups.getFirst().getFirst());
     }
@@ -72,7 +72,7 @@ public class DosageUtilsTest {
                 createDosage(2),
                 createDosage(3)
         );
-        List<List<Dosage>> groups = DosageUtils.groupBySequence(dosages);
+        List<List<Dosage>> groups = Utils.groupBySequence(dosages);
         assertEquals(3, groups.size());
 
         for (int i = 0; i < dosages.size(); i++) {

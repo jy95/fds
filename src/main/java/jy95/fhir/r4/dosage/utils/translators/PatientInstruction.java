@@ -1,16 +1,16 @@
 package jy95.fhir.r4.dosage.utils.translators;
 
+import jy95.fhir.r4.dosage.utils.config.FDUConfig;
 import org.hl7.fhir.r4.model.Dosage;
 
 import jy95.fhir.r4.dosage.utils.classes.AbstractTranslator;
-import jy95.fhir.r4.dosage.utils.types.DisplayOrder;
 
 import java.util.concurrent.CompletableFuture;
 
 public class PatientInstruction extends AbstractTranslator {
 
-    public PatientInstruction(){
-        super(DisplayOrder.PATIENT_INSTRUCTION);
+    public PatientInstruction(FDUConfig config){
+        super(config);
     }
 
     @Override

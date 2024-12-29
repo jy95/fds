@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.stream.Collectors;
 // import java.util.Objects;
 
-public class DosageUtils {
+public class Utils {
 
     public static boolean containsOnlySequentialInstructions(List<Dosage> dosages) {
         var encounteredSequenceNumbers = dosages

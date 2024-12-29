@@ -2,6 +2,8 @@ package jy95.fhir.r4.dosage.utils.miscellaneous;
 
 // Credits to https://coiaf.de/java-multiple-resource-bundles/
 
+import lombok.Getter;
+
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -9,6 +11,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
+@Getter
 public class MultiResourceBundleControl extends ResourceBundle.Control {
 
     private final String baseName;
@@ -17,10 +20,6 @@ public class MultiResourceBundleControl extends ResourceBundle.Control {
     public MultiResourceBundleControl(String baseName, String... dependentBaseNames) {
         this.baseName = baseName;
         this.dependentBaseNames = dependentBaseNames;
-    }
-
-    public String getBaseName() {
-        return this.baseName;
     }
 
     @Override
