@@ -1,5 +1,6 @@
 package jy95.fhir.r4.dosage.utils.translators;
 
+import lombok.Getter;
 import org.hl7.fhir.r4.model.Dosage;
 
 import jy95.fhir.r4.dosage.utils.classes.AbstractTranslator;
@@ -7,6 +8,7 @@ import jy95.fhir.r4.dosage.utils.types.DisplayOrder;
 
 public class Text extends AbstractTranslator {
 
+    @Getter
     private final DisplayOrder field;
 
     public Text(){
@@ -21,7 +23,4 @@ public class Text extends AbstractTranslator {
         return !dosage.getText().isEmpty();
     }
 
-    public DisplayOrder getField() {
-        return field;
-    }
 }

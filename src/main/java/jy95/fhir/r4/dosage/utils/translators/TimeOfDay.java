@@ -3,6 +3,7 @@ package jy95.fhir.r4.dosage.utils.translators;
 import java.text.MessageFormat;
 import java.util.ResourceBundle;
 
+import lombok.Getter;
 import org.hl7.fhir.r4.model.Dosage;
 import org.hl7.fhir.r4.model.TimeType;
 
@@ -13,6 +14,7 @@ import jy95.fhir.r4.dosage.utils.types.DisplayOrder;
 public class TimeOfDay extends AbstractTranslator {
 
     private final ResourceBundle bundle;
+    @Getter
     private final DisplayOrder field;
 
     public TimeOfDay(ResourceBundle bundle){
@@ -35,11 +37,6 @@ public class TimeOfDay extends AbstractTranslator {
 
     public boolean isPresent(Dosage dosage) {
         return !dosage.getTiming().getRepeat().getTimeOfDay().isEmpty();
-    }
-
-    @Override
-    public DisplayOrder getField() {
-        return this.field;
     }
 
     /**

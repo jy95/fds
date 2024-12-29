@@ -3,6 +3,8 @@ package jy95.fhir.r4.dosage.utils.translators;
 import java.text.MessageFormat;
 import java.util.ResourceBundle;
 
+import lombok.Getter;
+
 import jy95.fhir.r4.dosage.utils.functions.ListToString;
 import jy95.fhir.r4.dosage.utils.types.DisplayOrder;
 import jy95.fhir.r4.dosage.utils.classes.AbstractTranslator;
@@ -11,6 +13,7 @@ import org.hl7.fhir.r4.model.Dosage;
 public class DayOfWeek extends AbstractTranslator {
 
     private final ResourceBundle bundle;
+    @Getter
     private final DisplayOrder field;
 
     public DayOfWeek(ResourceBundle bundle){
@@ -36,7 +39,4 @@ public class DayOfWeek extends AbstractTranslator {
         return !dosage.getTiming().getRepeat().getDayOfWeek().isEmpty();
     }
 
-    public DisplayOrder getField() {
-        return this.field;
-    }
 }

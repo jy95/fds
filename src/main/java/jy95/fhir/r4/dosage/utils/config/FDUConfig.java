@@ -7,6 +7,11 @@ import java.util.Locale;
 import java.util.List;
 import jy95.fhir.r4.dosage.utils.types.DisplayOrder;
 
+import java.util.concurrent.CompletableFuture;
+import java.util.function.Function;
+
+import org.hl7.fhir.r4.model.Quantity;
+
 // To provide a configuration with the
 @Getter
 @Builder(toBuilder = true)
@@ -49,4 +54,9 @@ public class FDUConfig {
     );
     // Override separator between each part of "Dosage"
     @Builder.Default private String displaySeparator = " - ";
+    /**
+     * Function to turn a quantity unit (e.g UCUM "ml") into a string for humans (e.g "militier")
+     * The choice to handle plural form or not is thus under the hands of people ;)
+     */
+    @Builder.Default private Function<Quantity, CompletableFuture<String>> fromFHIRQuantityUnitToString = DefaultImplementations::defaultFromFHIRQuantityUnitToString;
 }
