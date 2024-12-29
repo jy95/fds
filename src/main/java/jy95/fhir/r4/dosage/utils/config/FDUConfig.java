@@ -11,6 +11,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.function.Function;
 
 import org.hl7.fhir.r4.model.Quantity;
+import org.hl7.fhir.r4.model.CodeableConcept;
 
 // To provide a configuration with the
 @Getter
@@ -58,5 +59,10 @@ public class FDUConfig {
      * Function to turn a quantity unit (e.g UCUM "ml") into a string for humans (e.g "militier")
      * The choice to handle plural form or not is thus under the hands of people ;)
      */
-    @Builder.Default private Function<Quantity, CompletableFuture<String>> fromFHIRQuantityUnitToString = DefaultImplementations::defaultFromFHIRQuantityUnitToString;
+    @Builder.Default private Function<Quantity, CompletableFuture<String>> fromFHIRQuantityUnitToString = DefaultImplementations::fromFHIRQuantityUnitToString;
+    /**
+     * Function to turn a codeable concept (e.g SNOMED CT "311504000") into a string for humans (e.g "With or after food")
+     * The choice to handle extension, local valueset, ... is thus under the hands of people ;)
+     */
+    @Builder.Default private Function<CodeableConcept, CompletableFuture<String>> fromCodeableConceptToString = DefaultImplementations::fromCodeableConceptToString;
 }
