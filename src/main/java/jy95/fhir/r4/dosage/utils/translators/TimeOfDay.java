@@ -2,6 +2,7 @@ package jy95.fhir.r4.dosage.utils.translators;
 
 import java.text.MessageFormat;
 import java.util.ResourceBundle;
+import java.util.concurrent.CompletableFuture;
 
 import lombok.Getter;
 import org.hl7.fhir.r4.model.Dosage;
@@ -22,19 +23,22 @@ public class TimeOfDay extends AbstractTranslator {
         this.field = DisplayOrder.TIME_OF_DAY;
     }
 
-    public String convert(Dosage dosage) {
+    @Override
+    public CompletableFuture<String> convert(Dosage dosage) {
+        return CompletableFuture.supplyAsync(() -> {
+            var timeOfDay = dosage.getTiming().getRepeat().getTimeOfDay();
+            var timeOfDays = timeOfDay.stream()
+                    .map(this::formatString)
+                    .toList();
 
-        var timeOfDay = dosage.getTiming().getRepeat().getTimeOfDay();
-        var timeOfDays = timeOfDay.stream()
-                .map(this::formatString)
-                .toList();
+            var timeOfDaysAsString = ListToString.convert(bundle, timeOfDays);
+            var message = bundle.getString("fields.timeOfDay");
 
-        var timeOfDaysAsString = ListToString.convert(bundle, timeOfDays);
-        var message = bundle.getString("fields.timeOfDay");
-
-        return MessageFormat.format(message, timeOfDaysAsString, timeOfDays.size());
+            return MessageFormat.format(message, timeOfDaysAsString, timeOfDays.size());
+        });
     }
 
+    @Override
     public boolean isPresent(Dosage dosage) {
         return !dosage.getTiming().getRepeat().getTimeOfDay().isEmpty();
     }

@@ -6,6 +6,8 @@ import org.hl7.fhir.r4.model.Dosage;
 import jy95.fhir.r4.dosage.utils.classes.AbstractTranslator;
 import jy95.fhir.r4.dosage.utils.types.DisplayOrder;
 
+import java.util.concurrent.CompletableFuture;
+
 public class Text extends AbstractTranslator {
 
     @Getter
@@ -15,10 +17,12 @@ public class Text extends AbstractTranslator {
         this.field = DisplayOrder.TEXT;
     }
 
-    public String convert(Dosage dosage) {
-        return dosage.getText();
+    @Override
+    public CompletableFuture<String> convert(Dosage dosage) {
+        return CompletableFuture.supplyAsync(dosage::getText);
     }
 
+    @Override
     public boolean isPresent(Dosage dosage) {
         return !dosage.getText().isEmpty();
     }
