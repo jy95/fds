@@ -47,4 +47,6 @@ public class FDUConfig {
             DisplayOrder.ADDITIONAL_INSTRUCTION,
             DisplayOrder.PATIENT_INSTRUCTION
     );
+    // Override separator between each part of "Dosage"
+    @Builder.Default private String displaySeparator = " - ";
 }
