@@ -34,7 +34,7 @@ public class TimeOfDay extends AbstractTranslator {
 
     @Override
     public boolean isPresent(Dosage dosage) {
-        return !dosage.getTiming().getRepeat().getTimeOfDay().isEmpty();
+        return dosage.hasTiming() && dosage.getTiming().hasRepeat() && dosage.getTiming().getRepeat().hasTimeOfDay();
     }
 
     /**
