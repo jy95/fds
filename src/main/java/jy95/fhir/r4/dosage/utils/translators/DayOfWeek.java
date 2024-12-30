@@ -34,7 +34,7 @@ public class DayOfWeek extends AbstractTranslator {
 
     @Override
     public boolean isPresent(Dosage dosage) {
-        return !dosage.getTiming().getRepeat().getDayOfWeek().isEmpty();
+        return dosage.hasTiming() && dosage.getTiming().hasRepeat() && dosage.getTiming().getRepeat().hasDayOfWeek();
     }
 
 }
