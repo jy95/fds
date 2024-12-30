@@ -32,7 +32,8 @@ public class Translators {
                         Map.entry(DisplayOrder.TIMING_REPEAT_EXTENSION, new TimingRepeatExtension(config)),
                         Map.entry(DisplayOrder.MODIFIER_EXTENSION,new ModifierExtension(config)),
                         Map.entry(DisplayOrder.TIMING_MODIFIER_EXTENSION, new TimingModifierExtension(config)),
-                        Map.entry(DisplayOrder.ADDITIONAL_INSTRUCTION, new AdditionalInstruction(config))
+                        Map.entry(DisplayOrder.ADDITIONAL_INSTRUCTION, new AdditionalInstruction(config)),
+                        Map.entry(DisplayOrder.AS_NEEDED, new AsNeeded(config))
                 )
         );
         this.bundleControl = new MultiResourceBundleControl(
