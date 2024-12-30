@@ -22,7 +22,7 @@ public class FDUConfig {
     * Locale to return the humanized dosage string
     * Default : English
     * */
-    @Builder.Default private Locale locale = Locale.getDefault();
+    @Builder.Default private Locale locale = Locale.ENGLISH;
     /**
      * Control the display order used by the algorithm
      * Useful when you want to turn on / off some specific rules for some reason
