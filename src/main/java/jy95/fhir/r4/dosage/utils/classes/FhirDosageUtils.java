@@ -85,7 +85,49 @@ public class FhirDosageUtils {
     }
 
     private CompletableFuture<String> convertGroupedDosagesToText(List<Dosage> dosages) {
-        // TODO
+        var sortedDosages = Utils.groupBySequence(dosages);
+
+        List<CompletableFuture<String>> sequentialInstructionsFutures = sortedDosages
+                .stream()
+                .map(this::convertConcurrentDosagesToText)
+                .toList();
+
+        return CompletableFuture
+                .allOf(sequentialInstructionsFutures.toArray(CompletableFuture[]::new))
+                .thenApplyAsync(v -> {
+
+                    // Extract results from completed futures
+                    List<String> dosagesAsText = sequentialInstructionsFutures
+                            .stream()
+                            .map(s -> s.getNow(""))
+                            .toList();
+
+                    // Use ListToString.convert with the translators' resources
+                    var bundle = this.translators.getResources();
+                    return ListToString.convert(bundle, dosagesAsText, ListToString.LinkWord.THEN);
+                });
+    }
+
+    private CompletableFuture<String> convertConcurrentDosagesToText(List<Dosage> dosages) {
+        var concurrentInstructionsFutures = dosages
+                .stream()
+                .map(this::asHumanReadableText)
+                .toList();
+
+        return CompletableFuture
+                .allOf(concurrentInstructionsFutures.toArray(CompletableFuture[]::new))
+                .thenApplyAsync(v -> {
+
+                    // Extract results from completed futures
+                    List<String> dosagesAsText = concurrentInstructionsFutures
+                            .stream()
+                            .map(s -> s.getNow(""))
+                            .toList();
+
+                    // Use ListToString.convert with the translators' resources
+                    var bundle = this.translators.getResources();
+                    return ListToString.convert(bundle, dosagesAsText);
+                });
     }
 
 }
