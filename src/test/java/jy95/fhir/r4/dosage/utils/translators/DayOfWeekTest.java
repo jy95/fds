@@ -96,7 +96,7 @@ public class DayOfWeekTest {
         if (locale.equals(Locale.ENGLISH)) {
             return "on Monday and Friday";
         } else if (locale.equals(Locale.FRENCH)) {
-            return "le lundi et le vendredi";
+            return "les lundi et vendredi";
         } else if (locale.equals(Locale.GERMAN)) {
             return "am Montag und Freitag";
         } else {
