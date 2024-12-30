@@ -20,7 +20,7 @@ public class Text extends AbstractTranslator {
 
     @Override
     public boolean isPresent(Dosage dosage) {
-        return !dosage.getText().isEmpty();
+        return dosage.hasText();
     }
 
 }
