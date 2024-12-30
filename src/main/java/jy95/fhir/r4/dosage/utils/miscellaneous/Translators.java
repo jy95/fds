@@ -24,7 +24,8 @@ public class Translators {
                         DisplayOrder.DAY_OF_WEEK, new DayOfWeek(config),
                         DisplayOrder.TIME_OF_DAY, new TimeOfDay(config),
                         DisplayOrder.CODE, new TimingCode(config),
-                        DisplayOrder.METHOD, new Method(config)
+                        DisplayOrder.METHOD, new Method(config),
+                        DisplayOrder.ROUTE, new Route(config)
                 )
         );
         this.bundleControl = new MultiResourceBundleControl(
