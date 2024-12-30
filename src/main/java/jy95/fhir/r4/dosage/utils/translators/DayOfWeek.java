@@ -3,7 +3,6 @@ package jy95.fhir.r4.dosage.utils.translators;
 import java.text.MessageFormat;
 import java.util.concurrent.CompletableFuture;
 
-
 import jy95.fhir.r4.dosage.utils.functions.ListToString;
 import jy95.fhir.r4.dosage.utils.classes.AbstractTranslator;
 import org.hl7.fhir.r4.model.Dosage;
