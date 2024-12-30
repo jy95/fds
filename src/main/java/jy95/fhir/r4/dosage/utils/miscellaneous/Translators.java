@@ -22,7 +22,8 @@ public class Translators {
                         DisplayOrder.TEXT, new Text(config),
                         DisplayOrder.PATIENT_INSTRUCTION, new PatientInstruction(config),
                         DisplayOrder.DAY_OF_WEEK, new DayOfWeek(config),
-                        DisplayOrder.TIME_OF_DAY, new TimeOfDay(config)
+                        DisplayOrder.TIME_OF_DAY, new TimeOfDay(config),
+                        DisplayOrder.CODE, new TimingCode(config)
                 )
         );
         this.bundleControl = new MultiResourceBundleControl(
