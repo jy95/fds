@@ -18,17 +18,18 @@ public class Translators {
 
     public Translators(FDUConfig config) {
         this.translatorMap = new EnumMap<>(
-                Map.of(
-                        DisplayOrder.TEXT, new Text(config),
-                        DisplayOrder.PATIENT_INSTRUCTION, new PatientInstruction(config),
-                        DisplayOrder.DAY_OF_WEEK, new DayOfWeek(config),
-                        DisplayOrder.TIME_OF_DAY, new TimeOfDay(config),
-                        DisplayOrder.CODE, new TimingCode(config),
-                        DisplayOrder.METHOD, new Method(config),
-                        DisplayOrder.ROUTE, new Route(config),
-                        DisplayOrder.SITE, new Site(config),
-                        DisplayOrder.EXTENSION, new Extension(config),
-                        DisplayOrder.TIMING_EXTENSION, new TimingExtension(config)
+                Map.ofEntries(
+                        Map.entry(DisplayOrder.TEXT, new Text(config)),
+                        Map.entry(DisplayOrder.PATIENT_INSTRUCTION, new PatientInstruction(config)),
+                        Map.entry(DisplayOrder.DAY_OF_WEEK, new DayOfWeek(config)),
+                        Map.entry(DisplayOrder.TIME_OF_DAY, new TimeOfDay(config)),
+                        Map.entry(DisplayOrder.CODE, new TimingCode(config)),
+                        Map.entry(DisplayOrder.METHOD, new Method(config)),
+                        Map.entry(DisplayOrder.ROUTE, new Route(config)),
+                        Map.entry(DisplayOrder.SITE, new Site(config)),
+                        Map.entry(DisplayOrder.EXTENSION, new Extension(config)),
+                        Map.entry(DisplayOrder.TIMING_EXTENSION, new TimingExtension(config)),
+                        Map.entry(DisplayOrder.TIMING_REPEAT_EXTENSION, new TimingRepeatExtension(config))
                 )
         );
         this.bundleControl = new MultiResourceBundleControl(
