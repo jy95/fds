@@ -25,6 +25,14 @@ public class TextTest {
     void testNoText() throws ExecutionException, InterruptedException {
         Dosage dosage = new Dosage();
         String result = dosageUtils.asHumanReadableText(dosage).get();
-        assertEquals("", result, "Expected an empty string when text is null");
+        assertEquals("", result);
+    }
+
+    @Test
+    void testWithText() throws ExecutionException, InterruptedException {
+        Dosage dosage = new Dosage();
+        dosage.setText("SIG");
+        String result = dosageUtils.asHumanReadableText(dosage).get();
+        assertEquals("SIG", result);
     }
 }
