@@ -7,22 +7,21 @@ import jy95.fhir.r4.dosage.utils.classes.AbstractTranslator;
 
 import java.util.concurrent.CompletableFuture;
 
-public class TimingCode extends AbstractTranslator {
+public class Method extends AbstractTranslator {
 
-    public TimingCode(FDUConfig config){
+    public Method(FDUConfig config){
         super(config);
     }
 
     @Override
     public CompletableFuture<String> convert(Dosage dosage) {
-        var code = dosage.getTiming().getCode();
+        var code = dosage.getMethod();
         var fct = this.getConfig().getFromCodeableConceptToString();
         return fct.apply(code);
     }
 
     @Override
     public boolean isPresent(Dosage dosage) {
-        return dosage.hasTiming() && dosage.getTiming().hasCode();
+        return dosage.hasMethod();
     }
-
 }
