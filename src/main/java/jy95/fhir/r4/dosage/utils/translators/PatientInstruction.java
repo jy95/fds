@@ -20,6 +20,6 @@ public class PatientInstruction extends AbstractTranslator {
 
     @Override
     public boolean isPresent(Dosage dosage) {
-        return !dosage.getPatientInstruction().isEmpty();
+        return dosage.hasPatientInstruction();
     }
 }
