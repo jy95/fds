@@ -47,4 +47,9 @@ public class FhirDosageUtils {
                 );
     }
 
+    public CompletableFuture<String> asHumanReadableText(Dosage dosage) {
+        var fields = this.config.getDisplayOrder().toArray(DisplayOrder[]::new);
+        return this.getFields(dosage, fields);
+    }
+
 }
