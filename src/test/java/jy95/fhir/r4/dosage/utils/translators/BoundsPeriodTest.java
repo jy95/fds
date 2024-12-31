@@ -65,7 +65,7 @@ public class BoundsPeriodTest {
         if (locale.equals(Locale.ENGLISH)) {
             return "from May 23, 2011 to May 27, 2011";
         } else if (locale.equals(Locale.FRENCH)) {
-            return "si nécessaire";
+            return "du 23 mai 2011 au 27 mai 2011";
         } else if (locale.equals(Locale.GERMAN)) {
             return "von 23.05.2011 bis 27.05.2011";
         } else {
