@@ -19,22 +19,22 @@ public class AsNeeded extends AbstractTranslator {
     public CompletableFuture<String> convert(Dosage dosage) {
         var bundle = getResources();
 
-        // Simple case - only "as-needed"
-        if (dosage.hasAsNeededBooleanType()) {
-            return CompletableFuture.supplyAsync(() -> bundle.getString("fields.asNeeded"));
+        // Complex case - "as-need" for ...
+        if (dosage.hasAsNeededCodeableConcept()) {
+            var code = dosage.getAsNeededCodeableConcept();
+            var msg = bundle.getString("fields.asNeededFor");
+            var codeAsText = this
+                    .getConfig()
+                    .getFromCodeableConceptToString()
+                    .apply(code);
+
+            return codeAsText
+                    .thenApplyAsync(v -> ListToString.convert(bundle, List.of(v)))
+                    .thenApplyAsync(v -> MessageFormat.format(msg, v, 1));
         }
 
-        // Complex case - "as-need" for ...
-        var code = dosage.getAsNeededCodeableConcept();
-        var msg = bundle.getString("fields.asNeededFor");
-        var codeAsText = this
-                .getConfig()
-                .getFromCodeableConceptToString()
-                .apply(code);
-
-        return codeAsText
-                .thenApplyAsync(v -> ListToString.convert(bundle, List.of(v)))
-                .thenApplyAsync(v -> MessageFormat.format(msg, v, 1));
+        // Simple case - only "as-needed"
+        return CompletableFuture.supplyAsync(() -> bundle.getString("fields.asNeeded"));
     }
 
     @Override
