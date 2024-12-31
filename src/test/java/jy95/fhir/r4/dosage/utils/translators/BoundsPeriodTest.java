@@ -77,6 +77,23 @@ public class BoundsPeriodTest {
         assertEquals(expected, result);
     }
 
+    @ParameterizedTest
+    @MethodSource("localeProvider")
+    void testOnlyStart(Locale locale) throws ExecutionException, InterruptedException {
+        Dosage dosage = new Dosage();
+        Timing timing = new Timing();
+        Timing.TimingRepeatComponent timingRepeatComponent = new Timing.TimingRepeatComponent();
+        Period boundsPeriod = new Period();
+        boundsPeriod.setStartElement(new DateTimeType("2011-05-23"));
+        timingRepeatComponent.setBounds(boundsPeriod);
+        timing.setRepeat(timingRepeatComponent);
+        dosage.setTiming(timing);
+        FhirDosageUtils dosageUtils = getDosageUtilsInstance(locale);
+        String result = dosageUtils.asHumanReadableText(dosage).get();
+        String expected = getExpectedText3(locale);
+        assertEquals(expected, result);
+    }
+
     // For the parametrized test of first test
     private static String getExpectedText1(Locale locale) {
         if (locale.equals(Locale.ENGLISH)) {
@@ -106,13 +123,13 @@ public class BoundsPeriodTest {
     // For the parametrized test of third test
     private String getExpectedText3(Locale locale) {
         if (locale.equals(Locale.ENGLISH)) {
-            return "as required for head pain";
+            return "from May 23, 2011";
         } else if (locale.equals(Locale.FRENCH)) {
-            return "si nécessaire pour head pain";
+            return "à partir du 23 mai 2011";
         } else if (locale.equals(Locale.GERMAN)) {
-            return "bei Bedarf für head pain";
+            return "ab 23.05.2011";
         } else {
-            return "zoals nodig voor head pain";
+            return "van 23 mei 2011";
         }
     }
 }
