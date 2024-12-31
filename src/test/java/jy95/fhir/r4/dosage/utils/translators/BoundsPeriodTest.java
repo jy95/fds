@@ -112,7 +112,7 @@ public class BoundsPeriodTest {
         if (locale.equals(Locale.ENGLISH)) {
             return "to Feb 7, 2015, 1:28:17 PM";
         } else if (locale.equals(Locale.FRENCH)) {
-            return "si nécessaire pour head pain";
+            return "jusqu'au 7 févr. 2015, 13:28:17";
         } else if (locale.equals(Locale.GERMAN)) {
             return "bis 07.02.2015, 13:28:17";
         } else {
