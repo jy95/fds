@@ -44,7 +44,7 @@ public class BoundsPeriodTest {
 
     @ParameterizedTest
     @MethodSource("localeProvider")
-    void testBothLowAndHigh(Locale locale) throws ExecutionException, InterruptedException {
+    void testBothStartAndEnd(Locale locale) throws ExecutionException, InterruptedException {
         Dosage dosage = new Dosage();
         Timing timing = new Timing();
         Timing.TimingRepeatComponent timingRepeatComponent = new Timing.TimingRepeatComponent();
@@ -57,6 +57,23 @@ public class BoundsPeriodTest {
         FhirDosageUtils dosageUtils = getDosageUtilsInstance(locale);
         String result = dosageUtils.asHumanReadableText(dosage).get();
         String expected = getExpectedText1(locale);
+        assertEquals(expected, result);
+    }
+
+    @ParameterizedTest
+    @MethodSource("localeProvider")
+    void testOnlyEnd(Locale locale) throws ExecutionException, InterruptedException {
+        Dosage dosage = new Dosage();
+        Timing timing = new Timing();
+        Timing.TimingRepeatComponent timingRepeatComponent = new Timing.TimingRepeatComponent();
+        Period boundsPeriod = new Period();
+        boundsPeriod.setEndElement(new DateTimeType("2015-02-07T13:28:17"));
+        timingRepeatComponent.setBounds(boundsPeriod);
+        timing.setRepeat(timingRepeatComponent);
+        dosage.setTiming(timing);
+        FhirDosageUtils dosageUtils = getDosageUtilsInstance(locale);
+        String result = dosageUtils.asHumanReadableText(dosage).get();
+        String expected = getExpectedText2(locale);
         assertEquals(expected, result);
     }
 
@@ -76,13 +93,13 @@ public class BoundsPeriodTest {
     // For the parametrized test of second test
     private String getExpectedText2(Locale locale) {
         if (locale.equals(Locale.ENGLISH)) {
-            return "as required for head pain";
+            return "to Feb 7, 2015, 1:28:17 PM";
         } else if (locale.equals(Locale.FRENCH)) {
             return "si nécessaire pour head pain";
         } else if (locale.equals(Locale.GERMAN)) {
-            return "bei Bedarf für head pain";
+            return "bis 07.02.2015, 13:28:17";
         } else {
-            return "zoals nodig voor head pain";
+            return "tot 7 feb 2015, 13:28:17";
         }
     }
 
