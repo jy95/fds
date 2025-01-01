@@ -11,6 +11,7 @@ import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class BoundsPeriodTest extends AbstractFhirTest {
 
@@ -96,8 +97,12 @@ public class BoundsPeriodTest extends AbstractFhirTest {
         } else if (locale.equals(Locale.GERMAN)) {
             assertEquals("bis 07.02.2015, 13:28:17", actual);
         } else {
-            // Check for both acceptable Dutch formats
-            assertEquals("tot 7 feb 2015, 13:28:17", actual);
+            // On Eclipse Temurin, it fails as it returns a string without comma
+            // In other words "tot 7 feb 2015 13:28:17"
+            // Whereas on Oracle JDK, it works,
+            // assertEquals("tot 7 feb 2015, 13:28:17", actual);
+            assertTrue(actual.contains("tot 7 feb 2015"));
+            assertTrue(actual.contains("13:28:17"));
         }
     }
 
