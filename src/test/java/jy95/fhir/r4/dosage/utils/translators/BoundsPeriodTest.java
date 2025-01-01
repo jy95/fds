@@ -11,7 +11,6 @@ import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class BoundsPeriodTest extends AbstractFhirTest {
 
@@ -98,8 +97,7 @@ public class BoundsPeriodTest extends AbstractFhirTest {
             assertEquals("bis 07.02.2015, 13:28:17", actual);
         } else {
             // Check for both acceptable Dutch formats
-            String expected = "tot 7 feb 2015(?:, )?13:28:17";
-            assertTrue(actual.matches(expected), "Unexpected result for Dutch: " + actual);
+            assertEquals("tot 7 feb 2015, 13:28:17", actual);
         }
     }
 

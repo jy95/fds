@@ -22,7 +22,7 @@ public abstract class AbstractFhirTest {
                 .of(
                         Locale.ENGLISH,
                         Locale.FRENCH,
-                        Locale.of("nl"),
+                        Locale.forLanguageTag("nl-BE"),
                         Locale.GERMAN
                 );
     }
