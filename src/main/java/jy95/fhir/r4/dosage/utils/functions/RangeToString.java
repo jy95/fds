@@ -124,7 +124,7 @@ public class RangeToString {
                 String code = quantity.getCode();
                 BigDecimal amount = quantity.hasValue() ? quantity.getValue() : BigDecimal.ONE;
                 String message = bundle.getString("withoutCount." + code);
-                return MessageFormat.format(message,message, amount);
+                return MessageFormat.format(message, amount);
             });
         }
 

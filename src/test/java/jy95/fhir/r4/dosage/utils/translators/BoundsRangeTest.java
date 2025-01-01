@@ -134,48 +134,48 @@ public class BoundsRangeTest extends AbstractFhirTest {
         } else if (locale.equals(Locale.FRENCH)) {
             return "du 23 mai 2011 au 27 mai 2011";
         } else if (locale.equals(Locale.GERMAN)) {
-            return "zwischen 1 und 3";
+            return "für zwischen 1 und 3";
         } else {
-            return "tussen 1 en 3";
+            return "gedurende tussen 1 en 3";
         }
     }
 
     // For the parametrized test of second test
     private String getExpectedText2(Locale locale) {
         if (locale.equals(Locale.ENGLISH)) {
-            return "1 to 3 ml";
+            return "for 1 to 3 days";
         } else if (locale.equals(Locale.FRENCH)) {
             return "jusqu’au 7 févr. 2015, 13:28:17";
         } else if (locale.equals(Locale.GERMAN)) {
-            return "zwischen 1 und 3 ml";
+            return "für zwischen 1 und 3 Tage";
         } else {
-            return "tussen 1 en 3 ml";
+            return "gedurende tussen 1 en 3 dagen";
         }
     }
 
     // For the parametrized test of third test
     private String getExpectedText3(Locale locale) {
         if (locale.equals(Locale.ENGLISH)) {
-            return "up to 3";
+            return "for up to 3";
         } else if (locale.equals(Locale.FRENCH)) {
             return "à partir du 23 mai 2011";
         } else if (locale.equals(Locale.GERMAN)) {
-            return "bis 3";
+            return "für bis 3";
         } else {
-            return "tot 3";
+            return "gedurende tot 3";
         }
     }
 
     // For the parametrized test of four test
     private String getExpectedText4(Locale locale) {
         if (locale.equals(Locale.ENGLISH)) {
-            return "for up to 3 ml";
+            return "for up to 3 days";
         } else if (locale.equals(Locale.FRENCH)) {
             return "à partir du 23 mai 2011";
         } else if (locale.equals(Locale.GERMAN)) {
-            return "für bis 3 ml";
+            return "für bis 3 Tage";
         } else {
-            return "gedurende tot 3 ml";
+            return "gedurende tot 3 dagen";
         }
     }
 
@@ -186,9 +186,9 @@ public class BoundsRangeTest extends AbstractFhirTest {
         } else if (locale.equals(Locale.FRENCH)) {
             return "à partir du 23 mai 2011";
         } else if (locale.equals(Locale.GERMAN)) {
-            return "mindestens 3";
+            return "für mindestens 3";
         } else {
-            return "minstens 3";
+            return "gedurende minstens 3";
         }
     }
 
@@ -199,9 +199,9 @@ public class BoundsRangeTest extends AbstractFhirTest {
         } else if (locale.equals(Locale.FRENCH)) {
             return "à partir du 23 mai 2011";
         } else if (locale.equals(Locale.GERMAN)) {
-            return "mindestens 3 ml";
+            return "für mindestens 3 Tage";
         } else {
-            return "minstens 3 ml";
+            return "gedurende minstens 3 dagen";
         }
     }
 }
