@@ -21,6 +21,6 @@ jobs:
           distribution: 'temurin'
           cache: 'maven'
       - name: 📦 Install dependencies
-        run: mvn install
+        run: mvn install -DskipTests
       - name: 🧪 Run tests with coverage
         run: mvn test jacoco:report
