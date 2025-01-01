@@ -2,7 +2,6 @@ package jy95.fhir.r4.dosage.utils.translators;
 
 import jy95.fhir.r4.dosage.utils.AbstractFhirTest;
 import jy95.fhir.r4.dosage.utils.classes.FhirDosageUtils;
-import jy95.fhir.r4.dosage.utils.config.FDUConfig;
 import jy95.fhir.r4.dosage.utils.types.DisplayOrder;
 import org.hl7.fhir.r4.model.CodeableConcept;
 import org.hl7.fhir.r4.model.Dosage;
