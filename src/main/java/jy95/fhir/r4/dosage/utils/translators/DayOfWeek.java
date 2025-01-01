@@ -1,7 +1,9 @@
 package jy95.fhir.r4.dosage.utils.translators;
 
-import java.text.MessageFormat;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
+
+import com.ibm.icu.text.MessageFormat;
 
 import jy95.fhir.r4.dosage.utils.functions.ListToString;
 import jy95.fhir.r4.dosage.utils.classes.AbstractTranslator;
@@ -21,13 +23,32 @@ public class DayOfWeek extends AbstractTranslator {
             var bundle = this.getResources();
             var dayOfWeeksCodes = dayOfWeeks
                     .stream()
-                    .map(day -> bundle.getString(day.getCode()))
+                    .map(day -> {
+
+                        String dayCode = day.getCode().toLowerCase(); // Get the lowercase day code
+                        String dayTranslation = bundle.getString("day." + dayCode);
+
+                        // Use ICU's MessageFormat to handle the translation with choice formatting
+                        MessageFormat messageFormat = new MessageFormat(dayTranslation, this.getConfig().getLocale());
+                        Map<String, Object> dayArguments = Map.of(
+                                "dayType", "long"
+                        );
+
+                        return messageFormat.format(dayArguments);
+                    })
                     .toList();
 
             var dayOfWeeksAsString = ListToString.convert(bundle, dayOfWeeksCodes);
             var msg = bundle.getString("fields.dayOfWeek");
 
-            return MessageFormat.format(msg, dayOfWeeks.size(), dayOfWeeksAsString);
+            Map<String, Object> messageArguments = Map.of(
+                    "dayCondition", dayOfWeeks.size(),
+                    "day", dayOfWeeksAsString
+            );
+
+            // Use ICU MessageFormat for plural and select formatting
+            MessageFormat messageFormat = new MessageFormat(msg, this.getConfig().getLocale());
+            return messageFormat.format(messageArguments);
         });
     }
 

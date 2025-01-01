@@ -1,6 +1,8 @@
 package jy95.fhir.r4.dosage.utils.translators;
 
-import java.text.MessageFormat;
+import com.ibm.icu.text.MessageFormat;
+
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 import jy95.fhir.r4.dosage.utils.config.FDUConfig;
@@ -28,7 +30,13 @@ public class TimeOfDay extends AbstractTranslator {
             var timeOfDaysAsString = ListToString.convert(bundle, timeOfDays);
             var message = bundle.getString("fields.timeOfDay");
 
-            return MessageFormat.format(message, timeOfDaysAsString, timeOfDays.size());
+            MessageFormat messageFormat = new MessageFormat(message, this.getConfig().getLocale());
+            Map<String, Object> messageArguments = Map.of(
+                    "timeOfDay", timeOfDaysAsString,
+                    "count", timeOfDays.size()
+            );
+
+            return messageFormat.format(messageArguments);
         });
     }
 

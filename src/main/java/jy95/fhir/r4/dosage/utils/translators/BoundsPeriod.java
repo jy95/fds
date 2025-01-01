@@ -1,6 +1,8 @@
 package jy95.fhir.r4.dosage.utils.translators;
 
-import java.text.MessageFormat;
+import com.ibm.icu.text.MessageFormat;
+
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 import jy95.fhir.r4.dosage.utils.functions.FormatDateTimes;
@@ -25,32 +27,26 @@ public class BoundsPeriod extends AbstractTranslator {
             var locale = this.getConfig().getLocale();
             var msg = bundle.getString("fields.boundsPeriod");
 
-            // Both start and end present
-            if (hasStart && hasEnd) {
-                return MessageFormat.format(
-                        msg,
-                        0,
-                        FormatDateTimes.convert(locale, boundPeriods.getStartElement()),
-                        FormatDateTimes.convert(locale, boundPeriods.getEndElement())
-                );
-            }
+            // Prepare date values using FormatDateTimes.convert()
+            String startDate = hasStart ? FormatDateTimes.convert(locale, boundPeriods.getStartElement()) : "";
+            String endDate = hasEnd ? FormatDateTimes.convert(locale, boundPeriods.getEndElement()) : "";
 
-            // Only start present
-            if (hasStart) {
-                return MessageFormat.format(
-                        msg,
-                        1,
-                        FormatDateTimes.convert(locale, boundPeriods.getStartElement())
-                );
-            }
+            // Use ICU MessageFormat for more flexible and locale-sensitive formatting
+            MessageFormat messageFormat = new MessageFormat(msg, this.getConfig().getLocale());
 
-            // Only end present
-            return MessageFormat.format(
-                    msg,
-                    2,
-                    FormatDateTimes.convert(locale, boundPeriods.getEndElement())
+            // Choose the correct condition based on the presence of start and end dates
+            String condition = hasStart && hasEnd ? "0" :
+                    (hasStart ? "1" : (hasEnd ? "2" : "other"));
+
+            // Create a map of named arguments
+            Map<String, Object> arguments = Map.of(
+                    "startDate", startDate,
+                    "endDate", endDate,
+                    "condition", condition
             );
 
+            // Format the message with the named arguments
+            return messageFormat.format(arguments);
         });
     }
 

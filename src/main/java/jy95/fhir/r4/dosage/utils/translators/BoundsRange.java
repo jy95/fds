@@ -1,7 +1,8 @@
 package jy95.fhir.r4.dosage.utils.translators;
 
+import com.ibm.icu.text.MessageFormat;
 
-import java.text.MessageFormat;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 import org.hl7.fhir.r4.model.Dosage;
@@ -20,11 +21,15 @@ public class BoundsRange extends AbstractTranslator {
     public CompletableFuture<String> convert(Dosage dosage) {
         var boundsRange = dosage.getTiming().getRepeat().getBoundsRange();
         var bundle = this.getResources();
+        var locale = this.getConfig().getLocale();
+        String msg = bundle.getString("fields.boundsRange");
+        MessageFormat messageFormat = new MessageFormat(msg, locale);
+
         return RangeToString
                 .convert(bundle, this.getConfig(), boundsRange)
                 .thenApplyAsync(v -> {
-                    String msg = bundle.getString("fields.boundsRange");
-                    return MessageFormat.format(msg, v);
+                    Map<String, Object> arguments = Map.of("range", v);
+                    return messageFormat.format(arguments);
                 });
     }
 

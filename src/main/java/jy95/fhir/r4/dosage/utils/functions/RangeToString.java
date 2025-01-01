@@ -1,11 +1,13 @@
 package jy95.fhir.r4.dosage.utils.functions;
 
+import com.ibm.icu.text.MessageFormat;
+
 import org.hl7.fhir.r4.model.Quantity;
 import org.hl7.fhir.r4.model.Range;
 import jy95.fhir.r4.dosage.utils.config.FDUConfig;
 
 import java.math.BigDecimal;
-import java.text.MessageFormat;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
 
@@ -43,31 +45,21 @@ public class RangeToString {
             boolean hasHigh = range.hasHigh();
             String msg = bundle.getString("amount.range.withoutUnit");
 
-            // Both are present
-            if (hasLow && hasHigh) {
-                return MessageFormat.format(
-                        msg,
-                        0,
-                        range.getLow().getValue().toString(),
-                        range.getHigh().getValue().toString()
-                );
-            }
+            // Use ICU MessageFormat for formatting
+            MessageFormat messageFormat = new MessageFormat(msg, config.getLocale());
 
-            // Only high is present
-            if (hasHigh) {
-                return MessageFormat.format(
-                        msg,
-                        1,
-                        range.getHigh().getValue().toString()
-                );
-            }
+            // Determine the condition
+            String condition = (hasLow && hasHigh) ? "0" : (hasHigh) ? "1" : (hasLow) ? "2" : "other";
 
-            // Only low is present
-            return MessageFormat.format(
-                    msg,
-                    2,
-                    range.getLow().getValue().toString()
+            // Create a map for the named arguments
+            Map<String, Object> arguments = Map.of(
+                    "minValue", hasLow ? range.getLow().getValue().toString() : "",
+                    "maxValue", hasHigh ? range.getHigh().getValue().toString() : "",
+                    "condition", condition
             );
+
+            // Format and return the result
+            return messageFormat.format(arguments);
         });
     }
 
@@ -80,38 +72,23 @@ public class RangeToString {
                 ? enhancedFromFHIRQuantityUnitToString(bundle, config, range.getHigh())
                 : enhancedFromFHIRQuantityUnitToString(bundle, config, range.getLow());
 
+        // Determine the condition
+        String condition = (hasLow && hasHigh) ? "0" : (hasHigh) ? "1" : (hasLow) ? "2" : "other";
+
         return unitRetrieval
                 .thenApplyAsync(unitAsText -> {
 
-                    // Both are present
-                    if (hasHigh && hasLow) {
-                        return MessageFormat.format(
-                                msg,
-                                0,
-                                range.getLow().getValue(),
-                                range.getHigh().getValue(),
-                                unitAsText
-                        );
-                    }
-
-                    // Only high is present
-                    if (hasHigh) {
-                        return MessageFormat.format(
-                                msg,
-                                1,
-                                range.getHigh().getValue(),
-                                unitAsText
-                        );
-                    }
-
-                    // Only low is present
-                    return MessageFormat.format(
-                            msg,
-                            2,
-                            range.getLow().getValue(),
-                            unitAsText
+                    // Create a map for the named arguments
+                    Map<String, Object> arguments = Map.of(
+                            "minValue", hasLow ? range.getLow().getValue() : "",
+                            "maxValue", hasHigh ? range.getHigh().getValue() : "",
+                            "condition", condition,
+                            "unit", unitAsText
                     );
 
+                    // Format the message
+                    MessageFormat messageFormat = new MessageFormat(msg, config.getLocale());
+                    return messageFormat.format(arguments);
                 });
     }
 

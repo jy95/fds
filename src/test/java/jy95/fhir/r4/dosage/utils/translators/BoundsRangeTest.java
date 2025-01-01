@@ -132,7 +132,7 @@ public class BoundsRangeTest extends AbstractFhirTest {
         if (locale.equals(Locale.ENGLISH)) {
             return "for 1 to 3";
         } else if (locale.equals(Locale.FRENCH)) {
-            return "du 23 mai 2011 au 27 mai 2011";
+            return "pour 1 à 3";
         } else if (locale.equals(Locale.GERMAN)) {
             return "für zwischen 1 und 3";
         } else {
@@ -145,7 +145,7 @@ public class BoundsRangeTest extends AbstractFhirTest {
         if (locale.equals(Locale.ENGLISH)) {
             return "for 1 to 3 days";
         } else if (locale.equals(Locale.FRENCH)) {
-            return "jusqu’au 7 févr. 2015, 13:28:17";
+            return "pour 1 à 3 jours";
         } else if (locale.equals(Locale.GERMAN)) {
             return "für zwischen 1 und 3 Tage";
         } else {
@@ -158,7 +158,7 @@ public class BoundsRangeTest extends AbstractFhirTest {
         if (locale.equals(Locale.ENGLISH)) {
             return "for up to 3";
         } else if (locale.equals(Locale.FRENCH)) {
-            return "à partir du 23 mai 2011";
+            return "pour 3 maximum";
         } else if (locale.equals(Locale.GERMAN)) {
             return "für bis 3";
         } else {
@@ -171,7 +171,7 @@ public class BoundsRangeTest extends AbstractFhirTest {
         if (locale.equals(Locale.ENGLISH)) {
             return "for up to 3 days";
         } else if (locale.equals(Locale.FRENCH)) {
-            return "à partir du 23 mai 2011";
+            return "pour 3 jours maximum";
         } else if (locale.equals(Locale.GERMAN)) {
             return "für bis 3 Tage";
         } else {
@@ -182,9 +182,9 @@ public class BoundsRangeTest extends AbstractFhirTest {
     // For the parametrized test of fifth test
     private String getExpectedText5(Locale locale) {
         if (locale.equals(Locale.ENGLISH)) {
-            return "from May 23, 2011";
+            return "for at least 3";
         } else if (locale.equals(Locale.FRENCH)) {
-            return "à partir du 23 mai 2011";
+            return "pour au moins 3";
         } else if (locale.equals(Locale.GERMAN)) {
             return "für mindestens 3";
         } else {
@@ -195,9 +195,9 @@ public class BoundsRangeTest extends AbstractFhirTest {
     // For the parametrized test of sixth test
     private String getExpectedText6(Locale locale) {
         if (locale.equals(Locale.ENGLISH)) {
-            return "from May 23, 2011";
+            return "for at least 3 days";
         } else if (locale.equals(Locale.FRENCH)) {
-            return "à partir du 23 mai 2011";
+            return "pour au moins 3 jours";
         } else if (locale.equals(Locale.GERMAN)) {
             return "für mindestens 3 Tage";
         } else {
