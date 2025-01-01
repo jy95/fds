@@ -1,43 +1,24 @@
 package jy95.fhir.r4.dosage.utils.translators;
 
+import jy95.fhir.r4.dosage.utils.AbstractFhirTest;
 import jy95.fhir.r4.dosage.utils.classes.FhirDosageUtils;
-import jy95.fhir.r4.dosage.utils.config.FDUConfig;
 import jy95.fhir.r4.dosage.utils.types.DisplayOrder;
 import org.hl7.fhir.r4.model.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.ExecutionException;
-import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class BoundsPeriodTest {
-    private static FhirDosageUtils getDosageUtilsInstance(Locale locale) {
-        return new FhirDosageUtils(FDUConfig.builder()
-                .displayOrder(List.of(DisplayOrder.BOUNDS_PERIOD))
-                .locale(locale)
-                .build());
-    }
-
-    // Locale I want to cover
-    private static Stream<Locale> localeProvider() {
-        return Stream
-                .of(
-                        Locale.ENGLISH,
-                        Locale.FRENCH,
-                        Locale.of("nl"),
-                        Locale.GERMAN
-                );
-    }
+public class BoundsPeriodTest extends AbstractFhirTest {
 
     @ParameterizedTest
     @MethodSource("localeProvider")
     void testNoBoundsPeriod(Locale locale) throws ExecutionException, InterruptedException {
         Dosage dosage = new Dosage();
-        FhirDosageUtils dosageUtils = getDosageUtilsInstance(locale);
+        FhirDosageUtils dosageUtils = getDosageUtilsInstance(locale, DisplayOrder.BOUNDS_PERIOD);
         String result = dosageUtils.asHumanReadableText(dosage).get();
         assertEquals("", result);
     }
@@ -54,7 +35,7 @@ public class BoundsPeriodTest {
         timingRepeatComponent.setBounds(boundsPeriod);
         timing.setRepeat(timingRepeatComponent);
         dosage.setTiming(timing);
-        FhirDosageUtils dosageUtils = getDosageUtilsInstance(locale);
+        FhirDosageUtils dosageUtils = getDosageUtilsInstance(locale, DisplayOrder.BOUNDS_PERIOD);
         String result = dosageUtils.asHumanReadableText(dosage).get();
         String expected = getExpectedText1(locale);
         assertEquals(expected, result);
@@ -71,7 +52,7 @@ public class BoundsPeriodTest {
         timingRepeatComponent.setBounds(boundsPeriod);
         timing.setRepeat(timingRepeatComponent);
         dosage.setTiming(timing);
-        FhirDosageUtils dosageUtils = getDosageUtilsInstance(locale);
+        FhirDosageUtils dosageUtils = getDosageUtilsInstance(locale, DisplayOrder.BOUNDS_PERIOD);
         String result = dosageUtils.asHumanReadableText(dosage).get();
         String expected = getExpectedText2(locale);
         assertEquals(expected, result);
@@ -88,7 +69,7 @@ public class BoundsPeriodTest {
         timingRepeatComponent.setBounds(boundsPeriod);
         timing.setRepeat(timingRepeatComponent);
         dosage.setTiming(timing);
-        FhirDosageUtils dosageUtils = getDosageUtilsInstance(locale);
+        FhirDosageUtils dosageUtils = getDosageUtilsInstance(locale, DisplayOrder.BOUNDS_PERIOD);
         String result = dosageUtils.asHumanReadableText(dosage).get();
         String expected = getExpectedText3(locale);
         assertEquals(expected, result);

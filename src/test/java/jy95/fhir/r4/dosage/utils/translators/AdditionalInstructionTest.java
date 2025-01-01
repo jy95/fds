@@ -1,5 +1,6 @@
 package jy95.fhir.r4.dosage.utils.translators;
 
+import jy95.fhir.r4.dosage.utils.AbstractFhirTest;
 import jy95.fhir.r4.dosage.utils.classes.FhirDosageUtils;
 import jy95.fhir.r4.dosage.utils.config.FDUConfig;
 import jy95.fhir.r4.dosage.utils.types.DisplayOrder;
@@ -11,36 +12,16 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.ExecutionException;
-import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class AdditionalInstructionTest {
-
-    // Factory to create instance
-    private static FhirDosageUtils getDosageUtilsInstance(Locale locale) {
-        return new FhirDosageUtils(FDUConfig.builder()
-                .displayOrder(List.of(DisplayOrder.ADDITIONAL_INSTRUCTION))
-                .locale(locale)
-                .build());
-    }
-
-    // Locale I want to cover
-    private static Stream<Locale> localeProvider() {
-        return Stream
-                .of(
-                        Locale.ENGLISH,
-                        Locale.FRENCH,
-                        Locale.of("nl"),
-                        Locale.GERMAN
-                );
-    }
+public class AdditionalInstructionTest extends AbstractFhirTest {
 
     @ParameterizedTest
     @MethodSource("localeProvider")
     void testNoAdditionalInstruction(Locale locale) throws ExecutionException, InterruptedException {
         Dosage dosage = new Dosage();
-        FhirDosageUtils dosageUtils = getDosageUtilsInstance(locale);
+        FhirDosageUtils dosageUtils = getDosageUtilsInstance(locale, DisplayOrder.ADDITIONAL_INSTRUCTION);
         String result = dosageUtils.asHumanReadableText(dosage).get();
         assertEquals("", result);
     }
@@ -48,7 +29,7 @@ public class AdditionalInstructionTest {
     @ParameterizedTest
     @MethodSource("localeProvider")
     void testSingleAdditionalInstruction(Locale locale) throws ExecutionException, InterruptedException {
-        FhirDosageUtils dosageUtils = getDosageUtilsInstance(locale);
+        FhirDosageUtils dosageUtils = getDosageUtilsInstance(locale, DisplayOrder.ADDITIONAL_INSTRUCTION);
         Dosage dosage = new Dosage();
         CodeableConcept cc1 = new CodeableConcept();
         cc1.setText("Instruction 1");
@@ -62,7 +43,7 @@ public class AdditionalInstructionTest {
     @ParameterizedTest
     @MethodSource("localeProvider")
     void testMultipleAdditionalInstruction(Locale locale) throws ExecutionException, InterruptedException {
-        FhirDosageUtils dosageUtils = getDosageUtilsInstance(locale);
+        FhirDosageUtils dosageUtils = getDosageUtilsInstance(locale, DisplayOrder.ADDITIONAL_INSTRUCTION);
         Dosage dosage = new Dosage();
         CodeableConcept cc1 = new CodeableConcept();
         cc1.setText("Instruction 1");

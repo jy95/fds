@@ -1,7 +1,7 @@
 package jy95.fhir.r4.dosage.utils.translators;
 
+import jy95.fhir.r4.dosage.utils.AbstractFhirTest;
 import jy95.fhir.r4.dosage.utils.classes.FhirDosageUtils;
-import jy95.fhir.r4.dosage.utils.config.FDUConfig;
 import jy95.fhir.r4.dosage.utils.types.DisplayOrder;
 import org.hl7.fhir.r4.model.BooleanType;
 import org.hl7.fhir.r4.model.CodeableConcept;
@@ -9,38 +9,18 @@ import org.hl7.fhir.r4.model.Dosage;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.ExecutionException;
-import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class AsNeededTest {
-
-    private static FhirDosageUtils getDosageUtilsInstance(Locale locale) {
-        return new FhirDosageUtils(FDUConfig.builder()
-                .displayOrder(List.of(DisplayOrder.AS_NEEDED))
-                .locale(locale)
-                .build());
-    }
-
-    // Locale I want to cover
-    private static Stream<Locale> localeProvider() {
-        return Stream
-                .of(
-                        Locale.ENGLISH,
-                        Locale.FRENCH,
-                        Locale.of("nl"),
-                        Locale.GERMAN
-                );
-    }
+public class AsNeededTest extends AbstractFhirTest {
 
     @ParameterizedTest
     @MethodSource("localeProvider")
     void testNoAsNeeded(Locale locale) throws ExecutionException, InterruptedException {
         Dosage dosage = new Dosage();
-        FhirDosageUtils dosageUtils = getDosageUtilsInstance(locale);
+        FhirDosageUtils dosageUtils = getDosageUtilsInstance(locale, DisplayOrder.AS_NEEDED);
         String result = dosageUtils.asHumanReadableText(dosage).get();
         assertEquals("", result);
     }
@@ -52,7 +32,7 @@ public class AsNeededTest {
         BooleanType flag = new BooleanType();
         flag.setValue(Boolean.TRUE);
         dosage.setAsNeeded(flag);
-        FhirDosageUtils dosageUtils = getDosageUtilsInstance(locale);
+        FhirDosageUtils dosageUtils = getDosageUtilsInstance(locale, DisplayOrder.AS_NEEDED);
         String result = dosageUtils.asHumanReadableText(dosage).get();
         String expected = getExpectedText1(locale);
         assertEquals(expected, result);
@@ -65,7 +45,7 @@ public class AsNeededTest {
         CodeableConcept neededFor = new CodeableConcept();
         neededFor.setText("head pain");
         dosage.setAsNeeded(neededFor);
-        FhirDosageUtils dosageUtils = getDosageUtilsInstance(locale);
+        FhirDosageUtils dosageUtils = getDosageUtilsInstance(locale, DisplayOrder.AS_NEEDED);
         String result = dosageUtils.asHumanReadableText(dosage).get();
         String expected = getExpectedText2(locale);
         assertEquals(expected, result);
