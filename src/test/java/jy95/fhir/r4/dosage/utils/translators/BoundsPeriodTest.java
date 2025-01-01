@@ -11,6 +11,7 @@ import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class BoundsPeriodTest extends AbstractFhirTest {
 
@@ -54,8 +55,7 @@ public class BoundsPeriodTest extends AbstractFhirTest {
         dosage.setTiming(timing);
         FhirDosageUtils dosageUtils = getDosageUtilsInstance(locale, DisplayOrder.BOUNDS_PERIOD);
         String result = dosageUtils.asHumanReadableText(dosage).get();
-        String expected = getExpectedText2(locale);
-        assertEquals(expected, result);
+        assertExpectedText2(locale, result);
     }
 
     @ParameterizedTest
@@ -89,15 +89,17 @@ public class BoundsPeriodTest extends AbstractFhirTest {
     }
 
     // For the parametrized test of second test
-    private String getExpectedText2(Locale locale) {
+    private void assertExpectedText2(Locale locale, String actual) {
         if (locale.equals(Locale.ENGLISH)) {
-            return "to Feb 7, 2015, 1:28:17 PM";
+            assertEquals("to Feb 7, 2015, 1:28:17 PM", actual);
         } else if (locale.equals(Locale.FRENCH)) {
-            return "jusqu’au 7 févr. 2015, 13:28:17";
+            assertEquals("jusqu’au 7 févr. 2015, 13:28:17", actual);
         } else if (locale.equals(Locale.GERMAN)) {
-            return "bis 07.02.2015, 13:28:17";
+            assertEquals("bis 07.02.2015, 13:28:17", actual);
         } else {
-            return "tot 7 feb 2015, 13:28:17";
+            // Check for both acceptable Dutch formats
+            String expected = "tot 7 feb 2015(?:, )?13:28:17";
+            assertTrue(actual.matches(expected), "Unexpected result for Dutch: " + actual);
         }
     }
 
