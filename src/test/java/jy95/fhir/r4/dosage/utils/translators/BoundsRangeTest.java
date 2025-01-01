@@ -49,7 +49,7 @@ public class BoundsRangeTest extends AbstractFhirTest {
         Timing.TimingRepeatComponent timingRepeatComponent = new Timing.TimingRepeatComponent();
         Range boundsRange = new Range();
         boundsRange.setLow(new Quantity(1));
-        boundsRange.setHigh(new Quantity(null, 3, null, null, "ml"));
+        boundsRange.setHigh(new Quantity(null, 3, "http://hl7.org/fhir/ValueSet/duration-units", "d", null));
         timingRepeatComponent.setBounds(boundsRange);
         timing.setRepeat(timingRepeatComponent);
         dosage.setTiming(timing);
@@ -76,10 +76,61 @@ public class BoundsRangeTest extends AbstractFhirTest {
         assertEquals(expected, result);
     }
 
+    @ParameterizedTest
+    @MethodSource("localeProvider")
+    void testOnlyHighWithUnit(Locale locale) throws ExecutionException, InterruptedException {
+        Dosage dosage = new Dosage();
+        Timing timing = new Timing();
+        Timing.TimingRepeatComponent timingRepeatComponent = new Timing.TimingRepeatComponent();
+        Range boundsRange = new Range();
+        boundsRange.setHigh(new Quantity(null, 3,"http://hl7.org/fhir/ValueSet/duration-units", "d", null));
+        timingRepeatComponent.setBounds(boundsRange);
+        timing.setRepeat(timingRepeatComponent);
+        dosage.setTiming(timing);
+        FhirDosageUtils dosageUtils = getDosageUtilsInstance(locale, DisplayOrder.BOUNDS_RANGE);
+        String result = dosageUtils.asHumanReadableText(dosage).get();
+        String expected = getExpectedText4(locale);
+        assertEquals(expected, result);
+    }
+
+    @ParameterizedTest
+    @MethodSource("localeProvider")
+    void testOnlyLowWithoutUnit(Locale locale) throws ExecutionException, InterruptedException {
+        Dosage dosage = new Dosage();
+        Timing timing = new Timing();
+        Timing.TimingRepeatComponent timingRepeatComponent = new Timing.TimingRepeatComponent();
+        Range boundsRange = new Range();
+        boundsRange.setLow(new Quantity(3));
+        timingRepeatComponent.setBounds(boundsRange);
+        timing.setRepeat(timingRepeatComponent);
+        dosage.setTiming(timing);
+        FhirDosageUtils dosageUtils = getDosageUtilsInstance(locale, DisplayOrder.BOUNDS_RANGE);
+        String result = dosageUtils.asHumanReadableText(dosage).get();
+        String expected = getExpectedText5(locale);
+        assertEquals(expected, result);
+    }
+
+    @ParameterizedTest
+    @MethodSource("localeProvider")
+    void testOnlyLowWithUnit(Locale locale) throws ExecutionException, InterruptedException {
+        Dosage dosage = new Dosage();
+        Timing timing = new Timing();
+        Timing.TimingRepeatComponent timingRepeatComponent = new Timing.TimingRepeatComponent();
+        Range boundsRange = new Range();
+        boundsRange.setLow(new Quantity(null, 3, "http://hl7.org/fhir/ValueSet/duration-units", "d", null));
+        timingRepeatComponent.setBounds(boundsRange);
+        timing.setRepeat(timingRepeatComponent);
+        dosage.setTiming(timing);
+        FhirDosageUtils dosageUtils = getDosageUtilsInstance(locale, DisplayOrder.BOUNDS_RANGE);
+        String result = dosageUtils.asHumanReadableText(dosage).get();
+        String expected = getExpectedText6(locale);
+        assertEquals(expected, result);
+    }
+
     // For the parametrized test of first test
     private static String getExpectedText1(Locale locale) {
         if (locale.equals(Locale.ENGLISH)) {
-            return "1 to 3";
+            return "for 1 to 3";
         } else if (locale.equals(Locale.FRENCH)) {
             return "du 23 mai 2011 au 27 mai 2011";
         } else if (locale.equals(Locale.GERMAN)) {
@@ -118,13 +169,13 @@ public class BoundsRangeTest extends AbstractFhirTest {
     // For the parametrized test of four test
     private String getExpectedText4(Locale locale) {
         if (locale.equals(Locale.ENGLISH)) {
-            return "from May 23, 2011";
+            return "for up to 3 ml";
         } else if (locale.equals(Locale.FRENCH)) {
             return "à partir du 23 mai 2011";
         } else if (locale.equals(Locale.GERMAN)) {
-            return "ab 23.05.2011";
+            return "für bis 3 ml";
         } else {
-            return "van 23 mei 2011";
+            return "gedurende tot 3 ml";
         }
     }
 
@@ -135,9 +186,9 @@ public class BoundsRangeTest extends AbstractFhirTest {
         } else if (locale.equals(Locale.FRENCH)) {
             return "à partir du 23 mai 2011";
         } else if (locale.equals(Locale.GERMAN)) {
-            return "ab 23.05.2011";
+            return "mindestens 3";
         } else {
-            return "van 23 mei 2011";
+            return "minstens 3";
         }
     }
 
@@ -148,9 +199,9 @@ public class BoundsRangeTest extends AbstractFhirTest {
         } else if (locale.equals(Locale.FRENCH)) {
             return "à partir du 23 mai 2011";
         } else if (locale.equals(Locale.GERMAN)) {
-            return "ab 23.05.2011";
+            return "mindestens 3 ml";
         } else {
-            return "van 23 mei 2011";
+            return "minstens 3 ml";
         }
     }
 }

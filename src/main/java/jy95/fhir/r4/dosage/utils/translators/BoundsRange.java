@@ -1,6 +1,7 @@
 package jy95.fhir.r4.dosage.utils.translators;
 
 
+import java.text.MessageFormat;
 import java.util.concurrent.CompletableFuture;
 
 import org.hl7.fhir.r4.model.Dosage;
@@ -18,7 +19,13 @@ public class BoundsRange extends AbstractTranslator {
     @Override
     public CompletableFuture<String> convert(Dosage dosage) {
         var boundsRange = dosage.getTiming().getRepeat().getBoundsRange();
-        return RangeToString.convert(this.getResources(), this.getConfig(), boundsRange);
+        var bundle = this.getResources();
+        return RangeToString
+                .convert(bundle, this.getConfig(), boundsRange)
+                .thenApplyAsync(v -> {
+                    String msg = bundle.getString("fields.boundsRange");
+                    return MessageFormat.format(msg, v);
+                });
     }
 
     @Override
