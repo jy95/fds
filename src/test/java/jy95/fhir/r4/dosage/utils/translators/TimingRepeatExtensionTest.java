@@ -33,8 +33,8 @@ public class TimingRepeatExtensionTest extends AbstractFhirTest {
     @MethodSource("localeProvider")
     void testWithExtension(Locale locale) throws ExecutionException, InterruptedException {
         Dosage dosage = new Dosage();
-        List<org.hl7.fhir.r4.model.Extension> extensions = List.of(
-                new org.hl7.fhir.r4.model.Extension(
+        List<Extension> extensions = List.of(
+                new Extension(
                         "http://hl7.org/fhir/StructureDefinition/timing-exact",
                         new BooleanType(true)
                 )
@@ -53,7 +53,7 @@ public class TimingRepeatExtensionTest extends AbstractFhirTest {
     @MethodSource("localeProvider")
     void testWithExtensionCustom(Locale locale) throws ExecutionException, InterruptedException {
         Dosage dosage = new Dosage();
-        List<org.hl7.fhir.r4.model.Extension> extensions = List.of(
+        List<Extension> extensions = List.of(
                 new Extension(
                         "http://hl7.org/fhir/StructureDefinition/timing-exact",
                         new BooleanType(true)
