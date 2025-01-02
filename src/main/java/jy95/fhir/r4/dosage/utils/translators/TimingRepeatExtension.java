@@ -15,9 +15,12 @@ public class TimingRepeatExtension extends AbstractTranslator {
 
     @Override
     public CompletableFuture<String> convert(Dosage dosage) {
-        var extensions = dosage.getTiming().getRepeat().getExtension();
-        var fct = this.getConfig().getFromExtensionsToString();
-        return fct.apply(extensions);
+        return this
+                .getConfig()
+                .getFromExtensionsToString()
+                .apply(
+                        dosage.getTiming().getRepeat().getExtension()
+                );
     }
 
     @Override

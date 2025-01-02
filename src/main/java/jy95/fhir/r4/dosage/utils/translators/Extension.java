@@ -15,9 +15,12 @@ public class Extension extends AbstractTranslator {
 
     @Override
     public CompletableFuture<String> convert(Dosage dosage) {
-        var extensions = dosage.getExtension();
-        var fct = this.getConfig().getFromExtensionsToString();
-        return fct.apply(extensions);
+        return this
+                .getConfig()
+                .getFromExtensionsToString()
+                .apply(
+                        dosage.getExtension()
+                );
     }
 
     @Override
