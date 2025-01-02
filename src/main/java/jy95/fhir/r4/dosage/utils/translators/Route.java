@@ -15,9 +15,12 @@ public class Route extends AbstractTranslator {
 
     @Override
     public CompletableFuture<String> convert(Dosage dosage) {
-        var code = dosage.getRoute();
-        var fct = this.getConfig().getFromCodeableConceptToString();
-        return fct.apply(code);
+        return this
+                .getConfig()
+                .getFromCodeableConceptToString()
+                .apply(
+                        dosage.getRoute()
+                );
     }
 
     @Override

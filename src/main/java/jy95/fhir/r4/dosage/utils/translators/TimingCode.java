@@ -15,9 +15,12 @@ public class TimingCode extends AbstractTranslator {
 
     @Override
     public CompletableFuture<String> convert(Dosage dosage) {
-        var code = dosage.getTiming().getCode();
-        var fct = this.getConfig().getFromCodeableConceptToString();
-        return fct.apply(code);
+        return this
+                .getConfig()
+                .getFromCodeableConceptToString()
+                .apply(
+                        dosage.getTiming().getCode()
+                );
     }
 
     @Override
