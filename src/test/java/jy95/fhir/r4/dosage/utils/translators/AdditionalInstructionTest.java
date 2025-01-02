@@ -35,8 +35,7 @@ public class AdditionalInstructionTest extends AbstractFhirTest {
         dosage.setAdditionalInstruction(List.of(cc1));
 
         String result = dosageUtils.asHumanReadableText(dosage).get();
-        String expectedResult = getExpectedSingleText(locale);
-        assertEquals(expectedResult, result);
+        assertEquals("Instruction 1", result);
     }
 
     @ParameterizedTest
@@ -53,11 +52,6 @@ public class AdditionalInstructionTest extends AbstractFhirTest {
         String result = dosageUtils.asHumanReadableText(dosage).get();
         String expectedResult = getExpectedMultipleText(locale);
         assertEquals(expectedResult, result);
-    }
-
-    // For the parametrized test of single form
-    private static String getExpectedSingleText(Locale locale) {
-        return "Instruction 1";
     }
 
     // For the parametrized test of multiple form
