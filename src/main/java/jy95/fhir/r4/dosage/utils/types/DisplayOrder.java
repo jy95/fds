@@ -90,11 +90,11 @@ public enum DisplayOrder {
     /**
      * Display "timing.event"
      */
-    EVENT("event"),
+    TIMING_EVENT("event"),
     /**
      * Display "timing.code"
      */
-    CODE("code"),
+    TIMING_CODE("code"),
     /**
      * Display "maxDosePerPeriod"
      */

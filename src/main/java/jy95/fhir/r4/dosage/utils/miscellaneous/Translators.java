@@ -23,7 +23,7 @@ public class Translators {
                         Map.entry(DisplayOrder.PATIENT_INSTRUCTION, new PatientInstruction(config)),
                         Map.entry(DisplayOrder.DAY_OF_WEEK, new DayOfWeek(config)),
                         Map.entry(DisplayOrder.TIME_OF_DAY, new TimeOfDay(config)),
-                        Map.entry(DisplayOrder.CODE, new TimingCode(config)),
+                        Map.entry(DisplayOrder.TIMING_CODE, new TimingCode(config)),
                         Map.entry(DisplayOrder.METHOD, new Method(config)),
                         Map.entry(DisplayOrder.ROUTE, new Route(config)),
                         Map.entry(DisplayOrder.SITE, new Site(config)),
