@@ -13,13 +13,13 @@ import jy95.fhir.r4.dosage.utils.classes.Utils;
 public class UtilsTest {
 
     @Test
-    void testContainsOnlySequentialInstructions_emptyList() {
+    void testContainsOnlySequentialInstructionsEmptyList() {
         List<Dosage> dosages = new ArrayList<>();
         assertTrue(Utils.containsOnlySequentialInstructions(dosages));
     }
 
     @Test
-    void testContainsOnlySequentialInstructions_allSequential() {
+    void testContainsOnlySequentialInstructionsAllSequential() {
         List<Dosage> dosages = List.of(
                 createDosage(1),
                 createDosage(2),
@@ -29,7 +29,7 @@ public class UtilsTest {
     }
 
     @Test
-    void testContainsOnlySequentialInstructions_nonSequential() {
+    void testContainsOnlySequentialInstructionsNonSequential() {
         List<Dosage> dosages = List.of(
                 createDosage(1),
                 createDosage(2), // Missing sequence 2
@@ -39,7 +39,7 @@ public class UtilsTest {
     }
 
     @Test
-    void testContainsOnlySequentialInstructions_withZeros() {
+    void testContainsOnlySequentialInstructionsWithZeros() {
         List<Dosage> dosages = List.of(
                 new Dosage()
         );
@@ -47,14 +47,14 @@ public class UtilsTest {
     }
 
     @Test
-    void testGroupBySequence_emptyList() {
+    void testGroupBySequenceEmptyList() {
         List<Dosage> dosages = new ArrayList<>();
         List<List<Dosage>> groups = Utils.groupBySequence(dosages);
         assertTrue(groups.isEmpty());
     }
 
     @Test
-    void testGroupBySequence_allSequential() {
+    void testGroupBySequenceAllSequential() {
         List<Dosage> dosages = List.of(
                 createDosage(1),
                 createDosage(2),
@@ -66,7 +66,7 @@ public class UtilsTest {
     }
 
     @Test
-    void testGroupBySequence_multipleSequences() {
+    void testGroupBySequenceMultipleSequences() {
         List<Dosage> dosages = List.of(
                 createDosage(1),
                 createDosage(2),
