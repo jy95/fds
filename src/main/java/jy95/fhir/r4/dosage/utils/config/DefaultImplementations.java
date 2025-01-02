@@ -62,8 +62,27 @@ public class DefaultImplementations {
 
             return extensions
                     .stream()
-                    .map(Object::toString)
-                    .collect(Collectors.joining(" "));
+                    .map(ext -> {
+
+                        StringBuilder sb = new StringBuilder();
+                        sb.append("{");
+
+                        if (ext.hasUrl()) {
+                            sb.append("\"url\":\"").append(ext.getUrl()).append("\"");
+                        }
+                        if (ext.hasUrl() && ext.hasValue()) {
+                            sb.append(",");
+                        }
+                        if (ext.hasValue()) {
+                            sb.append("\"value[x]\":\"").append(
+                                    ext.getValueAsPrimitive().getValueAsString()
+                            ).append("\"");
+                        }
+
+                        sb.append("}");
+                        return sb.toString();
+                    })
+                    .collect(Collectors.joining(", ", "[", "]"));
         });
     }
 }

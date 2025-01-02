@@ -17,6 +17,10 @@ public abstract class AbstractFhirTest {
                 .build());
     }
 
+    public static FhirDosageUtils getDosageUtilsInstance(FDUConfig config) {
+        return new FhirDosageUtils(config);
+    }
+
     public static Stream<Locale> localeProvider() {
         return Stream
                 .of(
