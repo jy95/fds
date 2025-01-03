@@ -12,7 +12,6 @@ import org.hl7.fhir.r4.model.DateTimeType;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
-import java.util.stream.Collectors;
 
 public class TimingEvent extends AbstractTranslator {
 

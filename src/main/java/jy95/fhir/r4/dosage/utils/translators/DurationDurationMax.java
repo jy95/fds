@@ -1,0 +1,102 @@
+package jy95.fhir.r4.dosage.utils.translators;
+
+import com.ibm.icu.text.MessageFormat;
+import jy95.fhir.r4.dosage.utils.classes.AbstractTranslator;
+import jy95.fhir.r4.dosage.utils.config.FDUConfig;
+import org.hl7.fhir.r4.model.Dosage;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+
+public class DurationDurationMax extends AbstractTranslator {
+
+    public DurationDurationMax(FDUConfig config) {
+        super(config);
+    }
+
+    @Override
+    public CompletableFuture<String> convert(Dosage dosage) {
+        return CompletableFuture.supplyAsync(() -> {
+
+            var repeat = dosage.getTiming().getRepeat();
+
+            var hasDuration = repeat.hasDuration();
+            var hasDurationMax = repeat.hasDurationMax();
+            var hasBoth = hasDuration && hasDurationMax;
+
+            List<String> texts = new ArrayList<>();
+
+            if (hasDuration) {
+                texts.add(turnDurationToString(dosage));
+            }
+
+            if (hasBoth) {
+                texts.add("(");
+            }
+
+            if (hasDurationMax) {
+                texts.add(turnDurationMaxToString(dosage));
+            }
+
+            if (hasBoth) {
+                texts.add(")");
+            }
+
+            return String.join(" ", texts);
+        });
+    }
+
+    @Override
+    public boolean isPresent(Dosage dosage) {
+        return dosage.hasTiming() && dosage.getTiming().hasRepeat()
+                && dosage.getTiming().getRepeat().hasDurationUnit()
+                && (dosage.getTiming().getRepeat().hasDuration() ||
+                dosage.getTiming().getRepeat().hasDurationMax());
+    }
+
+    private String turnDurationToString(Dosage dosage) {
+        var locale = this.getConfig().getLocale();
+        var bundle = this.getResources();
+
+        var repeat = dosage.getTiming().getRepeat();
+        var durationUnit = repeat.getDurationUnit().toCode();
+        var durationQuantity = repeat.getDuration();
+
+        var durationMsg = bundle.getString("fields.duration");
+        var durationText = quantityToString(durationUnit, durationQuantity);
+
+        Map<String, Object> arguments1 = Map.of(
+                "duration", durationText
+        );
+
+        return new MessageFormat(durationMsg, locale).format(arguments1);
+    }
+
+    private String turnDurationMaxToString(Dosage dosage) {
+        var locale = this.getConfig().getLocale();
+        var bundle = this.getResources();
+
+        var repeat = dosage.getTiming().getRepeat();
+        var durationUnit = repeat.getDurationUnit().toCode();
+        var durationQuantity = repeat.getDurationMax();
+
+        var durationMsg = bundle.getString("fields.durationMax");
+        var durationText = quantityToString(durationUnit, durationQuantity);
+
+        Map<String, Object> arguments1 = Map.of(
+                "duration", durationText
+        );
+
+        return new MessageFormat(durationMsg, locale).format(arguments1);
+    }
+
+    private String quantityToString(String durationUnit, BigDecimal quantity){
+        var bundle = this.getResources();
+        var commonDurationMsg = bundle.getString("withCount." + durationUnit);
+        return MessageFormat.format(commonDurationMsg, quantity);
+    }
+
+}
