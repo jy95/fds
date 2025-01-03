@@ -49,7 +49,7 @@ public class RangeToString {
             MessageFormat messageFormat = new MessageFormat(msg, config.getLocale());
 
             // Determine the condition
-            String condition = (hasLow && hasHigh) ? "0" : (hasHigh ? "1" : "2");
+            String condition = (hasLow && hasHigh) ? "0" : (hasHigh) ? "1" : (hasLow) ? "2" : "other";
 
             // Create a map for the named arguments
             Map<String, Object> arguments = Map.of(
@@ -73,7 +73,7 @@ public class RangeToString {
                 : enhancedFromFHIRQuantityUnitToString(bundle, config, range.getLow());
 
         // Determine the condition
-        String condition = (hasLow && hasHigh) ? "0" : (hasHigh ? "1" : "2");
+        String condition = (hasLow && hasHigh) ? "0" : (hasHigh) ? "1" : (hasLow) ? "2" : "other";
 
         return unitRetrieval
                 .thenApplyAsync(unitAsText -> {
