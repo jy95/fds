@@ -35,8 +35,7 @@ public class BoundsPeriod extends AbstractTranslator {
             MessageFormat messageFormat = new MessageFormat(msg, this.getConfig().getLocale());
 
             // Choose the correct condition based on the presence of start and end dates
-            String condition = hasStart && hasEnd ? "0" :
-                    (hasStart ? "1" : (hasEnd ? "2" : "other"));
+            String condition = hasStart && hasEnd ? "0" : (hasStart ? "1" : "2");
 
             // Create a map of named arguments
             Map<String, Object> arguments = Map.of(
