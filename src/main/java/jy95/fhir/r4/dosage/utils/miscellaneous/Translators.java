@@ -38,7 +38,8 @@ public class Translators {
                         Map.entry(DisplayOrder.BOUNDS_PERIOD, new BoundsPeriod(config)),
                         Map.entry(DisplayOrder.BOUNDS_RANGE, new BoundsRange(config)),
                         Map.entry(DisplayOrder.DURATION_DURATION_MAX, new DurationDurationMax(config)),
-                        Map.entry(DisplayOrder.FREQUENCY_FREQUENCY_MAX, new FrequencyFrequencyMax(config))
+                        Map.entry(DisplayOrder.FREQUENCY_FREQUENCY_MAX, new FrequencyFrequencyMax(config)),
+                        Map.entry(DisplayOrder.PERIOD_PERIOD_MAX, new PeriodPeriodMax(config))
                 )
         );
         this.bundleControl = new MultiResourceBundleControl(

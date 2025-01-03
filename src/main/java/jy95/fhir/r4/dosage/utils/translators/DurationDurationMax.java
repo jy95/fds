@@ -23,6 +23,9 @@ public class DurationDurationMax extends AbstractTranslator {
 
             var repeat = dosage.getTiming().getRepeat();
 
+            // Rule: duration SHALL be a non-negative value
+            // Rule: if there's a duration, there needs to be duration units
+            // Rule: If there's a durationMax, there must be a duration
             var hasDuration = repeat.hasDuration();
             var hasDurationMax = repeat.hasDurationMax();
             var hasBoth = hasDuration && hasDurationMax;
