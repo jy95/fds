@@ -46,7 +46,8 @@ public class Translators {
                         ),
                         Map.entry(DisplayOrder.COUNT_COUNT_MAX, new CountCountMax(config)),
                         Map.entry(DisplayOrder.DOSE_QUANTITY, new DoseQuantity(config)),
-                        Map.entry(DisplayOrder.DOSE_RANGE, new DoseRange(config))
+                        Map.entry(DisplayOrder.DOSE_RANGE, new DoseRange(config)),
+                        Map.entry(DisplayOrder.RATE_QUANTITY, new RateQuantity(config))
                 )
         );
         this.bundleControl = new MultiResourceBundleControl(

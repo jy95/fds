@@ -3,7 +3,8 @@ package jy95.fhir.r4.dosage.utils.translators;
 import jy95.fhir.r4.dosage.utils.AbstractFhirTest;
 import jy95.fhir.r4.dosage.utils.classes.FhirDosageUtils;
 import jy95.fhir.r4.dosage.utils.types.DisplayOrder;
-import org.hl7.fhir.r4.model.*;
+import org.hl7.fhir.r4.model.Dosage;
+import org.hl7.fhir.r4.model.Quantity;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
@@ -13,27 +14,26 @@ import java.util.concurrent.ExecutionException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class DoseRangeTest extends AbstractFhirTest {
+public class RateQuantityTest extends AbstractFhirTest {
 
     @ParameterizedTest
     @MethodSource("localeProvider")
-    void testNoDoseRange(Locale locale) throws ExecutionException, InterruptedException {
+    void testNoRateQuantity(Locale locale) throws ExecutionException, InterruptedException {
         Dosage dosage = new Dosage();
-        FhirDosageUtils dosageUtils = DayOfWeekTest.getDosageUtilsInstance(locale, DisplayOrder.DOSE_RANGE);
+        FhirDosageUtils dosageUtils = DayOfWeekTest.getDosageUtilsInstance(locale, DisplayOrder.RATE_QUANTITY);
         String result = dosageUtils.asHumanReadableText(dosage).get();
         assertEquals("", result);
     }
 
     @ParameterizedTest
     @MethodSource("localeProvider")
-    void testSimpleDoseRange(Locale locale) throws ExecutionException, InterruptedException {
-        FhirDosageUtils dosageUtils = DayOfWeekTest.getDosageUtilsInstance(locale, DisplayOrder.DOSE_RANGE);
+    void testSimpleRateQuantity(Locale locale) throws ExecutionException, InterruptedException {
+        FhirDosageUtils dosageUtils = DayOfWeekTest.getDosageUtilsInstance(locale, DisplayOrder.RATE_QUANTITY);
         Dosage dosage = new Dosage();
-        Range range1 = new Range();
-        range1.setLow(new Quantity(1));
-        range1.setHigh(new Quantity(3));
+        Quantity quantity1 = new Quantity(5);
+        quantity1.setUnit("ml");
         Dosage.DosageDoseAndRateComponent doseAndRateComponent1 = new Dosage.DosageDoseAndRateComponent();
-        doseAndRateComponent1.setDose(range1);
+        doseAndRateComponent1.setRate(quantity1);
         dosage.setDoseAndRate(List.of(doseAndRateComponent1));
 
         String result = dosageUtils.asHumanReadableText(dosage).get();
@@ -43,13 +43,13 @@ public class DoseRangeTest extends AbstractFhirTest {
 
     private String getExpectedText(Locale locale) {
         if (locale.equals(Locale.ENGLISH)) {
-            return "1 to 3";
+            return "at a rate of 5 ml";
         } else if (locale.equals(Locale.FRENCH)) {
-            return "1 à 3";
+            return "au taux de 5 ml";
         } else if (locale.equals(Locale.GERMAN)) {
-            return "zwischen 1 und 3";
+            return "mit einem Verhältnis von 5 ml";
         } else {
-            return "tussen 1 en 3";
+            return "met een verhouding van 5 ml";
         }
     }
 
