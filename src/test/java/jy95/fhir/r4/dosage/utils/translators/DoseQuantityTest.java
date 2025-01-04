@@ -79,6 +79,7 @@ public class DoseQuantityTest extends AbstractFhirTest {
     void testDoseQuantityCustom(Locale locale) throws ExecutionException, InterruptedException {
         FDUConfig config = FDUConfig
                 .builder()
+                .displayOrder(List.of(DisplayOrder.DOSE_QUANTITY))
                 .selectDosageAndRateField(
                         (doseAndRateComponentList, doseAndRateKey)
                                 -> doseAndRateKey.extract(doseAndRateComponentList.get(1)))
@@ -111,8 +112,8 @@ public class DoseQuantityTest extends AbstractFhirTest {
                         )
                 )
         );
-        dosage.setDoseAndRate(List.of(doseAndRateComponent1, doseAndRateComponent2));
-
+        dosage.addDoseAndRate(doseAndRateComponent1);
+        dosage.addDoseAndRate(doseAndRateComponent2);
         String result = dosageUtils.asHumanReadableText(dosage).get();
         assertEquals("8 ml", result);
     }
