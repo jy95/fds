@@ -5,9 +5,8 @@ import java.util.Objects;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.hl7.fhir.r4.model.CodeableConcept;
-import org.hl7.fhir.r4.model.Quantity;
-import org.hl7.fhir.r4.model.Extension;
+import jy95.fhir.r4.dosage.utils.types.DoseAndRateKey;
+import org.hl7.fhir.r4.model.*;
 
 public class DefaultImplementations {
 
@@ -84,5 +83,13 @@ public class DefaultImplementations {
                     })
                     .collect(Collectors.joining(", ", "[", "]"));
         });
+    }
+
+    public static Type selectDosageAndRateField(
+            List<Dosage.DosageDoseAndRateComponent> doseAndRates,
+            DoseAndRateKey extractor
+    ) {
+        // Keep it simple, use the first entry as most of the time, it is enough for everyone
+        return extractor.extract(doseAndRates.getFirst());
     }
 }

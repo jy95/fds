@@ -1,5 +1,6 @@
 package jy95.fhir.r4.dosage.utils.config;
 
+import jy95.fhir.r4.dosage.utils.types.DoseAndRateKey;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -9,10 +10,10 @@ import jy95.fhir.r4.dosage.utils.types.DisplayOrder;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Function;
+import java.util.function.BiFunction;
 
-import org.hl7.fhir.r4.model.Quantity;
-import org.hl7.fhir.r4.model.CodeableConcept;
-import org.hl7.fhir.r4.model.Extension;
+import org.hl7.fhir.r4.model.*;
+import org.hl7.fhir.r4.model.Dosage.DosageDoseAndRateComponent;
 
 // To provide a configuration with the
 @Getter
@@ -71,4 +72,12 @@ public class FDUConfig {
      * The choice to handle national extensions, ... is thus under the hands of people ;)
      */
     @Builder.Default private Function<List<Extension>, CompletableFuture<String>> fromExtensionsToString = DefaultImplementations::fromExtensionsToString;
+    /**
+     * Function to select the proper "doseAndRate" field of a given type from a list of "dosageAndRate"
+     * Because of optional type element DoseAndRateType, it is possible to have "Calculated" and "Ordered" fields
+     * Most of the time, what matter is only the first element, but in case of, this function give control
+     * on the selection strategy
+     * @see <a href="http://terminology.hl7.org/ValueSet/dose-rate-type">DoseAndRateType</a>
+     */
+    @Builder.Default private BiFunction<List<DosageDoseAndRateComponent>, DoseAndRateKey, Type> selectDosageAndRateField = DefaultImplementations::selectDosageAndRateField;
 }
