@@ -3,7 +3,7 @@ package jy95.fhir.r4.dosage.utils.functions;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class ListToString {
+public final class ListToString {
 
     public enum LinkWord {
         AND("and"), 

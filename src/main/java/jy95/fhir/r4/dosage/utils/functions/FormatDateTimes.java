@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.Locale;
 import java.util.List;
 
-public class FormatDateTimes {
+public final class FormatDateTimes {
 
     public static String convert(Locale locale, DateTimeType date){
         return DateTimeUtil.toHumanDisplay(

@@ -9,7 +9,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class QuantityToString {
+public final class QuantityToString {
     public static CompletableFuture<String> convert(ResourceBundle bundle, FDUConfig config, Quantity quantity) {
         var comparator = comparatorToString(bundle, config, quantity);
         var unit = unitToString(config, quantity);
