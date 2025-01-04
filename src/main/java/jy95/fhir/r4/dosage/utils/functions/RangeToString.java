@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
 
-public class RangeToString {
+public final class RangeToString {
 
     final static String DURATION_SYSTEM = "http://hl7.org/fhir/ValueSet/duration-units";
 

@@ -44,7 +44,12 @@ public class Translators {
                                 DisplayOrder.FREQUENCY_FREQUENCY_MAX_PERIOD_PERIOD_MAX,
                                 new FrequencyFrequencyMaxPeriodPeriodMax(config)
                         ),
-                        Map.entry(DisplayOrder.COUNT_COUNT_MAX, new CountCountMax(config))
+                        Map.entry(DisplayOrder.COUNT_COUNT_MAX, new CountCountMax(config)),
+                        Map.entry(DisplayOrder.DOSE_QUANTITY, new DoseQuantity(config)),
+                        Map.entry(DisplayOrder.DOSE_RANGE, new DoseRange(config)),
+                        Map.entry(DisplayOrder.RATE_QUANTITY, new RateQuantity(config)),
+                        Map.entry(DisplayOrder.RATE_RANGE, new RateRange(config)),
+                        Map.entry(DisplayOrder.RATE_RATIO, new RateRatio(config))
                 )
         );
         this.bundleControl = new MultiResourceBundleControl(
