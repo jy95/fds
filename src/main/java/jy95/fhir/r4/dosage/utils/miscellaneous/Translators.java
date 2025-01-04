@@ -43,7 +43,8 @@ public class Translators {
                         Map.entry(
                                 DisplayOrder.FREQUENCY_FREQUENCY_MAX_PERIOD_PERIOD_MAX,
                                 new FrequencyFrequencyMaxPeriodPeriodMax(config)
-                        )
+                        ),
+                        Map.entry(DisplayOrder.COUNT_COUNT_MAX, new CountCountMax(config))
                 )
         );
         this.bundleControl = new MultiResourceBundleControl(
