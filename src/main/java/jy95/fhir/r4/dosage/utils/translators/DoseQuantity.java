@@ -1,5 +1,6 @@
 package jy95.fhir.r4.dosage.utils.translators;
 
+import com.ibm.icu.text.MessageFormat;
 import jy95.fhir.r4.dosage.utils.classes.AbstractTranslator;
 import jy95.fhir.r4.dosage.utils.config.FDUConfig;
 import jy95.fhir.r4.dosage.utils.functions.QuantityToString;
@@ -22,7 +23,12 @@ public class DoseQuantity extends AbstractTranslator {
         var doseQuantity = getConfig()
                 .getSelectDosageAndRateField()
                 .apply(doseAndRate, DoseAndRateKey.DOSE_QUANTITY);
-        return QuantityToString.convert(bundle, getConfig(), (Quantity) doseQuantity);
+        return QuantityToString
+                .convert(bundle, getConfig(), (Quantity) doseQuantity)
+                .thenApplyAsync(quantityText -> {
+                    var doseMsg = bundle.getString("fields.doseQuantity");
+                    return new MessageFormat(doseMsg, getConfig().getLocale()).format(new Object[]{quantityText});
+                });
     }
 
     @Override
