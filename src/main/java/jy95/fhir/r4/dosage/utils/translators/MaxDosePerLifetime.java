@@ -5,7 +5,7 @@ import jy95.fhir.r4.dosage.utils.config.FDUConfig;
 import jy95.fhir.r4.dosage.utils.functions.QuantityToString;
 import org.hl7.fhir.r4.model.Dosage;
 
-import java.text.MessageFormat;
+import com.ibm.icu.text.MessageFormat;
 import java.util.concurrent.CompletableFuture;
 
 public class MaxDosePerLifetime extends AbstractTranslator {
@@ -23,7 +23,7 @@ public class MaxDosePerLifetime extends AbstractTranslator {
                 .convert(bundle, getConfig(), quantity)
                 .thenApplyAsync((quantityText) -> {
                     String msg = bundle.getString("fields.maxDosePerLifetime");
-                    return new MessageFormat(msg, getConfig().getLocale()).format(new Object[] {quantityText});
+                    return new MessageFormat(msg, getConfig().getLocale()).format(new Object[] { quantityText });
                 });
     }
 

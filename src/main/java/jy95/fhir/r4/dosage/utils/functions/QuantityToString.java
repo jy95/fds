@@ -4,7 +4,7 @@ import jy95.fhir.r4.dosage.utils.config.FDUConfig;
 import org.hl7.fhir.r4.model.Quantity;
 
 import java.math.BigDecimal;
-import java.text.MessageFormat;
+import com.ibm.icu.text.MessageFormat;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
@@ -19,7 +19,6 @@ public final class QuantityToString {
 
     public static CompletableFuture<String> convert(ResourceBundle bundle, FDUConfig config, Quantity quantity) {
         var comparator = comparatorToString(bundle, config, quantity);
-        //var unit = unitToString(config, quantity);
         var unit = hasUnit(quantity)
                 ? enhancedFromFHIRQuantityUnitToString(bundle, config, quantity)
                 : CompletableFuture.completedFuture("");
@@ -47,7 +46,7 @@ public final class QuantityToString {
                 String code = quantity.getCode();
                 BigDecimal amount = quantity.hasValue() ? quantity.getValue() : BigDecimal.ONE;
                 String message = bundle.getString("withoutCount." + code);
-                return com.ibm.icu.text.MessageFormat.format(message, amount);
+                return MessageFormat.format(message, amount);
             });
         }
 
