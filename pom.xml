@@ -7,7 +7,7 @@
 	<artifactId>dosage-support</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>FHIR Dosage Support</name>
-	<description>Turn FHIR Dosage into human readable text in your wanted language and much more</description>
+	<description>Turn FHIR Dosage into human-readable text in your wanted language and much more</description>
 
 	<licenses>
 		<license>
