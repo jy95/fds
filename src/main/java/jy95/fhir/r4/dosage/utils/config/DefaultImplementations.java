@@ -1,10 +1,13 @@
 package jy95.fhir.r4.dosage.utils.config;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
 import java.util.Objects;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import jy95.fhir.r4.dosage.utils.miscellaneous.MultiResourceBundleControl;
 import jy95.fhir.r4.dosage.utils.types.DoseAndRateKey;
 import org.hl7.fhir.r4.model.*;
 
@@ -91,5 +94,21 @@ public class DefaultImplementations {
     ) {
         // Keep it simple, use the first entry as most of the time, it is enough for everyone
         return extractor.extract(doseAndRates.getFirst());
+    }
+
+    public static ResourceBundle selectResourceBundle(Locale locale) {
+        var bundleControl = new MultiResourceBundleControl(
+                "translations",
+                "common",
+                "daysOfWeek",
+                "eventTiming",
+                "quantityComparator",
+                "unitsOfTime"
+        );
+        return ResourceBundle.getBundle(
+                bundleControl.getBaseName(),
+                locale,
+                bundleControl
+        );
     }
 }
