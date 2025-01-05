@@ -5,6 +5,7 @@ import org.hl7.fhir.r4.model.Quantity;
 
 import java.math.BigDecimal;
 import java.text.MessageFormat;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
@@ -13,6 +14,8 @@ import java.util.stream.Stream;
 public final class QuantityToString {
 
     final static String DURATION_SYSTEM = "http://hl7.org/fhir/ValueSet/duration-units";
+    final static String UNITS_OF_TIME_SYSTEM = "http://hl7.org/fhir/ValueSet/units-of-time";
+    final static List<String> TIME_SYSTEMS = List.of(DURATION_SYSTEM, UNITS_OF_TIME_SYSTEM);
 
     public static CompletableFuture<String> convert(ResourceBundle bundle, FDUConfig config, Quantity quantity) {
         var comparator = comparatorToString(bundle, config, quantity);
@@ -39,7 +42,7 @@ public final class QuantityToString {
     public static CompletableFuture<String> enhancedFromFHIRQuantityUnitToString(ResourceBundle bundle, FDUConfig config, Quantity quantity) {
 
         // duration units are built-in supported
-        if (quantity.hasSystem() && quantity.hasCode() && quantity.getSystem().equals(DURATION_SYSTEM)) {
+        if (quantity.hasSystem() && quantity.hasCode() && TIME_SYSTEMS.contains(quantity.getSystem())) {
             return CompletableFuture.supplyAsync(() -> {
                 String code = quantity.getCode();
                 BigDecimal amount = quantity.hasValue() ? quantity.getValue() : BigDecimal.ONE;
