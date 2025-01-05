@@ -8,6 +8,7 @@ import java.util.Locale;
 import java.util.List;
 import jy95.fhir.r4.dosage.utils.types.DisplayOrder;
 
+import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Function;
 import java.util.function.BiFunction;
@@ -59,17 +60,17 @@ public class FDUConfig {
     @Builder.Default private String displaySeparator = " - ";
     /**
      * Function to turn a quantity unit (e.g UCUM "ml") into a string for humans (e.g "militier")
-     * The choice to handle plural form or not is thus under the hands of people ;)
+     * The choice to handle plural form or not is thus under the hands of people
      */
     @Builder.Default private Function<Quantity, CompletableFuture<String>> fromFHIRQuantityUnitToString = DefaultImplementations::fromFHIRQuantityUnitToString;
     /**
-     * Function to turn a codeable concept (e.g SNOMED CT "311504000") into a string for humans (e.g "With or after food")
-     * The choice to handle extension, local valueset, ... is thus under the hands of people ;)
+     * Function to turn a codeable concept (e.x SNOMED CT "311504000") into a string for humans (e.g "With or after food")
+     * The choice to handle extension, local valueset, ... is thus under the hands of people
      */
     @Builder.Default private Function<CodeableConcept, CompletableFuture<String>> fromCodeableConceptToString = DefaultImplementations::fromCodeableConceptToString;
     /**
      * Function to turn extension(s) into a string for humans.
-     * The choice to handle national extensions, ... is thus under the hands of people ;)
+     * The choice to handle national extensions, ... is thus under the hands of people
      */
     @Builder.Default private Function<List<Extension>, CompletableFuture<String>> fromExtensionsToString = DefaultImplementations::fromExtensionsToString;
     /**
@@ -80,4 +81,12 @@ public class FDUConfig {
      * @see <a href="http://terminology.hl7.org/ValueSet/dose-rate-type">DoseAndRateType</a>
      */
     @Builder.Default private BiFunction<List<DosageDoseAndRateComponent>, DoseAndRateKey, Type> selectDosageAndRateField = DefaultImplementations::selectDosageAndRateField;
+    /**
+     * Function to select the ResourceBundle of a given locale.
+     * Useful in case you would like to override or support other locales that built ones.
+     * Please check the built-in implemented locales for the keys and messages format.
+     * Keep in mind that formats may change between versions, so be cautious of compatibility.
+     * Consider contributing improvements or additional locales as well.
+     */
+    @Builder.Default private Function<Locale, ResourceBundle> selectResourceBundle = DefaultImplementations::selectResourceBundle;
 }

@@ -8,13 +8,10 @@ import lombok.Getter;
 
 import java.util.EnumMap;
 import java.util.Map;
-import java.util.ResourceBundle;
 
 @Getter
 public class Translators {
     private final Map<DisplayOrder, AbstractTranslator> translatorMap;
-    private final MultiResourceBundleControl bundleControl;
-    private final ResourceBundle resources;
 
     public Translators(FDUConfig config) {
         this.translatorMap = new EnumMap<>(
@@ -56,19 +53,6 @@ public class Translators {
                         Map.entry(DisplayOrder.MAX_DOSE_PER_PERIOD, new MaxDosePerPeriod(config)),
                         Map.entry(DisplayOrder.BOUNDS_DURATION, new BoundsDuration(config))
                 )
-        );
-        this.bundleControl = new MultiResourceBundleControl(
-                "translations",
-                "common",
-                "daysOfWeek",
-                "eventTiming",
-                "quantityComparator",
-                "unitsOfTime"
-        );
-        this.resources = ResourceBundle.getBundle(
-                this.bundleControl.getBaseName(),
-                config.getLocale(),
-                this.bundleControl
         );
     }
 
