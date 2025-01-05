@@ -2,18 +2,14 @@ package jy95.fhir.r4.dosage.utils.functions;
 
 import com.ibm.icu.text.MessageFormat;
 
-import org.hl7.fhir.r4.model.Quantity;
 import org.hl7.fhir.r4.model.Range;
 import jy95.fhir.r4.dosage.utils.config.FDUConfig;
 
-import java.math.BigDecimal;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
 
 public final class RangeToString {
-
-    final static String DURATION_SYSTEM = "http://hl7.org/fhir/ValueSet/duration-units";
 
     public static CompletableFuture<String> convert(ResourceBundle bundle, FDUConfig config, Range range) {
         boolean hasUnitInRange = hasUnit(range);
@@ -26,16 +22,11 @@ public final class RangeToString {
     // See if unit (code or text) could be found in range
     private static boolean hasUnit(Range range) {
         // Check high first, more likely to be found in it
-        if (range.hasHigh() && hasUnit(range.getHigh())) {
+        if (range.hasHigh() && QuantityToString.hasUnit(range.getHigh())) {
             return true;
         }
         // Otherwise check low
-        return range.hasLow() && hasUnit(range.getLow());
-    }
-
-    // See if unit (code or text) could be found in quantity
-    private static boolean hasUnit(Quantity quantity) {
-        return quantity.hasUnit() || quantity.hasCode();
+        return range.hasLow() && QuantityToString.hasUnit(range.getLow());
     }
 
     // Convert a range without unit
@@ -69,8 +60,8 @@ public final class RangeToString {
         boolean hasHigh = range.hasHigh();
         String msg = bundle.getString("amount.range.withUnit");
         var unitRetrieval = (hasHigh)
-                ? enhancedFromFHIRQuantityUnitToString(bundle, config, range.getHigh())
-                : enhancedFromFHIRQuantityUnitToString(bundle, config, range.getLow());
+                ? QuantityToString.enhancedFromFHIRQuantityUnitToString(bundle, config, range.getHigh())
+                : QuantityToString.enhancedFromFHIRQuantityUnitToString(bundle, config, range.getLow());
 
         // Determine the condition
         String condition = (hasLow && hasHigh) ? "0" : (hasHigh) ? "1" : (hasLow) ? "2" : "other";
@@ -92,20 +83,4 @@ public final class RangeToString {
                 });
     }
 
-    // Enhanced version FromFHIRQuantityUnitToString, to deal with unitsOfTime directly
-    private static CompletableFuture<String> enhancedFromFHIRQuantityUnitToString(ResourceBundle bundle, FDUConfig config, Quantity quantity) {
-
-        // duration units are built-in supported
-        if (quantity.hasSystem() && quantity.hasCode() && quantity.getSystem().equals(DURATION_SYSTEM)) {
-            return CompletableFuture.supplyAsync(() -> {
-                String code = quantity.getCode();
-                BigDecimal amount = quantity.hasValue() ? quantity.getValue() : BigDecimal.ONE;
-                String message = bundle.getString("withoutCount." + code);
-                return MessageFormat.format(message, amount);
-            });
-        }
-
-        // Otherwise let config do the charm
-        return config.getFromFHIRQuantityUnitToString().apply(quantity);
-    }
 }
