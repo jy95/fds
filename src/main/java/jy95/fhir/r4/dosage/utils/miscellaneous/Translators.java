@@ -53,7 +53,8 @@ public class Translators {
                         Map.entry(DisplayOrder.OFFSET_WHEN, new OffsetWhen(config)),
                         Map.entry(DisplayOrder.MAX_DOSE_PER_LIFETIME, new MaxDosePerLifetime(config)),
                         Map.entry(DisplayOrder.MAX_DOSE_PER_ADMINISTRATION, new MaxDosePerAdministration(config)),
-                        Map.entry(DisplayOrder.MAX_DOSE_PER_PERIOD, new MaxDosePerPeriod(config))
+                        Map.entry(DisplayOrder.MAX_DOSE_PER_PERIOD, new MaxDosePerPeriod(config)),
+                        Map.entry(DisplayOrder.BOUNDS_DURATION, new BoundsDuration(config))
                 )
         );
         this.bundleControl = new MultiResourceBundleControl(
