@@ -1,12 +1,10 @@
 package jy95.fhir.r4.dosage.utils.functions;
 
 import jy95.fhir.r4.dosage.utils.config.FDUConfig;
-import org.hl7.fhir.r4.model.Quantity;
 import org.hl7.fhir.r4.model.Ratio;
 
 import java.math.BigDecimal;
-import java.text.MessageFormat;
-import java.util.Map;
+import com.ibm.icu.text.MessageFormat;
 import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
@@ -71,5 +69,4 @@ public final class RatioToString {
 
         return QuantityToString.convert(bundle, config, denominator);
     }
-
 }
