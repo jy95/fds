@@ -12,6 +12,8 @@ import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static jy95.fhir.r4.dosage.utils.functions.QuantityToString.hasUnit;
+
 public final class RatioToString {
     public static CompletableFuture<String> convert(ResourceBundle bundle, FDUConfig config, Ratio ratio) {
         var linkword = retrieveRatioLinkWord(bundle, config, ratio);
@@ -64,14 +66,10 @@ public final class RatioToString {
 
         // For the per case
         if (BigDecimal.ONE.equals(denominatorValue)) {
-            return config.getFromFHIRQuantityUnitToString().apply(denominator);
+            return QuantityToString.enhancedFromFHIRQuantityUnitToString(bundle, config, denominator);
         }
 
         return QuantityToString.convert(bundle, config, denominator);
     }
 
-    // See if unit (code or text) could be found in quantity
-    private static boolean hasUnit(Quantity quantity) {
-        return quantity.hasUnit() || quantity.hasCode();
-    }
 }
