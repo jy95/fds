@@ -15,8 +15,13 @@ import java.util.concurrent.CompletableFuture;
 
 public class TimingEvent extends AbstractTranslator {
 
+    // Translations
+    private final MessageFormat eventMsg;
+
     public TimingEvent(FDUConfig config) {
         super(config);
+        var msg = getResources().getString("fields.event");
+        eventMsg = new MessageFormat(msg, this.getConfig().getLocale());
     }
 
     @Override
@@ -24,14 +29,10 @@ public class TimingEvent extends AbstractTranslator {
         return CompletableFuture.supplyAsync(() -> {
 
             var bundle = this.getResources();
-            var msg = bundle.getString("fields.event");
 
             DateTimeType[] events = dosage.getTiming().getEvent().toArray(DateTimeType[]::new);
             List<String> eventsList = FormatDateTimes.convert(this.getConfig().getLocale(), events);
             String eventsAsString = ListToString.convert(bundle, eventsList);
-
-            // Use ICU MessageFormat for more flexible and locale-sensitive formatting
-            MessageFormat messageFormat = new MessageFormat(msg, this.getConfig().getLocale());
 
             // Create a map of named arguments
             Map<String, Object> arguments = Map.of(
@@ -40,7 +41,7 @@ public class TimingEvent extends AbstractTranslator {
             );
 
             // Format the message with the named arguments
-            return messageFormat.format(arguments);
+            return eventMsg.format(arguments);
         });
     }
 

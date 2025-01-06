@@ -12,8 +12,13 @@ import java.util.concurrent.CompletableFuture;
 
 public class DoseRange extends AbstractTranslator {
 
+    // Translations
+    private final MessageFormat doseRangeMsg;
+
     public DoseRange(FDUConfig config) {
         super(config);
+        var msg = getResources().getString("fields.doseRange");
+        doseRangeMsg = new MessageFormat(msg, getConfig().getLocale());
     }
 
     @Override
@@ -26,10 +31,7 @@ public class DoseRange extends AbstractTranslator {
 
         return RangeToString
                 .convert(bundle, getConfig(), (Range) doseRange)
-                .thenApplyAsync(rangeText -> {
-                    var rangeMsg = bundle.getString("fields.doseRange");
-                    return new MessageFormat(rangeMsg, getConfig().getLocale()).format(new Object[]{rangeText});
-                });
+                .thenApplyAsync(rangeText -> doseRangeMsg.format(new Object[]{rangeText}));
     }
 
     @Override

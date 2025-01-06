@@ -10,8 +10,13 @@ import java.util.concurrent.CompletableFuture;
 
 public class MaxDosePerPeriod extends AbstractTranslator {
 
+    // Translations
+    private final MessageFormat maxDosePerPeriodMsg;
+
     public MaxDosePerPeriod(FDUConfig config) {
         super(config);
+        String msg = getResources().getString("fields.maxDosePerPeriod");
+        maxDosePerPeriodMsg = new MessageFormat(msg, getConfig().getLocale());
     }
 
     @Override
@@ -21,10 +26,7 @@ public class MaxDosePerPeriod extends AbstractTranslator {
 
         return RatioToString
                 .convert(bundle, getConfig(), ratio)
-                .thenApplyAsync((ratioText) -> {
-                    String msg = bundle.getString("fields.maxDosePerPeriod");
-                    return new MessageFormat(msg, getConfig().getLocale()).format(new Object[] { ratioText });
-                });
+                .thenApplyAsync((ratioText) -> maxDosePerPeriodMsg.format(new Object[] { ratioText }));
     }
 
     @Override

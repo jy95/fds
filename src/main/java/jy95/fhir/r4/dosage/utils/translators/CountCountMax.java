@@ -10,8 +10,18 @@ import java.util.concurrent.CompletableFuture;
 
 public class CountCountMax extends AbstractTranslator {
 
+    // Translations
+    private final MessageFormat countMaxMsg;
+    private final MessageFormat countMsg;
+
     public CountCountMax(FDUConfig config) {
         super(config);
+        var bundle = this.getResources();
+        var locale = this.getConfig().getLocale();
+        var msg1 = bundle.getString("fields.countMax");
+        var msg2 = bundle.getString("fields.count");
+        countMaxMsg = new MessageFormat(msg1, locale);
+        countMsg = new MessageFormat(msg2, locale);
     }
 
     @Override
@@ -36,30 +46,24 @@ public class CountCountMax extends AbstractTranslator {
     }
 
     private String turnCountAndCountMaxToText(Dosage dosage) {
-        var locale = this.getConfig().getLocale();
-        var bundle = this.getResources();
 
         var repeat = dosage.getTiming().getRepeat();
         var countMin = repeat.getCount();
         var countMax = repeat.getCountMax();
 
-        var countMsg = bundle.getString("fields.countMax");
         Map<String, Object> arguments = Map.of(
                 "minCount", countMin,
                 "maxCount", countMax
         );
 
-        return new MessageFormat(countMsg, locale).format(arguments);
+        return countMaxMsg.format(arguments);
     }
 
     private String turnCountToText(Dosage dosage) {
-        var locale = this.getConfig().getLocale();
-        var bundle = this.getResources();
 
         var repeat = dosage.getTiming().getRepeat();
         var count = repeat.getCount();
 
-        var countMsg = bundle.getString("fields.count");
-        return new MessageFormat(countMsg, locale).format(new Object[]{count});
+        return countMsg.format(new Object[]{count});
     }
 }

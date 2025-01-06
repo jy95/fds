@@ -10,8 +10,13 @@ import java.util.concurrent.CompletableFuture;
 
 public class MaxDosePerLifetime extends AbstractTranslator {
 
+    // Translations
+    private final MessageFormat maxDosePerLifetimeMsg;
+
     public MaxDosePerLifetime(FDUConfig config) {
         super(config);
+        String msg = getResources().getString("fields.maxDosePerLifetime");
+        maxDosePerLifetimeMsg = new MessageFormat(msg, getConfig().getLocale());
     }
 
     @Override
@@ -21,10 +26,7 @@ public class MaxDosePerLifetime extends AbstractTranslator {
 
         return QuantityToString
                 .convert(bundle, getConfig(), quantity)
-                .thenApplyAsync((quantityText) -> {
-                    String msg = bundle.getString("fields.maxDosePerLifetime");
-                    return new MessageFormat(msg, getConfig().getLocale()).format(new Object[] { quantityText });
-                });
+                .thenApplyAsync((quantityText) -> maxDosePerLifetimeMsg.format(new Object[] { quantityText }));
     }
 
     @Override

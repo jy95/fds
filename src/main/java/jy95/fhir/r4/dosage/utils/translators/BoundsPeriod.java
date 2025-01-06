@@ -12,8 +12,13 @@ import jy95.fhir.r4.dosage.utils.config.FDUConfig;
 
 public class BoundsPeriod extends AbstractTranslator {
 
+    // Translations
+    private final MessageFormat boundsPeriodMsg;
+
     public BoundsPeriod(FDUConfig config) {
         super(config);
+        var msg = getResources().getString("fields.boundsPeriod");
+        boundsPeriodMsg = new MessageFormat(msg, this.getConfig().getLocale());
     }
 
     @Override
@@ -23,16 +28,11 @@ public class BoundsPeriod extends AbstractTranslator {
             var boundPeriods = dosage.getTiming().getRepeat().getBoundsPeriod();
             var hasStart = boundPeriods.hasStart();
             var hasEnd = boundPeriods.hasEnd();
-            var bundle = this.getResources();
             var locale = this.getConfig().getLocale();
-            var msg = bundle.getString("fields.boundsPeriod");
 
             // Prepare date values using FormatDateTimes.convert()
             String startDate = hasStart ? FormatDateTimes.convert(locale, boundPeriods.getStartElement()) : "";
             String endDate = hasEnd ? FormatDateTimes.convert(locale, boundPeriods.getEndElement()) : "";
-
-            // Use ICU MessageFormat for more flexible and locale-sensitive formatting
-            MessageFormat messageFormat = new MessageFormat(msg, this.getConfig().getLocale());
 
             // Choose the correct condition based on the presence of start and end dates
             String condition = hasStart && hasEnd ? "0" : (hasStart ? "1" : "other");
@@ -45,7 +45,7 @@ public class BoundsPeriod extends AbstractTranslator {
             );
 
             // Format the message with the named arguments
-            return messageFormat.format(arguments);
+            return boundsPeriodMsg.format(arguments);
         });
     }
 
