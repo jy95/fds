@@ -78,7 +78,6 @@ public class PeriodPeriodMax extends AbstractTranslator {
         var unitText = MessageFormat.format(unitMsg, period);
 
         Map<String, Object> arguments = Map.of(
-                "periodCondition", period,
                 "period", period,
                 "periodUnit",unitText
         );

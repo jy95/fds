@@ -45,7 +45,6 @@ public class CountCountMax extends AbstractTranslator {
 
         var countMsg = bundle.getString("fields.countMax");
         Map<String, Object> arguments = Map.of(
-                "countCondition", countMax,
                 "minCount", countMin,
                 "maxCount", countMax
         );
@@ -61,11 +60,6 @@ public class CountCountMax extends AbstractTranslator {
         var count = repeat.getCount();
 
         var countMsg = bundle.getString("fields.count");
-        Map<String, Object> arguments = Map.of(
-                "countCondition", count,
-                "count", count
-        );
-
-        return new MessageFormat(countMsg, locale).format(arguments);
+        return new MessageFormat(countMsg, locale).format(new Object[]{count});
     }
 }

@@ -53,8 +53,7 @@ public class FrequencyFrequencyMax extends AbstractTranslator {
         var frequencyMsg = bundle.getString("fields.frequencyAndFrequencyMax");
         Map<String, Object> arguments1 = Map.of(
                 "frequency", frequencyMin,
-                "maxFrequency", frequencyMax,
-                "frequencyCondition", frequencyMax
+                "maxFrequency", frequencyMax
         );
 
         return new MessageFormat(frequencyMsg, locale).format(arguments1);
@@ -68,12 +67,7 @@ public class FrequencyFrequencyMax extends AbstractTranslator {
         var frequencyMax = repeat.getFrequencyMax();
 
         var frequencyMsg = bundle.getString("fields.frequencyMax");
-        Map<String, Object> arguments1 = Map.of(
-                "frequency", frequencyMax,
-                "frequencyCondition", frequencyMax
-        );
-
-        return new MessageFormat(frequencyMsg, locale).format(arguments1);
+        return new MessageFormat(frequencyMsg, locale).format(new Object[]{frequencyMax});
     }
 
     private String turnFrequencyToString(Dosage dosage) {
@@ -84,11 +78,6 @@ public class FrequencyFrequencyMax extends AbstractTranslator {
         var frequency = repeat.getFrequency();
 
         var frequencyMsg = bundle.getString("fields.frequency");
-        Map<String, Object> arguments1 = Map.of(
-                "frequency", frequency,
-                "frequencyCondition", frequency
-        );
-
-        return new MessageFormat(frequencyMsg, locale).format(arguments1);
+        return new MessageFormat(frequencyMsg, locale).format(new Object[]{frequency});
     }
 }
