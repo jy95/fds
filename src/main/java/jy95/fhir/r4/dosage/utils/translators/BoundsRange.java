@@ -2,7 +2,6 @@ package jy95.fhir.r4.dosage.utils.translators;
 
 import com.ibm.icu.text.MessageFormat;
 
-import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 import org.hl7.fhir.r4.model.Dosage;
@@ -27,10 +26,7 @@ public class BoundsRange extends AbstractTranslator {
 
         return RangeToString
                 .convert(bundle, this.getConfig(), boundsRange)
-                .thenApplyAsync(v -> {
-                    Map<String, Object> arguments = Map.of("range", v);
-                    return messageFormat.format(arguments);
-                });
+                .thenApplyAsync(v -> messageFormat.format(new Object[]{v}));
     }
 
     @Override

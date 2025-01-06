@@ -2,7 +2,6 @@ package jy95.fhir.r4.dosage.utils.translators;
 
 import com.ibm.icu.text.MessageFormat;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 import jy95.fhir.r4.dosage.utils.functions.ListToString;
@@ -33,9 +32,7 @@ public class AsNeeded extends AbstractTranslator {
                     .thenApplyAsync(v -> ListToString.convert(bundle, List.of(v)))
                     .thenApplyAsync(v -> {
                         MessageFormat messageFormat = new MessageFormat(msg, this.getConfig().getLocale());
-                        // Create a map of named arguments
-                        Map<String, Object> arguments = Map.of("reason", v);
-                        return messageFormat.format(arguments);
+                        return messageFormat.format(new Object[]{v});
                     });
         }
 

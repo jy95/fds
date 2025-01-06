@@ -8,7 +8,6 @@ import org.hl7.fhir.r4.model.Dosage;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 public class DurationDurationMax extends AbstractTranslator {
@@ -70,12 +69,7 @@ public class DurationDurationMax extends AbstractTranslator {
 
         var durationMsg = bundle.getString("fields.duration");
         var durationText = quantityToString(durationUnit, durationQuantity);
-
-        Map<String, Object> arguments1 = Map.of(
-                "duration", durationText
-        );
-
-        return new MessageFormat(durationMsg, locale).format(arguments1);
+        return new MessageFormat(durationMsg, locale).format(new Object[]{durationText});
     }
 
     private String turnDurationMaxToString(Dosage dosage) {
@@ -88,12 +82,7 @@ public class DurationDurationMax extends AbstractTranslator {
 
         var durationMsg = bundle.getString("fields.durationMax");
         var durationText = quantityToString(durationUnit, durationQuantity);
-
-        Map<String, Object> arguments1 = Map.of(
-                "duration", durationText
-        );
-
-        return new MessageFormat(durationMsg, locale).format(arguments1);
+        return new MessageFormat(durationMsg, locale).format(new Object[]{durationText});
     }
 
     private String quantityToString(String durationUnit, BigDecimal quantity){
