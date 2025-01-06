@@ -10,8 +10,13 @@ import java.util.concurrent.CompletableFuture;
 
 public class MaxDosePerAdministration extends AbstractTranslator {
 
+    // Translations
+    private final MessageFormat maxDosePerAdministrationMsg;
+
     public MaxDosePerAdministration(FDUConfig config) {
         super(config);
+        String msg = getResources().getString("fields.maxDosePerAdministration");
+        maxDosePerAdministrationMsg = new MessageFormat(msg, getConfig().getLocale());
     }
 
     @Override
@@ -21,10 +26,9 @@ public class MaxDosePerAdministration extends AbstractTranslator {
 
         return QuantityToString
                 .convert(bundle, getConfig(), quantity)
-                .thenApplyAsync((quantityText) -> {
-                    String msg = bundle.getString("fields.maxDosePerAdministration");
-                    return new MessageFormat(msg, getConfig().getLocale()).format(new Object[] { quantityText });
-                });
+                .thenApplyAsync(
+                        (quantityText) -> maxDosePerAdministrationMsg.format(new Object[] { quantityText })
+                );
     }
 
     @Override

@@ -12,8 +12,13 @@ import jy95.fhir.r4.dosage.utils.config.FDUConfig;
 
 public class DayOfWeek extends AbstractTranslator {
 
+    // Translations
+    private final MessageFormat dayOfWeekMsg;
+
     public DayOfWeek(FDUConfig config){
         super(config);
+        var msg = getResources().getString("fields.dayOfWeek");
+        dayOfWeekMsg = new MessageFormat(msg, getConfig().getLocale());
     }
 
     @Override
@@ -39,7 +44,6 @@ public class DayOfWeek extends AbstractTranslator {
                     .toList();
 
             var dayOfWeeksAsString = ListToString.convert(bundle, dayOfWeeksCodes);
-            var msg = bundle.getString("fields.dayOfWeek");
 
             Map<String, Object> messageArguments = Map.of(
                     "dayCondition", dayOfWeeks.size(),
@@ -47,8 +51,7 @@ public class DayOfWeek extends AbstractTranslator {
             );
 
             // Use ICU MessageFormat for plural and select formatting
-            MessageFormat messageFormat = new MessageFormat(msg, this.getConfig().getLocale());
-            return messageFormat.format(messageArguments);
+            return dayOfWeekMsg.format(messageArguments);
         });
     }
 

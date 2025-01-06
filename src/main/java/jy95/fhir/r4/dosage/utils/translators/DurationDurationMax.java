@@ -12,8 +12,18 @@ import java.util.concurrent.CompletableFuture;
 
 public class DurationDurationMax extends AbstractTranslator {
 
+    // Translations
+    private final MessageFormat durationMsg;
+    private final MessageFormat durationMaxMsg;
+
     public DurationDurationMax(FDUConfig config) {
         super(config);
+        var locale = this.getConfig().getLocale();
+        var bundle = this.getResources();
+        var msg1 = bundle.getString("fields.duration");
+        var msg2 = bundle.getString("fields.durationMax");
+        durationMsg = new MessageFormat(msg1, locale);
+        durationMaxMsg = new MessageFormat(msg2, locale);
     }
 
     @Override
@@ -60,29 +70,23 @@ public class DurationDurationMax extends AbstractTranslator {
     }
 
     private String turnDurationToString(Dosage dosage) {
-        var locale = this.getConfig().getLocale();
-        var bundle = this.getResources();
 
         var repeat = dosage.getTiming().getRepeat();
         var durationUnit = repeat.getDurationUnit().toCode();
         var durationQuantity = repeat.getDuration();
 
-        var durationMsg = bundle.getString("fields.duration");
         var durationText = quantityToString(durationUnit, durationQuantity);
-        return new MessageFormat(durationMsg, locale).format(new Object[]{durationText});
+        return durationMsg.format(new Object[]{durationText});
     }
 
     private String turnDurationMaxToString(Dosage dosage) {
-        var locale = this.getConfig().getLocale();
-        var bundle = this.getResources();
 
         var repeat = dosage.getTiming().getRepeat();
         var durationUnit = repeat.getDurationUnit().toCode();
         var durationQuantity = repeat.getDurationMax();
 
-        var durationMsg = bundle.getString("fields.durationMax");
         var durationText = quantityToString(durationUnit, durationQuantity);
-        return new MessageFormat(durationMsg, locale).format(new Object[]{durationText});
+        return durationMaxMsg.format(new Object[]{durationText});
     }
 
     private String quantityToString(String durationUnit, BigDecimal quantity){

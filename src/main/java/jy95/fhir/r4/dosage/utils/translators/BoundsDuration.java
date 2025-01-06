@@ -10,8 +10,13 @@ import com.ibm.icu.text.MessageFormat;
 
 public class BoundsDuration extends AbstractTranslator {
 
+    // Translations
+    private final MessageFormat boundsDurationMsg;
+
     public BoundsDuration(FDUConfig config) {
         super(config);
+        String msg = getResources().getString("fields.boundsDuration");
+        boundsDurationMsg = new MessageFormat(msg, getConfig().getLocale());
     }
 
     @Override
@@ -20,10 +25,7 @@ public class BoundsDuration extends AbstractTranslator {
         var boundsDuration = dosage.getTiming().getRepeat().getBoundsDuration();
         return QuantityToString
                 .convert(bundle, getConfig(), boundsDuration)
-                .thenApplyAsync((durationText) -> {
-                    String msg = bundle.getString("fields.boundsDuration");
-                    return new MessageFormat(msg, getConfig().getLocale()).format(new Object[]{durationText});
-                });
+                .thenApplyAsync((durationText) -> boundsDurationMsg.format(new Object[]{durationText}));
     }
 
     @Override

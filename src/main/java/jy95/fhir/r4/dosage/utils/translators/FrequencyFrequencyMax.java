@@ -10,8 +10,21 @@ import java.util.concurrent.CompletableFuture;
 
 public class FrequencyFrequencyMax extends AbstractTranslator {
 
+    // Translations
+    private final MessageFormat frequencyAndFrequencyMaxMsg;
+    private final MessageFormat frequencyMaxMsg;
+    private final MessageFormat frequencyMsg;
+
     public FrequencyFrequencyMax(FDUConfig config) {
         super(config);
+        var locale = this.getConfig().getLocale();
+        var bundle = this.getResources();
+        var msg1 = bundle.getString("fields.frequencyAndFrequencyMax");
+        var msg2 = bundle.getString("fields.frequencyMax");
+        var msg3 = bundle.getString("fields.frequency");
+        frequencyAndFrequencyMaxMsg = new MessageFormat(msg1, locale);
+        frequencyMaxMsg = new MessageFormat(msg2, locale);
+        frequencyMsg = new MessageFormat(msg3, locale);
     }
 
     @Override
@@ -43,41 +56,32 @@ public class FrequencyFrequencyMax extends AbstractTranslator {
     }
 
     private String turnFrequencyAndFrequencyMaxToString(Dosage dosage) {
-        var locale = this.getConfig().getLocale();
-        var bundle = this.getResources();
 
         var repeat = dosage.getTiming().getRepeat();
         var frequencyMin = repeat.getFrequency();
         var frequencyMax = repeat.getFrequencyMax();
 
-        var frequencyMsg = bundle.getString("fields.frequencyAndFrequencyMax");
         Map<String, Object> arguments1 = Map.of(
                 "frequency", frequencyMin,
                 "maxFrequency", frequencyMax
         );
 
-        return new MessageFormat(frequencyMsg, locale).format(arguments1);
+        return frequencyAndFrequencyMaxMsg.format(arguments1);
     }
 
     private String turnFrequencyMaxToString(Dosage dosage) {
-        var locale = this.getConfig().getLocale();
-        var bundle = this.getResources();
 
         var repeat = dosage.getTiming().getRepeat();
         var frequencyMax = repeat.getFrequencyMax();
 
-        var frequencyMsg = bundle.getString("fields.frequencyMax");
-        return new MessageFormat(frequencyMsg, locale).format(new Object[]{frequencyMax});
+        return frequencyMaxMsg.format(new Object[]{frequencyMax});
     }
 
     private String turnFrequencyToString(Dosage dosage) {
-        var locale = this.getConfig().getLocale();
-        var bundle = this.getResources();
 
         var repeat = dosage.getTiming().getRepeat();
         var frequency = repeat.getFrequency();
 
-        var frequencyMsg = bundle.getString("fields.frequency");
-        return new MessageFormat(frequencyMsg, locale).format(new Object[]{frequency});
+        return frequencyMsg.format(new Object[]{frequency});
     }
 }

@@ -12,8 +12,13 @@ import java.util.concurrent.CompletableFuture;
 
 public class RateQuantity extends AbstractTranslator {
 
+    // Translations
+    private final MessageFormat rateQuantityMsg;
+
     public RateQuantity(FDUConfig config) {
         super(config);
+        var doseMsg = getResources().getString("fields.rateQuantity");
+        rateQuantityMsg = new MessageFormat(doseMsg, getConfig().getLocale());
     }
 
     @Override
@@ -25,10 +30,7 @@ public class RateQuantity extends AbstractTranslator {
                 .apply(doseAndRate, DoseAndRateKey.RATE_QUANTITY);
         return QuantityToString
                 .convert(bundle, getConfig(), (Quantity) rateQuantity)
-                .thenApplyAsync(rateQuantityText -> {
-                    var doseMsg = bundle.getString("fields.rateQuantity");
-                    return new MessageFormat(doseMsg, getConfig().getLocale()).format(new Object[]{rateQuantityText});
-                });
+                .thenApplyAsync(rateQuantityText -> rateQuantityMsg.format(new Object[]{rateQuantityText}));
     }
 
     @Override

@@ -10,8 +10,18 @@ import java.util.concurrent.CompletableFuture;
 
 public class PeriodPeriodMax extends AbstractTranslator {
 
+    // Translations
+    private final MessageFormat periodMaxMsg;
+    private final MessageFormat periodMsg;
+
     public PeriodPeriodMax(FDUConfig config) {
         super(config);
+        var locale = this.getConfig().getLocale();
+        var bundle = this.getResources();
+        var msg1 = bundle.getString("fields.periodMax");
+        var msg2 = bundle.getString("fields.period");
+        periodMaxMsg = new MessageFormat(msg1, locale);
+        periodMsg = new MessageFormat(msg2, locale);
     }
 
     @Override
@@ -44,7 +54,6 @@ public class PeriodPeriodMax extends AbstractTranslator {
     }
 
     private String turnPeriodAndPeriodMaxToString(Dosage dosage) {
-        var locale = this.getConfig().getLocale();
         var bundle = this.getResources();
 
         var repeat = dosage.getTiming().getRepeat();
@@ -52,7 +61,6 @@ public class PeriodPeriodMax extends AbstractTranslator {
         var periodMin = repeat.getPeriod();
         var periodUnit = repeat.getPeriodUnit().toCode();
 
-        var durationMsg = bundle.getString("fields.periodMax");
         var unitMsg = bundle.getString("withoutCount." + periodUnit);
         var unitText = MessageFormat.format(unitMsg, periodMax);
 
@@ -62,18 +70,16 @@ public class PeriodPeriodMax extends AbstractTranslator {
                 "unit",unitText
         );
 
-        return new MessageFormat(durationMsg, locale).format(arguments);
+        return periodMaxMsg.format(arguments);
     }
 
     private String turnPeriodToString(Dosage dosage) {
-        var locale = this.getConfig().getLocale();
         var bundle = this.getResources();
 
         var repeat = dosage.getTiming().getRepeat();
         var period = repeat.getPeriod();
         var periodUnit = repeat.getPeriodUnit().toCode();
 
-        var durationMsg = bundle.getString("fields.period");
         var unitMsg = bundle.getString("withoutCount." + periodUnit);
         var unitText = MessageFormat.format(unitMsg, period);
 
@@ -82,7 +88,7 @@ public class PeriodPeriodMax extends AbstractTranslator {
                 "periodUnit",unitText
         );
 
-        return new MessageFormat(durationMsg, locale).format(arguments);
+        return periodMsg.format(arguments);
 
     }
 }

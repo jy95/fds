@@ -11,8 +11,16 @@ import jy95.fhir.r4.dosage.utils.config.FDUConfig;
 
 public class AsNeeded extends AbstractTranslator {
 
+    // Translations
+    private final MessageFormat asNeededForMsg;
+    private final String asNeededMsg;
+
     public AsNeeded(FDUConfig config) {
         super(config);
+        var bundle = getResources();
+        var msg = bundle.getString("fields.asNeededFor");
+        asNeededForMsg = new MessageFormat(msg, this.getConfig().getLocale());
+        asNeededMsg = bundle.getString("fields.asNeeded");
     }
 
     @Override
@@ -22,7 +30,6 @@ public class AsNeeded extends AbstractTranslator {
         // Complex case - "as-need" for ...
         if (dosage.hasAsNeededCodeableConcept()) {
             var code = dosage.getAsNeededCodeableConcept();
-            var msg = bundle.getString("fields.asNeededFor");
             var codeAsText = this
                     .getConfig()
                     .getFromCodeableConceptToString()
@@ -30,14 +37,11 @@ public class AsNeeded extends AbstractTranslator {
 
             return codeAsText
                     .thenApplyAsync(v -> ListToString.convert(bundle, List.of(v)))
-                    .thenApplyAsync(v -> {
-                        MessageFormat messageFormat = new MessageFormat(msg, this.getConfig().getLocale());
-                        return messageFormat.format(new Object[]{v});
-                    });
+                    .thenApplyAsync(v -> asNeededForMsg.format(new Object[]{v}));
         }
 
         // Simple case - only "as-needed"
-        return CompletableFuture.supplyAsync(() -> bundle.getString("fields.asNeeded"));
+        return CompletableFuture.supplyAsync(() -> asNeededMsg);
     }
 
     @Override

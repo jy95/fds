@@ -14,8 +14,13 @@ import jy95.fhir.r4.dosage.utils.classes.AbstractTranslator;
 
 public class TimeOfDay extends AbstractTranslator {
 
+    // Translations
+    private final MessageFormat timeOfDayMsg;
+
     public TimeOfDay(FDUConfig config){
         super(config);
+        var msg  = getResources().getString("fields.timeOfDay");
+        timeOfDayMsg = new MessageFormat(msg, this.getConfig().getLocale());
     }
 
     @Override
@@ -28,15 +33,13 @@ public class TimeOfDay extends AbstractTranslator {
                     .toList();
 
             var timeOfDaysAsString = ListToString.convert(bundle, timeOfDays);
-            var message = bundle.getString("fields.timeOfDay");
 
-            MessageFormat messageFormat = new MessageFormat(message, this.getConfig().getLocale());
             Map<String, Object> messageArguments = Map.of(
                     "timeOfDay", timeOfDaysAsString,
                     "count", timeOfDays.size()
             );
 
-            return messageFormat.format(messageArguments);
+            return timeOfDayMsg.format(messageArguments);
         });
     }
 

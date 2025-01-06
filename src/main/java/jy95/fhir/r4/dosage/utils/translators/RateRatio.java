@@ -12,8 +12,13 @@ import java.util.concurrent.CompletableFuture;
 
 public class RateRatio extends AbstractTranslator {
 
+    // Translations
+    private final MessageFormat rateRatioMsg;
+
     public RateRatio(FDUConfig config) {
         super(config);
+        var msg = getResources().getString("fields.rateRatio");
+        rateRatioMsg = new MessageFormat(msg, getConfig().getLocale());
     }
 
     @Override
@@ -26,10 +31,7 @@ public class RateRatio extends AbstractTranslator {
 
         return RatioToString
                 .convert(bundle, getConfig(), (Ratio) rateRatio)
-                .thenApplyAsync(rateRatioText -> {
-                    var doseRateMsg = bundle.getString("fields.rateRatio");
-                    return new MessageFormat(doseRateMsg, getConfig().getLocale()).format(new Object[]{rateRatioText});
-                });
+                .thenApplyAsync(rateRatioText -> rateRatioMsg.format(new Object[]{rateRatioText}));
     }
 
     @Override
