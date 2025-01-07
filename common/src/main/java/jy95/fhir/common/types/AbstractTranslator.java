@@ -7,21 +7,21 @@ import java.util.concurrent.CompletableFuture;
 import jy95.fhir.common.config.FDSConfig;
 
 @Getter
-public abstract class AbstractTranslator<T> {
+public abstract class AbstractTranslator<C extends FDSConfig, D> {
 
-    private final FDSConfig config;
+    private final C config;
     private final ResourceBundle resources;
 
-    public AbstractTranslator(FDSConfig config) {
+    public AbstractTranslator(C config) {
         this.config = config;
         this.resources = config.getSelectResourceBundle().apply(config.getLocale());
     }
 
     // To turn a dosage field into a human-representation
-    public abstract CompletableFuture<String> convert(T dosage);
+    public abstract CompletableFuture<String> convert(D dosage);
 
     // To see if a dosage field is present and thus being turned to String
-    public boolean isPresent(T dosage) {
+    public boolean isPresent(D dosage) {
         return false;
     }
 }
