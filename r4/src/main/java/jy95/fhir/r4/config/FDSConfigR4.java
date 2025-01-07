@@ -17,7 +17,7 @@ import org.hl7.fhir.r4.model.Dosage.DosageDoseAndRateComponent;
 @Getter
 @SuperBuilder
 public class FDSConfigR4 extends FDSConfig {
-        /**
+    /**
      * Function to turn a quantity unit (e.g UCUM "ml") into a string for humans (e.g "militier")
      * The choice to handle plural form or not is thus under the hands of people
      */

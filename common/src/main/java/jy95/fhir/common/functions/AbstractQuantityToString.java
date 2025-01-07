@@ -1,6 +1,7 @@
 package jy95.fhir.common.functions;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
@@ -9,6 +10,10 @@ import java.util.stream.Stream;
 import jy95.fhir.common.config.FDSConfig;
 
 public abstract class AbstractQuantityToString<C extends FDSConfig, Q> {
+
+    final protected String DURATION_SYSTEM = "http://hl7.org/fhir/ValueSet/duration-units";
+    final protected String UNITS_OF_TIME_SYSTEM = "http://hl7.org/fhir/ValueSet/units-of-time";
+    final protected List<String> TIME_SYSTEMS = List.of(DURATION_SYSTEM, UNITS_OF_TIME_SYSTEM);
 
     /**
      * Converts a quantity object to a human-readable string asynchronously.
