@@ -14,5 +14,12 @@
             <artifactId>hapi-fhir-structures-r4</artifactId>
             <version>${hapi.fhir.version}</version>
         </dependency>
+
+        <!-- Add the common module dependency -->
+        <dependency>
+            <groupId>jy95.fhir</groupId>
+            <artifactId>common</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
 </project>
