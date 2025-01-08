@@ -1,4 +1,4 @@
-package jy95.fhir.r4.dosage.utils.translators;
+package jy95.fhir.r4.translators;
 
 import jy95.fhir.r4.dosage.utils.AbstractFhirTest;
 import jy95.fhir.r4.dosage.utils.classes.FhirDosageUtils;

@@ -1,4 +1,4 @@
-package jy95.fhir.r4.dosage.utils;
+package jy95.fhir.r4;
 
 import jy95.fhir.r4.dosage.utils.classes.FhirDosageUtils;
 import jy95.fhir.r4.dosage.utils.config.FDUConfig;

@@ -1,4 +1,4 @@
-package jy95.fhir.r4.dosage.utils.methods;
+package jy95.fhir.r4.methods;
 
 import jy95.fhir.r4.dosage.utils.AbstractFhirTest;
 import jy95.fhir.r4.dosage.utils.classes.FhirDosageUtils;

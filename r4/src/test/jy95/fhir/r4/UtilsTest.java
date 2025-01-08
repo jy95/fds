@@ -1,4 +1,4 @@
-package jy95.fhir.r4.dosage.utils;
+package jy95.fhir.r4;
 
 import org.hl7.fhir.r4.model.Dosage;
 
