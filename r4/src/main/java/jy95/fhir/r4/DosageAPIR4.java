@@ -35,9 +35,8 @@ public class DosageAPIR4 extends DosageAPI<FDSConfigR4, Dosage> {
     }
 
     @Override
-    protected CompletableFuture<String> convertConcurrentDosagesToText(List<Dosage> dosages) {
-        var groupedDosages = SequenceUtils.groupBySequence(dosages, Dosage::getSequence);
-        return convertGroupedDosagesToText(groupedDosages);
+    protected List<List<Dosage>> groupBySequence(List<Dosage> dosages) {
+        return SequenceUtils.groupBySequence(dosages, Dosage::getSequence);
     }
 
 }

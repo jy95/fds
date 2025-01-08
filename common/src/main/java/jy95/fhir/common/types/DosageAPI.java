@@ -57,7 +57,7 @@ public abstract class DosageAPI<C extends FDSConfig, D> {
         if (containsOnlySequentialInstructions(dosages)) {
             return convertSequentialDosagesToText(dosages);
         }
-        return convertConcurrentDosagesToText(dosages);
+        return convertGroupedDosagesToText(dosages);
     }
 
     protected CompletableFuture<String> convertSequentialDosagesToText(List<D> dosages) {
@@ -81,9 +81,31 @@ public abstract class DosageAPI<C extends FDSConfig, D> {
                 });
     }
 
-    protected abstract CompletableFuture<String> convertConcurrentDosagesToText(List<D> dosages);
+    protected CompletableFuture<String> convertGroupedDosagesToText(List<D> dosages){
+        var sortedDosages = groupBySequence(dosages);
 
-    protected CompletableFuture<String> convertGroupedDosagesToText(List<List<D>> dosages) {
+        var sequentialInstructionsFutures = sortedDosages
+                .stream()
+                .map(this::convertConcurrentDosagesToText)
+                .toList();
+
+        return CompletableFuture
+                .allOf(sequentialInstructionsFutures.toArray(CompletableFuture[]::new))
+                .thenApplyAsync(v -> {
+
+                    // Extract results from completed futures
+                    List<String> dosagesAsText = sequentialInstructionsFutures
+                            .stream()
+                            .map(s -> s.getNow(""))
+                            .toList();
+
+                    // Use ListToString.convert with the translators' resources
+                    var bundle = this.getResources();
+                    return ListToString.convert(bundle, dosagesAsText, ListToString.LinkWord.THEN);
+                });
+    }
+
+    protected CompletableFuture<String> convertConcurrentDosagesToText(List<D> dosages){
         var concurrentInstructionsFutures = dosages
                 .stream()
                 .map(this::asHumanReadableText)
@@ -92,6 +114,7 @@ public abstract class DosageAPI<C extends FDSConfig, D> {
         return CompletableFuture
                 .allOf(concurrentInstructionsFutures.toArray(CompletableFuture[]::new))
                 .thenApplyAsync(v -> {
+
                     // Extract results from completed futures
                     List<String> dosagesAsText = concurrentInstructionsFutures
                             .stream()
@@ -103,4 +126,8 @@ public abstract class DosageAPI<C extends FDSConfig, D> {
                     return ListToString.convert(bundle, dosagesAsText);
                 });
     }
+
+    protected abstract List<List<D>> groupBySequence(List<D> dosages);
+
+
 }
