@@ -1,9 +1,9 @@
 package jy95.fhir.r4.translators;
 
-import jy95.fhir.r4.dosage.utils.AbstractFhirTest;
-import jy95.fhir.r4.dosage.utils.classes.FhirDosageUtils;
-import jy95.fhir.r4.dosage.utils.config.FDUConfig;
-import jy95.fhir.r4.dosage.utils.types.DisplayOrder;
+import jy95.fhir.r4.DosageAPIR4;
+import jy95.fhir.r4.config.FDSConfigR4;
+import jy95.fhir.r4.AbstractFhirTest;
+import jy95.fhir.common.types.DisplayOrder;
 import org.hl7.fhir.r4.model.BooleanType;
 import org.hl7.fhir.r4.model.Dosage;
 import org.hl7.fhir.r4.model.Extension;
@@ -55,7 +55,7 @@ public class ModifierExtensionTest extends AbstractFhirTest {
                 )
         );
         dosage.setModifierExtension(extensions);
-        FDUConfig config = FDUConfig
+        FDSConfigR4 config = FDSConfigR4
                 .builder()
                 .displayOrder(List.of(DisplayOrder.MODIFIER_EXTENSION))
                 .locale(locale)

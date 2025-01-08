@@ -1,9 +1,9 @@
 package jy95.fhir.r4.translators;
 
-import jy95.fhir.r4.dosage.utils.AbstractFhirTest;
-import jy95.fhir.r4.dosage.utils.classes.FhirDosageUtils;
-import jy95.fhir.r4.dosage.utils.config.FDUConfig;
-import jy95.fhir.r4.dosage.utils.types.DisplayOrder;
+import jy95.fhir.r4.DosageAPIR4;
+import jy95.fhir.r4.config.FDSConfigR4;
+import jy95.fhir.r4.AbstractFhirTest;
+import jy95.fhir.common.types.DisplayOrder;
 import org.hl7.fhir.r4.model.CodeableConcept;
 import org.hl7.fhir.r4.model.Coding;
 import org.hl7.fhir.r4.model.Quantity;
@@ -77,12 +77,12 @@ public class DoseQuantityTest extends AbstractFhirTest {
     @ParameterizedTest
     @MethodSource("localeProvider")
     void testDoseQuantityCustom(Locale locale) throws ExecutionException, InterruptedException {
-        FDUConfig config = FDUConfig
+        FDSConfigR4 config = FDSConfigR4
                 .builder()
                 .displayOrder(List.of(DisplayOrder.DOSE_QUANTITY))
                 .selectDosageAndRateField(
                         (doseAndRateComponentList, doseAndRateKey)
-                                -> doseAndRateKey.extract(doseAndRateComponentList.get(1)))
+                                -> doseAndRateComponentList.get(1).getDoseRange())
                 .build();
         DosageAPIR4 dosageUtils = DayOfWeekTest.getDosageAPI(config);
         Dosage dosage = new Dosage();
