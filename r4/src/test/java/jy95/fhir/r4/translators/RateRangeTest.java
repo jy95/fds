@@ -1,8 +1,8 @@
 package jy95.fhir.r4.translators;
 
-import jy95.fhir.r4.dosage.utils.AbstractFhirTest;
-import jy95.fhir.r4.dosage.utils.classes.FhirDosageUtils;
-import jy95.fhir.r4.dosage.utils.types.DisplayOrder;
+import jy95.fhir.r4.DosageAPIR4;
+import jy95.fhir.r4.AbstractFhirTest;
+import jy95.fhir.common.types.DisplayOrder;
 import org.hl7.fhir.r4.model.Dosage;
 import org.hl7.fhir.r4.model.Quantity;
 import org.hl7.fhir.r4.model.Range;
@@ -21,7 +21,7 @@ public class RateRangeTest extends AbstractFhirTest {
     @MethodSource("localeProvider")
     void testNoRateRange(Locale locale) throws ExecutionException, InterruptedException {
         Dosage dosage = new Dosage();
-        FhirDosageUtils dosageUtils = DayOfWeekTest.getDosageUtilsInstance(locale, DisplayOrder.RATE_RANGE);
+        DosageAPIR4 dosageUtils = DayOfWeekTest.getDosageAPI(locale, DisplayOrder.RATE_RANGE);
         String result = dosageUtils.asHumanReadableText(dosage).get();
         assertEquals("", result);
     }
@@ -29,7 +29,7 @@ public class RateRangeTest extends AbstractFhirTest {
     @ParameterizedTest
     @MethodSource("localeProvider")
     void testSimpleRateRange(Locale locale) throws ExecutionException, InterruptedException {
-        FhirDosageUtils dosageUtils = DayOfWeekTest.getDosageUtilsInstance(locale, DisplayOrder.RATE_RANGE);
+        DosageAPIR4 dosageUtils = DayOfWeekTest.getDosageAPI(locale, DisplayOrder.RATE_RANGE);
         Dosage dosage = new Dosage();
         Range range1 = new Range();
         range1.setLow(new Quantity(1));

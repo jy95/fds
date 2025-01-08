@@ -1,8 +1,7 @@
 package jy95.fhir.r4;
 
-import jy95.fhir.r4.dosage.utils.classes.FhirDosageUtils;
-import jy95.fhir.r4.dosage.utils.config.FDUConfig;
-import jy95.fhir.r4.dosage.utils.types.DisplayOrder;
+import jy95.fhir.r4.config.FDSConfigR4;
+import jy95.fhir.common.types.DisplayOrder;
 
 import java.util.List;
 import java.util.Locale;
@@ -10,15 +9,15 @@ import java.util.stream.Stream;
 
 public abstract class AbstractFhirTest {
 
-    public static FhirDosageUtils getDosageUtilsInstance(Locale locale, DisplayOrder displayOrder) {
-        return new FhirDosageUtils(FDUConfig.builder()
+    public static DosageAPIR4 getDosageAPI(Locale locale, DisplayOrder displayOrder) {
+        return new DosageAPIR4(FDSConfigR4.builder()
                 .displayOrder(List.of(displayOrder))
                 .locale(locale)
                 .build());
     }
 
-    public static FhirDosageUtils getDosageUtilsInstance(FDUConfig config) {
-        return new FhirDosageUtils(config);
+    public static DosageAPIR4 getDosageAPI(FDSConfigR4 config) {
+        return new DosageAPIR4(config);
     }
 
     public static Stream<Locale> localeProvider() {

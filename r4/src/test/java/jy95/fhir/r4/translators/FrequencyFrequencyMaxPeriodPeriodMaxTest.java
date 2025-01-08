@@ -1,8 +1,8 @@
 package jy95.fhir.r4.translators;
 
-import jy95.fhir.r4.dosage.utils.AbstractFhirTest;
-import jy95.fhir.r4.dosage.utils.classes.FhirDosageUtils;
-import jy95.fhir.r4.dosage.utils.types.DisplayOrder;
+import jy95.fhir.r4.DosageAPIR4;
+import jy95.fhir.r4.AbstractFhirTest;
+import jy95.fhir.common.types.DisplayOrder;
 import org.hl7.fhir.r4.model.Dosage;
 import org.hl7.fhir.r4.model.Timing;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -19,7 +19,7 @@ public class FrequencyFrequencyMaxPeriodPeriodMaxTest extends AbstractFhirTest {
     @MethodSource("localeProvider")
     void testNoFrequencyOrPeriod(Locale locale) throws ExecutionException, InterruptedException {
         Dosage dosage = new Dosage();
-        FhirDosageUtils dosageUtils = DayOfWeekTest.getDosageUtilsInstance(
+        DosageAPIR4 dosageUtils = DayOfWeekTest.getDosageAPI(
                 locale,
                 DisplayOrder.FREQUENCY_FREQUENCY_MAX_PERIOD_PERIOD_MAX
         );
@@ -30,7 +30,7 @@ public class FrequencyFrequencyMaxPeriodPeriodMaxTest extends AbstractFhirTest {
     @ParameterizedTest
     @MethodSource("localeProvider")
     void testWithFrequencyOnly(Locale locale) throws ExecutionException, InterruptedException {
-        FhirDosageUtils dosageUtils = DayOfWeekTest.getDosageUtilsInstance(
+        DosageAPIR4 dosageUtils = DayOfWeekTest.getDosageAPI(
                 locale,
                 DisplayOrder.FREQUENCY_FREQUENCY_MAX_PERIOD_PERIOD_MAX
         );
@@ -50,7 +50,7 @@ public class FrequencyFrequencyMaxPeriodPeriodMaxTest extends AbstractFhirTest {
     @ParameterizedTest
     @MethodSource("localeProvider")
     void testWithPeriodOnly(Locale locale) throws ExecutionException, InterruptedException {
-        FhirDosageUtils dosageUtils = DayOfWeekTest.getDosageUtilsInstance(
+        DosageAPIR4 dosageUtils = DayOfWeekTest.getDosageAPI(
                 locale,
                 DisplayOrder.FREQUENCY_FREQUENCY_MAX_PERIOD_PERIOD_MAX
         );
@@ -71,7 +71,7 @@ public class FrequencyFrequencyMaxPeriodPeriodMaxTest extends AbstractFhirTest {
     @ParameterizedTest
     @MethodSource("localeProvider")
     void testBothFrequencyAndPeriod(Locale locale) throws ExecutionException, InterruptedException {
-        FhirDosageUtils dosageUtils = DayOfWeekTest.getDosageUtilsInstance(
+        DosageAPIR4 dosageUtils = DayOfWeekTest.getDosageAPI(
                 locale,
                 DisplayOrder.FREQUENCY_FREQUENCY_MAX_PERIOD_PERIOD_MAX
         );

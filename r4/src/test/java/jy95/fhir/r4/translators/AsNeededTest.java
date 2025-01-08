@@ -1,8 +1,8 @@
 package jy95.fhir.r4.translators;
 
-import jy95.fhir.r4.dosage.utils.AbstractFhirTest;
-import jy95.fhir.r4.dosage.utils.classes.FhirDosageUtils;
-import jy95.fhir.r4.dosage.utils.types.DisplayOrder;
+import jy95.fhir.r4.DosageAPIR4;
+import jy95.fhir.r4.AbstractFhirTest;
+import jy95.fhir.common.types.DisplayOrder;
 import org.hl7.fhir.r4.model.BooleanType;
 import org.hl7.fhir.r4.model.CodeableConcept;
 import org.hl7.fhir.r4.model.Dosage;
@@ -20,7 +20,7 @@ public class AsNeededTest extends AbstractFhirTest {
     @MethodSource("localeProvider")
     void testNoAsNeeded(Locale locale) throws ExecutionException, InterruptedException {
         Dosage dosage = new Dosage();
-        FhirDosageUtils dosageUtils = getDosageUtilsInstance(locale, DisplayOrder.AS_NEEDED);
+        DosageAPIR4 dosageUtils = getDosageAPI(locale, DisplayOrder.AS_NEEDED);
         String result = dosageUtils.asHumanReadableText(dosage).get();
         assertEquals("", result);
     }
@@ -32,7 +32,7 @@ public class AsNeededTest extends AbstractFhirTest {
         BooleanType flag = new BooleanType();
         flag.setValue(Boolean.TRUE);
         dosage.setAsNeeded(flag);
-        FhirDosageUtils dosageUtils = getDosageUtilsInstance(locale, DisplayOrder.AS_NEEDED);
+        DosageAPIR4 dosageUtils = getDosageAPI(locale, DisplayOrder.AS_NEEDED);
         String result = dosageUtils.asHumanReadableText(dosage).get();
         String expected = getExpectedText1(locale);
         assertEquals(expected, result);
@@ -45,7 +45,7 @@ public class AsNeededTest extends AbstractFhirTest {
         CodeableConcept neededFor = new CodeableConcept();
         neededFor.setText("head pain");
         dosage.setAsNeeded(neededFor);
-        FhirDosageUtils dosageUtils = getDosageUtilsInstance(locale, DisplayOrder.AS_NEEDED);
+        DosageAPIR4 dosageUtils = getDosageAPI(locale, DisplayOrder.AS_NEEDED);
         String result = dosageUtils.asHumanReadableText(dosage).get();
         String expected = getExpectedText2(locale);
         assertEquals(expected, result);

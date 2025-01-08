@@ -15,6 +15,10 @@ public class DosageAPIR4 extends DosageAPI<FDSConfigR4, Dosage> {
 
     private final TranslatorsMapR4 translatorsMapR4;
 
+    public DosageAPIR4() {
+        this(FDSConfigR4.builder().build());
+    }
+
     public DosageAPIR4(FDSConfigR4 config) {
         super(config);
         translatorsMapR4 = new TranslatorsMapR4(config);

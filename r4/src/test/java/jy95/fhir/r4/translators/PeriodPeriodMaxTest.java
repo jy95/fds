@@ -1,8 +1,8 @@
 package jy95.fhir.r4.translators;
 
-import jy95.fhir.r4.dosage.utils.AbstractFhirTest;
-import jy95.fhir.r4.dosage.utils.classes.FhirDosageUtils;
-import jy95.fhir.r4.dosage.utils.types.DisplayOrder;
+import jy95.fhir.r4.DosageAPIR4;
+import jy95.fhir.r4.AbstractFhirTest;
+import jy95.fhir.common.types.DisplayOrder;
 import org.hl7.fhir.r4.model.Dosage;
 import org.hl7.fhir.r4.model.Timing;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -19,7 +19,7 @@ public class PeriodPeriodMaxTest extends AbstractFhirTest {
     @MethodSource("localeProvider")
     void testNoPeriod(Locale locale) throws ExecutionException, InterruptedException {
         Dosage dosage = new Dosage();
-        FhirDosageUtils dosageUtils = getDosageUtilsInstance(locale, DisplayOrder.PERIOD_PERIOD_MAX);
+        DosageAPIR4 dosageUtils = getDosageAPI(locale, DisplayOrder.PERIOD_PERIOD_MAX);
         String result = dosageUtils.asHumanReadableText(dosage).get();
         assertEquals("", result);
     }
@@ -27,7 +27,7 @@ public class PeriodPeriodMaxTest extends AbstractFhirTest {
     @ParameterizedTest
     @MethodSource("localeProvider")
     void testWithPeriodOnly(Locale locale) throws ExecutionException, InterruptedException {
-        FhirDosageUtils dosageUtils = DayOfWeekTest.getDosageUtilsInstance(locale, DisplayOrder.PERIOD_PERIOD_MAX);
+        DosageAPIR4 dosageUtils = DayOfWeekTest.getDosageAPI(locale, DisplayOrder.PERIOD_PERIOD_MAX);
         Dosage dosage = new Dosage();
         Timing timing = new Timing();
         Timing.TimingRepeatComponent repeatComponent = new Timing.TimingRepeatComponent();
@@ -45,7 +45,7 @@ public class PeriodPeriodMaxTest extends AbstractFhirTest {
     @ParameterizedTest
     @MethodSource("localeProvider")
     void testWithBothPeriod(Locale locale) throws ExecutionException, InterruptedException {
-        FhirDosageUtils dosageUtils = DayOfWeekTest.getDosageUtilsInstance(locale, DisplayOrder.PERIOD_PERIOD_MAX);
+        DosageAPIR4 dosageUtils = DayOfWeekTest.getDosageAPI(locale, DisplayOrder.PERIOD_PERIOD_MAX);
         Dosage dosage = new Dosage();
         Timing timing = new Timing();
         Timing.TimingRepeatComponent repeatComponent = new Timing.TimingRepeatComponent();

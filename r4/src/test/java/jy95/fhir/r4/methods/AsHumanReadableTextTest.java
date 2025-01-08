@@ -1,8 +1,8 @@
 package jy95.fhir.r4.methods;
 
-import jy95.fhir.r4.dosage.utils.AbstractFhirTest;
-import jy95.fhir.r4.dosage.utils.classes.FhirDosageUtils;
-import jy95.fhir.r4.dosage.utils.config.FDUConfig;
+import jy95.fhir.r4.DosageAPIR4;
+import jy95.fhir.r4.AbstractFhirTest;
+import jy95.fhir.r4.config.FDSConfigR4;
 import org.hl7.fhir.r4.model.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -18,7 +18,7 @@ public class AsHumanReadableTextTest extends AbstractFhirTest {
     @ParameterizedTest
     @MethodSource("localeProvider")
     void testEmptyList(Locale locale) throws ExecutionException, InterruptedException {
-        FhirDosageUtils dosageUtils = new FhirDosageUtils();
+        DosageAPIR4 dosageUtils = new DosageAPIR4();
         List<Dosage> dosageList = List.of();
         String result = dosageUtils.asHumanReadableText(dosageList).get();
         assertEquals("", result);
@@ -27,8 +27,8 @@ public class AsHumanReadableTextTest extends AbstractFhirTest {
     @ParameterizedTest
     @MethodSource("localeProvider")
     void testOneItem(Locale locale) throws ExecutionException, InterruptedException {
-        FhirDosageUtils dosageUtils = getDosageUtilsInstance(
-                FDUConfig
+        DosageAPIR4 dosageUtils = getDosageAPI(
+                FDSConfigR4
                         .builder()
                         .locale(locale)
                         .build()
@@ -43,8 +43,8 @@ public class AsHumanReadableTextTest extends AbstractFhirTest {
     @ParameterizedTest
     @MethodSource("localeProvider")
     void testMultipleItems(Locale locale) throws ExecutionException, InterruptedException {
-        FhirDosageUtils dosageUtils = getDosageUtilsInstance(
-                FDUConfig
+        DosageAPIR4 dosageUtils = getDosageAPI(
+                FDSConfigR4
                         .builder()
                         .locale(locale)
                         .build()

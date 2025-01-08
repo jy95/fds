@@ -1,8 +1,8 @@
 package jy95.fhir.r4.translators;
 
-import jy95.fhir.r4.dosage.utils.AbstractFhirTest;
-import jy95.fhir.r4.dosage.utils.classes.FhirDosageUtils;
-import jy95.fhir.r4.dosage.utils.types.DisplayOrder;
+import jy95.fhir.r4.DosageAPIR4;
+import jy95.fhir.r4.AbstractFhirTest;
+import jy95.fhir.common.types.DisplayOrder;
 import org.hl7.fhir.r4.model.CodeableConcept;
 import org.hl7.fhir.r4.model.Dosage;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -20,7 +20,7 @@ public class AdditionalInstructionTest extends AbstractFhirTest {
     @MethodSource("localeProvider")
     void testNoAdditionalInstruction(Locale locale) throws ExecutionException, InterruptedException {
         Dosage dosage = new Dosage();
-        FhirDosageUtils dosageUtils = getDosageUtilsInstance(locale, DisplayOrder.ADDITIONAL_INSTRUCTION);
+        DosageAPIR4 dosageUtils = getDosageAPI(locale, DisplayOrder.ADDITIONAL_INSTRUCTION);
         String result = dosageUtils.asHumanReadableText(dosage).get();
         assertEquals("", result);
     }
@@ -28,7 +28,7 @@ public class AdditionalInstructionTest extends AbstractFhirTest {
     @ParameterizedTest
     @MethodSource("localeProvider")
     void testSingleAdditionalInstruction(Locale locale) throws ExecutionException, InterruptedException {
-        FhirDosageUtils dosageUtils = getDosageUtilsInstance(locale, DisplayOrder.ADDITIONAL_INSTRUCTION);
+        DosageAPIR4 dosageUtils = getDosageAPI(locale, DisplayOrder.ADDITIONAL_INSTRUCTION);
         Dosage dosage = new Dosage();
         CodeableConcept cc1 = new CodeableConcept();
         cc1.setText("Instruction 1");
@@ -41,7 +41,7 @@ public class AdditionalInstructionTest extends AbstractFhirTest {
     @ParameterizedTest
     @MethodSource("localeProvider")
     void testMultipleAdditionalInstruction(Locale locale) throws ExecutionException, InterruptedException {
-        FhirDosageUtils dosageUtils = getDosageUtilsInstance(locale, DisplayOrder.ADDITIONAL_INSTRUCTION);
+        DosageAPIR4 dosageUtils = getDosageAPI(locale, DisplayOrder.ADDITIONAL_INSTRUCTION);
         Dosage dosage = new Dosage();
         CodeableConcept cc1 = new CodeableConcept();
         cc1.setText("Instruction 1");

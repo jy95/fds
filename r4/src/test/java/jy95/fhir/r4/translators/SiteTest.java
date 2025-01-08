@@ -1,8 +1,8 @@
 package jy95.fhir.r4.translators;
 
-import jy95.fhir.r4.dosage.utils.AbstractFhirTest;
-import jy95.fhir.r4.dosage.utils.classes.FhirDosageUtils;
-import jy95.fhir.r4.dosage.utils.types.DisplayOrder;
+import jy95.fhir.r4.DosageAPIR4;
+import jy95.fhir.r4.AbstractFhirTest;
+import jy95.fhir.common.types.DisplayOrder;
 import org.hl7.fhir.r4.model.CodeableConcept;
 import org.hl7.fhir.r4.model.Coding;
 import org.hl7.fhir.r4.model.Dosage;
@@ -21,7 +21,7 @@ public class SiteTest extends AbstractFhirTest {
     @MethodSource("localeProvider")
     void testNoSite(Locale locale) throws ExecutionException, InterruptedException {
         Dosage dosage = new Dosage();
-        FhirDosageUtils dosageUtils = getDosageUtilsInstance(locale, DisplayOrder.SITE);
+        DosageAPIR4 dosageUtils = getDosageAPI(locale, DisplayOrder.SITE);
         String result = dosageUtils.asHumanReadableText(dosage).get();
         assertEquals("", result);
     }
@@ -33,7 +33,7 @@ public class SiteTest extends AbstractFhirTest {
         CodeableConcept cc1 = new CodeableConcept();
         cc1.setText("With or after food");
         dosage.setSite(cc1);
-        FhirDosageUtils dosageUtils = getDosageUtilsInstance(locale, DisplayOrder.SITE);
+        DosageAPIR4 dosageUtils = getDosageAPI(locale, DisplayOrder.SITE);
         String result = dosageUtils.asHumanReadableText(dosage).get();
         assertEquals("With or after food", result);
     }
@@ -49,7 +49,7 @@ public class SiteTest extends AbstractFhirTest {
                 )
         );
         dosage.setSite(cc1);
-        FhirDosageUtils dosageUtils = getDosageUtilsInstance(locale, DisplayOrder.SITE);
+        DosageAPIR4 dosageUtils = getDosageAPI(locale, DisplayOrder.SITE);
         String result = dosageUtils.asHumanReadableText(dosage).get();
         assertEquals("Entire ear", result);
     }
@@ -65,7 +65,7 @@ public class SiteTest extends AbstractFhirTest {
                 )
         );
         dosage.setSite(cc1);
-        FhirDosageUtils dosageUtils = getDosageUtilsInstance(locale, DisplayOrder.SITE);
+        DosageAPIR4 dosageUtils = getDosageAPI(locale, DisplayOrder.SITE);
         String result = dosageUtils.asHumanReadableText(dosage).get();
         assertEquals("1910005", result);
     }

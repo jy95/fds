@@ -1,8 +1,8 @@
 package jy95.fhir.r4.translators;
 
-import jy95.fhir.r4.dosage.utils.AbstractFhirTest;
-import jy95.fhir.r4.dosage.utils.classes.FhirDosageUtils;
-import jy95.fhir.r4.dosage.utils.types.DisplayOrder;
+import jy95.fhir.r4.DosageAPIR4;
+import jy95.fhir.r4.AbstractFhirTest;
+import jy95.fhir.common.types.DisplayOrder;
 import org.hl7.fhir.r4.model.CodeableConcept;
 import org.hl7.fhir.r4.model.Coding;
 import org.hl7.fhir.r4.model.Dosage;
@@ -21,7 +21,7 @@ public class RouteTest extends AbstractFhirTest {
     @MethodSource("localeProvider")
     void testNoRoute(Locale locale) throws ExecutionException, InterruptedException {
         Dosage dosage = new Dosage();
-        FhirDosageUtils dosageUtils = getDosageUtilsInstance(locale, DisplayOrder.ROUTE);
+        DosageAPIR4 dosageUtils = getDosageAPI(locale, DisplayOrder.ROUTE);
         String result = dosageUtils.asHumanReadableText(dosage).get();
         assertEquals("", result);
     }
@@ -33,7 +33,7 @@ public class RouteTest extends AbstractFhirTest {
         CodeableConcept cc1 = new CodeableConcept();
         cc1.setText("With or after food");
         dosage.setRoute(cc1);
-        FhirDosageUtils dosageUtils = getDosageUtilsInstance(locale, DisplayOrder.ROUTE);
+        DosageAPIR4 dosageUtils = getDosageAPI(locale, DisplayOrder.ROUTE);
         String result = dosageUtils.asHumanReadableText(dosage).get();
         assertEquals("With or after food", result);
     }
@@ -49,7 +49,7 @@ public class RouteTest extends AbstractFhirTest {
                 )
         );
         dosage.setRoute(cc1);
-        FhirDosageUtils dosageUtils = getDosageUtilsInstance(locale, DisplayOrder.ROUTE);
+        DosageAPIR4 dosageUtils = getDosageAPI(locale, DisplayOrder.ROUTE);
         String result = dosageUtils.asHumanReadableText(dosage).get();
         assertEquals("Oral route", result);
     }
@@ -65,7 +65,7 @@ public class RouteTest extends AbstractFhirTest {
                 )
         );
         dosage.setRoute(cc1);
-        FhirDosageUtils dosageUtils = getDosageUtilsInstance(locale, DisplayOrder.ROUTE);
+        DosageAPIR4 dosageUtils = getDosageAPI(locale, DisplayOrder.ROUTE);
         String result = dosageUtils.asHumanReadableText(dosage).get();
         assertEquals("26643006", result);
     }

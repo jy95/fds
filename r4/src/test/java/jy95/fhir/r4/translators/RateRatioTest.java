@@ -1,8 +1,8 @@
 package jy95.fhir.r4.translators;
 
-import jy95.fhir.r4.dosage.utils.AbstractFhirTest;
-import jy95.fhir.r4.dosage.utils.classes.FhirDosageUtils;
-import jy95.fhir.r4.dosage.utils.types.DisplayOrder;
+import jy95.fhir.r4.DosageAPIR4;
+import jy95.fhir.r4.AbstractFhirTest;
+import jy95.fhir.common.types.DisplayOrder;
 import org.hl7.fhir.r4.model.Dosage;
 import org.hl7.fhir.r4.model.Quantity;
 import org.hl7.fhir.r4.model.Ratio;
@@ -21,7 +21,7 @@ public class RateRatioTest extends AbstractFhirTest {
     @MethodSource("localeProvider")
     void testNoRateRatio(Locale locale) throws ExecutionException, InterruptedException {
         Dosage dosage = new Dosage();
-        FhirDosageUtils dosageUtils = DayOfWeekTest.getDosageUtilsInstance(locale, DisplayOrder.RATE_RATIO);
+        DosageAPIR4 dosageUtils = DayOfWeekTest.getDosageAPI(locale, DisplayOrder.RATE_RATIO);
         String result = dosageUtils.asHumanReadableText(dosage).get();
         assertEquals("", result);
     }
@@ -34,7 +34,7 @@ public class RateRatioTest extends AbstractFhirTest {
         Dosage.DosageDoseAndRateComponent doseAndRateComponent1 = new Dosage.DosageDoseAndRateComponent();
         doseAndRateComponent1.setRate(ratio);
         dosage.setDoseAndRate(List.of(doseAndRateComponent1));
-        FhirDosageUtils dosageUtils = DayOfWeekTest.getDosageUtilsInstance(locale, DisplayOrder.RATE_RATIO);
+        DosageAPIR4 dosageUtils = DayOfWeekTest.getDosageAPI(locale, DisplayOrder.RATE_RATIO);
         String result = dosageUtils.asHumanReadableText(dosage).get();
         assertEquals("", result);
     }
@@ -50,7 +50,7 @@ public class RateRatioTest extends AbstractFhirTest {
         Dosage.DosageDoseAndRateComponent doseAndRateComponent1 = new Dosage.DosageDoseAndRateComponent();
         doseAndRateComponent1.setRate(ratio);
         dosage.setDoseAndRate(List.of(doseAndRateComponent1));
-        FhirDosageUtils dosageUtils = DayOfWeekTest.getDosageUtilsInstance(locale, DisplayOrder.RATE_RATIO);
+        DosageAPIR4 dosageUtils = DayOfWeekTest.getDosageAPI(locale, DisplayOrder.RATE_RATIO);
         String result = dosageUtils.asHumanReadableText(dosage).get();
         String expected = getExpectedText1(locale);
         assertEquals(expected, result);
@@ -67,7 +67,7 @@ public class RateRatioTest extends AbstractFhirTest {
         Dosage.DosageDoseAndRateComponent doseAndRateComponent1 = new Dosage.DosageDoseAndRateComponent();
         doseAndRateComponent1.setRate(ratio);
         dosage.setDoseAndRate(List.of(doseAndRateComponent1));
-        FhirDosageUtils dosageUtils = DayOfWeekTest.getDosageUtilsInstance(locale, DisplayOrder.RATE_RATIO);
+        DosageAPIR4 dosageUtils = DayOfWeekTest.getDosageAPI(locale, DisplayOrder.RATE_RATIO);
         String result = dosageUtils.asHumanReadableText(dosage).get();
         String expected = getExpectedText2(locale);
         assertEquals(expected, result);
@@ -87,7 +87,7 @@ public class RateRatioTest extends AbstractFhirTest {
         Dosage.DosageDoseAndRateComponent doseAndRateComponent1 = new Dosage.DosageDoseAndRateComponent();
         doseAndRateComponent1.setRate(ratio);
         dosage.setDoseAndRate(List.of(doseAndRateComponent1));
-        FhirDosageUtils dosageUtils = DayOfWeekTest.getDosageUtilsInstance(locale, DisplayOrder.RATE_RATIO);
+        DosageAPIR4 dosageUtils = DayOfWeekTest.getDosageAPI(locale, DisplayOrder.RATE_RATIO);
         String result = dosageUtils.asHumanReadableText(dosage).get();
         String expected = getExpectedText3(locale);
         assertEquals(expected, result);
@@ -105,7 +105,7 @@ public class RateRatioTest extends AbstractFhirTest {
         Dosage.DosageDoseAndRateComponent doseAndRateComponent1 = new Dosage.DosageDoseAndRateComponent();
         doseAndRateComponent1.setRate(ratio);
         dosage.setDoseAndRate(List.of(doseAndRateComponent1));
-        FhirDosageUtils dosageUtils = DayOfWeekTest.getDosageUtilsInstance(locale, DisplayOrder.RATE_RATIO);
+        DosageAPIR4 dosageUtils = DayOfWeekTest.getDosageAPI(locale, DisplayOrder.RATE_RATIO);
         String result = dosageUtils.asHumanReadableText(dosage).get();
         String expected = getExpectedText4(locale);
         assertEquals(expected, result);
@@ -125,7 +125,7 @@ public class RateRatioTest extends AbstractFhirTest {
         Dosage.DosageDoseAndRateComponent doseAndRateComponent1 = new Dosage.DosageDoseAndRateComponent();
         doseAndRateComponent1.setRate(ratio);
         dosage.setDoseAndRate(List.of(doseAndRateComponent1));
-        FhirDosageUtils dosageUtils = DayOfWeekTest.getDosageUtilsInstance(locale, DisplayOrder.RATE_RATIO);
+        DosageAPIR4 dosageUtils = DayOfWeekTest.getDosageAPI(locale, DisplayOrder.RATE_RATIO);
         String result = dosageUtils.asHumanReadableText(dosage).get();
         String expected = getExpectedText5(locale);
         assertEquals(expected, result);

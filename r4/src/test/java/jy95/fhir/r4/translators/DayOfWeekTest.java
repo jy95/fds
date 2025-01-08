@@ -1,8 +1,8 @@
 package jy95.fhir.r4.translators;
 
-import jy95.fhir.r4.dosage.utils.AbstractFhirTest;
-import jy95.fhir.r4.dosage.utils.classes.FhirDosageUtils;
-import jy95.fhir.r4.dosage.utils.types.DisplayOrder;
+import jy95.fhir.r4.DosageAPIR4;
+import jy95.fhir.r4.AbstractFhirTest;
+import jy95.fhir.common.types.DisplayOrder;
 import org.hl7.fhir.r4.model.Dosage;
 import org.hl7.fhir.r4.model.Timing;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -19,7 +19,7 @@ public class DayOfWeekTest extends AbstractFhirTest {
     @MethodSource("localeProvider")
     void testNoDayOfWeek(Locale locale) throws ExecutionException, InterruptedException {
         Dosage dosage = new Dosage();
-        FhirDosageUtils dosageUtils = DayOfWeekTest.getDosageUtilsInstance(locale, DisplayOrder.DAY_OF_WEEK);
+        DosageAPIR4 dosageUtils = DayOfWeekTest.getDosageAPI(locale, DisplayOrder.DAY_OF_WEEK);
         String result = dosageUtils.asHumanReadableText(dosage).get();
         assertEquals("", result);
     }
@@ -27,7 +27,7 @@ public class DayOfWeekTest extends AbstractFhirTest {
     @ParameterizedTest
     @MethodSource("localeProvider")
     void testSingleDayOfWeek(Locale locale) throws ExecutionException, InterruptedException {
-        FhirDosageUtils dosageUtils = DayOfWeekTest.getDosageUtilsInstance(locale, DisplayOrder.DAY_OF_WEEK);
+        DosageAPIR4 dosageUtils = DayOfWeekTest.getDosageAPI(locale, DisplayOrder.DAY_OF_WEEK);
         Dosage dosage = new Dosage();
         Timing timing = new Timing();
         Timing.TimingRepeatComponent repeatComponent = new Timing.TimingRepeatComponent();
@@ -43,7 +43,7 @@ public class DayOfWeekTest extends AbstractFhirTest {
     @ParameterizedTest
     @MethodSource("localeProvider")
     void testMultipleDayOfWeek(Locale locale) throws ExecutionException, InterruptedException {
-        FhirDosageUtils dosageUtils = DayOfWeekTest.getDosageUtilsInstance(locale, DisplayOrder.DAY_OF_WEEK);
+        DosageAPIR4 dosageUtils = DayOfWeekTest.getDosageAPI(locale, DisplayOrder.DAY_OF_WEEK);
         Dosage dosage = new Dosage();
         Timing timing = new Timing();
         Timing.TimingRepeatComponent repeatComponent = new Timing.TimingRepeatComponent();

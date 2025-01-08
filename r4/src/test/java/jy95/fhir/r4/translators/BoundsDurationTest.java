@@ -1,8 +1,8 @@
 package jy95.fhir.r4.translators;
 
-import jy95.fhir.r4.dosage.utils.AbstractFhirTest;
-import jy95.fhir.r4.dosage.utils.classes.FhirDosageUtils;
-import jy95.fhir.r4.dosage.utils.types.DisplayOrder;
+import jy95.fhir.r4.DosageAPIR4;
+import jy95.fhir.r4.AbstractFhirTest;
+import jy95.fhir.common.types.DisplayOrder;
 import org.hl7.fhir.r4.model.Dosage;
 import org.hl7.fhir.r4.model.Duration;
 import org.hl7.fhir.r4.model.Quantity;
@@ -21,7 +21,7 @@ public class BoundsDurationTest extends AbstractFhirTest {
     @MethodSource("localeProvider")
     void testNoBoundsDuration(Locale locale) throws ExecutionException, InterruptedException {
         Dosage dosage = new Dosage();
-        FhirDosageUtils dosageUtils = getDosageUtilsInstance(locale, DisplayOrder.BOUNDS_DURATION);
+        DosageAPIR4 dosageUtils = getDosageAPI(locale, DisplayOrder.BOUNDS_DURATION);
         String result = dosageUtils.asHumanReadableText(dosage).get();
         assertEquals("", result);
     }
@@ -39,7 +39,7 @@ public class BoundsDurationTest extends AbstractFhirTest {
         timingRepeatComponent.setBounds(duration);
         timing.setRepeat(timingRepeatComponent);
         dosage.setTiming(timing);
-        FhirDosageUtils dosageUtils = getDosageUtilsInstance(locale, DisplayOrder.BOUNDS_DURATION);
+        DosageAPIR4 dosageUtils = getDosageAPI(locale, DisplayOrder.BOUNDS_DURATION);
         String result = dosageUtils.asHumanReadableText(dosage).get();
         String expected = getExpectedText(locale);
         assertEquals(expected, result);

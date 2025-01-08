@@ -1,8 +1,8 @@
 package jy95.fhir.r4.translators;
 
-import jy95.fhir.r4.dosage.utils.AbstractFhirTest;
-import jy95.fhir.r4.dosage.utils.classes.FhirDosageUtils;
-import jy95.fhir.r4.dosage.utils.types.DisplayOrder;
+import jy95.fhir.r4.DosageAPIR4;
+import jy95.fhir.r4.AbstractFhirTest;
+import jy95.fhir.common.types.DisplayOrder;
 import org.hl7.fhir.r4.model.DateTimeType;
 import org.hl7.fhir.r4.model.Dosage;
 import org.hl7.fhir.r4.model.Timing;
@@ -21,7 +21,7 @@ public class TimingEventTest extends AbstractFhirTest {
     @MethodSource("localeProvider")
     void testNoEvent(Locale locale) throws ExecutionException, InterruptedException {
         Dosage dosage = new Dosage();
-        FhirDosageUtils dosageUtils = getDosageUtilsInstance(locale, DisplayOrder.TIMING_EVENT);
+        DosageAPIR4 dosageUtils = getDosageAPI(locale, DisplayOrder.TIMING_EVENT);
         String result = dosageUtils.asHumanReadableText(dosage).get();
         assertEquals("", result);
     }
@@ -37,7 +37,7 @@ public class TimingEventTest extends AbstractFhirTest {
                 )
         );
         dosage.setTiming(timing);
-        FhirDosageUtils dosageUtils = getDosageUtilsInstance(locale, DisplayOrder.TIMING_EVENT);
+        DosageAPIR4 dosageUtils = getDosageAPI(locale, DisplayOrder.TIMING_EVENT);
         String result = dosageUtils.asHumanReadableText(dosage).get();
         String expected = getExpectedSingleDayText(locale);
         assertEquals(expected, result);
@@ -57,7 +57,7 @@ public class TimingEventTest extends AbstractFhirTest {
                 )
         );
         dosage.setTiming(timing);
-        FhirDosageUtils dosageUtils = getDosageUtilsInstance(locale, DisplayOrder.TIMING_EVENT);
+        DosageAPIR4 dosageUtils = getDosageAPI(locale, DisplayOrder.TIMING_EVENT);
         String result = dosageUtils.asHumanReadableText(dosage).get();
         String expected = getExpectedMultipleDaysText(locale);
         assertEquals(expected, result);

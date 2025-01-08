@@ -24,7 +24,7 @@ public class TimingModifierExtensionTest extends AbstractFhirTest {
     @MethodSource("localeProvider")
     void testNoExtension(Locale locale) throws ExecutionException, InterruptedException {
         Dosage dosage = new Dosage();
-        FhirDosageUtils dosageUtils = getDosageUtilsInstance(locale, DisplayOrder.TIMING_MODIFIER_EXTENSION);
+        DosageAPIR4 dosageUtils = getDosageAPI(locale, DisplayOrder.TIMING_MODIFIER_EXTENSION);
         String result = dosageUtils.asHumanReadableText(dosage).get();
         assertEquals("", result);
     }
@@ -42,7 +42,7 @@ public class TimingModifierExtensionTest extends AbstractFhirTest {
         Timing timing = new Timing();
         timing.setModifierExtension(extensions);
         dosage.setTiming(timing);
-        FhirDosageUtils dosageUtils = getDosageUtilsInstance(locale, DisplayOrder.TIMING_MODIFIER_EXTENSION);
+        DosageAPIR4 dosageUtils = getDosageAPI(locale, DisplayOrder.TIMING_MODIFIER_EXTENSION);
         String result = dosageUtils.asHumanReadableText(dosage).get();
         assertEquals("[{\"url\":\"http://hl7.org/fhir/StructureDefinition/timing-exact\",\"value[x]\":\"true\"}]", result);
     }
@@ -66,7 +66,7 @@ public class TimingModifierExtensionTest extends AbstractFhirTest {
                 .locale(locale)
                 .fromExtensionsToString(param -> CompletableFuture.completedFuture("(exact timing)"))
                 .build();
-        FhirDosageUtils dosageUtils = getDosageUtilsInstance(config);
+        DosageAPIR4 dosageUtils = getDosageAPI(config);
         String result = dosageUtils.asHumanReadableText(dosage).get();
         assertEquals("(exact timing)", result);
     }

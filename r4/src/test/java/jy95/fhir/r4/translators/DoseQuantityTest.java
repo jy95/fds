@@ -24,7 +24,7 @@ public class DoseQuantityTest extends AbstractFhirTest {
     @MethodSource("localeProvider")
     void testNoDoseQuantity(Locale locale) throws ExecutionException, InterruptedException {
         Dosage dosage = new Dosage();
-        FhirDosageUtils dosageUtils = DayOfWeekTest.getDosageUtilsInstance(locale, DisplayOrder.DOSE_QUANTITY);
+        DosageAPIR4 dosageUtils = DayOfWeekTest.getDosageAPI(locale, DisplayOrder.DOSE_QUANTITY);
         String result = dosageUtils.asHumanReadableText(dosage).get();
         assertEquals("", result);
     }
@@ -32,7 +32,7 @@ public class DoseQuantityTest extends AbstractFhirTest {
     @ParameterizedTest
     @MethodSource("localeProvider")
     void testSimpleDoseQuantity(Locale locale) throws ExecutionException, InterruptedException {
-        FhirDosageUtils dosageUtils = DayOfWeekTest.getDosageUtilsInstance(locale, DisplayOrder.DOSE_QUANTITY);
+        DosageAPIR4 dosageUtils = DayOfWeekTest.getDosageAPI(locale, DisplayOrder.DOSE_QUANTITY);
         Dosage dosage = new Dosage();
         Quantity quantity1 = new Quantity(5);
         quantity1.setUnit("ml");
@@ -47,7 +47,7 @@ public class DoseQuantityTest extends AbstractFhirTest {
     @ParameterizedTest
     @MethodSource("localeProvider")
     void testDoseQuantityWithComparator(Locale locale) throws ExecutionException, InterruptedException {
-        FhirDosageUtils dosageUtils = DayOfWeekTest.getDosageUtilsInstance(locale, DisplayOrder.DOSE_QUANTITY);
+        DosageAPIR4 dosageUtils = DayOfWeekTest.getDosageAPI(locale, DisplayOrder.DOSE_QUANTITY);
         Dosage dosage = new Dosage();
         Quantity quantity1 = new Quantity(5);
         quantity1.setUnit("ml");
@@ -63,7 +63,7 @@ public class DoseQuantityTest extends AbstractFhirTest {
     @ParameterizedTest
     @MethodSource("localeProvider")
     void testDoseQuantityWithoutUnit(Locale locale) throws ExecutionException, InterruptedException {
-        FhirDosageUtils dosageUtils = DayOfWeekTest.getDosageUtilsInstance(locale, DisplayOrder.DOSE_QUANTITY);
+        DosageAPIR4 dosageUtils = DayOfWeekTest.getDosageAPI(locale, DisplayOrder.DOSE_QUANTITY);
         Dosage dosage = new Dosage();
         Quantity quantity1 = new Quantity(5);
         DosageDoseAndRateComponent doseAndRateComponent1 = new DosageDoseAndRateComponent();
@@ -84,7 +84,7 @@ public class DoseQuantityTest extends AbstractFhirTest {
                         (doseAndRateComponentList, doseAndRateKey)
                                 -> doseAndRateKey.extract(doseAndRateComponentList.get(1)))
                 .build();
-        FhirDosageUtils dosageUtils = DayOfWeekTest.getDosageUtilsInstance(config);
+        DosageAPIR4 dosageUtils = DayOfWeekTest.getDosageAPI(config);
         Dosage dosage = new Dosage();
         Quantity quantity1 = new Quantity(5);
         quantity1.setUnit("ml");

@@ -1,8 +1,8 @@
 package jy95.fhir.r4.translators;
 
-import jy95.fhir.r4.dosage.utils.AbstractFhirTest;
-import jy95.fhir.r4.dosage.utils.classes.FhirDosageUtils;
-import jy95.fhir.r4.dosage.utils.types.DisplayOrder;
+import jy95.fhir.r4.DosageAPIR4;
+import jy95.fhir.r4.AbstractFhirTest;
+import jy95.fhir.common.types.DisplayOrder;
 import org.hl7.fhir.r4.model.CodeableConcept;
 import org.hl7.fhir.r4.model.Coding;
 import org.hl7.fhir.r4.model.Dosage;
@@ -22,7 +22,7 @@ public class TimingCodeTest extends AbstractFhirTest {
     @MethodSource("localeProvider")
     void testNoCode(Locale locale) throws ExecutionException, InterruptedException {
         Dosage dosage = new Dosage();
-        FhirDosageUtils dosageUtils = getDosageUtilsInstance(locale, DisplayOrder.TIMING_CODE);
+        DosageAPIR4 dosageUtils = getDosageAPI(locale, DisplayOrder.TIMING_CODE);
         String result = dosageUtils.asHumanReadableText(dosage).get();
         assertEquals("", result);
     }
@@ -36,7 +36,7 @@ public class TimingCodeTest extends AbstractFhirTest {
         Timing timing = new Timing();
         timing.setCode(cc1);
         dosage.setTiming(timing);
-        FhirDosageUtils dosageUtils = getDosageUtilsInstance(locale, DisplayOrder.TIMING_CODE);
+        DosageAPIR4 dosageUtils = getDosageAPI(locale, DisplayOrder.TIMING_CODE);
         String result = dosageUtils.asHumanReadableText(dosage).get();
         assertEquals("Take medication in the morning on weekends and days off work", result);
     }
@@ -54,7 +54,7 @@ public class TimingCodeTest extends AbstractFhirTest {
         Timing timing = new Timing();
         timing.setCode(cc1);
         dosage.setTiming(timing);
-        FhirDosageUtils dosageUtils = getDosageUtilsInstance(locale, DisplayOrder.TIMING_CODE);
+        DosageAPIR4 dosageUtils = getDosageAPI(locale, DisplayOrder.TIMING_CODE);
         String result = dosageUtils.asHumanReadableText(dosage).get();
         assertEquals("Two times a day at institution specified time", result);
     }
@@ -72,7 +72,7 @@ public class TimingCodeTest extends AbstractFhirTest {
         Timing timing = new Timing();
         timing.setCode(cc1);
         dosage.setTiming(timing);
-        FhirDosageUtils dosageUtils = getDosageUtilsInstance(locale, DisplayOrder.TIMING_CODE);
+        DosageAPIR4 dosageUtils = getDosageAPI(locale, DisplayOrder.TIMING_CODE);
         String result = dosageUtils.asHumanReadableText(dosage).get();
         assertEquals("BID", result);
     }

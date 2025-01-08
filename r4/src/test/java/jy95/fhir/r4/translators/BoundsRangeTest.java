@@ -1,8 +1,8 @@
 package jy95.fhir.r4.translators;
 
-import jy95.fhir.r4.dosage.utils.AbstractFhirTest;
-import jy95.fhir.r4.dosage.utils.classes.FhirDosageUtils;
-import jy95.fhir.r4.dosage.utils.types.DisplayOrder;
+import jy95.fhir.r4.DosageAPIR4;
+import jy95.fhir.r4.AbstractFhirTest;
+import jy95.fhir.common.types.DisplayOrder;
 import org.hl7.fhir.r4.model.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -18,7 +18,7 @@ public class BoundsRangeTest extends AbstractFhirTest {
     @MethodSource("localeProvider")
     void testNoBoundsRange(Locale locale) throws ExecutionException, InterruptedException {
         Dosage dosage = new Dosage();
-        FhirDosageUtils dosageUtils = getDosageUtilsInstance(locale, DisplayOrder.BOUNDS_RANGE);
+        DosageAPIR4 dosageUtils = getDosageAPI(locale, DisplayOrder.BOUNDS_RANGE);
         String result = dosageUtils.asHumanReadableText(dosage).get();
         assertEquals("", result);
     }
@@ -35,7 +35,7 @@ public class BoundsRangeTest extends AbstractFhirTest {
         timingRepeatComponent.setBounds(boundsRange);
         timing.setRepeat(timingRepeatComponent);
         dosage.setTiming(timing);
-        FhirDosageUtils dosageUtils = getDosageUtilsInstance(locale, DisplayOrder.BOUNDS_RANGE);
+        DosageAPIR4 dosageUtils = getDosageAPI(locale, DisplayOrder.BOUNDS_RANGE);
         String result = dosageUtils.asHumanReadableText(dosage).get();
         String expected = getExpectedText1(locale);
         assertEquals(expected, result);
@@ -53,7 +53,7 @@ public class BoundsRangeTest extends AbstractFhirTest {
         timingRepeatComponent.setBounds(boundsRange);
         timing.setRepeat(timingRepeatComponent);
         dosage.setTiming(timing);
-        FhirDosageUtils dosageUtils = getDosageUtilsInstance(locale, DisplayOrder.BOUNDS_RANGE);
+        DosageAPIR4 dosageUtils = getDosageAPI(locale, DisplayOrder.BOUNDS_RANGE);
         String result = dosageUtils.asHumanReadableText(dosage).get();
         String expected = getExpectedText2(locale);
         assertEquals(expected, result);
@@ -70,7 +70,7 @@ public class BoundsRangeTest extends AbstractFhirTest {
         timingRepeatComponent.setBounds(boundsRange);
         timing.setRepeat(timingRepeatComponent);
         dosage.setTiming(timing);
-        FhirDosageUtils dosageUtils = getDosageUtilsInstance(locale, DisplayOrder.BOUNDS_RANGE);
+        DosageAPIR4 dosageUtils = getDosageAPI(locale, DisplayOrder.BOUNDS_RANGE);
         String result = dosageUtils.asHumanReadableText(dosage).get();
         String expected = getExpectedText3(locale);
         assertEquals(expected, result);
@@ -87,7 +87,7 @@ public class BoundsRangeTest extends AbstractFhirTest {
         timingRepeatComponent.setBounds(boundsRange);
         timing.setRepeat(timingRepeatComponent);
         dosage.setTiming(timing);
-        FhirDosageUtils dosageUtils = getDosageUtilsInstance(locale, DisplayOrder.BOUNDS_RANGE);
+        DosageAPIR4 dosageUtils = getDosageAPI(locale, DisplayOrder.BOUNDS_RANGE);
         String result = dosageUtils.asHumanReadableText(dosage).get();
         String expected = getExpectedText4(locale);
         assertEquals(expected, result);
@@ -104,7 +104,7 @@ public class BoundsRangeTest extends AbstractFhirTest {
         timingRepeatComponent.setBounds(boundsRange);
         timing.setRepeat(timingRepeatComponent);
         dosage.setTiming(timing);
-        FhirDosageUtils dosageUtils = getDosageUtilsInstance(locale, DisplayOrder.BOUNDS_RANGE);
+        DosageAPIR4 dosageUtils = getDosageAPI(locale, DisplayOrder.BOUNDS_RANGE);
         String result = dosageUtils.asHumanReadableText(dosage).get();
         String expected = getExpectedText5(locale);
         assertEquals(expected, result);
@@ -121,7 +121,7 @@ public class BoundsRangeTest extends AbstractFhirTest {
         timingRepeatComponent.setBounds(boundsRange);
         timing.setRepeat(timingRepeatComponent);
         dosage.setTiming(timing);
-        FhirDosageUtils dosageUtils = getDosageUtilsInstance(locale, DisplayOrder.BOUNDS_RANGE);
+        DosageAPIR4 dosageUtils = getDosageAPI(locale, DisplayOrder.BOUNDS_RANGE);
         String result = dosageUtils.asHumanReadableText(dosage).get();
         String expected = getExpectedText6(locale);
         assertEquals(expected, result);

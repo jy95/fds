@@ -1,8 +1,8 @@
 package jy95.fhir.r4.translators;
 
-import jy95.fhir.r4.dosage.utils.AbstractFhirTest;
-import jy95.fhir.r4.dosage.utils.classes.FhirDosageUtils;
-import jy95.fhir.r4.dosage.utils.types.DisplayOrder;
+import jy95.fhir.r4.DosageAPIR4;
+import jy95.fhir.r4.AbstractFhirTest;
+import jy95.fhir.common.types.DisplayOrder;
 import org.hl7.fhir.r4.model.Dosage;
 import org.hl7.fhir.r4.model.Timing;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -19,7 +19,7 @@ public class TimeOfDayTest extends AbstractFhirTest {
     @MethodSource("localeProvider")
     void testNoTimeOfDay(Locale locale) throws ExecutionException, InterruptedException {
         Dosage dosage = new Dosage();
-        FhirDosageUtils dosageUtils = TimeOfDayTest.getDosageUtilsInstance(locale, DisplayOrder.TIME_OF_DAY);
+        DosageAPIR4 dosageUtils = TimeOfDayTest.getDosageAPI(locale, DisplayOrder.TIME_OF_DAY);
         String result = dosageUtils.asHumanReadableText(dosage).get();
         assertEquals("", result);
     }
@@ -32,7 +32,7 @@ public class TimeOfDayTest extends AbstractFhirTest {
         timing.getRepeat().addTimeOfDay("15:00:00");
         dosage.setTiming(timing);
 
-        FhirDosageUtils dosageUtils = TimeOfDayTest.getDosageUtilsInstance(locale, DisplayOrder.TIME_OF_DAY);
+        DosageAPIR4 dosageUtils = TimeOfDayTest.getDosageAPI(locale, DisplayOrder.TIME_OF_DAY);
         String result = dosageUtils.asHumanReadableText(dosage).get();
         String expectedResult = getExpectedSingleTimeText(locale);
         assertEquals(expectedResult, result);
@@ -47,7 +47,7 @@ public class TimeOfDayTest extends AbstractFhirTest {
         timing.getRepeat().addTimeOfDay("12:12:12");
         dosage.setTiming(timing);
 
-        FhirDosageUtils dosageUtils = TimeOfDayTest.getDosageUtilsInstance(locale, DisplayOrder.TIME_OF_DAY);
+        DosageAPIR4 dosageUtils = TimeOfDayTest.getDosageAPI(locale, DisplayOrder.TIME_OF_DAY);
         String result = dosageUtils.asHumanReadableText(dosage).get();
         String expectedResult = getExpectedMultipleTimesText(locale);
         assertEquals(expectedResult, result);

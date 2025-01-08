@@ -1,8 +1,8 @@
 package jy95.fhir.r4.translators;
 
-import jy95.fhir.r4.dosage.utils.AbstractFhirTest;
-import jy95.fhir.r4.dosage.utils.classes.FhirDosageUtils;
-import jy95.fhir.r4.dosage.utils.types.DisplayOrder;
+import jy95.fhir.r4.DosageAPIR4;
+import jy95.fhir.r4.AbstractFhirTest;
+import jy95.fhir.common.types.DisplayOrder;
 import org.hl7.fhir.r4.model.Dosage;
 import org.hl7.fhir.r4.model.Quantity;
 import org.hl7.fhir.r4.model.Ratio;
@@ -20,7 +20,7 @@ public class MaxDosePerPeriodTest extends AbstractFhirTest {
     @MethodSource("localeProvider")
     void testNoMaxDosePerPeriod(Locale locale) throws ExecutionException, InterruptedException {
         Dosage dosage = new Dosage();
-        FhirDosageUtils dosageUtils = getDosageUtilsInstance(locale, DisplayOrder.MAX_DOSE_PER_PERIOD);
+        DosageAPIR4 dosageUtils = getDosageAPI(locale, DisplayOrder.MAX_DOSE_PER_PERIOD);
         String result = dosageUtils.asHumanReadableText(dosage).get();
         assertEquals("", result);
     }
@@ -38,7 +38,7 @@ public class MaxDosePerPeriodTest extends AbstractFhirTest {
         denominator.setSystem("http://hl7.org/fhir/ValueSet/units-of-time");
         ratio.setDenominator(denominator);
         dosage.setMaxDosePerPeriod(ratio);
-        FhirDosageUtils dosageUtils = getDosageUtilsInstance(locale, DisplayOrder.MAX_DOSE_PER_PERIOD);
+        DosageAPIR4 dosageUtils = getDosageAPI(locale, DisplayOrder.MAX_DOSE_PER_PERIOD);
         String result = dosageUtils.asHumanReadableText(dosage).get();
         String expected = getExpectedText(locale);
         assertEquals(expected, result);
