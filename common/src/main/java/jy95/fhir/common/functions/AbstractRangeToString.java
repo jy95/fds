@@ -1,5 +1,6 @@
 package jy95.fhir.common.functions;
 
+import java.math.BigDecimal;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
@@ -132,7 +133,7 @@ public abstract class AbstractRangeToString<C extends FDSConfig, R> {
      * @param range The range object.
      * @return The low value.
      */
-    protected abstract String getLowValue(R range);
+    protected abstract BigDecimal getLowValue(R range);
 
     /**
      * Abstract method to retrieve the high value of the range.
@@ -140,5 +141,5 @@ public abstract class AbstractRangeToString<C extends FDSConfig, R> {
      * @param range The range object.
      * @return The high value.
      */
-    protected abstract String getHighValue(R range);
+    protected abstract BigDecimal getHighValue(R range);
 }

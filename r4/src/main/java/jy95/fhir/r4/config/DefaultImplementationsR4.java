@@ -5,9 +5,11 @@ import java.util.Objects;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import jy95.fhir.common.types.DoseAndRateKey;
+import jy95.fhir.r4.functions.DoseAndRateRegistryR4;
 import org.hl7.fhir.r4.model.*;
 
-public final class DefaultImplementations {
+public final class DefaultImplementationsR4 {
     
     public static CompletableFuture<String> fromFHIRQuantityUnitToString(Quantity quantity) {
         return CompletableFuture.supplyAsync(() -> {
@@ -82,5 +84,11 @@ public final class DefaultImplementations {
                     })
                     .collect(Collectors.joining(", ", "[", "]"));
         });
+    }
+
+    public static Type selectDosageAndRateField(List<Dosage.DosageDoseAndRateComponent> doseAndRateComponentList, DoseAndRateKey doseAndRateKey) {
+        var extractor = DoseAndRateRegistryR4.getInstance().getExtractor(doseAndRateKey);
+        var firstRep = doseAndRateComponentList.getFirst();
+        return extractor.extract(firstRep);
     }
 }

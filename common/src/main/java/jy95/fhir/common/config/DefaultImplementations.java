@@ -2,6 +2,7 @@ package jy95.fhir.common.config;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.concurrent.CompletableFuture;
 
 import jy95.fhir.common.bundle.MultiResourceBundleControl;
 

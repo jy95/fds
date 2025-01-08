@@ -5,6 +5,8 @@ import com.ibm.icu.text.MessageFormat;
 import jy95.fhir.common.config.FDSConfig;
 import jy95.fhir.common.types.AbstractTranslator;
 
+import java.util.Map;
+
 public abstract class AbstractCountCountMax<C extends FDSConfig, D> extends AbstractTranslator<C, D> {
     
     // Translations
@@ -19,5 +21,17 @@ public abstract class AbstractCountCountMax<C extends FDSConfig, D> extends Abst
         var msg2 = bundle.getString("fields.count");
         countMaxMsg = new MessageFormat(msg1, locale);
         countMsg = new MessageFormat(msg2, locale);
+    }
+
+    protected String turnCountAndCountMaxToText(int countMin, int countMax) {
+        Map<String, Object> arguments = Map.of(
+                "minCount", countMin,
+                "maxCount", countMax
+        );
+        return countMaxMsg.format(arguments);
+    }
+
+    protected String turnCountToText(int count) {
+        return countMsg.format(new Object[]{count});
     }
 }
