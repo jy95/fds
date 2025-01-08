@@ -82,7 +82,7 @@ public class DoseQuantityTest extends AbstractFhirTest {
                 .displayOrder(List.of(DisplayOrder.DOSE_QUANTITY))
                 .selectDosageAndRateField(
                         (doseAndRateComponentList, doseAndRateKey)
-                                -> doseAndRateComponentList.get(1).getDoseRange())
+                                -> doseAndRateComponentList.get(1).getDoseQuantity())
                 .build();
         DosageAPIR4 dosageUtils = DayOfWeekTest.getDosageAPI(config);
         Dosage dosage = new Dosage();
