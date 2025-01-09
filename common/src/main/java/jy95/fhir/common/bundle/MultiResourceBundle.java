@@ -15,7 +15,7 @@ public class MultiResourceBundle extends ResourceBundle {
     @Override
     protected Object handleGetObject(String key) {
         Optional<Object> firstPropertyValue = this.delegates.stream()
-                .filter(delegate -> delegate != null && delegate.containsKey(key))
+                .filter(delegate -> delegate.containsKey(key))
                 .map(delegate -> delegate.getObject(key))
                 .findFirst();
 
