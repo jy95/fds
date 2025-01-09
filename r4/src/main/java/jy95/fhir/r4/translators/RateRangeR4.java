@@ -9,6 +9,8 @@ import org.hl7.fhir.r4.model.Range;
 
 import java.util.concurrent.CompletableFuture;
 
+import static jy95.fhir.r4.config.DefaultImplementationsR4.hasMatchingComponent;
+
 public class RateRangeR4 extends AbstractRateRange<FDSConfigR4, Dosage> {
 
     private final RangeToStringR4 rangeToStringR4;
@@ -20,22 +22,17 @@ public class RateRangeR4 extends AbstractRateRange<FDSConfigR4, Dosage> {
 
     @Override
     public CompletableFuture<String> convert(Dosage dosage) {
-        var bundle = getResources();
-        var doseAndRate = dosage.getDoseAndRate();
         var rateRange = getConfig()
                 .getSelectDosageAndRateField()
-                .apply(doseAndRate, DoseAndRateKey.RATE_RANGE);
+                .apply(dosage.getDoseAndRate(), DoseAndRateKey.RATE_RANGE);
 
         return rangeToStringR4
-                .convert(bundle, getConfig(), (Range) rateRange)
+                .convert(getResources(), getConfig(), (Range) rateRange)
                 .thenApplyAsync(rateRatioText -> rateRangeMsg.format(new Object[]{rateRatioText}));
     }
 
     @Override
     public boolean isPresent(Dosage dosage) {
-        return dosage.hasDoseAndRate() && dosage
-                .getDoseAndRate()
-                .stream()
-                .anyMatch(Dosage.DosageDoseAndRateComponent::hasRateRange);
+        return hasMatchingComponent(dosage, Dosage.DosageDoseAndRateComponent::hasRateRange);
     }
 }
