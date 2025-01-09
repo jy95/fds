@@ -4,7 +4,7 @@
     <parent>
         <groupId>jy95.fhir</groupId>
         <artifactId>dosage-support</artifactId>
-        <version>1.0.0</version>
+        <version>${revision}</version>
     </parent>
     <artifactId>r4</artifactId>
 
@@ -19,7 +19,7 @@
         <dependency>
             <groupId>jy95.fhir</groupId>
             <artifactId>common</artifactId>
-            <version>1.0.0</version>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 </project>

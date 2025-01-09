@@ -5,7 +5,7 @@
 
     <groupId>jy95.fhir</groupId>
     <artifactId>dosage-support</artifactId>
-    <version>1.0.0</version>
+    <version>${revision}</version>
     <name>FHIR Dosage Support</name>
     <description>Turn FHIR Dosage into human-readable text in your wanted language and much more</description>
     <packaging>pom</packaging>
@@ -42,6 +42,8 @@
     </scm>
 
     <properties>
+        <!-- https://maven.apache.org/guides/mini/guide-maven-ci-friendly.html -->
+        <revision>1.0.0</revision>
         <java.version>21</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <lombok.version>1.18.36</lombok.version>
