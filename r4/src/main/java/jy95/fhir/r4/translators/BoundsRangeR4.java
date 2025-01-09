@@ -17,6 +17,16 @@ public class BoundsRangeR4 extends AbstractBoundsRange<FDSConfigR4, Dosage> {
     }
 
     @Override
+    protected boolean hasTiming(Dosage dosage) {
+        return dosage.hasTiming();
+    }
+
+    @Override
+    protected boolean hasRequiredElements(Dosage dosage) {
+        return dosage.getTiming().hasRepeat() && dosage.getTiming().getRepeat().hasBoundsRange();
+    }
+
+    @Override
     public CompletableFuture<String> convert(Dosage dosage) {
         var boundsRange = dosage.getTiming().getRepeat().getBoundsRange();
         var bundle = this.getResources();
@@ -24,10 +34,5 @@ public class BoundsRangeR4 extends AbstractBoundsRange<FDSConfigR4, Dosage> {
         return rangeToStringR4
                 .convert(bundle, this.getConfig(), boundsRange)
                 .thenApplyAsync(v -> boundsRangeMsg.format(new Object[]{v}));
-    }
-
-    @Override
-    public boolean isPresent(Dosage dosage) {
-        return dosage.hasTiming() && dosage.getTiming().hasRepeat() && dosage.getTiming().getRepeat().hasBoundsRange();
     }
 }

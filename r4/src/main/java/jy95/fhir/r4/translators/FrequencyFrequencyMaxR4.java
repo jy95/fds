@@ -11,6 +11,16 @@ public class FrequencyFrequencyMaxR4 extends AbstractFrequencyFrequencyMax<FDSCo
     }
 
     @Override
+    protected boolean hasTiming(Dosage dosage) {
+        return dosage.hasTiming();
+    }
+
+    @Override
+    protected boolean hasRequiredElements(Dosage dosage) {
+        return dosage.getTiming().hasRepeat() && (hasFrequency(dosage) || hasFrequencyMax(dosage));
+    }
+
+    @Override
     protected boolean hasFrequency(Dosage dosage) {
         return dosage.getTiming().getRepeat().hasFrequency();
     }
@@ -40,11 +50,5 @@ public class FrequencyFrequencyMaxR4 extends AbstractFrequencyFrequencyMax<FDSCo
         var repeat = dosage.getTiming().getRepeat();
         var frequency = repeat.getFrequency();
         return formatFrequencyText(frequency);
-    }
-
-    @Override
-    public boolean isPresent(Dosage dosage) {
-        return dosage.hasTiming() && dosage.getTiming().hasRepeat()
-                && (hasFrequency(dosage) || hasFrequencyMax(dosage));
     }
 }

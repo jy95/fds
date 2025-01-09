@@ -18,6 +18,16 @@ public class BoundsPeriodR4 extends AbstractBoundsPeriod<FDSConfigR4, Dosage> {
     }
 
     @Override
+    protected boolean hasTiming(Dosage dosage) {
+        return dosage.hasTiming();
+    }
+
+    @Override
+    protected boolean hasRequiredElements(Dosage dosage) {
+        return dosage.getTiming().hasRepeat() && dosage.getTiming().getRepeat().hasBoundsPeriod();
+    }
+
+    @Override
     public CompletableFuture<String> convert(Dosage dosage) {
         return CompletableFuture.supplyAsync(() -> {
 
@@ -43,10 +53,5 @@ public class BoundsPeriodR4 extends AbstractBoundsPeriod<FDSConfigR4, Dosage> {
             // Format the message with the named arguments
             return boundsPeriodMsg.format(arguments);
         });
-    }
-
-    @Override
-    public boolean isPresent(Dosage dosage) {
-        return dosage.hasTiming() && dosage.getTiming().hasRepeat() && dosage.getTiming().getRepeat().hasBoundsPeriod();
     }
 }

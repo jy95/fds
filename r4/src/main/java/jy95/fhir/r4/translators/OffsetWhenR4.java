@@ -17,6 +17,18 @@ public class OffsetWhenR4 extends AbstractOffsetWhen<FDSConfigR4, Dosage> {
     }
 
     @Override
+    protected boolean hasTiming(Dosage dosage) {
+        return dosage.hasTiming();
+    }
+
+    @Override
+    protected boolean hasRequiredElements(Dosage dosage) {
+        var timing = dosage.getTiming();
+        // Rule: If there's an offset, there must be a when (and not C, CM, CD, CV)
+        return timing.hasRepeat() && (timing.getRepeat().hasOffset() || timing.getRepeat().hasWhen());
+    }
+
+    @Override
     public CompletableFuture<String> convert(Dosage dosage) {
         var offsetPart = turnOffsetToText(dosage);
         var whenPart = turnWhenToText(dosage);
@@ -54,13 +66,5 @@ public class OffsetWhenR4 extends AbstractOffsetWhen<FDSConfigR4, Dosage> {
             return CompletableFuture.completedFuture("");
         }
         return turnOffsetValueToText(repeat.getOffset());
-    }
-
-    @Override
-    public boolean isPresent(Dosage dosage) {
-        // Rule: If there's an offset, there must be a when (and not C, CM, CD, CV)
-        return dosage.hasTiming()
-                && (dosage.getTiming().getRepeat().hasOffset() ||
-                dosage.getTiming().getRepeat().hasWhen());
     }
 }

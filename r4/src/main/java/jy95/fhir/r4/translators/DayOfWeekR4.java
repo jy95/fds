@@ -13,6 +13,16 @@ public class DayOfWeekR4 extends AbstractDayOfWeek<FDSConfigR4, Dosage> {
     }
 
     @Override
+    protected boolean hasTiming(Dosage dosage) {
+        return dosage.hasTiming();
+    }
+
+    @Override
+    protected boolean hasRequiredElements(Dosage dosage) {
+        return dosage.getTiming().hasRepeat() && dosage.getTiming().getRepeat().hasDayOfWeek();
+    }
+
+    @Override
     public CompletableFuture<String> convert(Dosage dosage) {
         return CompletableFuture.supplyAsync(() -> {
             var dayOfWeeks = dosage.getTiming().getRepeat().getDayOfWeek();
@@ -26,10 +36,5 @@ public class DayOfWeekR4 extends AbstractDayOfWeek<FDSConfigR4, Dosage> {
 
             return daysToText(dayOfWeeksCodes);
         });
-    }
-
-    @Override
-    public boolean isPresent(Dosage dosage) {
-        return dosage.hasTiming() && dosage.getTiming().hasRepeat() && dosage.getTiming().getRepeat().hasDayOfWeek();
     }
 }

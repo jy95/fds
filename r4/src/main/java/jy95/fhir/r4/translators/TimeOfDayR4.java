@@ -14,6 +14,17 @@ public class TimeOfDayR4 extends AbstractTimeOfDay<FDSConfigR4, Dosage> {
     }
 
     @Override
+    protected boolean hasTiming(Dosage dosage) {
+        return dosage.hasTiming();
+    }
+
+    @Override
+    protected boolean hasRequiredElements(Dosage dosage) {
+        var timing = dosage.getTiming();
+        return timing.hasRepeat() && timing.getRepeat().hasTimeOfDay();
+    }
+
+    @Override
     protected List<String> getTimes(Dosage dosage) {
         return dosage
                 .getTiming()
@@ -22,10 +33,5 @@ public class TimeOfDayR4 extends AbstractTimeOfDay<FDSConfigR4, Dosage> {
                 .stream()
                 .map(PrimitiveType::getValue)
                 .toList();
-    }
-
-    @Override
-    public boolean isPresent(Dosage dosage) {
-        return dosage.hasTiming() && dosage.getTiming().hasRepeat() && dosage.getTiming().getRepeat().hasTimeOfDay();
     }
 }

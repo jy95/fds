@@ -4,13 +4,13 @@ import com.ibm.icu.text.MessageFormat;
 
 import jy95.fhir.common.config.FDSConfig;
 import jy95.fhir.common.functions.ListToString;
-import jy95.fhir.common.types.AbstractTranslator;
+import jy95.fhir.common.types.AbstractTranslatorTiming;
 
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
-public abstract class AbstractTimeOfDay<C extends FDSConfig, D> extends AbstractTranslator<C, D> {
+public abstract class AbstractTimeOfDay<C extends FDSConfig, D> extends AbstractTranslatorTiming<C, D> {
     
     // Translations
     protected final MessageFormat timeOfDayMsg;

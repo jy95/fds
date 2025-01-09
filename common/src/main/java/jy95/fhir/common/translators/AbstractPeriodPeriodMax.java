@@ -3,13 +3,13 @@ package jy95.fhir.common.translators;
 import com.ibm.icu.text.MessageFormat;
 
 import jy95.fhir.common.config.FDSConfig;
-import jy95.fhir.common.types.AbstractTranslator;
+import jy95.fhir.common.types.AbstractTranslatorTiming;
 
 import java.math.BigDecimal;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
-public abstract class AbstractPeriodPeriodMax<C extends FDSConfig, D> extends AbstractTranslator<C, D> {
+public abstract class AbstractPeriodPeriodMax<C extends FDSConfig, D> extends AbstractTranslatorTiming<C, D> {
     
     // Translations
     protected final MessageFormat periodMaxMsg;
