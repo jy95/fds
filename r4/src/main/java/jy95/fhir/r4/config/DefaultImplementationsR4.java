@@ -3,6 +3,7 @@ package jy95.fhir.r4.config;
 import java.util.concurrent.CompletableFuture;
 import java.util.Objects;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import jy95.fhir.common.types.DoseAndRateKey;
@@ -90,5 +91,12 @@ public final class DefaultImplementationsR4 {
         var extractor = DoseAndRateRegistryR4.getInstance().getExtractor(doseAndRateKey);
         var firstRep = doseAndRateComponentList.getFirst();
         return extractor.extract(firstRep);
+    }
+
+    public static boolean hasMatchingComponent(Dosage dosage, Predicate<Dosage.DosageDoseAndRateComponent> predicate) {
+        return dosage.hasDoseAndRate() && dosage
+                .getDoseAndRate()
+                .stream()
+                .anyMatch(predicate);
     }
 }
