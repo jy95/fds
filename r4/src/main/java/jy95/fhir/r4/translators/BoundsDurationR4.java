@@ -17,6 +17,11 @@ public class BoundsDurationR4 extends AbstractBoundsDuration<FDSConfigR4, Dosage
     }
 
     @Override
+    protected boolean hasTiming(Dosage dosage) {
+        return dosage.hasTiming();
+    }
+
+    @Override
     public CompletableFuture<String> convert(Dosage dosage) {
         var bundle = getResources();
         var boundsDuration = dosage.getTiming().getRepeat().getBoundsDuration();
@@ -26,8 +31,7 @@ public class BoundsDurationR4 extends AbstractBoundsDuration<FDSConfigR4, Dosage
     }
 
     @Override
-    public boolean isPresent(Dosage dosage) {
-        return dosage.hasTiming() && dosage.getTiming().hasRepeat()
-                && dosage.getTiming().getRepeat().hasBoundsDuration();
+    protected boolean hasRequiredElements(Dosage dosage) {
+        return dosage.getTiming().hasRepeat() && dosage.getTiming().getRepeat().hasBoundsDuration();
     }
 }

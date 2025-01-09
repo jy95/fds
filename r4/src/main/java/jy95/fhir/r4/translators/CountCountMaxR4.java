@@ -26,9 +26,14 @@ public class CountCountMaxR4 extends AbstractCountCountMax<FDSConfigR4, Dosage> 
     }
 
     @Override
-    public boolean isPresent(Dosage dosage) {
-        return dosage.hasTiming() && dosage.getTiming().hasRepeat()
-                && (dosage.getTiming().getRepeat().hasCount() ||
-                dosage.getTiming().getRepeat().hasCountMax());
+    protected boolean hasRequiredElements(Dosage dosage) {
+        return dosage.getTiming().hasRepeat()
+                && (dosage.getTiming().getRepeat().hasCount()
+                || dosage.getTiming().getRepeat().hasCountMax());
+    }
+
+    @Override
+    protected boolean hasTiming(Dosage dosage) {
+        return dosage.hasTiming();
     }
 }

@@ -18,13 +18,18 @@ public class TimingEventR4 extends AbstractTimingEvent<FDSConfigR4, Dosage> {
     }
 
     @Override
-    protected List<String> getEvents(Dosage dosage) {
-        DateTimeType[] events = dosage.getTiming().getEvent().toArray(DateTimeType[]::new);
-        return formatDateTimesR4.convert(this.getConfig().getLocale(), events);
+    protected boolean hasTiming(Dosage dosage) {
+        return dosage.hasTiming();
     }
 
     @Override
-    public boolean isPresent(Dosage dosage) {
-        return dosage.hasTiming() && dosage.getTiming().hasEvent();
+    protected boolean hasRequiredElements(Dosage dosage) {
+        return dosage.getTiming().hasEvent();
+    }
+
+    @Override
+    protected List<String> getEvents(Dosage dosage) {
+        DateTimeType[] events = dosage.getTiming().getEvent().toArray(DateTimeType[]::new);
+        return formatDateTimesR4.convert(this.getConfig().getLocale(), events);
     }
 }

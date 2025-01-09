@@ -21,6 +21,18 @@ public class DurationDurationMaxR4 extends AbstractDurationDurationMax<FDSConfig
     }
 
     @Override
+    protected boolean hasRequiredElements(Dosage dosage) {
+        return dosage.getTiming().hasRepeat()
+                && dosage.getTiming().getRepeat().hasDurationUnit()
+                && (hasDuration(dosage) || hasDurationMax(dosage));
+    }
+
+    @Override
+    protected boolean hasTiming(Dosage dosage) {
+        return dosage.hasTiming();
+    }
+
+    @Override
     protected String turnDurationToString(Dosage dosage) {
         var repeat = dosage.getTiming().getRepeat();
         var durationUnit = repeat.getDurationUnit().toCode();
@@ -38,12 +50,5 @@ public class DurationDurationMaxR4 extends AbstractDurationDurationMax<FDSConfig
 
         var durationText = quantityToString(durationUnit, durationQuantity);
         return durationMaxMsg.format(new Object[]{durationText});
-    }
-
-    @Override
-    public boolean isPresent(Dosage dosage) {
-        return dosage.hasTiming() && dosage.getTiming().hasRepeat()
-                && dosage.getTiming().getRepeat().hasDurationUnit()
-                && (hasDuration(dosage) || hasDurationMax(dosage));
     }
 }

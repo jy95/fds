@@ -7,6 +7,7 @@
         <version>${revision}</version>
     </parent>
     <artifactId>universal-coverage</artifactId>
+    <packaging>pom</packaging>
 
     <name>Universal Coverage</name>
     <description>A comprehensive module for handling global coverage, ensuring seamless integration with FHIR R4 and R5 standards.</description>

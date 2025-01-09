@@ -46,7 +46,12 @@ public class BoundsPeriodR4 extends AbstractBoundsPeriod<FDSConfigR4, Dosage> {
     }
 
     @Override
-    public boolean isPresent(Dosage dosage) {
-        return dosage.hasTiming() && dosage.getTiming().hasRepeat() && dosage.getTiming().getRepeat().hasBoundsPeriod();
+    protected boolean hasRequiredElements(Dosage dosage) {
+        return dosage.getTiming().hasRepeat() && dosage.getTiming().getRepeat().hasBoundsPeriod();
+    }
+
+    @Override
+    protected boolean hasTiming(Dosage dosage) {
+        return dosage.hasTiming();
     }
 }

@@ -21,6 +21,17 @@ public class PeriodPeriodMaxR4 extends AbstractPeriodPeriodMax<FDSConfigR4, Dosa
     }
 
     @Override
+    protected boolean hasRequiredElements(Dosage dosage) {
+        var timing = dosage.getTiming();
+        return timing.hasRepeat() && timing.hasRepeat() && (hasPeriod(dosage) || hasPeriodMax(dosage));
+    }
+
+    @Override
+    protected boolean hasTiming(Dosage dosage) {
+        return dosage.hasTiming();
+    }
+
+    @Override
     protected String turnPeriodAndPeriodMaxToString(Dosage dosage) {
 
         var repeat = dosage.getTiming().getRepeat();
@@ -41,12 +52,5 @@ public class PeriodPeriodMaxR4 extends AbstractPeriodPeriodMax<FDSConfigR4, Dosa
 
         var unitText = getUnit(periodUnit, period);
         return formatPeriodText(period, unitText);
-    }
-
-    @Override
-    public boolean isPresent(Dosage dosage) {
-        return dosage.hasTiming() && dosage.getTiming().hasRepeat()
-                && dosage.getTiming().getRepeat().hasPeriodUnit()
-                && (hasPeriod(dosage) || hasPeriodMax(dosage));
     }
 }
