@@ -14,6 +14,7 @@
         <module>common</module>
         <module>r4</module>
         <module>r5</module>
+        <module>universal-coverage</module>
     </modules>
 
     <licenses>
@@ -116,13 +117,15 @@
                 <version>${jacoco.plugin.version}</version>
                 <executions>
                     <execution>
+                        <id>jacoco-initialize</id>
                         <goals>
                             <goal>prepare-agent</goal>
                         </goals>
+                        <phase>test-compile</phase>
                     </execution>
                     <execution>
-                        <id>report</id>
-                        <phase>test</phase>
+                        <id>jacoco-site</id>
+                        <phase>verify</phase>
                         <goals>
                             <goal>report</goal>
                         </goals>
