@@ -11,8 +11,13 @@ public class DurationDurationMaxR4 extends AbstractDurationDurationMax<FDSConfig
     }
 
     @Override
-    protected boolean hasTiming(Dosage dosage) {
-        return dosage.hasTiming();
+    protected boolean hasDuration(Dosage dosage) {
+        return dosage.getTiming().getRepeat().hasDuration();
+    }
+
+    @Override
+    protected boolean hasDurationMax(Dosage dosage) {
+        return dosage.getTiming().getRepeat().hasDurationMax();
     }
 
     @Override
@@ -23,13 +28,8 @@ public class DurationDurationMaxR4 extends AbstractDurationDurationMax<FDSConfig
     }
 
     @Override
-    protected boolean hasDuration(Dosage dosage) {
-        return dosage.getTiming().getRepeat().hasDuration();
-    }
-
-    @Override
-    protected boolean hasDurationMax(Dosage dosage) {
-        return dosage.getTiming().getRepeat().hasDurationMax();
+    protected boolean hasTiming(Dosage dosage) {
+        return dosage.hasTiming();
     }
 
     @Override

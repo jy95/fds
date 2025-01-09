@@ -17,8 +17,14 @@ public class OffsetWhenR4 extends AbstractOffsetWhen<FDSConfigR4, Dosage> {
     }
 
     @Override
-    protected boolean hasTiming(Dosage dosage) {
-        return dosage.hasTiming();
+    public CompletableFuture<String> convert(Dosage dosage) {
+        var offsetPart = turnOffsetToText(dosage);
+        var whenPart = turnWhenToText(dosage);
+
+        return offsetPart.thenCombineAsync(whenPart,(offsetText, whenText) -> Stream
+                .of(offsetText, whenText)
+                .filter(s -> !s.isEmpty())
+                .collect(Collectors.joining(" ")));
     }
 
     @Override
@@ -29,14 +35,8 @@ public class OffsetWhenR4 extends AbstractOffsetWhen<FDSConfigR4, Dosage> {
     }
 
     @Override
-    public CompletableFuture<String> convert(Dosage dosage) {
-        var offsetPart = turnOffsetToText(dosage);
-        var whenPart = turnWhenToText(dosage);
-
-        return offsetPart.thenCombineAsync(whenPart,(offsetText, whenText) -> Stream
-                .of(offsetText, whenText)
-                .filter(s -> !s.isEmpty())
-                .collect(Collectors.joining(" ")));
+    protected boolean hasTiming(Dosage dosage) {
+        return dosage.hasTiming();
     }
 
     private CompletableFuture<String> turnWhenToText(Dosage dosage) {

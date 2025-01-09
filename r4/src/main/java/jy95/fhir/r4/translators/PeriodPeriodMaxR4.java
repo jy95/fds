@@ -11,8 +11,13 @@ public class PeriodPeriodMaxR4 extends AbstractPeriodPeriodMax<FDSConfigR4, Dosa
     }
 
     @Override
-    protected boolean hasTiming(Dosage dosage) {
-        return dosage.hasTiming();
+    protected boolean hasPeriod(Dosage dosage) {
+        return dosage.getTiming().getRepeat().hasPeriod();
+    }
+
+    @Override
+    protected boolean hasPeriodMax(Dosage dosage) {
+        return dosage.getTiming().getRepeat().hasPeriodMax();
     }
 
     @Override
@@ -22,13 +27,8 @@ public class PeriodPeriodMaxR4 extends AbstractPeriodPeriodMax<FDSConfigR4, Dosa
     }
 
     @Override
-    protected boolean hasPeriod(Dosage dosage) {
-        return dosage.getTiming().getRepeat().hasPeriod();
-    }
-
-    @Override
-    protected boolean hasPeriodMax(Dosage dosage) {
-        return dosage.getTiming().getRepeat().hasPeriodMax();
+    protected boolean hasTiming(Dosage dosage) {
+        return dosage.hasTiming();
     }
 
     @Override

@@ -13,18 +13,6 @@ public class CountCountMaxR4 extends AbstractCountCountMax<FDSConfigR4, Dosage> 
     }
 
     @Override
-    protected boolean hasTiming(Dosage dosage) {
-        return dosage.hasTiming();
-    }
-
-    @Override
-    protected boolean hasRequiredElements(Dosage dosage) {
-        return dosage.getTiming().hasRepeat()
-                && (dosage.getTiming().getRepeat().hasCount()
-                || dosage.getTiming().getRepeat().hasCountMax());
-    }
-
-    @Override
     public CompletableFuture<String> convert(Dosage dosage) {
         return CompletableFuture.supplyAsync(() -> {
             var repeat = dosage.getTiming().getRepeat();
@@ -35,5 +23,17 @@ public class CountCountMaxR4 extends AbstractCountCountMax<FDSConfigR4, Dosage> 
             }
             return turnCountToText(repeat.getCount());
         });
+    }
+
+    @Override
+    protected boolean hasRequiredElements(Dosage dosage) {
+        return dosage.getTiming().hasRepeat()
+                && (dosage.getTiming().getRepeat().hasCount()
+                || dosage.getTiming().getRepeat().hasCountMax());
+    }
+
+    @Override
+    protected boolean hasTiming(Dosage dosage) {
+        return dosage.hasTiming();
     }
 }
