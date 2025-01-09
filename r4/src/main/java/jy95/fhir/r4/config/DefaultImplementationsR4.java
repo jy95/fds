@@ -42,7 +42,7 @@ public final class DefaultImplementationsR4 {
                 return codeableConcept.getText();
             }
 
-            if (codeableConcept.getCoding().isEmpty()) {
+            if (!codeableConcept.hasCoding()) {
                 return null;
             }
 
