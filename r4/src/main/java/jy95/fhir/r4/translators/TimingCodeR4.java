@@ -18,11 +18,6 @@ public class TimingCodeR4 extends AbstractTranslatorTiming<FDSConfigR4, Dosage> 
     }
 
     @Override
-    protected boolean hasRequiredElements(Dosage dosage) {
-        return dosage.getTiming().hasCode();
-    }
-
-    @Override
     public CompletableFuture<String> convert(Dosage dosage) {
         return this
                 .getConfig()
@@ -30,5 +25,10 @@ public class TimingCodeR4 extends AbstractTranslatorTiming<FDSConfigR4, Dosage> 
                 .apply(
                         dosage.getTiming().getCode()
                 );
+    }
+
+    @Override
+    protected boolean hasRequiredElements(Dosage dosage) {
+        return dosage.getTiming().hasCode();
     }
 }
