@@ -22,16 +22,16 @@ public class BoundsDurationR4 extends AbstractBoundsDuration<FDSConfigR4, Dosage
     }
 
     @Override
-    protected boolean hasRequiredElements(Dosage dosage) {
-        return dosage.getTiming().hasRepeat() && dosage.getTiming().getRepeat().hasBoundsDuration();
-    }
-
-    @Override
     public CompletableFuture<String> convert(Dosage dosage) {
         var bundle = getResources();
         var boundsDuration = dosage.getTiming().getRepeat().getBoundsDuration();
         return quantityToStringR4
                 .convert(bundle, getConfig(), boundsDuration)
                 .thenApplyAsync((durationText) -> boundsDurationMsg.format(new Object[]{durationText}));
+    }
+
+    @Override
+    protected boolean hasRequiredElements(Dosage dosage) {
+        return dosage.getTiming().hasRepeat() && dosage.getTiming().getRepeat().hasBoundsDuration();
     }
 }

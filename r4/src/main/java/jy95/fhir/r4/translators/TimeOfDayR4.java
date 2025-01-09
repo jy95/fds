@@ -14,8 +14,14 @@ public class TimeOfDayR4 extends AbstractTimeOfDay<FDSConfigR4, Dosage> {
     }
 
     @Override
-    protected boolean hasTiming(Dosage dosage) {
-        return dosage.hasTiming();
+    protected List<String> getTimes(Dosage dosage) {
+        return dosage
+                .getTiming()
+                .getRepeat()
+                .getTimeOfDay()
+                .stream()
+                .map(PrimitiveType::getValue)
+                .toList();
     }
 
     @Override
@@ -25,13 +31,7 @@ public class TimeOfDayR4 extends AbstractTimeOfDay<FDSConfigR4, Dosage> {
     }
 
     @Override
-    protected List<String> getTimes(Dosage dosage) {
-        return dosage
-                .getTiming()
-                .getRepeat()
-                .getTimeOfDay()
-                .stream()
-                .map(PrimitiveType::getValue)
-                .toList();
+    protected boolean hasTiming(Dosage dosage) {
+        return dosage.hasTiming();
     }
 }
