@@ -16,7 +16,7 @@ import java.util.Map;
 public abstract class AbstractCountCountMax<C extends FDSConfig, D> extends AbstractTranslatorTiming<C, D> {
     
     // Translations
-    /** MessageFormat instance used for "count" & "countMax" translation */
+    /** MessageFormat instance used for "count" &amp; "countMax" translation */
     protected final MessageFormat countMaxMsg;
     /** MessageFormat instance used for "count" translation. */
     protected final MessageFormat countMsg;

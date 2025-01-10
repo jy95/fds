@@ -18,7 +18,7 @@ import java.util.concurrent.CompletableFuture;
 public abstract class AbstractPeriodPeriodMax<C extends FDSConfig, D> extends AbstractTranslatorTiming<C, D> {
     
     // Translations
-    /** MessageFormat instance used for "period" & "periodMax" translation */
+    /** MessageFormat instance used for "period" &amp; "periodMax" translation */
     protected final MessageFormat periodMaxMsg;
     /** MessageFormat instance used for "period" */
     protected final MessageFormat periodMsg;

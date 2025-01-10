@@ -17,7 +17,7 @@ import java.util.concurrent.CompletableFuture;
 public abstract class AbstractFrequencyFrequencyMax<C extends FDSConfig, D> extends AbstractTranslatorTiming<C, D> {
 
     // Translations
-    /** MessageFormat instance used for "frequency" & "frequencyMax" translation */
+    /** MessageFormat instance used for "frequency" &amp; "frequencyMax" translation */
     protected final MessageFormat frequencyAndFrequencyMaxMsg;
     /** MessageFormat instance used for "frequencyMax" translation */
     protected final MessageFormat frequencyMaxMsg;

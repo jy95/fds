@@ -21,7 +21,7 @@ public abstract class AbstractDurationDurationMax<C extends FDSConfig, D> extend
     // Translations
     /** MessageFormat instance used for "duration" translation. */
     protected final MessageFormat durationMsg;
-    /** MessageFormat instance used for "duration" & "durationMax" translation */
+    /** MessageFormat instance used for "duration" &amp; "durationMax" translation */
     protected final MessageFormat durationMaxMsg;
 
     /**
