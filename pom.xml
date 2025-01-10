@@ -44,7 +44,7 @@
 
     <properties>
         <!-- https://maven.apache.org/guides/mini/guide-maven-ci-friendly.html -->
-        <revision>1.0.0</revision>
+        <revision>1.0.0-SNAPSHOT</revision>
         <java.version>21</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <lombok.version>1.18.36</lombok.version>
