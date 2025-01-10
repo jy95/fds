@@ -9,10 +9,24 @@ import java.util.stream.Stream;
 
 import jy95.fhir.common.config.FDSConfig;
 
+/**
+ * Abstract base class for converting quantity objects to human-readable strings.
+ * @param <C> The type of configuration object extending FDSConfig.
+ * @param <Q> The type of quantity object to be converted.
+ */
 public abstract class AbstractQuantityToString<C extends FDSConfig, Q> {
 
+    /**
+     * System URI for duration units in FHIR.
+     */
     final protected String DURATION_SYSTEM = "http://hl7.org/fhir/ValueSet/duration-units";
+    /**
+     * System URI for units of time in FHIR.
+     */
     final protected String UNITS_OF_TIME_SYSTEM = "http://hl7.org/fhir/ValueSet/units-of-time";
+    /**
+     * List of time-related systems.
+     */
     final protected List<String> TIME_SYSTEMS = List.of(DURATION_SYSTEM, UNITS_OF_TIME_SYSTEM);
 
     /**

@@ -10,12 +10,24 @@ import java.util.ArrayList;
 import java.util.concurrent.CompletableFuture;
 import java.util.List;
 
+/**
+ * An abstract class for translating "timing.repeat.duration" / "timing.repeat.durationMax".
+ *
+ * @param <C> The type of configuration, extending {@link FDSConfig}.
+ * @param <D> The type of the translated data.
+ */
 public abstract class AbstractDurationDurationMax<C extends FDSConfig, D> extends AbstractTranslatorTiming<C, D> {
 
     // Translations
+    /** MessageFormat instance used for "duration" translation. */
     protected final MessageFormat durationMsg;
+    /** MessageFormat instance used for "duration" & "durationMax" translation */
     protected final MessageFormat durationMaxMsg;
 
+    /**
+     * Constructor for {@code AbstractDurationDurationMax}.
+     * @param config The configuration object used for translation.
+     */
     public AbstractDurationDurationMax(C config) {
         super(config);
         var locale = this.getConfig().getLocale();
@@ -59,17 +71,48 @@ public abstract class AbstractDurationDurationMax<C extends FDSConfig, D> extend
         });
     }
 
+    /**
+     * Converts the duration quantity and unit into a formatted string.
+     *
+     * @param durationUnit the unit code of duration (e.g., "d", "h").
+     * @param quantity the quantity of the duration.
+     * @return the formatted string representing the duration.
+     */
     protected String quantityToString(String durationUnit, BigDecimal quantity){
         var bundle = this.getResources();
         var commonDurationMsg = bundle.getString("withCount." + durationUnit);
         return MessageFormat.format(commonDurationMsg, quantity);
     }
 
+    /**
+     * Determines if the dosage data contains a valid "duration" value.
+     *
+     * @param dosage the dosage data.
+     * @return true if the dosage contains a "duration" value, false otherwise.
+     */
     protected abstract boolean hasDuration(D dosage);
 
+    /**
+     * Determines if the dosage data contains a valid "durationMax" value.
+     *
+     * @param dosage the dosage data.
+     * @return true if the dosage contains a "durationMax" value, false otherwise.
+     */
     protected abstract boolean hasDurationMax(D dosage);
 
+    /**
+     * Converts the "duration" value in the dosage data into a formatted string.
+     *
+     * @param dosage the dosage data.
+     * @return the formatted string representing the "duration".
+     */
     protected abstract String turnDurationToString(D dosage);
 
+    /**
+     * Converts the "durationMax" value in the dosage data into a formatted string.
+     *
+     * @param dosage the dosage data.
+     * @return the formatted string representing the "durationMax".
+     */
     protected abstract String turnDurationMaxToString(D dosage);
 }

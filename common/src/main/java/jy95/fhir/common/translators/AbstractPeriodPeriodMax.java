@@ -9,12 +9,24 @@ import java.math.BigDecimal;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * An abstract class for translating "timing.repeat.period" / "timing.repeat.periodMax".
+ *
+ * @param <C> The type of configuration, extending {@link FDSConfig}.
+ * @param <D> The type of the translated data.
+ */
 public abstract class AbstractPeriodPeriodMax<C extends FDSConfig, D> extends AbstractTranslatorTiming<C, D> {
     
     // Translations
+    /** MessageFormat instance used for "period" & "periodMax" translation */
     protected final MessageFormat periodMaxMsg;
+    /** MessageFormat instance used for "period" */
     protected final MessageFormat periodMsg;
-    
+
+    /**
+     * Constructor for {@code AbstractPeriodPeriodMax}.
+     * @param config The configuration object used for translation.
+     */
     public AbstractPeriodPeriodMax(C config) {
         super(config);
         var locale = this.getConfig().getLocale();
@@ -44,14 +56,45 @@ public abstract class AbstractPeriodPeriodMax<C extends FDSConfig, D> extends Ab
         });
     }
 
+    /**
+     * Checks whether a period value is present in the data object.
+     *
+     * @param dosage The data object to check.
+     * @return {@code true} if a period value is present; {@code false} otherwise.
+     */
     protected abstract boolean hasPeriod(D dosage);
 
+    /**
+     * Checks whether a periodMax value is present in the data object.
+     *
+     * @param dosage The data object to check.
+     * @return {@code true} if a periodMax value is present; {@code false} otherwise.
+     */
     protected abstract boolean hasPeriodMax(D dosage);
 
+    /**
+     * Converts both period and periodMax values into a formatted string.
+     *
+     * @param dosage The data object containing the values.
+     * @return A formatted string representing both period and periodMax.
+     */
     protected abstract String turnPeriodAndPeriodMaxToString(D dosage);
 
+    /**
+     * Converts the period value into a formatted string.
+     *
+     * @param dosage The data object containing the period value.
+     * @return A formatted string representing the period.
+     */
     protected abstract String turnPeriodToString(D dosage);
 
+    /**
+     * Formats a single period value with its unit.
+     *
+     * @param period The period value.
+     * @param unitText The localized unit of the period.
+     * @return A formatted string representing the period and its unit.
+     */
     protected String formatPeriodText(BigDecimal period, String unitText){
         Map<String, Object> arguments = Map.of(
                 "period", period,
@@ -60,6 +103,14 @@ public abstract class AbstractPeriodPeriodMax<C extends FDSConfig, D> extends Ab
         return periodMsg.format(arguments);
     }
 
+    /**
+     * Formats both period and periodMax values with their shared unit.
+     *
+     * @param periodMin The minimum period value.
+     * @param periodMax The maximum period value.
+     * @param unitText The localized unit of the periods.
+     * @return A formatted string representing the range of periods and their unit.
+     */
     protected String formatPeriodAndPeriodMaxText(BigDecimal periodMin, BigDecimal periodMax, String unitText) {
         Map<String, Object> arguments = Map.of(
                 "maxPeriod", periodMax,
@@ -69,6 +120,13 @@ public abstract class AbstractPeriodPeriodMax<C extends FDSConfig, D> extends Ab
         return periodMaxMsg.format(arguments);
     }
 
+    /**
+     * Retrieves the localized unit name for the given period unit and amount.
+     *
+     * @param periodUnit The unit code of the period (e.g., "d", "h").
+     * @param amount The quantity associated with the period unit.
+     * @return A localized string representing the unit.
+     */
     protected String getUnit(String periodUnit, BigDecimal amount) {
         var unitMsg = getResources().getString("withoutCount." + periodUnit);
         return MessageFormat.format(unitMsg, amount);
