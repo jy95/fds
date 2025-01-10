@@ -2,8 +2,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>jy95.fhir</groupId>
-        <artifactId>dosage-support</artifactId>
+        <groupId>io.github.jy95.fds</groupId>
+        <artifactId>fhir-dosage-support</artifactId>
         <version>${revision}</version>
     </parent>
     <artifactId>universal-coverage</artifactId>
@@ -16,19 +16,19 @@
 
         <!-- Add the other modules -->
         <dependency>
-            <groupId>jy95.fhir</groupId>
+            <groupId>io.github.jy95.fds</groupId>
             <artifactId>common</artifactId>
             <version>${project.version}</version>
         </dependency>
 
         <dependency>
-            <groupId>jy95.fhir</groupId>
+            <groupId>io.github.jy95.fds</groupId>
             <artifactId>r4</artifactId>
             <version>${project.version}</version>
         </dependency>
 
         <dependency>
-            <groupId>jy95.fhir</groupId>
+            <groupId>io.github.jy95.fds</groupId>
             <artifactId>r5</artifactId>
             <version>${project.version}</version>
         </dependency>
