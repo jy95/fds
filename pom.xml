@@ -134,4 +134,17 @@
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>skip-coverage</id>
+            <modules>
+                <module>common</module>
+                <module>r4</module>
+                <module>r5</module>
+                <!-- Excluding the universal-coverage module -->
+            </modules>
+        </profile>
+    </profiles>
+
 </project>

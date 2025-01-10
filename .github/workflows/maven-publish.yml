@@ -6,7 +6,10 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
+      # Check out the repository code
       - uses: actions/checkout@v4
+
+      # Set up Maven Central Repository with GPG signing
       - name: ☕ Set up Maven Central Repository
         uses: actions/setup-java@v4
         with:
@@ -17,10 +20,14 @@ jobs:
           server-password: MAVEN_PASSWORD
           gpg-private-key: ${{ secrets.GPG_SIGNING_KEY }}
           gpg-passphrase: MAVEN_GPG_PASSPHRASE
+
+      # Set the project version based on the release tag
       - name: 🤖 Set version
         run: mvn versions:set -DnewVersion=${{ github.event.release.tag_name }}
+
+      # Publish package using the 'skip-coverage' profile to exclude 'universal-coverage'
       - name: 📦 Publish package
-        run: mvn -P release --batch-mode deploy -DskipTests
+        run: mvn -P release,skip-coverage --batch-mode deploy -DskipTests
         env:
           MAVEN_USERNAME: ${{ secrets.CENTRAL_TOKEN_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.CENTRAL_TOKEN_PASSWORD }}
