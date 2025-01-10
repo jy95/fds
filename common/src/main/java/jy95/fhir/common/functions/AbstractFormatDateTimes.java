@@ -4,6 +4,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * Abstract base class for formatting DateTime objects into human-readable strings.
+ * @param <T> The type of the DateTime object to be formatted.
+ */
 public abstract class AbstractFormatDateTimes<T> {
 
     /**

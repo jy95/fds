@@ -12,6 +12,9 @@ import java.util.function.Function;
 
 import jy95.fhir.common.types.DisplayOrder;
 
+/**
+ * Configuration class for controlling how dosage are handled and displayed.
+ */
 @Getter
 @SuperBuilder
 public class FDSConfig {

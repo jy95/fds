@@ -11,16 +11,37 @@ import jy95.fhir.common.config.FDSConfig;
 import jy95.fhir.common.functions.ListToString;
 import lombok.Getter;
 
+/**
+ * Abstract class providing API methods for translating and formatting dosage data.
+ * @param <C> the type of configuration extending {@link FDSConfig}
+ * @param <D> the type of dosage handled by this API
+ */
 @Getter
 public abstract class DosageAPI<C extends FDSConfig, D> {
+    /**
+     * The configuration object used by this API.
+     */
     private final C config;
+    /**
+     * The resource bundle containing localized strings for translation.
+     */
     private final ResourceBundle resources;
 
+    /**
+     * Constructs a new {@code DosageAPI} with the specified configuration.
+     * @param config the configuration object providing locale and resource bundle
+     */
     public DosageAPI(C config) {
         this.config = config;
         this.resources = config.getSelectResourceBundle().apply(config.getLocale());
     }
 
+    /**
+     * Converts specified dosage fields into a human-readable string representation asynchronously.
+     * @param dosage the dosage object to translate
+     * @param fields the fields to include in the translation
+     * @return a {@link CompletableFuture} with the combined human-readable string
+     */
     public CompletableFuture<String> getFields(D dosage, DisplayOrder... fields) {
         var separator = this.config.getDisplaySeparator();
 
@@ -43,15 +64,36 @@ public abstract class DosageAPI<C extends FDSConfig, D> {
                 );
     }
 
+    /**
+     * Retrieves the translator associated with the specified display order.
+     * @param displayOrder the display order used to find the translator
+     * @return the corresponding {@link AbstractTranslator}, or {@code null} if not found
+     */
     public abstract AbstractTranslator<C, D> getTranslator(DisplayOrder displayOrder);
 
+    /**
+     * Checks if the given list of dosages contains only sequential instructions.
+     * @param dosages the list of dosages to check
+     * @return {@code true} if all dosages are sequential, {@code false} otherwise
+     */
     public abstract boolean containsOnlySequentialInstructions(List<D> dosages);
 
+    /**
+     * Converts a single dosage object into human-readable text asynchronously.
+     * @param dosage the dosage object to translate
+     * @return a {@link CompletableFuture} with the human-readable string
+     */
     public CompletableFuture<String> asHumanReadableText(D dosage) {
         var fields = this.config.getDisplayOrder().toArray(DisplayOrder[]::new);
         return getFields(dosage, fields);
     }
 
+    /**
+     * Converts a list of dosage objects into human-readable text asynchronously.
+     * Handles both sequential and grouped dosages appropriately.
+     * @param dosages the list of dosage objects to translate
+     * @return a {@link CompletableFuture} with the combined human-readable string
+     */
     public CompletableFuture<String> asHumanReadableText(List<D> dosages) {
         if (containsOnlySequentialInstructions(dosages)) {
             return convertSequentialDosagesToText(dosages);
@@ -59,6 +101,11 @@ public abstract class DosageAPI<C extends FDSConfig, D> {
         return convertGroupedDosagesToText(dosages);
     }
 
+    /**
+     * Converts sequential dosages into a human-readable text asynchronously.
+     * @param dosages the list of sequential dosages
+     * @return a {@link CompletableFuture} with the human-readable string
+     */
     protected CompletableFuture<String> convertSequentialDosagesToText(List<D> dosages) {
         List<CompletableFuture<String>> dosagesAsTextFutures = dosages.stream()
                 .map(this::asHumanReadableText)
@@ -72,6 +119,11 @@ public abstract class DosageAPI<C extends FDSConfig, D> {
                 });
     }
 
+    /**
+     * Converts grouped dosages into a human-readable text asynchronously.
+     * @param dosages the list of grouped dosages
+     * @return a {@link CompletableFuture} with the human-readable string
+     */
     protected CompletableFuture<String> convertGroupedDosagesToText(List<D> dosages) {
         var sortedDosages = groupBySequence(dosages);
 
@@ -87,6 +139,11 @@ public abstract class DosageAPI<C extends FDSConfig, D> {
                 });
     }
 
+    /**
+     * Converts concurrent dosages into a human-readable text asynchronously.
+     * @param dosages the list of concurrent dosages
+     * @return a {@link CompletableFuture} with the human-readable string
+     */
     protected CompletableFuture<String> convertConcurrentDosagesToText(List<D> dosages) {
         List<CompletableFuture<String>> concurrentInstructionsFutures = dosages.stream()
                 .map(this::asHumanReadableText)
@@ -100,16 +157,30 @@ public abstract class DosageAPI<C extends FDSConfig, D> {
                 });
     }
 
+    /**
+     * Groups the given list of dosages by sequence for processing.
+     * @param dosages the list of dosages to group
+     * @return a list of grouped dosages
+     */
     protected abstract List<List<D>> groupBySequence(List<D> dosages);
 
-    // Helper method to extract completed futures
+    /**
+     * Extracts completed results from a list of {@link CompletableFuture} instances.
+     * @param futures the list of futures to extract results from
+     * @return a list of completed results
+     */
     private List<String> extractCompletedFutures(List<CompletableFuture<String>> futures) {
         return futures.stream()
                 .map(future -> future.getNow("")) // Extracting results with default fallback
                 .toList();
     }
 
-    // Helper method to use ListToString.convert with  LinkWord
+    /**
+     * Converts a list of strings into a single formatted string using a link word.
+     * @param textList the list of strings to combine
+     * @param linkWord the linking word to use between strings
+     * @return the combined string
+     */
     private String convertToText(List<String> textList, ListToString.LinkWord linkWord) {
         var bundle = this.getResources();
         return ListToString.convert(bundle, textList, linkWord);

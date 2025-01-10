@@ -9,11 +9,22 @@ import jy95.fhir.common.types.AbstractTranslatorTiming;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * An abstract class for translating "timing.repeat.dayOfWeek".
+ *
+ * @param <C> The type of configuration, extending {@link FDSConfig}.
+ * @param <D> The type of the translated data.
+ */
 public abstract class AbstractDayOfWeek<C extends FDSConfig, D> extends AbstractTranslatorTiming<C, D> {
     
     // Translations
+    /** MessageFormat instance used for "dayOfWeek" translation. */
     protected final MessageFormat dayOfWeekMsg;
 
+    /**
+     * Constructor for {@code AbstractDayOfWeek}.
+     * @param config The configuration object used for translation.
+     */
     public AbstractDayOfWeek(C config) {
         super(config);
         var bundle = this.getResources();
@@ -22,6 +33,12 @@ public abstract class AbstractDayOfWeek<C extends FDSConfig, D> extends Abstract
         dayOfWeekMsg = new MessageFormat(msg, locale);
     }
 
+    /**
+     * Translates a single day code into its corresponding day of the week in text.
+     *
+     * @param dayCode the code representing the day (e.g., "mon", "tue").
+     * @return the translated day of the week as a string.
+     */
     protected String dayToText(String dayCode) {
         String dayTranslation = getResources().getString("day." + dayCode);
 
@@ -34,6 +51,11 @@ public abstract class AbstractDayOfWeek<C extends FDSConfig, D> extends Abstract
         return messageFormat.format(dayArguments);
     }
 
+    /**
+     * Translates a list of days in text.
+     * @param days the list of days (e.g., ["monday", "wednesday", "friday"]).
+     * @return the translated days of the week as a formatted string.
+     */
     protected String daysToText(List<String> days) {
         var dayOfWeeksAsString = ListToString.convert(getResources(), days);
 

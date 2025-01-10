@@ -9,6 +9,11 @@ import com.ibm.icu.text.MessageFormat;
 
 import jy95.fhir.common.config.FDSConfig;
 
+/**
+ * Abstract base class for converting range objects to human-readable strings.
+ * @param <C> The type of configuration object extending FDSConfig.
+ * @param <R> The type of range object to be converted.
+ */
 public abstract class AbstractRangeToString<C extends FDSConfig, R> {
 
     /**

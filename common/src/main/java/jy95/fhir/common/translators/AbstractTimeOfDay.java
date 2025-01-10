@@ -10,11 +10,22 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * An abstract class for translating "timing.repeat.timeOfDay".
+ *
+ * @param <C> The type of configuration, extending {@link FDSConfig}.
+ * @param <D> The type of the translated data.
+ */
 public abstract class AbstractTimeOfDay<C extends FDSConfig, D> extends AbstractTranslatorTiming<C, D> {
     
     // Translations
+    /** MessageFormat instance used for "timeOfDay" translation. */
     protected final MessageFormat timeOfDayMsg;
 
+    /**
+     * Constructor for {@code AbstractTimeOfDay}.
+     * @param config The configuration object used for translation.
+     */
     public AbstractTimeOfDay(C config) {
         super(config);
         var locale = this.getConfig().getLocale();
@@ -41,12 +52,20 @@ public abstract class AbstractTimeOfDay<C extends FDSConfig, D> extends Abstract
         });
     }
 
+    /**
+     * Extracts a list of time values from the data object.
+     *
+     * @param dosage The data object containing time values.
+     * @return A list of times represented as strings in the format hh:mm:ss.
+     */
     protected abstract List<String> getTimes(D dosage);
 
     /**
-     * Time during the day, in the format hh:mm:ss (a subset of [ISO8601] icon).
-     * There is no date specified. Seconds must be provided due to schema type constraints
-     * but may be zero-filled and may be ignored at receiver discretion.
+     * Formats a time string to remove unnecessary seconds if they are zero.
+     * The input must follow the format hh:mm:ss, where seconds may be ignored if zero.
+     *
+     * @param time A time string in the format hh:mm:ss.
+     * @return A formatted time string with optional seconds removed.
      */
     protected String formatString(String time) {
         String[] parts = time.split(":");
