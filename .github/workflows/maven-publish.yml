@@ -1,14 +1,49 @@
-name: Publish package to the Maven Central Repository
+name: Publish package to Maven and GitHub
+
 on:
   release:
     types: [created]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version to publish (will append -SNAPSHOT)"
+        required: false
+
 jobs:
-  publish:
+
+  common-steps:
     runs-on: ubuntu-latest
     steps:
       # Check out the repository code
       - uses: actions/checkout@v4
 
+      # Set up
+      - name: ☕ Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      # Set the project version based on the release tag
+      - name: 🤖 Set version
+        run: |
+          VERSION=${{ github.event.inputs.version || github.event.release.tag_name }}
+          mvn versions:set-property -Dproperty=revision -DnewVersion=${VERSION}-SNAPSHOT -DgenerateBackupPoms=false
+
+      # Install dependencies only once, across jobs
+      - name: 📦 Install dependencies
+        run: mvn install
+
+      # Fail fast
+      - name: 🧪 Run tests
+        run: mvn test
+
+
+  # Publish to Maven Central
+  publish-maven-central:
+    needs: common-steps
+    runs-on: ubuntu-latest
+    steps:
       # Set up Maven Central Repository with GPG signing
       - name: ☕ Set up Maven Central Repository
         uses: actions/setup-java@v4
@@ -21,10 +56,6 @@ jobs:
           gpg-private-key: ${{ secrets.GPG_SIGNING_KEY }}
           gpg-passphrase: MAVEN_GPG_PASSPHRASE
 
-      # Set the project version based on the release tag
-      - name: 🤖 Set version
-        run: mvn versions:set-property -Dproperty=revision -DnewVersion=${{ github.event.release.tag_name }}-SNAPSHOT -DgenerateBackupPoms=false
-
       # Publish package using the 'skip-coverage' profile to exclude 'universal-coverage'
       - name: 📦 Publish package
         run: mvn -P release,skip-coverage --batch-mode deploy -DskipTests
@@ -32,3 +63,15 @@ jobs:
           MAVEN_USERNAME: ${{ secrets.CENTRAL_TOKEN_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.CENTRAL_TOKEN_PASSWORD }}
           MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_SIGNING_KEY_PASSWORD }}
+
+  # Publish to GitHub Packages Apache Maven
+  publish-github-packages:
+    needs: common-steps
+    runs-on: ubuntu-latest
+    steps:
+      # Thanks to common steps, no need to recall @setup/java again to update settings to Github ones
+      # Publish package using the 'skip-coverage' profile to exclude 'universal-coverage'
+      - name: 📦 Publish package
+        run: mvn -P release,skip-coverage --batch-mode deploy -DskipTests
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
