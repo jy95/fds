@@ -146,7 +146,7 @@
 
     <profiles>
         <profile>
-            <id>skip-coverage</id>
+            <id>release</id>
             <modules>
                 <module>common</module>
                 <module>r4</module>

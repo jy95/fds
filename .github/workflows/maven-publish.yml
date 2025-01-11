@@ -33,9 +33,9 @@ jobs:
           gpg-private-key: ${{ secrets.GPG_SIGNING_KEY }}
           gpg-passphrase: MAVEN_GPG_PASSPHRASE
 
-      # Publish package using the 'skip-coverage' profile to exclude 'universal-coverage'
+      # Publish package using the 'release' profile to exclude 'universal-coverage'
       - name: 📦 Publish package
-        run: mvn -P release,skip-coverage -B deploy -DdryRun=${{ github.event.inputs.dry-run || 'false' }}
+        run: mvn -P release -B deploy -DdryRun=${{ github.event.inputs.dry-run || 'false' }}
         env:
           MAVEN_USERNAME: ${{ secrets.CENTRAL_TOKEN_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.CENTRAL_TOKEN_PASSWORD }}
@@ -56,8 +56,8 @@ jobs:
           java-version: ${{ env.JAVA_VERSION }}
           distribution: ${{ env.DISTRIBUTION }}
 
-      # Publish package using the 'skip-coverage' profile to exclude 'universal-coverage'
+      # Publish package using the 'release' profile to exclude 'universal-coverage'
       - name: 📦 Publish package
-        run: mvn -P release,skip-coverage -B deploy -DdryRun=${{ github.event.inputs.dry-run || 'false' }}
+        run: mvn -P release -B deploy -DdryRun=${{ github.event.inputs.dry-run || 'false' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
