@@ -17,6 +17,11 @@
         <module>universal-coverage</module>
     </modules>
 
+    <issueManagement>
+        <system>GitHub</system>
+        <url>https://github.com/jy95/fds/issues/</url>
+    </issueManagement>
+
     <licenses>
         <license>
             <name>Apache License, Version 2.0</name>
@@ -153,6 +158,38 @@
                 <module>r5</module>
                 <!-- Excluding the universal-coverage module -->
             </modules>
+        </profile>
+
+        <profile>
+            <id>ossrh</id>
+            <distributionManagement>
+                <snapshotRepository>
+                    <id>ossrh</id>
+                    <name>Central Repository OSSRH</name>
+                    <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+                </snapshotRepository>
+                <repository>
+                    <id>ossrh</id>
+                    <name>Central Repository OSSRH</name>
+                    <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+                </repository>
+            </distributionManagement>
+        </profile>
+
+        <profile>
+            <id>github</id>
+            <distributionManagement>
+                <snapshotRepository>
+                    <id>github</id>
+                    <name>GitHub Packages</name>
+                    <url>https://maven.pkg.github.com/jy95/fds</url>
+                </snapshotRepository>
+                <repository>
+                    <id>github</id>
+                    <name>GitHub Packages</name>
+                    <url>https://maven.pkg.github.com/jy95/fds</url>
+                </repository>
+            </distributionManagement>
         </profile>
     </profiles>
 
