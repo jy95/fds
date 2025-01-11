@@ -23,7 +23,7 @@ jobs:
 
       # Set the project version based on the release tag
       - name: 🤖 Set version
-        run: mvn versions:set -DnewVersion=${{ github.event.release.tag_name }}
+        run: mvn versions:set -DnewVersion=${{ github.event.release.tag_name }}-SNAPSHOT -DgenerateBackupPoms=false
 
       # Publish package using the 'skip-coverage' profile to exclude 'universal-coverage'
       - name: 📦 Publish package
