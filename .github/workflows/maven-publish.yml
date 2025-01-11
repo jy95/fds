@@ -8,6 +8,10 @@ on:
       version:
         description: "Version to publish (will append -SNAPSHOT)"
         required: false
+      dry-run:
+        description: "Run the workflow without actually publishing"
+        required: false
+        default: 'false'
 
 env:
   JAVA_VERSION: '21'
@@ -29,7 +33,8 @@ jobs:
           distribution: ${{ env.DISTRIBUTION }}
 
       # Set the project version based on the release tag
-      - name: 🤖 Set version
+      - name: 🤖 Set version (only if version or tag exists)
+        if: ${{ github.event.inputs.version || github.event.release.tag_name }}
         run: |
           VERSION=${{ github.event.inputs.version || github.event.release.tag_name }}
           mvn versions:set-property -Dproperty=revision -DnewVersion=${VERSION}-SNAPSHOT -DgenerateBackupPoms=false
@@ -62,7 +67,7 @@ jobs:
 
       # Publish package using the 'skip-coverage' profile to exclude 'universal-coverage'
       - name: 📦 Publish package
-        run: mvn -P release,skip-coverage --batch-mode deploy -DskipTests
+        run: mvn -P release,skip-coverage --batch-mode deploy -DskipTests -DdryRun=${{ github.event.inputs.dry-run || 'false' }}
         env:
           MAVEN_USERNAME: ${{ secrets.CENTRAL_TOKEN_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.CENTRAL_TOKEN_PASSWORD }}
@@ -76,6 +81,6 @@ jobs:
       # Thanks to common steps, no need to recall @setup/java again to update settings to Github ones
       # Publish package using the 'skip-coverage' profile to exclude 'universal-coverage'
       - name: 📦 Publish package
-        run: mvn -P release,skip-coverage --batch-mode deploy -DskipTests
+        run: mvn -P release,skip-coverage --batch-mode deploy -DskipTests -DdryRun=${{ github.event.inputs.dry-run || 'false' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
