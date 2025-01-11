@@ -7,6 +7,8 @@
         <version>${revision}</version>
     </parent>
     <artifactId>r5</artifactId>
+    <name>${project.name} - R5</name>
+    <description>Support for FHIR R5 Dosage, enabling human-readable text conversion and other related features.</description>
 
     <dependencies>
         <dependency>
