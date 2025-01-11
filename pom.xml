@@ -179,11 +179,6 @@
         <profile>
             <id>github</id>
             <distributionManagement>
-                <snapshotRepository>
-                    <id>github</id>
-                    <name>GitHub Packages</name>
-                    <url>https://maven.pkg.github.com/jy95/fds</url>
-                </snapshotRepository>
                 <repository>
                     <id>github</id>
                     <name>GitHub Packages</name>
