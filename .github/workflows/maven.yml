@@ -21,9 +21,9 @@ jobs:
           distribution: 'temurin'
           cache: 'maven'
       - name: 📦 Install dependencies
-        run: mvn install
+        run: mvn -P test install
       - name: 🧪 Run tests with coverage
-        run: mvn test
+        run: mvn -P test test
       - name: 🤖 Run codacy-coverage-reporter
         uses: codacy/codacy-coverage-reporter-action@v1.3.0
         with:

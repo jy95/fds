@@ -14,7 +14,6 @@
         <module>common</module>
         <module>r4</module>
         <module>r5</module>
-        <module>universal-coverage</module>
     </modules>
     
     <url>https://github.com/jy95/fds</url>
@@ -154,13 +153,11 @@
     </build>
 
     <profiles>
+
         <profile>
-            <id>release</id>
+            <id>test</id>
             <modules>
-                <module>common</module>
-                <module>r4</module>
-                <module>r5</module>
-                <!-- Excluding the universal-coverage module -->
+                <module>universal-coverage</module>
             </modules>
         </profile>
 
