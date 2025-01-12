@@ -5,6 +5,8 @@ import com.ibm.icu.text.MessageFormat;
 import io.github.jy95.fds.common.config.FDSConfig;
 import io.github.jy95.fds.common.types.AbstractTranslator;
 
+import java.util.concurrent.CompletableFuture;
+
 /**
  * Abstract class for translating fields related to the "as needed" / "as needed for" concepts .
  *
@@ -30,4 +32,29 @@ public abstract class AbstractAsNeeded<C extends FDSConfig, D> extends AbstractT
         asNeededForMsg = new MessageFormat(msg, this.getConfig().getLocale());
         asNeededMsg = bundle.getString("fields.asNeeded");
     }
+
+    @Override
+    public CompletableFuture<String> convert(D dosage) {
+
+        // Complex case - "as-need" for ...
+        if (hasCodeableConcepts(dosage)) {
+            return convertCodeableConcepts(dosage);
+        }
+
+        // Simple case - only "as-needed"
+        return CompletableFuture.supplyAsync(() -> asNeededMsg);
+    }
+
+    /**
+     * Check if "as needed" is expressed with CodeableConcept ("asNeededFor" / "asNeededCodeableConcept")
+     * @return true if it is the case, otherwise false
+     */
+    protected abstract boolean hasCodeableConcepts(D dosage);
+
+    /**
+     * Turn CodeableConcept(s) to a human-readable string
+     * @param dosage the dosage field to be converted
+     * @return a {@link CompletableFuture} that will complete with the human-readable string
+     */
+    protected abstract CompletableFuture<String> convertCodeableConcepts(D dosage);
 }

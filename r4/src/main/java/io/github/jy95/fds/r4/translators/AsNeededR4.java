@@ -15,28 +15,26 @@ public class AsNeededR4 extends AbstractAsNeeded<FDSConfigR4, Dosage> {
     }
 
     @Override
-    public CompletableFuture<String> convert(Dosage dosage) {
-        var bundle = getResources();
-
-        // Complex case - "as-need" for ...
-        if (dosage.hasAsNeededCodeableConcept()) {
-            var code = dosage.getAsNeededCodeableConcept();
-            var codeAsText = this
-                    .getConfig()
-                    .getFromCodeableConceptToString()
-                    .apply(code);
-
-            return codeAsText
-                    .thenApplyAsync(v -> ListToString.convert(bundle, List.of(v)))
-                    .thenApplyAsync(v -> asNeededForMsg.format(new Object[]{v}));
-        }
-
-        // Simple case - only "as-needed"
-        return CompletableFuture.supplyAsync(() -> asNeededMsg);
+    public boolean isPresent(Dosage dosage) {
+        return dosage.hasAsNeeded();
     }
 
     @Override
-    public boolean isPresent(Dosage dosage) {
-        return dosage.hasAsNeeded();
+    protected boolean hasCodeableConcepts(Dosage dosage) {
+        return dosage.hasAsNeededCodeableConcept();
+    }
+
+    @Override
+    protected CompletableFuture<String> convertCodeableConcepts(Dosage dosage) {
+        var bundle = getResources();
+        var code = dosage.getAsNeededCodeableConcept();
+        var codeAsText = this
+                .getConfig()
+                .getFromCodeableConceptToString()
+                .apply(code);
+
+        return codeAsText
+                .thenApplyAsync(v -> ListToString.convert(bundle, List.of(v)))
+                .thenApplyAsync(v -> asNeededForMsg.format(new Object[]{v}));
     }
 }
