@@ -18,34 +18,6 @@ public class BoundsPeriodR4 extends AbstractBoundsPeriod<FDSConfigR4, Dosage> {
     }
 
     @Override
-    public CompletableFuture<String> convert(Dosage dosage) {
-        return CompletableFuture.supplyAsync(() -> {
-
-            var boundPeriods = dosage.getTiming().getRepeat().getBoundsPeriod();
-            var hasStart = boundPeriods.hasStart();
-            var hasEnd = boundPeriods.hasEnd();
-            var locale = this.getConfig().getLocale();
-
-            // Prepare date values using FormatDateTimes.convert()
-            String startDate = hasStart ? formatDateTimesR4.convert(locale, boundPeriods.getStartElement()) : "";
-            String endDate = hasEnd ? formatDateTimesR4.convert(locale, boundPeriods.getEndElement()) : "";
-
-            // Choose the correct condition based on the presence of start and end dates
-            String condition = hasStart && hasEnd ? "0" : (hasStart ? "1" : "other");
-
-            // Create a map of named arguments
-            Map<String, Object> arguments = Map.of(
-                    "startDate", startDate,
-                    "endDate", endDate,
-                    "condition", condition
-            );
-
-            // Format the message with the named arguments
-            return boundsPeriodMsg.format(arguments);
-        });
-    }
-
-    @Override
     protected boolean hasRequiredElements(Dosage dosage) {
         return dosage.getTiming().hasRepeat() && dosage.getTiming().getRepeat().hasBoundsPeriod();
     }
@@ -53,5 +25,29 @@ public class BoundsPeriodR4 extends AbstractBoundsPeriod<FDSConfigR4, Dosage> {
     @Override
     protected boolean hasTiming(Dosage dosage) {
         return dosage.hasTiming();
+    }
+
+    @Override
+    protected boolean hasStartPeriod(Dosage dosage) {
+        return dosage.getTiming().getRepeat().getBoundsPeriod().hasStart();
+    }
+
+    @Override
+    protected boolean hasEndPeriod(Dosage dosage) {
+        return dosage.getTiming().getRepeat().getBoundsPeriod().hasEnd();
+    }
+
+    @Override
+    protected String formatStartPeriod(Dosage dosage) {
+        var boundPeriods = dosage.getTiming().getRepeat().getBoundsPeriod();
+        var locale = this.getConfig().getLocale();
+        return formatDateTimesR4.convert(locale, boundPeriods.getStartElement());
+    }
+
+    @Override
+    protected String formatEndPeriod(Dosage dosage) {
+        var locale = this.getConfig().getLocale();
+        var boundPeriods = dosage.getTiming().getRepeat().getBoundsPeriod();
+        return formatDateTimesR4.convert(locale, boundPeriods.getEndElement());
     }
 }

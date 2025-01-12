@@ -3,39 +3,12 @@ package io.github.jy95.fds.common.functions;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import io.github.jy95.fds.common.types.LinkWord;
+
 /**
  * Utility class for converting a list of strings into a human-readable string.
  */
 public final class ListToString {
-
-    /**
-     * Enum representing the link words used to combine list elements.
-     */
-    public enum LinkWord {
-        /**
-         * Represents the "and" link word.
-         */
-        AND("and"),
-        /**
-         * Represents the "then" link word.
-         */
-        THEN("then");
-
-        private final String value;
-
-        LinkWord(String value) {
-            this.value = value;
-        }
-
-        /**
-         * Retrieves the value of the link word.
-         *
-         * @return The string value of the link word.
-         */
-        public String getValue() {
-            return value;
-        }
-    }
 
     /**
      * Converts a list of strings into a human-readable string using a specified link word.
