@@ -13,19 +13,6 @@ public class CountCountMaxR4 extends AbstractCountCountMax<FDSConfigR4, Dosage> 
     }
 
     @Override
-    public CompletableFuture<String> convert(Dosage dosage) {
-        return CompletableFuture.supplyAsync(() -> {
-            var repeat = dosage.getTiming().getRepeat();
-
-            // Rule: If there's a countMax, there must be a count
-            if (repeat.hasCountMax()) {
-                return turnCountAndCountMaxToText(repeat.getCount(), repeat.getCountMax());
-            }
-            return turnCountToText(repeat.getCount());
-        });
-    }
-
-    @Override
     protected boolean hasRequiredElements(Dosage dosage) {
         return dosage.getTiming().hasRepeat()
                 && (dosage.getTiming().getRepeat().hasCount()
@@ -35,5 +22,20 @@ public class CountCountMaxR4 extends AbstractCountCountMax<FDSConfigR4, Dosage> 
     @Override
     protected boolean hasTiming(Dosage dosage) {
         return dosage.hasTiming();
+    }
+
+    @Override
+    protected int getCountMax(Dosage dosage) {
+        return dosage.getTiming().getRepeat().getCountMax();
+    }
+
+    @Override
+    protected int getCount(Dosage dosage) {
+        return dosage.getTiming().getRepeat().getCount();
+    }
+
+    @Override
+    protected boolean hasCountMax(Dosage dosage) {
+        return dosage.getTiming().getRepeat().hasCountMax();
     }
 }

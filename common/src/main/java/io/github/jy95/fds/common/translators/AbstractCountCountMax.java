@@ -6,6 +6,7 @@ import io.github.jy95.fds.common.config.FDSConfig;
 import io.github.jy95.fds.common.types.AbstractTranslatorTiming;
 
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * An abstract class for translating "timing.repeat.count" / "timing.repeat.countMax".
@@ -35,6 +36,21 @@ public abstract class AbstractCountCountMax<C extends FDSConfig, D> extends Abst
         countMsg = new MessageFormat(msg2, locale);
     }
 
+    @Override
+    public CompletableFuture<String> convert(D dosage) {
+        return CompletableFuture.supplyAsync(() -> {
+
+            // Rule: If there's a countMax, there must be a count
+            if (hasCountMax(dosage)) {
+                return turnCountAndCountMaxToText(
+                        getCount(dosage),
+                        getCountMax(dosage)
+                );
+            }
+            return turnCountToText(getCount(dosage));
+        });
+    }
+
     /**
      * Turns the "count" and "countMax" values into a formatted text.
      *
@@ -59,4 +75,22 @@ public abstract class AbstractCountCountMax<C extends FDSConfig, D> extends Abst
     protected String turnCountToText(int count) {
         return countMsg.format(new Object[]{count});
     }
+
+    /**
+     * Extract "timing.repeat.count"
+     * @param dosage the dosage object to check
+     */
+    protected abstract int getCount(D dosage);
+
+    /**
+     * Extract "timing.repeat.countMax"
+     * @param dosage the dosage object to check
+     */
+    protected abstract int getCountMax(D dosage);
+
+    /**
+     * Check if "timing.repeat.countMax" exists
+     * @param dosage the dosage object to check
+     */
+    protected abstract boolean hasCountMax(D dosage);
 }
