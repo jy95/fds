@@ -115,7 +115,7 @@ public abstract class DosageAPI<C extends FDSConfig, D> {
                 .allOf(dosagesAsTextFutures.toArray(CompletableFuture[]::new))
                 .thenApplyAsync(v -> {
                     var dosagesAsText = extractCompletedFutures(dosagesAsTextFutures);
-                    return convertToText(dosagesAsText, ListToString.LinkWord.THEN);
+                    return convertToText(dosagesAsText, LinkWord.THEN);
                 });
     }
 
@@ -135,7 +135,7 @@ public abstract class DosageAPI<C extends FDSConfig, D> {
                 .allOf(sequentialInstructionsFutures.toArray(CompletableFuture[]::new))
                 .thenApplyAsync(v -> {
                     var dosagesAsText = extractCompletedFutures(sequentialInstructionsFutures);
-                    return convertToText(dosagesAsText, ListToString.LinkWord.THEN);
+                    return convertToText(dosagesAsText, LinkWord.THEN);
                 });
     }
 
@@ -153,7 +153,7 @@ public abstract class DosageAPI<C extends FDSConfig, D> {
                 .allOf(concurrentInstructionsFutures.toArray(CompletableFuture[]::new))
                 .thenApplyAsync(v -> {
                     var dosagesAsText = extractCompletedFutures(concurrentInstructionsFutures);
-                    return convertToText(dosagesAsText, ListToString.LinkWord.AND); // Defaults to LinkWord.AND
+                    return convertToText(dosagesAsText, LinkWord.AND); // Defaults to LinkWord.AND
                 });
     }
 
@@ -181,7 +181,7 @@ public abstract class DosageAPI<C extends FDSConfig, D> {
      * @param linkWord the linking word to use between strings
      * @return the combined string
      */
-    private String convertToText(List<String> textList, ListToString.LinkWord linkWord) {
+    private String convertToText(List<String> textList, LinkWord linkWord) {
         var bundle = this.getResources();
         return ListToString.convert(bundle, textList, linkWord);
     }

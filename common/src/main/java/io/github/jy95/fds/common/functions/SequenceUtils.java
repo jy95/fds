@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
  * A utility class for handling sequences of dosages.
  * Provides methods for checking sequential instructions and grouping by sequence.
  */
-public class SequenceUtils {
+public final class SequenceUtils {
 
     /**
      * Checks if the given list of dosages contains only sequential instructions.
