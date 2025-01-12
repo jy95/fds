@@ -6,7 +6,9 @@ import org.hl7.fhir.r4.model.Dosage;
 
 import java.util.concurrent.CompletableFuture;
 
-// R4 class for translating "timing.code"
+/**
+ * R4 class for translating "timing.code"
+ */
 public class TimingCodeR4 extends AbstractTranslatorTiming<FDSConfigR4, Dosage> {
 
     /**

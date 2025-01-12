@@ -11,6 +11,9 @@ import java.util.concurrent.CompletableFuture;
 
 import static io.github.jy95.fds.r4.config.DefaultImplementationsR4.hasMatchingComponent;
 
+/**
+ * R4 class for translating "doseAndRate.rateRatio"
+ */
 public class RateRatioR4 extends AbstractRateRatio<FDSConfigR4, Dosage> {
 
     private final RatioToStringR4 ratioToStringR4;

@@ -9,6 +9,9 @@ import java.util.EnumMap;
 import java.util.Map;
 import io.github.jy95.fds.r4.translators.*;
 
+/**
+ * Map for R4 translators
+ */
 public class TranslatorsMapR4 extends AbstractTranslatorsMap<FDSConfigR4, Dosage> {
 
     /**

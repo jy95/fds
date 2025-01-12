@@ -7,7 +7,9 @@ import org.hl7.fhir.r4.model.PrimitiveType;
 
 import java.util.List;
 
-// R4 class for translating "timing.repeat.timeOfDay"
+/**
+ * R4 class for translating "timing.repeat.timeOfDay"
+ */
 public class TimeOfDayR4 extends AbstractTimeOfDay<FDSConfigR4, Dosage> {
 
     /**

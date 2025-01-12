@@ -11,6 +11,9 @@ import java.util.concurrent.CompletableFuture;
 
 import static io.github.jy95.fds.r4.config.DefaultImplementationsR4.hasMatchingComponent;
 
+/**
+ * R4 class for translating "doseAndRate.rateQuantity"
+ */
 public class RateQuantityR4 extends AbstractRateQuantity<FDSConfigR4, Dosage> {
 
     private final QuantityToStringR4 quantityToStringR4;

@@ -6,7 +6,9 @@ import org.hl7.fhir.r4.model.Dosage;
 
 import java.util.concurrent.CompletableFuture;
 
-// R4 class for translating "route"
+/**
+ * R4 class for translating "route"
+ */
 public class RouteR4 extends AbstractTranslator<FDSConfigR4, Dosage> {
 
     /**

@@ -8,6 +8,9 @@ import org.hl7.fhir.r4.model.Dosage;
 
 import java.util.List;
 
+/**
+ * R4 class for translating "timing.event"
+ */
 public class TimingEventR4 extends AbstractTimingEvent<FDSConfigR4, Dosage> {
 
     private final FormatDateTimesR4 formatDateTimesR4;

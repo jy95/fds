@@ -11,6 +11,9 @@ import java.util.concurrent.CompletableFuture;
 
 import static io.github.jy95.fds.r4.config.DefaultImplementationsR4.hasMatchingComponent;
 
+/**
+ * R4 class for translating "doseAndRate.doseRange"
+ */
 public class DoseRangeR4 extends AbstractDoseRange<FDSConfigR4, Dosage> {
 
     protected final RangeToStringR4 rangeToStringR4;

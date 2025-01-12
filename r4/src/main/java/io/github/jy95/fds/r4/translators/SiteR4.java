@@ -6,7 +6,9 @@ import org.hl7.fhir.r4.model.Dosage;
 
 import java.util.concurrent.CompletableFuture;
 
-// R4 class for translating "site"
+/**
+ * R4 class for translating "site"
+ */
 public class SiteR4 extends AbstractTranslator<FDSConfigR4, Dosage> {
 
     /**
