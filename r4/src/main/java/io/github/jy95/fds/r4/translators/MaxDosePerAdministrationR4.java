@@ -7,6 +7,9 @@ import org.hl7.fhir.r4.model.Dosage;
 
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * R4 class for translating "maxDosePerAdministration"
+ */
 public class MaxDosePerAdministrationR4 extends AbstractMaxDosePerAdministration<FDSConfigR4, Dosage> {
 
     private final QuantityToStringR4 quantityToStringR4;

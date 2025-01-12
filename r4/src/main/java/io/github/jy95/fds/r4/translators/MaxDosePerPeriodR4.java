@@ -7,6 +7,9 @@ import org.hl7.fhir.r4.model.Dosage;
 
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * R4 class for translating "maxDosePerPeriod"
+ */
 public class MaxDosePerPeriodR4 extends AbstractMaxDosePerPeriod<FDSConfigR4, Dosage> {
 
     protected final RatioToStringR4 ratioToStringR4;

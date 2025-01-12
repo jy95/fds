@@ -10,6 +10,9 @@ import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * R4 class for translating "timing.repeat.offset" / "timing.repeat.when"
+ */
 public class OffsetWhenR4 extends AbstractOffsetWhen<FDSConfigR4, Dosage> {
 
     /**

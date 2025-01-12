@@ -4,6 +4,9 @@ import io.github.jy95.fds.common.translators.AbstractPeriodPeriodMax;
 import io.github.jy95.fds.r4.config.FDSConfigR4;
 import org.hl7.fhir.r4.model.Dosage;
 
+/**
+ * R4 class for translating "timing.repeat.period" / "timing.repeat.periodMax"
+ */
 public class PeriodPeriodMaxR4 extends AbstractPeriodPeriodMax<FDSConfigR4, Dosage> {
 
     /**

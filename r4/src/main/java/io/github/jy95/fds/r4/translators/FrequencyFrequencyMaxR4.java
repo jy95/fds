@@ -4,6 +4,9 @@ import io.github.jy95.fds.common.translators.AbstractFrequencyFrequencyMax;
 import io.github.jy95.fds.r4.config.FDSConfigR4;
 import org.hl7.fhir.r4.model.Dosage;
 
+/**
+ * R4 class for translating "timing.repeat.frequency" / "timing.repeat.frequencyMax"
+ */
 public class FrequencyFrequencyMaxR4 extends AbstractFrequencyFrequencyMax<FDSConfigR4, Dosage> {
 
     /**
