@@ -145,6 +145,7 @@
                 <configuration>
                     <autoVersionSubmodules>true</autoVersionSubmodules>
                     <projectVersionPolicyId>SemVerVersionPolicy</projectVersionPolicyId>
+                    <releaseProfiles>release</releaseProfiles>
                 </configuration>
             </plugin>
         </plugins>

@@ -38,7 +38,7 @@ jobs:
 
       # Publish package using the 'release' profile to exclude 'universal-coverage'
       - name: 📦 Publish package
-        run: mvn -P release,ossrh -B deploy -DdryRun=${{ github.event.inputs.dry-run || 'false' }}
+        run: mvn -P ossrh -B deploy -DdryRun=${{ github.event.inputs.dry-run || 'false' }}
         env:
           MAVEN_USERNAME: ${{ secrets.CENTRAL_TOKEN_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.CENTRAL_TOKEN_PASSWORD }}
@@ -65,6 +65,6 @@ jobs:
 
       # Publish package using the 'release' profile to exclude 'universal-coverage'
       - name: 📦 Publish package
-        run: mvn -P release,github -B deploy -DdryRun=${{ github.event.inputs.dry-run || 'false' }}
+        run: mvn -P github -B deploy -DdryRun=${{ github.event.inputs.dry-run || 'false' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
