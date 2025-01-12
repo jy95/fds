@@ -25,7 +25,7 @@ jobs:
         with:
           java-version: ${{ env.JAVA_VERSION }}
           distribution: ${{ env.DISTRIBUTION }}
-          server-id: ossrh
+          server-id: central
           server-username: MAVEN_USERNAME
           server-password: MAVEN_PASSWORD
           gpg-private-key: ${{ secrets.GPG_SIGNING_KEY }}
@@ -33,7 +33,7 @@ jobs:
 
       # Publish package using the 'release' profile to exclude 'universal-coverage'
       - name: 📦 Publish package
-        run: mvn -P ossrh -B deploy
+        run: mvn -P central -B deploy
         env:
           MAVEN_USERNAME: ${{ secrets.CENTRAL_TOKEN_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.CENTRAL_TOKEN_PASSWORD }}
