@@ -45,8 +45,10 @@ jobs:
     needs: publish-maven-central
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
       packages: write
+    outputs:
+      version: ${{ steps.latest-tag.outputs.tag }}
     steps:
 
       # Check out the repository code
@@ -65,3 +67,30 @@ jobs:
         run: mvn -P github -B deploy
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # Push tags and files
+      - name: 📤 Push tags and files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git push && git push --tags
+
+      # Get the latest tag
+      - name: 🔍 Get the latest tag
+        id: latest-tag
+        uses: WyriHaximus/github-action-get-previous-tag@v1.4.0
+        
+  # Create GitHub Release
+  create-github-release:
+    needs: publish-github-packages
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      # Use the latest pushed tag
+      - name: ✨ Create GitHub Release
+        uses: ncipollo/release-action@v1.15.0
+        with:
+          generateReleaseNotes: true
+          tag: ${{ needs.publish-github-packages.outputs.version }}
+          commit: main
