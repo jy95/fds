@@ -2,7 +2,6 @@ package io.github.jy95.fds.common.config;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
-import java.util.concurrent.CompletableFuture;
 
 import io.github.jy95.fds.common.bundle.MultiResourceBundleControl;
 

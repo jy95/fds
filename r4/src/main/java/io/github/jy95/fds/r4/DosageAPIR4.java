@@ -9,7 +9,6 @@ import io.github.jy95.fds.r4.utils.TranslatorsMapR4;
 import org.hl7.fhir.r4.model.Dosage;
 
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
 public class DosageAPIR4 extends DosageAPI<FDSConfigR4, Dosage> {
 
