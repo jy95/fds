@@ -15,6 +15,10 @@ public class RateRangeR4 extends AbstractRateRange<FDSConfigR4, Dosage> {
 
     private final RangeToStringR4 rangeToStringR4;
 
+    /**
+     * Constructor for {@code RateRangeR4}.
+     * @param config The configuration object used for translation.
+     */
     public RateRangeR4(FDSConfigR4 config) {
         super(config);
         rangeToStringR4 = new RangeToStringR4();

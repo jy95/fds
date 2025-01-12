@@ -6,8 +6,13 @@ import org.hl7.fhir.r4.model.Dosage;
 
 import java.util.concurrent.CompletableFuture;
 
+// R4 class for translating "text"
 public class TextR4 extends AbstractTranslator<FDSConfigR4, Dosage> {
 
+    /**
+     * Constructor for {@code TextR4}.
+     * @param config The configuration object used for translation.
+     */
     public TextR4(FDSConfigR4 config) {
         super(config);
     }

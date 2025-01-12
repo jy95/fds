@@ -12,6 +12,10 @@ public class BoundsPeriodR4 extends AbstractBoundsPeriod<FDSConfigR4, Dosage> {
 
     private final FormatDateTimesR4 formatDateTimesR4;
 
+    /**
+     * Constructor for {@code BoundsPeriodR4}.
+     * @param config The configuration object used for translation.
+     */
     public BoundsPeriodR4(FDSConfigR4 config) {
         super(config);
         formatDateTimesR4 = new FormatDateTimesR4();

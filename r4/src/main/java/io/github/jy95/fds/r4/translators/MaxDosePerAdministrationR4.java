@@ -11,6 +11,10 @@ public class MaxDosePerAdministrationR4 extends AbstractMaxDosePerAdministration
 
     private final QuantityToStringR4 quantityToStringR4;
 
+    /**
+     * Constructor for {@code MaxDosePerAdministrationR4}.
+     * @param config The configuration object used for translation.
+     */
     public MaxDosePerAdministrationR4(FDSConfigR4 config) {
         super(config);
         quantityToStringR4 = new QuantityToStringR4();

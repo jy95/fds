@@ -79,18 +79,21 @@ public abstract class AbstractCountCountMax<C extends FDSConfig, D> extends Abst
     /**
      * Extract "timing.repeat.count"
      * @param dosage the dosage object to check
+     * @return the int value of "timing.repeat.count"
      */
     protected abstract int getCount(D dosage);
 
     /**
      * Extract "timing.repeat.countMax"
      * @param dosage the dosage object to check
+     * @return the int value of "timing.repeat.countMax"
      */
     protected abstract int getCountMax(D dosage);
 
     /**
      * Check if "timing.repeat.countMax" exists
      * @param dosage the dosage object to check
+     * @return True if it is the case, false otherwise
      */
     protected abstract boolean hasCountMax(D dosage);
 }

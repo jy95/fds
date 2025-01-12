@@ -8,6 +8,10 @@ import java.util.concurrent.CompletableFuture;
 
 public class ModifierExtensionR4 extends AbstractTranslator<FDSConfigR4, Dosage> {
 
+    /**
+     * Constructor for {@code ModifierExtensionR4}.
+     * @param config The configuration object used for translation.
+     */
     public ModifierExtensionR4(FDSConfigR4 config) {
         super(config);
     }

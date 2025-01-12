@@ -8,6 +8,10 @@ import java.util.concurrent.CompletableFuture;
 
 public class TimingExtensionR4 extends AbstractTranslator<FDSConfigR4, Dosage> {
 
+    /**
+     * Constructor for {@code TimingExtensionR4}.
+     * @param config The configuration object used for translation.
+     */
     public TimingExtensionR4(FDSConfigR4 config) {
         super(config);
     }

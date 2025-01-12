@@ -6,6 +6,10 @@ import org.hl7.fhir.r4.model.Dosage;
 
 public class PeriodPeriodMaxR4 extends AbstractPeriodPeriodMax<FDSConfigR4, Dosage> {
 
+    /**
+     * Constructor for {@code PeriodPeriodMaxR4}.
+     * @param config The configuration object used for translation.
+     */
     public PeriodPeriodMaxR4(FDSConfigR4 config) {
         super(config);
     }

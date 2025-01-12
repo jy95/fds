@@ -8,6 +8,10 @@ import java.util.concurrent.CompletableFuture;
 
 public class DayOfWeekR4 extends AbstractDayOfWeek<FDSConfigR4, Dosage> {
 
+    /**
+     * Constructor for {@code DayOfWeekR4}.
+     * @param config The configuration object used for translation.
+     */
     public DayOfWeekR4(FDSConfigR4 config) {
         super(config);
     }

@@ -15,6 +15,10 @@ public class RateRatioR4 extends AbstractRateRatio<FDSConfigR4, Dosage> {
 
     private final RatioToStringR4 ratioToStringR4;
 
+    /**
+     * Constructor for {@code RateRatioR4}.
+     * @param config The configuration object used for translation.
+     */
     public RateRatioR4(FDSConfigR4 config) {
         super(config);
         ratioToStringR4 = new RatioToStringR4();

@@ -15,6 +15,10 @@ public class DoseRangeR4 extends AbstractDoseRange<FDSConfigR4, Dosage> {
 
     protected final RangeToStringR4 rangeToStringR4;
 
+    /**
+     * Constructor for {@code DoseRangeR4}.
+     * @param config The configuration object used for translation.
+     */
     public DoseRangeR4(FDSConfigR4 config) {
         super(config);
         rangeToStringR4 = new RangeToStringR4();

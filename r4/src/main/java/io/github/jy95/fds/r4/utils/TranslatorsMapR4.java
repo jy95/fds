@@ -11,6 +11,10 @@ import io.github.jy95.fds.r4.translators.*;
 
 public class TranslatorsMapR4 extends AbstractTranslatorsMap<FDSConfigR4, Dosage> {
 
+    /**
+     * Constructor for {@code TranslatorsMapR4}.
+     * @param config The configuration object used for translation.
+     */
     public TranslatorsMapR4(FDSConfigR4 config) {
         super(
                 new EnumMap<>(

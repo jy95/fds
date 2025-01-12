@@ -6,6 +6,10 @@ import org.hl7.fhir.r4.model.Dosage;
 
 public class DurationDurationMaxR4 extends AbstractDurationDurationMax<FDSConfigR4, Dosage> {
 
+    /**
+     * Constructor for {@code DurationDurationMaxR4}.
+     * @param config The configuration object used for translation.
+     */
     public DurationDurationMaxR4(FDSConfigR4 config) {
         super(config);
     }

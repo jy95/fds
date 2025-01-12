@@ -8,6 +8,10 @@ import java.util.concurrent.CompletableFuture;
 
 public class CountCountMaxR4 extends AbstractCountCountMax<FDSConfigR4, Dosage> {
 
+    /**
+     * Constructor for {@code CountCountMaxR4}.
+     * @param config The configuration object used for translation.
+     */
     public CountCountMaxR4(FDSConfigR4 config) {
         super(config);
     }

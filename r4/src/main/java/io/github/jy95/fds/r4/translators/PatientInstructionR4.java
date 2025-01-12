@@ -8,6 +8,10 @@ import java.util.concurrent.CompletableFuture;
 
 public class PatientInstructionR4 extends AbstractTranslator<FDSConfigR4, Dosage> {
 
+    /**
+     * Constructor for {@code PatientInstructionR4}.
+     * @param config The configuration object used for translation.
+     */
     public PatientInstructionR4(FDSConfigR4 config) {
         super(config);
     }

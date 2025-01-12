@@ -10,6 +10,10 @@ import java.util.concurrent.CompletableFuture;
 
 public class AsNeededR4 extends AbstractAsNeeded<FDSConfigR4, Dosage> {
 
+    /**
+     * Constructor for {@code AsNeededR4}.
+     * @param config The configuration object used for translation.
+     */
     public AsNeededR4(FDSConfigR4 config) {
         super(config);
     }

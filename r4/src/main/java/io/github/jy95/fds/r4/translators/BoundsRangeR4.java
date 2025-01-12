@@ -11,6 +11,10 @@ public class BoundsRangeR4 extends AbstractBoundsRange<FDSConfigR4, Dosage> {
 
     private final RangeToStringR4 rangeToStringR4;
 
+    /**
+     * Constructor for {@code BoundsRangeR4}.
+     * @param config The configuration object used for translation.
+     */
     public BoundsRangeR4(FDSConfigR4 config) {
         super(config);
         rangeToStringR4 = new RangeToStringR4();

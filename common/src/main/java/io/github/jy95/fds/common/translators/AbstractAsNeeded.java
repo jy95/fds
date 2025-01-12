@@ -47,6 +47,7 @@ public abstract class AbstractAsNeeded<C extends FDSConfig, D> extends AbstractT
 
     /**
      * Check if "as needed" is expressed with CodeableConcept ("asNeededFor" / "asNeededCodeableConcept")
+     * @param dosage The dosage to check
      * @return true if it is the case, otherwise false
      */
     protected abstract boolean hasCodeableConcepts(D dosage);

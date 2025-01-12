@@ -6,6 +6,10 @@ import org.hl7.fhir.r4.model.Dosage;
 
 public class FrequencyFrequencyMaxR4 extends AbstractFrequencyFrequencyMax<FDSConfigR4, Dosage> {
 
+    /**
+     * Constructor for {@code FrequencyFrequencyMaxR4}.
+     * @param config The configuration object used for translation.
+     */
     public FrequencyFrequencyMaxR4(FDSConfigR4 config) {
         super(config);
     }

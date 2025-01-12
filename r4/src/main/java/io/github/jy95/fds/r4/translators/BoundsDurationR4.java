@@ -11,6 +11,10 @@ public class BoundsDurationR4 extends AbstractBoundsDuration<FDSConfigR4, Dosage
 
     private final QuantityToStringR4 quantityToStringR4;
 
+    /**
+     * Constructor for {@code BoundsDurationR4}.
+     * @param config The configuration object used for translation.
+     */
     public BoundsDurationR4(FDSConfigR4 config) {
         super(config);
         quantityToStringR4 = new QuantityToStringR4();

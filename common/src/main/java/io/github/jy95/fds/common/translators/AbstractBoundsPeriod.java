@@ -60,12 +60,14 @@ public abstract class AbstractBoundsPeriod<C extends FDSConfig, D> extends Abstr
     /**
      * Check if dosage has a "start" period
      * @param dosage the dosage object to check
+     * @return True if it is the case, otherwise false
      */
     protected abstract boolean hasStartPeriod(D dosage);
 
     /**
      * Check if dosage has a "end" period
      * @param dosage the dosage object to check
+     * @return True if it is the case, otherwise false
      */
     protected abstract boolean hasEndPeriod(D dosage);
 

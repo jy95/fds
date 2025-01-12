@@ -12,6 +12,10 @@ import java.util.stream.Stream;
 
 public class OffsetWhenR4 extends AbstractOffsetWhen<FDSConfigR4, Dosage> {
 
+    /**
+     * Constructor for {@code OffsetWhenR4}.
+     * @param config The configuration object used for translation.
+     */
     public OffsetWhenR4(FDSConfigR4 config) {
         super(config);
     }

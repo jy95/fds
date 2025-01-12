@@ -15,6 +15,10 @@ public class RateQuantityR4 extends AbstractRateQuantity<FDSConfigR4, Dosage> {
 
     private final QuantityToStringR4 quantityToStringR4;
 
+    /**
+     * Constructor for {@code RateQuantityR4}.
+     * @param config The configuration object used for translation.
+     */
     public RateQuantityR4(FDSConfigR4 config) {
         super(config);
         quantityToStringR4 = new QuantityToStringR4();

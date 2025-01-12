@@ -10,6 +10,7 @@ import org.hl7.fhir.r4.model.Dosage;
 
 import java.util.List;
 
+// R4 class for translating and formatting dosage data
 public class DosageAPIR4 extends DosageAPI<FDSConfigR4, Dosage> {
 
     private final TranslatorsMapR4 translatorsMapR4;

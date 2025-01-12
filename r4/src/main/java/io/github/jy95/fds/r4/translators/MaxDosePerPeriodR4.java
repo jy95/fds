@@ -11,6 +11,10 @@ public class MaxDosePerPeriodR4 extends AbstractMaxDosePerPeriod<FDSConfigR4, Do
 
     protected final RatioToStringR4 ratioToStringR4;
 
+    /**
+     * Constructor for {@code MaxDosePerPeriodR4}.
+     * @param config The configuration object used for translation.
+     */
     public MaxDosePerPeriodR4(FDSConfigR4 config) {
         super(config);
         ratioToStringR4 = new RatioToStringR4();
