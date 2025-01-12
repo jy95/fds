@@ -10,8 +10,16 @@ import io.github.jy95.fds.common.types.DoseAndRateKey;
 import io.github.jy95.fds.r4.functions.DoseAndRateRegistryR4;
 import org.hl7.fhir.r4.model.*;
 
+/**
+ * Provides FHIR R4 implementations for common operations in the library.
+ */
 public final class DefaultImplementationsR4 {
-    
+
+    /**
+     * Converts a FHIR {@link Quantity} object to a string representation of its unit or code.
+     * @param quantity the {@link Quantity} object to be converted.
+     * @return a {@link CompletableFuture} that resolves to the unit or code of the {@link Quantity}
+     */
     public static CompletableFuture<String> fromFHIRQuantityUnitToString(Quantity quantity) {
         return CompletableFuture.supplyAsync(() -> {
 
@@ -31,6 +39,11 @@ public final class DefaultImplementationsR4 {
         });
     }
 
+    /**
+     * Converts a FHIR {@link CodeableConcept} to a string representation.
+     * @param codeableConcept the {@link CodeableConcept} to be converted.
+     * @return a {@link CompletableFuture} that resolves to the text, display, or code of the first coding
+     */
     public static CompletableFuture<String> fromCodeableConceptToString(CodeableConcept codeableConcept) {
         return CompletableFuture.supplyAsync(() -> {
 
@@ -54,6 +67,11 @@ public final class DefaultImplementationsR4 {
         });
     }
 
+    /**
+     * Converts a list of FHIR {@link Extension} objects to a JSON-like string representation.
+     * @param extensions the list of {@link Extension} objects to be converted.
+     * @return a {@link CompletableFuture} that resolves to a JSON-like string representing the extensions.
+     */
     public static CompletableFuture<String> fromExtensionsToString(List<Extension> extensions) {
         return CompletableFuture.supplyAsync(() -> {
 
@@ -87,12 +105,24 @@ public final class DefaultImplementationsR4 {
         });
     }
 
+    /**
+     * Selects a specific dosage and rate field from a list of {@link Dosage.DosageDoseAndRateComponent}.
+     * @param doseAndRateComponentList the list of dosage components.
+     * @param doseAndRateKey the key used to extract the specific field.
+     * @return the extracted {@link Type} value.
+     */
     public static Type selectDosageAndRateField(List<Dosage.DosageDoseAndRateComponent> doseAndRateComponentList, DoseAndRateKey doseAndRateKey) {
         var extractor = DoseAndRateRegistryR4.getInstance().getExtractor(doseAndRateKey);
         var firstRep = doseAndRateComponentList.getFirst();
         return extractor.extract(firstRep);
     }
 
+    /**
+     * Checks if a {@link Dosage} has any component matching a given predicate. 
+     * @param dosage the {@link Dosage} to check.
+     * @param predicate the predicate to apply to each component.
+     * @return {@code true} if any component matches the predicate; {@code false} otherwise.
+     */
     public static boolean hasMatchingComponent(Dosage dosage, Predicate<Dosage.DosageDoseAndRateComponent> predicate) {
         return dosage.hasDoseAndRate() && dosage
                 .getDoseAndRate()
