@@ -2,11 +2,6 @@ name: Publish package to Maven and GitHub
 
 on:
   workflow_dispatch:
-    inputs:
-      dry-run:
-        description: "Run the workflow without actually publishing"
-        required: false
-        default: 'false'
 
 env:
   JAVA_VERSION: '21'
@@ -38,7 +33,7 @@ jobs:
 
       # Publish package using the 'release' profile to exclude 'universal-coverage'
       - name: 📦 Publish package
-        run: mvn -P ossrh -B deploy -DdryRun=${{ github.event.inputs.dry-run || 'false' }}
+        run: mvn -P ossrh -B deploy
         env:
           MAVEN_USERNAME: ${{ secrets.CENTRAL_TOKEN_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.CENTRAL_TOKEN_PASSWORD }}
@@ -46,6 +41,8 @@ jobs:
 
   # Publish to GitHub Packages Apache Maven
   publish-github-packages:
+    # Wait until publication is done at Maven Central, before creating the release at Github
+    needs: publish-maven-central
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -65,6 +62,6 @@ jobs:
 
       # Publish package using the 'release' profile to exclude 'universal-coverage'
       - name: 📦 Publish package
-        run: mvn -P github -B deploy -DdryRun=${{ github.event.inputs.dry-run || 'false' }}
+        run: mvn -P github -B deploy
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
