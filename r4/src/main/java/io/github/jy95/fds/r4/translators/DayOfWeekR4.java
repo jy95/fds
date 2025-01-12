@@ -6,6 +6,9 @@ import org.hl7.fhir.r4.model.Dosage;
 
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * R4 class for translating "timing.repeat.dayOfWeek"
+ */
 public class DayOfWeekR4 extends AbstractDayOfWeek<FDSConfigR4, Dosage> {
 
     /**

@@ -6,6 +6,9 @@ import org.hl7.fhir.r4.model.Dosage;
 
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * R4 class for translating "timing.repeat.count" / "timing.repeat.countMax"
+ */
 public class CountCountMaxR4 extends AbstractCountCountMax<FDSConfigR4, Dosage> {
 
     /**

@@ -8,6 +8,9 @@ import org.hl7.fhir.r4.model.Dosage;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * R4 class for translating "asNeededBoolean" / "asNeededCodeableConcept".
+ */
 public class AsNeededR4 extends AbstractAsNeeded<FDSConfigR4, Dosage> {
 
     /**

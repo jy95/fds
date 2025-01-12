@@ -4,6 +4,9 @@ import io.github.jy95.fds.common.translators.AbstractDurationDurationMax;
 import io.github.jy95.fds.r4.config.FDSConfigR4;
 import org.hl7.fhir.r4.model.Dosage;
 
+/**
+ * R4 class for translating "timing.repeat.duration" / "timing.repeat.durationMax"
+ */
 public class DurationDurationMaxR4 extends AbstractDurationDurationMax<FDSConfigR4, Dosage> {
 
     /**

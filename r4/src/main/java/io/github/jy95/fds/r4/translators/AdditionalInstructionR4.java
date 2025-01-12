@@ -6,7 +6,9 @@ import org.hl7.fhir.r4.model.Dosage;
 
 import java.util.concurrent.CompletableFuture;
 
-// R4 class for translating "additionalInstruction".
+/**
+ * R4 class for translating "additionalInstruction".
+ */
 public class AdditionalInstructionR4 extends AbstractAdditionalInstruction<FDSConfigR4, Dosage> {
 
     /**

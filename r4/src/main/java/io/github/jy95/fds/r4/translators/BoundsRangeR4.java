@@ -7,6 +7,9 @@ import org.hl7.fhir.r4.model.Dosage;
 
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * R4 class for translating "timing.repeat.boundsRange"
+ */
 public class BoundsRangeR4 extends AbstractBoundsRange<FDSConfigR4, Dosage> {
 
     private final RangeToStringR4 rangeToStringR4;

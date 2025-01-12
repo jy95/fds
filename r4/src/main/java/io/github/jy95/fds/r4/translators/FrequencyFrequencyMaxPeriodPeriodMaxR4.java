@@ -9,6 +9,9 @@ import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * R4 class for translating "timing.repeat.frequency" / "timing.repeat.frequencyMax" / "timing.repeat.period" / "timing.repeat.periodMax"
+ */
 public class FrequencyFrequencyMaxPeriodPeriodMaxR4 extends AbstractFrequencyFrequencyMaxPeriodPeriodMax<FDSConfigR4, Dosage> {
 
     public FrequencyFrequencyMaxPeriodPeriodMaxR4(FDSConfigR4 config,

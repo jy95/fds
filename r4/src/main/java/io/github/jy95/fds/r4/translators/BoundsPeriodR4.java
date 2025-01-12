@@ -8,6 +8,9 @@ import org.hl7.fhir.r4.model.Dosage;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * R4 class for translating "timing.repeat.boundsPeriod"
+ */
 public class BoundsPeriodR4 extends AbstractBoundsPeriod<FDSConfigR4, Dosage> {
 
     private final FormatDateTimesR4 formatDateTimesR4;
