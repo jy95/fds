@@ -38,7 +38,11 @@ public class TranslatorsMapR4 extends AbstractTranslatorsMap<FDSConfigR4, Dosage
                                 Map.entry(DisplayOrder.PERIOD_PERIOD_MAX, new PeriodPeriodMaxR4(config)),
                                 Map.entry(
                                         DisplayOrder.FREQUENCY_FREQUENCY_MAX_PERIOD_PERIOD_MAX,
-                                        new FrequencyFrequencyMaxPeriodPeriodMaxR4(config)
+                                        new FrequencyFrequencyMaxPeriodPeriodMaxR4(
+                                                config,
+                                                new FrequencyFrequencyMaxR4(config),
+                                                new PeriodPeriodMaxR4(config)
+                                        )
                                 ),
                                 Map.entry(DisplayOrder.COUNT_COUNT_MAX, new CountCountMaxR4(config)),
                                 Map.entry(DisplayOrder.DOSE_QUANTITY, new DoseQuantityR4(config)),
