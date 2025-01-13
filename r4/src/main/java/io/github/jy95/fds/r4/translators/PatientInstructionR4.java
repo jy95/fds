@@ -8,22 +8,27 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * R4 class for translating "patientInstruction"
+ *
+ * @author jy95
  */
 public class PatientInstructionR4 extends AbstractTranslator<FDSConfigR4, Dosage> {
 
     /**
      * Constructor for {@code PatientInstructionR4}.
+     *
      * @param config The configuration object used for translation.
      */
     public PatientInstructionR4(FDSConfigR4 config) {
         super(config);
     }
 
+    /** {@inheritDoc} */
     @Override
     public CompletableFuture<String> convert(Dosage dosage) {
         return CompletableFuture.supplyAsync(dosage::getPatientInstruction);
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean isPresent(Dosage dosage) {
         return dosage.hasPatientInstruction();

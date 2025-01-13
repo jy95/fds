@@ -8,17 +8,21 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * R4 class for translating "site"
+ *
+ * @author jy95
  */
 public class SiteR4 extends AbstractTranslator<FDSConfigR4, Dosage> {
 
     /**
      * Constructor for {@code SiteR4}.
+     *
      * @param config The configuration object used for translation.
      */
     public SiteR4(FDSConfigR4 config) {
         super(config);
     }
 
+    /** {@inheritDoc} */
     @Override
     public CompletableFuture<String> convert(Dosage dosage) {
         return this
@@ -29,6 +33,7 @@ public class SiteR4 extends AbstractTranslator<FDSConfigR4, Dosage> {
                 );
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean isPresent(Dosage dosage) {
         return dosage.hasSite();

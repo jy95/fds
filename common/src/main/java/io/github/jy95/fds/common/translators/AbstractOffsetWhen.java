@@ -13,13 +13,15 @@ import io.github.jy95.fds.common.types.AbstractTranslatorTiming;
 /**
  * An abstract class for translating "timing.repeat.offset" / "timing.repeat.when".
  *
- * @param <C> The type of configuration, extending {@link FDSConfig}.
+ * @param <C> The type of configuration, extending {@link io.github.jy95.fds.common.config.FDSConfig}.
  * @param <D> The type of the translated data.
+ * @author jy95
  */
 public abstract class AbstractOffsetWhen<C extends FDSConfig, D> extends AbstractTranslatorTiming<C, D> {
 
     /**
      * Constructor for {@code AbstractOffsetWhen}.
+     *
      * @param config The configuration object used for translation.
      */
     public AbstractOffsetWhen(C config) {
@@ -30,7 +32,7 @@ public abstract class AbstractOffsetWhen<C extends FDSConfig, D> extends Abstrac
      * Extracts the time components (days, hours, minutes) from a given offset in minutes.
      *
      * @param minutes The offset in minutes to be converted into days, hours, and minutes.
-     * @return A {@link Map} with keys "d" (days), "h" (hours), and "min" (minutes), and their corresponding values.
+     * @return A {@link java.util.Map} with keys "d" (days), "h" (hours), and "min" (minutes), and their corresponding values.
      */
     protected Map<String, Integer> extractTime(int minutes) {
         int d = minutes / 1440;
@@ -49,7 +51,7 @@ public abstract class AbstractOffsetWhen<C extends FDSConfig, D> extends Abstrac
      * The result combines the extracted time components (days, hours, minutes) into a formatted string.
      *
      * @param offset The offset in minutes to be converted.
-     * @return A {@link CompletableFuture} containing the formatted string representing the offset.
+     * @return A {@link java.util.concurrent.CompletableFuture} containing the formatted string representing the offset.
      */
     protected CompletableFuture<String> turnOffsetValueToText(int offset) { 
         return CompletableFuture.supplyAsync(() -> {

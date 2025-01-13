@@ -8,8 +8,9 @@ import io.github.jy95.fds.common.types.AbstractTranslator;
 /**
  * An abstract class for translating "doseAndRate.rateRatio".
  *
- * @param <C> The type of configuration, extending {@link FDSConfig}.
+ * @param <C> The type of configuration, extending {@link io.github.jy95.fds.common.config.FDSConfig}.
  * @param <D> The type of the translated data.
+ * @author jy95
  */
 public abstract class AbstractRateRatio<C extends FDSConfig, D> extends AbstractTranslator<C, D> {
 
@@ -19,6 +20,7 @@ public abstract class AbstractRateRatio<C extends FDSConfig, D> extends Abstract
 
     /**
      * Constructor for {@code AbstractRateRatio}.
+     *
      * @param config The configuration object used for translation.
      */
     public AbstractRateRatio(C config) {

@@ -10,6 +10,8 @@ import java.util.List;
 
 /**
  * R4 class for translating "timing.event"
+ *
+ * @author jy95
  */
 public class TimingEventR4 extends AbstractTimingEvent<FDSConfigR4, Dosage> {
 
@@ -17,6 +19,7 @@ public class TimingEventR4 extends AbstractTimingEvent<FDSConfigR4, Dosage> {
 
     /**
      * Constructor for {@code TimingEventR4}.
+     *
      * @param config The configuration object used for translation.
      */
     public TimingEventR4(FDSConfigR4 config) {
@@ -24,16 +27,19 @@ public class TimingEventR4 extends AbstractTimingEvent<FDSConfigR4, Dosage> {
         formatDateTimesR4 = new FormatDateTimesR4();
     }
 
+    /** {@inheritDoc} */
     @Override
     protected boolean hasTiming(Dosage dosage) {
         return dosage.hasTiming();
     }
 
+    /** {@inheritDoc} */
     @Override
     protected boolean hasRequiredElements(Dosage dosage) {
         return dosage.getTiming().hasEvent();
     }
 
+    /** {@inheritDoc} */
     @Override
     protected List<String> getEvents(Dosage dosage) {
         DateTimeType[] events = dosage.getTiming().getEvent().toArray(DateTimeType[]::new);

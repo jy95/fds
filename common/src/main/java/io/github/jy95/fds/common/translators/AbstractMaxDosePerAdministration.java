@@ -8,8 +8,9 @@ import io.github.jy95.fds.common.types.AbstractTranslator;
 /**
  * An abstract class for translating "maxDosePerAdministration".
  *
- * @param <C> The type of configuration, extending {@link FDSConfig}.
+ * @param <C> The type of configuration, extending {@link io.github.jy95.fds.common.config.FDSConfig}.
  * @param <D> The type of the translated data.
+ * @author jy95
  */
 public abstract class AbstractMaxDosePerAdministration<C extends FDSConfig, D> extends AbstractTranslator<C, D> {
 
@@ -19,6 +20,7 @@ public abstract class AbstractMaxDosePerAdministration<C extends FDSConfig, D> e
 
     /**
      * Constructor for {@code AbstractMaxDosePerAdministration}.
+     *
      * @param config The configuration object used for translation.
      */
     public AbstractMaxDosePerAdministration(C config) {

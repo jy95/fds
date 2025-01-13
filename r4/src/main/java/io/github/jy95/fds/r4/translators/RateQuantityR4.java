@@ -13,6 +13,8 @@ import static io.github.jy95.fds.r4.config.DefaultImplementationsR4.hasMatchingC
 
 /**
  * R4 class for translating "doseAndRate.rateQuantity"
+ *
+ * @author jy95
  */
 public class RateQuantityR4 extends AbstractRateQuantity<FDSConfigR4, Dosage> {
 
@@ -20,6 +22,7 @@ public class RateQuantityR4 extends AbstractRateQuantity<FDSConfigR4, Dosage> {
 
     /**
      * Constructor for {@code RateQuantityR4}.
+     *
      * @param config The configuration object used for translation.
      */
     public RateQuantityR4(FDSConfigR4 config) {
@@ -27,6 +30,7 @@ public class RateQuantityR4 extends AbstractRateQuantity<FDSConfigR4, Dosage> {
         quantityToStringR4 = new QuantityToStringR4();
     }
 
+    /** {@inheritDoc} */
     @Override
     public CompletableFuture<String> convert(Dosage dosage) {
         var rateQuantity = getConfig()
@@ -37,6 +41,7 @@ public class RateQuantityR4 extends AbstractRateQuantity<FDSConfigR4, Dosage> {
                 .thenApplyAsync(rateQuantityText -> rateQuantityMsg.format(new Object[]{rateQuantityText}));
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean isPresent(Dosage dosage) {
         return hasMatchingComponent(dosage, Dosage.DosageDoseAndRateComponent::hasRateQuantity);

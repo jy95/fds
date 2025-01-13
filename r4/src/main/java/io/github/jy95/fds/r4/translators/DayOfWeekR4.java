@@ -8,27 +8,33 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * R4 class for translating "timing.repeat.dayOfWeek"
+ *
+ * @author jy95
  */
 public class DayOfWeekR4 extends AbstractDayOfWeek<FDSConfigR4, Dosage> {
 
     /**
      * Constructor for {@code DayOfWeekR4}.
+     *
      * @param config The configuration object used for translation.
      */
     public DayOfWeekR4(FDSConfigR4 config) {
         super(config);
     }
 
+    /** {@inheritDoc} */
     @Override
     protected boolean hasTiming(Dosage dosage) {
         return dosage.hasTiming();
     }
 
+    /** {@inheritDoc} */
     @Override
     protected boolean hasRequiredElements(Dosage dosage) {
         return dosage.getTiming().hasRepeat() && dosage.getTiming().getRepeat().hasDayOfWeek();
     }
 
+    /** {@inheritDoc} */
     @Override
     public CompletableFuture<String> convert(Dosage dosage) {
         return CompletableFuture.supplyAsync(() -> {

@@ -11,8 +11,9 @@ import java.util.concurrent.CompletableFuture;
 /**
  * An abstract class for translating "timing.repeat.boundsPeriod".
  *
- * @param <C> The type of configuration, extending {@link FDSConfig}.
+ * @param <C> The type of configuration, extending {@link io.github.jy95.fds.common.config.FDSConfig}.
  * @param <D> The type of the translated data.
+ * @author jy95
  */
 public abstract class AbstractBoundsPeriod<C extends FDSConfig, D> extends AbstractTranslatorTiming<C, D> {
 
@@ -22,6 +23,7 @@ public abstract class AbstractBoundsPeriod<C extends FDSConfig, D> extends Abstr
 
     /**
      * Constructor for {@code AbstractBoundsPeriod}.
+     *
      * @param config The configuration object used for translation.
      */
     public AbstractBoundsPeriod(C config) {
@@ -30,6 +32,7 @@ public abstract class AbstractBoundsPeriod<C extends FDSConfig, D> extends Abstr
         boundsPeriodMsg = new MessageFormat(msg, getConfig().getLocale());
     }
 
+    /** {@inheritDoc} */
     @Override
     public CompletableFuture<String> convert(D dosage) {
         return CompletableFuture.supplyAsync(() -> {
@@ -59,6 +62,7 @@ public abstract class AbstractBoundsPeriod<C extends FDSConfig, D> extends Abstr
 
     /**
      * Check if dosage has a "start" period
+     *
      * @param dosage the dosage object to check
      * @return True if it is the case, otherwise false
      */
@@ -66,6 +70,7 @@ public abstract class AbstractBoundsPeriod<C extends FDSConfig, D> extends Abstr
 
     /**
      * Check if dosage has a "end" period
+     *
      * @param dosage the dosage object to check
      * @return True if it is the case, otherwise false
      */
@@ -73,6 +78,7 @@ public abstract class AbstractBoundsPeriod<C extends FDSConfig, D> extends Abstr
 
     /**
      * Format start period to a human-readable string
+     *
      * @param dosage the dosage field to be converted
      * @return the formatted start period as a string (e.g., "from May 23, 2011")
      */
@@ -80,6 +86,7 @@ public abstract class AbstractBoundsPeriod<C extends FDSConfig, D> extends Abstr
 
     /**
      * Format end period to a human-readable string
+     *
      * @param dosage the dosage field to be converted
      * @return the formatted end period as a string (e.g., "to Feb 7, 2015")
      */

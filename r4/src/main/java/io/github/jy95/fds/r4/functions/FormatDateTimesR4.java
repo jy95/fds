@@ -9,9 +9,12 @@ import io.github.jy95.fds.common.functions.AbstractFormatDateTimes;
 
 /**
  * R4 class for formatting DateTime objects into human-readable strings
+ *
+ * @author jy95
  */
 public class FormatDateTimesR4 extends AbstractFormatDateTimes<DateTimeType> {
 
+    /** {@inheritDoc} */
     @Override
     public String convert(Locale locale, DateTimeType date) {
         return DateTimeUtil.toHumanDisplay(

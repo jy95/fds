@@ -13,19 +13,24 @@ import io.github.jy95.fds.r4.config.FDSConfigR4;
 
 /**
  * R4 class for converting quantity objects to human-readable strings.
+ *
+ * @author jy95
  */
 public class QuantityToStringR4 extends AbstractQuantityToString<FDSConfigR4, Quantity> {
 
+    /** {@inheritDoc} */
     @Override
     public boolean hasUnit(Quantity quantity) {
         return quantity.hasUnit() || quantity.hasCode();
     }
 
+    /** {@inheritDoc} */
     @Override
     public BigDecimal getValue(Quantity quantity) {
         return quantity.getValue();
     }
 
+    /** {@inheritDoc} */
     @Override
     public CompletableFuture<String> enhancedFromUnitToString(ResourceBundle bundle, FDSConfigR4 config, Quantity quantity) {
 
@@ -43,6 +48,7 @@ public class QuantityToStringR4 extends AbstractQuantityToString<FDSConfigR4, Qu
         return config.getFromFHIRQuantityUnitToString().apply(quantity);
     }
 
+    /** {@inheritDoc} */
     @Override
     public CompletableFuture<String> comparatorToString(ResourceBundle bundle, FDSConfigR4 config, Quantity quantity) {
         if (quantity.hasComparator()) {

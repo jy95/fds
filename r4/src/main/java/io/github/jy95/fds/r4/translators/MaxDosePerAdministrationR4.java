@@ -9,6 +9,8 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * R4 class for translating "maxDosePerAdministration"
+ *
+ * @author jy95
  */
 public class MaxDosePerAdministrationR4 extends AbstractMaxDosePerAdministration<FDSConfigR4, Dosage> {
 
@@ -16,6 +18,7 @@ public class MaxDosePerAdministrationR4 extends AbstractMaxDosePerAdministration
 
     /**
      * Constructor for {@code MaxDosePerAdministrationR4}.
+     *
      * @param config The configuration object used for translation.
      */
     public MaxDosePerAdministrationR4(FDSConfigR4 config) {
@@ -23,6 +26,7 @@ public class MaxDosePerAdministrationR4 extends AbstractMaxDosePerAdministration
         quantityToStringR4 = new QuantityToStringR4();
     }
 
+    /** {@inheritDoc} */
     @Override
     public CompletableFuture<String> convert(Dosage dosage) {
         var quantity = dosage.getMaxDosePerAdministration();
@@ -35,6 +39,7 @@ public class MaxDosePerAdministrationR4 extends AbstractMaxDosePerAdministration
                 );
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean isPresent(Dosage dosage) {
         return dosage.hasMaxDosePerAdministration();

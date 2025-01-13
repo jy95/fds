@@ -10,6 +10,8 @@ import java.util.stream.Collectors;
 /**
  * A utility class for handling sequences of dosages.
  * Provides methods for checking sequential instructions and grouping by sequence.
+ *
+ * @author jy95
  */
 public final class SequenceUtils {
 

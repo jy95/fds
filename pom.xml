@@ -205,6 +205,10 @@
                                 </goals>
                             </execution>
                         </executions>
+                        <!-- Or run mvn javadoc:fix before release -->
+                        <configuration>
+                            <doclint>none</doclint>
+                        </configuration>
                     </plugin>
                     <!-- https://maven.apache.org/plugins/maven-gpg-plugin/ -->
                     <plugin>

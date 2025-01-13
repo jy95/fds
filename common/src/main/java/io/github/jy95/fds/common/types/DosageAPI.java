@@ -13,8 +13,10 @@ import lombok.Getter;
 
 /**
  * Abstract class providing API methods for translating and formatting dosage data.
- * @param <C> the type of configuration extending {@link FDSConfig}
+ *
+ * @param <C> the type of configuration extending {@link io.github.jy95.fds.common.config.FDSConfig}
  * @param <D> the type of dosage handled by this API
+ * @author jy95
  */
 @Getter
 public abstract class DosageAPI<C extends FDSConfig, D> {
@@ -29,6 +31,7 @@ public abstract class DosageAPI<C extends FDSConfig, D> {
 
     /**
      * Constructs a new {@code DosageAPI} with the specified configuration.
+     *
      * @param config the configuration object providing locale and resource bundle
      */
     public DosageAPI(C config) {
@@ -38,9 +41,10 @@ public abstract class DosageAPI<C extends FDSConfig, D> {
 
     /**
      * Converts specified dosage fields into a human-readable string representation asynchronously.
+     *
      * @param dosage the dosage object to translate
      * @param fields the fields to include in the translation
-     * @return a {@link CompletableFuture} with the combined human-readable string
+     * @return a {@link java.util.concurrent.CompletableFuture} with the combined human-readable string
      */
     public CompletableFuture<String> getFields(D dosage, DisplayOrder... fields) {
         var separator = this.config.getDisplaySeparator();
@@ -66,13 +70,15 @@ public abstract class DosageAPI<C extends FDSConfig, D> {
 
     /**
      * Retrieves the translator associated with the specified display order.
+     *
      * @param displayOrder the display order used to find the translator
-     * @return the corresponding {@link AbstractTranslator}, or {@code null} if not found
+     * @return the corresponding {@link io.github.jy95.fds.common.types.AbstractTranslator}, or {@code null} if not found
      */
     public abstract AbstractTranslator<C, D> getTranslator(DisplayOrder displayOrder);
 
     /**
      * Checks if the given list of dosages contains only sequential instructions.
+     *
      * @param dosages the list of dosages to check
      * @return {@code true} if all dosages are sequential, {@code false} otherwise
      */
@@ -80,8 +86,9 @@ public abstract class DosageAPI<C extends FDSConfig, D> {
 
     /**
      * Converts a single dosage object into human-readable text asynchronously.
+     *
      * @param dosage the dosage object to translate
-     * @return a {@link CompletableFuture} with the human-readable string
+     * @return a {@link java.util.concurrent.CompletableFuture} with the human-readable string
      */
     public CompletableFuture<String> asHumanReadableText(D dosage) {
         var fields = this.config.getDisplayOrder().toArray(DisplayOrder[]::new);
@@ -91,8 +98,9 @@ public abstract class DosageAPI<C extends FDSConfig, D> {
     /**
      * Converts a list of dosage objects into human-readable text asynchronously.
      * Handles both sequential and grouped dosages appropriately.
+     *
      * @param dosages the list of dosage objects to translate
-     * @return a {@link CompletableFuture} with the combined human-readable string
+     * @return a {@link java.util.concurrent.CompletableFuture} with the combined human-readable string
      */
     public CompletableFuture<String> asHumanReadableText(List<D> dosages) {
         if (containsOnlySequentialInstructions(dosages)) {
@@ -103,8 +111,9 @@ public abstract class DosageAPI<C extends FDSConfig, D> {
 
     /**
      * Converts sequential dosages into a human-readable text asynchronously.
+     *
      * @param dosages the list of sequential dosages
-     * @return a {@link CompletableFuture} with the human-readable string
+     * @return a {@link java.util.concurrent.CompletableFuture} with the human-readable string
      */
     protected CompletableFuture<String> convertSequentialDosagesToText(List<D> dosages) {
         List<CompletableFuture<String>> dosagesAsTextFutures = dosages.stream()
@@ -121,8 +130,9 @@ public abstract class DosageAPI<C extends FDSConfig, D> {
 
     /**
      * Converts grouped dosages into a human-readable text asynchronously.
+     *
      * @param dosages the list of grouped dosages
-     * @return a {@link CompletableFuture} with the human-readable string
+     * @return a {@link java.util.concurrent.CompletableFuture} with the human-readable string
      */
     protected CompletableFuture<String> convertGroupedDosagesToText(List<D> dosages) {
         var sortedDosages = groupBySequence(dosages);
@@ -141,8 +151,9 @@ public abstract class DosageAPI<C extends FDSConfig, D> {
 
     /**
      * Converts concurrent dosages into a human-readable text asynchronously.
+     *
      * @param dosages the list of concurrent dosages
-     * @return a {@link CompletableFuture} with the human-readable string
+     * @return a {@link java.util.concurrent.CompletableFuture} with the human-readable string
      */
     protected CompletableFuture<String> convertConcurrentDosagesToText(List<D> dosages) {
         List<CompletableFuture<String>> concurrentInstructionsFutures = dosages.stream()
@@ -159,6 +170,7 @@ public abstract class DosageAPI<C extends FDSConfig, D> {
 
     /**
      * Groups the given list of dosages by sequence for processing.
+     *
      * @param dosages the list of dosages to group
      * @return a list of grouped dosages
      */

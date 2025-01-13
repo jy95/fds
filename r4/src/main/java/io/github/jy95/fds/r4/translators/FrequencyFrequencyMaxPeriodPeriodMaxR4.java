@@ -11,11 +11,14 @@ import java.util.stream.Stream;
 
 /**
  * R4 class for translating "timing.repeat.frequency" / "timing.repeat.frequencyMax" / "timing.repeat.period" / "timing.repeat.periodMax"
+ *
+ * @author jy95
  */
 public class FrequencyFrequencyMaxPeriodPeriodMaxR4 extends AbstractFrequencyFrequencyMaxPeriodPeriodMax<FDSConfigR4, Dosage> {
 
     /**
      * Constructor for {@code FrequencyFrequencyMaxPeriodPeriodMaxR4}.
+     *
      * @param config The configuration object used for translation.
      * @param frequencyTranslator The translator for "timing.repeat.frequency" / "timing.repeat.frequencyMax" fields
      * @param periodTranslator The translator for "timing.repeat.period" / "timing.repeat.periodMax" fields

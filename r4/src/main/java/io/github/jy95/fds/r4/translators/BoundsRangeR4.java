@@ -9,6 +9,8 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * R4 class for translating "timing.repeat.boundsRange"
+ *
+ * @author jy95
  */
 public class BoundsRangeR4 extends AbstractBoundsRange<FDSConfigR4, Dosage> {
 
@@ -16,6 +18,7 @@ public class BoundsRangeR4 extends AbstractBoundsRange<FDSConfigR4, Dosage> {
 
     /**
      * Constructor for {@code BoundsRangeR4}.
+     *
      * @param config The configuration object used for translation.
      */
     public BoundsRangeR4(FDSConfigR4 config) {
@@ -23,11 +26,13 @@ public class BoundsRangeR4 extends AbstractBoundsRange<FDSConfigR4, Dosage> {
         rangeToStringR4 = new RangeToStringR4();
     }
 
+    /** {@inheritDoc} */
     @Override
     protected boolean hasTiming(Dosage dosage) {
         return dosage.hasTiming();
     }
 
+    /** {@inheritDoc} */
     @Override
     public CompletableFuture<String> convert(Dosage dosage) {
         var boundsRange = dosage.getTiming().getRepeat().getBoundsRange();
@@ -38,6 +43,7 @@ public class BoundsRangeR4 extends AbstractBoundsRange<FDSConfigR4, Dosage> {
                 .thenApplyAsync(v -> boundsRangeMsg.format(new Object[]{v}));
     }
 
+    /** {@inheritDoc} */
     @Override
     protected boolean hasRequiredElements(Dosage dosage) {
         return dosage.getTiming().hasRepeat() && dosage.getTiming().getRepeat().hasBoundsRange();

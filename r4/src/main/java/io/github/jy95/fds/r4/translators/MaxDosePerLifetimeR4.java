@@ -9,6 +9,8 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * R4 class for translating "maxDosePerLifetime"
+ *
+ * @author jy95
  */
 public class MaxDosePerLifetimeR4 extends AbstractMaxDosePerLifetime<FDSConfigR4, Dosage> {
 
@@ -16,6 +18,7 @@ public class MaxDosePerLifetimeR4 extends AbstractMaxDosePerLifetime<FDSConfigR4
 
     /**
      * Constructor for {@code MaxDosePerLifetimeR4}.
+     *
      * @param config The configuration object used for translation.
      */
     public MaxDosePerLifetimeR4(FDSConfigR4 config) {
@@ -23,6 +26,7 @@ public class MaxDosePerLifetimeR4 extends AbstractMaxDosePerLifetime<FDSConfigR4
         quantityToStringR4 = new QuantityToStringR4();
     }
 
+    /** {@inheritDoc} */
     @Override
     public CompletableFuture<String> convert(Dosage dosage) {
         var quantity = dosage.getMaxDosePerLifetime();
@@ -33,6 +37,7 @@ public class MaxDosePerLifetimeR4 extends AbstractMaxDosePerLifetime<FDSConfigR4
                 .thenApplyAsync((quantityText) -> maxDosePerLifetimeMsg.format(new Object[] { quantityText }));
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean isPresent(Dosage dosage) {
         return dosage.hasMaxDosePerLifetime();

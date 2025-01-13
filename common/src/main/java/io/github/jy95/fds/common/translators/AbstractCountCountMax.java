@@ -11,8 +11,9 @@ import java.util.concurrent.CompletableFuture;
 /**
  * An abstract class for translating "timing.repeat.count" / "timing.repeat.countMax".
  *
- * @param <C> The type of configuration, extending {@link FDSConfig}.
+ * @param <C> The type of configuration, extending {@link io.github.jy95.fds.common.config.FDSConfig}.
  * @param <D> The type of the translated data.
+ * @author jy95
  */
 public abstract class AbstractCountCountMax<C extends FDSConfig, D> extends AbstractTranslatorTiming<C, D> {
     
@@ -24,6 +25,7 @@ public abstract class AbstractCountCountMax<C extends FDSConfig, D> extends Abst
 
     /**
      * Constructor for {@code AbstractCountCountMax}.
+     *
      * @param config The configuration object used for translation.
      */
     public AbstractCountCountMax(C config) {
@@ -36,6 +38,7 @@ public abstract class AbstractCountCountMax<C extends FDSConfig, D> extends Abst
         countMsg = new MessageFormat(msg2, locale);
     }
 
+    /** {@inheritDoc} */
     @Override
     public CompletableFuture<String> convert(D dosage) {
         return CompletableFuture.supplyAsync(() -> {
@@ -78,6 +81,7 @@ public abstract class AbstractCountCountMax<C extends FDSConfig, D> extends Abst
 
     /**
      * Extract "timing.repeat.count"
+     *
      * @param dosage the dosage object to check
      * @return the int value of "timing.repeat.count"
      */
@@ -85,6 +89,7 @@ public abstract class AbstractCountCountMax<C extends FDSConfig, D> extends Abst
 
     /**
      * Extract "timing.repeat.countMax"
+     *
      * @param dosage the dosage object to check
      * @return the int value of "timing.repeat.countMax"
      */
@@ -92,6 +97,7 @@ public abstract class AbstractCountCountMax<C extends FDSConfig, D> extends Abst
 
     /**
      * Check if "timing.repeat.countMax" exists
+     *
      * @param dosage the dosage object to check
      * @return True if it is the case, false otherwise
      */

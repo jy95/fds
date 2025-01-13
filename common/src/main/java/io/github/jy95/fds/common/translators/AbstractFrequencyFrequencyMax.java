@@ -11,8 +11,9 @@ import java.util.concurrent.CompletableFuture;
 /**
  * An abstract class for translating "timing.repeat.frequency" / "timing.repeat.frequencyMax".
  *
- * @param <C> The type of configuration, extending {@link FDSConfig}.
+ * @param <C> The type of configuration, extending {@link io.github.jy95.fds.common.config.FDSConfig}.
  * @param <D> The type of the translated data.
+ * @author jy95
  */
 public abstract class AbstractFrequencyFrequencyMax<C extends FDSConfig, D> extends AbstractTranslatorTiming<C, D> {
 
@@ -26,6 +27,7 @@ public abstract class AbstractFrequencyFrequencyMax<C extends FDSConfig, D> exte
 
     /**
      * Constructor for {@code AbstractFrequencyFrequencyMax}.
+     *
      * @param config The configuration object used for translation.
      */
     public AbstractFrequencyFrequencyMax(C config) {
@@ -40,6 +42,7 @@ public abstract class AbstractFrequencyFrequencyMax<C extends FDSConfig, D> exte
         frequencyMsg = new MessageFormat(msg3, locale);
     }
 
+    /** {@inheritDoc} */
     @Override
     public CompletableFuture<String> convert(D dosage) {
         return CompletableFuture.supplyAsync(() -> {

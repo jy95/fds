@@ -12,13 +12,16 @@ import org.hl7.fhir.r4.model.*;
 
 /**
  * Provides FHIR R4 implementations for common operations in the library.
+ *
+ * @author jy95
  */
 public final class DefaultImplementationsR4 {
 
     /**
-     * Converts a FHIR {@link Quantity} object to a string representation of its unit or code.
-     * @param quantity the {@link Quantity} object to be converted.
-     * @return a {@link CompletableFuture} that resolves to the unit or code of the {@link Quantity}
+     * Converts a FHIR {@link org.hl7.fhir.r4.model.Quantity} object to a string representation of its unit or code.
+     *
+     * @param quantity the {@link org.hl7.fhir.r4.model.Quantity} object to be converted.
+     * @return a {@link java.util.concurrent.CompletableFuture} that resolves to the unit or code of the {@link org.hl7.fhir.r4.model.Quantity}
      */
     public static CompletableFuture<String> fromFHIRQuantityUnitToString(Quantity quantity) {
         return CompletableFuture.supplyAsync(() -> {
@@ -40,9 +43,10 @@ public final class DefaultImplementationsR4 {
     }
 
     /**
-     * Converts a FHIR {@link CodeableConcept} to a string representation.
-     * @param codeableConcept the {@link CodeableConcept} to be converted.
-     * @return a {@link CompletableFuture} that resolves to the text, display, or code of the first coding
+     * Converts a FHIR {@link org.hl7.fhir.r4.model.CodeableConcept} to a string representation.
+     *
+     * @param codeableConcept the {@link org.hl7.fhir.r4.model.CodeableConcept} to be converted.
+     * @return a {@link java.util.concurrent.CompletableFuture} that resolves to the text, display, or code of the first coding
      */
     public static CompletableFuture<String> fromCodeableConceptToString(CodeableConcept codeableConcept) {
         return CompletableFuture.supplyAsync(() -> {
@@ -68,9 +72,10 @@ public final class DefaultImplementationsR4 {
     }
 
     /**
-     * Converts a list of FHIR {@link Extension} objects to a JSON-like string representation.
-     * @param extensions the list of {@link Extension} objects to be converted.
-     * @return a {@link CompletableFuture} that resolves to a JSON-like string representing the extensions.
+     * Converts a list of FHIR {@link org.hl7.fhir.r4.model.Extension} objects to a JSON-like string representation.
+     *
+     * @param extensions the list of {@link org.hl7.fhir.r4.model.Extension} objects to be converted.
+     * @return a {@link java.util.concurrent.CompletableFuture} that resolves to a JSON-like string representing the extensions.
      */
     public static CompletableFuture<String> fromExtensionsToString(List<Extension> extensions) {
         return CompletableFuture.supplyAsync(() -> {
@@ -106,10 +111,11 @@ public final class DefaultImplementationsR4 {
     }
 
     /**
-     * Selects a specific dosage and rate field from a list of {@link Dosage.DosageDoseAndRateComponent}.
+     * Selects a specific dosage and rate field from a list of {@link org.hl7.fhir.r4.model.Dosage.DosageDoseAndRateComponent}.
+     *
      * @param doseAndRateComponentList the list of dosage components.
      * @param doseAndRateKey the key used to extract the specific field.
-     * @return the extracted {@link Type} value.
+     * @return the extracted {@link org.hl7.fhir.r4.model.Type} value.
      */
     public static Type selectDosageAndRateField(List<Dosage.DosageDoseAndRateComponent> doseAndRateComponentList, DoseAndRateKey doseAndRateKey) {
         var extractor = DoseAndRateRegistryR4.getInstance().getExtractor(doseAndRateKey);
@@ -118,8 +124,9 @@ public final class DefaultImplementationsR4 {
     }
 
     /**
-     * Checks if a {@link Dosage} has any component matching a given predicate. 
-     * @param dosage the {@link Dosage} to check.
+     * Checks if a {@link org.hl7.fhir.r4.model.Dosage} has any component matching a given predicate.
+     *
+     * @param dosage the {@link org.hl7.fhir.r4.model.Dosage} to check.
      * @param predicate the predicate to apply to each component.
      * @return {@code true} if any component matches the predicate; {@code false} otherwise.
      */

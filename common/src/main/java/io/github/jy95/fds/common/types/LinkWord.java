@@ -2,6 +2,8 @@ package io.github.jy95.fds.common.types;
 
 /**
  * Enum representing the link words used to combine list elements.
+ *
+ * @author jy95
  */
 public enum LinkWord {
     /**

@@ -11,8 +11,10 @@ import io.github.jy95.fds.common.config.FDSConfig;
 
 /**
  * Abstract base class for converting quantity objects to human-readable strings.
+ *
  * @param <C> The type of configuration object extending FDSConfig.
  * @param <Q> The type of quantity object to be converted.
+ * @author jy95
  */
 public abstract class AbstractQuantityToString<C extends FDSConfig, Q> {
 

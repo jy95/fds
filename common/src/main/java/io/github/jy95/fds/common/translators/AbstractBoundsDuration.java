@@ -8,8 +8,9 @@ import io.github.jy95.fds.common.types.AbstractTranslatorTiming;
 /**
  * An abstract class for translating "timing.repeat.boundsDuration".
  *
- * @param <C> The type of configuration, extending {@link FDSConfig}.
+ * @param <C> The type of configuration, extending {@link io.github.jy95.fds.common.config.FDSConfig}.
  * @param <D> The type of the translated data.
+ * @author jy95
  */
 public abstract class AbstractBoundsDuration<C extends FDSConfig, D> extends AbstractTranslatorTiming<C, D> {
     
@@ -19,6 +20,7 @@ public abstract class AbstractBoundsDuration<C extends FDSConfig, D> extends Abs
 
     /**
      * Constructor for {@code AbstractBoundsDuration}.
+     *
      * @param config The configuration object used for translation.
      */
     public AbstractBoundsDuration(C config) {

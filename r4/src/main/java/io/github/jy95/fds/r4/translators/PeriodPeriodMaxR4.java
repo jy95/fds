@@ -6,38 +6,46 @@ import org.hl7.fhir.r4.model.Dosage;
 
 /**
  * R4 class for translating "timing.repeat.period" / "timing.repeat.periodMax"
+ *
+ * @author jy95
  */
 public class PeriodPeriodMaxR4 extends AbstractPeriodPeriodMax<FDSConfigR4, Dosage> {
 
     /**
      * Constructor for {@code PeriodPeriodMaxR4}.
+     *
      * @param config The configuration object used for translation.
      */
     public PeriodPeriodMaxR4(FDSConfigR4 config) {
         super(config);
     }
 
+    /** {@inheritDoc} */
     @Override
     protected boolean hasPeriod(Dosage dosage) {
         return dosage.getTiming().getRepeat().hasPeriod();
     }
 
+    /** {@inheritDoc} */
     @Override
     protected boolean hasPeriodMax(Dosage dosage) {
         return dosage.getTiming().getRepeat().hasPeriodMax();
     }
 
+    /** {@inheritDoc} */
     @Override
     protected boolean hasRequiredElements(Dosage dosage) {
         var timing = dosage.getTiming();
         return timing.hasRepeat() && timing.hasRepeat() && (hasPeriod(dosage) || hasPeriodMax(dosage));
     }
 
+    /** {@inheritDoc} */
     @Override
     protected boolean hasTiming(Dosage dosage) {
         return dosage.hasTiming();
     }
 
+    /** {@inheritDoc} */
     @Override
     protected String turnPeriodAndPeriodMaxToString(Dosage dosage) {
 
@@ -50,6 +58,7 @@ public class PeriodPeriodMaxR4 extends AbstractPeriodPeriodMax<FDSConfigR4, Dosa
         return formatPeriodAndPeriodMaxText(periodMin, periodMax, unitText);
     }
 
+    /** {@inheritDoc} */
     @Override
     protected String turnPeriodToString(Dosage dosage) {
 

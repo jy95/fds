@@ -9,6 +9,8 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * R4 class for translating "maxDosePerPeriod"
+ *
+ * @author jy95
  */
 public class MaxDosePerPeriodR4 extends AbstractMaxDosePerPeriod<FDSConfigR4, Dosage> {
 
@@ -19,6 +21,7 @@ public class MaxDosePerPeriodR4 extends AbstractMaxDosePerPeriod<FDSConfigR4, Do
 
     /**
      * Constructor for {@code MaxDosePerPeriodR4}.
+     *
      * @param config The configuration object used for translation.
      */
     public MaxDosePerPeriodR4(FDSConfigR4 config) {
@@ -26,6 +29,7 @@ public class MaxDosePerPeriodR4 extends AbstractMaxDosePerPeriod<FDSConfigR4, Do
         ratioToStringR4 = new RatioToStringR4();
     }
 
+    /** {@inheritDoc} */
     @Override
     public CompletableFuture<String> convert(Dosage dosage) {
         var ratio = dosage.getMaxDosePerPeriod();
@@ -36,6 +40,7 @@ public class MaxDosePerPeriodR4 extends AbstractMaxDosePerPeriod<FDSConfigR4, Do
                 .thenApplyAsync((ratioText) -> maxDosePerPeriodMsg.format(new Object[] { ratioText }));
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean isPresent(Dosage dosage) {
         return dosage.hasMaxDosePerPeriod();

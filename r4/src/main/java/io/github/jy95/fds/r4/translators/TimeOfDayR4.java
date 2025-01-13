@@ -9,17 +9,21 @@ import java.util.List;
 
 /**
  * R4 class for translating "timing.repeat.timeOfDay"
+ *
+ * @author jy95
  */
 public class TimeOfDayR4 extends AbstractTimeOfDay<FDSConfigR4, Dosage> {
 
     /**
      * Constructor for {@code TimeOfDayR4}.
+     *
      * @param config The configuration object used for translation.
      */
     public TimeOfDayR4(FDSConfigR4 config) {
         super(config);
     }
 
+    /** {@inheritDoc} */
     @Override
     protected List<String> getTimes(Dosage dosage) {
         return dosage
@@ -31,12 +35,14 @@ public class TimeOfDayR4 extends AbstractTimeOfDay<FDSConfigR4, Dosage> {
                 .toList();
     }
 
+    /** {@inheritDoc} */
     @Override
     protected boolean hasRequiredElements(Dosage dosage) {
         var timing = dosage.getTiming();
         return timing.hasRepeat() && timing.getRepeat().hasTimeOfDay();
     }
 
+    /** {@inheritDoc} */
     @Override
     protected boolean hasTiming(Dosage dosage) {
         return dosage.hasTiming();

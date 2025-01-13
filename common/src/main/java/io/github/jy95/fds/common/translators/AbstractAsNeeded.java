@@ -10,8 +10,9 @@ import java.util.concurrent.CompletableFuture;
 /**
  * Abstract class for translating fields related to the "as needed" / "as needed for" concepts .
  *
- * @param <C> the type of configuration, which must extend {@link FDSConfig}
+ * @param <C> the type of configuration, which must extend {@link io.github.jy95.fds.common.config.FDSConfig}
  * @param <D> the type of data to be translated
+ * @author jy95
  */
 public abstract class AbstractAsNeeded<C extends FDSConfig, D> extends AbstractTranslator<C, D> {
 
@@ -23,6 +24,7 @@ public abstract class AbstractAsNeeded<C extends FDSConfig, D> extends AbstractT
 
     /**
      * Constructor for {@code AbstractAsNeeded}.
+     *
      * @param config The configuration object used for translation.
      */
     public AbstractAsNeeded(C config) {
@@ -33,6 +35,7 @@ public abstract class AbstractAsNeeded<C extends FDSConfig, D> extends AbstractT
         asNeededMsg = bundle.getString("fields.asNeeded");
     }
 
+    /** {@inheritDoc} */
     @Override
     public CompletableFuture<String> convert(D dosage) {
 
@@ -47,6 +50,7 @@ public abstract class AbstractAsNeeded<C extends FDSConfig, D> extends AbstractT
 
     /**
      * Check if "as needed" is expressed with CodeableConcept ("asNeededFor" / "asNeededCodeableConcept")
+     *
      * @param dosage The dosage to check
      * @return true if it is the case, otherwise false
      */
@@ -54,8 +58,9 @@ public abstract class AbstractAsNeeded<C extends FDSConfig, D> extends AbstractT
 
     /**
      * Turn CodeableConcept(s) to a human-readable string
+     *
      * @param dosage the dosage field to be converted
-     * @return a {@link CompletableFuture} that will complete with the human-readable string
+     * @return a {@link java.util.concurrent.CompletableFuture} that will complete with the human-readable string
      */
     protected abstract CompletableFuture<String> convertCodeableConcepts(D dosage);
 }

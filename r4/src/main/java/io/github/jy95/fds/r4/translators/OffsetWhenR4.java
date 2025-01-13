@@ -12,17 +12,21 @@ import java.util.stream.Stream;
 
 /**
  * R4 class for translating "timing.repeat.offset" / "timing.repeat.when"
+ *
+ * @author jy95
  */
 public class OffsetWhenR4 extends AbstractOffsetWhen<FDSConfigR4, Dosage> {
 
     /**
      * Constructor for {@code OffsetWhenR4}.
+     *
      * @param config The configuration object used for translation.
      */
     public OffsetWhenR4(FDSConfigR4 config) {
         super(config);
     }
 
+    /** {@inheritDoc} */
     @Override
     public CompletableFuture<String> convert(Dosage dosage) {
         var offsetPart = turnOffsetToText(dosage);
@@ -34,6 +38,7 @@ public class OffsetWhenR4 extends AbstractOffsetWhen<FDSConfigR4, Dosage> {
                 .collect(Collectors.joining(" ")));
     }
 
+    /** {@inheritDoc} */
     @Override
     protected boolean hasRequiredElements(Dosage dosage) {
         var timing = dosage.getTiming();
@@ -41,6 +46,7 @@ public class OffsetWhenR4 extends AbstractOffsetWhen<FDSConfigR4, Dosage> {
         return timing.hasRepeat() && (timing.getRepeat().hasOffset() || timing.getRepeat().hasWhen());
     }
 
+    /** {@inheritDoc} */
     @Override
     protected boolean hasTiming(Dosage dosage) {
         return dosage.hasTiming();

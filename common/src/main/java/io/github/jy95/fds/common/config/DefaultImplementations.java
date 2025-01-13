@@ -7,6 +7,8 @@ import io.github.jy95.fds.common.bundle.MultiResourceBundleControl;
 
 /**
  * Provides default implementations for common operations in the library.
+ *
+ * @author jy95
  */
 public final class DefaultImplementations {
 

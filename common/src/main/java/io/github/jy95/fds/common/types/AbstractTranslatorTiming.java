@@ -4,15 +4,17 @@ import io.github.jy95.fds.common.config.FDSConfig;
 
 /**
  * Abstract class for translators that specifically handle dosage objects with "Timing" elements.
- * This class extends {@link AbstractTranslator} to provide additional checks for timing-related data.
+ * This class extends {@link io.github.jy95.fds.common.types.AbstractTranslator} to provide additional checks for timing-related data.
  *
- * @param <C> the type of configuration extending {@link FDSConfig}
+ * @param <C> the type of configuration extending {@link io.github.jy95.fds.common.config.FDSConfig}
  * @param <D> the type of dosage field to be translated
+ * @author jy95
  */
 public abstract class AbstractTranslatorTiming<C extends FDSConfig, D> extends AbstractTranslator<C, D>{
 
     /**
      * Constructs a new {@code AbstractTranslatorTiming} with the specified configuration.
+     *
      * @param config the configuration object providing locale and resource bundle
      */
     public AbstractTranslatorTiming(C config) {
@@ -36,6 +38,7 @@ public abstract class AbstractTranslatorTiming<C extends FDSConfig, D> extends A
      */
     protected abstract boolean hasRequiredElements(D dosage);
 
+    /** {@inheritDoc} */
     @Override
     public boolean isPresent(D dosage) {
         return hasTiming(dosage) && hasRequiredElements(dosage);

@@ -9,8 +9,10 @@ import io.github.jy95.fds.common.config.FDSConfig;
 
 /**
  * Abstract base class for converting ratio objects to human-readable strings.
+ *
  * @param <C> The type of configuration object extending FDSConfig.
  * @param <R> The type of ratio object to be converted.
+ * @author jy95
  */
 public abstract class AbstractRatioToString<C extends FDSConfig, R> {
     

@@ -10,27 +10,33 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * R4 class for translating "asNeededBoolean" / "asNeededCodeableConcept".
+ *
+ * @author jy95
  */
 public class AsNeededR4 extends AbstractAsNeeded<FDSConfigR4, Dosage> {
 
     /**
      * Constructor for {@code AsNeededR4}.
+     *
      * @param config The configuration object used for translation.
      */
     public AsNeededR4(FDSConfigR4 config) {
         super(config);
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean isPresent(Dosage dosage) {
         return dosage.hasAsNeeded();
     }
 
+    /** {@inheritDoc} */
     @Override
     protected boolean hasCodeableConcepts(Dosage dosage) {
         return dosage.hasAsNeededCodeableConcept();
     }
 
+    /** {@inheritDoc} */
     @Override
     protected CompletableFuture<String> convertCodeableConcepts(Dosage dosage) {
         var bundle = getResources();

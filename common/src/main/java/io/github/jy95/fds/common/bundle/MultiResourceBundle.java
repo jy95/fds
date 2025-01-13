@@ -6,6 +6,8 @@ import java.util.*;
  * A ResourceBundle implementation that aggregates multiple ResourceBundles.
  * This class allows retrieving values from a list of ResourceBundles,
  * checking each bundle in the order they are provided.
+ *
+ * @author jy95
  */
 public class MultiResourceBundle extends ResourceBundle {
 
@@ -16,6 +18,7 @@ public class MultiResourceBundle extends ResourceBundle {
 
     /**
      * Constructs a MultiResourceBundle with the specified list of ResourceBundles.
+     *
      * @param resourceBundles the list of ResourceBundles to aggregate.
      *                        If {@code null}, an empty list will be used.
      */
@@ -23,6 +26,7 @@ public class MultiResourceBundle extends ResourceBundle {
         this.delegates = resourceBundles == null ? new ArrayList<>() : resourceBundles;
     }
 
+    /** {@inheritDoc} */
     @Override
     protected Object handleGetObject(String key) {
         Optional<Object> firstPropertyValue = this.delegates.stream()
@@ -33,6 +37,7 @@ public class MultiResourceBundle extends ResourceBundle {
         return firstPropertyValue.orElse(null);
     }
 
+    /** {@inheritDoc} */
     @Override
     public Enumeration<String> getKeys() {
 

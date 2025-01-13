@@ -12,6 +12,8 @@ import java.util.List;
 
 /**
  * R4 class for translating and formatting dosage data
+ *
+ * @author jy95
  */
 public class DosageAPIR4 extends DosageAPI<FDSConfigR4, Dosage> {
 
@@ -29,6 +31,7 @@ public class DosageAPIR4 extends DosageAPI<FDSConfigR4, Dosage> {
 
     /**
      * Constructor for {@code DosageAPIR4}.
+     *
      * @param config The configuration object used for translation.
      */
     public DosageAPIR4(FDSConfigR4 config) {
@@ -36,16 +39,19 @@ public class DosageAPIR4 extends DosageAPI<FDSConfigR4, Dosage> {
         translatorsMapR4 = new TranslatorsMapR4(config);
     }
 
+    /** {@inheritDoc} */
     @Override
     public AbstractTranslator<FDSConfigR4, Dosage> getTranslator(DisplayOrder displayOrder) {
         return translatorsMapR4.getTranslator(displayOrder);
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean containsOnlySequentialInstructions(List<Dosage> dosages) {
         return SequenceUtils.containsOnlySequentialInstructions(dosages, Dosage::getSequence);
     }
 
+    /** {@inheritDoc} */
     @Override
     protected List<List<Dosage>> groupBySequence(List<Dosage> dosages) {
         return SequenceUtils.groupBySequence(dosages, Dosage::getSequence);

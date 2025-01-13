@@ -13,8 +13,9 @@ import java.util.concurrent.CompletableFuture;
 /**
  * An abstract class for translating "timing.event".
  *
- * @param <C> The type of configuration, extending {@link FDSConfig}.
+ * @param <C> The type of configuration, extending {@link io.github.jy95.fds.common.config.FDSConfig}.
  * @param <D> The type of the translated data.
+ * @author jy95
  */
 public abstract class AbstractTimingEvent<C extends FDSConfig, D> extends AbstractTranslatorTiming<C, D> {
     
@@ -24,6 +25,7 @@ public abstract class AbstractTimingEvent<C extends FDSConfig, D> extends Abstra
 
     /**
      * Constructor for {@code AbstractTimingEvent}.
+     *
      * @param config The configuration object used for translation.
      */
     public AbstractTimingEvent(C config) {
@@ -34,6 +36,7 @@ public abstract class AbstractTimingEvent<C extends FDSConfig, D> extends Abstra
         timingEventMsg = new MessageFormat(msg, locale);
     }
 
+    /** {@inheritDoc} */
     @Override
     public CompletableFuture<String> convert(D dosage) {
         return CompletableFuture.supplyAsync(() -> {

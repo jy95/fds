@@ -7,6 +7,8 @@ import io.github.jy95.fds.common.types.LinkWord;
 
 /**
  * Utility class for converting a list of strings into a human-readable string.
+ *
+ * @author jy95
  */
 public final class ListToString {
 

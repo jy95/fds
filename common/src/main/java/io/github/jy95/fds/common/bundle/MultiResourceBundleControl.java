@@ -12,6 +12,8 @@ import java.util.stream.Collectors;
 /**
  * A custom ResourceBundle.Control implementation that aggregates multiple ResourceBundles.
  * This class facilitates the creation of a MultiResourceBundle by combining dependent ResourceBundles.
+ *
+ * @author jy95
  */
 @Getter
 public class MultiResourceBundleControl extends ResourceBundle.Control {
@@ -36,6 +38,7 @@ public class MultiResourceBundleControl extends ResourceBundle.Control {
         this.dependentBaseNames = dependentBaseNames;
     }
 
+    /** {@inheritDoc} */
     @Override
     public ResourceBundle newBundle(String baseName, Locale locale, String format, ClassLoader loader, boolean reload) throws IllegalAccessException, InstantiationException, IOException {
         List<ResourceBundle> delegates = Arrays.stream(this.dependentBaseNames)

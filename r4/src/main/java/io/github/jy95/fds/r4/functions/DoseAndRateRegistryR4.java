@@ -11,14 +11,16 @@ import java.util.EnumMap;
 
 /**
  * A registry specific to FHIR R4 for managing dose and rate components of a Dosage resource.
- * This class provides a mapping between {@link DoseAndRateKey} and the corresponding getter methods
- * from {@link DosageDoseAndRateComponent}. It is implemented as a singleton.
+ * This class provides a mapping between {@link io.github.jy95.fds.common.types.DoseAndRateKey} and the corresponding getter methods
+ * from {@link org.hl7.fhir.r4.model.Dosage.DosageDoseAndRateComponent}. It is implemented as a singleton.
+ *
+ * @author jy95
  */
 public class DoseAndRateRegistryR4 extends AbstractDoseAndRateRegistry<DosageDoseAndRateComponent, Type> {
 
     /**
      * Constructor initializing the registry with predefined mappings for dose and rate keys.
-     * The mappings are based on the getters provided by {@link DosageDoseAndRateComponent}.
+     * The mappings are based on the getters provided by {@link org.hl7.fhir.r4.model.Dosage.DosageDoseAndRateComponent}.
      */
     public DoseAndRateRegistryR4() {
         super(
@@ -43,8 +45,9 @@ public class DoseAndRateRegistryR4 extends AbstractDoseAndRateRegistry<DosageDos
     }
 
     /**
-     * Provides access to the singleton instance of {@link DoseAndRateRegistryR4}.
-     * @return The singleton instance of {@link DoseAndRateRegistryR4}.
+     * Provides access to the singleton instance of {@link io.github.jy95.fds.r4.functions.DoseAndRateRegistryR4}.
+     *
+     * @return The singleton instance of {@link io.github.jy95.fds.r4.functions.DoseAndRateRegistryR4}.
      */
     public static DoseAndRateRegistryR4 getInstance() {
         return Holder.INSTANCE;

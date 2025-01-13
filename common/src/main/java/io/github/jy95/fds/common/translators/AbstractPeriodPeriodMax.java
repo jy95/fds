@@ -12,8 +12,9 @@ import java.util.concurrent.CompletableFuture;
 /**
  * An abstract class for translating "timing.repeat.period" / "timing.repeat.periodMax".
  *
- * @param <C> The type of configuration, extending {@link FDSConfig}.
+ * @param <C> The type of configuration, extending {@link io.github.jy95.fds.common.config.FDSConfig}.
  * @param <D> The type of the translated data.
+ * @author jy95
  */
 public abstract class AbstractPeriodPeriodMax<C extends FDSConfig, D> extends AbstractTranslatorTiming<C, D> {
     
@@ -25,6 +26,7 @@ public abstract class AbstractPeriodPeriodMax<C extends FDSConfig, D> extends Ab
 
     /**
      * Constructor for {@code AbstractPeriodPeriodMax}.
+     *
      * @param config The configuration object used for translation.
      */
     public AbstractPeriodPeriodMax(C config) {
@@ -37,6 +39,7 @@ public abstract class AbstractPeriodPeriodMax<C extends FDSConfig, D> extends Ab
         periodMsg = new MessageFormat(msg2, locale);
     }
 
+    /** {@inheritDoc} */
     @Override
     public CompletableFuture<String> convert(D dosage) {
         return CompletableFuture.supplyAsync(() -> {

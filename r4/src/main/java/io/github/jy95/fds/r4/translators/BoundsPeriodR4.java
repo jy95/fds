@@ -10,6 +10,8 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * R4 class for translating "timing.repeat.boundsPeriod"
+ *
+ * @author jy95
  */
 public class BoundsPeriodR4 extends AbstractBoundsPeriod<FDSConfigR4, Dosage> {
 
@@ -17,6 +19,7 @@ public class BoundsPeriodR4 extends AbstractBoundsPeriod<FDSConfigR4, Dosage> {
 
     /**
      * Constructor for {@code BoundsPeriodR4}.
+     *
      * @param config The configuration object used for translation.
      */
     public BoundsPeriodR4(FDSConfigR4 config) {
@@ -24,26 +27,31 @@ public class BoundsPeriodR4 extends AbstractBoundsPeriod<FDSConfigR4, Dosage> {
         formatDateTimesR4 = new FormatDateTimesR4();
     }
 
+    /** {@inheritDoc} */
     @Override
     protected boolean hasRequiredElements(Dosage dosage) {
         return dosage.getTiming().hasRepeat() && dosage.getTiming().getRepeat().hasBoundsPeriod();
     }
 
+    /** {@inheritDoc} */
     @Override
     protected boolean hasTiming(Dosage dosage) {
         return dosage.hasTiming();
     }
 
+    /** {@inheritDoc} */
     @Override
     protected boolean hasStartPeriod(Dosage dosage) {
         return dosage.getTiming().getRepeat().getBoundsPeriod().hasStart();
     }
 
+    /** {@inheritDoc} */
     @Override
     protected boolean hasEndPeriod(Dosage dosage) {
         return dosage.getTiming().getRepeat().getBoundsPeriod().hasEnd();
     }
 
+    /** {@inheritDoc} */
     @Override
     protected String formatStartPeriod(Dosage dosage) {
         var boundPeriods = dosage.getTiming().getRepeat().getBoundsPeriod();
@@ -51,6 +59,7 @@ public class BoundsPeriodR4 extends AbstractBoundsPeriod<FDSConfigR4, Dosage> {
         return formatDateTimesR4.convert(locale, boundPeriods.getStartElement());
     }
 
+    /** {@inheritDoc} */
     @Override
     protected String formatEndPeriod(Dosage dosage) {
         var locale = this.getConfig().getLocale();

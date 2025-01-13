@@ -4,6 +4,8 @@ import java.util.List;
 
 /**
  * Represents the available display orders
+ *
+ * @author jy95
  */
 public enum DisplayOrder {
     /**
@@ -145,6 +147,11 @@ public enum DisplayOrder {
         this.fields = fields;
     }
 
+    /**
+     * <p>Getter for the field <code>fields</code>.</p>
+     *
+     * @return a {@link java.util.List} object
+     */
     public List<String> getFields() {
         return fields;
     }

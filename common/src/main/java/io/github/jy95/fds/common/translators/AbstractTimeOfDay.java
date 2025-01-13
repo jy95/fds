@@ -13,8 +13,9 @@ import java.util.concurrent.CompletableFuture;
 /**
  * An abstract class for translating "timing.repeat.timeOfDay".
  *
- * @param <C> The type of configuration, extending {@link FDSConfig}.
+ * @param <C> The type of configuration, extending {@link io.github.jy95.fds.common.config.FDSConfig}.
  * @param <D> The type of the translated data.
+ * @author jy95
  */
 public abstract class AbstractTimeOfDay<C extends FDSConfig, D> extends AbstractTranslatorTiming<C, D> {
     
@@ -24,6 +25,7 @@ public abstract class AbstractTimeOfDay<C extends FDSConfig, D> extends Abstract
 
     /**
      * Constructor for {@code AbstractTimeOfDay}.
+     *
      * @param config The configuration object used for translation.
      */
     public AbstractTimeOfDay(C config) {
@@ -34,6 +36,7 @@ public abstract class AbstractTimeOfDay<C extends FDSConfig, D> extends Abstract
         timeOfDayMsg = new MessageFormat(msg, locale);
     }
 
+    /** {@inheritDoc} */
     @Override
     public CompletableFuture<String> convert(D dosage) {
         return CompletableFuture.supplyAsync(() -> {

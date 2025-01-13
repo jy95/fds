@@ -10,8 +10,9 @@ import java.util.stream.Stream;
 /**
  * An abstract class for translating "timing.repeat.frequency" / "timing.repeat.frequencyMax" / "timing.repeat.period" / "timing.repeat.periodMax".
  *
- * @param <C> The type of configuration, extending {@link FDSConfig}.
+ * @param <C> The type of configuration, extending {@link io.github.jy95.fds.common.config.FDSConfig}.
  * @param <D> The type of the translated data.
+ * @author jy95
  */
 public abstract class AbstractFrequencyFrequencyMaxPeriodPeriodMax<C extends FDSConfig, D> extends AbstractTranslator<C, D> {
 
@@ -26,6 +27,7 @@ public abstract class AbstractFrequencyFrequencyMaxPeriodPeriodMax<C extends FDS
 
     /**
      * Constructs a new {@code AbstractFrequencyPeriodTranslator} with the specified configuration and translators.
+     *
      * @param config             the configuration object
      * @param frequencyTranslator the translator for frequency-related fields
      * @param periodTranslator    the translator for period-related fields
@@ -38,6 +40,7 @@ public abstract class AbstractFrequencyFrequencyMaxPeriodPeriodMax<C extends FDS
         this.periodTranslator = periodTranslator;
     }
 
+    /** {@inheritDoc} */
     @Override
     public CompletableFuture<String> convert(D dosage) {
         CompletableFuture<String> frequencyPart = frequencyTranslator.isPresent(dosage)
@@ -55,6 +58,7 @@ public abstract class AbstractFrequencyFrequencyMaxPeriodPeriodMax<C extends FDS
         );
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean isPresent(D dosage) {
         return frequencyTranslator.isPresent(dosage) || periodTranslator.isPresent(dosage);

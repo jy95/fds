@@ -11,6 +11,8 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * R4 class for converting ratio objects to human-readable strings
+ *
+ * @author jy95
  */
 public class RatioToStringR4 extends AbstractRatioToString<FDSConfigR4, Ratio> {
 
@@ -26,6 +28,7 @@ public class RatioToStringR4 extends AbstractRatioToString<FDSConfigR4, Ratio> {
         quantityToStringR4 = new QuantityToStringR4();
     }
 
+    /** {@inheritDoc} */
     @Override
     protected String retrieveRatioLinkWord(ResourceBundle bundle, FDSConfigR4 config, Ratio ratio) {
         var hasNumerator = ratio.hasNumerator();
@@ -44,21 +47,25 @@ public class RatioToStringR4 extends AbstractRatioToString<FDSConfigR4, Ratio> {
         return hasBothElements ? ":" : "";
     }
 
+    /** {@inheritDoc} */
     @Override
     protected boolean hasNumerator(Ratio ratio) {
         return ratio.hasNumerator();
     }
 
+    /** {@inheritDoc} */
     @Override
     protected CompletableFuture<String> convertNumerator(ResourceBundle bundle, FDSConfigR4 config, Ratio ratio) {
         return quantityToStringR4.convert(bundle, config, ratio.getNumerator());
     }
 
+    /** {@inheritDoc} */
     @Override
     protected boolean hasDenominator(Ratio ratio) {
         return ratio.hasDenominator();
     }
 
+    /** {@inheritDoc} */
     @Override
     protected CompletableFuture<String> convertDenominator(ResourceBundle bundle, FDSConfigR4 config, Ratio ratio) {
         var denominator = ratio.getDenominator();

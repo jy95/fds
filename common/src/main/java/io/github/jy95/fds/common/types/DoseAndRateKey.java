@@ -3,6 +3,8 @@ package io.github.jy95.fds.common.types;
 /**
  * Enum representing the different keys for dose and rate components.
  * These keys are used to identify the various attributes in a dose and rate structure.
+ *
+ * @author jy95
  */
 public enum DoseAndRateKey {
     /**

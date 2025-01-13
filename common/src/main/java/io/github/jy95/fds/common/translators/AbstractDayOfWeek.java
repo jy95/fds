@@ -12,8 +12,9 @@ import java.util.Map;
 /**
  * An abstract class for translating "timing.repeat.dayOfWeek".
  *
- * @param <C> The type of configuration, extending {@link FDSConfig}.
+ * @param <C> The type of configuration, extending {@link io.github.jy95.fds.common.config.FDSConfig}.
  * @param <D> The type of the translated data.
+ * @author jy95
  */
 public abstract class AbstractDayOfWeek<C extends FDSConfig, D> extends AbstractTranslatorTiming<C, D> {
     
@@ -23,6 +24,7 @@ public abstract class AbstractDayOfWeek<C extends FDSConfig, D> extends Abstract
 
     /**
      * Constructor for {@code AbstractDayOfWeek}.
+     *
      * @param config The configuration object used for translation.
      */
     public AbstractDayOfWeek(C config) {
@@ -53,6 +55,7 @@ public abstract class AbstractDayOfWeek<C extends FDSConfig, D> extends Abstract
 
     /**
      * Translates a list of days in text.
+     *
      * @param days the list of days (e.g., ["monday", "wednesday", "friday"]).
      * @return the translated days of the week as a formatted string.
      */

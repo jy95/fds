@@ -10,6 +10,8 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * R4 class for converting range objects to human-readable strings.
+ *
+ * @author jy95
  */
 public class RangeToStringR4 extends AbstractRangeToString<FDSConfigR4, Range> {
 
@@ -22,6 +24,7 @@ public class RangeToStringR4 extends AbstractRangeToString<FDSConfigR4, Range> {
         quantityToStringR4 = new QuantityToStringR4();
     }
 
+    /** {@inheritDoc} */
     @Override
     protected boolean hasUnit(Range range) {
         // Check high first, more likely to be found in it
@@ -32,6 +35,7 @@ public class RangeToStringR4 extends AbstractRangeToString<FDSConfigR4, Range> {
         return hasLow(range) && quantityToStringR4.hasUnit(range.getLow());
     }
 
+    /** {@inheritDoc} */
     @Override
     protected CompletableFuture<String> getUnitText(ResourceBundle bundle, FDSConfigR4 config, Range range, boolean hasLow, boolean hasHigh) {
         return (hasHigh)
@@ -39,21 +43,25 @@ public class RangeToStringR4 extends AbstractRangeToString<FDSConfigR4, Range> {
                 : quantityToStringR4.enhancedFromUnitToString(bundle, config, range.getLow());
     }
 
+    /** {@inheritDoc} */
     @Override
     protected boolean hasLow(Range range) {
         return range.hasLow();
     }
 
+    /** {@inheritDoc} */
     @Override
     protected boolean hasHigh(Range range) {
         return range.hasHigh();
     }
 
+    /** {@inheritDoc} */
     @Override
     protected BigDecimal getLowValue(Range range) {
         return range.getLow().getValue();
     }
 
+    /** {@inheritDoc} */
     @Override
     protected BigDecimal getHighValue(Range range) {
         return range.getHigh().getValue();

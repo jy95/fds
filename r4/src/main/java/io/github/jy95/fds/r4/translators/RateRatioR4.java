@@ -13,6 +13,8 @@ import static io.github.jy95.fds.r4.config.DefaultImplementationsR4.hasMatchingC
 
 /**
  * R4 class for translating "doseAndRate.rateRatio"
+ *
+ * @author jy95
  */
 public class RateRatioR4 extends AbstractRateRatio<FDSConfigR4, Dosage> {
 
@@ -20,6 +22,7 @@ public class RateRatioR4 extends AbstractRateRatio<FDSConfigR4, Dosage> {
 
     /**
      * Constructor for {@code RateRatioR4}.
+     *
      * @param config The configuration object used for translation.
      */
     public RateRatioR4(FDSConfigR4 config) {
@@ -27,6 +30,7 @@ public class RateRatioR4 extends AbstractRateRatio<FDSConfigR4, Dosage> {
         ratioToStringR4 = new RatioToStringR4();
     }
 
+    /** {@inheritDoc} */
     @Override
     public CompletableFuture<String> convert(Dosage dosage) {
         var rateRatio = getConfig()
@@ -38,6 +42,7 @@ public class RateRatioR4 extends AbstractRateRatio<FDSConfigR4, Dosage> {
                 .thenApplyAsync(rateRatioText -> rateRatioMsg.format(new Object[]{rateRatioText}));
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean isPresent(Dosage dosage) {
         return hasMatchingComponent(dosage, Dosage.DosageDoseAndRateComponent::hasRateRatio);

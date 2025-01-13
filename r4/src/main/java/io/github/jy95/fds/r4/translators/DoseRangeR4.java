@@ -13,6 +13,8 @@ import static io.github.jy95.fds.r4.config.DefaultImplementationsR4.hasMatchingC
 
 /**
  * R4 class for translating "doseAndRate.doseRange"
+ *
+ * @author jy95
  */
 public class DoseRangeR4 extends AbstractDoseRange<FDSConfigR4, Dosage> {
 
@@ -23,6 +25,7 @@ public class DoseRangeR4 extends AbstractDoseRange<FDSConfigR4, Dosage> {
 
     /**
      * Constructor for {@code DoseRangeR4}.
+     *
      * @param config The configuration object used for translation.
      */
     public DoseRangeR4(FDSConfigR4 config) {
@@ -30,6 +33,7 @@ public class DoseRangeR4 extends AbstractDoseRange<FDSConfigR4, Dosage> {
         rangeToStringR4 = new RangeToStringR4();
     }
 
+    /** {@inheritDoc} */
     @Override
     public CompletableFuture<String> convert(Dosage dosage) {
         var doseRange = getConfig()
@@ -41,6 +45,7 @@ public class DoseRangeR4 extends AbstractDoseRange<FDSConfigR4, Dosage> {
                 .thenApplyAsync(rangeText -> doseRangeMsg.format(new Object[]{rangeText}));
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean isPresent(Dosage dosage) {
         return hasMatchingComponent(dosage, Dosage.DosageDoseAndRateComponent::hasDoseRange);

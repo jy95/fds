@@ -13,8 +13,9 @@ import java.util.List;
 /**
  * An abstract class for translating "timing.repeat.duration" / "timing.repeat.durationMax".
  *
- * @param <C> The type of configuration, extending {@link FDSConfig}.
+ * @param <C> The type of configuration, extending {@link io.github.jy95.fds.common.config.FDSConfig}.
  * @param <D> The type of the translated data.
+ * @author jy95
  */
 public abstract class AbstractDurationDurationMax<C extends FDSConfig, D> extends AbstractTranslatorTiming<C, D> {
 
@@ -26,6 +27,7 @@ public abstract class AbstractDurationDurationMax<C extends FDSConfig, D> extend
 
     /**
      * Constructor for {@code AbstractDurationDurationMax}.
+     *
      * @param config The configuration object used for translation.
      */
     public AbstractDurationDurationMax(C config) {
@@ -38,6 +40,7 @@ public abstract class AbstractDurationDurationMax<C extends FDSConfig, D> extend
         durationMaxMsg = new MessageFormat(msg2, locale);
     }
 
+    /** {@inheritDoc} */
     @Override
     public CompletableFuture<String> convert(D dosage) {
         return CompletableFuture.supplyAsync(() -> {
