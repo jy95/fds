@@ -12,6 +12,9 @@ import java.util.concurrent.CompletableFuture;
  */
 public class MaxDosePerPeriodR4 extends AbstractMaxDosePerPeriod<FDSConfigR4, Dosage> {
 
+    /**
+     * Instance to translate ratio to string
+     */
     protected final RatioToStringR4 ratioToStringR4;
 
     /**

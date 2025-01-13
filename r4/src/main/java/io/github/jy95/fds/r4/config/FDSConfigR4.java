@@ -15,6 +15,9 @@ import java.util.function.Function;
 import org.hl7.fhir.r4.model.*;
 import org.hl7.fhir.r4.model.Dosage.DosageDoseAndRateComponent;
 
+/**
+ * R4 Configuration class for controlling how dosage are handled and displayed.
+ */
 @Getter
 @SuperBuilder
 public class FDSConfigR4 extends FDSConfig {

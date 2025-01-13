@@ -16,6 +16,9 @@ import static io.github.jy95.fds.r4.config.DefaultImplementationsR4.hasMatchingC
  */
 public class DoseRangeR4 extends AbstractDoseRange<FDSConfigR4, Dosage> {
 
+    /**
+     * Instance for translating range to string
+     */
     protected final RangeToStringR4 rangeToStringR4;
 
     /**

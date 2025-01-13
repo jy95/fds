@@ -7,6 +7,9 @@ import org.hl7.fhir.utilities.DateTimeUtil;
 
 import io.github.jy95.fds.common.functions.AbstractFormatDateTimes;
 
+/**
+ * R4 class for formatting DateTime objects into human-readable strings
+ */
 public class FormatDateTimesR4 extends AbstractFormatDateTimes<DateTimeType> {
 
     @Override

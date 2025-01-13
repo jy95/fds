@@ -11,8 +11,14 @@ import java.util.concurrent.CompletableFuture;
 
 public class RatioToStringR4 extends AbstractRatioToString<FDSConfigR4, Ratio> {
 
+    /**
+     * Instance to translate quantity to string
+     */
     private final QuantityToStringR4 quantityToStringR4;
 
+    /**
+     * Constructor for {@code RatioToStringR4}.
+     */
     public RatioToStringR4() {
         quantityToStringR4 = new QuantityToStringR4();
     }

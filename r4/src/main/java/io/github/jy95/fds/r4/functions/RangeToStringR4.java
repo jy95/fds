@@ -12,6 +12,9 @@ public class RangeToStringR4 extends AbstractRangeToString<FDSConfigR4, Range> {
 
     private final QuantityToStringR4 quantityToStringR4;
 
+    /**
+     * Constructor for {@code RangeToStringR4}.
+     */
     public RangeToStringR4() {
         quantityToStringR4 = new QuantityToStringR4();
     }

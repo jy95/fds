@@ -74,12 +74,14 @@ public abstract class AbstractBoundsPeriod<C extends FDSConfig, D> extends Abstr
     /**
      * Format start period to a human-readable string
      * @param dosage the dosage field to be converted
+     * @return the formatted start period as a string (e.g., "from May 23, 2011")
      */
     protected abstract String formatStartPeriod(D dosage);
 
     /**
      * Format end period to a human-readable string
      * @param dosage the dosage field to be converted
+     * @return the formatted end period as a string (e.g., "to Feb 7, 2015")
      */
     protected abstract String formatEndPeriod(D dosage);
 }
