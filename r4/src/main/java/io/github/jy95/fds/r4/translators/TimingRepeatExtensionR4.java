@@ -27,8 +27,7 @@ public class TimingRepeatExtensionR4 extends AbstractTranslator<FDSConfigR4, Dos
     public CompletableFuture<String> convert(Dosage dosage) {
         return this
                 .getConfig()
-                .getFromExtensionsToString()
-                .apply(
+                .fromExtensionsToString(
                         dosage.getTiming().getRepeat().getExtension()
                 );
     }

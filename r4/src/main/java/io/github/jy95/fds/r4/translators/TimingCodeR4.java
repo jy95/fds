@@ -33,8 +33,7 @@ public class TimingCodeR4 extends AbstractTranslatorTiming<FDSConfigR4, Dosage> 
     public CompletableFuture<String> convert(Dosage dosage) {
         return this
                 .getConfig()
-                .getFromCodeableConceptToString()
-                .apply(
+                .fromCodeableConceptToString(
                         dosage.getTiming().getCode()
                 );
     }
