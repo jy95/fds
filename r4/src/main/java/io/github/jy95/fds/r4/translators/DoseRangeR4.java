@@ -9,8 +9,6 @@ import org.hl7.fhir.r4.model.Range;
 
 import java.util.concurrent.CompletableFuture;
 
-import static io.github.jy95.fds.r4.config.DefaultImplementationsR4.hasMatchingComponent;
-
 /**
  * R4 class for translating "doseAndRate.doseRange"
  *
@@ -37,8 +35,7 @@ public class DoseRangeR4 extends AbstractDoseRange<FDSConfigR4, Dosage> {
     @Override
     public CompletableFuture<String> convert(Dosage dosage) {
         var doseRange = getConfig()
-                .getSelectDosageAndRateField()
-                .apply(dosage.getDoseAndRate(), DoseAndRateKey.DOSE_RANGE);
+                .selectDosageAndRateField(dosage.getDoseAndRate(), DoseAndRateKey.DOSE_RANGE);
 
         return rangeToStringR4
                 .convert(getResources(), getConfig(), (Range) doseRange)
@@ -48,6 +45,7 @@ public class DoseRangeR4 extends AbstractDoseRange<FDSConfigR4, Dosage> {
     /** {@inheritDoc} */
     @Override
     public boolean isPresent(Dosage dosage) {
-        return hasMatchingComponent(dosage, Dosage.DosageDoseAndRateComponent::hasDoseRange);
+        return getConfig()
+                .hasMatchingComponent(dosage, Dosage.DosageDoseAndRateComponent::hasDoseRange);
     }
 }

@@ -27,8 +27,7 @@ public class TimingModifierExtensionR4 extends AbstractTranslator<FDSConfigR4, D
     public CompletableFuture<String> convert(Dosage dosage) {
         return this
                 .getConfig()
-                .getFromExtensionsToString()
-                .apply(
+                .fromExtensionsToString(
                         dosage.getTiming().getModifierExtension()
                 );
     }

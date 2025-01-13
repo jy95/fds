@@ -9,8 +9,6 @@ import org.hl7.fhir.r4.model.Quantity;
 
 import java.util.concurrent.CompletableFuture;
 
-import static io.github.jy95.fds.r4.config.DefaultImplementationsR4.hasMatchingComponent;
-
 /**
  * R4 class for translating "doseAndRate.rateQuantity"
  *
@@ -34,8 +32,7 @@ public class RateQuantityR4 extends AbstractRateQuantity<FDSConfigR4, Dosage> {
     @Override
     public CompletableFuture<String> convert(Dosage dosage) {
         var rateQuantity = getConfig()
-                .getSelectDosageAndRateField()
-                .apply(dosage.getDoseAndRate(), DoseAndRateKey.RATE_QUANTITY);
+                .selectDosageAndRateField(dosage.getDoseAndRate(), DoseAndRateKey.RATE_QUANTITY);
         return quantityToStringR4
                 .convert(getResources(), getConfig(), (Quantity) rateQuantity)
                 .thenApplyAsync(rateQuantityText -> rateQuantityMsg.format(new Object[]{rateQuantityText}));
@@ -44,6 +41,7 @@ public class RateQuantityR4 extends AbstractRateQuantity<FDSConfigR4, Dosage> {
     /** {@inheritDoc} */
     @Override
     public boolean isPresent(Dosage dosage) {
-        return hasMatchingComponent(dosage, Dosage.DosageDoseAndRateComponent::hasRateQuantity);
+        return getConfig()
+                .hasMatchingComponent(dosage, Dosage.DosageDoseAndRateComponent::hasRateQuantity);
     }
 }

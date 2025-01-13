@@ -20,10 +20,10 @@ import io.github.jy95.fds.common.types.DisplayOrder;
 @Getter
 @SuperBuilder
 public class FDSConfig {
-    /*
-    * Locale to return the humanized dosage string
-    * Default : English
-    * */
+    /**
+     * Locale to return the humanized dosage string
+     * Default : English
+     */
     @Builder.Default private Locale locale = Locale.ENGLISH;
     /**
      * Control the display order used by the algorithm

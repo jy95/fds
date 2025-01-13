@@ -43,8 +43,7 @@ public class AsNeededR4 extends AbstractAsNeeded<FDSConfigR4, Dosage> {
         var code = dosage.getAsNeededCodeableConcept();
         var codeAsText = this
                 .getConfig()
-                .getFromCodeableConceptToString()
-                .apply(code);
+                .fromCodeableConceptToString(code);
 
         return codeAsText
                 .thenApplyAsync(v -> ListToString.convert(bundle, List.of(v)))

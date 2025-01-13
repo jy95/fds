@@ -28,7 +28,7 @@ public class AdditionalInstructionR4 extends AbstractAdditionalInstruction<FDSCo
         var additionalInstructions = dosage
                 .getAdditionalInstruction()
                 .stream()
-                .map(this.getConfig().getFromCodeableConceptToString())
+                .map(ins -> this.getConfig().fromCodeableConceptToString(ins))
                 .toList();
 
         return instructionsFuture(additionalInstructions);

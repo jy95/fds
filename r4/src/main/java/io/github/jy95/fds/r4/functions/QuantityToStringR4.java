@@ -45,7 +45,7 @@ public class QuantityToStringR4 extends AbstractQuantityToString<FDSConfigR4, Qu
         }
 
         // Otherwise let config do the charm
-        return config.getFromFHIRQuantityUnitToString().apply(quantity);
+        return config.fromFHIRQuantityUnitToString(quantity);
     }
 
     /** {@inheritDoc} */

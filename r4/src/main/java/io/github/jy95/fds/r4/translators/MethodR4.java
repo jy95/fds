@@ -27,8 +27,7 @@ public class MethodR4 extends AbstractTranslator<FDSConfigR4, Dosage> {
     public CompletableFuture<String> convert(Dosage dosage) {
         return this
                 .getConfig()
-                .getFromCodeableConceptToString()
-                .apply(
+                .fromCodeableConceptToString(
                         dosage.getMethod()
                 );
     }

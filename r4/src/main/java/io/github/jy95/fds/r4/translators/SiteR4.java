@@ -27,8 +27,7 @@ public class SiteR4 extends AbstractTranslator<FDSConfigR4, Dosage> {
     public CompletableFuture<String> convert(Dosage dosage) {
         return this
                 .getConfig()
-                .getFromCodeableConceptToString()
-                .apply(
+                .fromCodeableConceptToString(
                         dosage.getSite()
                 );
     }
