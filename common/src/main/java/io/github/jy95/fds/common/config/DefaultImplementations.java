@@ -8,7 +8,7 @@ import io.github.jy95.fds.common.bundle.MultiResourceBundleControl;
 /**
  * Provides default implementations for common operations in the library.
  */
-public class DefaultImplementations {
+public final class DefaultImplementations {
 
     /**
      * Selects a ResourceBundle for the specified locale using a MultiResourceBundleControl.

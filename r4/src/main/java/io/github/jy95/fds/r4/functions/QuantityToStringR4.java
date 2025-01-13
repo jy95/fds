@@ -11,6 +11,9 @@ import com.ibm.icu.text.MessageFormat;
 import io.github.jy95.fds.common.functions.AbstractQuantityToString;
 import io.github.jy95.fds.r4.config.FDSConfigR4;
 
+/**
+ * R4 class for converting quantity objects to human-readable strings.
+ */
 public class QuantityToStringR4 extends AbstractQuantityToString<FDSConfigR4, Quantity> {
 
     @Override

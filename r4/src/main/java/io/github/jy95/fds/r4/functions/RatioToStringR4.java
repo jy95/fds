@@ -9,6 +9,9 @@ import java.math.BigDecimal;
 import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * R4 class for converting ratio objects to human-readable strings
+ */
 public class RatioToStringR4 extends AbstractRatioToString<FDSConfigR4, Ratio> {
 
     /**

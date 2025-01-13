@@ -8,6 +8,9 @@ import java.math.BigDecimal;
 import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * R4 class for converting range objects to human-readable strings.
+ */
 public class RangeToStringR4 extends AbstractRangeToString<FDSConfigR4, Range> {
 
     private final QuantityToStringR4 quantityToStringR4;

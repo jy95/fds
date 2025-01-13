@@ -9,8 +9,17 @@ import org.hl7.fhir.r4.model.Type;
 import java.util.Map;
 import java.util.EnumMap;
 
+/**
+ * A registry specific to FHIR R4 for managing dose and rate components of a Dosage resource.
+ * This class provides a mapping between {@link DoseAndRateKey} and the corresponding getter methods
+ * from {@link DosageDoseAndRateComponent}. It is implemented as a singleton.
+ */
 public class DoseAndRateRegistryR4 extends AbstractDoseAndRateRegistry<DosageDoseAndRateComponent, Type> {
 
+    /**
+     * Constructor initializing the registry with predefined mappings for dose and rate keys.
+     * The mappings are based on the getters provided by {@link DosageDoseAndRateComponent}.
+     */
     public DoseAndRateRegistryR4() {
         super(
                 new EnumMap<>(
@@ -25,12 +34,18 @@ public class DoseAndRateRegistryR4 extends AbstractDoseAndRateRegistry<DosageDos
         );
     }
 
-    // Static inner class responsible for holding the singleton instance
+    /**
+     * Static inner class responsible for holding the singleton instance.
+     * This ensures the singleton is instantiated lazily and thread-safe.
+     */
     private static class Holder {
         private static final DoseAndRateRegistryR4 INSTANCE = new DoseAndRateRegistryR4();
     }
 
-    // Public method to provide access to the singleton instance
+    /**
+     * Provides access to the singleton instance of {@link DoseAndRateRegistryR4}.
+     * @return The singleton instance of {@link DoseAndRateRegistryR4}.
+     */
     public static DoseAndRateRegistryR4 getInstance() {
         return Holder.INSTANCE;
     }

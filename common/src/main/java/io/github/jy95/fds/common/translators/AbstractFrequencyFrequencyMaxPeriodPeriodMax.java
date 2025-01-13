@@ -15,9 +15,13 @@ import java.util.stream.Stream;
  */
 public abstract class AbstractFrequencyFrequencyMaxPeriodPeriodMax<C extends FDSConfig, D> extends AbstractTranslator<C, D> {
 
-    // Class implementing the parsing of "timing.repeat.frequency" / "timing.repeat.frequencyMax"
+    /**
+     * Class implementing the parsing of "timing.repeat.frequency" / "timing.repeat.frequencyMax"
+     */
     protected final AbstractTranslator<C, D> frequencyTranslator;
-    // Class implementing the parsing of "timing.repeat.period" / "timing.repeat.periodMax"
+    /**
+     * Class implementing the parsing of "timing.repeat.period" / "timing.repeat.periodMax"
+     */
     protected final AbstractTranslator<C, D> periodTranslator;
 
     /**
