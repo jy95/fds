@@ -8,6 +8,22 @@ updates:
       include: "scope"
     schedule:
       interval: "weekly"
+  # Files stored in common repository
+  - package-ecosystem: "maven"
+    directory: "/common"
+    commit-message:
+      prefix: chore
+      include: "scope"
+    schedule:
+      interval: "weekly"
+  # Files stored in r4 repository
+  - package-ecosystem: "maven"
+    directory: "/r4"
+    commit-message:
+      prefix: chore
+      include: "scope"
+    schedule:
+      interval: "weekly"
   # Workflow files stored in the default location of `.github/workflows`
   - package-ecosystem: "github-actions"
     directory: "/"
