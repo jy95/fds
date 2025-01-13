@@ -59,11 +59,11 @@ public interface FDSOperations<
     T selectDosageAndRateField(List<R> doseAndRateComponentList, DoseAndRateKey doseAndRateKey);
 
     /**
-     * <p>hasMatchingComponent.</p>
+     * Checks if a Dosage has any component matching a given predicate.
      *
-     * @param dosage a D object
-     * @param predicate a {@link java.util.function.Predicate} object
-     * @return a boolean
+     * @param dosage the Dosage to check
+     * @param predicate the predicate to apply to each component.
+     * @return {@code true} if any component matches the predicate; {@code false} otherwise.
      */
     boolean hasMatchingComponent(D dosage, Predicate<R> predicate);
 }
