@@ -1,17 +1,15 @@
 package io.github.jy95.fds.r4.translators;
 
+import io.github.jy95.fds.common.types.DisplayOrder;
 import io.github.jy95.fds.common.types.DosageAPI;
 import io.github.jy95.fds.r4.DosageAPIR4;
-
-import io.github.jy95.fds.common.types.DisplayOrder;
 import io.github.jy95.fds.r4.config.FDSConfigR4;
+import io.github.jy95.fds.translators.AbstractAdditionalInstructionTest;
 import org.hl7.fhir.r4.model.CodeableConcept;
 import org.hl7.fhir.r4.model.Dosage;
 
 import java.util.List;
 import java.util.Locale;
-
-import io.github.jy95.fds.translators.AbstractAdditionalInstructionTest;
 
 public class AdditionalInstructionTest extends AbstractAdditionalInstructionTest<FDSConfigR4, Dosage> {
 

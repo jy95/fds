@@ -1,23 +1,16 @@
 package io.github.jy95.fds.r4.translators;
 
-import io.github.jy95.fds.common.config.FDSConfig;
+import io.github.jy95.fds.common.types.DisplayOrder;
 import io.github.jy95.fds.common.types.DosageAPI;
 import io.github.jy95.fds.r4.DosageAPIR4;
-import io.github.jy95.fds.r4.AbstractFhirTest;
-import io.github.jy95.fds.common.types.DisplayOrder;
 import io.github.jy95.fds.r4.config.FDSConfigR4;
 import io.github.jy95.fds.translators.AbstractAsNeededTest;
 import org.hl7.fhir.r4.model.BooleanType;
 import org.hl7.fhir.r4.model.CodeableConcept;
 import org.hl7.fhir.r4.model.Dosage;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.concurrent.ExecutionException;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class AsNeededTest extends AbstractAsNeededTest<FDSConfigR4, Dosage> {
 
