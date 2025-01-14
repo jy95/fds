@@ -1,32 +1,26 @@
 package io.github.jy95.fds.r4.translators;
 
+import io.github.jy95.fds.common.types.DosageAPI;
 import io.github.jy95.fds.r4.DosageAPIR4;
 import io.github.jy95.fds.r4.AbstractFhirTest;
 import io.github.jy95.fds.common.types.DisplayOrder;
+import io.github.jy95.fds.r4.config.FDSConfigR4;
+import io.github.jy95.fds.translators.AbstractBoundsPeriodTest;
 import org.hl7.fhir.r4.model.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class BoundsPeriodTest extends AbstractFhirTest {
+public class BoundsPeriodTest extends AbstractBoundsPeriodTest<FDSConfigR4, Dosage> {
 
-    @ParameterizedTest
-    @MethodSource("localeProvider")
-    void testNoBoundsPeriod(Locale locale) throws ExecutionException, InterruptedException {
-        Dosage dosage = new Dosage();
-        DosageAPIR4 dosageUtils = getDosageAPI(locale, DisplayOrder.BOUNDS_PERIOD);
-        String result = dosageUtils.asHumanReadableText(dosage).get();
-        assertEquals("", result);
-    }
-
-    @ParameterizedTest
-    @MethodSource("localeProvider")
-    void testBothStartAndEnd(Locale locale) throws ExecutionException, InterruptedException {
+    @Override
+    protected Dosage generateBothStartAndEnd() {
         Dosage dosage = new Dosage();
         Timing timing = new Timing();
         Timing.TimingRepeatComponent timingRepeatComponent = new Timing.TimingRepeatComponent();
@@ -36,15 +30,11 @@ public class BoundsPeriodTest extends AbstractFhirTest {
         timingRepeatComponent.setBounds(boundsPeriod);
         timing.setRepeat(timingRepeatComponent);
         dosage.setTiming(timing);
-        DosageAPIR4 dosageUtils = getDosageAPI(locale, DisplayOrder.BOUNDS_PERIOD);
-        String result = dosageUtils.asHumanReadableText(dosage).get();
-        String expected = getExpectedText1(locale);
-        assertEquals(expected, result);
+        return dosage;
     }
 
-    @ParameterizedTest
-    @MethodSource("localeProvider")
-    void testOnlyEnd(Locale locale) throws ExecutionException, InterruptedException {
+    @Override
+    protected Dosage generateOnlyEnd() {
         Dosage dosage = new Dosage();
         Timing timing = new Timing();
         Timing.TimingRepeatComponent timingRepeatComponent = new Timing.TimingRepeatComponent();
@@ -53,14 +43,11 @@ public class BoundsPeriodTest extends AbstractFhirTest {
         timingRepeatComponent.setBounds(boundsPeriod);
         timing.setRepeat(timingRepeatComponent);
         dosage.setTiming(timing);
-        DosageAPIR4 dosageUtils = getDosageAPI(locale, DisplayOrder.BOUNDS_PERIOD);
-        String result = dosageUtils.asHumanReadableText(dosage).get();
-        assertExpectedText2(locale, result);
+        return dosage;
     }
 
-    @ParameterizedTest
-    @MethodSource("localeProvider")
-    void testOnlyStart(Locale locale) throws ExecutionException, InterruptedException {
+    @Override
+    protected Dosage generateOnlyStart() {
         Dosage dosage = new Dosage();
         Timing timing = new Timing();
         Timing.TimingRepeatComponent timingRepeatComponent = new Timing.TimingRepeatComponent();
@@ -69,53 +56,24 @@ public class BoundsPeriodTest extends AbstractFhirTest {
         timingRepeatComponent.setBounds(boundsPeriod);
         timing.setRepeat(timingRepeatComponent);
         dosage.setTiming(timing);
-        DosageAPIR4 dosageUtils = getDosageAPI(locale, DisplayOrder.BOUNDS_PERIOD);
-        String result = dosageUtils.asHumanReadableText(dosage).get();
-        String expected = getExpectedText3(locale);
-        assertEquals(expected, result);
+        return dosage;
+    }
+    
+    @Override
+    public DosageAPI<FDSConfigR4, Dosage> getDosageAPI(Locale locale, DisplayOrder displayOrder) {
+        return new DosageAPIR4(FDSConfigR4.builder()
+                .displayOrder(List.of(displayOrder))
+                .locale(locale)
+                .build());
     }
 
-    // For the parametrized test of first test
-    private static String getExpectedText1(Locale locale) {
-        if (locale.equals(Locale.ENGLISH)) {
-            return "from May 23, 2011 to May 27, 2011";
-        } else if (locale.equals(Locale.FRENCH)) {
-            return "du 23 mai 2011 au 27 mai 2011";
-        } else if (locale.equals(Locale.GERMAN)) {
-            return "von 23.05.2011 bis 27.05.2011";
-        } else {
-            return "van 23 mei 2011 tot 27 mei 2011";
-        }
+    @Override
+    public DosageAPI<FDSConfigR4, Dosage> getDosageAPI(FDSConfigR4 config) {
+        return new DosageAPIR4(config);
     }
 
-    // For the parametrized test of second test
-    private void assertExpectedText2(Locale locale, String actual) {
-        if (locale.equals(Locale.ENGLISH)) {
-            assertEquals("to Feb 7, 2015, 1:28:17 PM", actual);
-        } else if (locale.equals(Locale.FRENCH)) {
-            assertEquals("jusqu’au 7 févr. 2015, 13:28:17", actual);
-        } else if (locale.equals(Locale.GERMAN)) {
-            assertEquals("bis 07.02.2015, 13:28:17", actual);
-        } else {
-            // On Eclipse Temurin, it fails as it returns a string without comma
-            // In other words "tot 7 feb 2015 13:28:17"
-            // Whereas on Oracle JDK, it works,
-            // assertEquals("tot 7 feb 2015, 13:28:17", actual);
-            assertTrue(actual.contains("tot 7 feb 2015"));
-            assertTrue(actual.contains("13:28:17"));
-        }
-    }
-
-    // For the parametrized test of third test
-    private String getExpectedText3(Locale locale) {
-        if (locale.equals(Locale.ENGLISH)) {
-            return "from May 23, 2011";
-        } else if (locale.equals(Locale.FRENCH)) {
-            return "à partir du 23 mai 2011";
-        } else if (locale.equals(Locale.GERMAN)) {
-            return "ab 23.05.2011";
-        } else {
-            return "van 23 mei 2011";
-        }
+    @Override
+    public Dosage generateEmptyDosage() {
+        return new Dosage();
     }
 }
