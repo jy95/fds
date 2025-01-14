@@ -58,7 +58,7 @@ public class BoundsPeriodTest extends AbstractBoundsPeriodTest<FDSConfigR4, Dosa
         dosage.setTiming(timing);
         return dosage;
     }
-    
+
     @Override
     public DosageAPI<FDSConfigR4, Dosage> getDosageAPI(Locale locale, DisplayOrder displayOrder) {
         return new DosageAPIR4(FDSConfigR4.builder()
