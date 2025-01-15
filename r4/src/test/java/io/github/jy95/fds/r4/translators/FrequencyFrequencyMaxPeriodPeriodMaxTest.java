@@ -1,39 +1,20 @@
 package io.github.jy95.fds.r4.translators;
 
-import io.github.jy95.fds.r4.DosageAPIR4;
-import io.github.jy95.fds.r4.AbstractFhirTest;
 import io.github.jy95.fds.common.types.DisplayOrder;
+import io.github.jy95.fds.common.types.DosageAPI;
+import io.github.jy95.fds.r4.DosageAPIR4;
+import io.github.jy95.fds.r4.config.FDSConfigR4;
+import io.github.jy95.fds.translators.AbstractFrequencyFrequencyMaxPeriodPeriodMaxTest;
 import org.hl7.fhir.r4.model.Dosage;
 import org.hl7.fhir.r4.model.Timing;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.List;
 import java.util.Locale;
-import java.util.concurrent.ExecutionException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+public class FrequencyFrequencyMaxPeriodPeriodMaxTest extends AbstractFrequencyFrequencyMaxPeriodPeriodMaxTest<FDSConfigR4, Dosage> {
 
-public class FrequencyFrequencyMaxPeriodPeriodMaxTest extends AbstractFhirTest {
-
-    @ParameterizedTest
-    @MethodSource("localeProvider")
-    void testNoFrequencyOrPeriod(Locale locale) throws ExecutionException, InterruptedException {
-        Dosage dosage = new Dosage();
-        DosageAPIR4 dosageUtils = DayOfWeekTest.getDosageAPI(
-                locale,
-                DisplayOrder.FREQUENCY_FREQUENCY_MAX_PERIOD_PERIOD_MAX
-        );
-        String result = dosageUtils.asHumanReadableText(dosage).get();
-        assertEquals("", result);
-    }
-
-    @ParameterizedTest
-    @MethodSource("localeProvider")
-    void testWithFrequencyOnly(Locale locale) throws ExecutionException, InterruptedException {
-        DosageAPIR4 dosageUtils = DayOfWeekTest.getDosageAPI(
-                locale,
-                DisplayOrder.FREQUENCY_FREQUENCY_MAX_PERIOD_PERIOD_MAX
-        );
+    @Override
+    protected Dosage generateWithFrequencyOnly() {
         Dosage dosage = new Dosage();
         Timing timing = new Timing();
         Timing.TimingRepeatComponent repeatComponent = new Timing.TimingRepeatComponent();
@@ -41,19 +22,11 @@ public class FrequencyFrequencyMaxPeriodPeriodMaxTest extends AbstractFhirTest {
 
         timing.setRepeat(repeatComponent);
         dosage.setTiming(timing);
-
-        String result = dosageUtils.asHumanReadableText(dosage).get();
-        String expectedResult = getExpectedText1(locale);
-        assertEquals(expectedResult, result);
+        return dosage;
     }
 
-    @ParameterizedTest
-    @MethodSource("localeProvider")
-    void testWithPeriodOnly(Locale locale) throws ExecutionException, InterruptedException {
-        DosageAPIR4 dosageUtils = DayOfWeekTest.getDosageAPI(
-                locale,
-                DisplayOrder.FREQUENCY_FREQUENCY_MAX_PERIOD_PERIOD_MAX
-        );
+    @Override
+    protected Dosage generateWithPeriodOnly() {
         Dosage dosage = new Dosage();
         Timing timing = new Timing();
         Timing.TimingRepeatComponent repeatComponent = new Timing.TimingRepeatComponent();
@@ -62,19 +35,11 @@ public class FrequencyFrequencyMaxPeriodPeriodMaxTest extends AbstractFhirTest {
 
         timing.setRepeat(repeatComponent);
         dosage.setTiming(timing);
-
-        String result = dosageUtils.asHumanReadableText(dosage).get();
-        String expectedResult = getExpectedText2(locale);
-        assertEquals(expectedResult, result);
+        return dosage;
     }
 
-    @ParameterizedTest
-    @MethodSource("localeProvider")
-    void testBothFrequencyAndPeriod(Locale locale) throws ExecutionException, InterruptedException {
-        DosageAPIR4 dosageUtils = DayOfWeekTest.getDosageAPI(
-                locale,
-                DisplayOrder.FREQUENCY_FREQUENCY_MAX_PERIOD_PERIOD_MAX
-        );
+    @Override
+    protected Dosage generateBothFrequencyAndPeriod() {
         Dosage dosage = new Dosage();
         Timing timing = new Timing();
         Timing.TimingRepeatComponent repeatComponent = new Timing.TimingRepeatComponent();
@@ -84,46 +49,24 @@ public class FrequencyFrequencyMaxPeriodPeriodMaxTest extends AbstractFhirTest {
 
         timing.setRepeat(repeatComponent);
         dosage.setTiming(timing);
-
-        String result = dosageUtils.asHumanReadableText(dosage).get();
-        String expectedResult = getExpectedText3(locale);
-        assertEquals(expectedResult, result);
+        return dosage;
     }
 
-    private String getExpectedText1(Locale locale) {
-        if (locale.equals(Locale.ENGLISH)) {
-            return "3 times";
-        } else if (locale.equals(Locale.FRENCH)) {
-            return "3 fois";
-        } else if (locale.equals(Locale.GERMAN)) {
-            return "3 Mal";
-        } else {
-            return "3 keer";
-        }
+    @Override
+    public DosageAPI<FDSConfigR4, Dosage> getDosageAPI(Locale locale, DisplayOrder displayOrder) {
+        return new DosageAPIR4(FDSConfigR4.builder()
+                .displayOrder(List.of(displayOrder))
+                .locale(locale)
+                .build());
     }
 
-    private String getExpectedText2(Locale locale) {
-        if (locale.equals(Locale.ENGLISH)) {
-            return "every 2 days";
-        } else if (locale.equals(Locale.FRENCH)) {
-            return "chaque 2 jours";
-        } else if (locale.equals(Locale.GERMAN)) {
-            return "alle 2 Tage";
-        } else {
-            return "per 2 dagen";
-        }
+    @Override
+    public DosageAPI<FDSConfigR4, Dosage> getDosageAPI(FDSConfigR4 config) {
+        return new DosageAPIR4(config);
     }
 
-    private String getExpectedText3(Locale locale) {
-        if (locale.equals(Locale.ENGLISH)) {
-            return "3 times every 2 days";
-        } else if (locale.equals(Locale.FRENCH)) {
-            return "3 fois chaque 2 jours";
-        } else if (locale.equals(Locale.GERMAN)) {
-            return "3 Mal alle 2 Tage";
-        } else {
-            return "3 keer per 2 dagen";
-        }
+    @Override
+    public Dosage generateEmptyDosage() {
+        return new Dosage();
     }
-
 }

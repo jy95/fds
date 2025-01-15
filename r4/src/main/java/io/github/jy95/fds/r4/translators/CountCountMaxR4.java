@@ -4,8 +4,6 @@ import io.github.jy95.fds.common.translators.AbstractCountCountMax;
 import io.github.jy95.fds.r4.config.FDSConfigR4;
 import org.hl7.fhir.r4.model.Dosage;
 
-import java.util.concurrent.CompletableFuture;
-
 /**
  * R4 class for translating "timing.repeat.count" / "timing.repeat.countMax"
  *

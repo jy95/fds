@@ -5,9 +5,6 @@ import io.github.jy95.fds.r4.config.FDSConfigR4;
 import io.github.jy95.fds.r4.functions.FormatDateTimesR4;
 import org.hl7.fhir.r4.model.Dosage;
 
-import java.util.Map;
-import java.util.concurrent.CompletableFuture;
-
 /**
  * R4 class for translating "timing.repeat.boundsPeriod"
  *

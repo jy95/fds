@@ -1,46 +1,30 @@
 package io.github.jy95.fds.r4.translators;
 
-import io.github.jy95.fds.r4.DosageAPIR4;
-import io.github.jy95.fds.r4.AbstractFhirTest;
 import io.github.jy95.fds.common.types.DisplayOrder;
+import io.github.jy95.fds.common.types.DosageAPI;
+import io.github.jy95.fds.r4.DosageAPIR4;
+import io.github.jy95.fds.r4.config.FDSConfigR4;
+import io.github.jy95.fds.translators.AbstractMethodTest;
 import org.hl7.fhir.r4.model.CodeableConcept;
 import org.hl7.fhir.r4.model.Coding;
 import org.hl7.fhir.r4.model.Dosage;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.concurrent.ExecutionException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+public class MethodTest extends AbstractMethodTest<FDSConfigR4, Dosage> {
 
-public class MethodTest extends AbstractFhirTest {
-
-    @ParameterizedTest
-    @MethodSource("localeProvider")
-    void testNoMethod(Locale locale) throws ExecutionException, InterruptedException {
-        Dosage dosage = new Dosage();
-        DosageAPIR4 dosageUtils = getDosageAPI(locale, DisplayOrder.METHOD);
-        String result = dosageUtils.asHumanReadableText(dosage).get();
-        assertEquals("", result);
-    }
-
-    @ParameterizedTest
-    @MethodSource("localeProvider")
-    void testWithMethodText(Locale locale) throws ExecutionException, InterruptedException {
+    @Override
+    protected Dosage generateWithMethodText() {
         Dosage dosage = new Dosage();
         CodeableConcept cc1 = new CodeableConcept();
         cc1.setText("With or after food");
         dosage.setMethod(cc1);
-        DosageAPIR4 dosageUtils = getDosageAPI(locale, DisplayOrder.METHOD);
-        String result = dosageUtils.asHumanReadableText(dosage).get();
-        assertEquals("With or after food", result);
+        return dosage;
     }
 
-    @ParameterizedTest
-    @MethodSource("localeProvider")
-    void testWithMethodCodeAndDisplay(Locale locale) throws ExecutionException, InterruptedException {
+    @Override
+    protected Dosage generateWithMethodCodeAndDisplay() {
         Dosage dosage = new Dosage();
         CodeableConcept cc1 = new CodeableConcept();
         cc1.setCoding(
@@ -49,14 +33,11 @@ public class MethodTest extends AbstractFhirTest {
                 )
         );
         dosage.setMethod(cc1);
-        DosageAPIR4 dosageUtils = getDosageAPI(locale, DisplayOrder.METHOD);
-        String result = dosageUtils.asHumanReadableText(dosage).get();
-        assertEquals("Spray", result);
+        return dosage;
     }
 
-    @ParameterizedTest
-    @MethodSource("localeProvider")
-    void testWithMethodCodeOnly(Locale locale) throws ExecutionException, InterruptedException {
+    @Override
+    protected Dosage generateWithMethodCodeOnly() {
         Dosage dosage = new Dosage();
         CodeableConcept cc1 = new CodeableConcept();
         cc1.setCoding(
@@ -65,9 +46,24 @@ public class MethodTest extends AbstractFhirTest {
                 )
         );
         dosage.setMethod(cc1);
-        DosageAPIR4 dosageUtils = getDosageAPI(locale, DisplayOrder.METHOD);
-        String result = dosageUtils.asHumanReadableText(dosage).get();
-        assertEquals("738996007", result);
+        return dosage;
     }
 
+    @Override
+    public DosageAPI<FDSConfigR4, Dosage> getDosageAPI(Locale locale, DisplayOrder displayOrder) {
+        return new DosageAPIR4(FDSConfigR4.builder()
+                .displayOrder(List.of(displayOrder))
+                .locale(locale)
+                .build());
+    }
+
+    @Override
+    public DosageAPI<FDSConfigR4, Dosage> getDosageAPI(FDSConfigR4 config) {
+        return new DosageAPIR4(config);
+    }
+
+    @Override
+    public Dosage generateEmptyDosage() {
+        return new Dosage();
+    }
 }

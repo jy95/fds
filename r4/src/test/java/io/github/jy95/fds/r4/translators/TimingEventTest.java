@@ -1,34 +1,21 @@
 package io.github.jy95.fds.r4.translators;
 
-import io.github.jy95.fds.r4.DosageAPIR4;
-import io.github.jy95.fds.r4.AbstractFhirTest;
 import io.github.jy95.fds.common.types.DisplayOrder;
+import io.github.jy95.fds.common.types.DosageAPI;
+import io.github.jy95.fds.r4.DosageAPIR4;
+import io.github.jy95.fds.r4.config.FDSConfigR4;
+import io.github.jy95.fds.translators.AbstractTimingEventTest;
 import org.hl7.fhir.r4.model.DateTimeType;
 import org.hl7.fhir.r4.model.Dosage;
 import org.hl7.fhir.r4.model.Timing;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.concurrent.ExecutionException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+public class TimingEventTest extends AbstractTimingEventTest<FDSConfigR4, Dosage> {
 
-public class TimingEventTest extends AbstractFhirTest {
-
-    @ParameterizedTest
-    @MethodSource("localeProvider")
-    void testNoEvent(Locale locale) throws ExecutionException, InterruptedException {
-        Dosage dosage = new Dosage();
-        DosageAPIR4 dosageUtils = getDosageAPI(locale, DisplayOrder.TIMING_EVENT);
-        String result = dosageUtils.asHumanReadableText(dosage).get();
-        assertEquals("", result);
-    }
-
-    @ParameterizedTest
-    @MethodSource("localeProvider")
-    void testSingle(Locale locale) throws ExecutionException, InterruptedException {
+    @Override
+    protected Dosage generateSingle() {
         Dosage dosage = new Dosage();
         Timing timing = new Timing();
         timing.setEvent(
@@ -37,15 +24,11 @@ public class TimingEventTest extends AbstractFhirTest {
                 )
         );
         dosage.setTiming(timing);
-        DosageAPIR4 dosageUtils = getDosageAPI(locale, DisplayOrder.TIMING_EVENT);
-        String result = dosageUtils.asHumanReadableText(dosage).get();
-        String expected = getExpectedSingleDayText(locale);
-        assertEquals(expected, result);
+        return dosage;
     }
 
-    @ParameterizedTest
-    @MethodSource("localeProvider")
-    void testMultiple(Locale locale) throws ExecutionException, InterruptedException {
+    @Override
+    protected Dosage generateMultiple() {
         Dosage dosage = new Dosage();
         Timing timing = new Timing();
         timing.setEvent(
@@ -57,36 +40,25 @@ public class TimingEventTest extends AbstractFhirTest {
                 )
         );
         dosage.setTiming(timing);
-        DosageAPIR4 dosageUtils = getDosageAPI(locale, DisplayOrder.TIMING_EVENT);
-        String result = dosageUtils.asHumanReadableText(dosage).get();
-        String expected = getExpectedMultipleDaysText(locale);
-        assertEquals(expected, result);
+        return dosage;
     }
 
-    // For the parametrized test of single form
-    private static String getExpectedSingleDayText(Locale locale) {
-        if (locale.equals(Locale.ENGLISH)) {
-            return "on Jan 1, 2024";
-        } else if (locale.equals(Locale.FRENCH)) {
-            return "le 1 janv. 2024";
-        } else if (locale.equals(Locale.GERMAN)) {
-            return "am 01.01.2024";
-        } else {
-            return "op 1 jan 2024";
-        }
+    @Override
+    public DosageAPI<FDSConfigR4, Dosage> getDosageAPI(Locale locale, DisplayOrder displayOrder) {
+        return new DosageAPIR4(FDSConfigR4.builder()
+                .displayOrder(List.of(displayOrder))
+                .locale(locale)
+                .build());
     }
 
-    // For the parametrized test of multiple form
-    private String getExpectedMultipleDaysText(Locale locale) {
-        if (locale.equals(Locale.ENGLISH)) {
-            return "on Jan 1, 2018, Jun 1, 1973 and Aug 23, 1905";
-        } else if (locale.equals(Locale.FRENCH)) {
-            return "les 1 janv. 2018, 1 juin 1973 et 23 août 1905";
-        } else if (locale.equals(Locale.GERMAN)) {
-            return "am 01.01.2018, 01.06.1973 und 23.08.1905";
-        } else {
-            return "op 1 jan 2018, 1 jun 1973 en 23 aug 1905";
-        }
+    @Override
+    public DosageAPI<FDSConfigR4, Dosage> getDosageAPI(FDSConfigR4 config) {
+        return new DosageAPIR4(config);
+    }
+
+    @Override
+    public Dosage generateEmptyDosage() {
+        return new Dosage();
     }
 
 }
