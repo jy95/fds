@@ -2,7 +2,6 @@ package io.github.jy95.fds.common.bundle;
 
 import lombok.Getter;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
@@ -40,7 +39,7 @@ public class MultiResourceBundleControl extends ResourceBundle.Control {
 
     /** {@inheritDoc} */
     @Override
-    public ResourceBundle newBundle(String baseName, Locale locale, String format, ClassLoader loader, boolean reload) throws IllegalAccessException, InstantiationException, IOException {
+    public ResourceBundle newBundle(String baseName, Locale locale, String format, ClassLoader loader, boolean reload) {
         List<ResourceBundle> delegates = Arrays.stream(this.dependentBaseNames)
                 .filter(currentBaseName -> currentBaseName != null && !currentBaseName.trim().isEmpty())
                 .map(currentBaseName -> ResourceBundle.getBundle(currentBaseName, locale))
