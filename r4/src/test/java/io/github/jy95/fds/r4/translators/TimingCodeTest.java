@@ -1,49 +1,33 @@
 package io.github.jy95.fds.r4.translators;
 
-import io.github.jy95.fds.r4.DosageAPIR4;
-import io.github.jy95.fds.r4.AbstractFhirTest;
 import io.github.jy95.fds.common.types.DisplayOrder;
+import io.github.jy95.fds.common.types.DosageAPI;
+import io.github.jy95.fds.r4.DosageAPIR4;
+import io.github.jy95.fds.r4.config.FDSConfigR4;
+import io.github.jy95.fds.translators.AbstractTimingCodeTest;
 import org.hl7.fhir.r4.model.CodeableConcept;
 import org.hl7.fhir.r4.model.Coding;
 import org.hl7.fhir.r4.model.Dosage;
 import org.hl7.fhir.r4.model.Timing;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.concurrent.ExecutionException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+public class TimingCodeTest extends AbstractTimingCodeTest<FDSConfigR4, Dosage> {
 
-public class TimingCodeTest extends AbstractFhirTest {
-
-    @ParameterizedTest
-    @MethodSource("localeProvider")
-    void testNoCode(Locale locale) throws ExecutionException, InterruptedException {
-        Dosage dosage = new Dosage();
-        DosageAPIR4 dosageUtils = getDosageAPI(locale, DisplayOrder.TIMING_CODE);
-        String result = dosageUtils.asHumanReadableText(dosage).get();
-        assertEquals("", result);
-    }
-
-    @ParameterizedTest
-    @MethodSource("localeProvider")
-    void testWithTimingCodeText(Locale locale) throws ExecutionException, InterruptedException {
+    @Override
+    protected Dosage generateWithTimingCodeText() {
         Dosage dosage = new Dosage();
         CodeableConcept cc1 = new CodeableConcept();
         cc1.setText("Take medication in the morning on weekends and days off work");
         Timing timing = new Timing();
         timing.setCode(cc1);
         dosage.setTiming(timing);
-        DosageAPIR4 dosageUtils = getDosageAPI(locale, DisplayOrder.TIMING_CODE);
-        String result = dosageUtils.asHumanReadableText(dosage).get();
-        assertEquals("Take medication in the morning on weekends and days off work", result);
+        return dosage;
     }
 
-    @ParameterizedTest
-    @MethodSource("localeProvider")
-    void testWithTimingCodeCodeAndDisplay(Locale locale) throws ExecutionException, InterruptedException {
+    @Override
+    protected Dosage generateWithTimingCodeCodeAndDisplay() {
         Dosage dosage = new Dosage();
         CodeableConcept cc1 = new CodeableConcept();
         cc1.setCoding(
@@ -54,14 +38,11 @@ public class TimingCodeTest extends AbstractFhirTest {
         Timing timing = new Timing();
         timing.setCode(cc1);
         dosage.setTiming(timing);
-        DosageAPIR4 dosageUtils = getDosageAPI(locale, DisplayOrder.TIMING_CODE);
-        String result = dosageUtils.asHumanReadableText(dosage).get();
-        assertEquals("Two times a day at institution specified time", result);
+        return dosage;
     }
-
-    @ParameterizedTest
-    @MethodSource("localeProvider")
-    void testWithTimingCodeCodeOnly(Locale locale) throws ExecutionException, InterruptedException {
+    
+    @Override
+    protected Dosage generateWithTimingCodeCodeOnly() {
         Dosage dosage = new Dosage();
         CodeableConcept cc1 = new CodeableConcept();
         cc1.setCoding(
@@ -72,9 +53,25 @@ public class TimingCodeTest extends AbstractFhirTest {
         Timing timing = new Timing();
         timing.setCode(cc1);
         dosage.setTiming(timing);
-        DosageAPIR4 dosageUtils = getDosageAPI(locale, DisplayOrder.TIMING_CODE);
-        String result = dosageUtils.asHumanReadableText(dosage).get();
-        assertEquals("BID", result);
+        return dosage;
+    }
+
+    @Override
+    public DosageAPI<FDSConfigR4, Dosage> getDosageAPI(Locale locale, DisplayOrder displayOrder) {
+        return new DosageAPIR4(FDSConfigR4.builder()
+                .displayOrder(List.of(displayOrder))
+                .locale(locale)
+                .build());
+    }
+
+    @Override
+    public DosageAPI<FDSConfigR4, Dosage> getDosageAPI(FDSConfigR4 config) {
+        return new DosageAPIR4(config);
+    }
+
+    @Override
+    public Dosage generateEmptyDosage() {
+        return new Dosage();
     }
 
 }
