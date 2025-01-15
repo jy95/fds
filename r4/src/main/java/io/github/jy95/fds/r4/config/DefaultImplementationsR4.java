@@ -1,14 +1,14 @@
 package io.github.jy95.fds.r4.config;
 
-import java.util.concurrent.CompletableFuture;
-import java.util.Objects;
-import java.util.List;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
-
 import io.github.jy95.fds.common.types.DoseAndRateKey;
 import io.github.jy95.fds.r4.functions.DoseAndRateRegistryR4;
 import org.hl7.fhir.r4.model.*;
+
+import java.util.List;
+import java.util.Objects;
+import java.util.concurrent.CompletableFuture;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 /**
  * Provides FHIR R4 implementations for common operations in the library.
