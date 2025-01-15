@@ -1,33 +1,21 @@
 package io.github.jy95.fds.r4.translators;
 
-import io.github.jy95.fds.r4.DosageAPIR4;
-import io.github.jy95.fds.r4.AbstractFhirTest;
 import io.github.jy95.fds.common.types.DisplayOrder;
-import org.hl7.fhir.r4.model.*;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.MethodSource;
+import io.github.jy95.fds.common.types.DosageAPI;
+import io.github.jy95.fds.r4.DosageAPIR4;
+import io.github.jy95.fds.r4.config.FDSConfigR4;
+import io.github.jy95.fds.translators.AbstractDoseRangeTest;
+import org.hl7.fhir.r4.model.Dosage;
+import org.hl7.fhir.r4.model.Quantity;
+import org.hl7.fhir.r4.model.Range;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.concurrent.ExecutionException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+public class DoseRangeTest extends AbstractDoseRangeTest<FDSConfigR4, Dosage> {
 
-public class DoseRangeTest extends AbstractFhirTest {
-
-    @ParameterizedTest
-    @MethodSource("localeProvider")
-    void testNoDoseRange(Locale locale) throws ExecutionException, InterruptedException {
-        Dosage dosage = new Dosage();
-        DosageAPIR4 dosageUtils = DayOfWeekTest.getDosageAPI(locale, DisplayOrder.DOSE_RANGE);
-        String result = dosageUtils.asHumanReadableText(dosage).get();
-        assertEquals("", result);
-    }
-
-    @ParameterizedTest
-    @MethodSource("localeProvider")
-    void testSimpleDoseRange(Locale locale) throws ExecutionException, InterruptedException {
-        DosageAPIR4 dosageUtils = DayOfWeekTest.getDosageAPI(locale, DisplayOrder.DOSE_RANGE);
+    @Override
+    protected Dosage generateSimpleDoseRange() {
         Dosage dosage = new Dosage();
         Range range1 = new Range();
         range1.setLow(new Quantity(1));
@@ -35,22 +23,24 @@ public class DoseRangeTest extends AbstractFhirTest {
         Dosage.DosageDoseAndRateComponent doseAndRateComponent1 = new Dosage.DosageDoseAndRateComponent();
         doseAndRateComponent1.setDose(range1);
         dosage.setDoseAndRate(List.of(doseAndRateComponent1));
-
-        String result = dosageUtils.asHumanReadableText(dosage).get();
-        String expected = getExpectedText(locale);
-        assertEquals(expected, result);
+        return dosage;
     }
 
-    private String getExpectedText(Locale locale) {
-        if (locale.equals(Locale.ENGLISH)) {
-            return "1 to 3";
-        } else if (locale.equals(Locale.FRENCH)) {
-            return "1 à 3";
-        } else if (locale.equals(Locale.GERMAN)) {
-            return "zwischen 1 und 3";
-        } else {
-            return "tussen 1 en 3";
-        }
+    @Override
+    public DosageAPI<FDSConfigR4, Dosage> getDosageAPI(Locale locale, DisplayOrder displayOrder) {
+        return new DosageAPIR4(FDSConfigR4.builder()
+                .displayOrder(List.of(displayOrder))
+                .locale(locale)
+                .build());
     }
 
+    @Override
+    public DosageAPI<FDSConfigR4, Dosage> getDosageAPI(FDSConfigR4 config) {
+        return new DosageAPIR4(config);
+    }
+
+    @Override
+    public Dosage generateEmptyDosage() {
+        return new Dosage();
+    }
 }
