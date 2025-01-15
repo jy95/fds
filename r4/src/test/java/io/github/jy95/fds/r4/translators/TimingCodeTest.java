@@ -40,7 +40,7 @@ public class TimingCodeTest extends AbstractTimingCodeTest<FDSConfigR4, Dosage> 
         dosage.setTiming(timing);
         return dosage;
     }
-    
+
     @Override
     protected Dosage generateWithTimingCodeCodeOnly() {
         Dosage dosage = new Dosage();
