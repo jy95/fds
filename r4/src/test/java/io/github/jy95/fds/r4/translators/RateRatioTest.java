@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class RateRatioTest extends AbstractRateRatioTest<FDSConfigR4, Dosage> {
-    
+
     @Override
     protected Dosage generateEmptyRateRatio() {
         Dosage dosage = new Dosage();
