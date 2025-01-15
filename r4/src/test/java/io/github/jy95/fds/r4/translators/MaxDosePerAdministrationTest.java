@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class MaxDosePerAdministrationTest extends AbstractMaxDosePerAdministrationTest<FDSConfigR4, Dosage> {
-    
+
     @Override
     protected Dosage generateWithMaxDosePerAdministration() {
         Dosage dosage = new Dosage();
