@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class MethodTest extends AbstractMethodTest<FDSConfigR4, Dosage> {
-    
+
     @Override
     protected Dosage generateWithMethodText() {
         Dosage dosage = new Dosage();
