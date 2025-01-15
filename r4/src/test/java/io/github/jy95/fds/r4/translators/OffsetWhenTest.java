@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class OffsetWhenTest extends AbstractOffsetWhenTest<FDSConfigR4, Dosage> {
-    
+
     @Override
     protected Dosage generateWithWhenOnly() {
         Dosage dosage = new Dosage();
