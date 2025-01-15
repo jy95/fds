@@ -14,7 +14,7 @@ import java.util.Locale;
 import java.util.concurrent.CompletableFuture;
 
 public class ModifierExtensionTest extends AbstractModifierExtensionTest<FDSConfigR4, Dosage> {
-    
+
     @Override
     protected Dosage generateWithExtension() {
         Dosage dosage = new Dosage();
