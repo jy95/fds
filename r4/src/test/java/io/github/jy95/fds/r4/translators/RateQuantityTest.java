@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class RateQuantityTest extends AbstractRateQuantityTest<FDSConfigR4, Dosage> {
-    
+
     @Override
     protected Dosage generateSimpleRateQuantity() {
         Dosage dosage = new Dosage();
