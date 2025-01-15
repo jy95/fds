@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class RouteTest extends AbstractRouteTest<FDSConfigR4, Dosage> {
-    
+
     @Override
     protected Dosage generateWithRouteText() {
         Dosage dosage = new Dosage();
