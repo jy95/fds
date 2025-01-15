@@ -30,7 +30,7 @@ public class TimingModifierExtensionTest extends AbstractTimingModifierExtension
         dosage.setTiming(timing);
         return dosage;
     }
-    
+
     @Override
     protected Dosage generateWithExtensionCustom() {
         Dosage dosage = new Dosage();
