@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class RateRangeTest extends AbstractRateRangeTest<FDSConfigR4, Dosage> {
-    
+
     @Override
     protected Dosage generateSimpleRateRange() {
         Dosage dosage = new Dosage();
