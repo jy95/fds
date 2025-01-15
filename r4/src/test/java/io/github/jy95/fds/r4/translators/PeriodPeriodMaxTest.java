@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class PeriodPeriodMaxTest extends AbstractPeriodPeriodMaxTest<FDSConfigR4, Dosage> {
-    
+
     @Override
     protected Dosage generateWithPeriodOnly() {
         Dosage dosage = new Dosage();
