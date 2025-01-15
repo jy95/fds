@@ -1,18 +1,17 @@
 package io.github.jy95.fds.r4.functions;
 
-import java.util.Locale;
-
+import io.github.jy95.fds.common.functions.FormatDateTimes;
 import org.hl7.fhir.r4.model.DateTimeType;
 import org.hl7.fhir.utilities.DateTimeUtil;
 
-import io.github.jy95.fds.common.functions.AbstractFormatDateTimes;
+import java.util.Locale;
 
 /**
  * R4 class for formatting DateTime objects into human-readable strings
  *
  * @author jy95
  */
-public class FormatDateTimesR4 extends AbstractFormatDateTimes<DateTimeType> {
+public class FormatDateTimesR4 implements FormatDateTimes<DateTimeType> {
 
     /** {@inheritDoc} */
     @Override

@@ -1,6 +1,6 @@
 package io.github.jy95.fds.r4.functions;
 
-import io.github.jy95.fds.common.functions.AbstractRangeToString;
+import io.github.jy95.fds.common.functions.RangeToString;
 import io.github.jy95.fds.r4.config.FDSConfigR4;
 import org.hl7.fhir.r4.model.Range;
 
@@ -13,7 +13,7 @@ import java.util.concurrent.CompletableFuture;
  *
  * @author jy95
  */
-public class RangeToStringR4 extends AbstractRangeToString<FDSConfigR4, Range> {
+public class RangeToStringR4 implements RangeToString<FDSConfigR4, Range> {
 
     private final QuantityToStringR4 quantityToStringR4;
 
@@ -26,7 +26,7 @@ public class RangeToStringR4 extends AbstractRangeToString<FDSConfigR4, Range> {
 
     /** {@inheritDoc} */
     @Override
-    protected boolean hasUnit(Range range) {
+    public boolean hasUnit(Range range) {
         // Check high first, more likely to be found in it
         if (hasHigh(range) && quantityToStringR4.hasUnit(range.getHigh())) {
             return true;
@@ -37,7 +37,7 @@ public class RangeToStringR4 extends AbstractRangeToString<FDSConfigR4, Range> {
 
     /** {@inheritDoc} */
     @Override
-    protected CompletableFuture<String> getUnitText(ResourceBundle bundle, FDSConfigR4 config, Range range, boolean hasLow, boolean hasHigh) {
+    public CompletableFuture<String> getUnitText(ResourceBundle bundle, FDSConfigR4 config, Range range, boolean hasLow, boolean hasHigh) {
         return (hasHigh)
                 ? quantityToStringR4.enhancedFromUnitToString(bundle, config, range.getHigh())
                 : quantityToStringR4.enhancedFromUnitToString(bundle, config, range.getLow());
@@ -45,25 +45,25 @@ public class RangeToStringR4 extends AbstractRangeToString<FDSConfigR4, Range> {
 
     /** {@inheritDoc} */
     @Override
-    protected boolean hasLow(Range range) {
+    public boolean hasLow(Range range) {
         return range.hasLow();
     }
 
     /** {@inheritDoc} */
     @Override
-    protected boolean hasHigh(Range range) {
+    public boolean hasHigh(Range range) {
         return range.hasHigh();
     }
 
     /** {@inheritDoc} */
     @Override
-    protected BigDecimal getLowValue(Range range) {
+    public BigDecimal getLowValue(Range range) {
         return range.getLow().getValue();
     }
 
     /** {@inheritDoc} */
     @Override
-    protected BigDecimal getHighValue(Range range) {
+    public BigDecimal getHighValue(Range range) {
         return range.getHigh().getValue();
     }
 }

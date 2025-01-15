@@ -1,22 +1,21 @@
 package io.github.jy95.fds.common.functions;
 
+import com.ibm.icu.text.MessageFormat;
+import io.github.jy95.fds.common.config.FDSConfig;
+
 import java.math.BigDecimal;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
 
-import com.ibm.icu.text.MessageFormat;
-
-import io.github.jy95.fds.common.config.FDSConfig;
-
 /**
- * Abstract base class for converting range objects to human-readable strings.
+ * Interface for converting range objects to human-readable strings.
  *
  * @param <C> The type of configuration object extending FDSConfig.
  * @param <R> The type of range object to be converted.
  * @author jy95
  */
-public abstract class AbstractRangeToString<C extends FDSConfig, R> {
+public interface RangeToString<C extends FDSConfig, R> {
 
     /**
      * Converts a range object to a human-readable string asynchronously.
@@ -26,7 +25,7 @@ public abstract class AbstractRangeToString<C extends FDSConfig, R> {
      * @param range   The range object to convert.
      * @return A CompletableFuture that resolves to the human-readable string.
      */
-    public CompletableFuture<String> convert(ResourceBundle bundle, C config, R range) {
+    default CompletableFuture<String> convert(ResourceBundle bundle, C config, R range) {
         if (hasUnit(range)) {
             return convertWithUnit(bundle, config, range);
         }
@@ -39,7 +38,7 @@ public abstract class AbstractRangeToString<C extends FDSConfig, R> {
      * @param range The range object.
      * @return True if the range has a unit, false otherwise.
      */
-    protected abstract boolean hasUnit(R range);
+    boolean hasUnit(R range);
 
     /**
      * Convert a range without a unit to a human-readable string.
@@ -49,26 +48,22 @@ public abstract class AbstractRangeToString<C extends FDSConfig, R> {
      * @param range   The range object.
      * @return A CompletableFuture that resolves to the human-readable string.
      */
-    protected CompletableFuture<String> convertWithoutUnit(ResourceBundle bundle, C config, R range) {
+    default CompletableFuture<String> convertWithoutUnit(ResourceBundle bundle, C config, R range) {
         return CompletableFuture.supplyAsync(() -> {
             boolean hasLow = hasLow(range);
             boolean hasHigh = hasHigh(range);
             String msg = bundle.getString("amount.range.withoutUnit");
 
-            // Use ICU MessageFormat for formatting
             MessageFormat messageFormat = new MessageFormat(msg, config.getLocale());
 
-            // Determine the condition based on the range's presence of low and high values
             String condition = (hasLow && hasHigh) ? "0" : (hasHigh) ? "1" : (hasLow) ? "2" : "other";
 
-            // Create a map for the named arguments
             Map<String, Object> arguments = Map.of(
                     "minValue", hasLow ? getLowValue(range) : "",
                     "maxValue", hasHigh ? getHighValue(range) : "",
                     "condition", condition
             );
 
-            // Format and return the result
             return messageFormat.format(arguments);
         });
     }
@@ -81,18 +76,16 @@ public abstract class AbstractRangeToString<C extends FDSConfig, R> {
      * @param range   The range object.
      * @return A CompletableFuture that resolves to the human-readable string.
      */
-    protected CompletableFuture<String> convertWithUnit(ResourceBundle bundle, C config, R range) {
+    default CompletableFuture<String> convertWithUnit(ResourceBundle bundle, C config, R range) {
         boolean hasLow = hasLow(range);
         boolean hasHigh = hasHigh(range);
         String msg = bundle.getString("amount.range.withUnit");
         CompletableFuture<String> unitRetrieval = getUnitText(bundle, config, range, hasLow, hasHigh);
 
-        // Determine the condition based on the range's presence of low and high values
         String condition = (hasLow && hasHigh) ? "0" : (hasHigh) ? "1" : (hasLow) ? "2" : "other";
 
         return unitRetrieval
                 .thenApplyAsync(unitAsText -> {
-                    // Create a map for the named arguments
                     Map<String, Object> arguments = Map.of(
                             "minValue", hasLow ? getLowValue(range) : "",
                             "maxValue", hasHigh ? getHighValue(range) : "",
@@ -100,14 +93,13 @@ public abstract class AbstractRangeToString<C extends FDSConfig, R> {
                             "unit", unitAsText
                     );
 
-                    // Format the message
                     MessageFormat messageFormat = new MessageFormat(msg, config.getLocale());
                     return messageFormat.format(arguments);
                 });
     }
 
     /**
-     * Abstract method to retrieve the unit as text (either code or text).
+     * Retrieves the unit as text (either code or text).
      *
      * @param bundle   The resource bundle for localization.
      * @param config   The configuration object for additional logic.
@@ -116,37 +108,37 @@ public abstract class AbstractRangeToString<C extends FDSConfig, R> {
      * @param hasHigh  Boolean indicating if high value is present.
      * @return A CompletableFuture that resolves to the unit string.
      */
-    protected abstract CompletableFuture<String> getUnitText(ResourceBundle bundle, C config, R range, boolean hasLow, boolean hasHigh);
+    CompletableFuture<String> getUnitText(ResourceBundle bundle, C config, R range, boolean hasLow, boolean hasHigh);
 
     /**
-     * Abstract method to check if the range has a low value.
+     * Checks if the range has a low value.
      *
      * @param range The range object.
      * @return True if the range has a low value, false otherwise.
      */
-    protected abstract boolean hasLow(R range);
+    boolean hasLow(R range);
 
     /**
-     * Abstract method to check if the range has a high value.
+     * Checks if the range has a high value.
      *
      * @param range The range object.
      * @return True if the range has a high value, false otherwise.
      */
-    protected abstract boolean hasHigh(R range);
+    boolean hasHigh(R range);
 
     /**
-     * Abstract method to retrieve the low value of the range.
+     * Retrieves the low value of the range.
      *
      * @param range The range object.
      * @return The low value.
      */
-    protected abstract BigDecimal getLowValue(R range);
+    BigDecimal getLowValue(R range);
 
     /**
-     * Abstract method to retrieve the high value of the range.
+     * Retrieves the high value of the range.
      *
      * @param range The range object.
      * @return The high value.
      */
-    protected abstract BigDecimal getHighValue(R range);
+    BigDecimal getHighValue(R range);
 }
