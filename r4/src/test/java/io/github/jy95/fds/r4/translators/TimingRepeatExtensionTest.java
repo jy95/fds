@@ -32,7 +32,7 @@ public class TimingRepeatExtensionTest extends AbstractTimingRepeatExtensionTest
         dosage.setTiming(timing);
         return dosage;
     }
-    
+
     @Override
     protected Dosage generateWithExtensionCustom() {
         Dosage dosage = new Dosage();

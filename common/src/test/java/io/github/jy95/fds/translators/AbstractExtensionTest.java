@@ -38,7 +38,7 @@ public abstract class AbstractExtensionTest<C extends FDSConfig, D> extends Abst
     void testWithExtensionCustom(Locale locale) throws ExecutionException, InterruptedException {
         var dosage = generateWithExtensionCustom();
         var config = generateCustomConfig(locale);
-        var dosageUtils = getDosageAPI(locale, DisplayOrder.EXTENSION);
+        var dosageUtils = getDosageAPI(config);
         String result = dosageUtils.asHumanReadableText(dosage).get();
         assertEquals("(exact timing)", result);
     }
