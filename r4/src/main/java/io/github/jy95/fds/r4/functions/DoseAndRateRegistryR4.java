@@ -1,13 +1,13 @@
 package io.github.jy95.fds.r4.functions;
 
-import io.github.jy95.fds.common.types.AbstractDoseAndRateRegistry;
-
+import io.github.jy95.fds.common.types.DoseAndRateExtractor;
 import io.github.jy95.fds.common.types.DoseAndRateKey;
+import io.github.jy95.fds.common.types.DoseAndRateRegistry;
 import org.hl7.fhir.r4.model.Dosage.DosageDoseAndRateComponent;
 import org.hl7.fhir.r4.model.Type;
 
-import java.util.Map;
 import java.util.EnumMap;
+import java.util.Map;
 
 /**
  * A registry specific to FHIR R4 for managing dose and rate components of a Dosage resource.
@@ -16,24 +16,22 @@ import java.util.EnumMap;
  *
  * @author jy95
  */
-public class DoseAndRateRegistryR4 extends AbstractDoseAndRateRegistry<DosageDoseAndRateComponent, Type> {
+public class DoseAndRateRegistryR4 implements DoseAndRateRegistry<DosageDoseAndRateComponent, Type> {
 
-    /**
-     * Constructor initializing the registry with predefined mappings for dose and rate keys.
-     * The mappings are based on the getters provided by {@link org.hl7.fhir.r4.model.Dosage.DosageDoseAndRateComponent}.
-     */
-    public DoseAndRateRegistryR4() {
-        super(
-                new EnumMap<>(
-                        Map.ofEntries(
-                                Map.entry(DoseAndRateKey.DOSE_QUANTITY, DosageDoseAndRateComponent::getDoseQuantity),
-                                Map.entry(DoseAndRateKey.DOSE_RANGE, DosageDoseAndRateComponent::getDoseRange),
-                                Map.entry(DoseAndRateKey.RATE_QUANTITY, DosageDoseAndRateComponent::getRateQuantity),
-                                Map.entry(DoseAndRateKey.RATE_RANGE, DosageDoseAndRateComponent::getRateRange),
-                                Map.entry(DoseAndRateKey.RATE_RATIO, DosageDoseAndRateComponent::getRateRatio)
-                        )
-                )
-        );
+    // Static map holding the extractors
+    private static final Map<DoseAndRateKey, DoseAndRateExtractor<DosageDoseAndRateComponent, Type>> extractors = new EnumMap<>(
+            Map.ofEntries(
+                    Map.entry(DoseAndRateKey.DOSE_QUANTITY, DosageDoseAndRateComponent::getDoseQuantity),
+                    Map.entry(DoseAndRateKey.DOSE_RANGE, DosageDoseAndRateComponent::getDoseRange),
+                    Map.entry(DoseAndRateKey.RATE_QUANTITY, DosageDoseAndRateComponent::getRateQuantity),
+                    Map.entry(DoseAndRateKey.RATE_RANGE, DosageDoseAndRateComponent::getRateRange),
+                    Map.entry(DoseAndRateKey.RATE_RATIO, DosageDoseAndRateComponent::getRateRatio)
+            )
+    );
+
+    @Override
+    public DoseAndRateExtractor<DosageDoseAndRateComponent, Type> getExtractor(DoseAndRateKey key) {
+        return extractors.get(key);
     }
 
     /**
