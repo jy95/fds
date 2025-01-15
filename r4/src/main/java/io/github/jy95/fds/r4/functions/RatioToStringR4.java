@@ -1,7 +1,7 @@
 package io.github.jy95.fds.r4.functions;
 
 import com.ibm.icu.text.MessageFormat;
-import io.github.jy95.fds.common.functions.AbstractRatioToString;
+import io.github.jy95.fds.common.functions.RatioToString;
 import io.github.jy95.fds.r4.config.FDSConfigR4;
 import org.hl7.fhir.r4.model.Ratio;
 
@@ -14,7 +14,7 @@ import java.util.concurrent.CompletableFuture;
  *
  * @author jy95
  */
-public class RatioToStringR4 extends AbstractRatioToString<FDSConfigR4, Ratio> {
+public class RatioToStringR4 implements RatioToString<FDSConfigR4, Ratio> {
 
     /**
      * Instance to translate quantity to string
@@ -30,7 +30,7 @@ public class RatioToStringR4 extends AbstractRatioToString<FDSConfigR4, Ratio> {
 
     /** {@inheritDoc} */
     @Override
-    protected String retrieveRatioLinkWord(ResourceBundle bundle, FDSConfigR4 config, Ratio ratio) {
+    public String retrieveRatioLinkWord(ResourceBundle bundle, FDSConfigR4 config, Ratio ratio) {
         var hasNumerator = ratio.hasNumerator();
         var hasDenominator = ratio.hasDenominator();
         var hasNumeratorUnit = hasNumerator && quantityToStringR4.hasUnit(ratio.getNumerator());
@@ -49,25 +49,25 @@ public class RatioToStringR4 extends AbstractRatioToString<FDSConfigR4, Ratio> {
 
     /** {@inheritDoc} */
     @Override
-    protected boolean hasNumerator(Ratio ratio) {
+    public boolean hasNumerator(Ratio ratio) {
         return ratio.hasNumerator();
     }
 
     /** {@inheritDoc} */
     @Override
-    protected CompletableFuture<String> convertNumerator(ResourceBundle bundle, FDSConfigR4 config, Ratio ratio) {
+    public CompletableFuture<String> convertNumerator(ResourceBundle bundle, FDSConfigR4 config, Ratio ratio) {
         return quantityToStringR4.convert(bundle, config, ratio.getNumerator());
     }
 
     /** {@inheritDoc} */
     @Override
-    protected boolean hasDenominator(Ratio ratio) {
+    public boolean hasDenominator(Ratio ratio) {
         return ratio.hasDenominator();
     }
 
     /** {@inheritDoc} */
     @Override
-    protected CompletableFuture<String> convertDenominator(ResourceBundle bundle, FDSConfigR4 config, Ratio ratio) {
+    public CompletableFuture<String> convertDenominator(ResourceBundle bundle, FDSConfigR4 config, Ratio ratio) {
         var denominator = ratio.getDenominator();
         // Where the denominator value is known to be fixed to "1", Quantity should be used instead of Ratio
         var denominatorValue = denominator.getValue();

@@ -1,22 +1,20 @@
 package io.github.jy95.fds.r4.functions;
 
+import com.ibm.icu.text.MessageFormat;
+import io.github.jy95.fds.common.functions.QuantityToString;
+import io.github.jy95.fds.r4.config.FDSConfigR4;
+import org.hl7.fhir.r4.model.Quantity;
+
 import java.math.BigDecimal;
 import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
-
-import org.hl7.fhir.r4.model.Quantity;
-
-import com.ibm.icu.text.MessageFormat;
-
-import io.github.jy95.fds.common.functions.AbstractQuantityToString;
-import io.github.jy95.fds.r4.config.FDSConfigR4;
 
 /**
  * R4 class for converting quantity objects to human-readable strings.
  *
  * @author jy95
  */
-public class QuantityToStringR4 extends AbstractQuantityToString<FDSConfigR4, Quantity> {
+public class QuantityToStringR4 implements QuantityToString<FDSConfigR4, Quantity> {
 
     /** {@inheritDoc} */
     @Override
