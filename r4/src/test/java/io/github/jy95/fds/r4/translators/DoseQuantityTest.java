@@ -1,53 +1,34 @@
 package io.github.jy95.fds.r4.translators;
 
+import io.github.jy95.fds.common.types.DisplayOrder;
+import io.github.jy95.fds.common.types.DosageAPI;
 import io.github.jy95.fds.r4.DosageAPIR4;
 import io.github.jy95.fds.r4.config.FDSConfigR4;
-import io.github.jy95.fds.r4.AbstractFhirTest;
-import io.github.jy95.fds.common.types.DisplayOrder;
+import io.github.jy95.fds.translators.AbstractDoseQuantityTest;
 import org.hl7.fhir.r4.model.CodeableConcept;
 import org.hl7.fhir.r4.model.Coding;
-import org.hl7.fhir.r4.model.Quantity;
 import org.hl7.fhir.r4.model.Dosage;
 import org.hl7.fhir.r4.model.Dosage.DosageDoseAndRateComponent;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.MethodSource;
+import org.hl7.fhir.r4.model.Quantity;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.concurrent.ExecutionException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+public class DoseQuantityTest extends AbstractDoseQuantityTest<FDSConfigR4, Dosage> {
 
-public class DoseQuantityTest extends AbstractFhirTest {
-
-    @ParameterizedTest
-    @MethodSource("localeProvider")
-    void testNoDoseQuantity(Locale locale) throws ExecutionException, InterruptedException {
-        Dosage dosage = new Dosage();
-        DosageAPIR4 dosageUtils = DayOfWeekTest.getDosageAPI(locale, DisplayOrder.DOSE_QUANTITY);
-        String result = dosageUtils.asHumanReadableText(dosage).get();
-        assertEquals("", result);
-    }
-
-    @ParameterizedTest
-    @MethodSource("localeProvider")
-    void testSimpleDoseQuantity(Locale locale) throws ExecutionException, InterruptedException {
-        DosageAPIR4 dosageUtils = DayOfWeekTest.getDosageAPI(locale, DisplayOrder.DOSE_QUANTITY);
+    @Override
+    protected Dosage generateSimpleDoseQuantity() {
         Dosage dosage = new Dosage();
         Quantity quantity1 = new Quantity(5);
         quantity1.setUnit("ml");
         DosageDoseAndRateComponent doseAndRateComponent1 = new DosageDoseAndRateComponent();
         doseAndRateComponent1.setDose(quantity1);
         dosage.setDoseAndRate(List.of(doseAndRateComponent1));
-
-        String result = dosageUtils.asHumanReadableText(dosage).get();
-        assertEquals("5 ml", result);
+        return dosage;
     }
 
-    @ParameterizedTest
-    @MethodSource("localeProvider")
-    void testDoseQuantityWithComparator(Locale locale) throws ExecutionException, InterruptedException {
-        DosageAPIR4 dosageUtils = DayOfWeekTest.getDosageAPI(locale, DisplayOrder.DOSE_QUANTITY);
+    @Override
+    protected Dosage generateDoseQuantityWithComparator() {
         Dosage dosage = new Dosage();
         Quantity quantity1 = new Quantity(5);
         quantity1.setUnit("ml");
@@ -55,36 +36,21 @@ public class DoseQuantityTest extends AbstractFhirTest {
         DosageDoseAndRateComponent doseAndRateComponent1 = new DosageDoseAndRateComponent();
         doseAndRateComponent1.setDose(quantity1);
         dosage.setDoseAndRate(List.of(doseAndRateComponent1));
-
-        String result = dosageUtils.asHumanReadableText(dosage).get();
-        assertEquals("< 5 ml", result);
+        return dosage;
     }
 
-    @ParameterizedTest
-    @MethodSource("localeProvider")
-    void testDoseQuantityWithoutUnit(Locale locale) throws ExecutionException, InterruptedException {
-        DosageAPIR4 dosageUtils = DayOfWeekTest.getDosageAPI(locale, DisplayOrder.DOSE_QUANTITY);
+    @Override
+    protected Dosage generateDoseQuantityWithoutUnit() {
         Dosage dosage = new Dosage();
         Quantity quantity1 = new Quantity(5);
         DosageDoseAndRateComponent doseAndRateComponent1 = new DosageDoseAndRateComponent();
         doseAndRateComponent1.setDose(quantity1);
         dosage.setDoseAndRate(List.of(doseAndRateComponent1));
-
-        String result = dosageUtils.asHumanReadableText(dosage).get();
-        assertEquals("5", result);
+        return dosage;
     }
 
-    @ParameterizedTest
-    @MethodSource("localeProvider")
-    void testDoseQuantityCustom(Locale locale) throws ExecutionException, InterruptedException {
-        FDSConfigR4 config = FDSConfigR4
-                .builder()
-                .displayOrder(List.of(DisplayOrder.DOSE_QUANTITY))
-                .selectDosageAndRateField(
-                        (doseAndRateComponentList, doseAndRateKey)
-                                -> doseAndRateComponentList.get(1).getDoseQuantity())
-                .build();
-        DosageAPIR4 dosageUtils = DayOfWeekTest.getDosageAPI(config);
+    @Override
+    protected Dosage generateDoseQuantityCustom() {
         Dosage dosage = new Dosage();
         Quantity quantity1 = new Quantity(5);
         quantity1.setUnit("ml");
@@ -114,8 +80,35 @@ public class DoseQuantityTest extends AbstractFhirTest {
         );
         dosage.addDoseAndRate(doseAndRateComponent1);
         dosage.addDoseAndRate(doseAndRateComponent2);
-        String result = dosageUtils.asHumanReadableText(dosage).get();
-        assertEquals("8 ml", result);
+        return dosage;
     }
 
+    @Override
+    protected FDSConfigR4 generateCustomConfig() {
+        return FDSConfigR4
+                .builder()
+                .displayOrder(List.of(DisplayOrder.DOSE_QUANTITY))
+                .selectDosageAndRateField(
+                        (doseAndRateComponentList, doseAndRateKey)
+                                -> doseAndRateComponentList.get(1).getDoseQuantity())
+                .build();
+    }
+
+    @Override
+    public DosageAPI<FDSConfigR4, Dosage> getDosageAPI(Locale locale, DisplayOrder displayOrder) {
+        return new DosageAPIR4(FDSConfigR4.builder()
+                .displayOrder(List.of(displayOrder))
+                .locale(locale)
+                .build());
+    }
+
+    @Override
+    public DosageAPI<FDSConfigR4, Dosage> getDosageAPI(FDSConfigR4 config) {
+        return new DosageAPIR4(config);
+    }
+
+    @Override
+    public Dosage generateEmptyDosage() {
+        return new Dosage();
+    }
 }
