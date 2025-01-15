@@ -26,7 +26,7 @@ public class TimingEventTest extends AbstractTimingEventTest<FDSConfigR4, Dosage
         dosage.setTiming(timing);
         return dosage;
     }
-    
+
     @Override
     protected Dosage generateMultiple() {
         Dosage dosage = new Dosage();
