@@ -15,7 +15,7 @@ import java.util.Locale;
 import java.util.concurrent.CompletableFuture;
 
 public class TimingExtensionTest extends AbstractTimingExtensionTest<FDSConfigR4, Dosage> {
-    
+
     @Override
     protected Dosage generateWithExtension() {
         Dosage dosage = new Dosage();
