@@ -18,6 +18,11 @@ import java.util.stream.Collectors;
 public final class DefaultImplementationsR4 {
 
     /**
+     * No constructor for this class
+     */
+    private DefaultImplementationsR4(){}
+
+    /**
      * Converts a FHIR {@link org.hl7.fhir.r4.model.Quantity} object to a string representation of its unit or code.
      *
      * @param quantity the {@link org.hl7.fhir.r4.model.Quantity} object to be converted.

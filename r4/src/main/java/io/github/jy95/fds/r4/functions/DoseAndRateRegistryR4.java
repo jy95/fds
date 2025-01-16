@@ -18,6 +18,11 @@ import java.util.Map;
  */
 public class DoseAndRateRegistryR4 implements DoseAndRateRegistry<DosageDoseAndRateComponent, Type> {
 
+    /**
+     * No constructor for this class
+     */
+    private DoseAndRateRegistryR4(){}
+
     // Static map holding the extractors
     private static final Map<DoseAndRateKey, DoseAndRateExtractor<DosageDoseAndRateComponent, Type>> extractors = new EnumMap<>(
             Map.ofEntries(

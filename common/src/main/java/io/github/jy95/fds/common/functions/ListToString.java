@@ -1,9 +1,9 @@
 package io.github.jy95.fds.common.functions;
 
+import io.github.jy95.fds.common.types.LinkWord;
+
 import java.util.List;
 import java.util.ResourceBundle;
-
-import io.github.jy95.fds.common.types.LinkWord;
 
 /**
  * Utility class for converting a list of strings into a human-readable string.
@@ -11,6 +11,11 @@ import io.github.jy95.fds.common.types.LinkWord;
  * @author jy95
  */
 public final class ListToString {
+
+    /**
+     * No constructor for this class
+     */
+    private ListToString(){}
 
     /**
      * Converts a list of strings into a human-readable string using a specified link word.

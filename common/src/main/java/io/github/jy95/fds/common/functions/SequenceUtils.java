@@ -16,6 +16,11 @@ import java.util.stream.Collectors;
 public final class SequenceUtils {
 
     /**
+     * No constructor for this class
+     */
+    private SequenceUtils(){}
+
+    /**
      * Checks if the given list of dosages contains only sequential instructions.
      *
      * <p>This method checks if the dosages contain unique sequence numbers,

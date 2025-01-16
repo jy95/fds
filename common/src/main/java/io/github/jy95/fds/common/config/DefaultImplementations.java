@@ -1,9 +1,9 @@
 package io.github.jy95.fds.common.config;
 
+import io.github.jy95.fds.common.bundle.MultiResourceBundleControl;
+
 import java.util.Locale;
 import java.util.ResourceBundle;
-
-import io.github.jy95.fds.common.bundle.MultiResourceBundleControl;
 
 /**
  * Provides default implementations for common operations in the library.
@@ -11,6 +11,11 @@ import io.github.jy95.fds.common.bundle.MultiResourceBundleControl;
  * @author jy95
  */
 public final class DefaultImplementations {
+
+    /**
+     * No constructor for this class
+     */
+    private DefaultImplementations(){};
 
     /**
      * Selects a ResourceBundle for the specified locale using a MultiResourceBundleControl.
