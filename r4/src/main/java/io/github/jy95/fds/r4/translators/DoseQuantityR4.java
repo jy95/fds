@@ -16,8 +16,6 @@ import java.util.concurrent.CompletableFuture;
  */
 public class DoseQuantityR4 extends AbstractDoseQuantity<FDSConfigR4, Dosage> {
 
-    private final QuantityToStringR4 quantityToStringR4;
-
     /**
      * Constructor for {@code DoseQuantityR4}.
      *
@@ -25,7 +23,6 @@ public class DoseQuantityR4 extends AbstractDoseQuantity<FDSConfigR4, Dosage> {
      */
     public DoseQuantityR4(FDSConfigR4 config) {
         super(config);
-        quantityToStringR4 = new QuantityToStringR4();
     }
 
     /** {@inheritDoc} */
@@ -33,7 +30,8 @@ public class DoseQuantityR4 extends AbstractDoseQuantity<FDSConfigR4, Dosage> {
     public CompletableFuture<String> convert(Dosage dosage) {
         var doseQuantity = getConfig()
                 .selectDosageAndRateField(dosage.getDoseAndRate(), DoseAndRateKey.DOSE_QUANTITY);
-        return quantityToStringR4
+        return QuantityToStringR4
+                .getInstance()
                 .convert(getResources(), getConfig(), (Quantity) doseQuantity)
                 .thenApplyAsync(quantityText -> doseQuantityMsg.format(new Object[]{quantityText}));
     }

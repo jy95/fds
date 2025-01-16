@@ -16,8 +16,6 @@ import java.util.concurrent.CompletableFuture;
  */
 public class RateRatioR4 extends AbstractRateRatio<FDSConfigR4, Dosage> {
 
-    private final RatioToStringR4 ratioToStringR4;
-
     /**
      * Constructor for {@code RateRatioR4}.
      *
@@ -25,7 +23,6 @@ public class RateRatioR4 extends AbstractRateRatio<FDSConfigR4, Dosage> {
      */
     public RateRatioR4(FDSConfigR4 config) {
         super(config);
-        ratioToStringR4 = new RatioToStringR4();
     }
 
     /** {@inheritDoc} */
@@ -34,7 +31,8 @@ public class RateRatioR4 extends AbstractRateRatio<FDSConfigR4, Dosage> {
         var rateRatio = getConfig()
                 .selectDosageAndRateField(dosage.getDoseAndRate(), DoseAndRateKey.RATE_RATIO);
 
-        return ratioToStringR4
+        return RatioToStringR4
+                .getInstance()
                 .convert(getResources(), getConfig(), (Ratio) rateRatio)
                 .thenApplyAsync(rateRatioText -> rateRatioMsg.format(new Object[]{rateRatioText}));
     }

@@ -16,8 +16,6 @@ import java.util.concurrent.CompletableFuture;
  */
 public class RateRangeR4 extends AbstractRateRange<FDSConfigR4, Dosage> {
 
-    private final RangeToStringR4 rangeToStringR4;
-
     /**
      * Constructor for {@code RateRangeR4}.
      *
@@ -25,7 +23,6 @@ public class RateRangeR4 extends AbstractRateRange<FDSConfigR4, Dosage> {
      */
     public RateRangeR4(FDSConfigR4 config) {
         super(config);
-        rangeToStringR4 = new RangeToStringR4();
     }
 
     /** {@inheritDoc} */
@@ -34,7 +31,8 @@ public class RateRangeR4 extends AbstractRateRange<FDSConfigR4, Dosage> {
         var rateRange = getConfig()
                 .selectDosageAndRateField(dosage.getDoseAndRate(), DoseAndRateKey.RATE_RANGE);
 
-        return rangeToStringR4
+        return RangeToStringR4
+                .getInstance()
                 .convert(getResources(), getConfig(), (Range) rateRange)
                 .thenApplyAsync(rateRatioText -> rateRangeMsg.format(new Object[]{rateRatioText}));
     }

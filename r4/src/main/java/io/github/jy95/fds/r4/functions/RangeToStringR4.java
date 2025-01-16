@@ -10,37 +10,50 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * R4 class for converting range objects to human-readable strings.
+ * Implements the Bill Pugh Singleton pattern for thread-safe lazy initialization.
  *
  * @author jy95
  */
 public class RangeToStringR4 implements RangeToString<FDSConfigR4, Range> {
 
-    private final QuantityToStringR4 quantityToStringR4;
+    // Private constructor to prevent instantiation
+    private RangeToStringR4() {}
+
+    // Static inner class for holding the singleton instance
+    private static class Holder {
+        private static final RangeToStringR4 INSTANCE = new RangeToStringR4();
+    }
 
     /**
-     * Constructor for {@code RangeToStringR4}.
+     * Returns the singleton instance of RangeToStringR4.
+     *
+     * @return the singleton instance
      */
-    public RangeToStringR4() {
-        quantityToStringR4 = new QuantityToStringR4();
+    public static RangeToStringR4 getInstance() {
+        return Holder.INSTANCE;
     }
 
     /** {@inheritDoc} */
     @Override
     public boolean hasUnit(Range range) {
         // Check high first, more likely to be found in it
-        if (hasHigh(range) && quantityToStringR4.hasUnit(range.getHigh())) {
+        if (hasHigh(range) && QuantityToStringR4.getInstance().hasUnit(range.getHigh())) {
             return true;
         }
         // Otherwise check low
-        return hasLow(range) && quantityToStringR4.hasUnit(range.getLow());
+        return hasLow(range) && QuantityToStringR4.getInstance().hasUnit(range.getLow());
     }
 
     /** {@inheritDoc} */
     @Override
     public CompletableFuture<String> getUnitText(ResourceBundle bundle, FDSConfigR4 config, Range range, boolean hasLow, boolean hasHigh) {
-        return (hasHigh)
-                ? quantityToStringR4.enhancedFromUnitToString(bundle, config, range.getHigh())
-                : quantityToStringR4.enhancedFromUnitToString(bundle, config, range.getLow());
+        return QuantityToStringR4
+                .getInstance()
+                .enhancedFromUnitToString(
+                        bundle,
+                        config,
+                        (hasHigh) ? range.getHigh() : range.getLow()
+                );
     }
 
     /** {@inheritDoc} */

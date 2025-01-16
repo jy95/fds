@@ -10,22 +10,28 @@ import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * R4 class for converting ratio objects to human-readable strings
+ * R4 class for converting ratio objects to human-readable strings.
+ * Implements the Bill Pugh Singleton pattern for thread-safe lazy initialization.
  *
- * @author jy95
+ * Author: jy95
  */
 public class RatioToStringR4 implements RatioToString<FDSConfigR4, Ratio> {
 
-    /**
-     * Instance to translate quantity to string
-     */
-    private final QuantityToStringR4 quantityToStringR4;
+    // Private constructor to prevent instantiation
+    private RatioToStringR4() {}
+
+    // Static inner class for holding the singleton instance
+    private static class Holder {
+        private static final RatioToStringR4 INSTANCE = new RatioToStringR4();
+    }
 
     /**
-     * Constructor for {@code RatioToStringR4}.
+     * Returns the singleton instance of RatioToStringR4.
+     *
+     * @return the singleton instance
      */
-    public RatioToStringR4() {
-        quantityToStringR4 = new QuantityToStringR4();
+    public static RatioToStringR4 getInstance() {
+        return Holder.INSTANCE;
     }
 
     /** {@inheritDoc} */
@@ -33,9 +39,9 @@ public class RatioToStringR4 implements RatioToString<FDSConfigR4, Ratio> {
     public String retrieveRatioLinkWord(ResourceBundle bundle, FDSConfigR4 config, Ratio ratio) {
         var hasNumerator = ratio.hasNumerator();
         var hasDenominator = ratio.hasDenominator();
-        var hasNumeratorUnit = hasNumerator && quantityToStringR4.hasUnit(ratio.getNumerator());
+        var hasNumeratorUnit = hasNumerator && QuantityToStringR4.getInstance().hasUnit(ratio.getNumerator());
         var hasBothElements = hasNumerator && hasDenominator;
-        var hasDenominatorUnit = hasDenominator && quantityToStringR4.hasUnit(ratio.getDenominator());
+        var hasDenominatorUnit = hasDenominator && QuantityToStringR4.getInstance().hasUnit(ratio.getDenominator());
         var hasUnitRatio = hasNumeratorUnit || hasDenominatorUnit;
         var denominatorValue = hasDenominator ? ratio.getDenominator().getValue() : BigDecimal.ONE;
 
@@ -56,7 +62,9 @@ public class RatioToStringR4 implements RatioToString<FDSConfigR4, Ratio> {
     /** {@inheritDoc} */
     @Override
     public CompletableFuture<String> convertNumerator(ResourceBundle bundle, FDSConfigR4 config, Ratio ratio) {
-        return quantityToStringR4.convert(bundle, config, ratio.getNumerator());
+        return QuantityToStringR4
+                .getInstance()
+                .convert(bundle, config, ratio.getNumerator());
     }
 
     /** {@inheritDoc} */
@@ -73,15 +81,19 @@ public class RatioToStringR4 implements RatioToString<FDSConfigR4, Ratio> {
         var denominatorValue = denominator.getValue();
 
         // For titers cases (e.g. 1:128)
-        if (!quantityToStringR4.hasUnit(denominator)) {
+        if (!QuantityToStringR4.getInstance().hasUnit(denominator)) {
             return CompletableFuture.completedFuture(denominatorValue.toString());
         }
 
         // For the per case
         if (BigDecimal.ONE.equals(denominatorValue)) {
-            return quantityToStringR4.enhancedFromUnitToString(bundle, config, denominator);
+            return QuantityToStringR4
+                    .getInstance()
+                    .enhancedFromUnitToString(bundle, config, denominator);
         }
 
-        return quantityToStringR4.convert(bundle, config, denominator);
+        return QuantityToStringR4
+                .getInstance()
+                .convert(bundle, config, denominator);
     }
 }

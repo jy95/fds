@@ -14,8 +14,6 @@ import java.util.concurrent.CompletableFuture;
  */
 public class MaxDosePerLifetimeR4 extends AbstractMaxDosePerLifetime<FDSConfigR4, Dosage> {
 
-    private final QuantityToStringR4 quantityToStringR4;
-
     /**
      * Constructor for {@code MaxDosePerLifetimeR4}.
      *
@@ -23,7 +21,6 @@ public class MaxDosePerLifetimeR4 extends AbstractMaxDosePerLifetime<FDSConfigR4
      */
     public MaxDosePerLifetimeR4(FDSConfigR4 config) {
         super(config);
-        quantityToStringR4 = new QuantityToStringR4();
     }
 
     /** {@inheritDoc} */
@@ -32,7 +29,8 @@ public class MaxDosePerLifetimeR4 extends AbstractMaxDosePerLifetime<FDSConfigR4
         var quantity = dosage.getMaxDosePerLifetime();
         var bundle = getResources();
 
-        return quantityToStringR4
+        return QuantityToStringR4
+                .getInstance()
                 .convert(bundle, getConfig(), quantity)
                 .thenApplyAsync((quantityText) -> maxDosePerLifetimeMsg.format(new Object[] { quantityText }));
     }

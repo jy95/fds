@@ -15,18 +15,12 @@ import java.util.concurrent.CompletableFuture;
 public class MaxDosePerPeriodR4 extends AbstractMaxDosePerPeriod<FDSConfigR4, Dosage> {
 
     /**
-     * Instance to translate ratio to string
-     */
-    protected final RatioToStringR4 ratioToStringR4;
-
-    /**
      * Constructor for {@code MaxDosePerPeriodR4}.
      *
      * @param config The configuration object used for translation.
      */
     public MaxDosePerPeriodR4(FDSConfigR4 config) {
         super(config);
-        ratioToStringR4 = new RatioToStringR4();
     }
 
     /** {@inheritDoc} */
@@ -35,7 +29,8 @@ public class MaxDosePerPeriodR4 extends AbstractMaxDosePerPeriod<FDSConfigR4, Do
         var ratio = dosage.getMaxDosePerPeriod();
         var bundle = getResources();
 
-        return ratioToStringR4
+        return RatioToStringR4
+                .getInstance()
                 .convert(bundle, getConfig(), ratio)
                 .thenApplyAsync((ratioText) -> maxDosePerPeriodMsg.format(new Object[] { ratioText }));
     }

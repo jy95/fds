@@ -11,10 +11,28 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * R4 class for converting quantity objects to human-readable strings.
+ * Implements the Bill Pugh Singleton pattern for thread-safe lazy initialization.
  *
  * @author jy95
  */
 public class QuantityToStringR4 implements QuantityToString<FDSConfigR4, Quantity> {
+
+    // Private constructor to prevent instantiation
+    private QuantityToStringR4() {}
+
+    // Static inner class for holding the singleton instance
+    private static class Holder {
+        private static final QuantityToStringR4 INSTANCE = new QuantityToStringR4();
+    }
+
+    /**
+     * Returns the singleton instance of QuantityToStringR4.
+     *
+     * @return the singleton instance
+     */
+    public static QuantityToStringR4 getInstance() {
+        return Holder.INSTANCE;
+    }
 
     /** {@inheritDoc} */
     @Override
@@ -31,8 +49,7 @@ public class QuantityToStringR4 implements QuantityToString<FDSConfigR4, Quantit
     /** {@inheritDoc} */
     @Override
     public CompletableFuture<String> enhancedFromUnitToString(ResourceBundle bundle, FDSConfigR4 config, Quantity quantity) {
-
-        // duration units are built-in supported
+        // Duration units are built-in supported
         if (quantity.hasSystem() && quantity.hasCode() && TIME_SYSTEMS.contains(quantity.getSystem())) {
             return CompletableFuture.supplyAsync(() -> {
                 String code = quantity.getCode();
@@ -42,7 +59,7 @@ public class QuantityToStringR4 implements QuantityToString<FDSConfigR4, Quantit
             });
         }
 
-        // Otherwise let config do the charm
+        // Otherwise, let config do the charm
         return config.fromFHIRQuantityUnitToString(quantity);
     }
 
@@ -57,5 +74,4 @@ public class QuantityToStringR4 implements QuantityToString<FDSConfigR4, Quantit
         }
         return CompletableFuture.completedFuture("");
     }
-    
 }
