@@ -29,6 +29,11 @@ public class DoseAndRateRegistryR4 implements DoseAndRateRegistry<DosageDoseAndR
             )
     );
 
+    /**
+     * No constructor for this class
+     */
+    private DoseAndRateRegistryR4(){}
+
     @Override
     public DoseAndRateExtractor<DosageDoseAndRateComponent, Type> getExtractor(DoseAndRateKey key) {
         return extractors.get(key);
