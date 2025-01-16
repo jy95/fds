@@ -10,16 +10,29 @@ import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * R4 class for converting ratio objects to human-readable strings
+ * R4 class for converting ratio objects to human-readable strings.
+ * Implements the Bill Pugh Singleton pattern for thread-safe lazy initialization.
  *
- * @author jy95
+ * Author: jy95
  */
 public class RatioToStringR4 implements RatioToString<FDSConfigR4, Ratio> {
 
+    // Private constructor to prevent instantiation
+    private RatioToStringR4() {}
+
+    // Static inner class for holding the singleton instance
+    private static class Holder {
+        private static final RatioToStringR4 INSTANCE = new RatioToStringR4();
+    }
+
     /**
-     * Constructor for {@code RatioToStringR4}.
+     * Returns the singleton instance of RatioToStringR4.
+     *
+     * @return the singleton instance
      */
-    public RatioToStringR4() {}
+    public static RatioToStringR4 getInstance() {
+        return Holder.INSTANCE;
+    }
 
     /** {@inheritDoc} */
     @Override
