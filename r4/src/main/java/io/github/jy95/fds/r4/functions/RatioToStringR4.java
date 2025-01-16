@@ -17,25 +17,18 @@ import java.util.concurrent.CompletableFuture;
 public class RatioToStringR4 implements RatioToString<FDSConfigR4, Ratio> {
 
     /**
-     * Instance to translate quantity to string
-     */
-    private final QuantityToStringR4 quantityToStringR4;
-
-    /**
      * Constructor for {@code RatioToStringR4}.
      */
-    public RatioToStringR4() {
-        quantityToStringR4 = new QuantityToStringR4();
-    }
+    public RatioToStringR4() {}
 
     /** {@inheritDoc} */
     @Override
     public String retrieveRatioLinkWord(ResourceBundle bundle, FDSConfigR4 config, Ratio ratio) {
         var hasNumerator = ratio.hasNumerator();
         var hasDenominator = ratio.hasDenominator();
-        var hasNumeratorUnit = hasNumerator && quantityToStringR4.hasUnit(ratio.getNumerator());
+        var hasNumeratorUnit = hasNumerator && QuantityToStringR4.getInstance().hasUnit(ratio.getNumerator());
         var hasBothElements = hasNumerator && hasDenominator;
-        var hasDenominatorUnit = hasDenominator && quantityToStringR4.hasUnit(ratio.getDenominator());
+        var hasDenominatorUnit = hasDenominator && QuantityToStringR4.getInstance().hasUnit(ratio.getDenominator());
         var hasUnitRatio = hasNumeratorUnit || hasDenominatorUnit;
         var denominatorValue = hasDenominator ? ratio.getDenominator().getValue() : BigDecimal.ONE;
 
@@ -56,7 +49,9 @@ public class RatioToStringR4 implements RatioToString<FDSConfigR4, Ratio> {
     /** {@inheritDoc} */
     @Override
     public CompletableFuture<String> convertNumerator(ResourceBundle bundle, FDSConfigR4 config, Ratio ratio) {
-        return quantityToStringR4.convert(bundle, config, ratio.getNumerator());
+        return QuantityToStringR4
+                .getInstance()
+                .convert(bundle, config, ratio.getNumerator());
     }
 
     /** {@inheritDoc} */
@@ -73,15 +68,19 @@ public class RatioToStringR4 implements RatioToString<FDSConfigR4, Ratio> {
         var denominatorValue = denominator.getValue();
 
         // For titers cases (e.g. 1:128)
-        if (!quantityToStringR4.hasUnit(denominator)) {
+        if (!QuantityToStringR4.getInstance().hasUnit(denominator)) {
             return CompletableFuture.completedFuture(denominatorValue.toString());
         }
 
         // For the per case
         if (BigDecimal.ONE.equals(denominatorValue)) {
-            return quantityToStringR4.enhancedFromUnitToString(bundle, config, denominator);
+            return QuantityToStringR4
+                    .getInstance()
+                    .enhancedFromUnitToString(bundle, config, denominator);
         }
 
-        return quantityToStringR4.convert(bundle, config, denominator);
+        return QuantityToStringR4
+                .getInstance()
+                .convert(bundle, config, denominator);
     }
 }

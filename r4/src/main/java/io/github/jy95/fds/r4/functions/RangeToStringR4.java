@@ -15,32 +15,32 @@ import java.util.concurrent.CompletableFuture;
  */
 public class RangeToStringR4 implements RangeToString<FDSConfigR4, Range> {
 
-    private final QuantityToStringR4 quantityToStringR4;
-
     /**
      * Constructor for {@code RangeToStringR4}.
      */
-    public RangeToStringR4() {
-        quantityToStringR4 = new QuantityToStringR4();
-    }
+    public RangeToStringR4() {}
 
     /** {@inheritDoc} */
     @Override
     public boolean hasUnit(Range range) {
         // Check high first, more likely to be found in it
-        if (hasHigh(range) && quantityToStringR4.hasUnit(range.getHigh())) {
+        if (hasHigh(range) && QuantityToStringR4.getInstance().hasUnit(range.getHigh())) {
             return true;
         }
         // Otherwise check low
-        return hasLow(range) && quantityToStringR4.hasUnit(range.getLow());
+        return hasLow(range) && QuantityToStringR4.getInstance().hasUnit(range.getLow());
     }
 
     /** {@inheritDoc} */
     @Override
     public CompletableFuture<String> getUnitText(ResourceBundle bundle, FDSConfigR4 config, Range range, boolean hasLow, boolean hasHigh) {
-        return (hasHigh)
-                ? quantityToStringR4.enhancedFromUnitToString(bundle, config, range.getHigh())
-                : quantityToStringR4.enhancedFromUnitToString(bundle, config, range.getLow());
+        return QuantityToStringR4
+                .getInstance()
+                .enhancedFromUnitToString(
+                        bundle,
+                        config,
+                        (hasHigh) ? range.getHigh() : range.getLow()
+                );
     }
 
     /** {@inheritDoc} */

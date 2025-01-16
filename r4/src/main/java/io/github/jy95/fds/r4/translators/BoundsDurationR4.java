@@ -14,8 +14,6 @@ import java.util.concurrent.CompletableFuture;
  */
 public class BoundsDurationR4 extends AbstractBoundsDuration<FDSConfigR4, Dosage> {
 
-    private final QuantityToStringR4 quantityToStringR4;
-
     /**
      * Constructor for {@code BoundsDurationR4}.
      *
@@ -23,7 +21,6 @@ public class BoundsDurationR4 extends AbstractBoundsDuration<FDSConfigR4, Dosage
      */
     public BoundsDurationR4(FDSConfigR4 config) {
         super(config);
-        quantityToStringR4 = new QuantityToStringR4();
     }
 
     /** {@inheritDoc} */
@@ -37,7 +34,8 @@ public class BoundsDurationR4 extends AbstractBoundsDuration<FDSConfigR4, Dosage
     public CompletableFuture<String> convert(Dosage dosage) {
         var bundle = getResources();
         var boundsDuration = dosage.getTiming().getRepeat().getBoundsDuration();
-        return quantityToStringR4
+        return QuantityToStringR4
+                .getInstance()
                 .convert(bundle, getConfig(), boundsDuration)
                 .thenApplyAsync((durationText) -> boundsDurationMsg.format(new Object[]{durationText}));
     }
