@@ -17,18 +17,12 @@ import java.util.concurrent.CompletableFuture;
 public class DoseRangeR4 extends AbstractDoseRange<FDSConfigR4, Dosage> {
 
     /**
-     * Instance for translating range to string
-     */
-    protected final RangeToStringR4 rangeToStringR4;
-
-    /**
      * Constructor for {@code DoseRangeR4}.
      *
      * @param config The configuration object used for translation.
      */
     public DoseRangeR4(FDSConfigR4 config) {
         super(config);
-        rangeToStringR4 = new RangeToStringR4();
     }
 
     /** {@inheritDoc} */
@@ -37,7 +31,8 @@ public class DoseRangeR4 extends AbstractDoseRange<FDSConfigR4, Dosage> {
         var doseRange = getConfig()
                 .selectDosageAndRateField(dosage.getDoseAndRate(), DoseAndRateKey.DOSE_RANGE);
 
-        return rangeToStringR4
+        return RangeToStringR4
+                .getInstance()
                 .convert(getResources(), getConfig(), (Range) doseRange)
                 .thenApplyAsync(rangeText -> doseRangeMsg.format(new Object[]{rangeText}));
     }

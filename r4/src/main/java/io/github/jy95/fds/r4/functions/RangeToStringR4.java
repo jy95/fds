@@ -10,15 +10,28 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * R4 class for converting range objects to human-readable strings.
+ * Implements the Bill Pugh Singleton pattern for thread-safe lazy initialization.
  *
  * @author jy95
  */
 public class RangeToStringR4 implements RangeToString<FDSConfigR4, Range> {
 
+    // Private constructor to prevent instantiation
+    private RangeToStringR4() {}
+
+    // Static inner class for holding the singleton instance
+    private static class Holder {
+        private static final RangeToStringR4 INSTANCE = new RangeToStringR4();
+    }
+
     /**
-     * Constructor for {@code RangeToStringR4}.
+     * Returns the singleton instance of RangeToStringR4.
+     *
+     * @return the singleton instance
      */
-    public RangeToStringR4() {}
+    public static RangeToStringR4 getInstance() {
+        return Holder.INSTANCE;
+    }
 
     /** {@inheritDoc} */
     @Override

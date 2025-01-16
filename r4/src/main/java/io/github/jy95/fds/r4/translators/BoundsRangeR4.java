@@ -14,8 +14,6 @@ import java.util.concurrent.CompletableFuture;
  */
 public class BoundsRangeR4 extends AbstractBoundsRange<FDSConfigR4, Dosage> {
 
-    private final RangeToStringR4 rangeToStringR4;
-
     /**
      * Constructor for {@code BoundsRangeR4}.
      *
@@ -23,7 +21,6 @@ public class BoundsRangeR4 extends AbstractBoundsRange<FDSConfigR4, Dosage> {
      */
     public BoundsRangeR4(FDSConfigR4 config) {
         super(config);
-        rangeToStringR4 = new RangeToStringR4();
     }
 
     /** {@inheritDoc} */
@@ -38,7 +35,8 @@ public class BoundsRangeR4 extends AbstractBoundsRange<FDSConfigR4, Dosage> {
         var boundsRange = dosage.getTiming().getRepeat().getBoundsRange();
         var bundle = this.getResources();
 
-        return rangeToStringR4
+        return RangeToStringR4
+                .getInstance()
                 .convert(bundle, this.getConfig(), boundsRange)
                 .thenApplyAsync(v -> boundsRangeMsg.format(new Object[]{v}));
     }
