@@ -38,4 +38,11 @@ public interface CountCountMax<C extends FDSConfig, D> extends TranslatorTiming<
         return new MessageFormat(msg, locale);
     }
 
+    /**
+     * Check if "timing.repeat.countMax" exists
+     *
+     * @param dosage the dosage object to check
+     * @return True if it is the case, false otherwise
+     */
+    boolean hasCountMax(D dosage);
 }

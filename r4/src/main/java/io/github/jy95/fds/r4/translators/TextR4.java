@@ -1,6 +1,6 @@
 package io.github.jy95.fds.r4.translators;
 
-import io.github.jy95.fds.common.types.AbstractTranslator;
+import io.github.jy95.fds.common.types.Translator;
 import io.github.jy95.fds.r4.config.FDSConfigR4;
 import org.hl7.fhir.r4.model.Dosage;
 
@@ -11,16 +11,13 @@ import java.util.concurrent.CompletableFuture;
  *
  * @author jy95
  */
-public class TextR4 extends AbstractTranslator<FDSConfigR4, Dosage> {
+public class TextR4 implements Translator<FDSConfigR4, Dosage> {
 
     /**
      * Constructor for {@code TextR4}.
      *
-     * @param config The configuration object used for translation.
      */
-    public TextR4(FDSConfigR4 config) {
-        super(config);
-    }
+    public TextR4() {}
 
     /** {@inheritDoc} */
     @Override

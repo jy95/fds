@@ -4,6 +4,7 @@ import com.ibm.icu.text.MessageFormat;
 import io.github.jy95.fds.common.config.FDSConfig;
 import io.github.jy95.fds.common.types.TranslatorTiming;
 
+import java.math.BigDecimal;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
@@ -37,6 +38,19 @@ public interface PeriodPeriodMax<C extends FDSConfig, D> extends TranslatorTimin
     default MessageFormat getPeriodMsg(ResourceBundle bundle, Locale locale) {
         var msg = bundle.getString("fields.period");
         return new MessageFormat(msg, locale);
+    }
+
+    /**
+     * Retrieves the localized unit name for the given period unit and amount.
+     *
+     * @param bundle The bundle to extract the key
+     * @param periodUnit The unit code of the period (e.g., "d", "h").
+     * @param amount     The quantity associated with the period unit.
+     * @return A localized string representing the unit.
+     */
+    default String getUnit(ResourceBundle bundle, String periodUnit, BigDecimal amount) {
+        var unitMsg = bundle.getString("withoutCount." + periodUnit);
+        return MessageFormat.format(unitMsg, amount);
     }
 
     /** {@inheritDoc} */

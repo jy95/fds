@@ -1,10 +1,12 @@
 package io.github.jy95.fds.r4.translators;
 
-import io.github.jy95.fds.common.translators.AbstractMaxDosePerLifetime;
+import com.ibm.icu.text.MessageFormat;
+import io.github.jy95.fds.common.translators.MaxDosePerLifetime;
 import io.github.jy95.fds.r4.config.FDSConfigR4;
 import io.github.jy95.fds.r4.functions.QuantityToStringR4;
 import org.hl7.fhir.r4.model.Dosage;
 
+import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -12,26 +14,41 @@ import java.util.concurrent.CompletableFuture;
  *
  * @author jy95
  */
-public class MaxDosePerLifetimeR4 extends AbstractMaxDosePerLifetime<FDSConfigR4, Dosage> {
+public class MaxDosePerLifetimeR4 implements MaxDosePerLifetime<FDSConfigR4, Dosage> {
+
+    // Translations
+    /** MessageFormat instance used for "maxDosePerLifetime" translation */
+    protected final MessageFormat maxDosePerLifetimeMsg;
+
+    /**
+     * The configuration object used by this API.
+     */
+    private final FDSConfigR4 config;
+
+    /**
+     * The resource bundle containing localized strings for translation.
+     */
+    private final ResourceBundle bundle;
 
     /**
      * Constructor for {@code MaxDosePerLifetimeR4}.
      *
      * @param config The configuration object used for translation.
      */
-    public MaxDosePerLifetimeR4(FDSConfigR4 config) {
-        super(config);
+    public MaxDosePerLifetimeR4(FDSConfigR4 config, ResourceBundle bundle) {
+        this.bundle = bundle;
+        this.config = config;
+        this.maxDosePerLifetimeMsg = getMaxDosePerLifetimeMsg(bundle, config.getLocale());
     }
 
     /** {@inheritDoc} */
     @Override
     public CompletableFuture<String> convert(Dosage dosage) {
         var quantity = dosage.getMaxDosePerLifetime();
-        var bundle = getResources();
 
         return QuantityToStringR4
                 .getInstance()
-                .convert(bundle, getConfig(), quantity)
+                .convert(bundle, config, quantity)
                 .thenApplyAsync((quantityText) -> maxDosePerLifetimeMsg.format(new Object[] { quantityText }));
     }
 
