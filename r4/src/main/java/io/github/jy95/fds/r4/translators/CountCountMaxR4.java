@@ -26,6 +26,7 @@ public class CountCountMaxR4 implements CountCountMax<FDSConfigR4, Dosage> {
      * Constructor for {@code CountCountMaxR4}.
      *
      * @param config The configuration object used for translation.
+     * @param bundle a {@link java.util.ResourceBundle} object
      */
     public CountCountMaxR4(FDSConfigR4 config, ResourceBundle bundle) {
         this.countMaxMsg = getCountMaxMsg(bundle, config.getLocale());
@@ -52,6 +53,7 @@ public class CountCountMaxR4 implements CountCountMax<FDSConfigR4, Dosage> {
         return dosage.getTiming().getRepeat().hasCountMax();
     }
 
+    /** {@inheritDoc} */
     @Override
     public CompletableFuture<String> convert(Dosage dosage) {
         return CompletableFuture.supplyAsync(() -> {

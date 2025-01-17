@@ -34,6 +34,7 @@ public class MaxDosePerAdministrationR4 implements MaxDosePerAdministration<FDSC
      * Constructor for {@code MaxDosePerAdministrationR4}.
      *
      * @param config The configuration object used for translation.
+     * @param bundle a {@link java.util.ResourceBundle} object
      */
     public MaxDosePerAdministrationR4(FDSConfigR4 config, ResourceBundle bundle) {
         this.bundle = bundle;

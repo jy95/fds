@@ -15,6 +15,7 @@ import java.util.Map;
  */
 public interface OffsetWhen<C extends FDSConfig, D> extends TranslatorTiming<C, D> {
 
+    /** Constant <code>order</code> */
     List<String> order = List.of("d", "h", "min");
 
     /**

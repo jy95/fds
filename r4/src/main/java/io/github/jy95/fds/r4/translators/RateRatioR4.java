@@ -36,6 +36,7 @@ public class RateRatioR4 implements RateRatio<FDSConfigR4, Dosage> {
      * Constructor for {@code RateRatioR4}.
      *
      * @param config The configuration object used for translation.
+     * @param bundle a {@link java.util.ResourceBundle} object
      */
     public RateRatioR4(FDSConfigR4 config, ResourceBundle bundle) {
         this.config = config;

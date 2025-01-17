@@ -28,6 +28,7 @@ public class AdditionalInstructionR4 implements AdditionalInstruction<FDSConfigR
      * Constructor for {@code AdditionalInstructionR4}.
      *
      * @param config The configuration object used for translation.
+     * @param bundle a {@link java.util.ResourceBundle} object
      */
     public AdditionalInstructionR4(FDSConfigR4 config, ResourceBundle bundle) {
         this.config = config;

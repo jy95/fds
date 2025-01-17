@@ -34,6 +34,7 @@ public class BoundsDurationR4 implements BoundsDuration<FDSConfigR4, Dosage> {
      * Constructor for {@code BoundsDurationR4}.
      *
      * @param config The configuration object used for translation.
+     * @param bundle a {@link java.util.ResourceBundle} object
      */
     public BoundsDurationR4(FDSConfigR4 config, ResourceBundle bundle) {
         this.config = config;

@@ -20,6 +20,7 @@ public interface AsNeeded<C extends FDSConfig, D> extends Translator<C, D> {
 
     /**
      * MessageFormat instance used for "asNeededFor" translation
+     *
      * @param bundle The bundle to extract the key
      * @param locale The locale for the message
      * @return The message template for "asNeededFor"
@@ -31,6 +32,7 @@ public interface AsNeeded<C extends FDSConfig, D> extends Translator<C, D> {
 
     /**
      * The message for "asNeeded"
+     *
      * @param bundle The bundle to extract the key
      * @return The message template for "asNeeded"
      */

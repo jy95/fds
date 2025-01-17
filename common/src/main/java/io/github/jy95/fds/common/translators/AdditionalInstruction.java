@@ -28,6 +28,7 @@ public interface AdditionalInstruction<C extends FDSConfig, D> extends Translato
      *                               the additional instructions to be processed.
      * @return A {@link java.util.concurrent.CompletableFuture} that, when completed, returns a string
      *         representing all the additional instructions combined.
+     * @param bundle a {@link java.util.ResourceBundle} object
      */
     default CompletableFuture<String> instructionsFuture(
             List<CompletableFuture<String>> additionalInstructions,

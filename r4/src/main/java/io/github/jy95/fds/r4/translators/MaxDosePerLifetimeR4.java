@@ -34,6 +34,7 @@ public class MaxDosePerLifetimeR4 implements MaxDosePerLifetime<FDSConfigR4, Dos
      * Constructor for {@code MaxDosePerLifetimeR4}.
      *
      * @param config The configuration object used for translation.
+     * @param bundle a {@link java.util.ResourceBundle} object
      */
     public MaxDosePerLifetimeR4(FDSConfigR4 config, ResourceBundle bundle) {
         this.bundle = bundle;

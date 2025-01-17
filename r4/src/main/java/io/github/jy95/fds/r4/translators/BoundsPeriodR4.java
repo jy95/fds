@@ -31,6 +31,7 @@ public class BoundsPeriodR4 implements BoundsPeriod<FDSConfigR4, Dosage> {
      * Constructor for {@code BoundsPeriodR4}.
      *
      * @param config The configuration object used for translation.
+     * @param bundle a {@link java.util.ResourceBundle} object
      */
     public BoundsPeriodR4(FDSConfigR4 config, ResourceBundle bundle) {
         this.config = config;
@@ -78,6 +79,7 @@ public class BoundsPeriodR4 implements BoundsPeriod<FDSConfigR4, Dosage> {
         return formatDateTimesR4.convert(locale, boundPeriods.getEndElement());
     }
 
+    /** {@inheritDoc} */
     @Override
     public CompletableFuture<String> convert(Dosage dosage) {
         return CompletableFuture.supplyAsync(() -> {

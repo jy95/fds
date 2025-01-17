@@ -29,6 +29,7 @@ public class DurationDurationMaxR4 implements DurationDurationMax<FDSConfigR4, D
      * Constructor for {@code DurationDurationMaxR4}.
      *
      * @param config The configuration object used for translation.
+     * @param bundle a {@link java.util.ResourceBundle} object
      */
     public DurationDurationMaxR4(FDSConfigR4 config, ResourceBundle bundle) {
         this.durationMsg = getDurationMsg(bundle, config.getLocale());

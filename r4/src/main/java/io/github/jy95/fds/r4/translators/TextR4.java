@@ -15,7 +15,6 @@ public class TextR4 implements Translator<FDSConfigR4, Dosage> {
 
     /**
      * Constructor for {@code TextR4}.
-     *
      */
     public TextR4() {}
 

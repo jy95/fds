@@ -19,6 +19,7 @@ public interface FrequencyFrequencyMax<C extends FDSConfig, D> extends Translato
 
     /**
      * MessageFormat instance used for "frequency" &amp; "frequencyMax" translation
+     *
      * @param bundle The bundle to extract the key
      * @param locale The locale for the message
      * @return The message template for "frequency" &amp; "frequencyMax" translation
@@ -30,6 +31,7 @@ public interface FrequencyFrequencyMax<C extends FDSConfig, D> extends Translato
 
     /**
      * MessageFormat instance used for "frequencyMax" translation
+     *
      * @param bundle The bundle to extract the key
      * @param locale The locale for the message
      * @return The message template for "frequencyMax" translation
@@ -41,6 +43,7 @@ public interface FrequencyFrequencyMax<C extends FDSConfig, D> extends Translato
 
     /**
      * MessageFormat instance used for "frequency" translation
+     *
      * @param bundle The bundle to extract the key
      * @param locale The locale for the message
      * @return The message template for "frequency" translation

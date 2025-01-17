@@ -32,6 +32,7 @@ public class TimeOfDayR4 implements TimeOfDay<FDSConfigR4, Dosage> {
      * Constructor for {@code TimeOfDayR4}.
      *
      * @param config The configuration object used for translation.
+     * @param bundle a {@link java.util.ResourceBundle} object
      */
     public TimeOfDayR4(FDSConfigR4 config, ResourceBundle bundle) {
         this.timeOfDayMsg = getTimeOfDayMsg(bundle, config.getLocale());
@@ -63,6 +64,7 @@ public class TimeOfDayR4 implements TimeOfDay<FDSConfigR4, Dosage> {
         return dosage.hasTiming();
     }
 
+    /** {@inheritDoc} */
     @Override
     public CompletableFuture<String> convert(Dosage dosage) {
         return CompletableFuture.supplyAsync(() -> {

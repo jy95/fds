@@ -21,6 +21,7 @@ public class TranslatorsMapR4 extends AbstractTranslatorsMap<FDSConfigR4, Dosage
      * Constructor for {@code TranslatorsMapR4}.
      *
      * @param config The configuration object used for translation.
+     * @param bundle a {@link java.util.ResourceBundle} object
      */
     public TranslatorsMapR4(FDSConfigR4 config, ResourceBundle bundle) {
         super(

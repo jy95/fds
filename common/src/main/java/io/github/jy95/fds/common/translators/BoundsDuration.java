@@ -19,6 +19,7 @@ public interface BoundsDuration<C extends FDSConfig, D> extends TranslatorTiming
 
     /**
      * MessageFormat instance used for "boundsDuration" translation
+     *
      * @param bundle The bundle to extract the key
      * @param locale The locale for the message
      * @return The message template for "boundsDuration"

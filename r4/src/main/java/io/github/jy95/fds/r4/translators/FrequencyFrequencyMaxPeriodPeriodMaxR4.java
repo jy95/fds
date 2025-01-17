@@ -37,16 +37,19 @@ public class FrequencyFrequencyMaxPeriodPeriodMaxR4 implements FrequencyFrequenc
         this.periodTranslator = periodTranslator;
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean hasFrequency(Dosage dosage) {
         return frequencyTranslator.isPresent(dosage);
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean hasPeriod(Dosage dosage) {
         return periodTranslator.isPresent(dosage);
     }
 
+    /** {@inheritDoc} */
     @Override
     public CompletableFuture<String> extractFrequency(Dosage dosage) {
         return frequencyTranslator.isPresent(dosage)
@@ -54,6 +57,7 @@ public class FrequencyFrequencyMaxPeriodPeriodMaxR4 implements FrequencyFrequenc
                 : CompletableFuture.completedFuture("");
     }
 
+    /** {@inheritDoc} */
     @Override
     public CompletableFuture<String> extractPeriod(Dosage dosage) {
         return periodTranslator.isPresent(dosage)

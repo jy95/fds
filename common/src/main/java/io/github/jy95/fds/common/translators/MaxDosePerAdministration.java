@@ -19,6 +19,7 @@ public interface MaxDosePerAdministration<C extends FDSConfig, D> extends Transl
 
     /**
      * MessageFormat instance used for "maxDosePerAdministration" translation
+     *
      * @param bundle The bundle to extract the key
      * @param locale The locale for the message
      * @return The message template for "maxDosePerAdministration"

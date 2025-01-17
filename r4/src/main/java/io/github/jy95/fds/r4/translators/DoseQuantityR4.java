@@ -36,6 +36,7 @@ public class DoseQuantityR4 implements DoseQuantity<FDSConfigR4, Dosage> {
      * Constructor for {@code DoseQuantityR4}.
      *
      * @param config The configuration object used for translation.
+     * @param bundle a {@link java.util.ResourceBundle} object
      */
     public DoseQuantityR4(FDSConfigR4 config, ResourceBundle bundle) {
         this.config = config;

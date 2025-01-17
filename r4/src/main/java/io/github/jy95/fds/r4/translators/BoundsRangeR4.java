@@ -34,6 +34,7 @@ public class BoundsRangeR4 implements BoundsRange<FDSConfigR4, Dosage> {
      * Constructor for {@code BoundsRangeR4}.
      *
      * @param config The configuration object used for translation.
+     * @param bundle a {@link java.util.ResourceBundle} object
      */
     public BoundsRangeR4(FDSConfigR4 config, ResourceBundle bundle) {
         this.config = config;

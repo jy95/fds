@@ -34,6 +34,7 @@ public class MaxDosePerPeriodR4 implements MaxDosePerPeriod<FDSConfigR4, Dosage>
      * Constructor for {@code MaxDosePerPeriodR4}.
      *
      * @param config The configuration object used for translation.
+     * @param bundle a {@link java.util.ResourceBundle} object
      */
     public MaxDosePerPeriodR4(FDSConfigR4 config, ResourceBundle bundle) {
         this.bundle = bundle;

@@ -20,6 +20,7 @@ public interface PeriodPeriodMax<C extends FDSConfig, D> extends TranslatorTimin
     
     /**
      * MessageFormat instance used for "period" &amp; "periodMax" translation
+     *
      * @param bundle The bundle to extract the key
      * @param locale The locale for the message
      * @return The message template for "period" &amp; "periodMax"
@@ -31,6 +32,7 @@ public interface PeriodPeriodMax<C extends FDSConfig, D> extends TranslatorTimin
 
     /**
      * MessageFormat instance used for "period" translation
+     *
      * @param bundle The bundle to extract the key
      * @param locale The locale for the message
      * @return The message template for "period"

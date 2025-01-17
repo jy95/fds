@@ -36,6 +36,7 @@ public class RateRangeR4 implements RateRange<FDSConfigR4, Dosage> {
      * Constructor for {@code RateRangeR4}.
      *
      * @param config The configuration object used for translation.
+     * @param bundle a {@link java.util.ResourceBundle} object
      */
     public RateRangeR4(FDSConfigR4 config, ResourceBundle bundle) {
         this.config = config;

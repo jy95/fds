@@ -18,6 +18,7 @@ public interface CountCountMax<C extends FDSConfig, D> extends TranslatorTiming<
 
     /**
      * MessageFormat instance used for "count" &amp; "countMax" translation
+     *
      * @param bundle The bundle to extract the key
      * @param locale The locale for the message
      * @return The message template for "count" &amp; "countMax"
@@ -29,6 +30,7 @@ public interface CountCountMax<C extends FDSConfig, D> extends TranslatorTiming<
 
     /**
      * MessageFormat instance used for "count" translation
+     *
      * @param bundle The bundle to extract the key
      * @param locale The locale for the message
      * @return The message template for "count"

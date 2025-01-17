@@ -27,6 +27,7 @@ public class OffsetWhenR4 implements OffsetWhen<FDSConfigR4, Dosage> {
     /**
      * Constructor for {@code OffsetWhenR4}.
      *
+     * @param bundle a {@link java.util.ResourceBundle} object
      */
     public OffsetWhenR4(ResourceBundle bundle) {
         this.bundle = bundle;

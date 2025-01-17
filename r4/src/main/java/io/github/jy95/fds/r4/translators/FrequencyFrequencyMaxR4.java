@@ -27,6 +27,7 @@ public class FrequencyFrequencyMaxR4 implements FrequencyFrequencyMax<FDSConfigR
      * Constructor for {@code FrequencyFrequencyMaxR4}.
      *
      * @param config The configuration object used for translation.
+     * @param bundle a {@link java.util.ResourceBundle} object
      */
     public FrequencyFrequencyMaxR4(FDSConfigR4 config, ResourceBundle bundle) {
         var locale = config.getLocale();
@@ -41,6 +42,7 @@ public class FrequencyFrequencyMaxR4 implements FrequencyFrequencyMax<FDSConfigR
         return dosage.hasTiming();
     }
 
+    /** {@inheritDoc} */
     @Override
     public String formatFrequencyAndFrequencyMaxText(int frequencyMin, int frequencyMax) {
         Map<String, Object> arguments = Map.of(
@@ -50,11 +52,13 @@ public class FrequencyFrequencyMaxR4 implements FrequencyFrequencyMax<FDSConfigR
         return frequencyAndFrequencyMaxMsg.format(arguments);
     }
 
+    /** {@inheritDoc} */
     @Override
     public String formatFrequencyMaxText(int frequencyMax) {
         return frequencyMaxMsg.format(new Object[]{frequencyMax});
     }
 
+    /** {@inheritDoc} */
     @Override
     public String formatFrequencyText(int frequency) {
         return frequencyMsg.format(new Object[]{frequency});

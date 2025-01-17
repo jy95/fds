@@ -36,6 +36,7 @@ public class DayOfWeekR4 implements DayOfWeek<FDSConfigR4, Dosage> {
      * Constructor for {@code DayOfWeekR4}.
      *
      * @param config The configuration object used for translation.
+     * @param bundle a {@link java.util.ResourceBundle} object
      */
     public DayOfWeekR4(FDSConfigR4 config, ResourceBundle bundle) {
         this.config = config;

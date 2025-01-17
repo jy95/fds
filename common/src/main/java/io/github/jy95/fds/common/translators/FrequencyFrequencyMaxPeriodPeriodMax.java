@@ -7,10 +7,16 @@ import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * <p>FrequencyFrequencyMaxPeriodPeriodMax interface.</p>
+ *
+ * @author jy95
+ */
 public interface FrequencyFrequencyMaxPeriodPeriodMax<C extends FDSConfig, D> extends Translator<C, D> {
 
     /**
      * Check if dosage contains some frequency fields (frequency / frequencyMax)
+     *
      * @param dosage The dosage to check
      * @return True if present, otherwise false
      */
@@ -18,16 +24,19 @@ public interface FrequencyFrequencyMaxPeriodPeriodMax<C extends FDSConfig, D> ex
 
     /**
      * Check if dosage contains some period fields (period / periodMax)
+     *
      * @param dosage The dosage to check
      * @return True if present, otherwise false
      */
     boolean hasPeriod(D dosage);
 
+    /** {@inheritDoc} */
     @Override
     default boolean isPresent(D dosage) {
         return hasFrequency(dosage) || hasPeriod(dosage);
     }
 
+    /** {@inheritDoc} */
     @Override
     default CompletableFuture<String> convert(D dosage) {
         var frequencyPart = extractFrequency(dosage);
@@ -40,7 +49,19 @@ public interface FrequencyFrequencyMaxPeriodPeriodMax<C extends FDSConfig, D> ex
         );
     }
 
+    /**
+     * <p>extractFrequency.</p>
+     *
+     * @param dosage a D object
+     * @return a {@link java.util.concurrent.CompletableFuture} object
+     */
     CompletableFuture<String> extractFrequency(D dosage);
 
+    /**
+     * <p>extractPeriod.</p>
+     *
+     * @param dosage a D object
+     * @return a {@link java.util.concurrent.CompletableFuture} object
+     */
     CompletableFuture<String> extractPeriod(D dosage);
 }

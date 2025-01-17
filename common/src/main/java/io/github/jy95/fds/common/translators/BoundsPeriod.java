@@ -19,6 +19,7 @@ public interface BoundsPeriod<C extends FDSConfig, D> extends TranslatorTiming<C
 
     /**
      * MessageFormat instance used for "boundsPeriod" translation
+     *
      * @param bundle The bundle to extract the key
      * @param locale The locale for the message
      * @return The message template for "boundsPeriod"
@@ -30,6 +31,7 @@ public interface BoundsPeriod<C extends FDSConfig, D> extends TranslatorTiming<C
 
     /**
      * Extract information about the boundsPeriod
+     *
      * @param dosage The dosage object to analyze
      * @return A map
      */

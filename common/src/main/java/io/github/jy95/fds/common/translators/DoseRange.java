@@ -19,6 +19,7 @@ public interface DoseRange<C extends FDSConfig, D> extends Translator<C, D> {
 
     /**
      * MessageFormat instance used for "doseRange" translation
+     *
      * @param bundle The bundle to extract the key
      * @param locale The locale for the message
      * @return The message template for "doseRange"

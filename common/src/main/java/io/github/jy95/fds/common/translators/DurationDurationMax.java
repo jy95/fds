@@ -23,6 +23,7 @@ public interface DurationDurationMax<C extends FDSConfig, D> extends TranslatorT
 
     /**
      * MessageFormat instance used for "duration" translation
+     *
      * @param bundle The bundle to extract the key
      * @param locale The locale for the message
      * @return The message template for "duration"
@@ -34,6 +35,7 @@ public interface DurationDurationMax<C extends FDSConfig, D> extends TranslatorT
 
     /**
      * MessageFormat instance used for "duration" &amp; "durationMax" translation
+     *
      * @param bundle The bundle to extract the key
      * @param locale The locale for the message
      * @return The message template for "duration" &amp; "durationMax"

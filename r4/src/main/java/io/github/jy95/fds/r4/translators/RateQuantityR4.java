@@ -36,6 +36,7 @@ public class RateQuantityR4 implements RateQuantity<FDSConfigR4, Dosage> {
      * Constructor for {@code RateQuantityR4}.
      *
      * @param config The configuration object used for translation.
+     * @param bundle a {@link java.util.ResourceBundle} object
      */
     public RateQuantityR4(FDSConfigR4 config, ResourceBundle bundle) {
         this.config = config;

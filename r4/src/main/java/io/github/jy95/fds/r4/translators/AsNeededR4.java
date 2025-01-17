@@ -37,6 +37,7 @@ public class AsNeededR4 implements AsNeeded<FDSConfigR4, Dosage> {
      * Constructor for {@code AsNeededR4}.
      *
      * @param config The configuration object used for translation.
+     * @param bundle a {@link java.util.ResourceBundle} object
      */
     public AsNeededR4(FDSConfigR4 config, ResourceBundle bundle) {
         this.config = config;
@@ -45,6 +46,7 @@ public class AsNeededR4 implements AsNeeded<FDSConfigR4, Dosage> {
         this.asNeededMsg = getAsNeededMsg(bundle);
     }
 
+    /** {@inheritDoc} */
     @Override
     public CompletableFuture<String> convert(Dosage dosage) {
 

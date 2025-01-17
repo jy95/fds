@@ -18,6 +18,7 @@ public interface DayOfWeek<C extends FDSConfig, D> extends TranslatorTiming<C, D
 
     /**
      * MessageFormat instance used for "dayOfWeek" translation
+     *
      * @param bundle The bundle to extract the key
      * @param locale The locale for the message
      * @return The message template for "dayOfWeek"

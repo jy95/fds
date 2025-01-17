@@ -40,6 +40,7 @@ public class TimingEventR4 implements TimingEvent<FDSConfigR4, Dosage> {
      * Constructor for {@code TimingEventR4}.
      *
      * @param config The configuration object used for translation.
+     * @param bundle a {@link java.util.ResourceBundle} object
      */
     public TimingEventR4(FDSConfigR4 config, ResourceBundle bundle) {
         this.config = config;
@@ -67,6 +68,7 @@ public class TimingEventR4 implements TimingEvent<FDSConfigR4, Dosage> {
         return formatDateTimesR4.convert(config.getLocale(), events);
     }
 
+    /** {@inheritDoc} */
     @Override
     public CompletableFuture<String> convert(Dosage dosage) {
         return CompletableFuture.supplyAsync(() -> {
