@@ -20,8 +20,6 @@ import java.util.concurrent.CompletableFuture;
  */
 public class TimingEventR4 implements TimingEvent<FDSConfigR4, Dosage> {
 
-    private final FormatDateTimesR4 formatDateTimesR4;
-
     // Translations
     /** MessageFormat instance used for "event" translation. */
     protected final MessageFormat timingEventMsg;
@@ -45,7 +43,6 @@ public class TimingEventR4 implements TimingEvent<FDSConfigR4, Dosage> {
     public TimingEventR4(FDSConfigR4 config, ResourceBundle bundle) {
         this.config = config;
         this.bundle = bundle;
-        formatDateTimesR4 = new FormatDateTimesR4();
         this.timingEventMsg = getTimingEventMsg(bundle, config.getLocale());
     }
 
@@ -65,7 +62,7 @@ public class TimingEventR4 implements TimingEvent<FDSConfigR4, Dosage> {
     @Override
     public List<String> getEvents(Dosage dosage) {
         DateTimeType[] events = dosage.getTiming().getEvent().toArray(DateTimeType[]::new);
-        return formatDateTimesR4.convert(config.getLocale(), events);
+        return FormatDateTimesR4.getInstance().convert(config.getLocale(), events);
     }
 
     /** {@inheritDoc} */

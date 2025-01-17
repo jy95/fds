@@ -25,8 +25,6 @@ public class BoundsPeriodR4 implements BoundsPeriod<FDSConfigR4, Dosage> {
      */
     private final FDSConfigR4 config;
 
-    private final FormatDateTimesR4 formatDateTimesR4;
-
     /**
      * Constructor for {@code BoundsPeriodR4}.
      *
@@ -36,7 +34,6 @@ public class BoundsPeriodR4 implements BoundsPeriod<FDSConfigR4, Dosage> {
     public BoundsPeriodR4(FDSConfigR4 config, ResourceBundle bundle) {
         this.config = config;
         this.boundsPeriodMsg = getBoundsPeriodMsg(bundle, config.getLocale());
-        formatDateTimesR4 = new FormatDateTimesR4();
     }
 
     /** {@inheritDoc} */
@@ -68,7 +65,7 @@ public class BoundsPeriodR4 implements BoundsPeriod<FDSConfigR4, Dosage> {
     public String formatStartPeriod(Dosage dosage) {
         var boundPeriods = dosage.getTiming().getRepeat().getBoundsPeriod();
         var locale = config.getLocale();
-        return formatDateTimesR4.convert(locale, boundPeriods.getStartElement());
+        return FormatDateTimesR4.getInstance().convert(locale, boundPeriods.getStartElement());
     }
 
     /** {@inheritDoc} */
@@ -76,7 +73,7 @@ public class BoundsPeriodR4 implements BoundsPeriod<FDSConfigR4, Dosage> {
     public String formatEndPeriod(Dosage dosage) {
         var locale = config.getLocale();
         var boundPeriods = dosage.getTiming().getRepeat().getBoundsPeriod();
-        return formatDateTimesR4.convert(locale, boundPeriods.getEndElement());
+        return FormatDateTimesR4.getInstance().convert(locale, boundPeriods.getEndElement());
     }
 
     /** {@inheritDoc} */

@@ -7,12 +7,30 @@ import org.hl7.fhir.utilities.DateTimeUtil;
 import java.util.Locale;
 
 /**
- * R4 class for formatting DateTime objects into human-readable strings
+ * Singleton implementation for formatting FHIR R4 DateTimeType objects
+ * into human-readable strings. Implements the Bill Pugh Singleton pattern.
+ * This class ensures thread-safe lazy initialization of the singleton instance.
  *
  * @author jy95
  */
 public class FormatDateTimesR4 implements FormatDateTimes<DateTimeType> {
 
+    // Private constructor to prevent instantiation
+    private FormatDateTimesR4() {}
+
+    // Static inner class responsible for holding the Singleton instance
+    private static class Holder {
+        private static final FormatDateTimesR4 INSTANCE = new FormatDateTimesR4();
+    }
+
+    /**
+     * Returns the singleton instance of FormatDateTimesR4.
+     *
+     * @return the singleton instance
+     */
+    public static FormatDateTimesR4 getInstance() {
+        return Holder.INSTANCE;
+    }
     /** {@inheritDoc} */
     @Override
     public String convert(Locale locale, DateTimeType date) {
