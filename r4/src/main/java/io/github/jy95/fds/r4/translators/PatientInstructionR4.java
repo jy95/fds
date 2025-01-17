@@ -13,11 +13,6 @@ import java.util.concurrent.CompletableFuture;
  */
 public class PatientInstructionR4 implements Translator<FDSConfigR4, Dosage> {
 
-    /**
-     * Constructor for {@code PatientInstructionR4}.
-     */
-    public PatientInstructionR4() {}
-
     /** {@inheritDoc} */
     @Override
     public CompletableFuture<String> convert(Dosage dosage) {
