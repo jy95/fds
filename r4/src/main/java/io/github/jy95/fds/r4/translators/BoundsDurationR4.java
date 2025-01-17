@@ -50,17 +50,17 @@ public class BoundsDurationR4 implements BoundsDuration<FDSConfigR4, Dosage> {
 
     /** {@inheritDoc} */
     @Override
+    public boolean hasRequiredElements(Dosage dosage) {
+        return dosage.getTiming().hasRepeat() && dosage.getTiming().getRepeat().hasBoundsDuration();
+    }
+
+    /** {@inheritDoc} */
+    @Override
     public CompletableFuture<String> convert(Dosage dosage) {
         var boundsDuration = dosage.getTiming().getRepeat().getBoundsDuration();
         return QuantityToStringR4
                 .getInstance()
                 .convert(bundle, config, boundsDuration)
                 .thenApplyAsync((durationText) -> boundsDurationMsg.format(new Object[]{durationText}));
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public boolean hasRequiredElements(Dosage dosage) {
-        return dosage.getTiming().hasRepeat() && dosage.getTiming().getRepeat().hasBoundsDuration();
     }
 }

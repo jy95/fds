@@ -46,14 +46,14 @@ public class DayOfWeekR4 implements DayOfWeek<FDSConfigR4, Dosage> {
 
     /** {@inheritDoc} */
     @Override
-    public boolean hasTiming(Dosage dosage) {
-        return dosage.hasTiming();
+    public boolean hasRequiredElements(Dosage dosage) {
+        return dosage.getTiming().hasRepeat() && dosage.getTiming().getRepeat().hasDayOfWeek();
     }
 
     /** {@inheritDoc} */
     @Override
-    public boolean hasRequiredElements(Dosage dosage) {
-        return dosage.getTiming().hasRepeat() && dosage.getTiming().getRepeat().hasDayOfWeek();
+    public boolean hasTiming(Dosage dosage) {
+        return dosage.hasTiming();
     }
 
     /** {@inheritDoc} */

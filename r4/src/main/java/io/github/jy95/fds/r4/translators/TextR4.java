@@ -12,7 +12,7 @@ import java.util.concurrent.CompletableFuture;
  * @author jy95
  */
 public class TextR4 implements Translator<FDSConfigR4, Dosage> {
-    
+
     /** {@inheritDoc} */
     @Override
     public CompletableFuture<String> convert(Dosage dosage) {
