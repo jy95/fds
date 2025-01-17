@@ -1,11 +1,14 @@
 package io.github.jy95.fds.r4.translators;
 
+import com.ibm.icu.text.MessageFormat;
 import io.github.jy95.fds.common.functions.ListToString;
-import io.github.jy95.fds.common.translators.AbstractOffsetWhen;
+import io.github.jy95.fds.common.translators.OffsetWhen;
 import io.github.jy95.fds.r4.config.FDSConfigR4;
+import lombok.RequiredArgsConstructor;
 import org.hl7.fhir.r4.model.Dosage;
 import org.hl7.fhir.r4.model.Enumeration;
 
+import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -15,16 +18,13 @@ import java.util.stream.Stream;
  *
  * @author jy95
  */
-public class OffsetWhenR4 extends AbstractOffsetWhen<FDSConfigR4, Dosage> {
+@RequiredArgsConstructor
+public class OffsetWhenR4 implements OffsetWhen<FDSConfigR4, Dosage> {
 
     /**
-     * Constructor for {@code OffsetWhenR4}.
-     *
-     * @param config The configuration object used for translation.
+     * The resource bundle containing localized strings for translation.
      */
-    public OffsetWhenR4(FDSConfigR4 config) {
-        super(config);
-    }
+    private final ResourceBundle bundle;
 
     /** {@inheritDoc} */
     @Override
@@ -40,7 +40,7 @@ public class OffsetWhenR4 extends AbstractOffsetWhen<FDSConfigR4, Dosage> {
 
     /** {@inheritDoc} */
     @Override
-    protected boolean hasRequiredElements(Dosage dosage) {
+    public boolean hasRequiredElements(Dosage dosage) {
         var timing = dosage.getTiming();
         // Rule: If there's an offset, there must be a when (and not C, CM, CD, CV)
         return timing.hasRepeat() && (timing.getRepeat().hasOffset() || timing.getRepeat().hasWhen());
@@ -48,12 +48,11 @@ public class OffsetWhenR4 extends AbstractOffsetWhen<FDSConfigR4, Dosage> {
 
     /** {@inheritDoc} */
     @Override
-    protected boolean hasTiming(Dosage dosage) {
+    public boolean hasTiming(Dosage dosage) {
         return dosage.hasTiming();
     }
 
     private CompletableFuture<String> turnWhenToText(Dosage dosage) {
-        var bundle = getResources();
         var repeat = dosage.getTiming().getRepeat();
 
         if (!repeat.hasWhen()) {
@@ -79,5 +78,31 @@ public class OffsetWhenR4 extends AbstractOffsetWhen<FDSConfigR4, Dosage> {
             return CompletableFuture.completedFuture("");
         }
         return turnOffsetValueToText(repeat.getOffset());
+    }
+
+    /**
+     * Converts an offset value (in minutes) into a human-readable time string.
+     * The result combines the extracted time components (days, hours, minutes) into a formatted string.
+     *
+     * @param offset The offset in minutes to be converted.
+     * @return A {@link java.util.concurrent.CompletableFuture} containing the formatted string representing the offset.
+     */
+    protected CompletableFuture<String> turnOffsetValueToText(int offset) {
+        return CompletableFuture.supplyAsync(() -> {
+            var extractedTime = extractTime(offset);
+
+            var times = OffsetWhen
+                    .order
+                    .stream()
+                    .filter(unit -> extractedTime.getOrDefault(unit, 0) > 0)
+                    .map(unit -> {
+                        var unitMsg = bundle.getString("withCount." + unit);
+                        var amount = extractedTime.get(unit);
+                        return MessageFormat.format(unitMsg, amount);
+                    })
+                    .toList();
+
+            return ListToString.convert(bundle, times);
+        });
     }
 }

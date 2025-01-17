@@ -1,7 +1,8 @@
 package io.github.jy95.fds.r4.translators;
 
-import io.github.jy95.fds.common.types.AbstractTranslatorTiming;
+import io.github.jy95.fds.common.types.TranslatorTiming;
 import io.github.jy95.fds.r4.config.FDSConfigR4;
+import lombok.RequiredArgsConstructor;
 import org.hl7.fhir.r4.model.Dosage;
 
 import java.util.concurrent.CompletableFuture;
@@ -11,28 +12,24 @@ import java.util.concurrent.CompletableFuture;
  *
  * @author jy95
  */
-public class TimingCodeR4 extends AbstractTranslatorTiming<FDSConfigR4, Dosage> {
+@RequiredArgsConstructor
+public class TimingCodeR4 implements TranslatorTiming<FDSConfigR4, Dosage> {
 
     /**
-     * Constructor for {@code TimingCodeR4}.
-     *
-     * @param config The configuration object used for translation.
+     * The configuration object used by this API.
      */
-    public TimingCodeR4(FDSConfigR4 config) {
-        super(config);
-    }
+    private final FDSConfigR4 config;
 
     /** {@inheritDoc} */
     @Override
-    protected boolean hasTiming(Dosage dosage) {
+    public boolean hasTiming(Dosage dosage) {
         return dosage.hasTiming();
     }
 
     /** {@inheritDoc} */
     @Override
     public CompletableFuture<String> convert(Dosage dosage) {
-        return this
-                .getConfig()
+        return config
                 .fromCodeableConceptToString(
                         dosage.getTiming().getCode()
                 );
@@ -40,7 +37,7 @@ public class TimingCodeR4 extends AbstractTranslatorTiming<FDSConfigR4, Dosage> 
 
     /** {@inheritDoc} */
     @Override
-    protected boolean hasRequiredElements(Dosage dosage) {
+    public boolean hasRequiredElements(Dosage dosage) {
         return dosage.getTiming().hasCode();
     }
 }

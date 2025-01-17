@@ -1,15 +1,15 @@
 package io.github.jy95.fds.common.types;
 
+import io.github.jy95.fds.common.config.FDSConfig;
+import io.github.jy95.fds.common.functions.ListToString;
+import lombok.Getter;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
-
-import io.github.jy95.fds.common.config.FDSConfig;
-import io.github.jy95.fds.common.functions.ListToString;
-import lombok.Getter;
 
 /**
  * Abstract class providing API methods for translating and formatting dosage data.
@@ -72,9 +72,9 @@ public abstract class DosageAPI<C extends FDSConfig, D> {
      * Retrieves the translator associated with the specified display order.
      *
      * @param displayOrder the display order used to find the translator
-     * @return the corresponding {@link io.github.jy95.fds.common.types.AbstractTranslator}, or {@code null} if not found
+     * @return the corresponding {@link io.github.jy95.fds.common.types.Translator}, or {@code null} if not found
      */
-    public abstract AbstractTranslator<C, D> getTranslator(DisplayOrder displayOrder);
+    public abstract Translator<C, D> getTranslator(DisplayOrder displayOrder);
 
     /**
      * Checks if the given list of dosages contains only sequential instructions.

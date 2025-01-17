@@ -1,50 +1,61 @@
 package io.github.jy95.fds.common.translators;
 
 import com.ibm.icu.text.MessageFormat;
-
 import io.github.jy95.fds.common.config.FDSConfig;
-import io.github.jy95.fds.common.types.AbstractTranslatorTiming;
+import io.github.jy95.fds.common.types.TranslatorTiming;
 
-import java.util.Map;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * An abstract class for translating "timing.repeat.frequency" / "timing.repeat.frequencyMax".
+ * Interface for translating "timing.repeat.frequency" / "timing.repeat.frequencyMax".
  *
  * @param <C> The type of configuration, extending {@link io.github.jy95.fds.common.config.FDSConfig}.
  * @param <D> The type of the translated data.
  * @author jy95
  */
-public abstract class AbstractFrequencyFrequencyMax<C extends FDSConfig, D> extends AbstractTranslatorTiming<C, D> {
-
-    // Translations
-    /** MessageFormat instance used for "frequency" &amp; "frequencyMax" translation */
-    protected final MessageFormat frequencyAndFrequencyMaxMsg;
-    /** MessageFormat instance used for "frequencyMax" translation */
-    protected final MessageFormat frequencyMaxMsg;
-    /** MessageFormat instance used for "frequencyMax" translation */
-    protected final MessageFormat frequencyMsg;
+public interface FrequencyFrequencyMax<C extends FDSConfig, D> extends TranslatorTiming<C, D> {
 
     /**
-     * Constructor for {@code AbstractFrequencyFrequencyMax}.
+     * MessageFormat instance used for "frequency" &amp; "frequencyMax" translation
      *
-     * @param config The configuration object used for translation.
+     * @param bundle The bundle to extract the key
+     * @param locale The locale for the message
+     * @return The message template for "frequency" &amp; "frequencyMax" translation
      */
-    public AbstractFrequencyFrequencyMax(C config) {
-        super(config);
-        var bundle = this.getResources();
-        var locale = this.getConfig().getLocale();
-        var msg1 = bundle.getString("fields.frequencyAndFrequencyMax");
-        var msg2 = bundle.getString("fields.frequencyMax");
-        var msg3 = bundle.getString("fields.frequency");
-        frequencyAndFrequencyMaxMsg = new MessageFormat(msg1, locale);
-        frequencyMaxMsg = new MessageFormat(msg2, locale);
-        frequencyMsg = new MessageFormat(msg3, locale);
+    default MessageFormat getFrequencyAndFrequencyMaxMsg(ResourceBundle bundle, Locale locale) {
+        var msg = bundle.getString("fields.frequencyAndFrequencyMax");
+        return new MessageFormat(msg, locale);
+    }
+
+    /**
+     * MessageFormat instance used for "frequencyMax" translation
+     *
+     * @param bundle The bundle to extract the key
+     * @param locale The locale for the message
+     * @return The message template for "frequencyMax" translation
+     */
+    default MessageFormat getFrequencyMaxMsg(ResourceBundle bundle, Locale locale) {
+        var msg = bundle.getString("fields.frequencyMax");
+        return new MessageFormat(msg, locale);
+    }
+
+    /**
+     * MessageFormat instance used for "frequency" translation
+     *
+     * @param bundle The bundle to extract the key
+     * @param locale The locale for the message
+     * @return The message template for "frequency" translation
+     */
+    default MessageFormat getFrequencyMsg(ResourceBundle bundle, Locale locale) {
+        var msg = bundle.getString("fields.frequency");
+        return new MessageFormat(msg, locale);
     }
 
     /** {@inheritDoc} */
     @Override
-    public CompletableFuture<String> convert(D dosage) {
+    default CompletableFuture<String> convert(D dosage) {
         return CompletableFuture.supplyAsync(() -> {
 
             var hasFrequencyFlag = hasFrequency(dosage);
@@ -70,13 +81,7 @@ public abstract class AbstractFrequencyFrequencyMax<C extends FDSConfig, D> exte
      * @param frequencyMax The maximum frequency.
      * @return A formatted string representing both "frequency" and "frequencyMax".
      */
-    protected String formatFrequencyAndFrequencyMaxText(int frequencyMin, int frequencyMax) {
-        Map<String, Object> arguments = Map.of(
-                "frequency", frequencyMin,
-                "maxFrequency", frequencyMax
-        );
-        return frequencyAndFrequencyMaxMsg.format(arguments);
-    }
+    String formatFrequencyAndFrequencyMaxText(int frequencyMin, int frequencyMax);
 
     /**
      * Formats the text for cases where only "frequencyMax" is present.
@@ -84,9 +89,7 @@ public abstract class AbstractFrequencyFrequencyMax<C extends FDSConfig, D> exte
      * @param frequencyMax The maximum frequency.
      * @return A formatted string representing "frequencyMax".
      */
-    protected String formatFrequencyMaxText(int frequencyMax) {
-        return frequencyMaxMsg.format(new Object[]{frequencyMax});
-    }
+    String formatFrequencyMaxText(int frequencyMax);
 
     /**
      * Formats the text for cases where only "frequency" is present.
@@ -94,9 +97,7 @@ public abstract class AbstractFrequencyFrequencyMax<C extends FDSConfig, D> exte
      * @param frequency The frequency.
      * @return A formatted string representing "frequency".
      */
-    protected String formatFrequencyText(int frequency) {
-        return frequencyMsg.format(new Object[]{frequency});
-    }
+    String formatFrequencyText(int frequency);
 
     /**
      * Checks if the dosage data contains a valid "frequency" value.
@@ -104,7 +105,7 @@ public abstract class AbstractFrequencyFrequencyMax<C extends FDSConfig, D> exte
      * @param dosage The dosage data.
      * @return true if the dosage contains a "frequency" value, false otherwise.
      */
-    protected abstract boolean hasFrequency(D dosage);
+    boolean hasFrequency(D dosage);
 
     /**
      * Checks if the dosage data contains a valid "frequencyMax" value.
@@ -112,7 +113,7 @@ public abstract class AbstractFrequencyFrequencyMax<C extends FDSConfig, D> exte
      * @param dosage The dosage data.
      * @return true if the dosage contains a "frequencyMax" value, false otherwise.
      */
-    protected abstract boolean hasFrequencyMax(D dosage);
+    boolean hasFrequencyMax(D dosage);
 
     /**
      * Converts the dosage data containing both "frequency" and "frequencyMax" into a formatted string.
@@ -120,7 +121,7 @@ public abstract class AbstractFrequencyFrequencyMax<C extends FDSConfig, D> exte
      * @param dosage The dosage data.
      * @return A formatted string representing both "frequency" and "frequencyMax".
      */
-    protected abstract String turnFrequencyAndFrequencyMaxToString(D dosage);
+    String turnFrequencyAndFrequencyMaxToString(D dosage);
 
     /**
      * Converts the dosage data containing "frequencyMax" into a formatted string.
@@ -128,7 +129,7 @@ public abstract class AbstractFrequencyFrequencyMax<C extends FDSConfig, D> exte
      * @param dosage The dosage data.
      * @return A formatted string representing "frequencyMax".
      */
-    protected abstract String turnFrequencyMaxToString(D dosage);
+    String turnFrequencyMaxToString(D dosage);
 
     /**
      * Converts the dosage data containing "frequency" into a formatted string.
@@ -136,5 +137,5 @@ public abstract class AbstractFrequencyFrequencyMax<C extends FDSConfig, D> exte
      * @param dosage The dosage data.
      * @return A formatted string representing "frequency".
      */
-    protected abstract String turnFrequencyToString(D dosage);
+    String turnFrequencyToString(D dosage);
 }

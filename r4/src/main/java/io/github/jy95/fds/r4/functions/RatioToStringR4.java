@@ -14,6 +14,8 @@ import java.util.concurrent.CompletableFuture;
  * Implements the Bill Pugh Singleton pattern for thread-safe lazy initialization.
  *
  * Author: jy95
+ *
+ * @author jy95
  */
 public class RatioToStringR4 implements RatioToString<FDSConfigR4, Ratio> {
 

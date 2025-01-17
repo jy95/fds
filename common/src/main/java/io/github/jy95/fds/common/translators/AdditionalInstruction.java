@@ -2,28 +2,20 @@ package io.github.jy95.fds.common.translators;
 
 import io.github.jy95.fds.common.config.FDSConfig;
 import io.github.jy95.fds.common.functions.ListToString;
-import io.github.jy95.fds.common.types.AbstractTranslator;
+import io.github.jy95.fds.common.types.Translator;
 
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * An abstract class for translating "additionalInstruction".
+ * An interface for translating "additionalInstruction".
  *
  * @param <C> The type of configuration, extending {@link io.github.jy95.fds.common.config.FDSConfig}.
  * @param <D> The type of the translated data.
  * @author jy95
  */
-public abstract class AbstractAdditionalInstruction<C extends FDSConfig, D> extends AbstractTranslator<C, D> {
-
-    /**
-     * Constructor for {@code AbstractAdditionalInstruction}.
-     *
-     * @param config The configuration object used for translation.
-     */
-    public AbstractAdditionalInstruction(C config) {
-        super(config);
-    }
+public interface AdditionalInstruction<C extends FDSConfig, D> extends Translator<C, D> {
 
     /**
      * Processes a list of asynchronous additional instructions and converts them to a single string.
@@ -36,9 +28,11 @@ public abstract class AbstractAdditionalInstruction<C extends FDSConfig, D> exte
      *                               the additional instructions to be processed.
      * @return A {@link java.util.concurrent.CompletableFuture} that, when completed, returns a string
      *         representing all the additional instructions combined.
+     * @param bundle a {@link java.util.ResourceBundle} object
      */
-    protected CompletableFuture<String> instructionsFuture(
-            List<CompletableFuture<String>> additionalInstructions
+    default CompletableFuture<String> instructionsFuture(
+            List<CompletableFuture<String>> additionalInstructions,
+            ResourceBundle bundle
     ) {
         return CompletableFuture
                 .allOf(additionalInstructions.toArray(CompletableFuture[]::new))
@@ -49,7 +43,6 @@ public abstract class AbstractAdditionalInstruction<C extends FDSConfig, D> exte
                             .toList();
 
                     // Use ListToString.convert with the translators' resources
-                    var bundle = this.getResources();
                     return ListToString.convert(bundle, additionalInstructionsAsText);
                 });
     }
