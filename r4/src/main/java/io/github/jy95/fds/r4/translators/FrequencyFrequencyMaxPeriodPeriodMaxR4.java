@@ -1,6 +1,5 @@
 package io.github.jy95.fds.r4.translators;
 
-import io.github.jy95.fds.common.translators.AbstractFrequencyFrequencyMaxPeriodPeriodMax;
 import io.github.jy95.fds.common.types.AbstractTranslator;
 import io.github.jy95.fds.r4.config.FDSConfigR4;
 import org.hl7.fhir.r4.model.Dosage;
