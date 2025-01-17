@@ -1,22 +1,18 @@
 package io.github.jy95.fds;
 
-import io.github.jy95.fds.common.types.AbstractTranslator;
+import io.github.jy95.fds.common.config.FDSConfig;
+import io.github.jy95.fds.common.types.Translator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.CompletableFuture;
 
-import io.github.jy95.fds.common.config.FDSConfig;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class AbstractTranslatorTest {
+public class TranslatorTest {
 
-    // Concrete implementation of AbstractTranslator
-    private static class TestTranslator extends AbstractTranslator<FDSConfig, String> {
-
-        public TestTranslator(FDSConfig config) {
-            super(config);
-        }
+    // Concrete implementation of Translator
+    private static class TestTranslator implements Translator<FDSConfig, String> {
 
         @Override
         public CompletableFuture<String> convert(String dosage) {
@@ -24,11 +20,11 @@ public class AbstractTranslatorTest {
         }
     }
 
-    private AbstractTranslator<FDSConfig, String> translator;
+    private Translator<FDSConfig, String> translator;
 
     @BeforeEach
     void setUp() {
-        translator = new TestTranslator(FDSConfig.builder().build());
+        translator = new TestTranslator();
     }
 
     @Test

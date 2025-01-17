@@ -4,7 +4,7 @@ import io.github.jy95.fds.common.config.FDSConfig;
 
 /**
  * Interface for translators that specifically handle dosage objects with "Timing" elements.
- * This class extends {@link io.github.jy95.fds.common.types.AbstractTranslator} to provide additional checks for timing-related data.
+ * This class extends {@link io.github.jy95.fds.common.types.Translator} to provide additional checks for timing-related data.
  *
  * @param <C> the type of configuration extending {@link io.github.jy95.fds.common.config.FDSConfig}
  * @param <D> the type of dosage field to be translated

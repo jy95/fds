@@ -1,7 +1,7 @@
 package io.github.jy95.fds.r4;
 
 import io.github.jy95.fds.common.functions.SequenceUtils;
-import io.github.jy95.fds.common.types.AbstractTranslator;
+import io.github.jy95.fds.common.types.Translator;
 import io.github.jy95.fds.common.types.DisplayOrder;
 import io.github.jy95.fds.common.types.DosageAPI;
 import io.github.jy95.fds.r4.config.FDSConfigR4;
@@ -36,12 +36,13 @@ public class DosageAPIR4 extends DosageAPI<FDSConfigR4, Dosage> {
      */
     public DosageAPIR4(FDSConfigR4 config) {
         super(config);
-        translatorsMapR4 = new TranslatorsMapR4(config);
+        var bundle = config.getSelectResourceBundle().apply(config.getLocale());
+        translatorsMapR4 = new TranslatorsMapR4(config, bundle);
     }
 
     /** {@inheritDoc} */
     @Override
-    public AbstractTranslator<FDSConfigR4, Dosage> getTranslator(DisplayOrder displayOrder) {
+    public Translator<FDSConfigR4, Dosage> getTranslator(DisplayOrder displayOrder) {
         return translatorsMapR4.getTranslator(displayOrder);
     }
 
