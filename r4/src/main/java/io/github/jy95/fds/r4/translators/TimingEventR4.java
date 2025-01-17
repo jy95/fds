@@ -48,12 +48,6 @@ public class TimingEventR4 implements TimingEvent<FDSConfigR4, Dosage> {
 
     /** {@inheritDoc} */
     @Override
-    public boolean hasTiming(Dosage dosage) {
-        return dosage.hasTiming();
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public boolean hasRequiredElements(Dosage dosage) {
         return dosage.getTiming().hasEvent();
     }
@@ -63,6 +57,12 @@ public class TimingEventR4 implements TimingEvent<FDSConfigR4, Dosage> {
     public List<String> getEvents(Dosage dosage) {
         DateTimeType[] events = dosage.getTiming().getEvent().toArray(DateTimeType[]::new);
         return FormatDateTimesR4.getInstance().convert(config.getLocale(), events);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public boolean hasTiming(Dosage dosage) {
+        return dosage.hasTiming();
     }
 
     /** {@inheritDoc} */

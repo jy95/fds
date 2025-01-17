@@ -52,12 +52,6 @@ public class DayOfWeekR4 implements DayOfWeek<FDSConfigR4, Dosage> {
 
     /** {@inheritDoc} */
     @Override
-    public boolean hasTiming(Dosage dosage) {
-        return dosage.hasTiming();
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public CompletableFuture<String> convert(Dosage dosage) {
         return CompletableFuture.supplyAsync(() -> {
             var dayOfWeeks = dosage.getTiming().getRepeat().getDayOfWeek();
@@ -89,6 +83,12 @@ public class DayOfWeekR4 implements DayOfWeek<FDSConfigR4, Dosage> {
         );
 
         return messageFormat.format(dayArguments);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public boolean hasTiming(Dosage dosage) {
+        return dosage.hasTiming();
     }
 
     /**

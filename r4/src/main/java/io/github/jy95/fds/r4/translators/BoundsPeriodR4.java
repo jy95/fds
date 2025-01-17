@@ -44,12 +44,6 @@ public class BoundsPeriodR4 implements BoundsPeriod<FDSConfigR4, Dosage> {
 
     /** {@inheritDoc} */
     @Override
-    public boolean hasTiming(Dosage dosage) {
-        return dosage.hasTiming();
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public boolean hasStartPeriod(Dosage dosage) {
         return dosage.getTiming().getRepeat().getBoundsPeriod().hasStart();
     }
@@ -58,6 +52,12 @@ public class BoundsPeriodR4 implements BoundsPeriod<FDSConfigR4, Dosage> {
     @Override
     public boolean hasEndPeriod(Dosage dosage) {
         return dosage.getTiming().getRepeat().getBoundsPeriod().hasEnd();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public boolean hasTiming(Dosage dosage) {
+        return dosage.hasTiming();
     }
 
     /** {@inheritDoc} */

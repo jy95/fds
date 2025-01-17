@@ -60,12 +60,6 @@ public class TimeOfDayR4 implements TimeOfDay<FDSConfigR4, Dosage> {
 
     /** {@inheritDoc} */
     @Override
-    public boolean hasTiming(Dosage dosage) {
-        return dosage.hasTiming();
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public CompletableFuture<String> convert(Dosage dosage) {
         return CompletableFuture.supplyAsync(() -> {
 
@@ -80,5 +74,11 @@ public class TimeOfDayR4 implements TimeOfDay<FDSConfigR4, Dosage> {
 
             return timeOfDayMsg.format(messageArguments);
         });
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public boolean hasTiming(Dosage dosage) {
+        return dosage.hasTiming();
     }
 }
