@@ -2,6 +2,7 @@ package io.github.jy95.fds.r4.translators;
 
 import io.github.jy95.fds.common.types.Translator;
 import io.github.jy95.fds.r4.config.FDSConfigR4;
+import lombok.RequiredArgsConstructor;
 import org.hl7.fhir.r4.model.Dosage;
 
 import java.util.concurrent.CompletableFuture;
@@ -11,21 +12,13 @@ import java.util.concurrent.CompletableFuture;
  *
  * @author jy95
  */
+@RequiredArgsConstructor
 public class ExtensionR4 implements Translator<FDSConfigR4, Dosage> {
 
     /**
      * The configuration object used by this API.
      */
     private final FDSConfigR4 config;
-
-    /**
-     * Constructor for {@code ExtensionR4}.
-     *
-     * @param config The configuration object used for translation.
-     */
-    public ExtensionR4(FDSConfigR4 config) {
-        this.config = config;
-    }
 
     /** {@inheritDoc} */
     @Override

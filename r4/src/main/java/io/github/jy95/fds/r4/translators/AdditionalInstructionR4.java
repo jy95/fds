@@ -2,6 +2,7 @@ package io.github.jy95.fds.r4.translators;
 
 import io.github.jy95.fds.common.translators.AdditionalInstruction;
 import io.github.jy95.fds.r4.config.FDSConfigR4;
+import lombok.RequiredArgsConstructor;
 import org.hl7.fhir.r4.model.Dosage;
 
 import java.util.ResourceBundle;
@@ -12,6 +13,7 @@ import java.util.concurrent.CompletableFuture;
  *
  * @author jy95
  */
+@RequiredArgsConstructor
 public class AdditionalInstructionR4 implements AdditionalInstruction<FDSConfigR4, Dosage> {
 
     /**
@@ -23,17 +25,6 @@ public class AdditionalInstructionR4 implements AdditionalInstruction<FDSConfigR
      * The resource bundle containing localized strings for translation.
      */
     private final ResourceBundle bundle;
-
-    /**
-     * Constructor for {@code AdditionalInstructionR4}.
-     *
-     * @param config The configuration object used for translation.
-     * @param bundle a {@link java.util.ResourceBundle} object
-     */
-    public AdditionalInstructionR4(FDSConfigR4 config, ResourceBundle bundle) {
-        this.config = config;
-        this.bundle = bundle;
-    }
 
     /** {@inheritDoc} */
     @Override

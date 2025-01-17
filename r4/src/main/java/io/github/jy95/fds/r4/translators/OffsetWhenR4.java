@@ -4,6 +4,7 @@ import com.ibm.icu.text.MessageFormat;
 import io.github.jy95.fds.common.functions.ListToString;
 import io.github.jy95.fds.common.translators.OffsetWhen;
 import io.github.jy95.fds.r4.config.FDSConfigR4;
+import lombok.RequiredArgsConstructor;
 import org.hl7.fhir.r4.model.Dosage;
 import org.hl7.fhir.r4.model.Enumeration;
 
@@ -17,21 +18,13 @@ import java.util.stream.Stream;
  *
  * @author jy95
  */
+@RequiredArgsConstructor
 public class OffsetWhenR4 implements OffsetWhen<FDSConfigR4, Dosage> {
 
     /**
      * The resource bundle containing localized strings for translation.
      */
     private final ResourceBundle bundle;
-
-    /**
-     * Constructor for {@code OffsetWhenR4}.
-     *
-     * @param bundle a {@link java.util.ResourceBundle} object
-     */
-    public OffsetWhenR4(ResourceBundle bundle) {
-        this.bundle = bundle;
-    }
 
     /** {@inheritDoc} */
     @Override
