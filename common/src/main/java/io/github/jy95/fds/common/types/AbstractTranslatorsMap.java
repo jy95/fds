@@ -1,7 +1,10 @@
 package io.github.jy95.fds.common.types;
 
 import io.github.jy95.fds.common.config.FDSConfig;
+
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Supplier;
 
 /**
  * Abstract class representing a map of translators for various {@link io.github.jy95.fds.common.types.DisplayOrder} values.
@@ -16,26 +19,36 @@ public abstract class AbstractTranslatorsMap<C extends FDSConfig, D> {
 
     /**
      * A map associating {@link DisplayOrder} values with their corresponding
-     * {@link Translator} instances.
+     * lazy {@link Supplier} instances for {@link Translator}.
      */
-    private final Map<DisplayOrder, Translator<C, D>> translatorMap;
+    private final Map<DisplayOrder, Supplier<Translator<C, D>>> translatorSuppliers;
 
     /**
-     * Constructs a new {@code AbstractTranslatorsMap} with the specified translator map.
-     *
-     * @param translatorMap a map of {@link io.github.jy95.fds.common.types.DisplayOrder} to {@link io.github.jy95.fds.common.types.Translator} instances
+     * A map associating {@link DisplayOrder} values with their corresponding {@link Translator} instance.
+     * So if you use part of the supported fields, you won't have a bunch of useless new calls to for your needs
      */
-    public AbstractTranslatorsMap(Map<DisplayOrder, Translator<C, D>> translatorMap) {
-        this.translatorMap = translatorMap;
+    private final Map<DisplayOrder, Translator<C, D>> translatorCache = new ConcurrentHashMap<>();
+
+    /**
+     * Constructs a new {@code AbstractTranslatorsMap} with the specified supplier map.
+     *
+     * @param translatorSuppliers a map of {@link io.github.jy95.fds.common.types.DisplayOrder} to lazy {@link java.util.function.Supplier} instances
+     */
+    public AbstractTranslatorsMap(Map<DisplayOrder, Supplier<Translator<C, D>>> translatorSuppliers) {
+        this.translatorSuppliers = translatorSuppliers;
     }
 
     /**
      * Retrieves the {@link io.github.jy95.fds.common.types.Translator} associated with the specified {@link io.github.jy95.fds.common.types.DisplayOrder}.
+     * The translator is created lazily on first access.
      *
      * @param displayOrder the {@link io.github.jy95.fds.common.types.DisplayOrder} used to locate the translator
      * @return the corresponding {@link io.github.jy95.fds.common.types.Translator}, or {@code null} if no match is found
      */
     public Translator<C, D> getTranslator(DisplayOrder displayOrder) {
-        return translatorMap.get(displayOrder);
+        return translatorCache.computeIfAbsent(displayOrder, key -> {
+            Supplier<Translator<C, D>> supplier = translatorSuppliers.get(key);
+            return supplier != null ? supplier.get() : null;
+        });
     }
 }
