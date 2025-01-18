@@ -1,12 +1,15 @@
-<h1 align="center">FHIR Dosage Support</h1>
+<h1 style="text-align: center;">FHIR Dosage Support</h1>
 
-<div align="center">
+<div style="text-align: center;">
 
 Turn [FHIR Dosage](https://build.fhir.org/dosage.html) into human readable text in your wanted language (english, french, dutch, german, ...) and much more
 
-[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://github.com/jy95/fhir-dosage-utils/blob/main/LICENSE)
+[![Build Status](https://github.com/jy95/fds/actions/workflows/maven.yml/badge.svg)](https://github.com/jy95/fds/actions/workflows/maven.yml)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/56beb6b5e12a4de481cd74ad164989f9)](https://app.codacy.com/gh/jy95/fds/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 [![Codacy Badge](https://app.codacy.com/project/badge/Coverage/56beb6b5e12a4de481cd74ad164989f9)](https://app.codacy.com/gh/jy95/fds/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_coverage)
+[![Java Version](https://img.shields.io/badge/Java-21%2B-brightgreen.svg)](https://www.oracle.com/java/)
+[![We ❤️ PRs](https://img.shields.io/badge/We%20%E2%9D%A4%EF%B8%8F-Pull%20Requests-brightgreen.svg)](https://github.com/jy95/fds/pulls)
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://github.com/jy95/fhir-dosage-utils/blob/main/LICENSE)
 <br /> 
 <a href="https://www.buymeacoffee.com/GPFR" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" height="41" width="174" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;" ></a>
 <br />
@@ -25,6 +28,22 @@ Key Features:
 - **Integration Ease** Works effortlessly in various environments like server, client, ...
 
 Read more on : 
+
+## Artifacts
+
+| ArtifactId | Description                                   | Maven Central                                                                              |
+|------------|-----------------------------------------------|--------------------------------------------------------------------------------------------|
+| `common`   | Shared utilities and foundational components. | ![Maven Central Version](https://img.shields.io/maven-central/v/io.github.jy95.fds/common) |
+| `r4`       | Implementation for FHIR R4 support.           | ![Maven Central Version](https://img.shields.io/maven-central/v/io.github.jy95.fds/r4)     |
+| `r5`       | Implementation for FHIR R5 support.           | ![Maven Central Version](https://img.shields.io/maven-central/v/io.github.jy95.fds/r5)     |
+
+```xml
+<dependency>
+    <groupId>io.github.jy95.fds</groupId>
+    <artifactId>r4</artifactId>
+    <version>1.0.0</version>
+</dependency>
+```
 
 ## Credits
 
