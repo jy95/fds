@@ -1,6 +1,6 @@
-<h1 style="text-align: center;">FHIR Dosage Support</h1>
+<h1 align="center">FHIR Dosage Support</h1>
 
-<div style="text-align: center;">
+<div align="center">
 
 Turn [FHIR Dosage](https://build.fhir.org/dosage.html) into human readable text in your wanted language (english, french, dutch, german, ...) and much more
 
