@@ -31,11 +31,11 @@ Read more on :
 
 ## Artifacts
 
-| ArtifactId | Description                                   | Maven Central                                                                              |
-|------------|-----------------------------------------------|--------------------------------------------------------------------------------------------|
-| `common`   | Shared utilities and foundational components. | ![Maven Central Version](https://img.shields.io/maven-central/v/io.github.jy95.fds/common) |
-| `r4`       | Implementation for FHIR R4 support.           | ![Maven Central Version](https://img.shields.io/maven-central/v/io.github.jy95.fds/r4)     |
-| `r5`       | Implementation for FHIR R5 support.           | ![Maven Central Version](https://img.shields.io/maven-central/v/io.github.jy95.fds/r5)     |
+| ArtifactId           | Description                                   | Maven Central                                                                              |
+|----------------------|-----------------------------------------------|--------------------------------------------------------------------------------------------|
+| [`common`](./common) | Shared utilities and foundational components. | ![Maven Central Version](https://img.shields.io/maven-central/v/io.github.jy95.fds/common) |
+| [`r4`](./r4)         | Implementation for FHIR R4 support.           | ![Maven Central Version](https://img.shields.io/maven-central/v/io.github.jy95.fds/r4)     |
+| [`r5`](./r5)         | Implementation for FHIR R5 support.           | ![Maven Central Version](https://img.shields.io/maven-central/v/io.github.jy95.fds/r5)     |
 
 ```xml
 <dependency>
