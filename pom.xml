@@ -61,6 +61,9 @@
         <maven.compiler.plugin.version>3.13.0</maven.compiler.plugin.version>
         <maven.surefire.plugin.version>3.5.2</maven.surefire.plugin.version>
         <jacoco.plugin.version>0.8.12</jacoco.plugin.version>
+        <maven.site.plugin.version>3.21.0</maven.site.plugin.version>
+        <maven.javadoc.plugin.version>3.11.2</maven.javadoc.plugin.version>
+        <maven.scm.publish.plugin.version>3.3.0</maven.scm.publish.plugin.version>
     </properties>
 
     <dependencies>
@@ -95,8 +98,39 @@
         </dependency>
     </dependencies>
 
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <version>3.8.0</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>${maven.javadoc.plugin.version}</version>
+                <reportSets>
+                    <reportSet>
+                        <id>aggregate</id>
+                        <inherited>false</inherited>
+                        <reports>
+                            <report>aggregate</report>
+                        </reports>
+                    </reportSet>
+                    <reportSet>
+                        <id>default</id>
+                        <reports>
+                            <report>javadoc</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+        </plugins>
+    </reporting>
+
     <build>
         <plugins>
+            <!-- https://maven.apache.org/plugins/maven-compiler-plugin/index.html -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -113,11 +147,13 @@
                     </annotationProcessorPaths>
                 </configuration>
             </plugin>
+            <!-- https://maven.apache.org/surefire/maven-surefire-plugin/ -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${maven.surefire.plugin.version}</version>
             </plugin>
+            <!-- https://www.eclemma.org/jacoco/trunk/doc/maven.html -->
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
@@ -139,14 +175,19 @@
                     </execution>
                 </executions>
             </plugin>
+            <!-- https://maven.apache.org/plugins/maven-site-plugin/ -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-release-plugin</artifactId>
-                <version>3.1.1</version>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>${maven.site.plugin.version}</version>
+            </plugin>
+            <!-- https://maven.apache.org/plugins/maven-scm-publish-plugin/index.html -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-scm-publish-plugin</artifactId>
+                <version>${maven.scm.publish.plugin.version}</version>
                 <configuration>
-                    <autoVersionSubmodules>true</autoVersionSubmodules>
-                    <projectVersionPolicyId>SemVerVersionPolicy</projectVersionPolicyId>
-                    <releaseProfiles>release</releaseProfiles>
+                    <scmBranch>gh-pages</scmBranch>
                 </configuration>
             </plugin>
         </plugins>
@@ -196,7 +237,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>3.11.2</version>
+                        <version>${maven.javadoc.plugin}</version>
                         <executions>
                             <execution>
                                 <id>attach-javadoc</id>
@@ -237,7 +278,12 @@
 
         <profile>
             <id>github</id>
+            <!-- https://maven.apache.org/plugins/maven-scm-publish-plugin/various-tips.html#Git_branch -->
             <distributionManagement>
+                <site>
+                    <id>github</id>
+                    <url>scm:git:git@github.com:jy95/fds.git</url>
+                </site>
                 <repository>
                     <id>github</id>
                     <name>GitHub Packages</name>
