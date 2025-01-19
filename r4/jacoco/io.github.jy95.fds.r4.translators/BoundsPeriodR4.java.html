@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BoundsPeriodR4.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">FHIR Dosage Support - R4</a> &gt; <a href="index.source.html" class="el_package">io.github.jy95.fds.r4.translators</a> &gt; <span class="el_source">BoundsPeriodR4.java</span></div><h1>BoundsPeriodR4.java</h1><pre class="source lang-java linenums">package io.github.jy95.fds.r4.translators;
+
+import com.ibm.icu.text.MessageFormat;
+import io.github.jy95.fds.common.translators.BoundsPeriod;
+import io.github.jy95.fds.r4.config.FDSConfigR4;
+import io.github.jy95.fds.r4.functions.FormatDateTimesR4;
+import org.hl7.fhir.r4.model.Dosage;
+
+import java.util.ResourceBundle;
+import java.util.concurrent.CompletableFuture;
+
+/**
+ * R4 class for translating &quot;timing.repeat.boundsPeriod&quot;
+ *
+ * @author jy95
+ */
+public class BoundsPeriodR4 implements BoundsPeriod&lt;FDSConfigR4, Dosage&gt; {
+
+    // Translations
+    /** MessageFormat instance used for &quot;boundsPeriod&quot; translation. */
+    protected final MessageFormat boundsPeriodMsg;
+
+    /**
+     * The configuration object used by this API.
+     */
+    private final FDSConfigR4 config;
+
+    /**
+     * Constructor for {@code BoundsPeriodR4}.
+     *
+     * @param config The configuration object used for translation.
+     * @param bundle a {@link java.util.ResourceBundle} object
+     */
+<span class="fc" id="L34">    public BoundsPeriodR4(FDSConfigR4 config, ResourceBundle bundle) {</span>
+<span class="fc" id="L35">        this.config = config;</span>
+<span class="fc" id="L36">        this.boundsPeriodMsg = getBoundsPeriodMsg(bundle, config.getLocale());</span>
+<span class="fc" id="L37">    }</span>
+
+    /** {@inheritDoc} */
+    @Override
+    public boolean hasRequiredElements(Dosage dosage) {
+<span class="pc bpc" id="L42" title="1 of 4 branches missed.">        return dosage.getTiming().hasRepeat() &amp;&amp; dosage.getTiming().getRepeat().hasBoundsPeriod();</span>
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public boolean hasStartPeriod(Dosage dosage) {
+<span class="fc" id="L48">        return dosage.getTiming().getRepeat().getBoundsPeriod().hasStart();</span>
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public boolean hasEndPeriod(Dosage dosage) {
+<span class="fc" id="L54">        return dosage.getTiming().getRepeat().getBoundsPeriod().hasEnd();</span>
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public boolean hasTiming(Dosage dosage) {
+<span class="fc" id="L60">        return dosage.hasTiming();</span>
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public String formatStartPeriod(Dosage dosage) {
+<span class="fc" id="L66">        var boundPeriods = dosage.getTiming().getRepeat().getBoundsPeriod();</span>
+<span class="fc" id="L67">        var locale = config.getLocale();</span>
+<span class="fc" id="L68">        return FormatDateTimesR4.getInstance().convert(locale, boundPeriods.getStartElement());</span>
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public String formatEndPeriod(Dosage dosage) {
+<span class="fc" id="L74">        var locale = config.getLocale();</span>
+<span class="fc" id="L75">        var boundPeriods = dosage.getTiming().getRepeat().getBoundsPeriod();</span>
+<span class="fc" id="L76">        return FormatDateTimesR4.getInstance().convert(locale, boundPeriods.getEndElement());</span>
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public CompletableFuture&lt;String&gt; convert(Dosage dosage) {
+<span class="fc" id="L82">        return CompletableFuture.supplyAsync(() -&gt; {</span>
+<span class="fc" id="L83">            var arguments = extractInformation(dosage);</span>
+            // Format the message with the named arguments
+<span class="fc" id="L85">            return boundsPeriodMsg.format(arguments);</span>
+        });
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>QuantityToString.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">FHIR Dosage Support - Common</a> &gt; <a href="index.source.html" class="el_package">io.github.jy95.fds.common.functions</a> &gt; <span class="el_source">QuantityToString.java</span></div><h1>QuantityToString.java</h1><pre class="source lang-java linenums">package io.github.jy95.fds.common.functions;
+
+import io.github.jy95.fds.common.config.FDSConfig;
+
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.ResourceBundle;
+import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+/**
+ * Interface for converting quantity objects to human-readable strings.
+ *
+ * @param &lt;C&gt; The type of configuration object extending FDSConfig.
+ * @param &lt;Q&gt; The type of quantity object to be converted.
+ * @author jy95
+ */
+public interface QuantityToString&lt;C extends FDSConfig, Q&gt; {
+
+    /**
+     * System URI for duration units in FHIR.
+     */
+    String DURATION_SYSTEM = &quot;http://hl7.org/fhir/ValueSet/duration-units&quot;;
+    /**
+     * System URI for units of time in FHIR.
+     */
+    String UNITS_OF_TIME_SYSTEM = &quot;http://hl7.org/fhir/ValueSet/units-of-time&quot;;
+    /**
+     * List of time-related systems.
+     */
+<span class="nc" id="L32">    List&lt;String&gt; TIME_SYSTEMS = List.of(DURATION_SYSTEM, UNITS_OF_TIME_SYSTEM);</span>
+
+    /**
+     * Converts a quantity object to a human-readable string asynchronously.
+     *
+     * @param bundle  The resource bundle for localization.
+     * @param config  The configuration object for additional logic.
+     * @param quantity The quantity object to convert.
+     * @return A CompletableFuture that resolves to the human-readable string.
+     */
+    default CompletableFuture&lt;String&gt; convert(ResourceBundle bundle, C config, Q quantity) {
+<span class="nc" id="L43">        var comparator = comparatorToString(bundle, config, quantity);</span>
+<span class="nc bnc" id="L44" title="All 2 branches missed.">        var unit = hasUnit(quantity)</span>
+<span class="nc" id="L45">                ? enhancedFromUnitToString(bundle, config, quantity)</span>
+<span class="nc" id="L46">                : CompletableFuture.completedFuture(&quot;&quot;);</span>
+<span class="nc" id="L47">        var amount = getValue(quantity).toString();</span>
+
+<span class="nc" id="L49">        return comparator.thenCombineAsync(unit, (comparatorText, unitText) -&gt;</span>
+                Stream
+<span class="nc" id="L51">                        .of(comparatorText, amount, unitText)</span>
+<span class="nc bnc" id="L52" title="All 2 branches missed.">                        .filter(part -&gt; !part.isEmpty())</span>
+<span class="nc" id="L53">                        .collect(Collectors.joining(&quot; &quot;))</span>
+        );
+    }
+
+    /**
+     * Determines if a quantity has a unit.
+     *
+     * @param quantity The quantity object.
+     * @return True if the quantity has a unit, false otherwise.
+     */
+    boolean hasUnit(Q quantity);
+
+    /**
+     * Retrieves the numeric value of the quantity.
+     *
+     * @param quantity The quantity object.
+     * @return The numeric value of the quantity.
+     */
+    BigDecimal getValue(Q quantity);
+
+    /**
+     * Provides enhanced logic for converting units to a human-readable string.
+     *
+     * @param bundle   The resource bundle for localization.
+     * @param config   The configuration object for additional logic.
+     * @param quantity The quantity object.
+     * @return A CompletableFuture that resolves to the human-readable string for the unit.
+     */
+    CompletableFuture&lt;String&gt; enhancedFromUnitToString(ResourceBundle bundle, C config, Q quantity);
+
+    /**
+     * Converts the comparator of a quantity to a human-readable string.
+     *
+     * @param bundle   The resource bundle for localization.
+     * @param config   The configuration object for additional logic.
+     * @param quantity The quantity object.
+     * @return A CompletableFuture that resolves to the human-readable string for the comparator.
+     */
+    CompletableFuture&lt;String&gt; comparatorToString(ResourceBundle bundle, C config, Q quantity);
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

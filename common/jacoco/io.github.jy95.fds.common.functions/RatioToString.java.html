@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RatioToString.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">FHIR Dosage Support - Common</a> &gt; <a href="index.source.html" class="el_package">io.github.jy95.fds.common.functions</a> &gt; <span class="el_source">RatioToString.java</span></div><h1>RatioToString.java</h1><pre class="source lang-java linenums">package io.github.jy95.fds.common.functions;
+
+import io.github.jy95.fds.common.config.FDSConfig;
+
+import java.util.ResourceBundle;
+import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+/**
+ * Interface for converting ratio objects to human-readable strings.
+ *
+ * @param &lt;C&gt; The type of configuration object extending FDSConfig.
+ * @param &lt;R&gt; The type of ratio object to be converted.
+ * @author jy95
+ */
+public interface RatioToString&lt;C extends FDSConfig, R&gt; {
+
+    /**
+     * Converts a ratio object to a human-readable string asynchronously.
+     *
+     * @param bundle  The resource bundle for localization.
+     * @param config  The configuration object for additional logic.
+     * @param ratio   The ratio object to convert.
+     * @return A CompletableFuture that resolves to the human-readable string.
+     */
+    default CompletableFuture&lt;String&gt; convert(ResourceBundle bundle, C config, R ratio) {
+<span class="nc" id="L28">        var linkword = retrieveRatioLinkWord(bundle, config, ratio);</span>
+
+<span class="nc bnc" id="L30" title="All 2 branches missed.">        var numeratorText = hasNumerator(ratio)</span>
+<span class="nc" id="L31">                ? convertNumerator(bundle, config, ratio)</span>
+<span class="nc" id="L32">                : CompletableFuture.completedFuture(&quot;&quot;);</span>
+
+<span class="nc bnc" id="L34" title="All 2 branches missed.">        var denominatorText = hasDenominator(ratio)</span>
+<span class="nc" id="L35">                ? convertDenominator(bundle, config, ratio)</span>
+<span class="nc" id="L36">                : CompletableFuture.completedFuture(&quot;&quot;);</span>
+
+<span class="nc" id="L38">        return numeratorText.thenCombineAsync(denominatorText, (num, dem) -&gt; Stream</span>
+<span class="nc" id="L39">                .of(num, linkword, dem)</span>
+<span class="nc bnc" id="L40" title="All 2 branches missed.">                .filter(s -&gt; !s.isEmpty())</span>
+<span class="nc" id="L41">                .collect(Collectors.joining(&quot; &quot;))</span>
+        );
+    }
+
+    /**
+     * Retrieves the link word based on the ratio's components.
+     *
+     * @param bundle   The resource bundle for localization.
+     * @param config   The configuration object for additional logic.
+     * @param ratio    The ratio object.
+     * @return The link word as a string.
+     */
+    String retrieveRatioLinkWord(ResourceBundle bundle, C config, R ratio);
+
+    /**
+     * Determines if the ratio has a numerator.
+     *
+     * @param ratio The ratio object.
+     * @return True if the ratio has a numerator, false otherwise.
+     */
+    boolean hasNumerator(R ratio);
+
+    /**
+     * Converts the numerator to a human-readable string.
+     *
+     * @param bundle   The resource bundle for localization.
+     * @param config   The configuration object for additional logic.
+     * @param ratio    The ratio object.
+     * @return A CompletableFuture that resolves to the human-readable string for the numerator.
+     */
+    CompletableFuture&lt;String&gt; convertNumerator(ResourceBundle bundle, C config, R ratio);
+
+    /**
+     * Determines if the ratio has a denominator.
+     *
+     * @param ratio The ratio object.
+     * @return True if the ratio has a denominator, false otherwise.
+     */
+    boolean hasDenominator(R ratio);
+
+    /**
+     * Converts the denominator to a human-readable string.
+     *
+     * @param bundle   The resource bundle for localization.
+     * @param config   The configuration object for additional logic.
+     * @param ratio    The ratio object.
+     * @return A CompletableFuture that resolves to the human-readable string for the denominator.
+     */
+    CompletableFuture&lt;String&gt; convertDenominator(ResourceBundle bundle, C config, R ratio);
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RangeToStringR4.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">FHIR Dosage Support - R4</a> &gt; <a href="index.source.html" class="el_package">io.github.jy95.fds.r4.functions</a> &gt; <span class="el_source">RangeToStringR4.java</span></div><h1>RangeToStringR4.java</h1><pre class="source lang-java linenums">package io.github.jy95.fds.r4.functions;
+
+import io.github.jy95.fds.common.functions.RangeToString;
+import io.github.jy95.fds.r4.config.FDSConfigR4;
+import org.hl7.fhir.r4.model.Range;
+
+import java.math.BigDecimal;
+import java.util.ResourceBundle;
+import java.util.concurrent.CompletableFuture;
+
+/**
+ * R4 class for converting range objects to human-readable strings.
+ * Implements the Bill Pugh Singleton pattern for thread-safe lazy initialization.
+ *
+ * @author jy95
+ */
+public class RangeToStringR4 implements RangeToString&lt;FDSConfigR4, Range&gt; {
+
+    // Private constructor to prevent instantiation
+    private RangeToStringR4() {}
+
+    // Static inner class for holding the singleton instance
+    private static class Holder {
+<span class="fc" id="L24">        private static final RangeToStringR4 INSTANCE = new RangeToStringR4();</span>
+    }
+
+    /**
+     * Returns the singleton instance of RangeToStringR4.
+     *
+     * @return the singleton instance
+     */
+    public static RangeToStringR4 getInstance() {
+<span class="fc" id="L33">        return Holder.INSTANCE;</span>
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public boolean hasUnit(Range range) {
+        // Check high first, more likely to be found in it
+<span class="fc bfc" id="L40" title="All 4 branches covered.">        if (hasHigh(range) &amp;&amp; QuantityToStringR4.getInstance().hasUnit(range.getHigh())) {</span>
+<span class="fc" id="L41">            return true;</span>
+        }
+        // Otherwise check low
+<span class="fc bfc" id="L44" title="All 4 branches covered.">        return hasLow(range) &amp;&amp; QuantityToStringR4.getInstance().hasUnit(range.getLow());</span>
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public CompletableFuture&lt;String&gt; getUnitText(ResourceBundle bundle, FDSConfigR4 config, Range range, boolean hasLow, boolean hasHigh) {
+<span class="fc" id="L50">        return QuantityToStringR4</span>
+<span class="fc" id="L51">                .getInstance()</span>
+<span class="fc" id="L52">                .enhancedFromUnitToString(</span>
+                        bundle,
+                        config,
+<span class="fc bfc" id="L55" title="All 2 branches covered.">                        (hasHigh) ? range.getHigh() : range.getLow()</span>
+                );
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public boolean hasLow(Range range) {
+<span class="fc" id="L62">        return range.hasLow();</span>
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public boolean hasHigh(Range range) {
+<span class="fc" id="L68">        return range.hasHigh();</span>
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public BigDecimal getLowValue(Range range) {
+<span class="fc" id="L74">        return range.getLow().getValue();</span>
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public BigDecimal getHighValue(Range range) {
+<span class="fc" id="L80">        return range.getHigh().getValue();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

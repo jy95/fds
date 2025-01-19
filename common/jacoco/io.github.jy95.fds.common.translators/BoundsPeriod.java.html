@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BoundsPeriod.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">FHIR Dosage Support - Common</a> &gt; <a href="index.source.html" class="el_package">io.github.jy95.fds.common.translators</a> &gt; <span class="el_source">BoundsPeriod.java</span></div><h1>BoundsPeriod.java</h1><pre class="source lang-java linenums">package io.github.jy95.fds.common.translators;
+
+import com.ibm.icu.text.MessageFormat;
+import io.github.jy95.fds.common.config.FDSConfig;
+import io.github.jy95.fds.common.types.TranslatorTiming;
+
+import java.util.Locale;
+import java.util.Map;
+import java.util.ResourceBundle;
+
+/**
+ * Interface for translating &quot;timing.repeat.boundsPeriod&quot;.
+ *
+ * @param &lt;C&gt; The type of configuration, extending {@link io.github.jy95.fds.common.config.FDSConfig}.
+ * @param &lt;D&gt; The type of the translated data.
+ * @author jy95
+ */
+public interface BoundsPeriod&lt;C extends FDSConfig, D&gt; extends TranslatorTiming&lt;C, D&gt; {
+
+    /**
+     * MessageFormat instance used for &quot;boundsPeriod&quot; translation
+     *
+     * @param bundle The bundle to extract the key
+     * @param locale The locale for the message
+     * @return The message template for &quot;boundsPeriod&quot;
+     */
+    default MessageFormat getBoundsPeriodMsg(ResourceBundle bundle, Locale locale) {
+<span class="nc" id="L28">        String msg = bundle.getString(&quot;fields.boundsPeriod&quot;);</span>
+<span class="nc" id="L29">        return new MessageFormat(msg, locale);</span>
+    }
+
+    /**
+     * Extract information about the boundsPeriod
+     *
+     * @param dosage The dosage object to analyze
+     * @return A map
+     */
+    default Map&lt;String, Object&gt; extractInformation(D dosage) {
+        // Check conditions
+<span class="nc" id="L40">        var hasStart = hasStartPeriod(dosage);</span>
+<span class="nc" id="L41">        var hasEnd = hasEndPeriod(dosage);</span>
+
+        // Prepare date values using FormatDateTimes.convert()
+<span class="nc bnc" id="L44" title="All 2 branches missed.">        String startDate = hasStart ? formatStartPeriod(dosage) : &quot;&quot;;</span>
+<span class="nc bnc" id="L45" title="All 2 branches missed.">        String endDate = hasEnd ? formatEndPeriod(dosage) : &quot;&quot;;</span>
+
+        // Choose the correct condition based on the presence of start and end dates
+<span class="nc bnc" id="L48" title="All 6 branches missed.">        String condition = hasStart &amp;&amp; hasEnd ? &quot;0&quot; : (hasStart ? &quot;1&quot; : &quot;other&quot;);</span>
+
+        // Create a map of named arguments
+<span class="nc" id="L51">        return Map.of(</span>
+                &quot;startDate&quot;, startDate,
+                &quot;endDate&quot;, endDate,
+                &quot;condition&quot;, condition
+        );
+    }
+
+    /**
+     * Check if dosage has a &quot;start&quot; period
+     *
+     * @param dosage the dosage object to check
+     * @return True if it is the case, otherwise false
+     */
+    boolean hasStartPeriod(D dosage);
+
+    /**
+     * Check if dosage has a &quot;end&quot; period
+     *
+     * @param dosage the dosage object to check
+     * @return True if it is the case, otherwise false
+     */
+    boolean hasEndPeriod(D dosage);
+
+    /**
+     * Format start period to a human-readable string
+     *
+     * @param dosage the dosage field to be converted
+     * @return the formatted start period as a string (e.g., &quot;from May 23, 2011&quot;)
+     */
+    String formatStartPeriod(D dosage);
+
+    /**
+     * Format end period to a human-readable string
+     *
+     * @param dosage the dosage field to be converted
+     * @return the formatted end period as a string (e.g., &quot;to Feb 7, 2015&quot;)
+     */
+    String formatEndPeriod(D dosage);
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

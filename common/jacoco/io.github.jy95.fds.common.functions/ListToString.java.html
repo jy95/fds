@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ListToString.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">FHIR Dosage Support - Common</a> &gt; <a href="index.source.html" class="el_package">io.github.jy95.fds.common.functions</a> &gt; <span class="el_source">ListToString.java</span></div><h1>ListToString.java</h1><pre class="source lang-java linenums">package io.github.jy95.fds.common.functions;
+
+import io.github.jy95.fds.common.types.LinkWord;
+
+import java.util.List;
+import java.util.ResourceBundle;
+
+/**
+ * Utility class for converting a list of strings into a human-readable string.
+ *
+ * @author jy95
+ */
+public final class ListToString {
+
+    /**
+     * No constructor for this class
+     */
+    private ListToString(){}
+
+    /**
+     * Converts a list of strings into a human-readable string using a specified link word.
+     * Example: [&quot;A&quot;, &quot;B&quot;, &quot;C&quot;] with the link word &quot;and&quot; results in &quot;A, B and C&quot;.
+     *
+     * @param bundle   The resource bundle for localization.
+     * @param list     The list of strings to convert.
+     * @param linkWord The link word to use for combining the elements.
+     * @return A human-readable string representation of the list.
+     */
+    public static String convert(ResourceBundle bundle, List&lt;String&gt; list, LinkWord linkWord) {
+
+<span class="nc bnc" id="L31" title="All 2 branches missed.">        if (list.isEmpty()){</span>
+<span class="nc" id="L32">            return &quot;&quot;;</span>
+        }
+
+        // Build the first part of the string (all except the last item)
+<span class="nc" id="L36">        String firstString = String.join(&quot;, &quot;, list.subList(0, list.size() - 1));</span>
+        // Get the last part of the string (the last item)
+<span class="nc" id="L38">        String lastString = list.getLast();</span>
+
+        // Get the translated link word via delegate
+<span class="nc" id="L41">        String linkWordTranslation = getLinkWordTranslation(bundle, linkWord);</span>
+<span class="nc bnc" id="L42" title="All 2 branches missed.">        String linkWordString = list.size() &gt; 1 ? &quot; &quot; + linkWordTranslation + &quot; &quot; : &quot;&quot;;</span>
+
+        // Combine everything into the final string
+<span class="nc" id="L45">        return firstString + linkWordString + lastString;</span>
+    }
+
+    /**
+     * Converts a list of strings into a human-readable string using the default link word &quot;and&quot;.
+     * Example: [&quot;A&quot;, &quot;B&quot;, &quot;C&quot;] results in &quot;A, B and C&quot;.
+     *
+     * @param bundle The resource bundle for localization.
+     * @param list   The list of strings to convert.
+     * @return A human-readable string representation of the list.
+     */
+    public static String convert(ResourceBundle bundle, List&lt;String&gt; list) {
+<span class="nc" id="L57">        return convert(bundle,list,LinkWord.AND);</span>
+    }
+
+    /**
+     * Retrieves the localized translation of the specified link word.
+     *
+     * @param bundle   The resource bundle for localization.
+     * @param linkWord The link word to translate.
+     * @return The translated link word as a string.
+     */
+    private static String getLinkWordTranslation(ResourceBundle bundle, LinkWord linkWord) {
+        // Delegate method for link word translation
+<span class="nc" id="L69">        return bundle.getString(&quot;linkwords.&quot; + linkWord.getValue());</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

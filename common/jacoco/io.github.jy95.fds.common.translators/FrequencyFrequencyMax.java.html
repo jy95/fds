@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FrequencyFrequencyMax.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">FHIR Dosage Support - Common</a> &gt; <a href="index.source.html" class="el_package">io.github.jy95.fds.common.translators</a> &gt; <span class="el_source">FrequencyFrequencyMax.java</span></div><h1>FrequencyFrequencyMax.java</h1><pre class="source lang-java linenums">package io.github.jy95.fds.common.translators;
+
+import com.ibm.icu.text.MessageFormat;
+import io.github.jy95.fds.common.config.FDSConfig;
+import io.github.jy95.fds.common.types.TranslatorTiming;
+
+import java.util.Locale;
+import java.util.ResourceBundle;
+import java.util.concurrent.CompletableFuture;
+
+/**
+ * Interface for translating &quot;timing.repeat.frequency&quot; / &quot;timing.repeat.frequencyMax&quot;.
+ *
+ * @param &lt;C&gt; The type of configuration, extending {@link io.github.jy95.fds.common.config.FDSConfig}.
+ * @param &lt;D&gt; The type of the translated data.
+ * @author jy95
+ */
+public interface FrequencyFrequencyMax&lt;C extends FDSConfig, D&gt; extends TranslatorTiming&lt;C, D&gt; {
+
+    /**
+     * MessageFormat instance used for &quot;frequency&quot; &amp;amp; &quot;frequencyMax&quot; translation
+     *
+     * @param bundle The bundle to extract the key
+     * @param locale The locale for the message
+     * @return The message template for &quot;frequency&quot; &amp;amp; &quot;frequencyMax&quot; translation
+     */
+    default MessageFormat getFrequencyAndFrequencyMaxMsg(ResourceBundle bundle, Locale locale) {
+<span class="nc" id="L28">        var msg = bundle.getString(&quot;fields.frequencyAndFrequencyMax&quot;);</span>
+<span class="nc" id="L29">        return new MessageFormat(msg, locale);</span>
+    }
+
+    /**
+     * MessageFormat instance used for &quot;frequencyMax&quot; translation
+     *
+     * @param bundle The bundle to extract the key
+     * @param locale The locale for the message
+     * @return The message template for &quot;frequencyMax&quot; translation
+     */
+    default MessageFormat getFrequencyMaxMsg(ResourceBundle bundle, Locale locale) {
+<span class="nc" id="L40">        var msg = bundle.getString(&quot;fields.frequencyMax&quot;);</span>
+<span class="nc" id="L41">        return new MessageFormat(msg, locale);</span>
+    }
+
+    /**
+     * MessageFormat instance used for &quot;frequency&quot; translation
+     *
+     * @param bundle The bundle to extract the key
+     * @param locale The locale for the message
+     * @return The message template for &quot;frequency&quot; translation
+     */
+    default MessageFormat getFrequencyMsg(ResourceBundle bundle, Locale locale) {
+<span class="nc" id="L52">        var msg = bundle.getString(&quot;fields.frequency&quot;);</span>
+<span class="nc" id="L53">        return new MessageFormat(msg, locale);</span>
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    default CompletableFuture&lt;String&gt; convert(D dosage) {
+<span class="nc" id="L59">        return CompletableFuture.supplyAsync(() -&gt; {</span>
+
+<span class="nc" id="L61">            var hasFrequencyFlag = hasFrequency(dosage);</span>
+<span class="nc" id="L62">            var hasFrequencyMaxFlag = hasFrequencyMax(dosage);</span>
+<span class="nc bnc" id="L63" title="All 4 branches missed.">            var hasBoth = hasFrequencyFlag &amp;&amp; hasFrequencyMaxFlag;</span>
+
+<span class="nc bnc" id="L65" title="All 2 branches missed.">            if (hasBoth) {</span>
+<span class="nc" id="L66">                return turnFrequencyAndFrequencyMaxToString(dosage);</span>
+            }
+
+<span class="nc bnc" id="L69" title="All 2 branches missed.">            if (hasFrequencyMaxFlag) {</span>
+<span class="nc" id="L70">                return turnFrequencyMaxToString(dosage);</span>
+            }
+
+<span class="nc" id="L73">            return turnFrequencyToString(dosage);</span>
+        });
+    }
+
+    /**
+     * Formats the text for cases where both &quot;frequency&quot; and &quot;frequencyMax&quot; are present.
+     *
+     * @param frequencyMin The minimum frequency.
+     * @param frequencyMax The maximum frequency.
+     * @return A formatted string representing both &quot;frequency&quot; and &quot;frequencyMax&quot;.
+     */
+    String formatFrequencyAndFrequencyMaxText(int frequencyMin, int frequencyMax);
+
+    /**
+     * Formats the text for cases where only &quot;frequencyMax&quot; is present.
+     *
+     * @param frequencyMax The maximum frequency.
+     * @return A formatted string representing &quot;frequencyMax&quot;.
+     */
+    String formatFrequencyMaxText(int frequencyMax);
+
+    /**
+     * Formats the text for cases where only &quot;frequency&quot; is present.
+     *
+     * @param frequency The frequency.
+     * @return A formatted string representing &quot;frequency&quot;.
+     */
+    String formatFrequencyText(int frequency);
+
+    /**
+     * Checks if the dosage data contains a valid &quot;frequency&quot; value.
+     *
+     * @param dosage The dosage data.
+     * @return true if the dosage contains a &quot;frequency&quot; value, false otherwise.
+     */
+    boolean hasFrequency(D dosage);
+
+    /**
+     * Checks if the dosage data contains a valid &quot;frequencyMax&quot; value.
+     *
+     * @param dosage The dosage data.
+     * @return true if the dosage contains a &quot;frequencyMax&quot; value, false otherwise.
+     */
+    boolean hasFrequencyMax(D dosage);
+
+    /**
+     * Converts the dosage data containing both &quot;frequency&quot; and &quot;frequencyMax&quot; into a formatted string.
+     *
+     * @param dosage The dosage data.
+     * @return A formatted string representing both &quot;frequency&quot; and &quot;frequencyMax&quot;.
+     */
+    String turnFrequencyAndFrequencyMaxToString(D dosage);
+
+    /**
+     * Converts the dosage data containing &quot;frequencyMax&quot; into a formatted string.
+     *
+     * @param dosage The dosage data.
+     * @return A formatted string representing &quot;frequencyMax&quot;.
+     */
+    String turnFrequencyMaxToString(D dosage);
+
+    /**
+     * Converts the dosage data containing &quot;frequency&quot; into a formatted string.
+     *
+     * @param dosage The dosage data.
+     * @return A formatted string representing &quot;frequency&quot;.
+     */
+    String turnFrequencyToString(D dosage);
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

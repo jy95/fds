@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SequenceUtils.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">FHIR Dosage Support - Common</a> &gt; <a href="index.source.html" class="el_package">io.github.jy95.fds.common.functions</a> &gt; <span class="el_source">SequenceUtils.java</span></div><h1>SequenceUtils.java</h1><pre class="source lang-java linenums">package io.github.jy95.fds.common.functions;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
+/**
+ * A utility class for handling sequences of dosages.
+ * Provides methods for checking sequential instructions and grouping by sequence.
+ *
+ * @author jy95
+ */
+public final class SequenceUtils {
+
+    /**
+     * No constructor for this class
+     */
+    private SequenceUtils(){}
+
+    /**
+     * Checks if the given list of dosages contains only sequential instructions.
+     *
+     * &lt;p&gt;This method checks if the dosages contain unique sequence numbers,
+     * and determines if the instructions are sequential. A list of dosages is considered sequential
+     * if it either has no sequence numbers or has a sequence number for every dosage in the list.&lt;/p&gt;
+     *
+     * @param dosages The list of dosages to check.
+     * @param getSequence A function that extracts the sequence number from each dosage.
+     * @param &lt;T&gt; The type of the dosage object.
+     * @return {@code true} if the dosages contain only sequential instructions,
+     *         {@code false} otherwise.
+     */
+    public static &lt;T&gt; boolean containsOnlySequentialInstructions(List&lt;T&gt; dosages, Function&lt;T, Integer&gt; getSequence) {
+<span class="nc" id="L37">        var encounteredSequenceNumbers = dosages</span>
+<span class="nc" id="L38">                .stream()</span>
+<span class="nc" id="L39">                .map(getSequence)</span>
+<span class="nc bnc" id="L40" title="All 2 branches missed.">                .filter(i -&gt; i &gt; 0)</span>
+<span class="nc" id="L41">                .collect(Collectors.toSet());</span>
+
+<span class="nc bnc" id="L43" title="All 4 branches missed.">        return encounteredSequenceNumbers.isEmpty() || encounteredSequenceNumbers.size() == dosages.size();</span>
+    }
+
+    /**
+     * Groups the given list of dosages by their sequence number.
+     *
+     * &lt;p&gt;This method creates a map of dosages grouped by sequence number,
+     * returning a list of lists where each inner list contains dosages with the same sequence number.&lt;/p&gt;
+     *
+     * @param dosages The list of dosages to group.
+     * @param getSequence A function that extracts the sequence number from each dosage.
+     * @param &lt;T&gt; The type of the dosage object.
+     * @return A list of lists, where each inner list contains dosages grouped by their sequence number.
+     */
+    public static &lt;T&gt; List&lt;List&lt;T&gt;&gt; groupBySequence(List&lt;T&gt; dosages, Function&lt;T, Integer&gt; getSequence) {
+<span class="nc" id="L58">        Map&lt;Integer, List&lt;T&gt;&gt; sequencesMap = new HashMap&lt;&gt;();</span>
+
+<span class="nc bnc" id="L60" title="All 2 branches missed.">        for (T dosage : dosages) {</span>
+<span class="nc" id="L61">            var sequenceNr = getSequence.apply(dosage);</span>
+<span class="nc" id="L62">            sequencesMap.computeIfAbsent(sequenceNr, k -&gt; new ArrayList&lt;&gt;()).add(dosage);</span>
+<span class="nc" id="L63">        }</span>
+
+<span class="nc" id="L65">        return new ArrayList&lt;&gt;(sequencesMap.values());</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

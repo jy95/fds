@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DefaultImplementations.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">FHIR Dosage Support - Common</a> &gt; <a href="index.source.html" class="el_package">io.github.jy95.fds.common.config</a> &gt; <span class="el_source">DefaultImplementations.java</span></div><h1>DefaultImplementations.java</h1><pre class="source lang-java linenums">package io.github.jy95.fds.common.config;
+
+import io.github.jy95.fds.common.bundle.MultiResourceBundleControl;
+
+import java.util.Locale;
+import java.util.ResourceBundle;
+
+/**
+ * Provides default implementations for common operations in the library.
+ *
+ * @author jy95
+ */
+public final class DefaultImplementations {
+
+    /**
+     * No constructor for this class
+     */
+    private DefaultImplementations(){};
+
+    /**
+     * Selects a ResourceBundle for the specified locale using a MultiResourceBundleControl.
+     *
+     * @param locale the locale for which the ResourceBundle is desired.
+     * @return the aggregated ResourceBundle for the specified locale.
+     */
+    public static ResourceBundle selectResourceBundle(Locale locale) {
+<span class="fc" id="L27">        var bundleControl = new MultiResourceBundleControl(</span>
+                &quot;translations&quot;,
+                &quot;common&quot;,
+                &quot;daysOfWeek&quot;,
+                &quot;eventTiming&quot;,
+                &quot;quantityComparator&quot;,
+                &quot;unitsOfTime&quot;
+        );
+<span class="fc" id="L35">        return ResourceBundle.getBundle(</span>
+<span class="fc" id="L36">                bundleControl.getBaseName(),</span>
+                locale,
+                bundleControl
+        );
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

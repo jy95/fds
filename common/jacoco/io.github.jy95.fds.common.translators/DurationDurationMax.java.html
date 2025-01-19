@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DurationDurationMax.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">FHIR Dosage Support - Common</a> &gt; <a href="index.source.html" class="el_package">io.github.jy95.fds.common.translators</a> &gt; <span class="el_source">DurationDurationMax.java</span></div><h1>DurationDurationMax.java</h1><pre class="source lang-java linenums">package io.github.jy95.fds.common.translators;
+
+import com.ibm.icu.text.MessageFormat;
+
+import io.github.jy95.fds.common.config.FDSConfig;
+import io.github.jy95.fds.common.types.TranslatorTiming;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Locale;
+import java.util.ResourceBundle;
+import java.util.concurrent.CompletableFuture;
+import java.util.List;
+
+/**
+ * Interface for translating &quot;timing.repeat.duration&quot; / &quot;timing.repeat.durationMax&quot;.
+ *
+ * @param &lt;C&gt; The type of configuration, extending {@link io.github.jy95.fds.common.config.FDSConfig}.
+ * @param &lt;D&gt; The type of the translated data.
+ * @author jy95
+ */
+public interface DurationDurationMax&lt;C extends FDSConfig, D&gt; extends TranslatorTiming&lt;C, D&gt; {
+
+    /**
+     * MessageFormat instance used for &quot;duration&quot; translation
+     *
+     * @param bundle The bundle to extract the key
+     * @param locale The locale for the message
+     * @return The message template for &quot;duration&quot;
+     */
+    default MessageFormat getDurationMsg(ResourceBundle bundle, Locale locale) {
+<span class="nc" id="L32">        var msg = bundle.getString(&quot;fields.duration&quot;);</span>
+<span class="nc" id="L33">        return new MessageFormat(msg, locale);</span>
+    }
+
+    /**
+     * MessageFormat instance used for &quot;duration&quot; &amp;amp; &quot;durationMax&quot; translation
+     *
+     * @param bundle The bundle to extract the key
+     * @param locale The locale for the message
+     * @return The message template for &quot;duration&quot; &amp;amp; &quot;durationMax&quot;
+     */
+    default MessageFormat getDurationMaxMsg(ResourceBundle bundle, Locale locale) {
+<span class="nc" id="L44">        var msg = bundle.getString(&quot;fields.durationMax&quot;);</span>
+<span class="nc" id="L45">        return new MessageFormat(msg, locale);</span>
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    default CompletableFuture&lt;String&gt; convert(D dosage) {
+<span class="nc" id="L51">        return CompletableFuture.supplyAsync(() -&gt; {</span>
+
+            // Rule: duration SHALL be a non-negative value
+            // Rule: if there's a duration, there needs to be duration units
+            // Rule: If there's a durationMax, there must be a duration
+<span class="nc" id="L56">            var hasDurationFlag = hasDuration(dosage);</span>
+<span class="nc" id="L57">            var hasDurationMaxFlag = hasDurationMax(dosage);</span>
+<span class="nc bnc" id="L58" title="All 4 branches missed.">            var hasBoth = hasDurationFlag &amp;&amp; hasDurationMaxFlag;</span>
+
+<span class="nc" id="L60">            List&lt;String&gt; texts = new ArrayList&lt;&gt;();</span>
+
+<span class="nc bnc" id="L62" title="All 2 branches missed.">            if (hasDurationFlag) {</span>
+<span class="nc" id="L63">                texts.add(turnDurationToString(dosage));</span>
+            }
+
+<span class="nc bnc" id="L66" title="All 2 branches missed.">            if (hasBoth) {</span>
+<span class="nc" id="L67">                texts.add(&quot;(&quot;);</span>
+            }
+
+<span class="nc bnc" id="L70" title="All 2 branches missed.">            if (hasDurationMaxFlag) {</span>
+<span class="nc" id="L71">                texts.add(turnDurationMaxToString(dosage));</span>
+            }
+
+<span class="nc bnc" id="L74" title="All 2 branches missed.">            if (hasBoth) {</span>
+<span class="nc" id="L75">                texts.add(&quot;)&quot;);</span>
+            }
+
+<span class="nc" id="L78">            return String.join(&quot; &quot;, texts);</span>
+        });
+    }
+
+    /**
+     * Converts the duration quantity and unit into a formatted string.
+     *
+     * @param bundle The resourceBundle to use
+     * @param durationUnit the unit code of duration (e.g., &quot;d&quot;, &quot;h&quot;).
+     * @param quantity the quantity of the duration.
+     * @return the formatted string representing the duration.
+     */
+    default String quantityToString(ResourceBundle bundle, String durationUnit, BigDecimal quantity){
+<span class="nc" id="L91">        var commonDurationMsg = bundle.getString(&quot;withCount.&quot; + durationUnit);</span>
+<span class="nc" id="L92">        return MessageFormat.format(commonDurationMsg, quantity);</span>
+    }
+
+    /**
+     * Determines if the dosage data contains a valid &quot;duration&quot; value.
+     *
+     * @param dosage the dosage data.
+     * @return true if the dosage contains a &quot;duration&quot; value, false otherwise.
+     */
+    boolean hasDuration(D dosage);
+
+    /**
+     * Determines if the dosage data contains a valid &quot;durationMax&quot; value.
+     *
+     * @param dosage the dosage data.
+     * @return true if the dosage contains a &quot;durationMax&quot; value, false otherwise.
+     */
+    boolean hasDurationMax(D dosage);
+
+    /**
+     * Converts the &quot;duration&quot; value in the dosage data into a formatted string.
+     *
+     * @param dosage the dosage data.
+     * @return the formatted string representing the &quot;duration&quot;.
+     */
+    String turnDurationToString(D dosage);
+
+    /**
+     * Converts the &quot;durationMax&quot; value in the dosage data into a formatted string.
+     *
+     * @param dosage the dosage data.
+     * @return the formatted string representing the &quot;durationMax&quot;.
+     */
+    String turnDurationMaxToString(D dosage);
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

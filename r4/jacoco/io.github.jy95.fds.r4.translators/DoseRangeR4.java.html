@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DoseRangeR4.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">FHIR Dosage Support - R4</a> &gt; <a href="index.source.html" class="el_package">io.github.jy95.fds.r4.translators</a> &gt; <span class="el_source">DoseRangeR4.java</span></div><h1>DoseRangeR4.java</h1><pre class="source lang-java linenums">package io.github.jy95.fds.r4.translators;
+
+import com.ibm.icu.text.MessageFormat;
+import io.github.jy95.fds.common.translators.DoseRange;
+import io.github.jy95.fds.common.types.DoseAndRateKey;
+import io.github.jy95.fds.r4.config.FDSConfigR4;
+import io.github.jy95.fds.r4.functions.RangeToStringR4;
+import org.hl7.fhir.r4.model.Dosage;
+import org.hl7.fhir.r4.model.Range;
+
+import java.util.ResourceBundle;
+import java.util.concurrent.CompletableFuture;
+
+/**
+ * R4 class for translating &quot;doseAndRate.doseRange&quot;
+ *
+ * @author jy95
+ */
+public class DoseRangeR4 implements DoseRange&lt;FDSConfigR4, Dosage&gt; {
+
+    // Translations
+    /** MessageFormat instance used for &quot;doseRange&quot; translation. */
+    protected final MessageFormat doseRangeMsg;
+
+    /**
+     * The configuration object used by this API.
+     */
+    private final FDSConfigR4 config;
+
+    /**
+     * The resource bundle containing localized strings for translation.
+     */
+    private final ResourceBundle bundle;
+
+    /**
+     * Constructor for {@code DoseRangeR4}.
+     *
+     * @param config The configuration object used for translation.
+     * @param bundle a {@link java.util.ResourceBundle} object
+     */
+<span class="fc" id="L41">    public DoseRangeR4(FDSConfigR4 config, ResourceBundle bundle) {</span>
+<span class="fc" id="L42">        this.config = config;</span>
+<span class="fc" id="L43">        this.bundle = bundle;</span>
+<span class="fc" id="L44">        this.doseRangeMsg = getDoseRangeMsg(bundle, config.getLocale());</span>
+<span class="fc" id="L45">    }</span>
+
+    /** {@inheritDoc} */
+    @Override
+    public CompletableFuture&lt;String&gt; convert(Dosage dosage) {
+<span class="fc" id="L50">        var doseRange = config</span>
+<span class="fc" id="L51">                .selectDosageAndRateField(dosage.getDoseAndRate(), DoseAndRateKey.DOSE_RANGE);</span>
+
+<span class="fc" id="L53">        return RangeToStringR4</span>
+<span class="fc" id="L54">                .getInstance()</span>
+<span class="fc" id="L55">                .convert(bundle, config, (Range) doseRange)</span>
+<span class="fc" id="L56">                .thenApplyAsync(rangeText -&gt; doseRangeMsg.format(new Object[]{rangeText}));</span>
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public boolean isPresent(Dosage dosage) {
+<span class="fc" id="L62">        return config</span>
+<span class="fc" id="L63">                .hasMatchingComponent(dosage, Dosage.DosageDoseAndRateComponent::hasDoseRange);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>QuantityToStringR4.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">FHIR Dosage Support - R4</a> &gt; <a href="index.source.html" class="el_package">io.github.jy95.fds.r4.functions</a> &gt; <span class="el_source">QuantityToStringR4.java</span></div><h1>QuantityToStringR4.java</h1><pre class="source lang-java linenums">package io.github.jy95.fds.r4.functions;
+
+import com.ibm.icu.text.MessageFormat;
+import io.github.jy95.fds.common.functions.QuantityToString;
+import io.github.jy95.fds.r4.config.FDSConfigR4;
+import org.hl7.fhir.r4.model.Quantity;
+
+import java.math.BigDecimal;
+import java.util.ResourceBundle;
+import java.util.concurrent.CompletableFuture;
+
+/**
+ * R4 class for converting quantity objects to human-readable strings.
+ * Implements the Bill Pugh Singleton pattern for thread-safe lazy initialization.
+ *
+ * @author jy95
+ */
+public class QuantityToStringR4 implements QuantityToString&lt;FDSConfigR4, Quantity&gt; {
+
+    // Private constructor to prevent instantiation
+    private QuantityToStringR4() {}
+
+    // Static inner class for holding the singleton instance
+    private static class Holder {
+<span class="fc" id="L25">        private static final QuantityToStringR4 INSTANCE = new QuantityToStringR4();</span>
+    }
+
+    /**
+     * Returns the singleton instance of QuantityToStringR4.
+     *
+     * @return the singleton instance
+     */
+    public static QuantityToStringR4 getInstance() {
+<span class="fc" id="L34">        return Holder.INSTANCE;</span>
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public boolean hasUnit(Quantity quantity) {
+<span class="fc bfc" id="L40" title="All 4 branches covered.">        return quantity.hasUnit() || quantity.hasCode();</span>
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public BigDecimal getValue(Quantity quantity) {
+<span class="fc" id="L46">        return quantity.getValue();</span>
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public CompletableFuture&lt;String&gt; enhancedFromUnitToString(ResourceBundle bundle, FDSConfigR4 config, Quantity quantity) {
+        // Duration units are built-in supported
+<span class="pc bpc" id="L53" title="2 of 6 branches missed.">        if (quantity.hasSystem() &amp;&amp; quantity.hasCode() &amp;&amp; TIME_SYSTEMS.contains(quantity.getSystem())) {</span>
+<span class="fc" id="L54">            return CompletableFuture.supplyAsync(() -&gt; {</span>
+<span class="fc" id="L55">                String code = quantity.getCode();</span>
+<span class="pc bpc" id="L56" title="1 of 2 branches missed.">                BigDecimal amount = quantity.hasValue() ? quantity.getValue() : BigDecimal.ONE;</span>
+<span class="fc" id="L57">                String message = bundle.getString(&quot;withoutCount.&quot; + code);</span>
+<span class="fc" id="L58">                return MessageFormat.format(message, amount);</span>
+            });
+        }
+
+        // Otherwise, let config do the charm
+<span class="fc" id="L63">        return config.fromFHIRQuantityUnitToString(quantity);</span>
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public CompletableFuture&lt;String&gt; comparatorToString(ResourceBundle bundle, FDSConfigR4 config, Quantity quantity) {
+<span class="fc bfc" id="L69" title="All 2 branches covered.">        if (quantity.hasComparator()) {</span>
+<span class="fc" id="L70">            var code = quantity.getComparator().toCode();</span>
+<span class="fc" id="L71">            var comparatorMsg = bundle.getString(code);</span>
+<span class="fc" id="L72">            var text = new MessageFormat(comparatorMsg, config.getLocale()).format(new Object[]{});</span>
+<span class="fc" id="L73">            return CompletableFuture.completedFuture(text);</span>
+        }
+<span class="fc" id="L75">        return CompletableFuture.completedFuture(&quot;&quot;);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

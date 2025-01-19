@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OffsetWhen.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">FHIR Dosage Support - Common</a> &gt; <a href="index.source.html" class="el_package">io.github.jy95.fds.common.translators</a> &gt; <span class="el_source">OffsetWhen.java</span></div><h1>OffsetWhen.java</h1><pre class="source lang-java linenums">package io.github.jy95.fds.common.translators;
+
+import io.github.jy95.fds.common.config.FDSConfig;
+import io.github.jy95.fds.common.types.TranslatorTiming;
+
+import java.util.List;
+import java.util.Map;
+
+/**
+ * Interface for translating &quot;timing.repeat.offset&quot; / &quot;timing.repeat.when&quot;.
+ *
+ * @param &lt;C&gt; The type of configuration, extending {@link io.github.jy95.fds.common.config.FDSConfig}.
+ * @param &lt;D&gt; The type of the translated data.
+ * @author jy95
+ */
+public interface OffsetWhen&lt;C extends FDSConfig, D&gt; extends TranslatorTiming&lt;C, D&gt; {
+
+    /** Constant &lt;code&gt;order&lt;/code&gt; */
+<span class="nc" id="L19">    List&lt;String&gt; order = List.of(&quot;d&quot;, &quot;h&quot;, &quot;min&quot;);</span>
+
+    /**
+     * Extracts the time components (days, hours, minutes) from a given offset in minutes.
+     *
+     * @param minutes The offset in minutes to be converted into days, hours, and minutes.
+     * @return A {@link java.util.Map} with keys &quot;d&quot; (days), &quot;h&quot; (hours), and &quot;min&quot; (minutes), and their corresponding values.
+     */
+    default Map&lt;String, Integer&gt; extractTime(int minutes) {
+<span class="nc" id="L28">        int d = minutes / 1440;</span>
+<span class="nc" id="L29">        int h = (minutes % 1440) / 60;</span>
+<span class="nc" id="L30">        int min = minutes % 60;</span>
+
+<span class="nc" id="L32">        return Map.of(</span>
+<span class="nc" id="L33">                &quot;d&quot;, d,</span>
+<span class="nc" id="L34">                &quot;h&quot;, h,</span>
+<span class="nc" id="L35">                &quot;min&quot;, min</span>
+        );
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

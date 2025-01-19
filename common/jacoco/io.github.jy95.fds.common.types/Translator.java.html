@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Translator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">FHIR Dosage Support - Common</a> &gt; <a href="index.source.html" class="el_package">io.github.jy95.fds.common.types</a> &gt; <span class="el_source">Translator.java</span></div><h1>Translator.java</h1><pre class="source lang-java linenums">package io.github.jy95.fds.common.types;
+
+import io.github.jy95.fds.common.config.FDSConfig;
+
+import java.util.concurrent.CompletableFuture;
+
+/**
+ * Interface for translating dosage fields into human-readable representations.
+ * This class provides base functionality for configuration and resource bundle handling,
+ * while requiring subclasses to define specific translation behavior.
+ *
+ * @param &lt;C&gt; the type of configuration extending {@link io.github.jy95.fds.common.config.FDSConfig}
+ * @param &lt;D&gt; the type of dosage field to be translated
+ * @author jy95
+ */
+public interface Translator&lt;C extends FDSConfig, D&gt; {
+    /**
+     * Converts a dosage field into a human-readable string representation asynchronously.
+     *
+     * @param dosage the dosage field to be converted
+     * @return a {@link java.util.concurrent.CompletableFuture} that will complete with the human-readable string
+     */
+    CompletableFuture&lt;String&gt; convert(D dosage);
+
+    /**
+     * Checks whether a dosage field is present and can be converted to a string.
+     *
+     * @param dosage the dosage field to check
+     * @return {@code true} if the dosage field is present, {@code false} otherwise
+     */
+    default boolean isPresent(D dosage) {
+<span class="fc" id="L32">        return false;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
