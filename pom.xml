@@ -61,6 +61,7 @@
         <maven.compiler.plugin.version>3.13.0</maven.compiler.plugin.version>
         <maven.surefire.plugin.version>3.5.2</maven.surefire.plugin.version>
         <jacoco.plugin.version>0.8.12</jacoco.plugin.version>
+        <maven.site.plugin.version>3.21.0</maven.site.plugin.version>
     </properties>
 
     <dependencies>
@@ -94,6 +95,16 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <version>3.8.0</version>
+            </plugin>
+        </plugins>
+    </reporting>
 
     <build>
         <plugins>
@@ -139,15 +150,11 @@
                     </execution>
                 </executions>
             </plugin>
+            <!-- Maven Site Plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-release-plugin</artifactId>
-                <version>3.1.1</version>
-                <configuration>
-                    <autoVersionSubmodules>true</autoVersionSubmodules>
-                    <projectVersionPolicyId>SemVerVersionPolicy</projectVersionPolicyId>
-                    <releaseProfiles>release</releaseProfiles>
-                </configuration>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>${maven.site.plugin.version}</version>
             </plugin>
         </plugins>
     </build>

@@ -2,7 +2,8 @@
 
 <div align="center">
 
-Turn [FHIR Dosage](https://build.fhir.org/dosage.html) into human readable text in your wanted language (english, french, dutch, german, ...) and much more
+Turn [FHIR Dosage](https://build.fhir.org/dosage.html) into human-readable text in your wanted language 
+(English, French, Dutch, German, ...) and much more
 
 [![Build Status](https://github.com/jy95/fds/actions/workflows/maven.yml/badge.svg)](https://github.com/jy95/fds/actions/workflows/maven.yml)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/56beb6b5e12a4de481cd74ad164989f9)](https://app.codacy.com/gh/jy95/fds/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
