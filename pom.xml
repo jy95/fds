@@ -43,8 +43,8 @@
     </developers>
 
     <scm>
-        <connection>scm:git:git@github.com:jy95/fds.git</connection>
-        <developerConnection>scm:git:git@github.com:jy95/fds.git</developerConnection>
+        <connection>scm:git:https://github.com/jy95/fds.git</connection>
+        <developerConnection>scm:git:https://github.com/jy95/fds.git</developerConnection>
         <url>https://github.com/jy95/fds</url>
     </scm>
 
