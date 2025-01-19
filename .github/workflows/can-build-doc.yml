@@ -1,4 +1,4 @@
-name: Maven CI/CD
+name: Can build Maven site
 on:
   push:
   pull_request:
