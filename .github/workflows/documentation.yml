@@ -25,4 +25,4 @@ jobs:
           cache: 'maven'
           server-id: github
       - name: 🤖 Deploy website
-        run: mvn -P github clean site site:stage scm-publish:publish-scm
+        run: mvn -P github clean install site site:stage scm-publish:publish-scm
