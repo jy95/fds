@@ -62,7 +62,8 @@
         <maven.surefire.plugin.version>3.5.2</maven.surefire.plugin.version>
         <jacoco.plugin.version>0.8.12</jacoco.plugin.version>
         <maven.site.plugin.version>3.21.0</maven.site.plugin.version>
-        <maven.javadoc.plugin>3.11.2</maven.javadoc.plugin>
+        <maven.javadoc.plugin.version>3.11.2</maven.javadoc.plugin.version>
+        <maven.scm.publish.plugin.version>3.3.0</maven.scm.publish.plugin.version>
     </properties>
 
     <dependencies>
@@ -107,7 +108,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>${maven.javadoc.plugin}</version>
+                <version>${maven.javadoc.plugin.version}</version>
                 <reportSets>
                     <reportSet>
                         <id>aggregate</id>
@@ -129,6 +130,7 @@
 
     <build>
         <plugins>
+            <!-- https://maven.apache.org/plugins/maven-compiler-plugin/index.html -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -145,11 +147,13 @@
                     </annotationProcessorPaths>
                 </configuration>
             </plugin>
+            <!-- https://maven.apache.org/surefire/maven-surefire-plugin/ -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${maven.surefire.plugin.version}</version>
             </plugin>
+            <!-- https://www.eclemma.org/jacoco/trunk/doc/maven.html -->
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
@@ -171,11 +175,20 @@
                     </execution>
                 </executions>
             </plugin>
-            <!-- Maven Site Plugin -->
+            <!-- https://maven.apache.org/plugins/maven-site-plugin/ -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
                 <version>${maven.site.plugin.version}</version>
+            </plugin>
+            <!-- https://maven.apache.org/plugins/maven-scm-publish-plugin/index.html -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-scm-publish-plugin</artifactId>
+                <version>${maven.scm.publish.plugin.version}</version>
+                <configuration>
+                    <scmBranch>gh-pages</scmBranch>
+                </configuration>
             </plugin>
         </plugins>
     </build>
@@ -265,7 +278,12 @@
 
         <profile>
             <id>github</id>
+            <!-- https://maven.apache.org/plugins/maven-scm-publish-plugin/various-tips.html#Git_branch -->
             <distributionManagement>
+                <site>
+                    <id>github</id>
+                    <url>scm:git:git@github.com:jy95/fds.git</url>
+                </site>
                 <repository>
                     <id>github</id>
                     <name>GitHub Packages</name>
