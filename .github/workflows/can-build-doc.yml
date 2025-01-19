@@ -9,6 +9,8 @@ on:
 jobs:
   build_docs:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v4
       # https://github.com/actions/setup-java?tab=readme-ov-file#caching-packages-dependencies
