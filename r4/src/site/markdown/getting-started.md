@@ -6,7 +6,6 @@
 Here is a complete code sample to illustrate what the library can do for you :
 
 ```java
-// The imports
 import io.github.jy95.fds.common.types.DisplayOrder;
 import io.github.jy95.fds.r4.DosageAPIR4;
 import io.github.jy95.fds.r4.config.FDSConfigR4;
@@ -41,4 +40,4 @@ public class Main {
 }
 ```
 
-Refer to the [documentation for more details](/apidocs).
+Refer to the [documentation for more details](./apidocs/index.html).
