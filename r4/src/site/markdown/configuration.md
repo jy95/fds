@@ -149,7 +149,9 @@ This method provides a standardized way to extract the relevant field for a spec
 ### Example Usage
 
 ```java
+import io.github.jy95.fds.common.types.DoseAndRateKey;
 import io.github.jy95.fds.r4.config.FDSConfigR4;
+import io.github.jy95.fds.r4.functions.DoseAndRateRegistryR4;
 import org.hl7.fhir.r4.model.Dosage;
 import org.hl7.fhir.r4.model.Quantity;
 
@@ -161,8 +163,24 @@ public class Main {
         // Sample
         List<Dosage.DosageDoseAndRateComponent> components = new ArrayList<>();
         components.add(new Dosage.DosageDoseAndRateComponent().setDoseQuantity(new Quantity().setValue(10)));
+        
+        // Create a configuration to be used by the library
+        var config = FDSConfigR4
+                .builder()
+                .selectDosageAndRateField(
+                        (doseAndRateComponentList, doseAndRateKey) -> {
+                            // TODO Your custom "selectDosageAndRateField" logic here
+                            // Here is the default implementation in the library
+                            var extractor = DoseAndRateRegistryR4.getInstance().getExtractor(doseAndRateKey);
+                            var firstRep = doseAndRateComponentList.getFirst();
+                            return extractor.extract(firstRep);
+                        }
+                ).build();
 
-        // TODO complete code
+        // To test the function in action
+        var doseAndRateKey = DoseAndRateKey.DOSE_QUANTITY;
+        var result = config.selectDosageAndRateField(components, doseAndRateKey);
+        System.out.println(result);
     }
 }
 ```
@@ -197,7 +215,9 @@ public class Main {
         var config = FDSConfigR4
                 .builder()
                 .hasMatchingComponent(
-                        // TODO
+                        // TODO Your custom "hasMatchingComponent" logic here
+                        // Here is the default implementation in the library
+                        (d, predicate) -> d.hasDoseAndRate() && d.getDoseAndRate().stream().anyMatch(predicate)
                 ).build();
 
         // To test the function in action
