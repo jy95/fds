@@ -3,9 +3,10 @@ description: How to customize the library?
 
 # ⚙️ Configuration
 
-<!-- MACRO{toc|fromDepth=1|toDepth=2|id=toc} -->
+<!-- MACRO{toc|fromDepth=2|toDepth=2|id=toc} -->
 
 This page provides details on configuring the library with [`FDSConfigR4`](./apidocs/io/github/jy95/fds/r4/config/FDSConfigR4.html) class.
+Remember to check the [Configuration page of the common module](../common/configuration.html) as well.
 
 ## fromCodeableConceptToString
 

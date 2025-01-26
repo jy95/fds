@@ -9,6 +9,10 @@
     </bannerLeft>
 
     <body>
+        <menu name="Reference">
+            <item name="Configuration" href="configuration.html"/>
+            <item name="Javadoc" href="./apidocs/index.html"/>
+        </menu>
         <menu ref="reports" />
         <menu ref="parent" />
     </body>
