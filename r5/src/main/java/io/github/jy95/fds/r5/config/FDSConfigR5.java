@@ -30,13 +30,13 @@ public class FDSConfigR5 extends FDSConfig implements FDSOperations<
         Extension,
         Dosage,
         DosageDoseAndRateComponent,
-        Type>  {
+        DataType>  {
 
     // Default implementations, in case not provided by user
     @Builder.Default private Function<Quantity, CompletableFuture<String>> fromFHIRQuantityUnitToString = DefaultImplementationsR5::fromFHIRQuantityUnitToString;
     @Builder.Default private Function<CodeableConcept, CompletableFuture<String>> fromCodeableConceptToString = DefaultImplementationsR5::fromCodeableConceptToString;
     @Builder.Default private Function<List<Extension>, CompletableFuture<String>> fromExtensionsToString = DefaultImplementationsR5::fromExtensionsToString;
-    @Builder.Default private BiFunction<List<DosageDoseAndRateComponent>, DoseAndRateKey, Type> selectDosageAndRateField = DefaultImplementationsR5::selectDosageAndRateField;
+    @Builder.Default private BiFunction<List<DosageDoseAndRateComponent>, DoseAndRateKey, DataType> selectDosageAndRateField = DefaultImplementationsR5::selectDosageAndRateField;
     @Builder.Default private BiFunction<Dosage, Predicate<Dosage.DosageDoseAndRateComponent>, Boolean> hasMatchingComponent = DefaultImplementationsR5::hasMatchingComponent;
 
     /** {@inheritDoc} */
@@ -59,7 +59,7 @@ public class FDSConfigR5 extends FDSConfig implements FDSOperations<
 
     /** {@inheritDoc} */
     @Override
-    public Type selectDosageAndRateField(List<DosageDoseAndRateComponent> doseAndRateComponentList, DoseAndRateKey doseAndRateKey) {
+    public DataType selectDosageAndRateField(List<DosageDoseAndRateComponent> doseAndRateComponentList, DoseAndRateKey doseAndRateKey) {
         return this.selectDosageAndRateField.apply(doseAndRateComponentList, doseAndRateKey);
     }
 

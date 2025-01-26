@@ -120,9 +120,9 @@ public final class DefaultImplementationsR5 {
      *
      * @param doseAndRateComponentList the list of dosage components.
      * @param doseAndRateKey the key used to extract the specific field.
-     * @return the extracted {@link org.hl7.fhir.r5.model.Type} value.
+     * @return the extracted {@link org.hl7.fhir.r5.model.DataType} value.
      */
-    public static Type selectDosageAndRateField(List<Dosage.DosageDoseAndRateComponent> doseAndRateComponentList, DoseAndRateKey doseAndRateKey) {
+    public static DataType selectDosageAndRateField(List<Dosage.DosageDoseAndRateComponent> doseAndRateComponentList, DoseAndRateKey doseAndRateKey) {
         var extractor = DoseAndRateRegistryR5.getInstance().getExtractor(doseAndRateKey);
         var firstRep = doseAndRateComponentList.getFirst();
         return extractor.extract(firstRep);

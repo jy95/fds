@@ -47,6 +47,8 @@ public class MaxDosePerPeriodR5 implements MaxDosePerPeriod<FDSConfigR5, Dosage>
     public CompletableFuture<String> convert(Dosage dosage) {
         var ratio = dosage.getMaxDosePerPeriod();
 
+        // TODO
+
         return RatioToStringR5
                 .getInstance()
                 .convert(bundle, config, ratio)

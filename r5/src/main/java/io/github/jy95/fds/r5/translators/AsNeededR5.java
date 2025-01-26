@@ -68,15 +68,18 @@ public class AsNeededR5 implements AsNeeded<FDSConfigR5, Dosage> {
     /** {@inheritDoc} */
     @Override
     public boolean hasCodeableConcepts(Dosage dosage) {
-        return dosage.hasAsNeededCodeableConcept();
+        return dosage.hasAsNeededFor();
     }
 
     /** {@inheritDoc} */
     @Override
     public CompletableFuture<String> convertCodeableConcepts(Dosage dosage) {
-        var code = dosage.getAsNeededCodeableConcept();
-        var codeAsText = config
-                .fromCodeableConceptToString(code);
+        var codes = dosage.getAsNeededFor();
+        // TODO here
+        var codesAsText = codes
+                .stream()
+                .map(config::fromCodeableConceptToString)
+                .toList();
 
         return codeAsText
                 .thenApplyAsync(v -> ListToString.convert(bundle, List.of(v)))

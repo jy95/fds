@@ -4,7 +4,7 @@ import io.github.jy95.fds.common.types.DoseAndRateExtractor;
 import io.github.jy95.fds.common.types.DoseAndRateKey;
 import io.github.jy95.fds.common.types.DoseAndRateRegistry;
 import org.hl7.fhir.r5.model.Dosage.DosageDoseAndRateComponent;
-import org.hl7.fhir.r5.model.Type;
+import org.hl7.fhir.r5.model.DataType;
 
 import java.util.EnumMap;
 import java.util.Map;
@@ -16,10 +16,10 @@ import java.util.Map;
  *
  * @author jy95
  */
-public class DoseAndRateRegistryR5 implements DoseAndRateRegistry<DosageDoseAndRateComponent, Type> {
+public class DoseAndRateRegistryR5 implements DoseAndRateRegistry<DosageDoseAndRateComponent, DataType> {
 
     // Static map holding the extractors
-    private static final Map<DoseAndRateKey, DoseAndRateExtractor<DosageDoseAndRateComponent, Type>> extractors = new EnumMap<>(
+    private static final Map<DoseAndRateKey, DoseAndRateExtractor<DosageDoseAndRateComponent, DataType>> extractors = new EnumMap<>(
             Map.ofEntries(
                     Map.entry(DoseAndRateKey.DOSE_QUANTITY, DosageDoseAndRateComponent::getDoseQuantity),
                     Map.entry(DoseAndRateKey.DOSE_RANGE, DosageDoseAndRateComponent::getDoseRange),
@@ -36,7 +36,7 @@ public class DoseAndRateRegistryR5 implements DoseAndRateRegistry<DosageDoseAndR
 
     /** {@inheritDoc} */
     @Override
-    public DoseAndRateExtractor<DosageDoseAndRateComponent, Type> getExtractor(DoseAndRateKey key) {
+    public DoseAndRateExtractor<DosageDoseAndRateComponent, DataType> getExtractor(DoseAndRateKey key) {
         return extractors.get(key);
     }
 
