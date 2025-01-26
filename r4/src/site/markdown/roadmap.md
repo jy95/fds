@@ -6,7 +6,6 @@
 | `additionalInstruction`        | ✅      | AdditionalInstructionR4                |       |
 | `patientInstruction`           | ✅      | PatientInstructionR4                   |       |
 | `timing.extension`             | ✅      | TimingExtensionR4                      |       |
-| `timing.repeat`                | ✅      | Translator C                           |       |
 | `timing.repeat.extension`      | ✅      | TimingRepeatExtensionR4                |       |
 | `timing.repeat.boundsDuration` | ✅      | BoundsDurationR4                       |       |
 | `timing.repeat.boundsRange`    | ✅      | BoundsRangeR4                          |       |
