@@ -9,16 +9,8 @@
     </bannerLeft>
 
     <body>
-        <menu name="Overview">
-            <item name="Getting started" href="getting-started.html" />
-            <item name="Configuration" href="configuration.html"/>
-        </menu>
-        <menu name="Reference">
-            <item name="FAQ" href="faq.html"/>
-            <item name="Roadmap" href="roadmap.html"/>
-        </menu>
+        <menu ref="modules" />
         <menu ref="reports" />
-        <menu ref="parent" />
     </body>
 
     <skin>
