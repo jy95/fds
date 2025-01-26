@@ -8,7 +8,7 @@ Turn [FHIR Dosage](https://build.fhir.org/dosage.html) into human-readable text 
 [![Build Status](https://github.com/jy95/fds/actions/workflows/maven.yml/badge.svg)](https://github.com/jy95/fds/actions/workflows/maven.yml)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/56beb6b5e12a4de481cd74ad164989f9)](https://app.codacy.com/gh/jy95/fds/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 [![Codacy Badge](https://app.codacy.com/project/badge/Coverage/56beb6b5e12a4de481cd74ad164989f9)](https://app.codacy.com/gh/jy95/fds/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_coverage)
-[![Java Version](https://img.shields.io/badge/Java-21%2B-brightgreen.svg)](https://www.oracle.com/java/)
+[![Java Version](https://img.shields.io/badge/Java-11%2B-brightgreen.svg)](https://www.oracle.com/java/)
 [![We ❤️ PRs](https://img.shields.io/badge/We%20%E2%9D%A4%EF%B8%8F-Pull%20Requests-brightgreen.svg)](https://github.com/jy95/fds/pulls)
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://github.com/jy95/fhir-dosage-utils/blob/main/LICENSE)
 <br /> 
@@ -28,23 +28,7 @@ Key Features:
 - **Internationalization** Seamlessly extendable to other languages thanks to [`ICU4J`](https://unicode-org.github.io/icu/userguide/icu4j/)
 - **Integration Ease** Works effortlessly in various environments like server, client, ...
 
-Read more on : 
-
-## Artifacts
-
-| ArtifactId           | Description                                   | Maven Central                                                                              |
-|----------------------|-----------------------------------------------|--------------------------------------------------------------------------------------------|
-| [`common`](./common) | Shared utilities and foundational components. | ![Maven Central Version](https://img.shields.io/maven-central/v/io.github.jy95.fds/common) |
-| [`r4`](./r4)         | Implementation for FHIR R4 support.           | ![Maven Central Version](https://img.shields.io/maven-central/v/io.github.jy95.fds/r4)     |
-| [`r5`](./r5)         | Implementation for FHIR R5 support.           | ![Maven Central Version](https://img.shields.io/maven-central/v/io.github.jy95.fds/r5)     |
-
-```xml
-<dependency>
-    <groupId>io.github.jy95.fds</groupId>
-    <artifactId>r4</artifactId>
-    <version>1.0.0</version>
-</dependency>
-```
+Read more on: https://jy95.github.io/fds/
 
 ## Credits
 
