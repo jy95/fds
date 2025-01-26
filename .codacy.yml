@@ -2,4 +2,5 @@
 exclude_paths:
   - ".github/**"
   - "**/src/test/**"
+  - "**/src/site/**"
   - "README.MD"

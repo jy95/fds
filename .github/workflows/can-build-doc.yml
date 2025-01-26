@@ -20,7 +20,5 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
           cache: 'maven'
-      - name: 📦 Install dependencies
-        run: mvn install
       - name: 🤖 Build website
-        run: mvn site
+        run: mvn -P github clean install site site:stage
