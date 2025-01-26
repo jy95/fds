@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PeriodPeriodMaxR5.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">FHIR Dosage Support - R5</a> &gt; <a href="index.source.html" class="el_package">io.github.jy95.fds.r5.translators</a> &gt; <span class="el_source">PeriodPeriodMaxR5.java</span></div><h1>PeriodPeriodMaxR5.java</h1><pre class="source lang-java linenums">package io.github.jy95.fds.r5.translators;
+
+import com.ibm.icu.text.MessageFormat;
+import io.github.jy95.fds.common.translators.PeriodPeriodMax;
+import io.github.jy95.fds.r5.config.FDSConfigR5;
+import org.hl7.fhir.r5.model.Dosage;
+
+import java.math.BigDecimal;
+import java.util.Map;
+import java.util.ResourceBundle;
+
+/**
+ * R5 class for translating &quot;timing.repeat.period&quot; / &quot;timing.repeat.periodMax&quot;
+ *
+ * @author jy95
+ */
+public class PeriodPeriodMaxR5 implements PeriodPeriodMax&lt;FDSConfigR5, Dosage&gt; {
+
+    // Translations
+    /** MessageFormat instance used for &quot;period&quot; &amp;amp; &quot;periodMax&quot; translation */
+    protected final MessageFormat periodMaxMsg;
+    /** MessageFormat instance used for &quot;period&quot; */
+    protected final MessageFormat periodMsg;
+
+    /**
+     * The resource bundle containing localized strings for translation.
+     */
+    private final ResourceBundle bundle;
+
+    /**
+     * Constructor for {@code PeriodPeriodMaxR5}.
+     *
+     * @param config The configuration object used for translation.
+     * @param bundle a {@link java.util.ResourceBundle} object
+     */
+<span class="fc" id="L36">    public PeriodPeriodMaxR5(FDSConfigR5 config, ResourceBundle bundle) {</span>
+<span class="fc" id="L37">        this.bundle = bundle;</span>
+<span class="fc" id="L38">        this.periodMaxMsg = getPeriodMaxMsg(bundle, config.getLocale());</span>
+<span class="fc" id="L39">        this.periodMsg = getPeriodMsg(bundle, config.getLocale());</span>
+<span class="fc" id="L40">    }</span>
+
+    /** {@inheritDoc} */
+    @Override
+    public boolean hasPeriod(Dosage dosage) {
+<span class="fc" id="L45">        return dosage.getTiming().getRepeat().hasPeriod();</span>
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public boolean hasPeriodMax(Dosage dosage) {
+<span class="fc" id="L51">        return dosage.getTiming().getRepeat().hasPeriodMax();</span>
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public boolean hasRequiredElements(Dosage dosage) {
+<span class="fc" id="L57">        var timing = dosage.getTiming();</span>
+<span class="pc bpc" id="L58" title="3 of 8 branches missed.">        return timing.hasRepeat() &amp;&amp; timing.hasRepeat() &amp;&amp; (hasPeriod(dosage) || hasPeriodMax(dosage));</span>
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public boolean hasTiming(Dosage dosage) {
+<span class="fc" id="L64">        return dosage.hasTiming();</span>
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public String turnPeriodAndPeriodMaxToString(Dosage dosage) {
+
+<span class="fc" id="L71">        var repeat = dosage.getTiming().getRepeat();</span>
+<span class="fc" id="L72">        var periodMax = repeat.getPeriodMax();</span>
+<span class="fc" id="L73">        var periodMin = repeat.getPeriod();</span>
+<span class="fc" id="L74">        var periodUnit = repeat.getPeriodUnit().toCode();</span>
+
+<span class="fc" id="L76">        var unitText = getUnit(bundle, periodUnit, periodMax);</span>
+<span class="fc" id="L77">        return formatPeriodAndPeriodMaxText(periodMin, periodMax, unitText);</span>
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public String turnPeriodToString(Dosage dosage) {
+
+<span class="fc" id="L84">        var repeat = dosage.getTiming().getRepeat();</span>
+<span class="fc" id="L85">        var period = repeat.getPeriod();</span>
+<span class="fc" id="L86">        var periodUnit = repeat.getPeriodUnit().toCode();</span>
+
+<span class="fc" id="L88">        var unitText = getUnit(bundle, periodUnit, period);</span>
+<span class="fc" id="L89">        return formatPeriodText(period, unitText);</span>
+    }
+
+    /**
+     * Formats a single period value with its unit.
+     *
+     * @param period The period value.
+     * @param unitText The localized unit of the period.
+     * @return A formatted string representing the period and its unit.
+     */
+    private String formatPeriodText(BigDecimal period, String unitText){
+<span class="fc" id="L100">        Map&lt;String, Object&gt; arguments = Map.of(</span>
+                &quot;period&quot;, period,
+                &quot;periodUnit&quot;,unitText
+        );
+<span class="fc" id="L104">        return periodMsg.format(arguments);</span>
+    }
+
+    /**
+     * Formats both period and periodMax values with their shared unit.
+     *
+     * @param periodMin The minimum period value.
+     * @param periodMax The maximum period value.
+     * @param unitText The localized unit of the periods.
+     * @return A formatted string representing the range of periods and their unit.
+     */
+    private String formatPeriodAndPeriodMaxText(BigDecimal periodMin, BigDecimal periodMax, String unitText) {
+<span class="fc" id="L116">        Map&lt;String, Object&gt; arguments = Map.of(</span>
+                &quot;maxPeriod&quot;, periodMax,
+                &quot;minPeriod&quot;, periodMin,
+                &quot;unit&quot;,unitText
+        );
+<span class="fc" id="L121">        return periodMaxMsg.format(arguments);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

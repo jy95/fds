@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TranslatorsMapR5.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">FHIR Dosage Support - R5</a> &gt; <a href="index.source.html" class="el_package">io.github.jy95.fds.r5.utils</a> &gt; <span class="el_source">TranslatorsMapR5.java</span></div><h1>TranslatorsMapR5.java</h1><pre class="source lang-java linenums">package io.github.jy95.fds.r5.utils;
+
+import io.github.jy95.fds.common.types.AbstractTranslatorsMap;
+import io.github.jy95.fds.common.types.DisplayOrder;
+import io.github.jy95.fds.common.types.Translator;
+import io.github.jy95.fds.r5.config.FDSConfigR5;
+import io.github.jy95.fds.r5.translators.*;
+import org.hl7.fhir.r5.model.Dosage;
+
+import java.util.EnumMap;
+import java.util.Map;
+import java.util.ResourceBundle;
+import java.util.function.Supplier;
+
+/**
+ * Map for R5 translators
+ *
+ * @author jy95
+ */
+public class TranslatorsMapR5 extends AbstractTranslatorsMap&lt;FDSConfigR5, Dosage&gt; {
+
+    /**
+     * Constructor for {@code TranslatorsMapR5}.
+     *
+     * @param config The configuration object used for translation.
+     * @param bundle a {@link java.util.ResourceBundle} object
+     */
+    public TranslatorsMapR5(FDSConfigR5 config, ResourceBundle bundle) {
+<span class="fc" id="L29">        super(createTranslatorsSuppliers(config, bundle));</span>
+<span class="fc" id="L30">    }</span>
+
+
+    /**
+     * Creates a map of {@link DisplayOrder} to {@link Supplier} instances that lazily initialize the corresponding
+     * {@link Translator} objects for the R5 configuration.
+     * &lt;p&gt;
+     * This method ensures that translators are only created when needed, improving efficiency and reducing
+     * unnecessary resource usage.It supports both simple translators and composite translators that depend
+     * on other translators.
+     * &lt;/p&gt;
+     *
+     * @param config the {@link FDSConfigR5} configuration object used by the translators
+     * @param bundle the {@link ResourceBundle} providing localized resources for the translators
+     * @return a {@link Map} where the keys are {@link DisplayOrder} values and the values are {@link Supplier}
+     *         instances that produce the corresponding {@link Translator} objects
+     */
+    private static Map&lt;DisplayOrder, Supplier&lt;Translator&lt;FDSConfigR5, Dosage&gt;&gt;&gt; createTranslatorsSuppliers(
+            FDSConfigR5 config, ResourceBundle bundle) {
+<span class="fc" id="L49">        EnumMap&lt;DisplayOrder, Supplier&lt;Translator&lt;FDSConfigR5, Dosage&gt;&gt;&gt; suppliers = new EnumMap&lt;&gt;(DisplayOrder.class);</span>
+
+        // All display order supported by R5 are initialized here
+<span class="fc" id="L52">        suppliers.put(DisplayOrder.TEXT, TextR5::new);</span>
+<span class="fc" id="L53">        suppliers.put(DisplayOrder.PATIENT_INSTRUCTION, PatientInstructionR5::new);</span>
+<span class="fc" id="L54">        suppliers.put(DisplayOrder.DAY_OF_WEEK, () -&gt; new DayOfWeekR5(config, bundle));</span>
+<span class="fc" id="L55">        suppliers.put(DisplayOrder.TIME_OF_DAY, () -&gt; new TimeOfDayR5(config, bundle));</span>
+<span class="fc" id="L56">        suppliers.put(DisplayOrder.TIMING_CODE, () -&gt; new TimingCodeR5(config));</span>
+<span class="fc" id="L57">        suppliers.put(DisplayOrder.TIMING_EVENT, () -&gt; new TimingEventR5(config, bundle));</span>
+<span class="fc" id="L58">        suppliers.put(DisplayOrder.METHOD, () -&gt; new MethodR5(config));</span>
+<span class="fc" id="L59">        suppliers.put(DisplayOrder.ROUTE, () -&gt; new RouteR5(config));</span>
+<span class="fc" id="L60">        suppliers.put(DisplayOrder.SITE, () -&gt; new SiteR5(config));</span>
+<span class="fc" id="L61">        suppliers.put(DisplayOrder.EXTENSION, () -&gt; new ExtensionR5(config));</span>
+<span class="fc" id="L62">        suppliers.put(DisplayOrder.TIMING_EXTENSION, () -&gt; new TimingExtensionR5(config));</span>
+<span class="fc" id="L63">        suppliers.put(DisplayOrder.TIMING_REPEAT_EXTENSION, () -&gt; new TimingRepeatExtensionR5(config));</span>
+<span class="fc" id="L64">        suppliers.put(DisplayOrder.MODIFIER_EXTENSION, () -&gt; new ModifierExtensionR5(config));</span>
+<span class="fc" id="L65">        suppliers.put(DisplayOrder.TIMING_MODIFIER_EXTENSION, () -&gt; new TimingModifierExtensionR5(config));</span>
+<span class="fc" id="L66">        suppliers.put(DisplayOrder.ADDITIONAL_INSTRUCTION, () -&gt; new AdditionalInstructionR5(config, bundle));</span>
+<span class="fc" id="L67">        suppliers.put(DisplayOrder.AS_NEEDED, () -&gt; new AsNeededR5(config, bundle));</span>
+<span class="fc" id="L68">        suppliers.put(DisplayOrder.BOUNDS_PERIOD, () -&gt; new BoundsPeriodR5(config, bundle));</span>
+<span class="fc" id="L69">        suppliers.put(DisplayOrder.BOUNDS_RANGE, () -&gt; new BoundsRangeR5(config, bundle));</span>
+<span class="fc" id="L70">        suppliers.put(DisplayOrder.DURATION_DURATION_MAX, () -&gt; new DurationDurationMaxR5(config, bundle));</span>
+<span class="fc" id="L71">        suppliers.put(DisplayOrder.FREQUENCY_FREQUENCY_MAX, () -&gt; new FrequencyFrequencyMaxR5(config, bundle));</span>
+<span class="fc" id="L72">        suppliers.put(DisplayOrder.PERIOD_PERIOD_MAX, () -&gt; new PeriodPeriodMaxR5(config, bundle));</span>
+<span class="fc" id="L73">        suppliers.put(DisplayOrder.COUNT_COUNT_MAX, () -&gt; new CountCountMaxR5(config, bundle));</span>
+<span class="fc" id="L74">        suppliers.put(DisplayOrder.DOSE_QUANTITY, () -&gt; new DoseQuantityR5(config, bundle));</span>
+<span class="fc" id="L75">        suppliers.put(DisplayOrder.DOSE_RANGE, () -&gt; new DoseRangeR5(config, bundle));</span>
+<span class="fc" id="L76">        suppliers.put(DisplayOrder.RATE_QUANTITY, () -&gt; new RateQuantityR5(config, bundle));</span>
+<span class="fc" id="L77">        suppliers.put(DisplayOrder.RATE_RANGE, () -&gt; new RateRangeR5(config, bundle));</span>
+<span class="fc" id="L78">        suppliers.put(DisplayOrder.RATE_RATIO, () -&gt; new RateRatioR5(config, bundle));</span>
+<span class="fc" id="L79">        suppliers.put(DisplayOrder.OFFSET_WHEN, () -&gt; new OffsetWhenR5(bundle));</span>
+<span class="fc" id="L80">        suppliers.put(DisplayOrder.MAX_DOSE_PER_LIFETIME, () -&gt; new MaxDosePerLifetimeR5(config, bundle));</span>
+<span class="fc" id="L81">        suppliers.put(DisplayOrder.MAX_DOSE_PER_ADMINISTRATION, () -&gt; new MaxDosePerAdministrationR5(config, bundle));</span>
+<span class="fc" id="L82">        suppliers.put(DisplayOrder.MAX_DOSE_PER_PERIOD, () -&gt; new MaxDosePerPeriodR5(config, bundle));</span>
+<span class="fc" id="L83">        suppliers.put(DisplayOrder.BOUNDS_DURATION, () -&gt; new BoundsDurationR5(config, bundle));</span>
+
+        // Composite translator with dependencies
+<span class="fc" id="L86">        suppliers.put(</span>
+                DisplayOrder.FREQUENCY_FREQUENCY_MAX_PERIOD_PERIOD_MAX,
+<span class="fc" id="L88">                () -&gt; new FrequencyFrequencyMaxPeriodPeriodMaxR5(</span>
+<span class="fc" id="L89">                        suppliers.get(DisplayOrder.FREQUENCY_FREQUENCY_MAX).get(),</span>
+<span class="fc" id="L90">                        suppliers.get(DisplayOrder.PERIOD_PERIOD_MAX).get()</span>
+                )
+        );
+
+<span class="fc" id="L94">        return suppliers;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

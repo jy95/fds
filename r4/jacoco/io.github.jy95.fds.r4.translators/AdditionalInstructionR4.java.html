@@ -7,6 +7,7 @@ import org.hl7.fhir.r4.model.Dosage;
 
 import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
 
 /**
  * R4 class for translating &quot;additionalInstruction&quot;.
@@ -29,19 +30,19 @@ public class AdditionalInstructionR4 implements AdditionalInstruction&lt;FDSConf
     /** {@inheritDoc} */
     @Override
     public CompletableFuture&lt;String&gt; convert(Dosage dosage) {
-<span class="fc" id="L32">        var additionalInstructions = dosage</span>
-<span class="fc" id="L33">                .getAdditionalInstruction()</span>
-<span class="fc" id="L34">                .stream()</span>
-<span class="fc" id="L35">                .map(config::fromCodeableConceptToString)</span>
-<span class="fc" id="L36">                .toList();</span>
+<span class="fc" id="L33">        var additionalInstructions = dosage</span>
+<span class="fc" id="L34">                .getAdditionalInstruction()</span>
+<span class="fc" id="L35">                .stream()</span>
+<span class="fc" id="L36">                .map(config::fromCodeableConceptToString)</span>
+<span class="fc" id="L37">                .collect(Collectors.toList());</span>
 
-<span class="fc" id="L38">        return instructionsFuture(additionalInstructions, bundle);</span>
+<span class="fc" id="L39">        return instructionsFuture(additionalInstructions, bundle);</span>
     }
 
     /** {@inheritDoc} */
     @Override
     public boolean isPresent(Dosage dosage) {
-<span class="fc" id="L44">        return dosage.hasAdditionalInstruction();</span>
+<span class="fc" id="L45">        return dosage.hasAdditionalInstruction();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

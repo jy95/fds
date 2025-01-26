@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"io.github.jy95.fds.r5"},{"l":"io.github.jy95.fds.r5.config"},{"l":"io.github.jy95.fds.r5.functions"},{"l":"io.github.jy95.fds.r5.translators"},{"l":"io.github.jy95.fds.r5.utils"}];updateSearchResults();

@@ -52,6 +52,7 @@
       <li><a href="summary.html">Summary</a></li>
       <li><a href="team.html">Team</a></li>
      </ul></li>
+    <li><a href="project-reports.html"><span class="icon-chevron-right"></span>Project Reports</a></li>
    <li class="nav-header">Parent Project</li>
     <li><a href="../index.html">FHIR Dosage Support</a></li>
   </ul>
@@ -101,24 +102,35 @@
 <th>GroupId</th>
 <th>ArtifactId</th>
 <th>Version</th>
+<th>Classifier</th>
 <th>Type</th>
 <th>Licenses</th></tr>
 <tr class="b">
+<td>io.github.jy95.fds</td>
+<td><a class="externalLink" href="https://jy95.github.io/fds/common">common</a></td>
+<td>1.0.0-SNAPSHOT</td>
+<td>tests</td>
+<td>test-jar</td>
+<td><a class="externalLink" href="https://www.apache.org/licenses/LICENSE-2.0">Apache License, Version 2.0</a></td></tr>
+<tr class="a">
 <td>org.junit.jupiter</td>
 <td><a class="externalLink" href="https://junit.org/junit5/">junit-jupiter-api</a></td>
 <td>5.11.4</td>
+<td>-</td>
+<td>jar</td>
+<td><a class="externalLink" href="https://www.eclipse.org/legal/epl-v20.html">Eclipse Public License v2.0</a></td></tr>
+<tr class="b">
+<td>org.junit.jupiter</td>
+<td><a class="externalLink" href="https://junit.org/junit5/">junit-jupiter-engine</a></td>
+<td>5.11.4</td>
+<td>-</td>
 <td>jar</td>
 <td><a class="externalLink" href="https://www.eclipse.org/legal/epl-v20.html">Eclipse Public License v2.0</a></td></tr>
 <tr class="a">
 <td>org.junit.jupiter</td>
-<td><a class="externalLink" href="https://junit.org/junit5/">junit-jupiter-engine</a></td>
-<td>5.11.4</td>
-<td>jar</td>
-<td><a class="externalLink" href="https://www.eclipse.org/legal/epl-v20.html">Eclipse Public License v2.0</a></td></tr>
-<tr class="b">
-<td>org.junit.jupiter</td>
 <td><a class="externalLink" href="https://junit.org/junit5/">junit-jupiter-params</a></td>
 <td>5.11.4</td>
+<td>-</td>
 <td>jar</td>
 <td><a class="externalLink" href="https://www.eclipse.org/legal/epl-v20.html">Eclipse Public License v2.0</a></td></tr></table></section><section><a id="Project_Dependencies_provided"></a>
 <h2>provided</h2>
@@ -698,7 +710,16 @@ writes to specify Java code for type-checking by the Checker Framework.</p>
 <p><b>Description: </b>Shared utilities and foundational components for handling FHIR Dosage transformation and processing.</p>
 <p><b>URL: </b><a class="externalLink" href="https://jy95.github.io/fds/common">https://jy95.github.io/fds/common</a></p>
 <p><b>Project Licenses: </b><a class="externalLink" href="https://www.apache.org/licenses/LICENSE-2.0">Apache License, Version 2.0</a></p></td></tr></table></div></li>
-<li>org.projectlombok:lombok:jar:1.18.36 (provided) <img id="_img63" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep62', '_img63' );" style="cursor: pointer; vertical-align: text-bottom;" /><div id="_dep62" style="display:none">
+<li>io.github.jy95.fds:common:test-jar:tests:1.0.0-SNAPSHOT (test) <img id="_img63" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep62', '_img63' );" style="cursor: pointer; vertical-align: text-bottom;" /><div id="_dep62" style="display:none">
+<table class="table table-striped">
+<tr class="a">
+<th>FHIR Dosage Support - Common</th></tr>
+<tr class="b">
+<td>
+<p><b>Description: </b>Shared utilities and foundational components for handling FHIR Dosage transformation and processing.</p>
+<p><b>URL: </b><a class="externalLink" href="https://jy95.github.io/fds/common">https://jy95.github.io/fds/common</a></p>
+<p><b>Project Licenses: </b><a class="externalLink" href="https://www.apache.org/licenses/LICENSE-2.0">Apache License, Version 2.0</a></p></td></tr></table></div></li>
+<li>org.projectlombok:lombok:jar:1.18.36 (provided) <img id="_img65" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep64', '_img65' );" style="cursor: pointer; vertical-align: text-bottom;" /><div id="_dep64" style="display:none">
 <table class="table table-striped">
 <tr class="a">
 <th>Project Lombok</th></tr>
@@ -707,7 +728,7 @@ writes to specify Java code for type-checking by the Checker Framework.</p>
 <p><b>Description: </b>Spice up your java: Automatic Resource Management, automatic generation of getters, setters, equals, hashCode and toString, and more!</p>
 <p><b>URL: </b><a class="externalLink" href="https://projectlombok.org">https://projectlombok.org</a></p>
 <p><b>Project Licenses: </b><a class="externalLink" href="https://projectlombok.org/LICENSE">The MIT License</a></p></td></tr></table></div></li>
-<li>com.ibm.icu:icu4j:jar:76.1 (compile) <img id="_img65" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep64', '_img65' );" style="cursor: pointer; vertical-align: text-bottom;" /><div id="_dep64" style="display:none">
+<li>com.ibm.icu:icu4j:jar:76.1 (compile) <img id="_img67" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep66', '_img67' );" style="cursor: pointer; vertical-align: text-bottom;" /><div id="_dep66" style="display:none">
 <table class="table table-striped">
 <tr class="a">
 <th>icu4j</th></tr>
@@ -717,7 +738,7 @@ writes to specify Java code for type-checking by the Checker Framework.</p>
     providing Unicode and Globalization support</p>
 <p><b>URL: </b><a class="externalLink" href="https://icu.unicode.org/">https://icu.unicode.org/</a></p>
 <p><b>Project Licenses: </b><a class="externalLink" href="https://raw.githubusercontent.com/unicode-org/icu/maint/maint-76/LICENSE">Unicode-3.0</a></p></td></tr></table></div></li>
-<li>org.junit.jupiter:junit-jupiter-api:jar:5.11.4 (test) <img id="_img67" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep66', '_img67' );" style="cursor: pointer; vertical-align: text-bottom;" /><div id="_dep66" style="display:none">
+<li>org.junit.jupiter:junit-jupiter-api:jar:5.11.4 (test) <img id="_img69" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep68', '_img69' );" style="cursor: pointer; vertical-align: text-bottom;" /><div id="_dep68" style="display:none">
 <table class="table table-striped">
 <tr class="a">
 <th>JUnit Jupiter API</th></tr>
@@ -727,7 +748,7 @@ writes to specify Java code for type-checking by the Checker Framework.</p>
 <p><b>URL: </b><a class="externalLink" href="https://junit.org/junit5/">https://junit.org/junit5/</a></p>
 <p><b>Project Licenses: </b><a class="externalLink" href="https://www.eclipse.org/legal/epl-v20.html">Eclipse Public License v2.0</a></p></td></tr></table></div>
 <ul>
-<li>org.opentest4j:opentest4j:jar:1.3.0 (test) <img id="_img69" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep68', '_img69' );" style="cursor: pointer; vertical-align: text-bottom;" /><div id="_dep68" style="display:none">
+<li>org.opentest4j:opentest4j:jar:1.3.0 (test) <img id="_img71" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep70', '_img71' );" style="cursor: pointer; vertical-align: text-bottom;" /><div id="_dep70" style="display:none">
 <table class="table table-striped">
 <tr class="a">
 <th>org.opentest4j:opentest4j</th></tr>
@@ -736,7 +757,7 @@ writes to specify Java code for type-checking by the Checker Framework.</p>
 <p><b>Description: </b>Open Test Alliance for the JVM</p>
 <p><b>URL: </b><a class="externalLink" href="https://github.com/ota4j-team/opentest4j">https://github.com/ota4j-team/opentest4j</a></p>
 <p><b>Project Licenses: </b><a class="externalLink" href="https://www.apache.org/licenses/LICENSE-2.0.txt">The Apache License, Version 2.0</a></p></td></tr></table></div></li>
-<li>org.junit.platform:junit-platform-commons:jar:1.11.4 (test) <img id="_img71" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep70', '_img71' );" style="cursor: pointer; vertical-align: text-bottom;" /><div id="_dep70" style="display:none">
+<li>org.junit.platform:junit-platform-commons:jar:1.11.4 (test) <img id="_img73" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep72', '_img73' );" style="cursor: pointer; vertical-align: text-bottom;" /><div id="_dep72" style="display:none">
 <table class="table table-striped">
 <tr class="a">
 <th>JUnit Platform Commons</th></tr>
@@ -745,7 +766,7 @@ writes to specify Java code for type-checking by the Checker Framework.</p>
 <p><b>Description: </b>Module &quot;junit-platform-commons&quot; of JUnit 5.</p>
 <p><b>URL: </b><a class="externalLink" href="https://junit.org/junit5/">https://junit.org/junit5/</a></p>
 <p><b>Project Licenses: </b><a class="externalLink" href="https://www.eclipse.org/legal/epl-v20.html">Eclipse Public License v2.0</a></p></td></tr></table></div></li>
-<li>org.apiguardian:apiguardian-api:jar:1.1.2 (test) <img id="_img73" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep72', '_img73' );" style="cursor: pointer; vertical-align: text-bottom;" /><div id="_dep72" style="display:none">
+<li>org.apiguardian:apiguardian-api:jar:1.1.2 (test) <img id="_img75" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep74', '_img75' );" style="cursor: pointer; vertical-align: text-bottom;" /><div id="_dep74" style="display:none">
 <table class="table table-striped">
 <tr class="a">
 <th>org.apiguardian:apiguardian-api</th></tr>
@@ -754,7 +775,7 @@ writes to specify Java code for type-checking by the Checker Framework.</p>
 <p><b>Description: </b>@API Guardian</p>
 <p><b>URL: </b><a class="externalLink" href="https://github.com/apiguardian-team/apiguardian">https://github.com/apiguardian-team/apiguardian</a></p>
 <p><b>Project Licenses: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache License, Version 2.0</a></p></td></tr></table></div></li></ul></li>
-<li>org.junit.jupiter:junit-jupiter-params:jar:5.11.4 (test) <img id="_img75" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep74', '_img75' );" style="cursor: pointer; vertical-align: text-bottom;" /><div id="_dep74" style="display:none">
+<li>org.junit.jupiter:junit-jupiter-params:jar:5.11.4 (test) <img id="_img77" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep76', '_img77' );" style="cursor: pointer; vertical-align: text-bottom;" /><div id="_dep76" style="display:none">
 <table class="table table-striped">
 <tr class="a">
 <th>JUnit Jupiter Params</th></tr>
@@ -763,7 +784,7 @@ writes to specify Java code for type-checking by the Checker Framework.</p>
 <p><b>Description: </b>Module &quot;junit-jupiter-params&quot; of JUnit 5.</p>
 <p><b>URL: </b><a class="externalLink" href="https://junit.org/junit5/">https://junit.org/junit5/</a></p>
 <p><b>Project Licenses: </b><a class="externalLink" href="https://www.eclipse.org/legal/epl-v20.html">Eclipse Public License v2.0</a></p></td></tr></table></div></li>
-<li>org.junit.jupiter:junit-jupiter-engine:jar:5.11.4 (test) <img id="_img77" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep76', '_img77' );" style="cursor: pointer; vertical-align: text-bottom;" /><div id="_dep76" style="display:none">
+<li>org.junit.jupiter:junit-jupiter-engine:jar:5.11.4 (test) <img id="_img79" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep78', '_img79' );" style="cursor: pointer; vertical-align: text-bottom;" /><div id="_dep78" style="display:none">
 <table class="table table-striped">
 <tr class="a">
 <th>JUnit Jupiter Engine</th></tr>
@@ -773,7 +794,7 @@ writes to specify Java code for type-checking by the Checker Framework.</p>
 <p><b>URL: </b><a class="externalLink" href="https://junit.org/junit5/">https://junit.org/junit5/</a></p>
 <p><b>Project Licenses: </b><a class="externalLink" href="https://www.eclipse.org/legal/epl-v20.html">Eclipse Public License v2.0</a></p></td></tr></table></div>
 <ul>
-<li>org.junit.platform:junit-platform-engine:jar:1.11.4 (test) <img id="_img79" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep78', '_img79' );" style="cursor: pointer; vertical-align: text-bottom;" /><div id="_dep78" style="display:none">
+<li>org.junit.platform:junit-platform-engine:jar:1.11.4 (test) <img id="_img81" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep80', '_img81' );" style="cursor: pointer; vertical-align: text-bottom;" /><div id="_dep80" style="display:none">
 <table class="table table-striped">
 <tr class="a">
 <th>JUnit Platform Engine API</th></tr>
@@ -1087,13 +1108,21 @@ writes to specify Java code for type-checking by the Checker Framework.</p>
 <td style="text-align: center;">No</td></tr>
 <tr class="a">
 <td style="text-align: left;">common-1.0.0-SNAPSHOT.jar</td>
-<td style="text-align: right;">62.7 kB</td>
+<td style="text-align: right;">62.8 kB</td>
 <td style="text-align: right;">87</td>
 <td style="text-align: right;">50</td>
 <td style="text-align: right;">6</td>
 <td style="text-align: center;">11</td>
 <td style="text-align: center;">Yes</td></tr>
 <tr class="b">
+<td style="text-align: left;">common-1.0.0-SNAPSHOT-tests.jar</td>
+<td style="text-align: right;">57.8 kB</td>
+<td style="text-align: right;">-</td>
+<td style="text-align: right;">-</td>
+<td style="text-align: right;">-</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">-</td></tr>
+<tr class="a">
 <td style="text-align: left;">opentelemetry-api-1.42.1.jar</td>
 <td style="text-align: right;">157.3 kB</td>
 <td style="text-align: right;">185</td>
@@ -1101,7 +1130,7 @@ writes to specify Java code for type-checking by the Checker Framework.</p>
 <td style="text-align: right;">10</td>
 <td style="text-align: center;">1.8</td>
 <td style="text-align: center;">Yes</td></tr>
-<tr class="a">
+<tr class="b">
 <td style="text-align: left;">opentelemetry-context-1.42.1.jar</td>
 <td style="text-align: right;">47.3 kB</td>
 <td style="text-align: right;">49</td>
@@ -1109,7 +1138,7 @@ writes to specify Java code for type-checking by the Checker Framework.</p>
 <td style="text-align: right;">3</td>
 <td style="text-align: center;">1.8</td>
 <td style="text-align: center;">Yes</td></tr>
-<tr class="b">
+<tr class="a">
 <td style="text-align: left;">opentelemetry-instrumentation-annotations-2.8.0.jar</td>
 <td style="text-align: right;">2.8 kB</td>
 <td style="text-align: right;">10</td>
@@ -1117,7 +1146,7 @@ writes to specify Java code for type-checking by the Checker Framework.</p>
 <td style="text-align: right;">1</td>
 <td style="text-align: center;">1.8</td>
 <td style="text-align: center;">No</td></tr>
-<tr class="a">
+<tr class="b">
 <td style="text-align: left;">jakarta.annotation-api-2.1.1.jar</td>
 <td style="text-align: right;">26.1 kB</td>
 <td style="text-align: right;">31</td>
@@ -1125,7 +1154,7 @@ writes to specify Java code for type-checking by the Checker Framework.</p>
 <td style="text-align: right;">4</td>
 <td style="text-align: center;">1.8</td>
 <td style="text-align: center;">Yes</td></tr>
-<tr class="b">
+<tr class="a">
 <td style="text-align: left;">plantuml-mit-1.2023.9.jar</td>
 <td style="text-align: right;">9.2 MB</td>
 <td style="text-align: right;">3613</td>
@@ -1133,7 +1162,7 @@ writes to specify Java code for type-checking by the Checker Framework.</p>
 <td style="text-align: right;">200</td>
 <td style="text-align: center;">1.8</td>
 <td style="text-align: center;">Yes</td></tr>
-<tr class="a">
+<tr class="b">
 <td style="text-align: left;">commons-lang3-3.17.0.jar</td>
 <td style="text-align: right;">673.6 kB</td>
 <td style="text-align: right;">426</td>
@@ -1141,7 +1170,7 @@ writes to specify Java code for type-checking by the Checker Framework.</p>
 <td style="text-align: right;">-</td>
 <td style="text-align: center;">-</td>
 <td style="text-align: center;">-</td></tr>
-<tr class="b">
+<tr class="a">
 <td style="text-align: left;">&#160;&#160;&#160;&#x2022; Root</td>
 <td style="text-align: right;">-</td>
 <td style="text-align: right;">425</td>
@@ -1149,7 +1178,7 @@ writes to specify Java code for type-checking by the Checker Framework.</p>
 <td style="text-align: right;">18</td>
 <td style="text-align: center;">1.8</td>
 <td style="text-align: center;">Yes</td></tr>
-<tr class="a">
+<tr class="b">
 <td style="text-align: left;">&#160;&#160;&#160;&#x2022; Versioned</td>
 <td style="text-align: right;">-</td>
 <td style="text-align: right;">1</td>
@@ -1157,7 +1186,7 @@ writes to specify Java code for type-checking by the Checker Framework.</p>
 <td style="text-align: right;">1</td>
 <td style="text-align: center;">9</td>
 <td style="text-align: center;">No</td></tr>
-<tr class="b">
+<tr class="a">
 <td style="text-align: left;">commons-text-1.10.0.jar</td>
 <td style="text-align: right;">238.4 kB</td>
 <td style="text-align: right;">174</td>
@@ -1165,7 +1194,7 @@ writes to specify Java code for type-checking by the Checker Framework.</p>
 <td style="text-align: right;">8</td>
 <td style="text-align: center;">1.8</td>
 <td style="text-align: center;">Yes</td></tr>
-<tr class="a">
+<tr class="b">
 <td style="text-align: left;">apiguardian-api-1.1.2.jar</td>
 <td style="text-align: right;">6.8 kB</td>
 <td style="text-align: right;">9</td>
@@ -1173,7 +1202,7 @@ writes to specify Java code for type-checking by the Checker Framework.</p>
 <td style="text-align: right;">2</td>
 <td style="text-align: center;">1.6</td>
 <td style="text-align: center;">Yes</td></tr>
-<tr class="b">
+<tr class="a">
 <td style="text-align: left;">checker-qual-3.42.0.jar</td>
 <td style="text-align: right;">230.8 kB</td>
 <td style="text-align: right;">438</td>
@@ -1181,7 +1210,7 @@ writes to specify Java code for type-checking by the Checker Framework.</p>
 <td style="text-align: right;">30</td>
 <td style="text-align: center;">1.8</td>
 <td style="text-align: center;">Yes</td></tr>
-<tr class="a">
+<tr class="b">
 <td style="text-align: left;">junit-jupiter-api-5.11.4.jar</td>
 <td style="text-align: right;">216.4 kB</td>
 <td style="text-align: right;">197</td>
@@ -1189,7 +1218,7 @@ writes to specify Java code for type-checking by the Checker Framework.</p>
 <td style="text-align: right;">8</td>
 <td style="text-align: center;">1.8</td>
 <td style="text-align: center;">Yes</td></tr>
-<tr class="b">
+<tr class="a">
 <td style="text-align: left;">junit-jupiter-engine-5.11.4.jar</td>
 <td style="text-align: right;">260.1 kB</td>
 <td style="text-align: right;">152</td>
@@ -1197,7 +1226,7 @@ writes to specify Java code for type-checking by the Checker Framework.</p>
 <td style="text-align: right;">9</td>
 <td style="text-align: center;">1.8</td>
 <td style="text-align: center;">Yes</td></tr>
-<tr class="a">
+<tr class="b">
 <td style="text-align: left;">junit-jupiter-params-5.11.4.jar</td>
 <td style="text-align: right;">591.6 kB</td>
 <td style="text-align: right;">388</td>
@@ -1205,7 +1234,7 @@ writes to specify Java code for type-checking by the Checker Framework.</p>
 <td style="text-align: right;">22</td>
 <td style="text-align: center;">1.8</td>
 <td style="text-align: center;">Yes</td></tr>
-<tr class="b">
+<tr class="a">
 <td style="text-align: left;">junit-platform-commons-1.11.4.jar</td>
 <td style="text-align: right;">142 kB</td>
 <td style="text-align: right;">88</td>
@@ -1213,7 +1242,7 @@ writes to specify Java code for type-checking by the Checker Framework.</p>
 <td style="text-align: right;">-</td>
 <td style="text-align: center;">-</td>
 <td style="text-align: center;">-</td></tr>
-<tr class="a">
+<tr class="b">
 <td style="text-align: left;">&#160;&#160;&#160;&#x2022; Root</td>
 <td style="text-align: right;">-</td>
 <td style="text-align: right;">78</td>
@@ -1221,7 +1250,7 @@ writes to specify Java code for type-checking by the Checker Framework.</p>
 <td style="text-align: right;">8</td>
 <td style="text-align: center;">1.8</td>
 <td style="text-align: center;">Yes</td></tr>
-<tr class="b">
+<tr class="a">
 <td style="text-align: left;">&#160;&#160;&#160;&#x2022; Versioned</td>
 <td style="text-align: right;">-</td>
 <td style="text-align: right;">10</td>
@@ -1229,7 +1258,7 @@ writes to specify Java code for type-checking by the Checker Framework.</p>
 <td style="text-align: right;">1</td>
 <td style="text-align: center;">9</td>
 <td style="text-align: center;">Yes</td></tr>
-<tr class="a">
+<tr class="b">
 <td style="text-align: left;">junit-platform-engine-1.11.4.jar</td>
 <td style="text-align: right;">246.8 kB</td>
 <td style="text-align: right;">177</td>
@@ -1237,7 +1266,7 @@ writes to specify Java code for type-checking by the Checker Framework.</p>
 <td style="text-align: right;">10</td>
 <td style="text-align: center;">1.8</td>
 <td style="text-align: center;">Yes</td></tr>
-<tr class="b">
+<tr class="a">
 <td style="text-align: left;">opentest4j-1.3.0.jar</td>
 <td style="text-align: right;">14.3 kB</td>
 <td style="text-align: right;">15</td>
@@ -1245,7 +1274,7 @@ writes to specify Java code for type-checking by the Checker Framework.</p>
 <td style="text-align: right;">2</td>
 <td style="text-align: center;">1.6</td>
 <td style="text-align: center;">Yes</td></tr>
-<tr class="a">
+<tr class="b">
 <td style="text-align: left;">lombok-1.18.36.jar</td>
 <td style="text-align: right;">2.1 MB</td>
 <td style="text-align: right;">1083</td>
@@ -1253,7 +1282,7 @@ writes to specify Java code for type-checking by the Checker Framework.</p>
 <td style="text-align: right;">13</td>
 <td style="text-align: center;">1.6</td>
 <td style="text-align: center;">Yes</td></tr>
-<tr class="b">
+<tr class="a">
 <td style="text-align: left;">jcl-over-slf4j-2.0.13.jar</td>
 <td style="text-align: right;">18.4 kB</td>
 <td style="text-align: right;">26</td>
@@ -1261,7 +1290,7 @@ writes to specify Java code for type-checking by the Checker Framework.</p>
 <td style="text-align: right;">-</td>
 <td style="text-align: center;">-</td>
 <td style="text-align: center;">-</td></tr>
-<tr class="a">
+<tr class="b">
 <td style="text-align: left;">&#160;&#160;&#160;&#x2022; Root</td>
 <td style="text-align: right;">-</td>
 <td style="text-align: right;">24</td>
@@ -1269,7 +1298,7 @@ writes to specify Java code for type-checking by the Checker Framework.</p>
 <td style="text-align: right;">2</td>
 <td style="text-align: center;">1.8</td>
 <td style="text-align: center;">Yes</td></tr>
-<tr class="b">
+<tr class="a">
 <td style="text-align: left;">&#160;&#160;&#160;&#x2022; Versioned</td>
 <td style="text-align: right;">-</td>
 <td style="text-align: right;">2</td>
@@ -1277,7 +1306,7 @@ writes to specify Java code for type-checking by the Checker Framework.</p>
 <td style="text-align: right;">1</td>
 <td style="text-align: center;">9</td>
 <td style="text-align: center;">No</td></tr>
-<tr class="a">
+<tr class="b">
 <td style="text-align: left;">slf4j-api-2.0.13.jar</td>
 <td style="text-align: right;">68.6 kB</td>
 <td style="text-align: right;">70</td>
@@ -1285,7 +1314,7 @@ writes to specify Java code for type-checking by the Checker Framework.</p>
 <td style="text-align: right;">-</td>
 <td style="text-align: center;">-</td>
 <td style="text-align: center;">-</td></tr>
-<tr class="b">
+<tr class="a">
 <td style="text-align: left;">&#160;&#160;&#160;&#x2022; Root</td>
 <td style="text-align: right;">-</td>
 <td style="text-align: right;">68</td>
@@ -1293,7 +1322,7 @@ writes to specify Java code for type-checking by the Checker Framework.</p>
 <td style="text-align: right;">4</td>
 <td style="text-align: center;">1.8</td>
 <td style="text-align: center;">Yes</td></tr>
-<tr class="a">
+<tr class="b">
 <td style="text-align: left;">&#160;&#160;&#160;&#x2022; Versioned</td>
 <td style="text-align: right;">-</td>
 <td style="text-align: right;">2</td>
@@ -1301,7 +1330,7 @@ writes to specify Java code for type-checking by the Checker Framework.</p>
 <td style="text-align: right;">1</td>
 <td style="text-align: center;">9</td>
 <td style="text-align: center;">No</td></tr>
-<tr class="b">
+<tr class="a">
 <th>Total</th>
 <th>Size</th>
 <th>Entries</th>
@@ -1309,15 +1338,15 @@ writes to specify Java code for type-checking by the Checker Framework.</p>
 <th>Packages</th>
 <th>Java Version</th>
 <th>Debug Information</th></tr>
-<tr class="a">
-<td style="text-align: right;">39</td>
-<td style="text-align: right;">51.3 MB</td>
+<tr class="b">
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">51.4 MB</td>
 <td style="text-align: right;">21142</td>
 <td style="text-align: right;">14832</td>
 <td style="text-align: right;">603</td>
 <td style="text-align: center;">11</td>
 <td style="text-align: right;">36</td></tr>
-<tr class="b">
+<tr class="a">
 <td style="text-align: right;">compile: 31</td>
 <td style="text-align: right;">compile: 47.8 MB</td>
 <td style="text-align: right;">compile: 19033</td>
@@ -1325,15 +1354,15 @@ writes to specify Java code for type-checking by the Checker Framework.</p>
 <td style="text-align: right;">compile: 529</td>
 <td rowspan="2" style="text-align: center; vertical-align: middle;">11</td>
 <td style="text-align: right;">compile: 28</td></tr>
-<tr class="a">
+<tr class="b">
 <td style="text-align: right;">provided: 1</td>
 <td style="text-align: right;">provided: 2.1 MB</td>
 <td style="text-align: right;">provided: 1083</td>
 <td style="text-align: right;">provided: 178</td>
 <td style="text-align: right;">provided: 13</td>
 <td style="text-align: right;">provided: 1</td></tr>
-<tr class="b">
-<td style="text-align: right;">test: 7</td>
+<tr class="a">
+<td style="text-align: right;">test: 8</td>
 <td style="text-align: right;">test: 1.5 MB</td>
 <td style="text-align: right;">test: 1026</td>
 <td style="text-align: right;">test: 905</td>
