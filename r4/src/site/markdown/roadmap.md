@@ -1,3 +1,6 @@
+keywords: roadmap, supported features, upcoming
+description: Roadmap
+
 # 🚧 Roadmap
 
 | Field Name                     | Status | Translator                             | Notes |

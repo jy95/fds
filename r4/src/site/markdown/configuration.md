@@ -1,4 +1,9 @@
+keywords: config, configuration, setup
+description: How to customize the library?
+
 # ⚙️ Configuration
+
+<!-- MACRO{toc|fromDepth=1|toDepth=2|id=toc} -->
 
 This page provides details on configuring the library with [`FDSConfigR4`](./apidocs/io/github/jy95/fds/r4/config/FDSConfigR4.html) class.
 
