@@ -52,7 +52,7 @@ public class MaxDosePerPeriodR5 implements MaxDosePerPeriod<FDSConfigR5, Dosage>
                 .stream()
                 .map(ratio -> RatioToStringR5.getInstance().convert(bundle, config, ratio))
                 .collect(Collectors.toList());
-        
+
         return CompletableFuture
                 .allOf(ratioFutures.toArray(CompletableFuture[]::new))
                 .thenApplyAsync(v -> {
