@@ -15,12 +15,12 @@
     <link rel="stylesheet" href="./css/site.css" />
     <link rel="stylesheet" href="./css/print.css" media="print" />
     <script src="./js/apache-maven-fluido-2.0.1.min.js"></script>
-  </head>
+<meta name="keywords" content="config, configuration, setup" /><meta name="description" content="How to customize the library?" />  </head>
   <body>
     <div class="container-fluid container-fluid-top">
       <header>
         <div id="banner">
-          <div class="pull-left"></div>
+          <div class="pull-left"><div id="bannerLeft"><h1><a href="https://github.com/jy95/fds/r4">FHIR Dosage Support - R4</a></h1></div></div>
           <div class="pull-right"></div>
           <div class="clear"><hr/></div>
         </div>
@@ -61,6 +61,15 @@
         <main id="bodyColumn" class="span10">
 <section><a id="a.E2.9A.99.EF.B8.8F_Configuration"></a>
 <h1>&#x2699;&#xfe0f; Configuration</h1>
+<ul id="toc">
+<li><a href="#a.E2.9A.99.EF.B8.8F_Configuration">&#x2699;&#xfe0f; Configuration</a>
+<ul>
+<li><a href="#fromCodeableConceptToString">fromCodeableConceptToString</a></li>
+<li><a href="#fromExtensionsToString">fromExtensionsToString</a></li>
+<li><a href="#fromFHIRQuantityUnitToString">fromFHIRQuantityUnitToString</a></li>
+<li><a href="#selectDosageAndRateField">selectDosageAndRateField</a></li>
+<li><a href="#hasMatchingComponent">hasMatchingComponent</a></li></ul></li></ul>
+
 <p>This page provides details on configuring the library with <a href="./apidocs/io/github/jy95/fds/r4/config/FDSConfigR4.html"><code>FDSConfigR4</code></a> class.</p><section><a id="fromCodeableConceptToString"></a>
 <h2>fromCodeableConceptToString</h2>
 <p>Converts a FHIR <code>CodeableConcept</code> to a string representation.</p><section><a id="Why_this_method_exists"></a>
