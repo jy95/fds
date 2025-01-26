@@ -1,3 +1,6 @@
+keywords: faq, question, frequently asked questions
+description: Frequently Asked Questions
+
 # ❓ FAQ
 
 <details>
