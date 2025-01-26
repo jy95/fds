@@ -1,4 +1,4 @@
-# FAQ
+# ❓ FAQ
 
 <details>
     <summary>How can I customize the default behavior of the library ?</summary>

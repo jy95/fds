@@ -1,4 +1,4 @@
-# Getting Started
+# ⚡ Getting Started
 
 1. Add the library as a dependency to your project. You can find instructions about it on [Maven Coordinates page](./dependency-info.html)
 2. Use the library in your Java code

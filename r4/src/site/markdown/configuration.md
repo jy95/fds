@@ -1,4 +1,4 @@
-# Configuration
+# ⚙️ Configuration
 
 This page provides details on configuring the library with [`FDSConfigR4`](./apidocs/io/github/jy95/fds/r4/config/FDSConfigR4.html) class.
 
