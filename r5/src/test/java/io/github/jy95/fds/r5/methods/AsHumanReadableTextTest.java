@@ -93,13 +93,12 @@ public class AsHumanReadableTextTest extends AbstractFhirTest {
     private static Dosage getThirdDosage() {
         Dosage dosage = new Dosage();
         Timing timing = new Timing();
-        BooleanType asNeeded = new BooleanType(true);
         dosage.setSequence(2);
         Timing.TimingRepeatComponent repeatComponent = new Timing.TimingRepeatComponent();
         repeatComponent.setCount(1);
         timing.setRepeat(repeatComponent);
         dosage.setTiming(timing);
-        dosage.setAsNeeded(asNeeded);
+        dosage.setAsNeeded(true);
         return dosage;
     }
 

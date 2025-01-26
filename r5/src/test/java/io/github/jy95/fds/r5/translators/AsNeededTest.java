@@ -17,9 +17,7 @@ public class AsNeededTest extends AbstractAsNeededTest<FDSConfigR5, Dosage> {
     @Override
     public Dosage generateAsNeededBoolean() {
         Dosage dosage = new Dosage();
-        BooleanType flag = new BooleanType();
-        flag.setValue(Boolean.TRUE);
-        dosage.setAsNeeded(flag);
+        dosage.setAsNeeded(true);
         return dosage;
     }
 
@@ -28,7 +26,7 @@ public class AsNeededTest extends AbstractAsNeededTest<FDSConfigR5, Dosage> {
         Dosage dosage = new Dosage();
         CodeableConcept neededFor = new CodeableConcept();
         neededFor.setText("head pain");
-        dosage.setAsNeeded(neededFor);
+        dosage.setAsNeededFor(List.of(neededFor));
         return dosage;
     }
 

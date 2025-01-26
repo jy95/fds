@@ -25,7 +25,7 @@ public class MaxDosePerPeriodTest extends AbstractMaxDosePerPeriodTest<FDSConfig
         denominator.setCode("d");
         denominator.setSystem("http://hl7.org/fhir/ValueSet/units-of-time");
         ratio.setDenominator(denominator);
-        dosage.setMaxDosePerPeriod(ratio);
+        dosage.setMaxDosePerPeriod(List.of(ratio));
         return dosage;
     }
 
