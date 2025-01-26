@@ -10,7 +10,7 @@ import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * Interface for translating fields related to the "as needed" / "as needed for" concepts .
+ * Interface for translating fields related to the "as needed" / "as needed for" concepts.
  *
  * @param <C> the type of configuration, which must extend {@link io.github.jy95.fds.common.config.FDSConfig}
  * @param <D> the type of data to be translated

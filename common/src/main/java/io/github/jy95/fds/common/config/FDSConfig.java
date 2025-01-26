@@ -13,7 +13,7 @@ import java.util.function.Function;
 import io.github.jy95.fds.common.types.DisplayOrder;
 
 /**
- * Configuration class for controlling how dosage are handled and displayed.
+ * Configuration class for controlling how dosages are handled and displayed.
  *
  * @author jy95
  */
@@ -22,7 +22,7 @@ import io.github.jy95.fds.common.types.DisplayOrder;
 public class FDSConfig {
     /**
      * Locale to return the humanized dosage string
-     * Default : English
+     * Default: English
      */
     @Builder.Default private Locale locale = Locale.ENGLISH;
     /**
