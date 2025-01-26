@@ -5,11 +5,8 @@ import io.github.jy95.fds.common.types.DosageAPI;
 import io.github.jy95.fds.r5.DosageAPIR5;
 import io.github.jy95.fds.r5.config.FDSConfigR5;
 import io.github.jy95.fds.translators.AbstractDoseQuantityTest;
-import org.hl7.fhir.r5.model.CodeableConcept;
-import org.hl7.fhir.r5.model.Coding;
-import org.hl7.fhir.r5.model.Dosage;
+import org.hl7.fhir.r5.model.*;
 import org.hl7.fhir.r5.model.Dosage.DosageDoseAndRateComponent;
-import org.hl7.fhir.r5.model.Quantity;
 
 import java.util.List;
 import java.util.Locale;
@@ -32,7 +29,7 @@ public class DoseQuantityTest extends AbstractDoseQuantityTest<FDSConfigR5, Dosa
         Dosage dosage = new Dosage();
         Quantity quantity1 = new Quantity(5);
         quantity1.setUnit("ml");
-        quantity1.setComparator(Quantity.QuantityComparator.LESS_THAN);
+        quantity1.setComparator(Enumerations.QuantityComparator.LESS_THAN);
         DosageDoseAndRateComponent doseAndRateComponent1 = new DosageDoseAndRateComponent();
         doseAndRateComponent1.setDose(quantity1);
         dosage.setDoseAndRate(List.of(doseAndRateComponent1));

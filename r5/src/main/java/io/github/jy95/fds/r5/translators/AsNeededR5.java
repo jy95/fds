@@ -63,7 +63,7 @@ public class AsNeededR5 implements AsNeeded<FDSConfigR5, Dosage> {
     /** {@inheritDoc} */
     @Override
     public boolean isPresent(Dosage dosage) {
-        return dosage.hasAsNeeded();
+        return dosage.hasAsNeeded() || hasCodeableConcepts(dosage);
     }
 
     /** {@inheritDoc} */

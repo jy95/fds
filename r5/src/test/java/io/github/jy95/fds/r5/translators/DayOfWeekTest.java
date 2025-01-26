@@ -6,6 +6,7 @@ import io.github.jy95.fds.r5.DosageAPIR5;
 import io.github.jy95.fds.r5.config.FDSConfigR5;
 import io.github.jy95.fds.translators.AbstractDayOfWeekTest;
 import org.hl7.fhir.r5.model.Dosage;
+import org.hl7.fhir.r5.model.Enumerations;
 import org.hl7.fhir.r5.model.Timing;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public class DayOfWeekTest extends AbstractDayOfWeekTest<FDSConfigR5, Dosage> {
         Dosage dosage = new Dosage();
         Timing timing = new Timing();
         Timing.TimingRepeatComponent repeatComponent = new Timing.TimingRepeatComponent();
-        repeatComponent.addDayOfWeek(Timing.DayOfWeek.FRI);
+        repeatComponent.addDayOfWeek(Enumerations.DaysOfWeek.FRI);
         timing.setRepeat(repeatComponent);
         dosage.setTiming(timing);
         return dosage;
@@ -29,8 +30,8 @@ public class DayOfWeekTest extends AbstractDayOfWeekTest<FDSConfigR5, Dosage> {
         Dosage dosage = new Dosage();
         Timing timing = new Timing();
         Timing.TimingRepeatComponent repeatComponent = new Timing.TimingRepeatComponent();
-        repeatComponent.addDayOfWeek(Timing.DayOfWeek.MON);
-        repeatComponent.addDayOfWeek(Timing.DayOfWeek.FRI);
+        repeatComponent.addDayOfWeek(Enumerations.DaysOfWeek.MON);
+        repeatComponent.addDayOfWeek(Enumerations.DaysOfWeek.FRI);
         timing.setRepeat(repeatComponent);
         dosage.setTiming(timing);
         return dosage;
