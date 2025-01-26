@@ -7,6 +7,7 @@ import org.hl7.fhir.r5.model.Dosage;
 
 import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
 
 /**
  * R5 class for translating "additionalInstruction".
@@ -33,7 +34,7 @@ public class AdditionalInstructionR5 implements AdditionalInstruction<FDSConfigR
                 .getAdditionalInstruction()
                 .stream()
                 .map(config::fromCodeableConceptToString)
-                .toList();
+                .collect(Collectors.toList());
 
         return instructionsFuture(additionalInstructions, bundle);
     }
