@@ -249,7 +249,7 @@
                                 </goals>
                             </execution>
                         </executions>
-                        <!-- Or run mvn javadoc:fix before release -->
+                        <!-- Or run mvn Javadoc:fix before release -->
                         <configuration>
                             <doclint>none</doclint>
                         </configuration>
