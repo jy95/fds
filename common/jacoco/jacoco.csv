@@ -9,8 +9,8 @@ FHIR Dosage Support - Common,io.github.jy95.fds.common.translators,FrequencyFreq
 FHIR Dosage Support - Common,io.github.jy95.fds.common.translators,BoundsDuration,10,0,0,0,2,0,1,0,1,0
 FHIR Dosage Support - Common,io.github.jy95.fds.common.translators,DayOfWeek,10,0,0,0,2,0,1,0,1,0
 FHIR Dosage Support - Common,io.github.jy95.fds.common.translators,RateQuantity,10,0,0,0,2,0,1,0,1,0
-FHIR Dosage Support - Common,io.github.jy95.fds.common.translators,CountCountMax,20,0,0,0,4,0,2,0,2,0
 FHIR Dosage Support - Common,io.github.jy95.fds.common.translators,BoundsPeriod,54,0,10,0,8,0,7,0,2,0
+FHIR Dosage Support - Common,io.github.jy95.fds.common.translators,CountCountMax,20,0,0,0,4,0,2,0,2,0
 FHIR Dosage Support - Common,io.github.jy95.fds.common.translators,RateRatio,10,0,0,0,2,0,1,0,1,0
 FHIR Dosage Support - Common,io.github.jy95.fds.common.translators,AdditionalInstruction,28,0,0,0,8,0,4,0,4,0
 FHIR Dosage Support - Common,io.github.jy95.fds.common.translators,MaxDosePerAdministration,10,0,0,0,2,0,1,0,1,0
