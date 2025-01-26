@@ -1,26 +1,26 @@
-package io.github.jy95.fds.r4.translators;
+package io.github.jy95.fds.r5.translators;
 
 import io.github.jy95.fds.common.translators.AdditionalInstruction;
-import io.github.jy95.fds.r4.config.FDSConfigR4;
+import io.github.jy95.fds.r5.config.FDSConfigR5;
 import lombok.RequiredArgsConstructor;
-import org.hl7.fhir.r4.model.Dosage;
+import org.hl7.fhir.r5.model.Dosage;
 
 import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 /**
- * R4 class for translating "additionalInstruction".
+ * R5 class for translating "additionalInstruction".
  *
  * @author jy95
  */
 @RequiredArgsConstructor
-public class AdditionalInstructionR4 implements AdditionalInstruction<FDSConfigR4, Dosage> {
+public class AdditionalInstructionR5 implements AdditionalInstruction<FDSConfigR5, Dosage> {
 
     /**
      * The configuration object used by this API.
      */
-    private final FDSConfigR4 config;
+    private final FDSConfigR5 config;
 
     /**
      * The resource bundle containing localized strings for translation.

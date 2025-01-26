@@ -1,10 +1,10 @@
-package io.github.jy95.fds.r4.translators;
+package io.github.jy95.fds.r5.translators;
 
 import com.ibm.icu.text.MessageFormat;
 import io.github.jy95.fds.common.functions.ListToString;
 import io.github.jy95.fds.common.translators.DayOfWeek;
-import io.github.jy95.fds.r4.config.FDSConfigR4;
-import org.hl7.fhir.r4.model.Dosage;
+import io.github.jy95.fds.r5.config.FDSConfigR5;
+import org.hl7.fhir.r5.model.Dosage;
 
 import java.util.List;
 import java.util.Map;
@@ -13,11 +13,11 @@ import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 /**
- * R4 class for translating "timing.repeat.dayOfWeek"
+ * R5 class for translating "timing.repeat.dayOfWeek"
  *
  * @author jy95
  */
-public class DayOfWeekR4 implements DayOfWeek<FDSConfigR4, Dosage> {
+public class DayOfWeekR5 implements DayOfWeek<FDSConfigR5, Dosage> {
 
     // Translations
     /** MessageFormat instance used for "dayOfWeek" translation. */
@@ -26,7 +26,7 @@ public class DayOfWeekR4 implements DayOfWeek<FDSConfigR4, Dosage> {
     /**
      * The configuration object used by this API.
      */
-    private final FDSConfigR4 config;
+    private final FDSConfigR5 config;
 
     /**
      * The resource bundle containing localized strings for translation.
@@ -34,12 +34,12 @@ public class DayOfWeekR4 implements DayOfWeek<FDSConfigR4, Dosage> {
     private final ResourceBundle bundle;
 
     /**
-     * Constructor for {@code DayOfWeekR4}.
+     * Constructor for {@code DayOfWeekR5}.
      *
      * @param config The configuration object used for translation.
      * @param bundle a {@link java.util.ResourceBundle} object
      */
-    public DayOfWeekR4(FDSConfigR4 config, ResourceBundle bundle) {
+    public DayOfWeekR5(FDSConfigR5 config, ResourceBundle bundle) {
         this.config = config;
         this.bundle = bundle;
         this.dayOfWeekMsg = getDayOfWeekMsg(bundle, config.getLocale());

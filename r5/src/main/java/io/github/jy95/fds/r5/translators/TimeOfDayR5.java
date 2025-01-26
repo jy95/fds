@@ -1,11 +1,11 @@
-package io.github.jy95.fds.r4.translators;
+package io.github.jy95.fds.r5.translators;
 
 import com.ibm.icu.text.MessageFormat;
 import io.github.jy95.fds.common.functions.ListToString;
 import io.github.jy95.fds.common.translators.TimeOfDay;
-import io.github.jy95.fds.r4.config.FDSConfigR4;
-import org.hl7.fhir.r4.model.Dosage;
-import org.hl7.fhir.r4.model.PrimitiveType;
+import io.github.jy95.fds.r5.config.FDSConfigR5;
+import org.hl7.fhir.r5.model.Dosage;
+import org.hl7.fhir.r5.model.PrimitiveType;
 
 import java.util.List;
 import java.util.Map;
@@ -14,11 +14,11 @@ import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 /**
- * R4 class for translating "timing.repeat.timeOfDay"
+ * R5 class for translating "timing.repeat.timeOfDay"
  *
  * @author jy95
  */
-public class TimeOfDayR4 implements TimeOfDay<FDSConfigR4, Dosage> {
+public class TimeOfDayR5 implements TimeOfDay<FDSConfigR5, Dosage> {
 
     // Translations
     /** MessageFormat instance used for "timeOfDay" translation. */
@@ -30,12 +30,12 @@ public class TimeOfDayR4 implements TimeOfDay<FDSConfigR4, Dosage> {
     private final ResourceBundle bundle;
 
     /**
-     * Constructor for {@code TimeOfDayR4}.
+     * Constructor for {@code TimeOfDayR5}.
      *
      * @param config The configuration object used for translation.
      * @param bundle a {@link java.util.ResourceBundle} object
      */
-    public TimeOfDayR4(FDSConfigR4 config, ResourceBundle bundle) {
+    public TimeOfDayR5(FDSConfigR5 config, ResourceBundle bundle) {
         this.timeOfDayMsg = getTimeOfDayMsg(bundle, config.getLocale());
         this.bundle = bundle;
     }

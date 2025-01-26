@@ -7,6 +7,7 @@ import io.github.jy95.fds.common.types.Translator;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
 
 /**
  * An interface for translating "additionalInstruction".
@@ -40,7 +41,7 @@ public interface AdditionalInstruction<C extends FDSConfig, D> extends Translato
                     var additionalInstructionsAsText = additionalInstructions
                             .stream()
                             .map(future -> future.getNow(""))
-                            .toList();
+                            .collect(Collectors.toList());
 
                     // Use ListToString.convert with the translators' resources
                     return ListToString.convert(bundle, additionalInstructionsAsText);

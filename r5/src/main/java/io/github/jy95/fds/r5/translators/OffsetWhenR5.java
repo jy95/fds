@@ -1,12 +1,12 @@
-package io.github.jy95.fds.r4.translators;
+package io.github.jy95.fds.r5.translators;
 
 import com.ibm.icu.text.MessageFormat;
 import io.github.jy95.fds.common.functions.ListToString;
 import io.github.jy95.fds.common.translators.OffsetWhen;
-import io.github.jy95.fds.r4.config.FDSConfigR4;
+import io.github.jy95.fds.r5.config.FDSConfigR5;
 import lombok.RequiredArgsConstructor;
-import org.hl7.fhir.r4.model.Dosage;
-import org.hl7.fhir.r4.model.Enumeration;
+import org.hl7.fhir.r5.model.Dosage;
+import org.hl7.fhir.r5.model.Enumeration;
 
 import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
@@ -14,12 +14,12 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * R4 class for translating "timing.repeat.offset" / "timing.repeat.when"
+ * R5 class for translating "timing.repeat.offset" / "timing.repeat.when"
  *
  * @author jy95
  */
 @RequiredArgsConstructor
-public class OffsetWhenR4 implements OffsetWhen<FDSConfigR4, Dosage> {
+public class OffsetWhenR5 implements OffsetWhen<FDSConfigR5, Dosage> {
 
     /**
      * The resource bundle containing localized strings for translation.
