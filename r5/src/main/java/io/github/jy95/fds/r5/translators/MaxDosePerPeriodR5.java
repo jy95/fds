@@ -1,6 +1,7 @@
 package io.github.jy95.fds.r5.translators;
 
 import com.ibm.icu.text.MessageFormat;
+import io.github.jy95.fds.common.functions.ListToString;
 import io.github.jy95.fds.common.translators.MaxDosePerPeriod;
 import io.github.jy95.fds.r5.config.FDSConfigR5;
 import io.github.jy95.fds.r5.functions.RatioToStringR5;
@@ -8,6 +9,7 @@ import org.hl7.fhir.r5.model.Dosage;
 
 import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
 
 /**
  * R5 class for translating "maxDosePerPeriod"
@@ -45,13 +47,21 @@ public class MaxDosePerPeriodR5 implements MaxDosePerPeriod<FDSConfigR5, Dosage>
     /** {@inheritDoc} */
     @Override
     public CompletableFuture<String> convert(Dosage dosage) {
-        var ratio = dosage.getMaxDosePerPeriod();
-
-        // TODO
-
-        return RatioToStringR5
-                .getInstance()
-                .convert(bundle, config, ratio)
+        var ratioFutures = dosage
+                .getMaxDosePerPeriod()
+                .stream()
+                .map(ratio -> RatioToStringR5.getInstance().convert(bundle, config, ratio))
+                .collect(Collectors.toList());
+        
+        return CompletableFuture
+                .allOf(ratioFutures.toArray(CompletableFuture[]::new))
+                .thenApplyAsync(v -> {
+                    var ratioTexts = ratioFutures
+                            .stream()
+                            .map(future -> future.getNow(""))
+                            .collect(Collectors.toList());
+                    return ListToString.convert(bundle, ratioTexts);
+                })
                 .thenApplyAsync((ratioText) -> maxDosePerPeriodMsg.format(new Object[] { ratioText }));
     }
 
