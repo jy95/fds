@@ -7,7 +7,25 @@ on:
   workflow_dispatch:
 
 jobs:
-  build_and_test:
+  support_java_lts_versions:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java: [11, 17, 21]
+    steps:
+      - uses: actions/checkout@v4
+      - name: ☕ Set up JDK ${{ matrix.java }}
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ matrix.java }}
+          distribution: 'temurin'
+          cache: 'maven'
+      - name: 📦 Install dependencies
+        run: mvn -P test install
+      - name: 🧪 Run tests with coverage
+        run: mvn -P test test
+
+  codacy_coverage:
     runs-on: ubuntu-latest
     permissions:
       contents: write
