@@ -35,7 +35,7 @@ public final class ListToString {
         // Build the first part of the string (all except the last item)
 <span class="nc" id="L36">        String firstString = String.join(&quot;, &quot;, list.subList(0, list.size() - 1));</span>
         // Get the last part of the string (the last item)
-<span class="nc" id="L38">        String lastString = list.getLast();</span>
+<span class="nc" id="L38">        String lastString = list.get(list.size() - 1);</span>
 
         // Get the translated link word via delegate
 <span class="nc" id="L41">        String linkWordTranslation = getLinkWordTranslation(bundle, linkWord);</span>
