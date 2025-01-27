@@ -124,7 +124,7 @@ public final class DefaultImplementationsR5 {
      */
     public static DataType selectDosageAndRateField(List&lt;Dosage.DosageDoseAndRateComponent&gt; doseAndRateComponentList, DoseAndRateKey doseAndRateKey) {
 <span class="fc" id="L126">        var extractor = DoseAndRateRegistryR5.getInstance().getExtractor(doseAndRateKey);</span>
-<span class="fc" id="L127">        var firstRep = doseAndRateComponentList.getFirst();</span>
+<span class="fc" id="L127">        var firstRep = doseAndRateComponentList.get(0);</span>
 <span class="fc" id="L128">        return extractor.extract(firstRep);</span>
     }
 
