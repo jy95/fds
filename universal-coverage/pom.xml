@@ -9,7 +9,7 @@
     <artifactId>universal-coverage</artifactId>
     <packaging>pom</packaging>
 
-    <name>${project.name} - Universal Coverage</name>
+    <name>${lib.name} - Universal Coverage</name>
     <description>A comprehensive module for handling global coverage, ensuring seamless integration with FHIR R4 and R5 standards.</description>
 
     <dependencies>

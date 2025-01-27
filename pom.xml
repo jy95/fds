@@ -6,7 +6,7 @@
     <groupId>io.github.jy95.fds</groupId>
     <artifactId>fhir-dosage-support</artifactId>
     <version>${revision}</version>
-    <name>${project.name}</name>
+    <name>${lib.name}</name>
     <description>Turn FHIR Dosage into human-readable text in your wanted language and much more</description>
     <packaging>pom</packaging>
 
@@ -49,7 +49,7 @@
     </scm>
 
     <properties>
-        <project.name>FHIR Dosage Support</project.name>
+        <lib.name>FHIR Dosage Support</lib.name>
         <!-- https://maven.apache.org/guides/mini/guide-maven-ci-friendly.html -->
         <revision>1.0.0</revision>
         <java.version>11</java.version>

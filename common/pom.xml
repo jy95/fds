@@ -7,7 +7,7 @@
         <version>${revision}</version>
     </parent>
     <artifactId>common</artifactId>
-    <name>${project.name} - Common</name>
+    <name>${lib.name} - Common</name>
     <description>Shared utilities and foundational components for handling FHIR Dosage transformation and processing.</description>
 
     <build>
