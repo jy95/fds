@@ -124,7 +124,7 @@ public final class DefaultImplementationsR4 {
      */
     public static Type selectDosageAndRateField(List<Dosage.DosageDoseAndRateComponent> doseAndRateComponentList, DoseAndRateKey doseAndRateKey) {
         var extractor = DoseAndRateRegistryR4.getInstance().getExtractor(doseAndRateKey);
-        var firstRep = doseAndRateComponentList.getFirst();
+        var firstRep = doseAndRateComponentList.get(0);
         return extractor.extract(firstRep);
     }
 

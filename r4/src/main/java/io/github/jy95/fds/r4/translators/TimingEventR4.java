@@ -55,7 +55,7 @@ public class TimingEventR4 implements TimingEvent<FDSConfigR4, Dosage> {
     /** {@inheritDoc} */
     @Override
     public List<String> getEvents(Dosage dosage) {
-        DateTimeType[] events = dosage.getTiming().getEvent().toArray(DateTimeType[]::new);
+        var events = dosage.getTiming().getEvent();
         return FormatDateTimesR4.getInstance().convert(config.getLocale(), events);
     }
 

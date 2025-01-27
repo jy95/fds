@@ -29,9 +29,9 @@ public interface FormatDateTimes<T> {
      * @param dates  The date or time objects to format.
      * @return A list of human-readable string representations of the dates or times.
      */
-    default List<String> convert(Locale locale, T... dates) {
-        return Arrays
-                .stream(dates)
+    default List<String> convert(Locale locale, List<T> dates) {
+        return dates
+                .stream()
                 .map(date -> convert(locale, date))
                 .collect(Collectors.toList());
     }

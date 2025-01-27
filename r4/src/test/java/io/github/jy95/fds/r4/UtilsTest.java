@@ -62,7 +62,7 @@ public class UtilsTest {
         );
         List<List<Dosage>> groups = SequenceUtils.groupBySequence(dosages, Dosage::getSequence);
         assertEquals(3, groups.size());
-        assertEquals(dosages.getFirst(), groups.getFirst().getFirst());
+        assertEquals(dosages.get(0), groups.get(0).get(0));
     }
 
     @Test
