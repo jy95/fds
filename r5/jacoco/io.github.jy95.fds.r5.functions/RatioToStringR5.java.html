@@ -82,7 +82,7 @@ public class RatioToStringR5 implements RatioToString&lt;FDSConfigR5, Ratio&gt; 
         // Where the denominator value is known to be fixed to &quot;1&quot;, Quantity should be used instead of Ratio
 <span class="fc" id="L83">        var denominatorValue = denominator.getValue();</span>
 
-        // For titers cases (e.g. 1:128)
+        // For titers cases (e.g., 1:128)
 <span class="fc bfc" id="L86" title="All 2 branches covered.">        if (!QuantityToStringR5.getInstance().hasUnit(denominator)) {</span>
 <span class="fc" id="L87">            return CompletableFuture.completedFuture(denominatorValue.toString());</span>
         }
