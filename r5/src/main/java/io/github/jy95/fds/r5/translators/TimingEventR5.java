@@ -5,7 +5,6 @@ import io.github.jy95.fds.common.functions.ListToString;
 import io.github.jy95.fds.common.translators.TimingEvent;
 import io.github.jy95.fds.r5.config.FDSConfigR5;
 import io.github.jy95.fds.r5.functions.FormatDateTimesR5;
-import org.hl7.fhir.r5.model.DateTimeType;
 import org.hl7.fhir.r5.model.Dosage;
 
 import java.util.List;

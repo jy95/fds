@@ -69,7 +69,7 @@ public class DayOfWeekR4 implements DayOfWeek<FDSConfigR4, Dosage> {
     }
 
     /**
-     * Translates a single day code into its corresponding day of the week in text.
+     * Translates a single-day code into its corresponding day of the week in text.
      *
      * @param dayCode the code representing the day (e.g., "mon", "tue").
      * @return the translated day of the week as a string.

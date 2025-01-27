@@ -90,7 +90,7 @@ public class PeriodPeriodMaxR5 implements PeriodPeriodMax<FDSConfigR5, Dosage> {
     }
 
     /**
-     * Formats a single period value with its unit.
+     * Formats a single-period value with its unit.
      *
      * @param period The period value.
      * @param unitText The localized unit of the period.

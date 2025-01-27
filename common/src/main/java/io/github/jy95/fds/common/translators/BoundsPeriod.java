@@ -64,7 +64,7 @@ public interface BoundsPeriod<C extends FDSConfig, D> extends TranslatorTiming<C
     boolean hasStartPeriod(D dosage);
 
     /**
-     * Check if dosage has a "end" period
+     * Check if dosage has an "end" period
      *
      * @param dosage the dosage object to check
      * @return True if it is the case, otherwise false

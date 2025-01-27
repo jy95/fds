@@ -104,7 +104,7 @@ public interface RangeToString<C extends FDSConfig, R> {
      * @param bundle   The resource bundle for localization.
      * @param config   The configuration object for additional logic.
      * @param range    The range object.
-     * @param hasLow   Boolean indicating if low value is present.
+     * @param hasLow   Boolean indicating if a low value is present.
      * @param hasHigh  Boolean indicating if high value is present.
      * @return A CompletableFuture that resolves to the unit string.
      */

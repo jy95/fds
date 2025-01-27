@@ -18,7 +18,7 @@ import org.hl7.fhir.r5.model.*;
 import org.hl7.fhir.r5.model.Dosage.DosageDoseAndRateComponent;
 
 /**
- * R5 Configuration class for controlling how dosage are handled and displayed.
+ * R5 Configuration class for controlling how dosage is handled and displayed.
  *
  * @author jy95
  */
