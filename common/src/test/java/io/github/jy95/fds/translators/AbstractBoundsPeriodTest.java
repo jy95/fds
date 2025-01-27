@@ -86,7 +86,10 @@ public abstract class AbstractBoundsPeriodTest<C extends FDSConfig, D> extends A
             assertEquals("bis 07.02.2015, 13:28:17", actual);
         } else {
             // Check across several JDK requires splitting assertions to make them work
-            assertTrue(actual.startsWith("tot 7 feb 2015"));
+            assertTrue(
+                    actual.startsWith("tot 7 feb 2015") ||
+                            actual.startsWith("tot 7 feb. 2015")
+            );
             assertTrue(actual.contains("13:28:17"));
         }
     }
