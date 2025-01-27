@@ -85,10 +85,7 @@ public abstract class AbstractBoundsPeriodTest<C extends FDSConfig, D> extends A
         } else if (locale.equals(Locale.GERMAN)) {
             assertEquals("bis 07.02.2015, 13:28:17", actual);
         } else {
-            // On Eclipse Temurin, it fails as it returns a string without comma
-            // In other words "tot 7 feb 2015 13:28:17"
-            // Whereas on Oracle JDK, it works,
-            // assertEquals("tot 7 feb 2015, 13:28:17", actual);
+            // Check across several JDK requires splitting assertions to make them work
             assertTrue(actual.startsWith("tot 7 feb 2015"));
             assertTrue(actual.contains("13:28:17"));
         }

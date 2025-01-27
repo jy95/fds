@@ -10,6 +10,7 @@ import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public abstract class AbstractTimingEventTest<C extends FDSConfig, D> extends AbstractTranslatorTest<C, D> {
 
@@ -29,22 +30,23 @@ public abstract class AbstractTimingEventTest<C extends FDSConfig, D> extends Ab
         var dosage = generateSingle();
         var dosageUtils = getDosageAPI(locale, DisplayOrder.TIMING_EVENT);
         String result = dosageUtils.asHumanReadableText(dosage).get();
-        String expected = getExpectedSingleDayText(locale);
-        assertEquals(expected, result);
+        assertExpectedSingleDayText(locale, result);
     }
 
     protected abstract D generateSingle();
 
     // For the parametrized test of single form
-    private static String getExpectedSingleDayText(Locale locale) {
+    private static void assertExpectedSingleDayText(Locale locale, String actual) {
         if (locale.equals(Locale.ENGLISH)) {
-            return "on Jan 1, 2024";
+            assertEquals( "on Jan 1, 2024", actual);
         } else if (locale.equals(Locale.FRENCH)) {
-            return "le 1 janv. 2024";
+            assertEquals("le 1 janv. 2024",actual);
         } else if (locale.equals(Locale.GERMAN)) {
-            return "am 01.01.2024";
+            assertEquals("am 01.01.2024", actual);
         } else {
-            return "op 1 jan 2024";
+            // Check across several JDK requires splitting assertions to make them work
+            assertTrue(actual.startsWith("op 1 jan"));
+            assertTrue(actual.endsWith("2024"));
         }
     }
 
@@ -54,22 +56,24 @@ public abstract class AbstractTimingEventTest<C extends FDSConfig, D> extends Ab
         var dosage = generateMultiple();
         var dosageUtils = getDosageAPI(locale, DisplayOrder.TIMING_EVENT);
         String result = dosageUtils.asHumanReadableText(dosage).get();
-        String expected = getExpectedMultipleDaysText(locale);
-        assertEquals(expected, result);
+        assertMultipleDaysText(locale, result);
     }
 
     protected abstract D generateMultiple();
 
     // For the parametrized test of multiple form
-    private String getExpectedMultipleDaysText(Locale locale) {
+    private void assertMultipleDaysText(Locale locale, String actual) {
         if (locale.equals(Locale.ENGLISH)) {
-            return "on Jan 1, 2018, Jun 1, 1973 and Aug 23, 1905";
+            assertEquals("on Jan 1, 2018, Jun 1, 1973 and Aug 23, 1905", actual);
         } else if (locale.equals(Locale.FRENCH)) {
-            return "les 1 janv. 2018, 1 juin 1973 et 23 août 1905";
+            assertEquals("les 1 janv. 2018, 1 juin 1973 et 23 août 1905", actual);
         } else if (locale.equals(Locale.GERMAN)) {
-            return "am 01.01.2018, 01.06.1973 und 23.08.1905";
+            assertEquals("am 01.01.2018, 01.06.1973 und 23.08.1905", actual);
         } else {
-            return "op 1 jan 2018, 1 jun 1973 en 23 aug 1905";
+            assertTrue(
+                    actual.equals("op 1 jan 2018, 1 jun 1973 en 23 aug 1905") ||
+                            actual.equals("op 1 jan. 2018, 1 jun. 1973 en 23 aug. 1905")
+            );
         }
     }
 }
