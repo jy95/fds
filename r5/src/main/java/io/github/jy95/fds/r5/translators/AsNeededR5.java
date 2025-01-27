@@ -6,7 +6,6 @@ import io.github.jy95.fds.common.translators.AsNeeded;
 import io.github.jy95.fds.r5.config.FDSConfigR5;
 import org.hl7.fhir.r5.model.Dosage;
 
-import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
@@ -76,7 +75,7 @@ public class AsNeededR5 implements AsNeeded<FDSConfigR5, Dosage> {
     @Override
     public CompletableFuture<String> convertCodeableConcepts(Dosage dosage) {
         var codes = dosage.getAsNeededFor();
-        // TODO here
+
         var codesFutures = codes
                 .stream()
                 .map(config::fromCodeableConceptToString)

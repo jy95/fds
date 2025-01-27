@@ -35,7 +35,7 @@ public final class ListToString {
         // Build the first part of the string (all except the last item)
         String firstString = String.join(", ", list.subList(0, list.size() - 1));
         // Get the last part of the string (the last item)
-        String lastString = list.getLast();
+        String lastString = list.get(list.size() - 1);
 
         // Get the translated link word via delegate
         String linkWordTranslation = getLinkWordTranslation(bundle, linkWord);

@@ -15,7 +15,7 @@ public final class DefaultImplementations {
     /**
      * No constructor for this class
      */
-    private DefaultImplementations(){};
+    private DefaultImplementations(){}
 
     /**
      * Selects a ResourceBundle for the specified locale using a MultiResourceBundleControl.
