@@ -74,9 +74,14 @@ public abstract class AbstractBoundsPeriodTest<C extends FDSConfig, D> extends A
     // For the parametrized test of second test
     private void assertExpectedText2(Locale locale, String actual) {
         if (locale.equals(Locale.ENGLISH)) {
-            assertEquals("to Feb 7, 2015, 1:28:17 PM", actual);
+            // Check across several JDK requires splitting assertions to make them work
+            assertTrue(actual.startsWith("to Feb 7, 2015"));
+            assertTrue(actual.contains("1:28:17"));
+            assertTrue(actual.endsWith("PM"));
         } else if (locale.equals(Locale.FRENCH)) {
-            assertEquals("jusqu’au 7 févr. 2015, 13:28:17", actual);
+            // Check across several JDK requires splitting assertions to make them work
+            assertTrue(actual.startsWith("jusqu’au 7 févr. 2015"));
+            assertTrue(actual.endsWith("13:28:17"));
         } else if (locale.equals(Locale.GERMAN)) {
             assertEquals("bis 07.02.2015, 13:28:17", actual);
         } else {
@@ -84,7 +89,7 @@ public abstract class AbstractBoundsPeriodTest<C extends FDSConfig, D> extends A
             // In other words "tot 7 feb 2015 13:28:17"
             // Whereas on Oracle JDK, it works,
             // assertEquals("tot 7 feb 2015, 13:28:17", actual);
-            assertTrue(actual.contains("tot 7 feb 2015"));
+            assertTrue(actual.startsWith("tot 7 feb 2015"));
             assertTrue(actual.contains("13:28:17"));
         }
     }
