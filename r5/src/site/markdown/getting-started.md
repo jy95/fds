@@ -10,7 +10,7 @@ Here is a complete code sample to illustrate what the library can do for you :
 
 ```java
 import io.github.jy95.fds.common.types.DisplayOrder;
-import io.github.jy95.fds.r5.DosageAPIR4;
+import io.github.jy95.fds.r5.DosageAPIR5;
 import io.github.jy95.fds.r5.config.FDSConfigR5;
 import org.hl7.fhir.r5.model.Dosage;
 import java.util.List;
@@ -23,7 +23,7 @@ public class Main {
                 .build();
 
         // Create the library with that configuration
-        DosageAPIR4 lib = new DosageAPIR4(configR4);
+        DosageAPIR5 lib = new DosageAPIR5(configR4);
         
         // TODO Your HAPI FHIR Dosage instance you would like to deal with ;)
         Dosage dosage = new Dosage();
