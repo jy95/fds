@@ -134,7 +134,7 @@ public abstract class AbstractBoundsRangeTest<C extends FDSConfig, D> extends Ab
         }
     }
 
-    // For the parametrized test of four test
+    // For the parametrized test of fourth test
     private String getExpectedText4(Locale locale) {
         if (locale.equals(Locale.ENGLISH)) {
             return "for up to 3 days";

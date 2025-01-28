@@ -33,11 +33,11 @@ public class FDSConfigR5 extends FDSConfig implements FDSOperations<
         DataType>  {
 
     // Default implementations, in case not provided by user
-    @Builder.Default private Function<Quantity, CompletableFuture<String>> fromFHIRQuantityUnitToString = DefaultImplementationsR5::fromFHIRQuantityUnitToString;
-    @Builder.Default private Function<CodeableConcept, CompletableFuture<String>> fromCodeableConceptToString = DefaultImplementationsR5::fromCodeableConceptToString;
-    @Builder.Default private Function<List<Extension>, CompletableFuture<String>> fromExtensionsToString = DefaultImplementationsR5::fromExtensionsToString;
-    @Builder.Default private BiFunction<List<DosageDoseAndRateComponent>, DoseAndRateKey, DataType> selectDosageAndRateField = DefaultImplementationsR5::selectDosageAndRateField;
-    @Builder.Default private BiFunction<Dosage, Predicate<Dosage.DosageDoseAndRateComponent>, Boolean> hasMatchingComponent = DefaultImplementationsR5::hasMatchingComponent;
+    @Builder.Default private final Function<Quantity, CompletableFuture<String>> fromFHIRQuantityUnitToString = DefaultImplementationsR5::fromFHIRQuantityUnitToString;
+    @Builder.Default private final Function<CodeableConcept, CompletableFuture<String>> fromCodeableConceptToString = DefaultImplementationsR5::fromCodeableConceptToString;
+    @Builder.Default private final Function<List<Extension>, CompletableFuture<String>> fromExtensionsToString = DefaultImplementationsR5::fromExtensionsToString;
+    @Builder.Default private final BiFunction<List<DosageDoseAndRateComponent>, DoseAndRateKey, DataType> selectDosageAndRateField = DefaultImplementationsR5::selectDosageAndRateField;
+    @Builder.Default private final BiFunction<Dosage, Predicate<Dosage.DosageDoseAndRateComponent>, Boolean> hasMatchingComponent = DefaultImplementationsR5::hasMatchingComponent;
 
     /** {@inheritDoc} */
     @Override

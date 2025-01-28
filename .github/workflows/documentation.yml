@@ -24,7 +24,7 @@ jobs:
           distribution: ${{ env.DISTRIBUTION }}
           cache: 'maven'
           server-id: github
-# Note : scm-publish:publish-scm isn't working here
+# Note: scm-publish:publish-scm isn't working here
       - name: 📦 Build website
         run: mvn -P github clean install site site:stage
       - name: 🤖 Deploy website

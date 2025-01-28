@@ -14,7 +14,7 @@ import java.util.Locale;
 public abstract class AbstractTranslatorTest<C extends FDSConfig, D> extends LocaleProviderBase {
 
     /**
-     * Returns a instance that is configured for a given locale and field
+     * Returns an instance that is configured for a given locale and field
      * @param locale The language to use
      * @param displayOrder To set up the instance with only one given field to translate
      * @return A DosageAPI instance that is fine-tuned for the need
@@ -22,7 +22,7 @@ public abstract class AbstractTranslatorTest<C extends FDSConfig, D> extends Loc
     public abstract DosageAPI<C, D> getDosageAPI(Locale locale, DisplayOrder displayOrder);
 
     /**
-     * Returns a instance that is configured for a given config
+     * Returns an instance that is configured for a given config
      * @param config The configuration to use
      * @return A DosageAPI instance that is fine-tuned for the need
      */

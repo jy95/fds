@@ -9,7 +9,6 @@ import org.hl7.fhir.r5.model.CodeableConcept;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class DefaultImplementationsR5Test {
 
