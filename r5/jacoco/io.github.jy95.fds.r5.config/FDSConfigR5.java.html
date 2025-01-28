@@ -33,11 +33,11 @@ public class FDSConfigR5 extends FDSConfig implements FDSOperations&lt;
         DataType&gt;  {
 
     // Default implementations, in case not provided by user
-    @Builder.Default private Function&lt;Quantity, CompletableFuture&lt;String&gt;&gt; fromFHIRQuantityUnitToString = DefaultImplementationsR5::fromFHIRQuantityUnitToString;
-    @Builder.Default private Function&lt;CodeableConcept, CompletableFuture&lt;String&gt;&gt; fromCodeableConceptToString = DefaultImplementationsR5::fromCodeableConceptToString;
-    @Builder.Default private Function&lt;List&lt;Extension&gt;, CompletableFuture&lt;String&gt;&gt; fromExtensionsToString = DefaultImplementationsR5::fromExtensionsToString;
-    @Builder.Default private BiFunction&lt;List&lt;DosageDoseAndRateComponent&gt;, DoseAndRateKey, DataType&gt; selectDosageAndRateField = DefaultImplementationsR5::selectDosageAndRateField;
-    @Builder.Default private BiFunction&lt;Dosage, Predicate&lt;Dosage.DosageDoseAndRateComponent&gt;, Boolean&gt; hasMatchingComponent = DefaultImplementationsR5::hasMatchingComponent;
+    @Builder.Default private final Function&lt;Quantity, CompletableFuture&lt;String&gt;&gt; fromFHIRQuantityUnitToString = DefaultImplementationsR5::fromFHIRQuantityUnitToString;
+    @Builder.Default private final Function&lt;CodeableConcept, CompletableFuture&lt;String&gt;&gt; fromCodeableConceptToString = DefaultImplementationsR5::fromCodeableConceptToString;
+    @Builder.Default private final Function&lt;List&lt;Extension&gt;, CompletableFuture&lt;String&gt;&gt; fromExtensionsToString = DefaultImplementationsR5::fromExtensionsToString;
+    @Builder.Default private final BiFunction&lt;List&lt;DosageDoseAndRateComponent&gt;, DoseAndRateKey, DataType&gt; selectDosageAndRateField = DefaultImplementationsR5::selectDosageAndRateField;
+    @Builder.Default private final BiFunction&lt;Dosage, Predicate&lt;Dosage.DosageDoseAndRateComponent&gt;, Boolean&gt; hasMatchingComponent = DefaultImplementationsR5::hasMatchingComponent;
 
     /** {@inheritDoc} */
     @Override
