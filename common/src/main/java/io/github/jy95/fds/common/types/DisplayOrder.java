@@ -1,5 +1,7 @@
 package io.github.jy95.fds.common.types;
 
+import lombok.Getter;
+
 import java.util.List;
 
 /**
@@ -7,6 +9,7 @@ import java.util.List;
  *
  * @author jy95
  */
+@Getter
 public enum DisplayOrder {
     /**
      * Display "method"
@@ -141,18 +144,13 @@ public enum DisplayOrder {
      */
     TIMING_MODIFIER_EXTENSION(List.of("timing.modifierExtension"));
 
+    /**
+     *  Getter for the <code>field</code>(s) covered by the display order
+     */
     private final List<String> fields;
 
     DisplayOrder(List<String> fields) {
         this.fields = fields;
     }
 
-    /**
-     * <p>Getter for the field <code>fields</code>.</p>
-     *
-     * @return a {@link java.util.List} object
-     */
-    public List<String> getFields() {
-        return fields;
-    }
 }
