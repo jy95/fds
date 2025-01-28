@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DisplayOrder.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">FHIR Dosage Support - Common</a> &gt; <a href="index.source.html" class="el_package">io.github.jy95.fds.common.types</a> &gt; <span class="el_source">DisplayOrder.java</span></div><h1>DisplayOrder.java</h1><pre class="source lang-java linenums">package io.github.jy95.fds.common.types;
 
+import lombok.Getter;
+
 import java.util.List;
 
 /**
@@ -7,153 +9,149 @@ import java.util.List;
  *
  * @author jy95
  */
-<span class="fc" id="L10">public enum DisplayOrder {</span>
+<span class="fc" id="L12">@Getter</span>
+public enum DisplayOrder {
     /**
      * Display &quot;method&quot;
      */
-<span class="fc" id="L14">    METHOD(List.of(&quot;method&quot;)),</span>
+<span class="fc" id="L17">    METHOD(List.of(&quot;method&quot;)),</span>
     /**
      * Display &quot;doseAndRate.doseQuantity&quot;
      */
-<span class="fc" id="L18">    DOSE_QUANTITY(List.of(&quot;doseAndRate.doseQuantity&quot;)),</span>
+<span class="fc" id="L21">    DOSE_QUANTITY(List.of(&quot;doseAndRate.doseQuantity&quot;)),</span>
     /**
      * Display &quot;doseAndRate.doseRange&quot;
      */
-<span class="fc" id="L22">    DOSE_RANGE(List.of(&quot;doseAndRate.doseRange&quot;)),</span>
+<span class="fc" id="L25">    DOSE_RANGE(List.of(&quot;doseAndRate.doseRange&quot;)),</span>
     /**
      * Display &quot;doseAndRate.rateRatio&quot;
      */
-<span class="fc" id="L26">    RATE_RATIO(List.of(&quot;doseAndRate.rateRatio&quot;)),</span>
+<span class="fc" id="L29">    RATE_RATIO(List.of(&quot;doseAndRate.rateRatio&quot;)),</span>
     /**
      * Display &quot;doseAndRate.rateQuantity&quot;
      */
-<span class="fc" id="L30">    RATE_QUANTITY(List.of(&quot;doseAndRate.rateQuantity&quot;)),</span>
+<span class="fc" id="L33">    RATE_QUANTITY(List.of(&quot;doseAndRate.rateQuantity&quot;)),</span>
     /**
      * Display &quot;doseAndRate.rateRange&quot;
      */
-<span class="fc" id="L34">    RATE_RANGE(List.of(&quot;doseAndRate.rateRange&quot;)),</span>
+<span class="fc" id="L37">    RATE_RANGE(List.of(&quot;doseAndRate.rateRange&quot;)),</span>
     /**
      * Display &quot;timing.repeat.duration&quot; / &quot;timing.repeat.durationMax&quot;
      */
-<span class="fc" id="L38">    DURATION_DURATION_MAX(List.of(&quot;timing.repeat.duration&quot;, &quot;timing.repeat.durationMax&quot;)),</span>
+<span class="fc" id="L41">    DURATION_DURATION_MAX(List.of(&quot;timing.repeat.duration&quot;, &quot;timing.repeat.durationMax&quot;)),</span>
     /**
      * Display &quot;timing.repeat.frequency&quot; / &quot;timing.repeat.frequencyMax&quot;
      */
-<span class="fc" id="L42">    FREQUENCY_FREQUENCY_MAX(List.of(&quot;timing.repeat.frequency&quot;, &quot;timing.repeat.frequencyMax&quot;)),</span>
+<span class="fc" id="L45">    FREQUENCY_FREQUENCY_MAX(List.of(&quot;timing.repeat.frequency&quot;, &quot;timing.repeat.frequencyMax&quot;)),</span>
     /**
      * Display &quot;timing.repeat.period&quot; / &quot;timing.repeat.periodMax&quot;
      */
-<span class="fc" id="L46">    PERIOD_PERIOD_MAX(List.of(&quot;timing.repeat.period&quot;, &quot;timing.repeat.periodMax&quot;)),</span>
+<span class="fc" id="L49">    PERIOD_PERIOD_MAX(List.of(&quot;timing.repeat.period&quot;, &quot;timing.repeat.periodMax&quot;)),</span>
     /**
      * Display &quot;timing.repeat.frequency&quot; / &quot;timing.repeat.frequencyMax&quot; / &quot;timing.repeat.period&quot; / &quot;timing.repeat.periodMax&quot;
      */
-<span class="fc" id="L50">    FREQUENCY_FREQUENCY_MAX_PERIOD_PERIOD_MAX(List.of(&quot;timing.repeat.frequency&quot;, &quot;timing.repeat.frequencyMax&quot;, &quot;timing.repeat.period&quot;, &quot;timing.repeat.periodMax&quot;)),</span>
+<span class="fc" id="L53">    FREQUENCY_FREQUENCY_MAX_PERIOD_PERIOD_MAX(List.of(&quot;timing.repeat.frequency&quot;, &quot;timing.repeat.frequencyMax&quot;, &quot;timing.repeat.period&quot;, &quot;timing.repeat.periodMax&quot;)),</span>
     /**
      * Display &quot;timing.repeat.offset&quot; / &quot;timing.repeat.when&quot;
      */
-<span class="fc" id="L54">    OFFSET_WHEN(List.of(&quot;timing.repeat.offset&quot;, &quot;timing.repeat.when&quot;)),</span>
+<span class="fc" id="L57">    OFFSET_WHEN(List.of(&quot;timing.repeat.offset&quot;, &quot;timing.repeat.when&quot;)),</span>
     /**
      * Display &quot;timing.repeat.dayOfWeek&quot;
      */
-<span class="fc" id="L58">    DAY_OF_WEEK(List.of(&quot;timing.repeat.dayOfWeek&quot;)),</span>
+<span class="fc" id="L61">    DAY_OF_WEEK(List.of(&quot;timing.repeat.dayOfWeek&quot;)),</span>
     /**
      * Display &quot;timing.repeat.timeOfDay&quot;
      */
-<span class="fc" id="L62">    TIME_OF_DAY(List.of(&quot;timing.repeat.timeOfDay&quot;)),</span>
+<span class="fc" id="L65">    TIME_OF_DAY(List.of(&quot;timing.repeat.timeOfDay&quot;)),</span>
     /**
      * Display &quot;route&quot;
      */
-<span class="fc" id="L66">    ROUTE(List.of(&quot;route&quot;)),</span>
+<span class="fc" id="L69">    ROUTE(List.of(&quot;route&quot;)),</span>
     /**
      * Display &quot;site&quot;
      */
-<span class="fc" id="L70">    SITE(List.of(&quot;site&quot;)),</span>
+<span class="fc" id="L73">    SITE(List.of(&quot;site&quot;)),</span>
     /**
      * Display &quot;asNeededBoolean&quot; / &quot;asNeededCodeableConcept&quot; / &quot;asNeeded&quot; / &quot;asNeededFor&quot;
      */
-<span class="fc" id="L74">    AS_NEEDED(List.of(&quot;asNeededBoolean&quot;, &quot;asNeededCodeableConcept&quot;, &quot;asNeeded&quot;, &quot;asNeededFor&quot;)),</span>
+<span class="fc" id="L77">    AS_NEEDED(List.of(&quot;asNeededBoolean&quot;, &quot;asNeededCodeableConcept&quot;, &quot;asNeeded&quot;, &quot;asNeededFor&quot;)),</span>
     /**
      * Display &quot;timing.repeat.boundsDuration&quot;
      */
-<span class="fc" id="L78">    BOUNDS_DURATION(List.of(&quot;timing.repeat.boundsDuration&quot;)),</span>
+<span class="fc" id="L81">    BOUNDS_DURATION(List.of(&quot;timing.repeat.boundsDuration&quot;)),</span>
     /**
      * Display &quot;timing.repeat.boundsPeriod&quot;
      */
-<span class="fc" id="L82">    BOUNDS_PERIOD(List.of(&quot;timing.repeat.boundsPeriod&quot;)),</span>
+<span class="fc" id="L85">    BOUNDS_PERIOD(List.of(&quot;timing.repeat.boundsPeriod&quot;)),</span>
     /**
      * Display &quot;timing.repeat.boundsRange&quot;
      */
-<span class="fc" id="L86">    BOUNDS_RANGE(List.of(&quot;timing.repeat.boundsRange&quot;)),</span>
+<span class="fc" id="L89">    BOUNDS_RANGE(List.of(&quot;timing.repeat.boundsRange&quot;)),</span>
     /**
      * Display &quot;timing.repeat.count&quot; / &quot;timing.repeat.countMax&quot;
      */
-<span class="fc" id="L90">    COUNT_COUNT_MAX(List.of(&quot;timing.repeat.count&quot;, &quot;timing.repeat.countMax&quot;)),</span>
+<span class="fc" id="L93">    COUNT_COUNT_MAX(List.of(&quot;timing.repeat.count&quot;, &quot;timing.repeat.countMax&quot;)),</span>
     /**
      * Display &quot;timing.event&quot;
      */
-<span class="fc" id="L94">    TIMING_EVENT(List.of(&quot;timing.event&quot;)),</span>
+<span class="fc" id="L97">    TIMING_EVENT(List.of(&quot;timing.event&quot;)),</span>
     /**
      * Display &quot;timing.code&quot;
      */
-<span class="fc" id="L98">    TIMING_CODE(List.of(&quot;timing.code&quot;)),</span>
+<span class="fc" id="L101">    TIMING_CODE(List.of(&quot;timing.code&quot;)),</span>
     /**
      * Display &quot;maxDosePerPeriod&quot;
      */
-<span class="fc" id="L102">    MAX_DOSE_PER_PERIOD(List.of(&quot;maxDosePerPeriod&quot;)),</span>
+<span class="fc" id="L105">    MAX_DOSE_PER_PERIOD(List.of(&quot;maxDosePerPeriod&quot;)),</span>
     /**
      * Display &quot;maxDosePerAdministration&quot;
      */
-<span class="fc" id="L106">    MAX_DOSE_PER_ADMINISTRATION(List.of(&quot;maxDosePerAdministration&quot;)),</span>
+<span class="fc" id="L109">    MAX_DOSE_PER_ADMINISTRATION(List.of(&quot;maxDosePerAdministration&quot;)),</span>
     /**
      * Display &quot;maxDosePerLifetime&quot;
      */
-<span class="fc" id="L110">    MAX_DOSE_PER_LIFETIME(List.of(&quot;maxDosePerLifetime&quot;)),</span>
+<span class="fc" id="L113">    MAX_DOSE_PER_LIFETIME(List.of(&quot;maxDosePerLifetime&quot;)),</span>
     /**
      * Display &quot;additionalInstruction&quot;
      */
-<span class="fc" id="L114">    ADDITIONAL_INSTRUCTION(List.of(&quot;additionalInstruction&quot;)),</span>
+<span class="fc" id="L117">    ADDITIONAL_INSTRUCTION(List.of(&quot;additionalInstruction&quot;)),</span>
     /**
      * Display &quot;patientInstruction&quot;
      */
-<span class="fc" id="L118">    PATIENT_INSTRUCTION(List.of(&quot;patientInstruction&quot;)),</span>
+<span class="fc" id="L121">    PATIENT_INSTRUCTION(List.of(&quot;patientInstruction&quot;)),</span>
     /**
      * Display &quot;text&quot;
      */
-<span class="fc" id="L122">    TEXT(List.of(&quot;text&quot;)),</span>
+<span class="fc" id="L125">    TEXT(List.of(&quot;text&quot;)),</span>
     /**
      * Display &quot;extension&quot;
      */
-<span class="fc" id="L126">    EXTENSION(List.of(&quot;extension&quot;)),</span>
+<span class="fc" id="L129">    EXTENSION(List.of(&quot;extension&quot;)),</span>
     /**
      * Display &quot;timing.extension&quot;
      */
-<span class="fc" id="L130">    TIMING_EXTENSION(List.of(&quot;timing.extension&quot;)),</span>
+<span class="fc" id="L133">    TIMING_EXTENSION(List.of(&quot;timing.extension&quot;)),</span>
     /**
      * Display &quot;timing.repeat.extension&quot;
      */
-<span class="fc" id="L134">    TIMING_REPEAT_EXTENSION(List.of(&quot;timing.repeat.extension&quot;)),</span>
+<span class="fc" id="L137">    TIMING_REPEAT_EXTENSION(List.of(&quot;timing.repeat.extension&quot;)),</span>
     /**
      * Display &quot;modifierExtension&quot;
      */
-<span class="fc" id="L138">    MODIFIER_EXTENSION(List.of(&quot;modifierExtension&quot;)),</span>
+<span class="fc" id="L141">    MODIFIER_EXTENSION(List.of(&quot;modifierExtension&quot;)),</span>
     /**
      * Display &quot;timing.modifierExtension&quot;
      */
-<span class="fc" id="L142">    TIMING_MODIFIER_EXTENSION(List.of(&quot;timing.modifierExtension&quot;));</span>
-
-    private final List&lt;String&gt; fields;
-
-<span class="fc" id="L146">    DisplayOrder(List&lt;String&gt; fields) {</span>
-<span class="fc" id="L147">        this.fields = fields;</span>
-<span class="fc" id="L148">    }</span>
+<span class="fc" id="L145">    TIMING_MODIFIER_EXTENSION(List.of(&quot;timing.modifierExtension&quot;));</span>
 
     /**
-     * &lt;p&gt;Getter for the field &lt;code&gt;fields&lt;/code&gt;.&lt;/p&gt;
-     *
-     * @return a {@link java.util.List} object
+     *  Getter for the &lt;code&gt;field&lt;/code&gt;(s) covered by the display order
      */
-    public List&lt;String&gt; getFields() {
-<span class="fc" id="L156">        return fields;</span>
-    }
+    private final List&lt;String&gt; fields;
+
+<span class="fc" id="L152">    DisplayOrder(List&lt;String&gt; fields) {</span>
+<span class="fc" id="L153">        this.fields = fields;</span>
+<span class="fc" id="L154">    }</span>
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
