@@ -13,8 +13,6 @@ import java.util.concurrent.CompletableFuture;
  * R5 class for converting ratio objects to human-readable strings.
  * Implements the Bill Pugh Singleton pattern for thread-safe lazy initialization.
  *
- * Author: jy95
- *
  * @author jy95
  */
 public class RatioToStringR5 implements RatioToString<FDSConfigR5, Ratio> {
