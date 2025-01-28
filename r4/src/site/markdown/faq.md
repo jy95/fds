@@ -27,7 +27,7 @@ description: Frequently Asked Questions
     <li>Your country extensions (e.g. <a href="https://www.ehealth.fgov.be/standards/fhir/">Belgian ones</a>)</li>
     <li><a href="https://hl7.org/fhir/extensions/artifacts.html">FHIR Extensions Pack</a> (for international and interoperability reasons)</li>
   </ul>
-  <p>Currently, 5 extensions are known to have impacts with Dosage / Timing with <a href="https://hl7.org/fhir/extensions/artifacts.html">FHIR Extensions Pack</a>:</p>
+  <p>Currently, five extensions are known to have impacts with Dosage / Timing with <a href="https://hl7.org/fhir/extensions/artifacts.html">FHIR Extensions Pack</a>:</p>
   <ul>
     <li><a href="https://hl7.org/fhir/extensions/StructureDefinition-dosage-conditions.html">Conditions</a></li>
     <li><a href="https://hl7.org/fhir/extensions/StructureDefinition-timing-daysOfCycle.html">Days of cycle</a></li>

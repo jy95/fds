@@ -43,7 +43,7 @@ jobs:
 
   # Publish to GitHub Packages Apache Maven
   publish-github-packages:
-    # Wait until publication is done at Maven Central, before creating the release at Github
+    # Wait until publication is done at Maven Central, before creating the release at GitHub
     needs: publish-maven-central
     runs-on: ubuntu-latest
     permissions:

@@ -60,7 +60,7 @@ FHIR extensions are designed to store extra information, but they can contain pr
 This method empowers users to :  
 - Select the extension(s) they would like to display
 - Customize each extension rendering to their liking or/and their specifications
-- Order the rendering of existing extension(s) in case of precedence rule(s) (e.g Extension B before Extension A)
+- Order the rendering of existing extension(s) in case of precedence rule(s) (e.g., Extension B before Extension A)
 
 ### Example Usage
 
@@ -108,7 +108,7 @@ Converts a FHIR Quantity object to a string representation of its unit or code.
 
 ### Why this method exists
 
-By default, FHIR `Quantity` object isn't bound to a single Code System (e.g. UCUM, SNOMED-CT, ...) or not (e.g raw units). 
+By default, FHIR `Quantity` object isn't bound to a single Code System (e.g., UCUM, SNOMED-CT, ...) or not (e.g raw units). 
 This method extracts only the unit regardless of its format, ensuring consistent and compact formatting, which is critical for displaying units in UI or reports.
 
 ### Example Usage
@@ -145,7 +145,7 @@ public class Main {
 
 ## selectDosageAndRateField
 
-Selects a specific dosage and rate field from a list of Dosage.DosageDoseAndRateComponent.
+Select a specific dosage and rate field from a list of Dosage.DosageDoseAndRateComponent.
 
 ### Why this method exists
 
