@@ -24,12 +24,12 @@ public class FDSConfig {
      * Locale to return the humanized dosage string
      * Default: English
      */
-    @Builder.Default private Locale locale = Locale.ENGLISH;
+    @Builder.Default private final Locale locale = Locale.ENGLISH;
     /**
      * Control the display order used by the algorithm
      * Useful when you want to turn on / off some specific rules for some reason
      */
-    @Builder.Default private List<DisplayOrder> displayOrder = List.of(
+    @Builder.Default private final List<DisplayOrder> displayOrder = List.of(
             DisplayOrder.METHOD,
             DisplayOrder.DOSE_QUANTITY,
             DisplayOrder.DOSE_RANGE,
@@ -57,7 +57,7 @@ public class FDSConfig {
             DisplayOrder.PATIENT_INSTRUCTION
     );
     // Override separator between each part of "Dosage"
-    @Builder.Default private String displaySeparator = " - ";
+    @Builder.Default private final String displaySeparator = " - ";
     /**
      * Function to select the ResourceBundle of a given locale.
      * Useful in case you would like to override or support other locales that built ones.
@@ -65,5 +65,5 @@ public class FDSConfig {
      * Keep in mind that formats may change between versions, so be cautious of compatibility.
      * Consider contributing improvements or additional locales as well.
      */
-    @Builder.Default private Function<Locale, ResourceBundle> selectResourceBundle = DefaultImplementations::selectResourceBundle;
+    @Builder.Default private final Function<Locale, ResourceBundle> selectResourceBundle = DefaultImplementations::selectResourceBundle;
 }
