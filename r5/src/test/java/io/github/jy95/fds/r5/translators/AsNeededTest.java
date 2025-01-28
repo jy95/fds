@@ -5,7 +5,6 @@ import io.github.jy95.fds.common.types.DosageAPI;
 import io.github.jy95.fds.r5.DosageAPIR5;
 import io.github.jy95.fds.r5.config.FDSConfigR5;
 import io.github.jy95.fds.translators.AbstractAsNeededTest;
-import org.hl7.fhir.r5.model.BooleanType;
 import org.hl7.fhir.r5.model.CodeableConcept;
 import org.hl7.fhir.r5.model.Dosage;
 
