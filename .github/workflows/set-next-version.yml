@@ -2,10 +2,30 @@ name: Set next version
 on:
   release:
     types: [created]
+  workflow_dispatch:
 
 jobs:
+  extract_version:
+    runs-on: ubuntu-latest
+    outputs:
+      next_patch: ${{ steps.semvers.outputs.patch }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch latest tag if manually triggered
+        id: get_latest_tag
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          latest_tag=$(git describe --tags --abbrev=0)
+          echo "latest_tag=$latest_tag" >> $GITHUB_OUTPUT
+      - name: 🤖 Get next minor version
+        id: semvers
+        uses: WyriHaximus/github-action-next-semvers@v1.2.1
+        with:
+          version: ${{ steps.get_latest_tag.outputs.latest_tag || github.event.release.tag_name }}
+
   version_bump:
     runs-on: ubuntu-latest
+    needs: extract_version
     permissions:
       contents: write
       pull-requests: write
@@ -18,16 +38,12 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
           cache: 'maven'
-      - name: 🤖 Get next minor version
-        id: semvers
-        uses: WyriHaximus/github-action-next-semvers@v1.2.1
-        with:
-          version: ${{ github.event.release.tag_name }}
       - name: Update Maven POM
         run: |
-          mvn versions:set-property -Dproperty=revision -DnewVersion=${{ steps.semvers.outputs.patch }}-SNAPSHOT -DgenerateBackupPoms=false
+          mvn versions:set-property -Dproperty=revision -DnewVersion=${{ needs.extract_version.outputs.next_patch }}-SNAPSHOT -DgenerateBackupPoms=false
       - name: 💅 Create Pull Request
         uses: peter-evans/create-pull-request@v7.0.5
         with:
-          title: "chore: Update POM version to ${{ steps.semvers.outputs.patch }}-SNAPSHOT 🤖"
-          branch: "automated/version-bump"
+          title: "chore: Update POM version to ${{ needs.extract_version.outputs.next_patch }}-SNAPSHOT 🤖"
+          branch: "automated/version-bump-${{ github.run_id }}"
+          base: main
