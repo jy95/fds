@@ -36,7 +36,7 @@ public class Main {
         String multipleFields = lib.getFields(dosage, DisplayOrder.TEXT, DisplayOrder.PATIENT_INSTRUCTION).get();
         
         // Converts the dosage object into human-readable text
-        String multipleAsText = lib.asHumanReadableText(List.of(dosage));
+        String multipleAsText = lib.asHumanReadableText(List.of(dosage)).get();
         
         // And much more ...
     }
