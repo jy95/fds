@@ -9,6 +9,8 @@ on:
 jobs:
   support_java_lts_versions:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     strategy:
       matrix:
         java: [11, 17, 21]

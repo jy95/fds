@@ -49,8 +49,6 @@ jobs:
     permissions:
       contents: write
       packages: write
-    outputs:
-      version: ${{ steps.latest-tag.outputs.tag }}
     steps:
 
       # Check out the repository code
