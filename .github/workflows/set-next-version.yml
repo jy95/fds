@@ -11,14 +11,13 @@ jobs:
       next_patch: ${{ steps.semvers.outputs.patch }}
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-tags: true
       - name: Fetch latest tag if manually triggered
         id: get_latest_tag
         if: github.event_name == 'workflow_dispatch'
         run: |
-          latest_tag=$(git describe --tags --abbrev=0)
-          echo "latest_tag=$latest_tag" >> $GITHUB_OUTPUT
+            # Extract the revision version using a regex
+            revision_version=$(grep -oP '(?<=<revision>)(.*?)(?=</revision>)' pom.xml)
+            echo "latest_tag=$revision_version" >> $GITHUB_OUTPUT
       - name: 🤖 Get next minor version
         id: semvers
         uses: WyriHaximus/github-action-next-semvers@v1.2.1
