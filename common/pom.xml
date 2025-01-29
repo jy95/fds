@@ -10,6 +10,12 @@
     <name>${lib.name} - Common</name>
     <description>Shared utilities and foundational components for handling FHIR Dosage transformation and processing.</description>
 
+    <scm>
+        <connection>scm:git:https://github.com/jy95/fds.git</connection>
+        <developerConnection>scm:git:https://github.com/jy95/fds.git</developerConnection>
+        <url>https://github.com/jy95/fds</url>
+    </scm>
+
     <build>
         <plugins>
             <plugin>

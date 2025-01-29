@@ -10,6 +10,12 @@
     <name>${lib.name} - R5</name>
     <description>Support for FHIR R5 Dosage, enabling human-readable text conversion and other related features.</description>
 
+    <scm>
+        <connection>scm:git:https://github.com/jy95/fds.git</connection>
+        <developerConnection>scm:git:https://github.com/jy95/fds.git</developerConnection>
+        <url>https://github.com/jy95/fds</url>
+    </scm>
+
     <dependencies>
         <dependency>
             <groupId>ca.uhn.hapi.fhir</groupId>
