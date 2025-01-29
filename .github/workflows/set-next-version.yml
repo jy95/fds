@@ -11,6 +11,8 @@ jobs:
       next_patch: ${{ steps.semvers.outputs.patch }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-tags: true
       - name: Fetch latest tag if manually triggered
         id: get_latest_tag
         if: github.event_name == 'workflow_dispatch'
