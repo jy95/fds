@@ -55,7 +55,7 @@ public class PeriodPeriodMaxR4 implements PeriodPeriodMax&lt;FDSConfigR4, Dosage
     @Override
     public boolean hasRequiredElements(Dosage dosage) {
 <span class="fc" id="L57">        var timing = dosage.getTiming();</span>
-<span class="pc bpc" id="L58" title="3 of 8 branches missed.">        return timing.hasRepeat() &amp;&amp; timing.hasRepeat() &amp;&amp; (hasPeriod(dosage) || hasPeriodMax(dosage));</span>
+<span class="pc bpc" id="L58" title="2 of 6 branches missed.">        return timing.hasRepeat() &amp;&amp; (hasPeriod(dosage) || hasPeriodMax(dosage));</span>
     }
 
     /** {@inheritDoc} */
