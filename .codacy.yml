@@ -3,7 +3,7 @@ exclude_paths:
   - ".github/**"
   - "**/src/test/**"
   - "**/src/site/**"
-  - "README.MD"
+  - "README.md"
 engines:
 # Codacy PMD's Copy/Paste Detector (CPD) https://docs.pmd-code.org/latest/ is quite aggressive,
 # So it needs to relax a bit
