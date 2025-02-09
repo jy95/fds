@@ -76,7 +76,7 @@ public class TranslatorsMapR5 extends AbstractTranslatorsMap&lt;FDSConfigR5, Dos
 <span class="fc" id="L76">        suppliers.put(DisplayOrder.RATE_QUANTITY, () -&gt; new RateQuantityR5(config, bundle));</span>
 <span class="fc" id="L77">        suppliers.put(DisplayOrder.RATE_RANGE, () -&gt; new RateRangeR5(config, bundle));</span>
 <span class="fc" id="L78">        suppliers.put(DisplayOrder.RATE_RATIO, () -&gt; new RateRatioR5(config, bundle));</span>
-<span class="fc" id="L79">        suppliers.put(DisplayOrder.OFFSET_WHEN, () -&gt; new OffsetWhenR5(bundle));</span>
+<span class="fc" id="L79">        suppliers.put(DisplayOrder.OFFSET_WHEN, () -&gt; new OffsetWhenR5(bundle, config.getLocale()));</span>
 <span class="fc" id="L80">        suppliers.put(DisplayOrder.MAX_DOSE_PER_LIFETIME, () -&gt; new MaxDosePerLifetimeR5(config, bundle));</span>
 <span class="fc" id="L81">        suppliers.put(DisplayOrder.MAX_DOSE_PER_ADMINISTRATION, () -&gt; new MaxDosePerAdministrationR5(config, bundle));</span>
 <span class="fc" id="L82">        suppliers.put(DisplayOrder.MAX_DOSE_PER_PERIOD, () -&gt; new MaxDosePerPeriodR5(config, bundle));</span>

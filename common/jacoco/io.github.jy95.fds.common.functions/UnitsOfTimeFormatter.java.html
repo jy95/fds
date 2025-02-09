@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UnitsOfTimeFormatter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">FHIR Dosage Support - Common</a> &gt; <a href="index.source.html" class="el_package">io.github.jy95.fds.common.functions</a> &gt; <span class="el_source">UnitsOfTimeFormatter.java</span></div><h1>UnitsOfTimeFormatter.java</h1><pre class="source lang-java linenums">package io.github.jy95.fds.common.functions;
+
+import com.ibm.icu.number.NumberFormatter;
+import com.ibm.icu.number.Precision;
+import com.ibm.icu.number.UnlocalizedNumberFormatter;
+import com.ibm.icu.util.MeasureUnit;
+
+import java.util.Locale;
+import java.util.Map;
+
+/**
+ * Class to format units of time
+ */
+public final class UnitsOfTimeFormatter {
+
+    /**
+     * Map each code of &lt;a href=&quot;https://build.fhir.org/valueset-units-of-time.html&quot;&gt;Units of Time&lt;/a&gt; to their ICU4J units
+     */
+<span class="nc" id="L19">    private static final Map&lt;String, MeasureUnit&gt; UNIT_MAPPING = Map.ofEntries(</span>
+<span class="nc" id="L20">            Map.entry(&quot;ms&quot;, MeasureUnit.MILLISECOND),</span>
+<span class="nc" id="L21">            Map.entry(&quot;s&quot;, MeasureUnit.SECOND),</span>
+<span class="nc" id="L22">            Map.entry(&quot;min&quot;, MeasureUnit.MINUTE),</span>
+<span class="nc" id="L23">            Map.entry(&quot;h&quot;, MeasureUnit.HOUR),</span>
+<span class="nc" id="L24">            Map.entry(&quot;d&quot;, MeasureUnit.DAY),</span>
+<span class="nc" id="L25">            Map.entry(&quot;wk&quot;, MeasureUnit.WEEK),</span>
+<span class="nc" id="L26">            Map.entry(&quot;mo&quot;, MeasureUnit.MONTH),</span>
+<span class="nc" id="L27">            Map.entry(&quot;a&quot;, MeasureUnit.YEAR)</span>
+    );
+
+    /**
+     * Common formatter for all calls to this class
+     */
+<span class="nc" id="L33">    private static final UnlocalizedNumberFormatter formatter = NumberFormatter</span>
+<span class="nc" id="L34">            .with()</span>
+<span class="nc" id="L35">            .unitWidth(NumberFormatter.UnitWidth.FULL_NAME);</span>
+
+    /**
+     * No constructor for this class
+     */
+    private UnitsOfTimeFormatter() {}
+
+    /**
+     * Formats a time unit with a count (e.g., &quot;3 heures&quot;, &quot;1 minute&quot;).
+     * @param locale The locale expected for the resulting text
+     * @param unit The &lt;a href=&quot;https://build.fhir.org/valueset-units-of-time.html&quot;&gt;unit code&lt;/a&gt;
+     * @param count The quantity
+     * @return A formatted time-unit string with a count
+     */
+    public static String formatWithCount(Locale locale, String unit, Number count) {
+<span class="nc" id="L50">        return formatter</span>
+<span class="nc" id="L51">                .locale(locale)</span>
+<span class="nc" id="L52">                .unit(UNIT_MAPPING.get(unit))</span>
+<span class="nc" id="L53">                .format(count)</span>
+<span class="nc" id="L54">                .toString();</span>
+    }
+
+    /**
+     * Formats a time unit without a count (e.g., &quot;heures&quot;, &quot;minute&quot;).
+     * @param locale The locale expected for the resulting text
+     * @param unit The &lt;a href=&quot;https://build.fhir.org/valueset-units-of-time.html&quot;&gt;unit code&lt;/a&gt;
+     * @param count The quantity
+     * @return A formatted time-unit string without a count
+     */
+    public static String formatWithoutCount(Locale locale, String unit, Number count) {
+        // ICU4j doesn't have a method for extracting only the unit with plural form so a bit of magic here
+<span class="nc" id="L66">        return formatter</span>
+<span class="nc" id="L67">                .unit(UNIT_MAPPING.get(unit))</span>
+<span class="nc" id="L68">                .locale(locale)</span>
+<span class="nc" id="L69">                .precision(Precision.maxSignificantDigits(1))</span>
+<span class="nc" id="L70">                .format(count)</span>
+<span class="nc" id="L71">                .toString()</span>
+<span class="nc" id="L72">                .substring(2); // 1 because of the number display + 1 because of spacing</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

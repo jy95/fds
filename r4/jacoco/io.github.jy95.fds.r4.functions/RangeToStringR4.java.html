@@ -50,34 +50,33 @@ public class RangeToStringR4 implements RangeToString&lt;FDSConfigR4, Range&gt; 
 <span class="fc" id="L50">        return QuantityToStringR4</span>
 <span class="fc" id="L51">                .getInstance()</span>
 <span class="fc" id="L52">                .enhancedFromUnitToString(</span>
-                        bundle,
                         config,
-<span class="fc bfc" id="L55" title="All 2 branches covered.">                        (hasHigh) ? range.getHigh() : range.getLow()</span>
+<span class="fc bfc" id="L54" title="All 2 branches covered.">                        (hasHigh) ? range.getHigh() : range.getLow()</span>
                 );
     }
 
     /** {@inheritDoc} */
     @Override
     public boolean hasLow(Range range) {
-<span class="fc" id="L62">        return range.hasLow();</span>
+<span class="fc" id="L61">        return range.hasLow();</span>
     }
 
     /** {@inheritDoc} */
     @Override
     public boolean hasHigh(Range range) {
-<span class="fc" id="L68">        return range.hasHigh();</span>
+<span class="fc" id="L67">        return range.hasHigh();</span>
     }
 
     /** {@inheritDoc} */
     @Override
     public BigDecimal getLowValue(Range range) {
-<span class="fc" id="L74">        return range.getLow().getValue();</span>
+<span class="fc" id="L73">        return range.getLow().getValue();</span>
     }
 
     /** {@inheritDoc} */
     @Override
     public BigDecimal getHighValue(Range range) {
-<span class="fc" id="L80">        return range.getHigh().getValue();</span>
+<span class="fc" id="L79">        return range.getHigh().getValue();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

@@ -5,7 +5,6 @@ import com.ibm.icu.text.MessageFormat;
 import io.github.jy95.fds.common.config.FDSConfig;
 import io.github.jy95.fds.common.types.TranslatorTiming;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -29,8 +28,8 @@ public interface DurationDurationMax&lt;C extends FDSConfig, D&gt; extends Trans
      * @return The message template for &quot;duration&quot;
      */
     default MessageFormat getDurationMsg(ResourceBundle bundle, Locale locale) {
-<span class="nc" id="L32">        var msg = bundle.getString(&quot;fields.duration&quot;);</span>
-<span class="nc" id="L33">        return new MessageFormat(msg, locale);</span>
+<span class="nc" id="L31">        var msg = bundle.getString(&quot;fields.duration&quot;);</span>
+<span class="nc" id="L32">        return new MessageFormat(msg, locale);</span>
     }
 
     /**
@@ -41,55 +40,42 @@ public interface DurationDurationMax&lt;C extends FDSConfig, D&gt; extends Trans
      * @return The message template for &quot;duration&quot; &amp;amp; &quot;durationMax&quot;
      */
     default MessageFormat getDurationMaxMsg(ResourceBundle bundle, Locale locale) {
-<span class="nc" id="L44">        var msg = bundle.getString(&quot;fields.durationMax&quot;);</span>
-<span class="nc" id="L45">        return new MessageFormat(msg, locale);</span>
+<span class="nc" id="L43">        var msg = bundle.getString(&quot;fields.durationMax&quot;);</span>
+<span class="nc" id="L44">        return new MessageFormat(msg, locale);</span>
     }
 
     /** {@inheritDoc} */
     @Override
     default CompletableFuture&lt;String&gt; convert(D dosage) {
-<span class="nc" id="L51">        return CompletableFuture.supplyAsync(() -&gt; {</span>
+<span class="nc" id="L50">        return CompletableFuture.supplyAsync(() -&gt; {</span>
 
             // Rule: duration SHALL be a non-negative value
             // Rule: if there's a duration, there needs to be duration units
             // Rule: If there's a durationMax, there must be a duration
-<span class="nc" id="L56">            var hasDurationFlag = hasDuration(dosage);</span>
-<span class="nc" id="L57">            var hasDurationMaxFlag = hasDurationMax(dosage);</span>
-<span class="nc bnc" id="L58" title="All 4 branches missed.">            var hasBoth = hasDurationFlag &amp;&amp; hasDurationMaxFlag;</span>
+<span class="nc" id="L55">            var hasDurationFlag = hasDuration(dosage);</span>
+<span class="nc" id="L56">            var hasDurationMaxFlag = hasDurationMax(dosage);</span>
+<span class="nc bnc" id="L57" title="All 4 branches missed.">            var hasBoth = hasDurationFlag &amp;&amp; hasDurationMaxFlag;</span>
 
-<span class="nc" id="L60">            List&lt;String&gt; texts = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L59">            List&lt;String&gt; texts = new ArrayList&lt;&gt;();</span>
 
-<span class="nc bnc" id="L62" title="All 2 branches missed.">            if (hasDurationFlag) {</span>
-<span class="nc" id="L63">                texts.add(turnDurationToString(dosage));</span>
+<span class="nc bnc" id="L61" title="All 2 branches missed.">            if (hasDurationFlag) {</span>
+<span class="nc" id="L62">                texts.add(turnDurationToString(dosage));</span>
             }
 
-<span class="nc bnc" id="L66" title="All 2 branches missed.">            if (hasBoth) {</span>
-<span class="nc" id="L67">                texts.add(&quot;(&quot;);</span>
+<span class="nc bnc" id="L65" title="All 2 branches missed.">            if (hasBoth) {</span>
+<span class="nc" id="L66">                texts.add(&quot;(&quot;);</span>
             }
 
-<span class="nc bnc" id="L70" title="All 2 branches missed.">            if (hasDurationMaxFlag) {</span>
-<span class="nc" id="L71">                texts.add(turnDurationMaxToString(dosage));</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">            if (hasDurationMaxFlag) {</span>
+<span class="nc" id="L70">                texts.add(turnDurationMaxToString(dosage));</span>
             }
 
-<span class="nc bnc" id="L74" title="All 2 branches missed.">            if (hasBoth) {</span>
-<span class="nc" id="L75">                texts.add(&quot;)&quot;);</span>
+<span class="nc bnc" id="L73" title="All 2 branches missed.">            if (hasBoth) {</span>
+<span class="nc" id="L74">                texts.add(&quot;)&quot;);</span>
             }
 
-<span class="nc" id="L78">            return String.join(&quot; &quot;, texts);</span>
+<span class="nc" id="L77">            return String.join(&quot; &quot;, texts);</span>
         });
-    }
-
-    /**
-     * Converts the duration quantity and unit into a formatted string.
-     *
-     * @param bundle The resourceBundle to use
-     * @param durationUnit the unit code of duration (e.g., &quot;d&quot;, &quot;h&quot;).
-     * @param quantity the quantity of the duration.
-     * @return the formatted string representing the duration.
-     */
-    default String quantityToString(ResourceBundle bundle, String durationUnit, BigDecimal quantity){
-<span class="nc" id="L91">        var commonDurationMsg = bundle.getString(&quot;withCount.&quot; + durationUnit);</span>
-<span class="nc" id="L92">        return MessageFormat.format(commonDurationMsg, quantity);</span>
     }
 
     /**
