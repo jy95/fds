@@ -27,12 +27,11 @@ public final class DefaultImplementations {
 <span class="fc" id="L27">        var bundleControl = new MultiResourceBundleControl(</span>
                 &quot;translations&quot;,
                 &quot;common&quot;,
-                &quot;daysOfWeek&quot;,
                 &quot;eventTiming&quot;,
                 &quot;quantityComparator&quot;
         );
-<span class="fc" id="L34">        return ResourceBundle.getBundle(</span>
-<span class="fc" id="L35">                bundleControl.getBaseName(),</span>
+<span class="fc" id="L33">        return ResourceBundle.getBundle(</span>
+<span class="fc" id="L34">                bundleControl.getBaseName(),</span>
                 locale,
                 bundleControl
         );
