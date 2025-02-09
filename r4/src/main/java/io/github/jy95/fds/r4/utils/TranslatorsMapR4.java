@@ -76,7 +76,7 @@ public class TranslatorsMapR4 extends AbstractTranslatorsMap<FDSConfigR4, Dosage
         suppliers.put(DisplayOrder.RATE_QUANTITY, () -> new RateQuantityR4(config, bundle));
         suppliers.put(DisplayOrder.RATE_RANGE, () -> new RateRangeR4(config, bundle));
         suppliers.put(DisplayOrder.RATE_RATIO, () -> new RateRatioR4(config, bundle));
-        suppliers.put(DisplayOrder.OFFSET_WHEN, () -> new OffsetWhenR4(bundle));
+        suppliers.put(DisplayOrder.OFFSET_WHEN, () -> new OffsetWhenR4(bundle, config.getLocale()));
         suppliers.put(DisplayOrder.MAX_DOSE_PER_LIFETIME, () -> new MaxDosePerLifetimeR4(config, bundle));
         suppliers.put(DisplayOrder.MAX_DOSE_PER_ADMINISTRATION, () -> new MaxDosePerAdministrationR4(config, bundle));
         suppliers.put(DisplayOrder.MAX_DOSE_PER_PERIOD, () -> new MaxDosePerPeriodR4(config, bundle));

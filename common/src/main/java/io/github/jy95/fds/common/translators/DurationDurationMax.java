@@ -5,7 +5,6 @@ import com.ibm.icu.text.MessageFormat;
 import io.github.jy95.fds.common.config.FDSConfig;
 import io.github.jy95.fds.common.types.TranslatorTiming;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -77,19 +76,6 @@ public interface DurationDurationMax<C extends FDSConfig, D> extends TranslatorT
 
             return String.join(" ", texts);
         });
-    }
-
-    /**
-     * Converts the duration quantity and unit into a formatted string.
-     *
-     * @param bundle The resourceBundle to use
-     * @param durationUnit the unit code of duration (e.g., "d", "h").
-     * @param quantity the quantity of the duration.
-     * @return the formatted string representing the duration.
-     */
-    default String quantityToString(ResourceBundle bundle, String durationUnit, BigDecimal quantity){
-        var commonDurationMsg = bundle.getString("withCount." + durationUnit);
-        return MessageFormat.format(commonDurationMsg, quantity);
     }
 
     /**
