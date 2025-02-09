@@ -2,6 +2,7 @@ package io.github.jy95.fds.common.functions;
 
 import com.ibm.icu.number.NumberFormatter;
 import com.ibm.icu.number.Precision;
+import com.ibm.icu.number.UnlocalizedNumberFormatter;
 import com.ibm.icu.util.MeasureUnit;
 
 import java.util.Locale;
@@ -27,6 +28,13 @@ public final class UnitsOfTimeFormatter {
     );
 
     /**
+     * Common formatter for all calls to this class
+     */
+    private static final UnlocalizedNumberFormatter formatter = NumberFormatter
+            .with()
+            .unitWidth(NumberFormatter.UnitWidth.FULL_NAME);
+
+    /**
      * Formats a time unit with a count (e.g., "3 heures", "1 minute").
      * @param locale The locale expected for the resulting text
      * @param unit The <a href="https://build.fhir.org/valueset-units-of-time.html">unit code</a>
@@ -34,10 +42,9 @@ public final class UnitsOfTimeFormatter {
      * @return A formatted time-unit string with a count
      */
     public static String formatWithCount(Locale locale, String unit, Number count) {
-        return NumberFormatter
-                .withLocale(locale)
+        return formatter
+                .locale(locale)
                 .unit(UNIT_MAPPING.get(unit))
-                .unitWidth(NumberFormatter.UnitWidth.FULL_NAME)
                 .format(count)
                 .toString();
     }
@@ -51,11 +58,10 @@ public final class UnitsOfTimeFormatter {
      */
     public static String formatWithoutCount(Locale locale, String unit, Number count) {
         // ICU4j doesn't have a method for extracting only the unit with plural form so a bit of magic here
-        return NumberFormatter
-                .withLocale(locale)
-                .precision(Precision.maxSignificantDigits(1))
+        return formatter
                 .unit(UNIT_MAPPING.get(unit))
-                .unitWidth(NumberFormatter.UnitWidth.FULL_NAME)
+                .locale(locale)
+                .precision(Precision.maxSignificantDigits(1))
                 .format(count)
                 .toString()
                 .substring(2); // 1 because of the number display + 1 because of spacing
