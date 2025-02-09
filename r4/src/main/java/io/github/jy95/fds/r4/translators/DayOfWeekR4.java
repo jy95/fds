@@ -1,6 +1,7 @@
 package io.github.jy95.fds.r4.translators;
 
 import com.ibm.icu.text.MessageFormat;
+import io.github.jy95.fds.common.functions.DayOfWeekFormatter;
 import io.github.jy95.fds.common.functions.ListToString;
 import io.github.jy95.fds.common.translators.DayOfWeek;
 import io.github.jy95.fds.r4.config.FDSConfigR4;
@@ -24,9 +25,9 @@ public class DayOfWeekR4 implements DayOfWeek<FDSConfigR4, Dosage> {
     protected final MessageFormat dayOfWeekMsg;
 
     /**
-     * The configuration object used by this API.
+     * Day of week formatter
      */
-    private final FDSConfigR4 config;
+    private final DayOfWeekFormatter dayOfWeekFormatter;
 
     /**
      * The resource bundle containing localized strings for translation.
@@ -40,9 +41,9 @@ public class DayOfWeekR4 implements DayOfWeek<FDSConfigR4, Dosage> {
      * @param bundle a {@link java.util.ResourceBundle} object
      */
     public DayOfWeekR4(FDSConfigR4 config, ResourceBundle bundle) {
-        this.config = config;
         this.bundle = bundle;
         this.dayOfWeekMsg = getDayOfWeekMsg(bundle, config.getLocale());
+        this.dayOfWeekFormatter = new DayOfWeekFormatter(config.getLocale());
     }
 
     /** {@inheritDoc} */
@@ -58,32 +59,15 @@ public class DayOfWeekR4 implements DayOfWeek<FDSConfigR4, Dosage> {
             var dayOfWeeks = dosage.getTiming().getRepeat().getDayOfWeek();
             var dayOfWeeksCodes = dayOfWeeks
                     .stream()
-                    .map(day -> {
-                        String dayCode = day.getCode().toLowerCase(); // Get the lowercase day code
-                        return dayToText(dayCode);
-                    })
+                    .map(day -> dayOfWeekFormatter
+                            .codeToLongText(
+                                    day.getCode().toLowerCase()
+                            )
+                    )
                     .collect(Collectors.toList());
 
             return daysToText(dayOfWeeksCodes);
         });
-    }
-
-    /**
-     * Translates a single-day code into its corresponding day of the week in text.
-     *
-     * @param dayCode the code representing the day (e.g., "mon", "tue").
-     * @return the translated day of the week as a string.
-     */
-    private String dayToText(String dayCode) {
-        String dayTranslation = bundle.getString("day." + dayCode);
-
-        // Use ICU's MessageFormat to handle the translation with choice formatting
-        MessageFormat messageFormat = new MessageFormat(dayTranslation, config.getLocale());
-        Map<String, Object> dayArguments = Map.of(
-                "dayType", "long"
-        );
-
-        return messageFormat.format(dayArguments);
     }
 
     /** {@inheritDoc} */

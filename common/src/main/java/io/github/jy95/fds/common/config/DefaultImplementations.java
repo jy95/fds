@@ -27,7 +27,6 @@ public final class DefaultImplementations {
         var bundleControl = new MultiResourceBundleControl(
                 "translations",
                 "common",
-                "daysOfWeek",
                 "eventTiming",
                 "quantityComparator"
         );
