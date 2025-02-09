@@ -35,6 +35,11 @@ public final class UnitsOfTimeFormatter {
             .unitWidth(NumberFormatter.UnitWidth.FULL_NAME);
 
     /**
+     * No constructor for this class
+     */
+    private UnitsOfTimeFormatter() {}
+
+    /**
      * Formats a time unit with a count (e.g., "3 heures", "1 minute").
      * @param locale The locale expected for the resulting text
      * @param unit The <a href="https://build.fhir.org/valueset-units-of-time.html">unit code</a>
