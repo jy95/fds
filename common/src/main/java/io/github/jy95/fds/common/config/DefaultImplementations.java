@@ -29,8 +29,7 @@ public final class DefaultImplementations {
                 "common",
                 "daysOfWeek",
                 "eventTiming",
-                "quantityComparator",
-                "unitsOfTime"
+                "quantityComparator"
         );
         return ResourceBundle.getBundle(
                 bundleControl.getBaseName(),

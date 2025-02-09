@@ -1,6 +1,7 @@
 package io.github.jy95.fds.r4.translators;
 
 import com.ibm.icu.text.MessageFormat;
+import io.github.jy95.fds.common.functions.UnitsOfTimeFormatter;
 import io.github.jy95.fds.common.translators.PeriodPeriodMax;
 import io.github.jy95.fds.r4.config.FDSConfigR4;
 import org.hl7.fhir.r4.model.Dosage;
@@ -23,9 +24,9 @@ public class PeriodPeriodMaxR4 implements PeriodPeriodMax<FDSConfigR4, Dosage> {
     protected final MessageFormat periodMsg;
 
     /**
-     * The resource bundle containing localized strings for translation.
+     * The configuration object used by this API.
      */
-    private final ResourceBundle bundle;
+    private final FDSConfigR4 config;
 
     /**
      * Constructor for {@code PeriodPeriodMaxR4}.
@@ -34,7 +35,7 @@ public class PeriodPeriodMaxR4 implements PeriodPeriodMax<FDSConfigR4, Dosage> {
      * @param bundle a {@link java.util.ResourceBundle} object
      */
     public PeriodPeriodMaxR4(FDSConfigR4 config, ResourceBundle bundle) {
-        this.bundle = bundle;
+        this.config = config;
         this.periodMaxMsg = getPeriodMaxMsg(bundle, config.getLocale());
         this.periodMsg = getPeriodMsg(bundle, config.getLocale());
     }
@@ -73,7 +74,7 @@ public class PeriodPeriodMaxR4 implements PeriodPeriodMax<FDSConfigR4, Dosage> {
         var periodMin = repeat.getPeriod();
         var periodUnit = repeat.getPeriodUnit().toCode();
 
-        var unitText = getUnit(bundle, periodUnit, periodMax);
+        var unitText = UnitsOfTimeFormatter.formatWithoutCount(config.getLocale(), periodUnit, periodMax);
         return formatPeriodAndPeriodMaxText(periodMin, periodMax, unitText);
     }
 
@@ -85,7 +86,7 @@ public class PeriodPeriodMaxR4 implements PeriodPeriodMax<FDSConfigR4, Dosage> {
         var period = repeat.getPeriod();
         var periodUnit = repeat.getPeriodUnit().toCode();
 
-        var unitText = getUnit(bundle, periodUnit, period);
+        var unitText = UnitsOfTimeFormatter.formatWithoutCount(config.getLocale(), periodUnit, period);
         return formatPeriodText(period, unitText);
     }
 

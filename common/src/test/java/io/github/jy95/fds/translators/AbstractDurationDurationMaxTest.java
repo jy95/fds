@@ -27,7 +27,7 @@ public abstract class AbstractDurationDurationMaxTest<C extends FDSConfig, D> ex
     void testWithDurationOnly(Locale locale) throws ExecutionException, InterruptedException {
         var dosage = generateWithDurationOnly();
         var dosageUtils = getDosageAPI(locale, DisplayOrder.DURATION_DURATION_MAX);
-        String result = dosageUtils.asHumanReadableText(dosage).get();
+        String result = dosageUtils.asHumanReadableText(dosage).get().replace("\u00a0"," ");;
         String expectedResult = getExpectedText1(locale);
         assertEquals(expectedResult, result);
     }
@@ -51,7 +51,7 @@ public abstract class AbstractDurationDurationMaxTest<C extends FDSConfig, D> ex
     void testWithDurationMaxOnly(Locale locale) throws ExecutionException, InterruptedException {
         var dosage = generateWithDurationMaxOnly();
         var dosageUtils = getDosageAPI(locale, DisplayOrder.DURATION_DURATION_MAX);
-        String result = dosageUtils.asHumanReadableText(dosage).get();
+        String result = dosageUtils.asHumanReadableText(dosage).get().replace("\u00a0"," ");;
         String expectedResult = getExpectedText2(locale);
         assertEquals(expectedResult, result);
     }
@@ -75,7 +75,7 @@ public abstract class AbstractDurationDurationMaxTest<C extends FDSConfig, D> ex
     void testWithBothDuration(Locale locale) throws ExecutionException, InterruptedException {
         var dosage = generateWithBothDuration();
         var dosageUtils = getDosageAPI(locale, DisplayOrder.DURATION_DURATION_MAX);
-        String result = dosageUtils.asHumanReadableText(dosage).get();
+        String result = dosageUtils.asHumanReadableText(dosage).get().replace("\u00a0"," ");;
         String expectedResult = getExpectedText3(locale);
         assertEquals(expectedResult, result);
     }

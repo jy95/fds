@@ -89,7 +89,7 @@ public class RatioToStringR4 implements RatioToString<FDSConfigR4, Ratio> {
         if (BigDecimal.ONE.equals(denominatorValue)) {
             return QuantityToStringR4
                     .getInstance()
-                    .enhancedFromUnitToString(bundle, config, denominator);
+                    .enhancedFromUnitToString(config, denominator);
         }
 
         return QuantityToStringR4

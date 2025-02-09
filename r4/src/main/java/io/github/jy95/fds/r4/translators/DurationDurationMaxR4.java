@@ -1,10 +1,12 @@
 package io.github.jy95.fds.r4.translators;
 
 import com.ibm.icu.text.MessageFormat;
+import io.github.jy95.fds.common.functions.UnitsOfTimeFormatter;
 import io.github.jy95.fds.common.translators.DurationDurationMax;
 import io.github.jy95.fds.r4.config.FDSConfigR4;
 import org.hl7.fhir.r4.model.Dosage;
 
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 /**
@@ -21,9 +23,9 @@ public class DurationDurationMaxR4 implements DurationDurationMax<FDSConfigR4, D
     protected final MessageFormat durationMaxMsg;
 
     /**
-     * The resource bundle containing localized strings for translation.
+     * The locale for translation.
      */
-    private final ResourceBundle bundle;
+    private final Locale locale;
 
     /**
      * Constructor for {@code DurationDurationMaxR4}.
@@ -32,9 +34,9 @@ public class DurationDurationMaxR4 implements DurationDurationMax<FDSConfigR4, D
      * @param bundle a {@link java.util.ResourceBundle} object
      */
     public DurationDurationMaxR4(FDSConfigR4 config, ResourceBundle bundle) {
-        this.durationMsg = getDurationMsg(bundle, config.getLocale());
-        this.durationMaxMsg = getDurationMaxMsg(bundle, config.getLocale());
-        this.bundle = bundle;
+        this.locale = config.getLocale();
+        this.durationMsg = getDurationMsg(bundle, locale);
+        this.durationMaxMsg = getDurationMaxMsg(bundle, locale);
     }
 
     /** {@inheritDoc} */
@@ -70,7 +72,7 @@ public class DurationDurationMaxR4 implements DurationDurationMax<FDSConfigR4, D
         var durationUnit = repeat.getDurationUnit().toCode();
         var durationQuantity = repeat.getDuration();
 
-        var durationText = quantityToString(bundle, durationUnit, durationQuantity);
+        var durationText = UnitsOfTimeFormatter.formatWithCount(locale, durationUnit, durationQuantity);
         return durationMsg.format(new Object[]{durationText});
     }
 
@@ -81,7 +83,7 @@ public class DurationDurationMaxR4 implements DurationDurationMax<FDSConfigR4, D
         var durationUnit = repeat.getDurationUnit().toCode();
         var durationQuantity = repeat.getDurationMax();
 
-        var durationText = quantityToString(bundle, durationUnit, durationQuantity);
+        var durationText = UnitsOfTimeFormatter.formatWithCount(locale, durationUnit, durationQuantity);
         return durationMaxMsg.format(new Object[]{durationText});
     }
 }

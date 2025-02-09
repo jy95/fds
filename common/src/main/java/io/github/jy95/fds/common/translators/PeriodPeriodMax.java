@@ -42,19 +42,6 @@ public interface PeriodPeriodMax<C extends FDSConfig, D> extends TranslatorTimin
         return new MessageFormat(msg, locale);
     }
 
-    /**
-     * Retrieves the localized unit name for the given period unit and amount.
-     *
-     * @param bundle The bundle to extract the key
-     * @param periodUnit The unit code of the period (e.g., "d", "h").
-     * @param amount     The quantity associated with the period unit.
-     * @return A localized string representing the unit.
-     */
-    default String getUnit(ResourceBundle bundle, String periodUnit, BigDecimal amount) {
-        var unitMsg = bundle.getString("withoutCount." + periodUnit);
-        return MessageFormat.format(unitMsg, amount);
-    }
-
     /** {@inheritDoc} */
     @Override
     default CompletableFuture<String> convert(D dosage) {

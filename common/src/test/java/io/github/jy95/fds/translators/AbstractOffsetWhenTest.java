@@ -51,7 +51,7 @@ public abstract class AbstractOffsetWhenTest<C extends FDSConfig, D> extends Abs
     void testWithWhenAndCount(Locale locale) throws ExecutionException, InterruptedException {
         var dosage = generateWithWhenAndCount();
         var dosageUtils = getDosageAPI(locale, DisplayOrder.OFFSET_WHEN);
-        String result = dosageUtils.asHumanReadableText(dosage).get();
+        String result = dosageUtils.asHumanReadableText(dosage).get().replace("\u00a0"," ");;
         String expectedResult = getExpectedText2(locale);
         assertEquals(expectedResult, result);
     }

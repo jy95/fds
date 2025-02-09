@@ -89,7 +89,7 @@ public class RatioToStringR5 implements RatioToString<FDSConfigR5, Ratio> {
         if (BigDecimal.ONE.equals(denominatorValue)) {
             return QuantityToStringR5
                     .getInstance()
-                    .enhancedFromUnitToString(bundle, config, denominator);
+                    .enhancedFromUnitToString(config, denominator);
         }
 
         return QuantityToStringR5

@@ -2,12 +2,14 @@ package io.github.jy95.fds.r5.translators;
 
 import com.ibm.icu.text.MessageFormat;
 import io.github.jy95.fds.common.functions.ListToString;
+import io.github.jy95.fds.common.functions.UnitsOfTimeFormatter;
 import io.github.jy95.fds.common.translators.OffsetWhen;
 import io.github.jy95.fds.r5.config.FDSConfigR5;
 import lombok.RequiredArgsConstructor;
 import org.hl7.fhir.r5.model.Dosage;
 import org.hl7.fhir.r5.model.Enumeration;
 
+import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
@@ -25,6 +27,11 @@ public class OffsetWhenR5 implements OffsetWhen<FDSConfigR5, Dosage> {
      * The resource bundle containing localized strings for translation.
      */
     private final ResourceBundle bundle;
+
+    /**
+     * The locale for translation.
+     */
+    private final Locale locale;
 
     /** {@inheritDoc} */
     @Override
@@ -96,9 +103,8 @@ public class OffsetWhenR5 implements OffsetWhen<FDSConfigR5, Dosage> {
                     .stream()
                     .filter(unit -> extractedTime.getOrDefault(unit, 0) > 0)
                     .map(unit -> {
-                        var unitMsg = bundle.getString("withCount." + unit);
                         var amount = extractedTime.get(unit);
-                        return MessageFormat.format(unitMsg, amount);
+                        return UnitsOfTimeFormatter.formatWithCount(locale, unit, amount);
                     })
                     .collect(Collectors.toList());
 
