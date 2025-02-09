@@ -36,6 +36,7 @@ public final class UnitsOfTimeFormatter {
         return NumberFormatter
                 .withLocale(locale)
                 .unit(UNIT_MAPPING.get(unit))
+                .unitWidth(NumberFormatter.UnitWidth.FULL_NAME)
                 .format(count)
                 .toString();
     }
