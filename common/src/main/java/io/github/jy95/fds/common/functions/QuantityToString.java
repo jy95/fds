@@ -43,7 +43,7 @@ public interface QuantityToString<C extends FDSConfig, Q> {
     default CompletableFuture<String> convert(ResourceBundle bundle, C config, Q quantity) {
         var comparator = comparatorToString(bundle, config, quantity);
         var unit = hasUnit(quantity)
-                ? enhancedFromUnitToString(bundle, config, quantity)
+                ? enhancedFromUnitToString(config, quantity)
                 : CompletableFuture.completedFuture("");
         var amount = getValue(quantity).toString();
 
