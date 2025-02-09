@@ -1,6 +1,7 @@
 package io.github.jy95.fds.common.functions;
 
 import com.ibm.icu.number.NumberFormatter;
+import com.ibm.icu.number.Precision;
 import com.ibm.icu.util.MeasureUnit;
 
 import java.util.Locale;
@@ -49,11 +50,14 @@ public final class UnitsOfTimeFormatter {
      * @return A formatted time-unit string without a count
      */
     public static String formatWithoutCount(Locale locale, String unit, Number count) {
-        String formattedWithCount = formatWithCount(locale, unit, count);
-        // Remove the numeric portion and return only the unit text
-        // ICU4J allows us to format with unit, but we use only the textual part in the final output.
-        int indexOfSpace = formattedWithCount.indexOf(" ");
-
-        return formattedWithCount.substring(indexOfSpace + 1);
+        // ICU4j doesn't have a method for extracting only the unit with plural form so a bit of magic here
+        return NumberFormatter
+                .withLocale(locale)
+                .precision(Precision.maxSignificantDigits(1))
+                .unit(UNIT_MAPPING.get(unit))
+                .unitWidth(NumberFormatter.UnitWidth.FULL_NAME)
+                .format(count)
+                .toString()
+                .substring(2); // 1 because of the number display + 1 because of spacing
     }
 }
