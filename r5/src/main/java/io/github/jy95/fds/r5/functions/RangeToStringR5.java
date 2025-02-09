@@ -50,7 +50,6 @@ public class RangeToStringR5 implements RangeToString<FDSConfigR5, Range> {
         return QuantityToStringR5
                 .getInstance()
                 .enhancedFromUnitToString(
-                        bundle,
                         config,
                         (hasHigh) ? range.getHigh() : range.getLow()
                 );
