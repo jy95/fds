@@ -52,7 +52,7 @@ public class Main {
 
 ## fromExtensionsToString
 
-Converts a list of FHIR Extension objects to a JSON-like string representation.
+Converts a list of FHIR Extension objects to a string representation.
 
 ### Why this method exists
 
