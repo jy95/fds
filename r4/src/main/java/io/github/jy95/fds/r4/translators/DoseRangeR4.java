@@ -1,6 +1,5 @@
 package io.github.jy95.fds.r4.translators;
 
-import com.ibm.icu.text.MessageFormat;
 import io.github.jy95.fds.common.types.DoseAndRateKey;
 import io.github.jy95.fds.common.types.Translator;
 import io.github.jy95.fds.r4.config.FDSConfigR4;
