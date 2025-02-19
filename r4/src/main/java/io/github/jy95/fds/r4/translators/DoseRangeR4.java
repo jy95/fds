@@ -1,8 +1,8 @@
 package io.github.jy95.fds.r4.translators;
 
 import com.ibm.icu.text.MessageFormat;
-import io.github.jy95.fds.common.translators.DoseRange;
 import io.github.jy95.fds.common.types.DoseAndRateKey;
+import io.github.jy95.fds.common.types.Translator;
 import io.github.jy95.fds.r4.config.FDSConfigR4;
 import io.github.jy95.fds.r4.functions.RangeToStringR4;
 import org.hl7.fhir.r4.model.Dosage;
@@ -16,11 +16,7 @@ import java.util.concurrent.CompletableFuture;
  *
  * @author jy95
  */
-public class DoseRangeR4 implements DoseRange<FDSConfigR4, Dosage> {
-
-    // Translations
-    /** MessageFormat instance used for "doseRange" translation. */
-    protected final MessageFormat doseRangeMsg;
+public class DoseRangeR4 implements Translator<FDSConfigR4, Dosage> {
 
     /**
      * The configuration object used by this API.
@@ -41,7 +37,6 @@ public class DoseRangeR4 implements DoseRange<FDSConfigR4, Dosage> {
     public DoseRangeR4(FDSConfigR4 config, ResourceBundle bundle) {
         this.config = config;
         this.bundle = bundle;
-        this.doseRangeMsg = getDoseRangeMsg(bundle, config.getLocale());
     }
 
     /** {@inheritDoc} */
@@ -52,8 +47,7 @@ public class DoseRangeR4 implements DoseRange<FDSConfigR4, Dosage> {
 
         return RangeToStringR4
                 .getInstance()
-                .convert(bundle, config, (Range) doseRange)
-                .thenApplyAsync(rangeText -> doseRangeMsg.format(new Object[]{rangeText}));
+                .convert(bundle, config, (Range) doseRange);
     }
 
     /** {@inheritDoc} */
