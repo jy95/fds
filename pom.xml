@@ -58,7 +58,7 @@
         <hapi.fhir.version>8.0.0</hapi.fhir.version>
         <icu4j.version>76.1</icu4j.version>
         <junit.version>5.12.0</junit.version>
-        <maven.compiler.plugin.version>3.13.0</maven.compiler.plugin.version>
+        <maven.compiler.plugin.version>3.14.0</maven.compiler.plugin.version>
         <maven.surefire.plugin.version>3.5.2</maven.surefire.plugin.version>
         <jacoco.plugin.version>0.8.12</jacoco.plugin.version>
         <maven.site.plugin.version>3.21.0</maven.site.plugin.version>
