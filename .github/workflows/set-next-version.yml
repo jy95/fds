@@ -45,7 +45,7 @@ jobs:
         run: |
           mvn versions:set-property -Dproperty=revision -DnewVersion=${{ needs.extract_version.outputs.next_patch }}-SNAPSHOT -DgenerateBackupPoms=false
       - name: 💅 Create Pull Request
-        uses: peter-evans/create-pull-request@v7.0.6
+        uses: peter-evans/create-pull-request@v7.0.7
         with:
           title: "chore: Update POM version to ${{ needs.extract_version.outputs.next_patch }}-SNAPSHOT 🤖"
           branch: "automated/version-bump-${{ github.run_id }}"
