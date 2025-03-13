@@ -18,12 +18,12 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
         // Create a configuration to be used by the library
-        FDSConfigR5 configR4 = FDSConfigR5
+        FDSConfigR5 configR5 = FDSConfigR5
                 .builder()
                 .build();
 
         // Create the library with that configuration
-        DosageAPIR5 lib = new DosageAPIR5(configR4);
+        DosageAPIR5 lib = new DosageAPIR5(configR5);
         
         // TODO Your HAPI FHIR Dosage instance you would like to deal with ;)
         Dosage dosage = new Dosage();
