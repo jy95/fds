@@ -56,7 +56,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <lombok.version>1.18.36</lombok.version>
         <hapi.fhir.version>8.0.0</hapi.fhir.version>
-        <icu4j.version>76.1</icu4j.version>
+        <icu4j.version>77.1</icu4j.version>
         <junit.version>5.12.0</junit.version>
         <maven.compiler.plugin.version>3.14.0</maven.compiler.plugin.version>
         <maven.surefire.plugin.version>3.5.2</maven.surefire.plugin.version>
