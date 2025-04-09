@@ -4,7 +4,6 @@ import io.github.jy95.fds.common.config.FDSConfig;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;

@@ -4,7 +4,6 @@ import com.ibm.icu.text.MessageFormat;
 import io.github.jy95.fds.common.config.FDSConfig;
 import io.github.jy95.fds.common.types.TranslatorTiming;
 
-import java.math.BigDecimal;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
