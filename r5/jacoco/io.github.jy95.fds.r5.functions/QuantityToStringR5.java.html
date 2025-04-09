@@ -7,7 +7,6 @@ import io.github.jy95.fds.r5.config.FDSConfigR5;
 import org.hl7.fhir.r5.model.Quantity;
 
 import java.math.BigDecimal;
-import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
 
@@ -24,7 +23,7 @@ public class QuantityToStringR5 implements QuantityToString&lt;FDSConfigR5, Quan
 
     // Static inner class for holding the singleton instance
     private static class Holder {
-<span class="fc" id="L27">        private static final QuantityToStringR5 INSTANCE = new QuantityToStringR5();</span>
+<span class="fc" id="L26">        private static final QuantityToStringR5 INSTANCE = new QuantityToStringR5();</span>
     }
 
     /**
@@ -33,47 +32,47 @@ public class QuantityToStringR5 implements QuantityToString&lt;FDSConfigR5, Quan
      * @return the singleton instance
      */
     public static QuantityToStringR5 getInstance() {
-<span class="fc" id="L36">        return Holder.INSTANCE;</span>
+<span class="fc" id="L35">        return Holder.INSTANCE;</span>
     }
 
     /** {@inheritDoc} */
     @Override
     public boolean hasUnit(Quantity quantity) {
-<span class="fc bfc" id="L42" title="All 4 branches covered.">        return quantity.hasUnit() || quantity.hasCode();</span>
+<span class="fc bfc" id="L41" title="All 4 branches covered.">        return quantity.hasUnit() || quantity.hasCode();</span>
     }
 
     /** {@inheritDoc} */
     @Override
     public BigDecimal getValue(Quantity quantity) {
-<span class="fc" id="L48">        return quantity.getValue();</span>
+<span class="fc" id="L47">        return quantity.getValue();</span>
     }
 
     /** {@inheritDoc} */
     @Override
     public CompletableFuture&lt;String&gt; enhancedFromUnitToString(FDSConfigR5 config, Quantity quantity) {
         // Duration units are built-in supported
-<span class="pc bpc" id="L55" title="2 of 6 branches missed.">        if (quantity.hasSystem() &amp;&amp; quantity.hasCode() &amp;&amp; TIME_SYSTEMS.contains(quantity.getSystem())) {</span>
-<span class="fc" id="L56">            return CompletableFuture.supplyAsync(() -&gt; {</span>
-<span class="fc" id="L57">                String code = quantity.getCode();</span>
-<span class="pc bpc" id="L58" title="1 of 2 branches missed.">                BigDecimal amount = quantity.hasValue() ? quantity.getValue() : BigDecimal.ONE;</span>
-<span class="fc" id="L59">                return UnitsOfTimeFormatter.formatWithoutCount(config.getLocale(), code, amount);</span>
+<span class="pc bpc" id="L54" title="2 of 6 branches missed.">        if (quantity.hasSystem() &amp;&amp; quantity.hasCode() &amp;&amp; TIME_SYSTEMS.contains(quantity.getSystem())) {</span>
+<span class="fc" id="L55">            return CompletableFuture.supplyAsync(() -&gt; {</span>
+<span class="fc" id="L56">                String code = quantity.getCode();</span>
+<span class="pc bpc" id="L57" title="1 of 2 branches missed.">                BigDecimal amount = quantity.hasValue() ? quantity.getValue() : BigDecimal.ONE;</span>
+<span class="fc" id="L58">                return UnitsOfTimeFormatter.formatWithoutCount(config.getLocale(), code, amount);</span>
             });
         }
 
         // Otherwise, let config do the charm
-<span class="fc" id="L64">        return config.fromFHIRQuantityUnitToString(quantity);</span>
+<span class="fc" id="L63">        return config.fromFHIRQuantityUnitToString(quantity);</span>
     }
 
     /** {@inheritDoc} */
     @Override
     public CompletableFuture&lt;String&gt; comparatorToString(ResourceBundle bundle, FDSConfigR5 config, Quantity quantity) {
-<span class="fc bfc" id="L70" title="All 2 branches covered.">        if (quantity.hasComparator()) {</span>
-<span class="fc" id="L71">            var code = quantity.getComparator().toCode();</span>
-<span class="fc" id="L72">            var comparatorMsg = bundle.getString(code);</span>
-<span class="fc" id="L73">            var text = new MessageFormat(comparatorMsg, config.getLocale()).format(new Object[]{});</span>
-<span class="fc" id="L74">            return CompletableFuture.completedFuture(text);</span>
+<span class="fc bfc" id="L69" title="All 2 branches covered.">        if (quantity.hasComparator()) {</span>
+<span class="fc" id="L70">            var code = quantity.getComparator().toCode();</span>
+<span class="fc" id="L71">            var comparatorMsg = bundle.getString(code);</span>
+<span class="fc" id="L72">            var text = new MessageFormat(comparatorMsg, config.getLocale()).format(new Object[]{});</span>
+<span class="fc" id="L73">            return CompletableFuture.completedFuture(text);</span>
         }
-<span class="fc" id="L76">        return CompletableFuture.completedFuture(&quot;&quot;);</span>
+<span class="fc" id="L75">        return CompletableFuture.completedFuture(&quot;&quot;);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
