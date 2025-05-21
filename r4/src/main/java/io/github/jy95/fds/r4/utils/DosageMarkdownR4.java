@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Locale;
 
 import org.hl7.fhir.r4.model.Dosage;
 import org.hl7.fhir.r4.model.MedicationKnowledge;
@@ -12,6 +13,7 @@ import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.parser.IParser;
 import io.github.jy95.fds.common.types.DosageMarkdown;
 import io.github.jy95.fds.r4.DosageAPIR4;
+import io.github.jy95.fds.r4.config.FDSConfigR4;
 
 /**
  * An interface for generating Markdown examples of dosage information.
@@ -39,11 +41,6 @@ public class DosageMarkdownR4 implements DosageMarkdown<DosageAPIR4, Dosage> {
         "}";
 
     @Override
-    public DosageAPIR4 getDosageAPI() {
-        return new DosageAPIR4();
-    }
-
-    @Override
     public List<Dosage> getDosageFromJson(Path jsonFile) throws IOException {
         String dosageJson = Files.readString(jsonFile);
         String cleanDosageJson = dosageJson.trim();
@@ -51,6 +48,16 @@ public class DosageMarkdownR4 implements DosageMarkdown<DosageAPIR4, Dosage> {
         String wrappedJson = String.format(TEMPLATE, dosagePart);
         MedicationKnowledge mk = jsonParser.parseResource(MedicationKnowledge.class, wrappedJson);
         return mk.getAdministrationGuidelinesFirstRep().getDosageFirstRep().getDosage();
+    }
+
+    @Override
+    public DosageAPIR4 createDosageAPI(Locale locale) {
+        return new DosageAPIR4(
+            FDSConfigR4
+                .builder()
+                .locale(locale)
+                .build()
+        );
     }
     
 }

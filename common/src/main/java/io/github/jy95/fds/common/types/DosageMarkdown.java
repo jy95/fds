@@ -1,9 +1,16 @@
 package io.github.jy95.fds.common.types;
 
-import java.io.*;
-import java.nio.file.*;
-import java.util.*;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * An interface for generating Markdown examples of dosage information.
@@ -32,7 +39,7 @@ public interface DosageMarkdown<A extends DosageAPI<?, B>, B> {
 
     /**
      * Returns the path to the resources directory containing the JSON input files.
-     * The default implementation assumes the JSON files are located in {@code src/site/resources}.
+     * The default implementation assumes the JSON files are located in {@code src/site/resources/examples}.
      *
      * @return A {@link Path} object representing the resources directory.
      */
@@ -50,26 +57,46 @@ public interface DosageMarkdown<A extends DosageAPI<?, B>, B> {
      * @return A {@link Path} object representing the output directory.
      */
     default Path getOutputDir(Locale locale, Path folder) {
-        return Paths.get("src", "site", locale.toString(), "markdown", "examples", folder.getFileName().toString());
+        Path resourcesDir = getResourcesDir();
+        Path relativePath = resourcesDir.relativize(folder); // e.g., "conditions" or "" (empty path for root)
+
+        String outputFolderName;
+        if (relativePath.toString().isEmpty()) {
+            // If the folder is the resourcesDir itself, use "general" as the output folder name
+            outputFolderName = "general";
+        } else {
+            // Otherwise, use the relative path's string as the output folder name
+            outputFolderName = relativePath.toString();
+        }
+
+        return Paths.get("src", "site", locale.toString(), "markdown", "examples", outputFolderName);
     }
 
     /**
-     * Extracts the base name of a JSON file (without the ".json" extension).
+     * Creates and returns a new instance of {@link DosageAPI} for the given locale.
+     * Implementers of this interface must provide a concrete implementation for this method.
      *
-     * @param jsonFile The {@link Path} to the JSON file.
-     * @return The base name of the file as a {@link String}.
+     * @param locale The {@link Locale} for which to create the {@link DosageAPI}.
+     * @return A new {@link DosageAPI} instance configured for the specified locale.
      */
-    default String getBaseName(Path jsonFile) {
-        return jsonFile.getFileName().toString().replace(".json", "");
-    }
+    A createDosageAPI(Locale locale);
 
     /**
-     * Returns an instance of the {@link DosageAPI} that will be used to convert
-     * the dosage objects into human-readable text.
+     * Returns a map of {@link DosageAPI} instances, keyed by {@link Locale}.
+     * This default implementation uses {@link #getLocales()} and {@link #createDosageAPI(Locale)}
+     * to build the map.
      *
-     * @return An instance of the {@link DosageAPI}.
+     * @return A {@link Map} where keys are {@link Locale} objects and values are
+     * {@link DosageAPI} instances configured for that locale.
      */
-    A getDosageAPI();
+    default Map<Locale, A> getDosageAPIs() {
+        return getLocales()
+            .stream()
+            .collect(Collectors.toMap(
+                locale -> locale,
+                this::createDosageAPI // Uses the abstract createDosageAPI method
+            ));
+    }
 
     /**
      * Reads a dosage object of type {@code B} from the specified JSON file.
@@ -81,62 +108,178 @@ public interface DosageMarkdown<A extends DosageAPI<?, B>, B> {
     List<B> getDosageFromJson(Path jsonFile) throws IOException;
 
     /**
+     * Returns a Stream of {@link Path} objects representing all JSON files
+     * recursively found within the resources directory and its subdirectories.
+     * This method can be overridden to customize how the JSON files are located.
+     *
+     * @return A {@link Stream} of {@link Path} objects for the JSON files.
+     * @throws IOException If an I/O error occurs while traversing directories.
+     */
+    default Stream<Path> getJsonFiles() throws IOException {
+        return Files
+                .walk(getResourcesDir())
+                .filter(path -> path.toString().endsWith(".json"));
+    }
+
+    /**
+     * Returns a map of JSON files grouped by their parent directory.
+     * This method uses {@link #getJsonFiles()} to find all JSON files
+     * and then groups them by their containing folder.
+     *
+     * @return A {@link Map} where keys are {@link Path} objects representing folders,
+     * and values are {@link List} of {@link Path} objects representing JSON files
+     * within that folder.
+     * @throws IOException If an I/O error occurs while traversing directories.
+     */
+    default Map<Path, List<Path>> getJsonFilesGroupedByFolder() throws IOException {
+        try (Stream<Path> jsonFilesStream = getJsonFiles()) {
+            return jsonFilesStream
+                    .collect(Collectors.groupingBy(Path::getParent));
+        }
+    }
+
+    /**
      * Generates Markdown example files for all JSON files found within the subdirectories
      * of the resources directory for each of the supported locales.
      * The generated Markdown files will contain the original JSON input and the
      * human-readable output produced by the {@link DosageAPI}.
      *
+     * This method now uses {@link #getJsonFilesGroupedByFolder()} to iterate through
+     * folders and their associated JSON files.
+     *
      * @throws Exception If an error occurs during file processing or API usage.
      */
     default void generateMarkdown() throws Exception {
-        Path resourcesDir = getResourcesDir();
-        A lib = getDosageAPI();
+        Map<Locale, A> dosageAPIs = getDosageAPIs(); // Get the map of APIs
+        Map<Path, List<Path>> groupedJsonFiles = getJsonFilesGroupedByFolder(); // Get files grouped by folder
 
-        try (var folders = Files.list(resourcesDir).filter(Files::isDirectory)) {
-            for (Path folder : folders.collect(Collectors.toList())) {
-                for (Locale locale : getLocales()) {
-                    Path outDir = getOutputDir(locale, folder);
-                    Files.createDirectories(outDir);
-                    Path mdFile = outDir.resolve(folder.getFileName() + ".md"); // Output file named after the folder
+        for (Map.Entry<Path, List<Path>> entry : groupedJsonFiles.entrySet()) {
+            Path folder = entry.getKey();
+            List<Path> jsonFilesInFolder = entry.getValue();
 
-                    try (BufferedWriter writer = Files.newBufferedWriter(mdFile)) {
-                        writer.write("# " + folder.getFileName() + " \n\n");
-                        writer.write("<table>\n");
-                        writer.write("  <thead>\n");
-                        writer.write("    <tr>\n");
-                        writer.write("      <th>Dosage</th>\n");
-                        writer.write("      <th>Human readable text</th>\n");
-                        writer.write("    </tr>\n");
-                        writer.write("  </thead>\n");
-                        writer.write("  <tbody>\n");
+            // Determine the output folder name for the markdown file
+            String outputFolderName = folder.getFileName() != null ? folder.getFileName().toString() : "general"; // For root level files
 
-                        try (var files = Files.list(folder).filter(f -> f.toString().endsWith(".json"))) {
-                            for (Path jsonFile : files.collect(Collectors.toList())) {
-                                try {
-                                    List<B> dosages = getDosageFromJson(jsonFile);
-                                    String outputText = lib.asHumanReadableText(dosages).get();
-                                    String jsonContent = escapeHtml(Files.readString(jsonFile));
+            for (Locale locale : getLocales()) {
+                Path outputDir = getOutputDir(locale, folder); // Use the original folder path to determine output directory
+                Files.createDirectories(outputDir);
+                Path markdownFile = outputDir.resolve(outputFolderName + ".md");
 
-                                    writer.write("    <tr>\n");
-                                    writer.write("      <td><pre><code class=\"language-json\">" +
-                                            jsonContent +
-                                            "</code></pre></td>\n");
-                                    writer.write("      <td>" + escapeHtml(outputText).replace("\n", "<br>") + "</td>\n");
-                                    writer.write("    </tr>\n");
-                                } catch (IOException e) {
-                                    System.err.println("Error reading JSON file: " + jsonFile + " - " + e.getMessage());
-                                } catch (NoSuchElementException e) {
-                                    System.err.println("Error converting dosage from file: " + jsonFile + " - " + e.getMessage());
-                                }
-                            }
-                        }
-
-                        writer.write("  </tbody>\n");
-                        writer.write("</table>\n");
-                    }
+                // Get the specific DosageAPI for the current locale from the map
+                A dosageApiForLocale = dosageAPIs.get(locale);
+                if (dosageApiForLocale == null) {
+                    System.err.println("No DosageAPI found for locale: " + locale + ". Skipping markdown generation for this locale.");
+                    continue; // Skip if no API is configured for this locale
                 }
+
+                // Generate Markdown for the current folder and locale using the grouped files
+                generateMarkdownForFolderAndLocale(dosageApiForLocale, folder, locale, markdownFile, jsonFilesInFolder);
             }
         }
+    }
+
+    /**
+     * Generates the Markdown content for a specific folder and locale.
+     * This overloaded method now accepts a list of JSON files to process for the given folder.
+     *
+     * @param dosageApi     The {@link DosageAPI} instance configured for the specific locale.
+     * @param inputFolder   The {@link Path} to the input folder containing JSON files.
+     * @param locale        The {@link Locale} for which to generate the Markdown.
+     * @param markdownFile The {@link Path} to the output Markdown file.
+     * @param jsonFilesToProcess The {@link List} of {@link Path} objects representing JSON files to be processed for this folder.
+     * @throws IOException If an I/O error occurs while reading or writing files.
+     * @throws ExecutionException 
+     * @throws InterruptedException 
+     */
+    private void generateMarkdownForFolderAndLocale(A dosageApi, Path inputFolder, Locale locale, Path markdownFile, List<Path> jsonFilesToProcess) throws IOException, InterruptedException, ExecutionException {
+        try (BufferedWriter writer = Files.newBufferedWriter(markdownFile)) {
+            writeMarkdownHeader(writer, inputFolder.getFileName().toString());
+            writeMarkdownTableStart(writer);
+
+            // Iterate directly over the provided list of JSON files
+            for (Path jsonFile : jsonFilesToProcess) {
+                processJsonFile(dosageApi, jsonFile, locale, writer);
+            }
+
+            writeMarkdownTableEnd(writer);
+        }
+    }
+
+    /**
+     * Writes the Markdown header to the output file.
+     *
+     * @param writer     The {@link BufferedWriter}.
+     * @param folderName The name of the folder.
+     * @throws IOException If an I/O error occurs while writing to the file.
+     */
+    private void writeMarkdownHeader(BufferedWriter writer, String folderName) throws IOException {
+        writer.write("# " + folderName + " \n\n");
+    }
+
+    /**
+     * Writes the start of the Markdown table.
+     *
+     * @param writer The {@link BufferedWriter}.
+     * @throws IOException If an I/O error occurs while writing to the file.
+     */
+    private void writeMarkdownTableStart(BufferedWriter writer) throws IOException {
+        writer.write("<table>\n");
+        writer.write("  <thead>\n");
+        writer.write("    <tr>\n");
+        writer.write("      <th>Dosage</th>\n");
+        writer.write("      <th>Human readable text</th>\n");
+        writer.write("    </tr>\n");
+        writer.write("  </thead>\n");
+        writer.write("  <tbody>\n");
+    }
+
+    /**
+     * Processes a single JSON file, reads the dosage data, generates the human-readable text,
+     * and writes a row to the Markdown table.
+     *
+     * @param dosageApi The {@link DosageAPI} instance configured for the specific locale.
+     * @param jsonFile  The {@link Path} to the JSON file.
+     * @param locale    The {@link Locale} for which to generate the text (used for error logging if needed).
+     * @param writer    The {@link BufferedWriter}.
+     * @throws IOException If an I/O error occurs while reading or writing files.
+     * @throws ExecutionException 
+     * @throws InterruptedException 
+     */
+    private void processJsonFile(A dosageApi, Path jsonFile, Locale locale, BufferedWriter writer) throws IOException, InterruptedException, ExecutionException {
+        try {
+            List<B> dosages = getDosageFromJson(jsonFile);
+            // The dosageApi is already configured for the correct locale, no need to set it here.
+            String outputText = dosageApi.asHumanReadableText(dosages).get();
+            String jsonContent = escapeHtml(Files.readString(jsonFile));
+            writeMarkdownTableRow(writer, jsonContent, outputText);
+        } catch (IOException e) {
+            System.err.println("Error reading JSON file: " + jsonFile + " - " + e.getMessage());
+        }
+    }
+
+    /**
+     * Writes a single row to the Markdown table.
+     *
+     * @param writer      The {@link BufferedWriter}.
+     * @param jsonContent The escaped JSON content.
+     * @param outputText  The escaped human-readable text.
+     * @throws IOException If an I/O error occurs while writing to the file.
+     */
+    private void writeMarkdownTableRow(BufferedWriter writer, String jsonContent, String outputText) throws IOException {
+        writer.write("    <tr>\n");
+        writer.write("      <td><pre><code class=\"language-json\">" + jsonContent + "</code></pre></td>\n");
+        writer.write("      <td>" + escapeHtml(outputText).replace("\n", "<br>") + "</td>\n");
+    }
+
+    /**
+     * Writes the end of the Markdown table.
+     *
+     * @param writer The {@link BufferedWriter}.
+     * @throws IOException If an I/O error occurs while writing to the file.
+     */
+    private void writeMarkdownTableEnd(BufferedWriter writer) throws IOException {
+        writer.write("  </tbody>\n");
+        writer.write("</table>\n");
     }
 
     /**
