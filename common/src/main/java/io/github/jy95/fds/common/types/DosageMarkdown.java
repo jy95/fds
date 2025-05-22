@@ -57,6 +57,22 @@ public interface DosageMarkdown<A extends DosageAPI<?, B>, B> {
      * @return A {@link Path} object representing the output directory.
      */
     default Path getOutputDir(Locale locale, Path folder) {
+        String outputFolderName = getOutputName(folder);
+        return Paths.get("src", "site", locale.toString(), "markdown", "examples", outputFolderName);
+    }
+
+    /**
+     * Determines the name of the output folder based on the provided folder path
+     * relative to the resources directory.
+     *
+     * @param folder The {@code Path} of the folder for which to determine the output name.
+     * @return A {@code String} representing the name of the output folder.
+     * If the provided {@code folder} is the same as the resources directory,
+     * the output folder name will be "general". Otherwise, the output
+     * folder name will be the string representation of the path of the
+     * {@code folder} relative to the resources directory.
+     */
+    default String getOutputName(Path folder) {
         Path resourcesDir = getResourcesDir();
         Path relativePath = resourcesDir.relativize(folder); // e.g., "conditions" or "" (empty path for root)
 
@@ -69,7 +85,7 @@ public interface DosageMarkdown<A extends DosageAPI<?, B>, B> {
             outputFolderName = relativePath.toString();
         }
 
-        return Paths.get("src", "site", locale.toString(), "markdown", "examples", outputFolderName);
+        return outputFolderName;
     }
 
     /**
@@ -167,10 +183,6 @@ public interface DosageMarkdown<A extends DosageAPI<?, B>, B> {
 
                 // Get the specific DosageAPI for the current locale from the map
                 A dosageApiForLocale = dosageAPIs.get(locale);
-                if (dosageApiForLocale == null) {
-                    System.err.println("No DosageAPI found for locale: " + locale + ". Skipping markdown generation for this locale.");
-                    continue; // Skip if no API is configured for this locale
-                }
 
                 // Generate Markdown for the current folder and locale using the grouped files
                 generateMarkdownForFolderAndLocale(dosageApiForLocale, folder, locale, markdownFile, jsonFilesInFolder);
