@@ -73,6 +73,7 @@ public class DosageMarkdownTest {
 
     }
 
+    // Step 1: Create a dummy instance of the class
     private DosageMarkdown<DummyDosageAPI, String> dosageMarkdown = new DummyMarkdown();
 
     private void assertMarkdownFileContent(Path markdownFile, String headerContains, String... contentContains) throws IOException {
@@ -86,9 +87,6 @@ public class DosageMarkdownTest {
 
     @Test
     void testDeFaultLocales() {
-        // Step 1: Create a dummy instance of the class
-        var dosageMarkdown = new DummyMarkdown();
-
         // Step 2: Get the default locales
         var defaultLocales = dosageMarkdown.getLocales();
 
@@ -98,8 +96,6 @@ public class DosageMarkdownTest {
 
     @Test
     void testDefaultBaseOutputDir() {
-        // Step 1: Create a dummy instance of the class
-        var dosageMarkdown = new DummyMarkdown();
         // Step 2: Get the default base output directory
         var defaultBaseOutputDir = dosageMarkdown.getBaseOutputDir(Locale.ENGLISH);
         // Step 3: Assert that the default base output directory is not null        
@@ -108,8 +104,6 @@ public class DosageMarkdownTest {
 
     @Test
     void testDefaultResourcesDir() {
-        // Step 1: Create a dummy instance of the class
-        var dosageMarkdown = new DummyMarkdown();
         // Step 2: Get the default resources directory
         var defaultResourcesDir = dosageMarkdown.getResourcesDir();
         // Step 3: Assert that the default resources directory is not null
@@ -176,5 +170,41 @@ public class DosageMarkdownTest {
         assertMarkdownFileContent(outputFile2, "text", "dosage_from_input2.json", "dosage_from_input3.json");
         assertMarkdownFileContent(outputFile3, "nested", "dosage_from_input4.json", "dosage_from_input5.json");
 
+    }
+
+    @Test
+    void testProcessJsonFileHandlesIOException() throws Exception {
+        // Step 1: Virtual filesystem setup
+        var fs = ZeroFs.newFileSystem(Configuration.unix());
+        var srcFolder = fs.getPath("src", "site", "errors");
+        Files.createDirectories(srcFolder);
+
+        // Step 2: Create a good JSON file and a file that will cause an IOException
+        var badJsonFile = srcFolder.resolve("bad.json");
+        Files.writeString(badJsonFile, "invalid content", StandardCharsets.UTF_8);
+
+        // Step 3: Create the FailingDosageMarkdown instance
+        class FailingMarkdown extends DummyMarkdown {
+
+            @Override
+            public Path getResourcesDir() {
+                return srcFolder;
+            }
+
+            @Override
+            public Path getBaseOutputDir(Locale locale) {
+                return fs.getPath("src", "site", locale.getLanguage(), "markdown", "examples");
+            }
+
+            @Override
+            public List<String> getDosageFromJson(Path jsonFile) throws IOException {
+                throw new IOException("Simulated IOException");
+            }
+        }
+        var failingMarkdown = new FailingMarkdown();
+
+        // Step 4: Call the method and assert that it handles the exception
+        failingMarkdown.generateMarkdown();
+        fs.close();
     }
 }
