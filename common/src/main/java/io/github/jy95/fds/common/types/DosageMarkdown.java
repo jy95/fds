@@ -67,9 +67,6 @@ public interface DosageMarkdown<A extends DosageAPI<?, B>, B> {
      *
      * @param folder The {@code Path} of the folder for which to determine the output name.
      * @return A {@code String} representing the name of the output folder.
-     * If the provided {@code folder} is the same as the resources directory,
-     * the output folder name will be "general". Otherwise, the output
-     * folder name will be the string representation of the path of the
      * {@code folder} relative to the resources directory.
      */
     default String getOutputName(Path folder) {
@@ -78,8 +75,8 @@ public interface DosageMarkdown<A extends DosageAPI<?, B>, B> {
 
         String outputFolderName;
         if (relativePath.toString().isEmpty()) {
-            // If the folder is the resourcesDir itself, use "general" as the output folder name
-            outputFolderName = "general";
+            // If the folder is the resourcesDir itself, use "." as the output folder name
+            outputFolderName = ".";
         } else {
             // Otherwise, use the relative path's string as the output folder name
             outputFolderName = relativePath.toString();
@@ -174,7 +171,7 @@ public interface DosageMarkdown<A extends DosageAPI<?, B>, B> {
             List<Path> jsonFilesInFolder = entry.getValue();
 
             // Determine the output folder name for the markdown file
-            String outputFolderName = folder.getFileName() != null ? folder.getFileName().toString() : "general"; // For root level files
+            String outputFolderName = folder.getFileName().toString();
 
             for (Locale locale : getLocales()) {
                 Path outputDir = getOutputDir(locale, folder); // Use the original folder path to determine output directory

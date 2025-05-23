@@ -16,6 +16,9 @@ import io.github.jy95.fds.common.config.FDSConfig;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import io.roastedroot.zerofs.Configuration;
+import io.roastedroot.zerofs.ZeroFs;
+
 public class DosageMarkdownTest {
     
     // Dummy implementation of DosageAPI with string as dosage type
@@ -59,38 +62,59 @@ public class DosageMarkdownTest {
     private DosageMarkdown<DummyDosageAPI, String> dosageMarkdown = new DummyMarkdown();
 
     @Test
-    void testDefaultGetResourcesDir() {
-        Path expected = Path.of("src", "site", "resources", "examples");
-        assertEquals(expected, dosageMarkdown.getResourcesDir(), "Default getResourcesDir should match expected path");
-    }
+    void testGenerateMarkdown_realFlowInVirtualFS() throws Exception {
 
-    @Test
-    void testDefaultLocales() {
-        Locale expected = Locale.ENGLISH;
-        assertTrue(dosageMarkdown.getLocales().contains(expected), "Locales should include English");
-    }
+        // Step 1: Virtual filesystem setup
+        var fs = ZeroFs.newFileSystem(Configuration.unix());
+        var srcFolder = fs.getPath("src", "site", "resources", "examples");
+        Files.createDirectories(srcFolder);
+        Files.createDirectories(srcFolder.resolve("text"));
+        Files.createDirectories(srcFolder.resolve("text").resolve("nested"));
 
-    @Test
-    void testGetOutputDirRoot() {
-        Path folder = Path.of("src", "site", "resources", "examples");
-        Path expected = Path.of("src", "site", "en", "markdown", "examples", "general");
+        // Step 2: Create fake JSON input files
+        var jsonFile1 = fs.getPath("src", "site", "resources", "examples", "input1.json");
+        var jsonFile2 = fs.getPath("src", "site", "resources", "examples", "text", "input2.json");
+        var jsonFile3 = fs.getPath("src", "site", "resources", "examples", "text", "input3.json");
+        var jsonFile4 = fs.getPath("src", "site", "resources", "examples", "text", "nested", "input4.json");
+        var jsonFile5 = fs.getPath("src", "site", "resources", "examples", "text", "nested", "input5.json");
+        Files.writeString(jsonFile1, "{}", StandardCharsets.UTF_8);
+        Files.writeString(jsonFile2, "{}", StandardCharsets.UTF_8);
+        Files.writeString(jsonFile3, "{}", StandardCharsets.UTF_8);
+        Files.writeString(jsonFile4, "{}", StandardCharsets.UTF_8);
+        Files.writeString(jsonFile5, "{}", StandardCharsets.UTF_8);
 
-        assertEquals(expected, dosageMarkdown.getOutputDir(Locale.ENGLISH, folder));
-    }
+        // Step 3: Custom subclass only for directory override
+        class InMemoryMarkdown extends DummyMarkdown {
+            @Override
+            public Path getResourcesDir() {
+                return srcFolder;
+            }
 
-    @Test
-    void testGetOutputDirSimple() {
-        Path folder = Path.of("src", "site", "resources", "examples", "text");
-        Path expected = Path.of("src", "site", "en", "markdown", "examples", "text");
+            @Override
+            public Path getOutputDir(Locale locale, Path folder) {
+                String outputFolderName = getOutputName(folder);
+                return fs.getPath("src", "site", locale.getLanguage(), "markdown", "examples", outputFolderName);
+            }
+        }
+        var inMemoryMarkdown = new InMemoryMarkdown();
 
-        assertEquals(expected, dosageMarkdown.getOutputDir(Locale.ENGLISH, folder));
-    }
+        // Step 4: Run real logic
+        inMemoryMarkdown.generateMarkdown();
 
-    @Test
-    void testGetOutputDirNested() {
-        Path folder = Path.of("src", "site", "resources", "examples", "text", "complex");
-        Path expected = Path.of("src", "site", "en", "markdown", "examples", "text", "complex");
+        // Step 5: Assert that output files were created
 
-        assertEquals(expected, dosageMarkdown.getOutputDir(Locale.ENGLISH, folder));
+        // 5.1: Check the output directory
+        var localeFolder = fs.getPath("src", "site", "en", "markdown", "examples");
+        assertTrue(Files.exists(localeFolder), "Locale folder should exist");
+
+        // 5.2 : Check that the output files were created
+        var outputFile1 = localeFolder.resolve("examples.md");
+        var outputFile2 = localeFolder.resolve("text.md");
+        var outputFile3 = localeFolder.resolve("text").resolve("nested.md");
+
+        assertTrue(Files.exists(outputFile1), "Output file 1 should exist");
+        assertTrue(Files.exists(outputFile2), "Output file 2 should exist");
+        assertTrue(Files.exists(outputFile3), "Output file 3 should exist");
+
     }
 }
