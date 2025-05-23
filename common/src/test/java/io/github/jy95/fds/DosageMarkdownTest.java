@@ -94,6 +94,11 @@ public class DosageMarkdownTest {
             public Path getBaseOutputDir(Locale locale) {
                 return fs.getPath("src", "site", locale.getLanguage(), "markdown", "examples");
             }
+
+            @Override
+            public List<Locale> getLocales() {
+                return List.of(Locale.ENGLISH);
+            }
         }
         var inMemoryMarkdown = new InMemoryMarkdown();
 

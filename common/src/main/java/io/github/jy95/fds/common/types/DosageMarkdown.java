@@ -152,18 +152,24 @@ public interface DosageMarkdown<A extends DosageAPI<?, B>, B> {
         Map<Locale, A> dosageAPIs = getDosageAPIs();
         Map<Path, List<Path>> groupedJsonFiles = getJsonFilesGroupedByFolder();
 
-        for (Map.Entry<Path, List<Path>> entry : groupedJsonFiles.entrySet()) {
-            Path folder = entry.getKey();
-            List<Path> jsonFilesInFolder = entry.getValue();
+        for (Locale locale : getLocales()) {
+            
+            // Prepare the main folder for the locale
+            Path baseOutputDir = getBaseOutputDir(locale);
+            Files.createDirectories(baseOutputDir);
 
-            for (Locale locale : getLocales()) {
-                Path baseOutputDir = getBaseOutputDir(locale);
-                Files.createDirectories(baseOutputDir); // Ensure the base output directory exists
+            // Prepare the dosage API for the current locale
+            A dosageApiForLocale = dosageAPIs.get(locale);
 
+            // Iterate through the grouped JSON files
+            for (Map.Entry<Path, List<Path>> entry : groupedJsonFiles.entrySet()) {
+
+                Path folder = entry.getKey();
+                List<Path> jsonFilesInFolder = entry.getValue();
+
+                // Fill in the markdown file with the JSON files
                 Path markdownFile = baseOutputDir.resolve(getRelativeMarkdownFilePath(folder));
                 Files.createDirectories(markdownFile.getParent()); // Ensure parent directories for the markdown file exist
-
-                A dosageApiForLocale = dosageAPIs.get(locale);
                 generateMarkdownForFolderAndLocale(dosageApiForLocale, folder, locale, markdownFile, jsonFilesInFolder);
             }
         }
