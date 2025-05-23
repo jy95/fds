@@ -85,6 +85,38 @@ public class DosageMarkdownTest {
     }
 
     @Test
+    void testDeFaultLocales() {
+        // Step 1: Create a dummy instance of the class
+        var dosageMarkdown = new DummyMarkdown();
+
+        // Step 2: Get the default locales
+        var defaultLocales = dosageMarkdown.getLocales();
+
+        // Step 3: Assert that the default locales are not empty
+        assertFalse(defaultLocales.isEmpty(), "Default locales should not be empty");
+    }
+
+    @Test
+    void testDefaultBaseOutputDir() {
+        // Step 1: Create a dummy instance of the class
+        var dosageMarkdown = new DummyMarkdown();
+        // Step 2: Get the default base output directory
+        var defaultBaseOutputDir = dosageMarkdown.getBaseOutputDir(Locale.ENGLISH);
+        // Step 3: Assert that the default base output directory is not null        
+        assertNotNull(defaultBaseOutputDir, "Default base output directory should not be null");
+    }
+
+    @Test
+    void testDefaultResourcesDir() {
+        // Step 1: Create a dummy instance of the class
+        var dosageMarkdown = new DummyMarkdown();
+        // Step 2: Get the default resources directory
+        var defaultResourcesDir = dosageMarkdown.getResourcesDir();
+        // Step 3: Assert that the default resources directory is not null
+        assertNotNull(defaultResourcesDir, "Default resources directory should not be null");
+    }
+
+    @Test
     void testGenerateMarkdown_realFlowInVirtualFS() throws Exception {
 
         // Step 1: Virtual filesystem setup

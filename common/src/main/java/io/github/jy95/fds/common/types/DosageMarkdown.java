@@ -60,21 +60,6 @@ public interface DosageMarkdown<A extends DosageAPI<?, B>, B> {
     }
 
     /**
-     * Determines the name of the output folder based on the provided folder path
-     * relative to the resources directory. This method is primarily for internal
-     * calculation of relative paths.
-     *
-     * @param folder The {@code Path} of the folder for which to determine the output name.
-     * @return A {@code String} representing the relative path from the resources directory
-     * (e.g., "", "text", "text/nested").
-     */
-    default String getOutputName(Path folder) {
-        Path resourcesDir = getResourcesDir();
-        Path relativePath = resourcesDir.relativize(folder);
-        return relativePath.toString();
-    }
-
-    /**
      * Creates and returns a new instance of {@link DosageAPI} for the given locale.
      * Implementers of this interface must provide a concrete implementation for this method.
      *
