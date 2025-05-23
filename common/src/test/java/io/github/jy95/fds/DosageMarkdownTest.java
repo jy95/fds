@@ -25,12 +25,26 @@ public class DosageMarkdownTest {
     private static class DummyDosageAPI extends DosageAPI<FDSConfig, String> {
 
         public DummyDosageAPI() {
-            super(FDSConfig.builder().build());
+            super(FDSConfig
+                .builder()
+                .displayOrder(List.of(DisplayOrder.TEXT))
+                .build()
+            );
         }
 
         @Override
         public Translator<FDSConfig, String> getTranslator(DisplayOrder displayOrder) {
-            return (dosage) -> CompletableFuture.completedFuture(dosage);
+            return new Translator<FDSConfig, String>() {
+                @Override
+                public CompletableFuture<String> convert(String dosage) {
+                    return CompletableFuture.completedFuture(dosage);
+                }
+
+                @Override
+                public boolean isPresent(String dosage) {
+                    return true;
+                }
+            };
         }
 
         @Override
@@ -60,6 +74,15 @@ public class DosageMarkdownTest {
     }
 
     private DosageMarkdown<DummyDosageAPI, String> dosageMarkdown = new DummyMarkdown();
+
+    private void assertMarkdownFileContent(Path markdownFile, String headerContains, String... contentContains) throws IOException {
+        assertTrue(Files.exists(markdownFile), "Markdown file should exist: " + markdownFile);
+        String content = Files.readString(markdownFile);
+        assertTrue(content.contains("# " + headerContains), "Header should contain: " + headerContains + " in " + markdownFile);
+        for (String expectedContent : contentContains) {
+            assertTrue(content.contains(expectedContent), "Content should contain: " + expectedContent + " in " + markdownFile);
+        }
+    }
 
     @Test
     void testGenerateMarkdown_realFlowInVirtualFS() throws Exception {
@@ -116,9 +139,10 @@ public class DosageMarkdownTest {
         var outputFile2 = localeFolder.resolve("text.md");
         var outputFile3 = localeFolder.resolve("text").resolve("nested.md");
 
-        assertTrue(Files.exists(outputFile1), "Output file 1 should exist");
-        assertTrue(Files.exists(outputFile2), "Output file 2 should exist");
-        assertTrue(Files.exists(outputFile3), "Output file 3 should exist");
+        // Step 6: Assert the content of the files using the reusable method
+        assertMarkdownFileContent(outputFile1, "examples", "dosage_from_input1.json");
+        assertMarkdownFileContent(outputFile2, "text", "dosage_from_input2.json", "dosage_from_input3.json");
+        assertMarkdownFileContent(outputFile3, "nested", "dosage_from_input4.json", "dosage_from_input5.json");
 
     }
 }
