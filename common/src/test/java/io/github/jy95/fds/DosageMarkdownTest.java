@@ -91,9 +91,8 @@ public class DosageMarkdownTest {
             }
 
             @Override
-            public Path getOutputDir(Locale locale, Path folder) {
-                String outputFolderName = getOutputName(folder);
-                return fs.getPath("src", "site", locale.getLanguage(), "markdown", "examples", outputFolderName);
+            public Path getBaseOutputDir(Locale locale) {
+                return fs.getPath("src", "site", locale.getLanguage(), "markdown", "examples");
             }
         }
         var inMemoryMarkdown = new InMemoryMarkdown();

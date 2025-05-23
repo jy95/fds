@@ -48,41 +48,30 @@ public interface DosageMarkdown<A extends DosageAPI<?, B>, B> {
     }
 
     /**
-     * Returns the output directory for the generated Markdown file for a specific locale and folder.
-     * The default implementation creates a directory structure like
-     * {@code src/site/{locale}/markdown/examples/{folderName}}.
+     * Returns the base output directory for generated Markdown files for a specific locale.
+     * All Markdown files will be placed under this directory, potentially in subdirectories
+     * that mirror the input folder structure.
      *
-     * @param locale The {@link Locale} for which the output directory is being determined.
-     * @param folder The {@link Path} to the input folder containing the JSON file.
-     * @return A {@link Path} object representing the output directory.
+     * @param locale The {@link Locale} for which the base output directory is being determined.
+     * @return A {@link Path} object representing the base output directory (e.g., src/site/en/markdown/examples).
      */
-    default Path getOutputDir(Locale locale, Path folder) {
-        String outputFolderName = getOutputName(folder);
-        return Paths.get("src", "site", locale.toString(), "markdown", "examples", outputFolderName);
+    default Path getBaseOutputDir(Locale locale) {
+        return Paths.get("src", "site", locale.toString(), "markdown", "examples");
     }
 
     /**
      * Determines the name of the output folder based on the provided folder path
-     * relative to the resources directory.
+     * relative to the resources directory. This method is primarily for internal
+     * calculation of relative paths.
      *
      * @param folder The {@code Path} of the folder for which to determine the output name.
-     * @return A {@code String} representing the name of the output folder.
-     * {@code folder} relative to the resources directory.
+     * @return A {@code String} representing the relative path from the resources directory
+     * (e.g., "", "text", "text/nested").
      */
     default String getOutputName(Path folder) {
         Path resourcesDir = getResourcesDir();
-        Path relativePath = resourcesDir.relativize(folder); // e.g., "conditions" or "" (empty path for root)
-
-        String outputFolderName;
-        if (relativePath.toString().isEmpty()) {
-            // If the folder is the resourcesDir itself, use "." as the output folder name
-            outputFolderName = ".";
-        } else {
-            // Otherwise, use the relative path's string as the output folder name
-            outputFolderName = relativePath.toString();
-        }
-
-        return outputFolderName;
+        Path relativePath = resourcesDir.relativize(folder);
+        return relativePath.toString();
     }
 
     /**
@@ -104,11 +93,11 @@ public interface DosageMarkdown<A extends DosageAPI<?, B>, B> {
      */
     default Map<Locale, A> getDosageAPIs() {
         return getLocales()
-            .stream()
-            .collect(Collectors.toMap(
-                locale -> locale,
-                this::createDosageAPI // Uses the abstract createDosageAPI method
-            ));
+                .stream()
+                .collect(Collectors.toMap(
+                        locale -> locale,
+                        this::createDosageAPI // Uses the abstract createDosageAPI method
+                ));
     }
 
     /**
@@ -157,31 +146,24 @@ public interface DosageMarkdown<A extends DosageAPI<?, B>, B> {
      * The generated Markdown files will contain the original JSON input and the
      * human-readable output produced by the {@link DosageAPI}.
      *
-     * This method now uses {@link #getJsonFilesGroupedByFolder()} to iterate through
-     * folders and their associated JSON files.
-     *
      * @throws Exception If an error occurs during file processing or API usage.
      */
     default void generateMarkdown() throws Exception {
-        Map<Locale, A> dosageAPIs = getDosageAPIs(); // Get the map of APIs
-        Map<Path, List<Path>> groupedJsonFiles = getJsonFilesGroupedByFolder(); // Get files grouped by folder
+        Map<Locale, A> dosageAPIs = getDosageAPIs();
+        Map<Path, List<Path>> groupedJsonFiles = getJsonFilesGroupedByFolder();
 
         for (Map.Entry<Path, List<Path>> entry : groupedJsonFiles.entrySet()) {
             Path folder = entry.getKey();
             List<Path> jsonFilesInFolder = entry.getValue();
 
-            // Determine the output folder name for the markdown file
-            String outputFolderName = folder.getFileName().toString();
-
             for (Locale locale : getLocales()) {
-                Path outputDir = getOutputDir(locale, folder); // Use the original folder path to determine output directory
-                Files.createDirectories(outputDir);
-                Path markdownFile = outputDir.resolve(outputFolderName + ".md");
+                Path baseOutputDir = getBaseOutputDir(locale);
+                Files.createDirectories(baseOutputDir); // Ensure the base output directory exists
 
-                // Get the specific DosageAPI for the current locale from the map
+                Path markdownFile = baseOutputDir.resolve(getRelativeMarkdownFilePath(folder));
+                Files.createDirectories(markdownFile.getParent()); // Ensure parent directories for the markdown file exist
+
                 A dosageApiForLocale = dosageAPIs.get(locale);
-
-                // Generate Markdown for the current folder and locale using the grouped files
                 generateMarkdownForFolderAndLocale(dosageApiForLocale, folder, locale, markdownFile, jsonFilesInFolder);
             }
         }
@@ -189,28 +171,53 @@ public interface DosageMarkdown<A extends DosageAPI<?, B>, B> {
 
     /**
      * Generates the Markdown content for a specific folder and locale.
-     * This overloaded method now accepts a list of JSON files to process for the given folder.
      *
-     * @param dosageApi     The {@link DosageAPI} instance configured for the specific locale.
-     * @param inputFolder   The {@link Path} to the input folder containing JSON files.
-     * @param locale        The {@link Locale} for which to generate the Markdown.
-     * @param markdownFile The {@link Path} to the output Markdown file.
+     * @param dosageApi          The {@link DosageAPI} instance configured for the specific locale.
+     * @param inputFolder        The {@link Path} to the input folder containing JSON files.
+     * @param locale             The {@link Locale} for which to generate the Markdown.
+     * @param markdownFile       The {@link Path} to the output Markdown file.
      * @param jsonFilesToProcess The {@link List} of {@link Path} objects representing JSON files to be processed for this folder.
-     * @throws IOException If an I/O error occurs while reading or writing files.
-     * @throws ExecutionException 
-     * @throws InterruptedException 
+     * @throws IOException          If an I/O error occurs while reading or writing files.
+     * @throws ExecutionException
+     * @throws InterruptedException
      */
     private void generateMarkdownForFolderAndLocale(A dosageApi, Path inputFolder, Locale locale, Path markdownFile, List<Path> jsonFilesToProcess) throws IOException, InterruptedException, ExecutionException {
         try (BufferedWriter writer = Files.newBufferedWriter(markdownFile)) {
-            writeMarkdownHeader(writer, inputFolder.getFileName().toString());
+            // The header should be the name of the folder (e.g., "examples", "text", "nested")
+            String headerName = inputFolder.getFileName().toString();
+            writeMarkdownHeader(writer, headerName);
             writeMarkdownTableStart(writer);
 
-            // Iterate directly over the provided list of JSON files
             for (Path jsonFile : jsonFilesToProcess) {
                 processJsonFile(dosageApi, jsonFile, locale, writer);
             }
 
             writeMarkdownTableEnd(writer);
+        }
+    }
+
+    /**
+     * Determines the relative path and filename for the markdown output file.
+     * This method constructs the path relative to the base output directory
+     * (e.g., "examples.md", "text/text.md", "text/nested/nested.md").
+     *
+     * @param folder The {@code Path} of the source folder (e.g., src/site/resources/examples/text).
+     * @return A {@code String} representing the relative path and filename from the base output directory.
+     */
+    private String getRelativeMarkdownFilePath(Path folder) {
+        Path resourcesDir = getResourcesDir();
+        Path relativePathFromResources = resourcesDir.relativize(folder); // e.g., "", "text", "text/nested"
+
+        // The filename itself is always the last segment of the input folder name + ".md"
+        String fileName = folder.getFileName().toString() + ".md";
+
+        if (relativePathFromResources.toString().isEmpty()) {
+            // If it's the root resources directory, the relative path is just the filename.
+            return fileName;
+        } else {
+            // For subdirectories, combine the relative path (e.g., "text", "text/nested")
+            // with the filename (e.g., "text.md", "nested.md").
+            return relativePathFromResources.resolve(fileName).toString();
         }
     }
 
@@ -250,14 +257,13 @@ public interface DosageMarkdown<A extends DosageAPI<?, B>, B> {
      * @param jsonFile  The {@link Path} to the JSON file.
      * @param locale    The {@link Locale} for which to generate the text (used for error logging if needed).
      * @param writer    The {@link BufferedWriter}.
-     * @throws IOException If an I/O error occurs while reading or writing files.
-     * @throws ExecutionException 
-     * @throws InterruptedException 
+     * @throws IOException          If an I/O error occurs while reading or writing files.
+     * @throws ExecutionException
+     * @throws InterruptedException
      */
     private void processJsonFile(A dosageApi, Path jsonFile, Locale locale, BufferedWriter writer) throws IOException, InterruptedException, ExecutionException {
         try {
             List<B> dosages = getDosageFromJson(jsonFile);
-            // The dosageApi is already configured for the correct locale, no need to set it here.
             String outputText = dosageApi.asHumanReadableText(dosages).get();
             String jsonContent = escapeHtml(Files.readString(jsonFile));
             writeMarkdownTableRow(writer, jsonContent, outputText);
@@ -278,6 +284,7 @@ public interface DosageMarkdown<A extends DosageAPI<?, B>, B> {
         writer.write("    <tr>\n");
         writer.write("      <td><pre><code class=\"language-json\">" + jsonContent + "</code></pre></td>\n");
         writer.write("      <td>" + escapeHtml(outputText).replace("\n", "<br>") + "</td>\n");
+        writer.write("    </tr>\n");
     }
 
     /**
