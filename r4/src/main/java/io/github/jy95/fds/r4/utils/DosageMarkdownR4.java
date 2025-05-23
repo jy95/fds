@@ -24,6 +24,9 @@ import io.github.jy95.fds.r4.config.FDSConfigR4;
  * An interface for generating Markdown examples of dosage information.
  * Implementations of this interface can read dosage R4 data from JSON files
  * and generate human-readable Markdown documentation in multiple locales.
+ *
+ * @author jy95
+ * @since 1.0.5
  */
 public class DosageMarkdownR4 implements DosageMarkdown<DosageAPIR4, Dosage> {
 
@@ -65,6 +68,7 @@ public class DosageMarkdownR4 implements DosageMarkdown<DosageAPIR4, Dosage> {
         return root;
     }
 
+    /** {@inheritDoc} */
     @Override
     public List<Dosage> getDosageFromJson(Path jsonFile) throws IOException {
         String dosageJson = Files.readString(jsonFile).trim();
@@ -91,6 +95,7 @@ public class DosageMarkdownR4 implements DosageMarkdown<DosageAPIR4, Dosage> {
         return mk.getAdministrationGuidelinesFirstRep().getDosageFirstRep().getDosage();
     }
 
+    /** {@inheritDoc} */
     @Override
     public DosageAPIR4 createDosageAPI(Locale locale) {
         return new DosageAPIR4(

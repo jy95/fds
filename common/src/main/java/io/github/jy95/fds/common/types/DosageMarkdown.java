@@ -19,6 +19,8 @@ import java.util.stream.Stream;
  *
  * @param <A> The type of the DosageAPI used to convert dosage objects to human-readable text.
  * @param <B> The type of the dosage object read from the JSON files.
+ * @author jy95
+ * @since 1.0.5
  */
 public interface DosageMarkdown<A extends DosageAPI<?, B>, B> {
 
@@ -26,7 +28,7 @@ public interface DosageMarkdown<A extends DosageAPI<?, B>, B> {
      * Returns a list of locales for which Markdown examples will be generated.
      * The default implementation provides English, French, German, and Dutch (Belgian).
      *
-     * @return A list of {@link Locale} objects.
+     * @return A list of {@link java.util.Locale} objects.
      */
     default List<Locale> getLocales() {
         return List.of(
@@ -41,7 +43,7 @@ public interface DosageMarkdown<A extends DosageAPI<?, B>, B> {
      * Returns the path to the resources directory containing the JSON input files.
      * The default implementation assumes the JSON files are located in {@code src/site/resources/examples}.
      *
-     * @return A {@link Path} object representing the resources directory.
+     * @return A {@link java.nio.file.Path} object representing the resources directory.
      */
     default Path getResourcesDir() {
         return Paths.get("src", "site", "resources", "examples");
@@ -52,29 +54,29 @@ public interface DosageMarkdown<A extends DosageAPI<?, B>, B> {
      * All Markdown files will be placed under this directory, potentially in subdirectories
      * that mirror the input folder structure.
      *
-     * @param locale The {@link Locale} for which the base output directory is being determined.
-     * @return A {@link Path} object representing the base output directory (e.g., src/site/en/markdown/examples).
+     * @param locale The {@link java.util.Locale} for which the base output directory is being determined.
+     * @return A {@link java.nio.file.Path} object representing the base output directory (e.g., src/site/en/markdown/examples).
      */
     default Path getBaseOutputDir(Locale locale) {
         return Paths.get("src", "site", locale.toString(), "markdown", "examples");
     }
 
     /**
-     * Creates and returns a new instance of {@link DosageAPI} for the given locale.
+     * Creates and returns a new instance of {@link io.github.jy95.fds.common.types.DosageAPI} for the given locale.
      * Implementers of this interface must provide a concrete implementation for this method.
      *
-     * @param locale The {@link Locale} for which to create the {@link DosageAPI}.
-     * @return A new {@link DosageAPI} instance configured for the specified locale.
+     * @param locale The {@link java.util.Locale} for which to create the {@link io.github.jy95.fds.common.types.DosageAPI}.
+     * @return A new {@link io.github.jy95.fds.common.types.DosageAPI} instance configured for the specified locale.
      */
     A createDosageAPI(Locale locale);
 
     /**
-     * Returns a map of {@link DosageAPI} instances, keyed by {@link Locale}.
+     * Returns a map of {@link io.github.jy95.fds.common.types.DosageAPI} instances, keyed by {@link java.util.Locale}.
      * This default implementation uses {@link #getLocales()} and {@link #createDosageAPI(Locale)}
      * to build the map.
      *
-     * @return A {@link Map} where keys are {@link Locale} objects and values are
-     * {@link DosageAPI} instances configured for that locale.
+     * @return A {@link java.util.Map} where keys are {@link java.util.Locale} objects and values are
+     * {@link io.github.jy95.fds.common.types.DosageAPI} instances configured for that locale.
      */
     default Map<Locale, A> getDosageAPIs() {
         return getLocales()
@@ -88,19 +90,19 @@ public interface DosageMarkdown<A extends DosageAPI<?, B>, B> {
     /**
      * Reads a dosage object of type {@code B} from the specified JSON file.
      *
-     * @param jsonFile The {@link Path} to the JSON file containing the dosage data.
+     * @param jsonFile The {@link java.nio.file.Path} to the JSON file containing the dosage data.
      * @return The dosage object read from the JSON file.
-     * @throws IOException If an I/O error occurs while reading the file.
+     * @throws java.io.IOException If an I/O error occurs while reading the file.
      */
     List<B> getDosageFromJson(Path jsonFile) throws IOException;
 
     /**
-     * Returns a Stream of {@link Path} objects representing all JSON files
+     * Returns a Stream of {@link java.nio.file.Path} objects representing all JSON files
      * recursively found within the resources directory and its subdirectories.
      * This method can be overridden to customize how the JSON files are located.
      *
-     * @return A {@link Stream} of {@link Path} objects for the JSON files.
-     * @throws IOException If an I/O error occurs while traversing directories.
+     * @return A {@link java.util.stream.Stream} of {@link java.nio.file.Path} objects for the JSON files.
+     * @throws java.io.IOException If an I/O error occurs while traversing directories.
      */
     default Stream<Path> getJsonFiles() throws IOException {
         return Files
@@ -113,10 +115,10 @@ public interface DosageMarkdown<A extends DosageAPI<?, B>, B> {
      * This method uses {@link #getJsonFiles()} to find all JSON files
      * and then groups them by their containing folder.
      *
-     * @return A {@link Map} where keys are {@link Path} objects representing folders,
-     * and values are {@link List} of {@link Path} objects representing JSON files
+     * @return A {@link java.util.Map} where keys are {@link java.nio.file.Path} objects representing folders,
+     * and values are {@link java.util.List} of {@link java.nio.file.Path} objects representing JSON files
      * within that folder.
-     * @throws IOException If an I/O error occurs while traversing directories.
+     * @throws java.io.IOException If an I/O error occurs while traversing directories.
      */
     default Map<Path, List<Path>> getJsonFilesGroupedByFolder() throws IOException {
         try (Stream<Path> jsonFilesStream = getJsonFiles()) {
@@ -129,9 +131,9 @@ public interface DosageMarkdown<A extends DosageAPI<?, B>, B> {
      * Generates Markdown example files for all JSON files found within the subdirectories
      * of the resources directory for each of the supported locales.
      * The generated Markdown files will contain the original JSON input and the
-     * human-readable output produced by the {@link DosageAPI}.
+     * human-readable output produced by the {@link io.github.jy95.fds.common.types.DosageAPI}.
      *
-     * @throws Exception If an error occurs during file processing or API usage.
+     * @throws java.lang.Exception If an error occurs during file processing or API usage.
      */
     default void generateMarkdown() throws Exception {
         Map<Locale, A> dosageAPIs = getDosageAPIs();
@@ -163,14 +165,14 @@ public interface DosageMarkdown<A extends DosageAPI<?, B>, B> {
     /**
      * Generates the Markdown content for a specific folder and locale.
      *
-     * @param dosageApi          The {@link DosageAPI} instance configured for the specific locale.
-     * @param inputFolder        The {@link Path} to the input folder containing JSON files.
-     * @param locale             The {@link Locale} for which to generate the Markdown.
-     * @param markdownFile       The {@link Path} to the output Markdown file.
-     * @param jsonFilesToProcess The {@link List} of {@link Path} objects representing JSON files to be processed for this folder.
-     * @throws IOException          If an I/O error occurs while reading or writing files.
-     * @throws ExecutionException
-     * @throws InterruptedException
+     * @param dosageApi          The {@link io.github.jy95.fds.common.types.DosageAPI} instance configured for the specific locale.
+     * @param inputFolder        The {@link java.nio.file.Path} to the input folder containing JSON files.
+     * @param locale             The {@link java.util.Locale} for which to generate the Markdown.
+     * @param markdownFile       The {@link java.nio.file.Path} to the output Markdown file.
+     * @param jsonFilesToProcess The {@link java.util.List} of {@link java.nio.file.Path} objects representing JSON files to be processed for this folder.
+     * @throws java.io.IOException          If an I/O error occurs while reading or writing files.
+     * @throws java.util.concurrent.ExecutionException
+     * @throws java.lang.InterruptedException
      */
     private void generateMarkdownForFolderAndLocale(A dosageApi, Path inputFolder, Locale locale, Path markdownFile, List<Path> jsonFilesToProcess) throws IOException, InterruptedException, ExecutionException {
         try (BufferedWriter writer = Files.newBufferedWriter(markdownFile)) {
@@ -221,9 +223,9 @@ public interface DosageMarkdown<A extends DosageAPI<?, B>, B> {
     /**
      * Writes the Markdown header to the output file.
      *
-     * @param writer     The {@link BufferedWriter}.
+     * @param writer     The {@link java.io.BufferedWriter}.
      * @param folderName The name of the folder.
-     * @throws IOException If an I/O error occurs while writing to the file.
+     * @throws java.io.IOException If an I/O error occurs while writing to the file.
      */
     private void writeMarkdownHeader(BufferedWriter writer, String folderName) throws IOException {
         writer.write("# " + folderName + " \n\n");
@@ -232,8 +234,8 @@ public interface DosageMarkdown<A extends DosageAPI<?, B>, B> {
     /**
      * Writes the start of the Markdown table.
      *
-     * @param writer The {@link BufferedWriter}.
-     * @throws IOException If an I/O error occurs while writing to the file.
+     * @param writer The {@link java.io.BufferedWriter}.
+     * @throws java.io.IOException If an I/O error occurs while writing to the file.
      */
     private void writeMarkdownTableStart(BufferedWriter writer) throws IOException {
         writer.write("<table>\n");
@@ -250,13 +252,13 @@ public interface DosageMarkdown<A extends DosageAPI<?, B>, B> {
      * Processes a single JSON file, reads the dosage data, generates the human-readable text,
      * and writes a row to the Markdown table.
      *
-     * @param dosageApi The {@link DosageAPI} instance configured for the specific locale.
-     * @param jsonFile  The {@link Path} to the JSON file.
-     * @param locale    The {@link Locale} for which to generate the text (used for error logging if needed).
-     * @param writer    The {@link BufferedWriter}.
-     * @throws IOException          If an I/O error occurs while reading or writing files.
-     * @throws ExecutionException
-     * @throws InterruptedException
+     * @param dosageApi The {@link io.github.jy95.fds.common.types.DosageAPI} instance configured for the specific locale.
+     * @param jsonFile  The {@link java.nio.file.Path} to the JSON file.
+     * @param locale    The {@link java.util.Locale} for which to generate the text (used for error logging if needed).
+     * @param writer    The {@link java.io.BufferedWriter}.
+     * @throws java.io.IOException          If an I/O error occurs while reading or writing files.
+     * @throws java.util.concurrent.ExecutionException
+     * @throws java.lang.InterruptedException
      */
     private void processJsonFile(A dosageApi, Path jsonFile, Locale locale, BufferedWriter writer) throws IOException, InterruptedException, ExecutionException {
         try {
@@ -272,10 +274,10 @@ public interface DosageMarkdown<A extends DosageAPI<?, B>, B> {
     /**
      * Writes a single row to the Markdown table.
      *
-     * @param writer      The {@link BufferedWriter}.
+     * @param writer      The {@link java.io.BufferedWriter}.
      * @param jsonContent The escaped JSON content.
      * @param outputText  The escaped human-readable text.
-     * @throws IOException If an I/O error occurs while writing to the file.
+     * @throws java.io.IOException If an I/O error occurs while writing to the file.
      */
     private void writeMarkdownTableRow(BufferedWriter writer, String jsonContent, String outputText) throws IOException {
         writer.write("    <tr>\n");
@@ -287,8 +289,8 @@ public interface DosageMarkdown<A extends DosageAPI<?, B>, B> {
     /**
      * Writes the end of the Markdown table.
      *
-     * @param writer The {@link BufferedWriter}.
-     * @throws IOException If an I/O error occurs while writing to the file.
+     * @param writer The {@link java.io.BufferedWriter}.
+     * @throws java.io.IOException If an I/O error occurs while writing to the file.
      */
     private void writeMarkdownTableEnd(BufferedWriter writer) throws IOException {
         writer.write("  </tbody>\n");
