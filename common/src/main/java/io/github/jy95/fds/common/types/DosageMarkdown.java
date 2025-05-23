@@ -211,19 +211,25 @@ public interface DosageMarkdown<A extends DosageAPI<?, B>, B> {
      * @return A {@code String} representing the relative path and filename from the base output directory.
      */
     private String getRelativeMarkdownFilePath(Path folder) {
-        Path resourcesDir = getResourcesDir();
-        Path relativePathFromResources = resourcesDir.relativize(folder); // e.g., "", "text", "text/nested"
 
-        // The filename itself is always the last segment of the input folder name + ".md"
+        // Get the resources directory and the file name for the markdown output
+        Path resourcesDir = getResourcesDir();
         String fileName = folder.getFileName().toString() + ".md";
 
-        if (relativePathFromResources.toString().isEmpty()) {
-            // If it's the root resources directory, the relative path is just the filename.
+        // Get the relative path from the resources directory to the folder
+        // e.g., "", "text", "text/nested"
+        Path relativePathFromResources = resourcesDir.relativize(folder);
+        var nameCount = relativePathFromResources.getNameCount();
+        
+        if (nameCount <= 1) {
+            // If the folder is the resources directory itself or empty, return the file name only.
             return fileName;
         } else {
-            // For subdirectories, combine the relative path (e.g., "text", "text/nested")
-            // with the filename (e.g., "text.md", "nested.md").
-            return relativePathFromResources.resolve(fileName).toString();
+            // For subdirectories, we need to combine the relative path - 1 (the folder name) with the filename.
+            return relativePathFromResources
+                .subpath(0, nameCount - 1)
+                .resolve(fileName)
+                .toString();
         }
     }
 
