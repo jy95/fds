@@ -9,7 +9,6 @@ import java.util.Locale;
 import org.hl7.fhir.r4.model.Dosage;
 import org.hl7.fhir.r4.model.MedicationRequest;
 
-import com.fasterxml.jackson.core.JsonPointer;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
