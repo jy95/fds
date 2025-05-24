@@ -30,12 +30,12 @@ public class MultiResourceBundle extends ResourceBundle {
     /** {@inheritDoc} */
     @Override
     protected Object handleGetObject(String key) {
-<span class="nc" id="L33">        Optional&lt;Object&gt; firstPropertyValue = this.delegates.stream()</span>
-<span class="nc" id="L34">                .filter(delegate -&gt; delegate.containsKey(key))</span>
-<span class="nc" id="L35">                .map(delegate -&gt; delegate.getObject(key))</span>
-<span class="nc" id="L36">                .findFirst();</span>
+<span class="fc" id="L33">        Optional&lt;Object&gt; firstPropertyValue = this.delegates.stream()</span>
+<span class="fc" id="L34">                .filter(delegate -&gt; delegate.containsKey(key))</span>
+<span class="fc" id="L35">                .map(delegate -&gt; delegate.getObject(key))</span>
+<span class="fc" id="L36">                .findFirst();</span>
 
-<span class="nc" id="L38">        return firstPropertyValue.orElse(null);</span>
+<span class="fc" id="L38">        return firstPropertyValue.orElse(null);</span>
     }
 
     /** {@inheritDoc} */

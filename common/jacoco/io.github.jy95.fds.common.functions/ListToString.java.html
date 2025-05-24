@@ -28,21 +28,21 @@ public final class ListToString {
      */
     public static String convert(ResourceBundle bundle, List&lt;String&gt; list, LinkWord linkWord) {
 
-<span class="nc bnc" id="L31" title="All 2 branches missed.">        if (list.isEmpty()){</span>
+<span class="pc bpc" id="L31" title="1 of 2 branches missed.">        if (list.isEmpty()){</span>
 <span class="nc" id="L32">            return &quot;&quot;;</span>
         }
 
         // Build the first part of the string (all except the last item)
-<span class="nc" id="L36">        String firstString = String.join(&quot;, &quot;, list.subList(0, list.size() - 1));</span>
+<span class="fc" id="L36">        String firstString = String.join(&quot;, &quot;, list.subList(0, list.size() - 1));</span>
         // Get the last part of the string (the last item)
-<span class="nc" id="L38">        String lastString = list.get(list.size() - 1);</span>
+<span class="fc" id="L38">        String lastString = list.get(list.size() - 1);</span>
 
         // Get the translated link word via delegate
-<span class="nc" id="L41">        String linkWordTranslation = getLinkWordTranslation(bundle, linkWord);</span>
-<span class="nc bnc" id="L42" title="All 2 branches missed.">        String linkWordString = list.size() &gt; 1 ? &quot; &quot; + linkWordTranslation + &quot; &quot; : &quot;&quot;;</span>
+<span class="fc" id="L41">        String linkWordTranslation = getLinkWordTranslation(bundle, linkWord);</span>
+<span class="pc bpc" id="L42" title="1 of 2 branches missed.">        String linkWordString = list.size() &gt; 1 ? &quot; &quot; + linkWordTranslation + &quot; &quot; : &quot;&quot;;</span>
 
         // Combine everything into the final string
-<span class="nc" id="L45">        return firstString + linkWordString + lastString;</span>
+<span class="fc" id="L45">        return firstString + linkWordString + lastString;</span>
     }
 
     /**
@@ -66,7 +66,7 @@ public final class ListToString {
      */
     private static String getLinkWordTranslation(ResourceBundle bundle, LinkWord linkWord) {
         // Delegate method for link word translation
-<span class="nc" id="L69">        return bundle.getString(&quot;linkwords.&quot; + linkWord.getValue());</span>
+<span class="fc" id="L69">        return bundle.getString(&quot;linkwords.&quot; + linkWord.getValue());</span>
     }
 
 }
