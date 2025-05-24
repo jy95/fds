@@ -10,6 +10,8 @@ import java.util.Map;
 
 /**
  * Class to format units of time
+ *
+ * @author jy95
  */
 public final class UnitsOfTimeFormatter {
 
@@ -41,6 +43,7 @@ public final class UnitsOfTimeFormatter {
 
     /**
      * Formats a time unit with a count (e.g., "3 heures", "1 minute").
+     *
      * @param locale The locale expected for the resulting text
      * @param unit The <a href="https://build.fhir.org/valueset-units-of-time.html">unit code</a>
      * @param count The quantity
@@ -56,6 +59,7 @@ public final class UnitsOfTimeFormatter {
 
     /**
      * Formats a time unit without a count (e.g., "heures", "minute").
+     *
      * @param locale The locale expected for the resulting text
      * @param unit The <a href="https://build.fhir.org/valueset-units-of-time.html">unit code</a>
      * @param count The quantity

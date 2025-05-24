@@ -8,6 +8,8 @@ import java.util.Map;
 
 /**
  * Class to format day of week
+ *
+ * @author jy95
  */
 public final class DayOfWeekFormatter {
 
@@ -31,6 +33,7 @@ public final class DayOfWeekFormatter {
 
     /**
      * Constructor for the formatter
+     *
      * @param locale The locale to use
      */
     public DayOfWeekFormatter(Locale locale) {
@@ -41,6 +44,7 @@ public final class DayOfWeekFormatter {
 
     /**
      * Translates a single-day code into its corresponding day of the week in text.
+     *
      * @param code The <a href="https://build.fhir.org/valueset-days-of-week.html">Day Of Week</a> code to translate
      * @return the translated day of the week as a string.
      */
