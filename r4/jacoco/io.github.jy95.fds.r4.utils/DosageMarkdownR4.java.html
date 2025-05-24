@@ -9,7 +9,6 @@ import java.util.Locale;
 import org.hl7.fhir.r4.model.Dosage;
 import org.hl7.fhir.r4.model.MedicationRequest;
 
-import com.fasterxml.jackson.core.JsonPointer;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -29,66 +28,66 @@ import io.github.jy95.fds.r4.config.FDSConfigR4;
  * @author jy95
  * @since 1.0.5
  */
-<span class="fc" id="L32">public class DosageMarkdownR4 implements DosageMarkdown&lt;DosageAPIR4, Dosage&gt; {</span>
+<span class="fc" id="L31">public class DosageMarkdownR4 implements DosageMarkdown&lt;DosageAPIR4, Dosage&gt; {</span>
 
     /**
      * The FHIR context for R4.
      */
-<span class="fc" id="L37">    private static final IParser JSON_PARSER = FhirContext.forR4().newJsonParser();</span>
+<span class="fc" id="L36">    private static final IParser JSON_PARSER = FhirContext.forR4().newJsonParser();</span>
 
     /**
      * The ObjectMapper for JSON parsing.
      */
-<span class="fc" id="L42">    private static final ObjectMapper MAPPER = new ObjectMapper();</span>
+<span class="fc" id="L41">    private static final ObjectMapper MAPPER = new ObjectMapper();</span>
     /**
      * The base JSON template for the MedicationRequest resource.
      */
-<span class="fc" id="L46">    private static final ObjectNode BASE_TEMPLATE = createJsonTemplate();</span>
+<span class="fc" id="L45">    private static final ObjectNode BASE_TEMPLATE = createJsonTemplate();</span>
 
 
     /**
      * The JSON parser for parsing dosage data.
      */
     private static ObjectNode createJsonTemplate() {
-<span class="fc" id="L53">        ObjectNode root = MAPPER.createObjectNode();</span>
-<span class="fc" id="L54">        root.put(&quot;resourceType&quot;, &quot;MedicationRequest&quot;);</span>
-<span class="fc" id="L55">        root.set(&quot;dosageInstruction&quot;, MAPPER.createArrayNode());</span>
-<span class="fc" id="L56">        return root;</span>
+<span class="fc" id="L52">        ObjectNode root = MAPPER.createObjectNode();</span>
+<span class="fc" id="L53">        root.put(&quot;resourceType&quot;, &quot;MedicationRequest&quot;);</span>
+<span class="fc" id="L54">        root.set(&quot;dosageInstruction&quot;, MAPPER.createArrayNode());</span>
+<span class="fc" id="L55">        return root;</span>
     }
 
     /** {@inheritDoc} */
     @Override
     public List&lt;Dosage&gt; getDosageFromJson(Path jsonFile) throws IOException {
-<span class="fc" id="L62">        String dosageJson = Files.readString(jsonFile).trim();</span>
-<span class="fc" id="L63">        JsonNode dosageNode = MAPPER.readTree(dosageJson);</span>
+<span class="fc" id="L61">        String dosageJson = Files.readString(jsonFile).trim();</span>
+<span class="fc" id="L62">        JsonNode dosageNode = MAPPER.readTree(dosageJson);</span>
 
         // Ensure it's an array
-<span class="fc bfc" id="L66" title="All 2 branches covered.">        ArrayNode dosageArray = dosageNode.isArray()</span>
-<span class="fc" id="L67">            ? (ArrayNode) dosageNode</span>
-<span class="fc" id="L68">            : MAPPER.createArrayNode().add(dosageNode);</span>
+<span class="fc bfc" id="L65" title="All 2 branches covered.">        ArrayNode dosageArray = dosageNode.isArray()</span>
+<span class="fc" id="L66">            ? (ArrayNode) dosageNode</span>
+<span class="fc" id="L67">            : MAPPER.createArrayNode().add(dosageNode);</span>
 
         // Deep copy the base template
-<span class="fc" id="L71">        var workingCopy = BASE_TEMPLATE.deepCopy();</span>
+<span class="fc" id="L70">        var workingCopy = BASE_TEMPLATE.deepCopy();</span>
 
         // Inject dosage data into the template
-<span class="fc" id="L74">        workingCopy.set(&quot;dosageInstruction&quot;, dosageArray);</span>
+<span class="fc" id="L73">        workingCopy.set(&quot;dosageInstruction&quot;, dosageArray);</span>
 
         // Convert back to MedicationKnowledge
-<span class="fc" id="L77">        String finalJson = MAPPER.writeValueAsString(workingCopy);</span>
-<span class="fc" id="L78">        MedicationRequest mr = JSON_PARSER.parseResource(MedicationRequest.class, finalJson);</span>
+<span class="fc" id="L76">        String finalJson = MAPPER.writeValueAsString(workingCopy);</span>
+<span class="fc" id="L77">        MedicationRequest mr = JSON_PARSER.parseResource(MedicationRequest.class, finalJson);</span>
 
         // Return the dosage
-<span class="fc" id="L81">        return mr.getDosageInstruction();</span>
+<span class="fc" id="L80">        return mr.getDosageInstruction();</span>
     }
 
     /** {@inheritDoc} */
     @Override
     public DosageAPIR4 createDosageAPI(Locale locale) {
-<span class="fc" id="L87">        return new DosageAPIR4(</span>
+<span class="fc" id="L86">        return new DosageAPIR4(</span>
             FDSConfigR4
-<span class="fc" id="L89">                .builder()</span>
-<span class="fc" id="L90">                .locale(locale)</span>
-<span class="fc" id="L91">                .build()</span>
+<span class="fc" id="L88">                .builder()</span>
+<span class="fc" id="L89">                .locale(locale)</span>
+<span class="fc" id="L90">                .build()</span>
         );
     }
     
