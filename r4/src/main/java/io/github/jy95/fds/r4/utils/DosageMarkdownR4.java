@@ -7,8 +7,9 @@ import java.util.List;
 import java.util.Locale;
 
 import org.hl7.fhir.r4.model.Dosage;
-import org.hl7.fhir.r4.model.MedicationKnowledge;
+import org.hl7.fhir.r4.model.MedicationRequest;
 
+import com.fasterxml.jackson.core.JsonPointer;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -40,7 +41,7 @@ public class DosageMarkdownR4 implements DosageMarkdown<DosageAPIR4, Dosage> {
      */
     private static final ObjectMapper MAPPER = new ObjectMapper();
     /**
-     * The base JSON template for the MedicationKnowledge resource.
+     * The base JSON template for the MedicationRequest resource.
      */
     private static final ObjectNode BASE_TEMPLATE = createJsonTemplate();
 
@@ -50,21 +51,8 @@ public class DosageMarkdownR4 implements DosageMarkdown<DosageAPIR4, Dosage> {
      */
     private static ObjectNode createJsonTemplate() {
         ObjectNode root = MAPPER.createObjectNode();
-        root.put("resourceType", "MedicationKnowledge");
-        root.put("status", "active");
-
-        ObjectNode code = MAPPER.createObjectNode();
-        code.put("text", "dummy");
-        root.set("code", code);
-
-        // Create an empty dosageGuideline array with one object ready for dosage injection
-        ObjectNode guideline = MAPPER.createObjectNode();
-        guideline.set("dosage", MAPPER.createArrayNode());
-
-        ArrayNode guidelineArray = MAPPER.createArrayNode();
-        guidelineArray.add(guideline);
-        root.set("dosageGuideline", guidelineArray);
-
+        root.put("resourceType", "MedicationRequest");
+        root.set("dosageInstruction", MAPPER.createArrayNode());
         return root;
     }
 
@@ -80,19 +68,17 @@ public class DosageMarkdownR4 implements DosageMarkdown<DosageAPIR4, Dosage> {
             : MAPPER.createArrayNode().add(dosageNode);
 
         // Deep copy the base template
-        ObjectNode workingCopy = BASE_TEMPLATE.deepCopy();
+        var workingCopy = BASE_TEMPLATE.deepCopy();
 
-        // Inject into guideline[0].dosage
-        ArrayNode guidelineArray = (ArrayNode) workingCopy.get("dosageGuideline");
-        ObjectNode firstGuideline = (ObjectNode) guidelineArray.get(0);
-        firstGuideline.set("dosage", dosageArray);
+        // Inject dosage data into the template
+        workingCopy.set("dosageInstruction", dosageArray);
 
         // Convert back to MedicationKnowledge
         String finalJson = MAPPER.writeValueAsString(workingCopy);
-        MedicationKnowledge mk = JSON_PARSER.parseResource(MedicationKnowledge.class, finalJson);
+        MedicationRequest mr = JSON_PARSER.parseResource(MedicationRequest.class, finalJson);
 
-        // Return the dosage from the first guideline
-        return mk.getAdministrationGuidelinesFirstRep().getDosageFirstRep().getDosage();
+        // Return the dosage
+        return mr.getDosageInstruction();
     }
 
     /** {@inheritDoc} */
