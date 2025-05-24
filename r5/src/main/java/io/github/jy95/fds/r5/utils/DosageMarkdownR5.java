@@ -40,7 +40,7 @@ public class DosageMarkdownR5 implements DosageMarkdown<DosageAPIR5, Dosage> {
      */
     private static final ObjectMapper MAPPER = new ObjectMapper();
     /**
-     * The base JSON template for the MedicationKnowledge resource.
+     * The base JSON template for the MedicationRequest resource.
      */
     private static final ObjectNode BASE_TEMPLATE = createJsonTemplate();
 
@@ -71,7 +71,7 @@ public class DosageMarkdownR5 implements DosageMarkdown<DosageAPIR5, Dosage> {
         // Inject dosage data into the template
         workingCopy.set("dosageInstruction", dosageArray);
 
-        // Convert back to MedicationKnowledge
+        // Convert back to MedicationRequest
         String finalJson = MAPPER.writeValueAsString(workingCopy);
         MedicationRequest mr = JSON_PARSER.parseResource(MedicationRequest.class, finalJson);
 
