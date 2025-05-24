@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Locale;
 
 import org.hl7.fhir.r5.model.Dosage;
-import org.hl7.fhir.r5.model.MedicationKnowledge;
+import org.hl7.fhir.r5.model.MedicationRequest;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -68,26 +68,15 @@ public class DosageMarkdownR5 implements DosageMarkdown<DosageAPIR5, Dosage> {
         // Deep copy the base template
         ObjectNode workingCopy = BASE_TEMPLATE.deepCopy();
 
-        // Inject dosage JSON into the correct location of the static template
-        ArrayNode dosageList = (ArrayNode)
-            workingCopy
-                .withObject("indicationGuideline")
-                .withArray("dosingGuideline")
-                .get(0)
-                .withArray("dosage")
-                .get(0)
-                .withArray("dosage");
+        // Inject dosage data into the template
+        workingCopy.set("dosageInstruction", dosageArray);
 
-        for (JsonNode dosage : dosageArray) {
-            dosageList.add(dosage);
-        }
-        
         // Convert back to MedicationKnowledge
         String finalJson = MAPPER.writeValueAsString(workingCopy);
-        MedicationKnowledge mk = JSON_PARSER.parseResource(MedicationKnowledge.class, finalJson);
+        MedicationRequest mr = JSON_PARSER.parseResource(MedicationRequest.class, finalJson);
 
-        // Return the dosage from the first guideline
-        return mk.getIndicationGuidelineFirstRep().getDosingGuidelineFirstRep().getDosageFirstRep().getDosage();
+        // Return the dosage
+        return mr.getDosageInstruction();
     }
 
     /**
@@ -95,39 +84,8 @@ public class DosageMarkdownR5 implements DosageMarkdown<DosageAPIR5, Dosage> {
      */
     private static ObjectNode createJsonTemplate() {
         ObjectNode root = MAPPER.createObjectNode();
-        root.put("resourceType", "MedicationKnowledge");
-        root.put("status", "active");
-
-        ObjectNode code = MAPPER.createObjectNode();
-        code.put("text", "dummy");
-        root.set("code", code);
-
-        // Create an empty dosingGuideline array with one object ready for dosage injection
-        ObjectNode dosingGuideline = MAPPER.createObjectNode();
-
-        // Add the type attribute
-        ObjectNode type = MAPPER.createObjectNode();
-        ArrayNode codingArray = MAPPER.createArrayNode();
-        ObjectNode coding = MAPPER.createObjectNode();
-        coding.put("system", "http://terminology.hl7.org/CodeSystem/dose-rate-type");
-        coding.put("code", "ordered");
-        codingArray.add(coding);
-        type.set("coding", codingArray);
-        dosingGuideline.set("type", type);
-
-        ArrayNode dosageArray = MAPPER.createArrayNode();
-        ObjectNode dosageInstruction = MAPPER.createObjectNode();
-        dosageInstruction.set("dosage", MAPPER.createArrayNode());
-        dosageArray.add(dosageInstruction);
-        dosingGuideline.set("dosage", dosageArray);
-
-        ArrayNode dosingGuidelineArray = MAPPER.createArrayNode();
-        dosingGuidelineArray.add(dosingGuideline);
-        root.set("indicationGuideline", MAPPER.createArrayNode());
-        ObjectNode indicationGuideline = MAPPER.createObjectNode();
-        indicationGuideline.set("dosingGuideline", dosingGuidelineArray);
-        root.set("indicationGuideline", indicationGuideline);
-
+        root.put("resourceType", "MedicationRequest");
+        root.set("dosageInstruction", MAPPER.createArrayNode());
         return root;
     }
     

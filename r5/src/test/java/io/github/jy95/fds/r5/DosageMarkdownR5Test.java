@@ -32,10 +32,10 @@ public class DosageMarkdownR5Test {
 
         // Step 2: Create dummy JSON files
         var jsonFile1 = srcFolder.resolve("simple.json");
-        String jsonContent = "{\"additionalInstruction\": [\"Instruction 1\"]}";
+        String jsonContent = "{\"additionalInstruction\": [{\"text\": \"Instruction 1\"}]}";
         Files.writeString(jsonFile1, jsonContent, StandardCharsets.UTF_8);
         var jsonFile2 = srcFolder.resolve("complex.json");
-        String jsonContent2 = "[{\"additionalInstruction\": [\"Instruction 1\", \"Instruction 2\"]}]";
+        String jsonContent2 = "[{\"additionalInstruction\": [{\"text\": \"Instruction 1\"}, {\"text\": \"Instruction 2\"}]}]";
         Files.writeString(jsonFile2, jsonContent2, StandardCharsets.UTF_8);
 
         // Step 3: Custom subclass only for directory override
@@ -65,7 +65,7 @@ public class DosageMarkdownR5Test {
 
         // Step 6: Assert the content of the files using the reusable method
         assertMarkdownFileContent(outputFile, "examples", "Instruction 1");
-        assertMarkdownFileContent(outputFile, "examples",  "Instruction 2");
+        assertMarkdownFileContent(outputFile, "examples",  "Instruction 1 and Instruction 2");
         fs.close();
     }
 
