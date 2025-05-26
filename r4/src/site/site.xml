@@ -13,6 +13,36 @@
             <item name="Getting started" href="getting-started.html" />
             <item name="Configuration" href="configuration.html"/>
         </menu>
+        <menu name="Examples">
+            <item name="additionalInstruction" href="specs/additionalInstruction.html"/>
+            <item name="asNeeded" href="specs/asNeeded.html"/>
+            <item name="boundsDuration" href="specs/boundsDuration.html"/>
+            <item name="boundsPeriod" href="specs/boundsPeriod.html"/>
+            <item name="boundsRange" href="specs/boundsRange.html"/>
+            <item name="code" href="specs/code.html"/>
+            <item name="countCountMax" href="specs/countCountMax.html"/>
+            <item name="dayOfWeek" href="specs/dayOfWeek.html"/>
+            <item name="doseQuantity" href="specs/doseQuantity.html"/>
+            <item name="doseRange" href="specs/doseRange.html"/>
+            <item name="durationDurationMax" href="specs/durationDurationMax.html"/>
+            <item name="event" href="specs/event.html"/>
+            <item name="frequencyFrequencyMax" href="specs/frequencyFrequencyMax.html"/>
+            <item name="maxDosePerAdministration" href="specs/maxDosePerAdministration.html"/>
+            <item name="maxDosePerLifetime" href="specs/maxDosePerLifetime.html"/>
+            <item name="maxDosePerPeriod" href="specs/maxDosePerPeriod.html"/>
+            <item name="method" href="specs/method.html"/>
+            <item name="offsetWhen" href="specs/offsetWhen.html"/>
+            <item name="patientInstruction" href="specs/patientInstruction.html"/>
+            <item name="periodPeriodMax" href="specs/periodPeriodMax.html"/>
+            <item name="rateQuantity" href="specs/rateQuantity.html"/>
+            <item name="rateRange" href="specs/rateRange.html"/>
+            <item name="rateRatio" href="specs/rateRatio.html"/>
+            <item name="route" href="specs/route.html"/>
+            <item name="sequence" href="specs/sequence.html"/>
+            <item name="site" href="specs/site.html"/>
+            <item name="text" href="specs/text.html"/>
+            <item name="timeOfDay" href="specs/timeOfDay.html"/>
+        </menu>
         <menu name="Reference">
             <item name="FAQ" href="faq.html"/>
             <item name="Roadmap" href="roadmap.html"/>
