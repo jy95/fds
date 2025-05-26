@@ -157,7 +157,7 @@ public interface DosageMarkdown<A extends DosageAPI<?, B>, B> {
 
                 // Fill in the Markdown file with the JSON files
                 Path markdownFile = baseOutputDir.resolve(getRelativeMarkdownFilePath(folder));
-                Files.createDirectories(markdownFile.getParent()); // Ensure parent directories for the markdown file exist
+                Files.createDirectories(markdownFile.getParent()); // Ensure parent directories for the Markdown file exist
                 generateMarkdownForFolderAndLocale(dosageApiForLocale, folder, markdownFile, jsonFilesInFolder);
             }
         }
@@ -204,22 +204,24 @@ public interface DosageMarkdown<A extends DosageAPI<?, B>, B> {
      */
     private String getRelativeMarkdownFilePath(Path folder) {
 
-        // Get the resources directory
+        // Get the resources directory and the file name for the markdown output
         Path resourcesDir = getResourcesDir();
+        String fileName = folder.getFileName().toString() + ".md";
 
-        // Get the relative path from the resources directory to the current folder
-        Path relativePath = resourcesDir.relativize(folder);
+        // Get the relative path from the resources directory to the folder
+        // e.g., "", "text", "text/nested"
+        Path relativePathFromResources = resourcesDir.relativize(folder);
+        var nameCount = relativePathFromResources.getNameCount();
 
-        // Construct the markdown file name based on the last part of the relative path
-        String markdownFileName = relativePath.getFileName().toString() + ".md";
-
-        // If the relative path has more than one part, it means it's in a subdirectory,
-        // so we need to include the parent directories in the output path.
-        if (relativePath.getNameCount() > 1) {
-            return relativePath.getParent().resolve(markdownFileName).toString();
+        if (nameCount <= 1) {
+            // If the folder is the resources directory itself or empty, return the file name only.
+            return fileName;
         } else {
-            // If it's directly under the resources directory, just return the file name.
-            return markdownFileName;
+            // For subdirectories, we need to combine the relative path - 1 (the folder name) with the filename.
+            return relativePathFromResources
+                    .subpath(0, nameCount - 1)
+                    .resolve(fileName)
+                    .toString();
         }
     }
 
