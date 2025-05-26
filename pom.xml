@@ -68,6 +68,7 @@
         <maven.source.plugin.version>3.3.1</maven.source.plugin.version>
         <central.publishing.maven.plugin.version>0.7.0</central.publishing.maven.plugin.version>
         <flatten.maven.plugin.version>1.7.0</flatten.maven.plugin.version>
+        <maven.jar.plugin.version>3.4.2</maven.jar.plugin.version>
     </properties>
 
     <dependencies>
