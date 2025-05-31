@@ -14,6 +14,12 @@ import java.util.Locale;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * <p>DosageMarkdownExecutor class.</p>
+ *
+ * @author runner
+ * @since 1.0.6
+ */
 public class DosageMarkdownExecutor {
 
     /**
@@ -66,6 +72,12 @@ public class DosageMarkdownExecutor {
         }
     }
 
+    /**
+     * <p>main.</p>
+     *
+     * @param args an array of {@link java.lang.String} objects
+     * @throws java.lang.Exception if any.
+     */
     public static void main(String[] args) throws Exception {
         var specsExamples = new SpecsR5();
         specsExamples.generateMarkdown();

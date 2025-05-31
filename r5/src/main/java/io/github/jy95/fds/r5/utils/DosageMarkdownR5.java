@@ -45,6 +45,7 @@ public class DosageMarkdownR5 implements DosageMarkdown<DosageAPIR5, Dosage> {
     private static final ObjectNode BASE_TEMPLATE = createJsonTemplate();
 
     
+    /** {@inheritDoc} */
     @Override
     public DosageAPIR5 createDosageAPI(Locale locale) {
         return new DosageAPIR5(
@@ -55,6 +56,7 @@ public class DosageMarkdownR5 implements DosageMarkdown<DosageAPIR5, Dosage> {
         );
     }
 
+    /** {@inheritDoc} */
     @Override
     public List<Dosage> getDosageFromJson(Path jsonFile) throws IOException {
         String dosageJson = Files.readString(jsonFile).trim();

@@ -171,6 +171,8 @@ public interface DosageMarkdown<A extends DosageAPI<?, B>, B> {
      * @param markdownFile       The {@link java.nio.file.Path} to the output Markdown file.
      * @param jsonFilesToProcess The {@link java.util.List} of {@link java.nio.file.Path} objects representing JSON files to be processed for this folder.
      * @throws java.io.IOException          If an I/O error occurs while reading or writing files.
+     * @throws java.util.concurrent.ExecutionException if any.
+     * @throws java.lang.InterruptedException if any.
      */
     private void generateMarkdownForFolderAndLocale(A dosageApi, Path inputFolder, Path markdownFile, List<Path> jsonFilesToProcess) throws IOException, ExecutionException, InterruptedException {
         try (BufferedWriter writer = Files.newBufferedWriter(markdownFile)) {
@@ -253,6 +255,13 @@ public interface DosageMarkdown<A extends DosageAPI<?, B>, B> {
         writer.write("  <tbody>\n");
     }
 
+    /**
+     * <p>extractJsonFile.</p>
+     *
+     * @param dosageApi a A object
+     * @param jsonFile a {@link java.nio.file.Path} object
+     * @return a {@link java.util.concurrent.CompletableFuture} object
+     */
     private CompletableFuture<Map<String, String>> extractJsonFile(A dosageApi, Path jsonFile) {
         return CompletableFuture.supplyAsync(() -> {
             try {
