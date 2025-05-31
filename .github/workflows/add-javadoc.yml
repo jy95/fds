@@ -1,0 +1,28 @@
+name: Add JavaDoc
+on:
+  workflow_dispatch:
+
+jobs:
+  javadoc:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: ☕ Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: 'maven'
+      - name: Update Javadoc
+        run: |
+          mvn javadoc:javadoc
+      - name: 💅 Create Pull Request
+        uses: peter-evans/create-pull-request@v7.0.8
+        with:
+          title: "chore: Add missing Javadoc 🤖"
+          branch: "automated/JavaDoc-${{ github.run_id }}"
+          base: main
