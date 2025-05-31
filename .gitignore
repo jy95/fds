@@ -31,3 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### POM useless files
+**/.flattened-pom.xml
