@@ -12,6 +12,7 @@
         <menu name="Overview">
             <item name="Getting started" href="getting-started.html" />
             <item name="Configuration" href="configuration.html"/>
+            <item name="Examples" href="examples.html"/>
         </menu>
         <menu name="Reference">
             <item name="FAQ" href="faq.html"/>

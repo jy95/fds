@@ -48,6 +48,18 @@
                 <artifactId>maven-site-plugin</artifactId>
                 <version>${maven.site.plugin.version}</version>
             </plugin>
+            <!-- Exclude internal tooling not interesting for lib customers -->
+            <!-- https://maven.apache.org/plugins/maven-jar-plugin/examples/include-exclude.html -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>${maven.jar.plugin.version}</version>
+                <configuration>
+                    <excludes>
+                        <exclude>**/internal/*</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 </project>
