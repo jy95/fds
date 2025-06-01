@@ -1,65 +1,80 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>io.github.jy95.fds</groupId>
-        <artifactId>fhir-dosage-support</artifactId>
-        <version>${revision}</version>
-    </parent>
-    <artifactId>r4</artifactId>
-    <name>${lib.name} - R4</name>
-    <description>Support for FHIR R4 Dosage, enabling human-readable text conversion and other related features.</description>
-
-    <scm>
-        <connection>scm:git:https://github.com/jy95/fds.git</connection>
-        <developerConnection>scm:git:https://github.com/jy95/fds.git</developerConnection>
-        <url>https://github.com/jy95/fds</url>
-    </scm>
-
-    <dependencies>
-        <dependency>
-            <groupId>ca.uhn.hapi.fhir</groupId>
-            <artifactId>hapi-fhir-structures-r4</artifactId>
-            <version>${hapi.fhir.version}</version>
-        </dependency>
-
-        <!-- Add the common module dependency -->
-        <dependency>
-            <groupId>io.github.jy95.fds</groupId>
-            <artifactId>common</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
-        <!-- Add the common module dependency test templates -->
-        <dependency>
-            <groupId>io.github.jy95.fds</groupId>
-            <artifactId>common</artifactId>
-            <version>${project.version}</version>
-            <type>test-jar</type>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
-
-    <build>
-        <plugins>
-            <!-- Maven Site Plugin -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-site-plugin</artifactId>
-                <version>${maven.site.plugin.version}</version>
-            </plugin>
-            <!-- Exclude internal tooling not interesting for lib customers -->
-            <!-- https://maven.apache.org/plugins/maven-jar-plugin/examples/include-exclude.html -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>${maven.jar.plugin.version}</version>
-                <configuration>
-                    <excludes>
-                        <exclude>**/internal/*</exclude>
-                    </excludes>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>io.github.jy95.fds</groupId>
+		<artifactId>fhir-dosage-support</artifactId>
+		<version>${revision}</version>
+	</parent>
+	<artifactId>r4</artifactId>
+	<name>${lib.name} - R4</name>
+	<description>Support for FHIR R4 Dosage, enabling human-readable text conversion and other related features.</description>
+	<scm>
+		<connection>scm:git:https://github.com/jy95/fds.git</connection>
+		<developerConnection>scm:git:https://github.com/jy95/fds.git</developerConnection>
+		<url>https://github.com/jy95/fds</url>
+	</scm>
+	<dependencies>
+		<dependency>
+			<groupId>ca.uhn.hapi.fhir</groupId>
+			<artifactId>hapi-fhir-structures-r4</artifactId>
+			<version>${hapi.fhir.version}</version>
+		</dependency>
+		<!-- Add the common module dependency -->
+		<dependency>
+			<groupId>io.github.jy95.fds</groupId>
+			<artifactId>common</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<!-- Add the common module dependency test templates -->
+		<dependency>
+			<groupId>io.github.jy95.fds</groupId>
+			<artifactId>common</artifactId>
+			<version>${project.version}</version>
+			<type>test-jar</type>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+	<build>
+		<plugins>
+			<!-- Exec plugin to run DosageMarkdownExecutor before site build -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>${exec.maven.plugin.version}</version>
+				<executions>
+					<execution>
+						<id>run-dosage-markdown-executor</id>
+						<phase>pre-site</phase>
+						<goals>
+							<goal>java</goal>
+						</goals>
+						<configuration>
+							<mainClass>io.github.jy95.fds.r4.internal.DosageMarkdownExecutor</mainClass>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- Maven Site Plugin -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-site-plugin</artifactId>
+				<version>${maven.site.plugin.version}</version>
+			</plugin>
+			<!-- Exclude internal tooling not interesting for lib customers -->
+			<!-- https://maven.apache.org/plugins/maven-jar-plugin/examples/include-exclude.html -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>${maven.jar.plugin.version}</version>
+				<configuration>
+					<excludes>
+						<exclude>**/internal/*</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>
