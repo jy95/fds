@@ -22,3 +22,7 @@ jobs:
           cache: 'maven'
       - name: 🤖 Build website
         run: mvn -P github clean install site site:stage
+      - name: 📂 List all files in ./target/staging
+        run: |
+          echo "Listing all files in ./target/staging:"
+          find ./target/staging
