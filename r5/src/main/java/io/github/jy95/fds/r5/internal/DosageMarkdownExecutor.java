@@ -126,9 +126,9 @@ public class DosageMarkdownExecutor {
     static class MedicationRequestR5 extends SpecsR5 {
 
         /**
-         * The FHIR context for R4.
+         * The FHIR context for R5.
          */
-        private static final IParser JSON_PARSER = FhirContext.forR4().newJsonParser();
+        private static final IParser JSON_PARSER = FhirContext.forR5().newJsonParser();
 
         @Override
         public Path getResourcesDir() {
