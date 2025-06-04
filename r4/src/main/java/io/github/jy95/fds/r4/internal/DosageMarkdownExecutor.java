@@ -20,6 +20,8 @@ import java.util.stream.Stream;
 import org.hl7.fhir.r4.model.Dosage;
 import org.hl7.fhir.r4.model.MedicationRequest;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.parser.IParser;
 
@@ -33,6 +35,7 @@ public class DosageMarkdownExecutor {
 
     private final static String BASE_PATH = new File("").getAbsolutePath();
     private final static String ROOT_PATH = "r4";
+    private final static ObjectMapper MAPPER = new ObjectMapper();
 
     /**
      * A custom implementation for the specification examples
@@ -157,6 +160,16 @@ public class DosageMarkdownExecutor {
             MedicationRequest mr = JSON_PARSER.parseResource(MedicationRequest.class, finalJson);
             
             return mr.getDosageInstruction();
+        }
+
+        @Override
+        public String getDosageJsonAsString(Path jsonFile) throws IOException {
+            String finalJson = super.getDosageJsonAsString(jsonFile);
+
+            var rootNode = MAPPER.readTree(finalJson);
+            var dosageNode = rootNode.get("dosageInstruction");
+
+            return MAPPER.writerWithDefaultPrettyPrinter().writeValueAsString(dosageNode);
         }
     }
 

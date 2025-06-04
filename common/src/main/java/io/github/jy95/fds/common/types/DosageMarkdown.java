@@ -164,6 +164,18 @@ public interface DosageMarkdown<A extends DosageAPI<?, B>, B> {
     }
 
     /**
+     * Reads the content of a JSON file and returns it as a String.
+     * This method is used to read the JSON file content before processing it
+     * @param jsonFile The path to the JSON file.
+     * @return The content of the JSON file as a String.
+     * @throws java.io.IOException If an I/O error occurs while reading the file.
+     */
+    default String getDosageJsonAsString(Path jsonFile) throws IOException {
+        // Read the JSON file content as a String
+        return Files.readString(jsonFile);
+    }
+
+    /**
      * Generates the Markdown content for a specific folder and locale.
      *
      * @param dosageApi          The {@link io.github.jy95.fds.common.types.DosageAPI} instance configured for the specific locale.
@@ -267,7 +279,7 @@ public interface DosageMarkdown<A extends DosageAPI<?, B>, B> {
             try {
                 List<B> dosages = getDosageFromJson(jsonFile);
                 String outputText = dosageApi.asHumanReadableText(dosages).get();
-                String jsonContent = escapeHtml(Files.readString(jsonFile));
+                String jsonContent = escapeHtml(getDosageJsonAsString(jsonFile));
                 return Map.of(
                         "dosage", outputText,
                         "json", jsonContent
