@@ -72,7 +72,7 @@ import io.github.jy95.fds.r4.config.FDSConfigR4;
         // Inject dosage data into the template
 <span class="fc" id="L73">        workingCopy.set(&quot;dosageInstruction&quot;, dosageArray);</span>
 
-        // Convert back to MedicationKnowledge
+        // Convert back to MedicationRequest
 <span class="fc" id="L76">        String finalJson = MAPPER.writeValueAsString(workingCopy);</span>
 <span class="fc" id="L77">        MedicationRequest mr = JSON_PARSER.parseResource(MedicationRequest.class, finalJson);</span>
 
