@@ -7,12 +7,21 @@ import io.github.jy95.fds.r5.DosageAPIR5;
 import io.github.jy95.fds.common.config.FDSConfig;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import org.hl7.fhir.r5.model.Dosage;
+import org.hl7.fhir.r5.model.MedicationRequest;
+
+import ca.uhn.fhir.context.FhirContext;
+import ca.uhn.fhir.parser.IParser;
 
 /**
  * <p>DosageMarkdownExecutor class.</p>
@@ -72,6 +81,9 @@ public class DosageMarkdownExecutor {
         }
     }
 
+    /**
+     * A custom implementation for the timing examples
+     */
     static class TimingR5 extends SpecsR5 {
         @Override
         public Path getResourcesDir() {
@@ -81,6 +93,70 @@ public class DosageMarkdownExecutor {
         @Override
         public Path getBaseOutputDir(Locale locale) {
             return Paths.get(BASE_PATH,ROOT_PATH, "src", "site", "markdown", "timing");
+        }
+    }
+
+    /**
+     * A custom implementation for the DosageAPIR4, to support fallback to the dosage text
+     * when the human-readable text is empty.
+     */
+    static class DosageAPIR5Custom extends DosageAPIR5 {
+
+        /**
+         * <p>Constructor for DosageAPIR5Custom.</p>
+         *
+         * @param config a {@link io.github.jy95.fds.r5.config.FDSConfigR5} object
+         */
+        public DosageAPIR5Custom(FDSConfigR5 config) {
+            super(config);
+        }
+
+        @Override
+        public CompletableFuture<String> asHumanReadableText(Dosage dosage) {
+            // Use the default implementation for now
+            // but ensure that if the result is empty, we return the text from the dosage
+            var result = super.asHumanReadableText(dosage);
+            return result.thenApply(text -> text.isEmpty() ? dosage.getText() : text);
+        }
+    }
+
+    /**
+     * A custom implementation for the medicationrequest examples
+     */
+    static class MedicationRequestR5 extends SpecsR5 {
+
+        /**
+         * The FHIR context for R5.
+         */
+        private static final IParser JSON_PARSER = FhirContext.forR5().newJsonParser();
+
+        @Override
+        public Path getResourcesDir() {
+            return Paths.get(BASE_PATH,ROOT_PATH, "src", "site", "resources", "medicationrequest");
+        }
+
+        @Override
+        public Path getBaseOutputDir(Locale locale) {
+            return Paths.get(BASE_PATH,ROOT_PATH, "src", "site", "markdown", "medicationrequest");
+        }
+
+        @Override
+        public DosageAPIR5 createDosageAPI(Locale locale) {
+            return new DosageAPIR5Custom(
+                    FDSConfigR5
+                            .builder()
+                            .displayOrder(FDSConfig.builder().build().getDisplayOrder())
+                            .locale(locale)
+                            .build()
+            );
+        }
+
+        @Override
+        public List<Dosage> getDosageFromJson(Path jsonFile) throws IOException {
+            String finalJson = Files.readString(jsonFile).trim();
+            MedicationRequest mr = JSON_PARSER.parseResource(MedicationRequest.class, finalJson);
+            
+            return mr.getDosageInstruction();
         }
     }
 
@@ -95,5 +171,7 @@ public class DosageMarkdownExecutor {
         specsExamples.generateMarkdown();
         var timingExamples = new TimingR5();
         timingExamples.generateMarkdown();
+        var medicationRequestExamples = new MedicationRequestR5();
+        medicationRequestExamples.generateMarkdown();
     }
 }

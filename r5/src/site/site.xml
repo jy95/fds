@@ -16,6 +16,7 @@
         <menu name="💡 Examples">
             <item name="🔎 Specifications" href="specifications.html"/>
             <item name="⌚ Timing" href="timing/timing.html"/>
+            <item name="🌌 MedicationRequest" href="medicationrequest.html"/>
         </menu>
         <menu name="📖 Reference">
             <item name="❓ FAQ" href="faq.html"/>
