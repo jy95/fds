@@ -166,9 +166,11 @@ public interface DosageMarkdown<A extends DosageAPI<?, B>, B> {
     /**
      * Reads the content of a JSON file and returns it as a String.
      * This method is used to read the JSON file content before processing it
+     *
      * @param jsonFile The path to the JSON file.
      * @return The content of the JSON file as a String.
      * @throws java.io.IOException If an I/O error occurs while reading the file.
+     * @since 1.0.6
      */
     default String getDosageJsonAsString(Path jsonFile) throws IOException {
         // Read the JSON file content as a String
