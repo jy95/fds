@@ -164,6 +164,18 @@ public interface DosageMarkdown&lt;A extends DosageAPI&lt;?, B&gt;, B&gt; {
 <span class="fc" id="L164">    }</span>
 
     /**
+     * Reads the content of a JSON file and returns it as a String.
+     * This method is used to read the JSON file content before processing it
+     * @param jsonFile The path to the JSON file.
+     * @return The content of the JSON file as a String.
+     * @throws java.io.IOException If an I/O error occurs while reading the file.
+     */
+    default String getDosageJsonAsString(Path jsonFile) throws IOException {
+        // Read the JSON file content as a String
+<span class="fc" id="L175">        return Files.readString(jsonFile);</span>
+    }
+
+    /**
      * Generates the Markdown content for a specific folder and locale.
      *
      * @param dosageApi          The {@link io.github.jy95.fds.common.types.DosageAPI} instance configured for the specific locale.
@@ -175,26 +187,26 @@ public interface DosageMarkdown&lt;A extends DosageAPI&lt;?, B&gt;, B&gt; {
      * @throws java.lang.InterruptedException if any.
      */
     private void generateMarkdownForFolderAndLocale(A dosageApi, Path inputFolder, Path markdownFile, List&lt;Path&gt; jsonFilesToProcess) throws IOException, ExecutionException, InterruptedException {
-<span class="fc" id="L178">        try (BufferedWriter writer = Files.newBufferedWriter(markdownFile)) {</span>
+<span class="fc" id="L190">        try (BufferedWriter writer = Files.newBufferedWriter(markdownFile)) {</span>
             // The header should be the name of the folder (e.g., &quot;examples&quot;, &quot;text&quot;, &quot;nested&quot;)
-<span class="fc" id="L180">            String headerName = inputFolder.getFileName().toString();</span>
-<span class="fc" id="L181">            writeMarkdownHeader(writer, headerName);</span>
-<span class="fc" id="L182">            writeMarkdownTableStart(writer);</span>
+<span class="fc" id="L192">            String headerName = inputFolder.getFileName().toString();</span>
+<span class="fc" id="L193">            writeMarkdownHeader(writer, headerName);</span>
+<span class="fc" id="L194">            writeMarkdownTableStart(writer);</span>
 
             // Process each JSON file asynchronously and then write to the Markdown
-<span class="fc" id="L185">            jsonFilesToProcess</span>
-<span class="fc" id="L186">                .stream()</span>
-<span class="fc" id="L187">                .forEach(jsonFile -&gt; {</span>
+<span class="fc" id="L197">            jsonFilesToProcess</span>
+<span class="fc" id="L198">                .stream()</span>
+<span class="fc" id="L199">                .forEach(jsonFile -&gt; {</span>
                     try {
                         // Extract JSON file content and human-readable text asynchronously
-<span class="fc" id="L190">                        Map&lt;String, String&gt; data = extractJsonFile(dosageApi, jsonFile).get();</span>
-<span class="fc" id="L191">                        writeMarkdownTableRow(writer, data.get(&quot;json&quot;), data.get(&quot;dosage&quot;));</span>
-<span class="fc" id="L192">                    } catch (Exception e) {}</span>
-<span class="fc" id="L193">                });</span>
+<span class="fc" id="L202">                        Map&lt;String, String&gt; data = extractJsonFile(dosageApi, jsonFile).get();</span>
+<span class="fc" id="L203">                        writeMarkdownTableRow(writer, data.get(&quot;json&quot;), data.get(&quot;dosage&quot;));</span>
+<span class="fc" id="L204">                    } catch (Exception e) {}</span>
+<span class="fc" id="L205">                });</span>
 
-<span class="fc" id="L195">            writeMarkdownTableEnd(writer);</span>
+<span class="fc" id="L207">            writeMarkdownTableEnd(writer);</span>
         }
-<span class="fc" id="L197">    }</span>
+<span class="fc" id="L209">    }</span>
 
     /**
      * Determines the relative path and filename for the markdown output file.
@@ -207,23 +219,23 @@ public interface DosageMarkdown&lt;A extends DosageAPI&lt;?, B&gt;, B&gt; {
     private String getRelativeMarkdownFilePath(Path folder) {
 
         // Get the resources directory and the file name for the markdown output
-<span class="fc" id="L210">        Path resourcesDir = getResourcesDir();</span>
-<span class="fc" id="L211">        String fileName = folder.getFileName().toString() + &quot;.md&quot;;</span>
+<span class="fc" id="L222">        Path resourcesDir = getResourcesDir();</span>
+<span class="fc" id="L223">        String fileName = folder.getFileName().toString() + &quot;.md&quot;;</span>
 
         // Get the relative path from the resources directory to the folder
         // e.g., &quot;&quot;, &quot;text&quot;, &quot;text/nested&quot;
-<span class="fc" id="L215">        Path relativePathFromResources = resourcesDir.relativize(folder);</span>
-<span class="fc" id="L216">        var nameCount = relativePathFromResources.getNameCount();</span>
+<span class="fc" id="L227">        Path relativePathFromResources = resourcesDir.relativize(folder);</span>
+<span class="fc" id="L228">        var nameCount = relativePathFromResources.getNameCount();</span>
 
-<span class="fc bfc" id="L218" title="All 2 branches covered.">        if (nameCount &lt;= 1) {</span>
+<span class="fc bfc" id="L230" title="All 2 branches covered.">        if (nameCount &lt;= 1) {</span>
             // If the folder is the resources directory itself or empty, return the file name only.
-<span class="fc" id="L220">            return fileName;</span>
+<span class="fc" id="L232">            return fileName;</span>
         } else {
             // For subdirectories, we need to combine the relative path - 1 (the folder name) with the filename.
-<span class="fc" id="L223">            return relativePathFromResources</span>
-<span class="fc" id="L224">                    .subpath(0, nameCount - 1)</span>
-<span class="fc" id="L225">                    .resolve(fileName)</span>
-<span class="fc" id="L226">                    .toString();</span>
+<span class="fc" id="L235">            return relativePathFromResources</span>
+<span class="fc" id="L236">                    .subpath(0, nameCount - 1)</span>
+<span class="fc" id="L237">                    .resolve(fileName)</span>
+<span class="fc" id="L238">                    .toString();</span>
         }
     }
 
@@ -235,8 +247,8 @@ public interface DosageMarkdown&lt;A extends DosageAPI&lt;?, B&gt;, B&gt; {
      * @throws java.io.IOException If an I/O error occurs while writing to the file.
      */
     private void writeMarkdownHeader(BufferedWriter writer, String folderName) throws IOException {
-<span class="fc" id="L238">        writer.write(&quot;# &quot; + folderName + &quot; \n\n&quot;);</span>
-<span class="fc" id="L239">    }</span>
+<span class="fc" id="L250">        writer.write(&quot;# &quot; + folderName + &quot; \n\n&quot;);</span>
+<span class="fc" id="L251">    }</span>
 
     /**
      * Writes the start of the Markdown table.
@@ -245,15 +257,15 @@ public interface DosageMarkdown&lt;A extends DosageAPI&lt;?, B&gt;, B&gt; {
      * @throws java.io.IOException If an I/O error occurs while writing to the file.
      */
     private void writeMarkdownTableStart(BufferedWriter writer) throws IOException {
-<span class="fc" id="L248">        writer.write(&quot;&lt;table&gt;\n&quot;);</span>
-<span class="fc" id="L249">        writer.write(&quot;  &lt;thead&gt;\n&quot;);</span>
-<span class="fc" id="L250">        writer.write(&quot;    &lt;tr&gt;\n&quot;);</span>
-<span class="fc" id="L251">        writer.write(&quot;      &lt;th&gt;Dosage&lt;/th&gt;\n&quot;);</span>
-<span class="fc" id="L252">        writer.write(&quot;      &lt;th&gt;Human readable text&lt;/th&gt;\n&quot;);</span>
-<span class="fc" id="L253">        writer.write(&quot;    &lt;/tr&gt;\n&quot;);</span>
-<span class="fc" id="L254">        writer.write(&quot;  &lt;/thead&gt;\n&quot;);</span>
-<span class="fc" id="L255">        writer.write(&quot;  &lt;tbody&gt;\n&quot;);</span>
-<span class="fc" id="L256">    }</span>
+<span class="fc" id="L260">        writer.write(&quot;&lt;table&gt;\n&quot;);</span>
+<span class="fc" id="L261">        writer.write(&quot;  &lt;thead&gt;\n&quot;);</span>
+<span class="fc" id="L262">        writer.write(&quot;    &lt;tr&gt;\n&quot;);</span>
+<span class="fc" id="L263">        writer.write(&quot;      &lt;th&gt;Dosage&lt;/th&gt;\n&quot;);</span>
+<span class="fc" id="L264">        writer.write(&quot;      &lt;th&gt;Human readable text&lt;/th&gt;\n&quot;);</span>
+<span class="fc" id="L265">        writer.write(&quot;    &lt;/tr&gt;\n&quot;);</span>
+<span class="fc" id="L266">        writer.write(&quot;  &lt;/thead&gt;\n&quot;);</span>
+<span class="fc" id="L267">        writer.write(&quot;  &lt;tbody&gt;\n&quot;);</span>
+<span class="fc" id="L268">    }</span>
 
     /**
      * &lt;p&gt;extractJsonFile.&lt;/p&gt;
@@ -263,17 +275,17 @@ public interface DosageMarkdown&lt;A extends DosageAPI&lt;?, B&gt;, B&gt; {
      * @return a {@link java.util.concurrent.CompletableFuture} object
      */
     private CompletableFuture&lt;Map&lt;String, String&gt;&gt; extractJsonFile(A dosageApi, Path jsonFile) {
-<span class="fc" id="L266">        return CompletableFuture.supplyAsync(() -&gt; {</span>
+<span class="fc" id="L278">        return CompletableFuture.supplyAsync(() -&gt; {</span>
             try {
-<span class="fc" id="L268">                List&lt;B&gt; dosages = getDosageFromJson(jsonFile);</span>
-<span class="fc" id="L269">                String outputText = dosageApi.asHumanReadableText(dosages).get();</span>
-<span class="fc" id="L270">                String jsonContent = escapeHtml(Files.readString(jsonFile));</span>
-<span class="fc" id="L271">                return Map.of(</span>
+<span class="fc" id="L280">                List&lt;B&gt; dosages = getDosageFromJson(jsonFile);</span>
+<span class="fc" id="L281">                String outputText = dosageApi.asHumanReadableText(dosages).get();</span>
+<span class="fc" id="L282">                String jsonContent = escapeHtml(getDosageJsonAsString(jsonFile));</span>
+<span class="fc" id="L283">                return Map.of(</span>
                         &quot;dosage&quot;, outputText,
                         &quot;json&quot;, jsonContent
                 );
-<span class="fc" id="L275">            } catch (IOException | InterruptedException | ExecutionException e) {</span>
-<span class="fc" id="L276">                throw new RuntimeException(e);</span>
+<span class="fc" id="L287">            } catch (IOException | InterruptedException | ExecutionException e) {</span>
+<span class="fc" id="L288">                throw new RuntimeException(e);</span>
             }
         });
     }
@@ -287,11 +299,11 @@ public interface DosageMarkdown&lt;A extends DosageAPI&lt;?, B&gt;, B&gt; {
      * @throws java.io.IOException If an I/O error occurs while writing to the file.
      */
     private void writeMarkdownTableRow(BufferedWriter writer, String jsonContent, String outputText) throws IOException {
-<span class="fc" id="L290">        writer.write(&quot;    &lt;tr&gt;\n&quot;);</span>
-<span class="fc" id="L291">        writer.write(&quot;      &lt;td&gt;&lt;pre&gt;&lt;code class=\&quot;language-json\&quot;&gt;&quot; + jsonContent + &quot;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;\n&quot;);</span>
-<span class="fc" id="L292">        writer.write(&quot;      &lt;td&gt;&quot; + escapeHtml(outputText).replace(&quot;\n&quot;, &quot;&lt;br&gt;&quot;) + &quot;&lt;/td&gt;\n&quot;);</span>
-<span class="fc" id="L293">        writer.write(&quot;    &lt;/tr&gt;\n&quot;);</span>
-<span class="fc" id="L294">    }</span>
+<span class="fc" id="L302">        writer.write(&quot;    &lt;tr&gt;\n&quot;);</span>
+<span class="fc" id="L303">        writer.write(&quot;      &lt;td&gt;&lt;pre&gt;&lt;code class=\&quot;language-json\&quot;&gt;&quot; + jsonContent + &quot;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;\n&quot;);</span>
+<span class="fc" id="L304">        writer.write(&quot;      &lt;td&gt;&quot; + escapeHtml(outputText).replace(&quot;\n&quot;, &quot;&lt;br&gt;&quot;) + &quot;&lt;/td&gt;\n&quot;);</span>
+<span class="fc" id="L305">        writer.write(&quot;    &lt;/tr&gt;\n&quot;);</span>
+<span class="fc" id="L306">    }</span>
 
     /**
      * Writes the end of the Markdown table.
@@ -300,9 +312,9 @@ public interface DosageMarkdown&lt;A extends DosageAPI&lt;?, B&gt;, B&gt; {
      * @throws java.io.IOException If an I/O error occurs while writing to the file.
      */
     private void writeMarkdownTableEnd(BufferedWriter writer) throws IOException {
-<span class="fc" id="L303">        writer.write(&quot;  &lt;/tbody&gt;\n&quot;);</span>
-<span class="fc" id="L304">        writer.write(&quot;&lt;/table&gt;\n&quot;);</span>
-<span class="fc" id="L305">    }</span>
+<span class="fc" id="L315">        writer.write(&quot;  &lt;/tbody&gt;\n&quot;);</span>
+<span class="fc" id="L316">        writer.write(&quot;&lt;/table&gt;\n&quot;);</span>
+<span class="fc" id="L317">    }</span>
 
     /**
      * Helper method to escape HTML special characters for safe inclusion in HTML content.
@@ -311,11 +323,11 @@ public interface DosageMarkdown&lt;A extends DosageAPI&lt;?, B&gt;, B&gt; {
      * @return The escaped text.
      */
     default String escapeHtml(String text) {
-<span class="fc" id="L314">        return text.replace(&quot;&amp;&quot;, &quot;&amp;amp;&quot;)</span>
-<span class="fc" id="L315">                .replace(&quot;&lt;&quot;, &quot;&amp;lt;&quot;)</span>
-<span class="fc" id="L316">                .replace(&quot;&gt;&quot;, &quot;&amp;gt;&quot;)</span>
-<span class="fc" id="L317">                .replace(&quot;\&quot;&quot;, &quot;&amp;quot;&quot;)</span>
-<span class="fc" id="L318">                .replace(&quot;'&quot;, &quot;&amp;#039;&quot;);</span>
+<span class="fc" id="L326">        return text.replace(&quot;&amp;&quot;, &quot;&amp;amp;&quot;)</span>
+<span class="fc" id="L327">                .replace(&quot;&lt;&quot;, &quot;&amp;lt;&quot;)</span>
+<span class="fc" id="L328">                .replace(&quot;&gt;&quot;, &quot;&amp;gt;&quot;)</span>
+<span class="fc" id="L329">                .replace(&quot;\&quot;&quot;, &quot;&amp;quot;&quot;)</span>
+<span class="fc" id="L330">                .replace(&quot;'&quot;, &quot;&amp;#039;&quot;);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

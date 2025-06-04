@@ -81,89 +81,37 @@
 <tr class="b">
       
 <td>
-<pre class="prettyprint"><code class="language-json">{
-  &quot;resourceType&quot; : &quot;MedicationRequest&quot;,
-  &quot;id&quot; : &quot;medrx0332&quot;,
-  &quot;text&quot; : {
-    &quot;status&quot; : &quot;generated&quot;,
-    &quot;div&quot; : &quot;&lt;div xmlns=\&quot;http://www.w3.org/1999/xhtml\&quot;&gt;&lt;p&gt;&lt;b&gt;Generated Narrative: MedicationRequest&lt;/b&gt;&lt;a name=\&quot;medrx0332\&quot;&gt; &lt;/a&gt;&lt;/p&gt;&lt;div style=\&quot;display: inline-block; background-color: #d9e0e7; padding: 6px; margin: 4px; border: 1px solid #8da1b4; border-radius: 5px; line-height: 60%\&quot;&gt;&lt;p style=\&quot;margin-bottom: 0px\&quot;&gt;Resource MedicationRequest &amp;quot;medrx0332&amp;quot; &lt;/p&gt;&lt;/div&gt;&lt;p&gt;&lt;b&gt;identifier&lt;/b&gt;: id:\u00a012345689\u00a0(use:\u00a0OFFICIAL)&lt;/p&gt;&lt;p&gt;&lt;b&gt;basedOn&lt;/b&gt;: &lt;a href=\&quot;careplan-example-GPVisit.html\&quot;&gt;CarePlan/gpvisit&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;groupIdentifier&lt;/b&gt;: id:\u00a0983939393\u00a0(use:\u00a0OFFICIAL)&lt;/p&gt;&lt;p&gt;&lt;b&gt;status&lt;/b&gt;: active&lt;/p&gt;&lt;p&gt;&lt;b&gt;intent&lt;/b&gt;: order&lt;/p&gt;&lt;h3&gt;Medications&lt;/h3&gt;&lt;table class=\&quot;grid\&quot;&gt;&lt;tr&gt;&lt;td&gt;-&lt;/td&gt;&lt;td&gt;&lt;b&gt;Reference&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;*&lt;/td&gt;&lt;td&gt;&lt;span title=\&quot;  Linked to a RESOURCE Medication  \&quot;&gt;&lt;a name=\&quot;med03499\&quot;&gt; &lt;/a&gt;&lt;/span&gt;&lt;blockquote&gt;&lt;p/&gt;&lt;p&gt;&lt;a name=\&quot;med03499\&quot;&gt; &lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;code&lt;/b&gt;: Ceftriaxone sodium 500mg powder for injection solution vial (product) &lt;span style=\&quot;background: LightGoldenRodYellow; margin: 4px; border: 1px solid khaki\&quot;&gt; (&lt;a href=\&quot;https://browser.ihtsdotools.org/\&quot;&gt;SNOMED CT&lt;/a&gt;#375860009)&lt;/span&gt;&lt;/p&gt;&lt;/blockquote&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;&lt;b&gt;subject&lt;/b&gt;: &lt;a href=\&quot;patient-example-a.html\&quot;&gt;Patient/pat1: Donald Duck&lt;/a&gt; &amp;quot;Donald DUCK&amp;quot;&lt;/p&gt;&lt;p&gt;&lt;b&gt;encounter&lt;/b&gt;: &lt;a href=\&quot;encounter-example-f001-heart.html\&quot;&gt;Encounter/f001: encounter who leads to this prescription&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;authoredOn&lt;/b&gt;: 2015-01-15&lt;/p&gt;&lt;p&gt;&lt;b&gt;requester&lt;/b&gt;: &lt;a href=\&quot;practitioner-example-f007-sh.html\&quot;&gt;Practitioner/f007: Patrick Pump&lt;/a&gt; &amp;quot;Simone HEPS&amp;quot;&lt;/p&gt;&lt;blockquote&gt;&lt;p&gt;&lt;b&gt;dosageInstruction&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;sequence&lt;/b&gt;: 1&lt;/p&gt;&lt;p&gt;&lt;b&gt;text&lt;/b&gt;: Administer 500mg IM as a single dose&lt;/p&gt;&lt;p&gt;&lt;b&gt;timing&lt;/b&gt;: Count 1 times, Once&lt;/p&gt;&lt;p&gt;&lt;b&gt;route&lt;/b&gt;: Intramuscular (qualifier value) &lt;span style=\&quot;background: LightGoldenRodYellow; margin: 4px; border: 1px solid khaki\&quot;&gt; (&lt;a href=\&quot;https://browser.ihtsdotools.org/\&quot;&gt;SNOMED CT&lt;/a&gt;#255559005)&lt;/span&gt;&lt;/p&gt;&lt;blockquote&gt;&lt;p&gt;&lt;b&gt;doseAndRate&lt;/b&gt;&lt;/p&gt;&lt;/blockquote&gt;&lt;/blockquote&gt;&lt;/div&gt;&quot;
-  },
-  &quot;contained&quot; : [{
-    &quot;resourceType&quot; : &quot;Medication&quot;,
-    &quot;id&quot; : &quot;med03499&quot;,
-    &quot;code&quot; : {
-      &quot;coding&quot; : [{
-        &quot;system&quot; : &quot;http://snomed.info/sct&quot;,
-        &quot;code&quot; : &quot;375860009&quot;,
-        &quot;display&quot; : &quot;Ceftriaxone sodium 500mg powder for injection solution vial (product)&quot;
-      }]
-    }
-  }],
-  &quot;identifier&quot; : [{
-    &quot;use&quot; : &quot;official&quot;,
-    &quot;system&quot; : &quot;http://www.bmc.nl/portal/prescriptions&quot;,
-    &quot;value&quot; : &quot;12345689&quot;
-  }],
-  &quot;basedOn&quot; : [{
-    &quot;reference&quot; : &quot;CarePlan/gpvisit&quot;
-  }],
-  &quot;groupIdentifier&quot; : {
-    &quot;use&quot; : &quot;official&quot;,
-    &quot;system&quot; : &quot;http://www.bmc.nl/portal/prescriptions&quot;,
-    &quot;value&quot; : &quot;983939393&quot;
-  },
-  &quot;status&quot; : &quot;active&quot;,
-  &quot;intent&quot; : &quot;order&quot;,
-  &quot;medication&quot; : {
-    &quot;reference&quot; : {
-      &quot;reference&quot; : &quot;#med03499&quot;
+<pre class="prettyprint"><code class="language-json">[ {
+  &quot;sequence&quot; : 1,
+  &quot;text&quot; : &quot;Administer 500mg IM as a single dose&quot;,
+  &quot;timing&quot; : {
+    &quot;repeat&quot; : {
+      &quot;count&quot; : 1
     }
   },
-  &quot;subject&quot; : {
-    &quot;reference&quot; : &quot;Patient/pat1&quot;,
-    &quot;display&quot; : &quot;Donald Duck&quot;
+  &quot;route&quot; : {
+    &quot;coding&quot; : [ {
+      &quot;system&quot; : &quot;http://snomed.info/sct&quot;,
+      &quot;code&quot; : &quot;255559005&quot;,
+      &quot;display&quot; : &quot;Intramuscular (qualifier value)&quot;
+    } ]
   },
-  &quot;encounter&quot; : {
-    &quot;reference&quot; : &quot;Encounter/f001&quot;,
-    &quot;display&quot; : &quot;encounter who leads to this prescription&quot;
-  },
-  &quot;authoredOn&quot; : &quot;2015-01-15&quot;,
-  &quot;requester&quot; : {
-    &quot;reference&quot; : &quot;Practitioner/f007&quot;,
-    &quot;display&quot; : &quot;Patrick Pump&quot;
-  },
-  &quot;dosageInstruction&quot; : [{
-    &quot;sequence&quot; : 1,
-    &quot;text&quot; : &quot;Administer 500mg IM as a single dose&quot;,
-    &quot;timing&quot; : {
-      &quot;repeat&quot; : {
-        &quot;count&quot; : 1
-      }
+  &quot;doseAndRate&quot; : [ {
+    &quot;type&quot; : {
+      &quot;coding&quot; : [ {
+        &quot;system&quot; : &quot;http://terminology.hl7.org/CodeSystem/dose-rate-type&quot;,
+        &quot;code&quot; : &quot;ordered&quot;,
+        &quot;display&quot; : &quot;Ordered&quot;
+      } ]
     },
-    &quot;route&quot; : {
-      &quot;coding&quot; : [{
-        &quot;system&quot; : &quot;http://snomed.info/sct&quot;,
-        &quot;code&quot; : &quot;255559005&quot;,
-        &quot;display&quot; : &quot;Intramuscular (qualifier value)&quot;
-      }]
-    },
-    &quot;doseAndRate&quot; : [{
-      &quot;type&quot; : {
-        &quot;coding&quot; : [{
-          &quot;system&quot; : &quot;http://terminology.hl7.org/CodeSystem/dose-rate-type&quot;,
-          &quot;code&quot; : &quot;ordered&quot;,
-          &quot;display&quot; : &quot;Ordered&quot;
-        }]
-      },
-      &quot;doseQuantity&quot; : {
-        &quot;value&quot; : 500,
-        &quot;unit&quot; : &quot;mg&quot;,
-        &quot;system&quot; : &quot;http://unitsofmeasure.org&quot;,
-        &quot;code&quot; : &quot;mg&quot;
-      }
-    }]
-  }]
-}</code></pre></td>
+    &quot;doseQuantity&quot; : {
+      &quot;value&quot; : 500,
+      &quot;unit&quot; : &quot;mg&quot;,
+      &quot;system&quot; : &quot;http://unitsofmeasure.org&quot;,
+      &quot;code&quot; : &quot;mg&quot;
+    }
+  } ]
+} ]</code></pre></td>
       
 <td>500 mg - Intramuscular (qualifier value) - take 1 time</td>
     </tr>

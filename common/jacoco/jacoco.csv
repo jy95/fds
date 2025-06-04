@@ -20,7 +20,7 @@ FHIR Dosage Support - Common,io.github.jy95.fds.common.translators,OffsetWhen,31
 FHIR Dosage Support - Common,io.github.jy95.fds.common.translators,DurationDurationMax,77,0,12,0,18,0,10,0,4,0
 FHIR Dosage Support - Common,io.github.jy95.fds.common.translators,AsNeeded,14,0,0,0,3,0,2,0,2,0
 FHIR Dosage Support - Common,io.github.jy95.fds.common.types,AbstractTranslatorsMap,33,0,2,0,7,0,4,0,3,0
-FHIR Dosage Support - Common,io.github.jy95.fds.common.types,DosageMarkdown,0,338,0,6,0,83,0,22,0,19
+FHIR Dosage Support - Common,io.github.jy95.fds.common.types,DosageMarkdown,0,342,0,6,0,84,0,23,0,20
 FHIR Dosage Support - Common,io.github.jy95.fds.common.types,DisplayOrder,0,286,0,0,0,37,0,2,0,2
 FHIR Dosage Support - Common,io.github.jy95.fds.common.types,DoseAndRateKey,33,0,0,0,6,0,1,0,1,0
 FHIR Dosage Support - Common,io.github.jy95.fds.common.types,DosageAPI,70,145,1,1,18,35,7,16,6,16

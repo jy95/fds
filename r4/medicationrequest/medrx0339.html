@@ -81,195 +81,87 @@
 <tr class="b">
       
 <td>
-<pre class="prettyprint"><code class="language-json">{
-  &quot;resourceType&quot;: &quot;MedicationRequest&quot;,
-  &quot;id&quot;: &quot;medrx0339&quot;,
-  &quot;text&quot;: {
-    &quot;status&quot;: &quot;generated&quot;,
-    &quot;div&quot;: &quot;&lt;div xmlns=\&quot;http://www.w3.org/1999/xhtml\&quot;&gt;&lt;p&gt;&lt;b&gt;Generated Narrative&lt;/b&gt;&lt;/p&gt;&lt;div style=\&quot;display: inline-block; background-color: #d9e0e7; padding: 6px; margin: 4px; border: 1px solid #8da1b4; border-radius: 5px; line-height: 60%\&quot;&gt;&lt;p style=\&quot;margin-bottom: 0px\&quot;&gt;Resource &amp;quot;medrx0339&amp;quot; &lt;/p&gt;&lt;/div&gt;&lt;p&gt;&lt;b&gt;identifier&lt;/b&gt;: id: 12345689 (OFFICIAL)&lt;/p&gt;&lt;p&gt;&lt;b&gt;status&lt;/b&gt;: active&lt;/p&gt;&lt;p&gt;&lt;b&gt;intent&lt;/b&gt;: order&lt;/p&gt;&lt;p&gt;&lt;b&gt;medication&lt;/b&gt;: &lt;a name=\&quot;med0322\&quot;&gt; &lt;/a&gt;&lt;/p&gt;&lt;blockquote&gt;&lt;div style=\&quot;display: inline-block; background-color: #d9e0e7; padding: 6px; margin: 4px; border: 1px solid #8da1b4; border-radius: 5px; line-height: 60%\&quot;&gt;&lt;p style=\&quot;margin-bottom: 0px\&quot;&gt;Resource &amp;quot;med0322&amp;quot; &lt;/p&gt;&lt;/div&gt;&lt;p&gt;&lt;b&gt;code&lt;/b&gt;: Vagistat-3 &lt;span style=\&quot;background: LightGoldenRodYellow; margin: 4px; border: 1px solid khaki\&quot;&gt; (&lt;a href=\&quot;http://terminology.hl7.org/3.1.0/CodeSystem-v3-ndc.html\&quot;&gt;National drug codes&lt;/a&gt;#0067-2091-03)&lt;/span&gt;&lt;/p&gt;&lt;/blockquote&gt;&lt;p&gt;&lt;b&gt;subject&lt;/b&gt;: &lt;a href=\&quot;patient-pat1.html\&quot;&gt;Patient/pat1: Donald Duck&lt;/a&gt; &amp;quot;Duck DONALD&amp;quot;&lt;/p&gt;&lt;p&gt;&lt;b&gt;encounter&lt;/b&gt;: &lt;a href=\&quot;encounter-f001.html\&quot;&gt;Encounter/f001: encounter who leads to this prescription&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;authoredOn&lt;/b&gt;: 2015-01-15&lt;/p&gt;&lt;p&gt;&lt;b&gt;requester&lt;/b&gt;: &lt;a href=\&quot;practitioner-f007.html\&quot;&gt;Practitioner/f007: Patrick Pump&lt;/a&gt; &amp;quot;Simone HEPS&amp;quot;&lt;/p&gt;&lt;p&gt;&lt;b&gt;basedOn&lt;/b&gt;: &lt;a href=\&quot;careplan-gpvisit.html\&quot;&gt;CarePlan/gpvisit&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;groupIdentifier&lt;/b&gt;: id: 983939393 (OFFICIAL)&lt;/p&gt;&lt;blockquote&gt;&lt;p&gt;&lt;b&gt;dispenseRequest&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;validityPeriod&lt;/b&gt;: 2015-01-15 --&amp;gt; 2016-01-15&lt;/p&gt;&lt;p&gt;&lt;b&gt;numberOfRepeatsAllowed&lt;/b&gt;: 1&lt;/p&gt;&lt;p&gt;&lt;b&gt;quantity&lt;/b&gt;: 1&lt;/p&gt;&lt;p&gt;&lt;b&gt;performer&lt;/b&gt;: &lt;a href=\&quot;organization-f001.html\&quot;&gt;Organization/f001&lt;/a&gt; &amp;quot;Burgers University Medical Center&amp;quot;&lt;/p&gt;&lt;/blockquote&gt;&lt;h3&gt;Substitutions&lt;/h3&gt;&lt;table class=\&quot;grid\&quot;&gt;&lt;tr&gt;&lt;td&gt;-&lt;/td&gt;&lt;td&gt;&lt;b&gt;Allowed[x]&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Reason&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;*&lt;/td&gt;&lt;td&gt;true&lt;/td&gt;&lt;td&gt;formulary policy &lt;span style=\&quot;background: LightGoldenRodYellow; margin: 4px; border: 1px solid khaki\&quot;&gt; (&lt;a href=\&quot;http://terminology.hl7.org/3.1.0/CodeSystem-v3-ActReason.html\&quot;&gt;ActReason&lt;/a&gt;#FP)&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&quot;
-  },
-  &quot;contained&quot;: [
-    {
-      &quot;resourceType&quot;: &quot;Medication&quot;,
-      &quot;id&quot;: &quot;med0322&quot;,
-      &quot;code&quot;: {
-        &quot;coding&quot;: [
-          {
-            &quot;system&quot;: &quot;http://hl7.org/fhir/sid/ndc&quot;,
-            &quot;code&quot;: &quot;0067-2091-03&quot;,
-            &quot;display&quot;: &quot;Vagistat-3&quot;
-          }
-        ]
-      }
-    }
-  ],
-  &quot;identifier&quot;: [
-    {
-      &quot;use&quot;: &quot;official&quot;,
-      &quot;system&quot;: &quot;http://www.bmc.nl/portal/prescriptions&quot;,
-      &quot;value&quot;: &quot;12345689&quot;
-    }
-  ],
-  &quot;status&quot;: &quot;active&quot;,
-  &quot;intent&quot;: &quot;order&quot;,
-  &quot;medicationReference&quot;: {
-    &quot;reference&quot;: &quot;#med0322&quot;
-  },
-  &quot;subject&quot;: {
-    &quot;reference&quot;: &quot;Patient/pat1&quot;,
-    &quot;display&quot;: &quot;Donald Duck&quot;
-  },
-  &quot;encounter&quot;: {
-    &quot;reference&quot;: &quot;Encounter/f001&quot;,
-    &quot;display&quot;: &quot;encounter who leads to this prescription&quot;
-  },
-  &quot;authoredOn&quot;: &quot;2015-01-15&quot;,
-  &quot;requester&quot;: {
-    &quot;reference&quot;: &quot;Practitioner/f007&quot;,
-    &quot;display&quot;: &quot;Patrick Pump&quot;
-  },
-  &quot;basedOn&quot;: [
-    {
-      &quot;reference&quot;: &quot;CarePlan/gpvisit&quot;
-    }
-  ],
-  &quot;groupIdentifier&quot;: {
-    &quot;use&quot;: &quot;official&quot;,
-    &quot;system&quot;: &quot;http://www.bmc.nl/portal/prescriptions&quot;,
-    &quot;value&quot;: &quot;983939393&quot;
-  },
-  &quot;dosageInstruction&quot;: [
-    {
-      &quot;sequence&quot;: 1,
-      &quot;text&quot;: &quot;Insert one suppository into the vagina daily at bedtime&quot;,
-      &quot;timing&quot;: {
-        &quot;repeat&quot;: {
-          &quot;boundsPeriod&quot;: {
-            &quot;start&quot;: &quot;2015-01-16&quot;,
-            &quot;end&quot;: &quot;2015-01-18&quot;
-          },
-          &quot;frequency&quot;: 1,
-          &quot;period&quot;: 1,
-          &quot;periodUnit&quot;: &quot;d&quot;
-        }
+<pre class="prettyprint"><code class="language-json">[ {
+  &quot;sequence&quot; : 1,
+  &quot;text&quot; : &quot;Insert one suppository into the vagina daily at bedtime&quot;,
+  &quot;timing&quot; : {
+    &quot;repeat&quot; : {
+      &quot;boundsPeriod&quot; : {
+        &quot;start&quot; : &quot;2015-01-16&quot;,
+        &quot;end&quot; : &quot;2015-01-18&quot;
       },
-      &quot;route&quot;: {
-        &quot;coding&quot;: [
-          {
-            &quot;system&quot;: &quot;http://snomed.info/sct&quot;,
-            &quot;code&quot;: &quot;16857009&quot;,
-            &quot;display&quot;: &quot;Vaginal Route&quot;
-          }
-        ]
-      },
-      &quot;method&quot;: {
-        &quot;coding&quot;: [
-          {
-            &quot;system&quot;: &quot;http://snomed.info/sct&quot;,
-            &quot;code&quot;: &quot;421257003&quot;,
-            &quot;display&quot;: &quot;Insert&quot;
-          }
-        ]
-      },
-      &quot;doseAndRate&quot;: [
-        {
-          &quot;type&quot;: {
-            &quot;coding&quot;: [
-              {
-                &quot;system&quot;: &quot;http://terminology.hl7.org/CodeSystem/dose-rate-type&quot;,
-                &quot;code&quot;: &quot;ordered&quot;,
-                &quot;display&quot;: &quot;Ordered&quot;
-              }
-            ]
-          },
-          &quot;doseQuantity&quot;: {
-            &quot;value&quot;: 1,
-            &quot;unit&quot;: &quot;VAGTAB&quot;,
-            &quot;system&quot;: &quot;http://terminology.hl7.org/CodeSystem/v3-orderableDrugForm&quot;,
-            &quot;code&quot;: &quot;VAGTAB&quot;
-          }
-        }
-      ]
+      &quot;frequency&quot; : 1,
+      &quot;period&quot; : 1,
+      &quot;periodUnit&quot; : &quot;d&quot;
+    }
+  },
+  &quot;route&quot; : {
+    &quot;coding&quot; : [ {
+      &quot;system&quot; : &quot;http://snomed.info/sct&quot;,
+      &quot;code&quot; : &quot;16857009&quot;,
+      &quot;display&quot; : &quot;Vaginal Route&quot;
+    } ]
+  },
+  &quot;method&quot; : {
+    &quot;coding&quot; : [ {
+      &quot;system&quot; : &quot;http://snomed.info/sct&quot;,
+      &quot;code&quot; : &quot;421257003&quot;,
+      &quot;display&quot; : &quot;Insert&quot;
+    } ]
+  },
+  &quot;doseAndRate&quot; : [ {
+    &quot;type&quot; : {
+      &quot;coding&quot; : [ {
+        &quot;system&quot; : &quot;http://terminology.hl7.org/CodeSystem/dose-rate-type&quot;,
+        &quot;code&quot; : &quot;ordered&quot;,
+        &quot;display&quot; : &quot;Ordered&quot;
+      } ]
     },
-    {
-      &quot;sequence&quot;: 1,
-      &quot;text&quot;: &quot;Apply to vaginal area topically once daily&quot;,
-      &quot;timing&quot;: {
-        &quot;repeat&quot;: {
-          &quot;boundsPeriod&quot;: {
-            &quot;start&quot;: &quot;2015-01-16&quot;,
-            &quot;end&quot;: &quot;2015-01-18&quot;
-          },
-          &quot;frequency&quot;: 1,
-          &quot;period&quot;: 1,
-          &quot;periodUnit&quot;: &quot;d&quot;
-        }
-      },
-      &quot;route&quot;: {
-        &quot;coding&quot;: [
-          {
-            &quot;system&quot;: &quot;http://snomed.info/sct&quot;,
-            &quot;code&quot;: &quot;6064005&quot;,
-            &quot;display&quot;: &quot;Topical Route&quot;
-          }
-        ]
-      },
-      &quot;method&quot;: {
-        &quot;coding&quot;: [
-          {
-            &quot;system&quot;: &quot;http://snomed.info/sct&quot;,
-            &quot;code&quot;: &quot;417924000&quot;,
-            &quot;display&quot;: &quot;Apply - dosing instruction imperative (qualifier value)&quot;
-          }
-        ]
-      },
-      &quot;doseAndRate&quot;: [
-        {
-          &quot;type&quot;: {
-            &quot;coding&quot;: [
-              {
-                &quot;system&quot;: &quot;http://terminology.hl7.org/CodeSystem/dose-rate-type&quot;,
-                &quot;code&quot;: &quot;ordered&quot;,
-                &quot;display&quot;: &quot;Ordered&quot;
-              }
-            ]
-          }
-        }
-      ]
+    &quot;doseQuantity&quot; : {
+      &quot;value&quot; : 1,
+      &quot;unit&quot; : &quot;VAGTAB&quot;,
+      &quot;system&quot; : &quot;http://terminology.hl7.org/CodeSystem/v3-orderableDrugForm&quot;,
+      &quot;code&quot; : &quot;VAGTAB&quot;
     }
-  ],
-  &quot;dispenseRequest&quot;: {
-    &quot;validityPeriod&quot;: {
-      &quot;start&quot;: &quot;2015-01-15&quot;,
-      &quot;end&quot;: &quot;2016-01-15&quot;
-    },
-    &quot;numberOfRepeatsAllowed&quot;: 1,
-    &quot;quantity&quot;: {
-      &quot;value&quot;: 1
-    },
-    &quot;expectedSupplyDuration&quot;: {
-      &quot;value&quot;: 3,
-      &quot;unit&quot;: &quot;days&quot;,
-      &quot;system&quot;: &quot;http://unitsofmeasure.org&quot;,
-      &quot;code&quot;: &quot;d&quot;
-    },
-    &quot;performer&quot;: {
-      &quot;reference&quot;: &quot;Organization/f001&quot;
+  } ]
+}, {
+  &quot;sequence&quot; : 1,
+  &quot;text&quot; : &quot;Apply to vaginal area topically once daily&quot;,
+  &quot;timing&quot; : {
+    &quot;repeat&quot; : {
+      &quot;boundsPeriod&quot; : {
+        &quot;start&quot; : &quot;2015-01-16&quot;,
+        &quot;end&quot; : &quot;2015-01-18&quot;
+      },
+      &quot;frequency&quot; : 1,
+      &quot;period&quot; : 1,
+      &quot;periodUnit&quot; : &quot;d&quot;
     }
   },
-  &quot;substitution&quot;: {
-    &quot;allowedBoolean&quot;: true,
-    &quot;reason&quot;: {
-      &quot;coding&quot;: [
-        {
-          &quot;system&quot;: &quot;http://terminology.hl7.org/CodeSystem/v3-ActReason&quot;,
-          &quot;code&quot;: &quot;FP&quot;,
-          &quot;display&quot;: &quot;formulary policy&quot;
-        }
-      ]
+  &quot;route&quot; : {
+    &quot;coding&quot; : [ {
+      &quot;system&quot; : &quot;http://snomed.info/sct&quot;,
+      &quot;code&quot; : &quot;6064005&quot;,
+      &quot;display&quot; : &quot;Topical Route&quot;
+    } ]
+  },
+  &quot;method&quot; : {
+    &quot;coding&quot; : [ {
+      &quot;system&quot; : &quot;http://snomed.info/sct&quot;,
+      &quot;code&quot; : &quot;417924000&quot;,
+      &quot;display&quot; : &quot;Apply - dosing instruction imperative (qualifier value)&quot;
+    } ]
+  },
+  &quot;doseAndRate&quot; : [ {
+    &quot;type&quot; : {
+      &quot;coding&quot; : [ {
+        &quot;system&quot; : &quot;http://terminology.hl7.org/CodeSystem/dose-rate-type&quot;,
+        &quot;code&quot; : &quot;ordered&quot;,
+        &quot;display&quot; : &quot;Ordered&quot;
+      } ]
     }
-  }
-}</code></pre></td>
+  } ]
+} ]</code></pre></td>
       
 <td>Insert - 1 VAGTAB - 1 time every day - Vaginal Route - from Jan 16, 2015 to Jan 18, 2015 and Apply - dosing instruction imperative (qualifier value) - 1 time every day - Topical Route - from Jan 16, 2015 to Jan 18, 2015</td>
     </tr>

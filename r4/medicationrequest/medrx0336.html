@@ -81,144 +81,37 @@
 <tr class="b">
       
 <td>
-<pre class="prettyprint"><code class="language-json">{
-  &quot;resourceType&quot;: &quot;MedicationRequest&quot;,
-  &quot;id&quot;: &quot;medrx0336&quot;,
-  &quot;text&quot;: {
-    &quot;status&quot;: &quot;generated&quot;,
-    &quot;div&quot;: &quot;&lt;div xmlns=\&quot;http://www.w3.org/1999/xhtml\&quot;&gt;&lt;p&gt;&lt;b&gt;Generated Narrative&lt;/b&gt;&lt;/p&gt;&lt;div style=\&quot;display: inline-block; background-color: #d9e0e7; padding: 6px; margin: 4px; border: 1px solid #8da1b4; border-radius: 5px; line-height: 60%\&quot;&gt;&lt;p style=\&quot;margin-bottom: 0px\&quot;&gt;Resource &amp;quot;medrx0336&amp;quot; &lt;/p&gt;&lt;/div&gt;&lt;p&gt;&lt;b&gt;identifier&lt;/b&gt;: id: 12345689 (OFFICIAL)&lt;/p&gt;&lt;p&gt;&lt;b&gt;status&lt;/b&gt;: completed&lt;/p&gt;&lt;p&gt;&lt;b&gt;intent&lt;/b&gt;: order&lt;/p&gt;&lt;p&gt;&lt;b&gt;medication&lt;/b&gt;: &lt;a name=\&quot;med0336\&quot;&gt; &lt;/a&gt;&lt;/p&gt;&lt;blockquote&gt;&lt;div style=\&quot;display: inline-block; background-color: #d9e0e7; padding: 6px; margin: 4px; border: 1px solid #8da1b4; border-radius: 5px; line-height: 60%\&quot;&gt;&lt;p style=\&quot;margin-bottom: 0px\&quot;&gt;Resource &amp;quot;med0336&amp;quot; &lt;/p&gt;&lt;/div&gt;&lt;p&gt;&lt;b&gt;form&lt;/b&gt;: Injection Solution (qualifier value) &lt;span style=\&quot;background: LightGoldenRodYellow; margin: 4px; border: 1px solid khaki\&quot;&gt; (&lt;a href=\&quot;https://browser.ihtsdotools.org/\&quot;&gt;SNOMED CT&lt;/a&gt;#385219001)&lt;/span&gt;&lt;/p&gt;&lt;blockquote&gt;&lt;p&gt;&lt;b&gt;ingredient&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;item&lt;/b&gt;: Dopamine &lt;span style=\&quot;background: LightGoldenRodYellow; margin: 4px; border: 1px solid khaki\&quot;&gt; (&lt;a href=\&quot;http://terminology.hl7.org/3.1.0/CodeSystem-v3-rxNorm.html\&quot;&gt;RxNorm&lt;/a&gt;#1114879)&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;strength&lt;/b&gt;: 400 mg&lt;span style=\&quot;background: LightGoldenRodYellow\&quot;&gt; (Details: UCUM code mg = 'mg')&lt;/span&gt;/500 mL&lt;span style=\&quot;background: LightGoldenRodYellow\&quot;&gt; (Details: UCUM code mL = 'mL')&lt;/span&gt;&lt;/p&gt;&lt;/blockquote&gt;&lt;blockquote&gt;&lt;p&gt;&lt;b&gt;ingredient&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;item&lt;/b&gt;: Dextrose 5% injection USP &lt;span style=\&quot;background: LightGoldenRodYellow; margin: 4px; border: 1px solid khaki\&quot;&gt; (&lt;a href=\&quot;http://terminology.hl7.org/3.1.0/CodeSystem-v3-ndc.html\&quot;&gt;National drug codes&lt;/a&gt;#0264751010)&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;strength&lt;/b&gt;: 5 g&lt;span style=\&quot;background: LightGoldenRodYellow\&quot;&gt; (Details: UCUM code g = 'g')&lt;/span&gt;/100 mL&lt;span style=\&quot;background: LightGoldenRodYellow\&quot;&gt; (Details: UCUM code mL = 'mL')&lt;/span&gt;&lt;/p&gt;&lt;/blockquote&gt;&lt;/blockquote&gt;&lt;p&gt;&lt;b&gt;subject&lt;/b&gt;: &lt;a href=\&quot;patient-pat1.html\&quot;&gt;Patient/pat1: Donald Duck&lt;/a&gt; &amp;quot;Duck DONALD&amp;quot;&lt;/p&gt;&lt;p&gt;&lt;b&gt;supportingInformation&lt;/b&gt;: &lt;a href=\&quot;observation-example.html\&quot;&gt;Observation/example&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;authoredOn&lt;/b&gt;: 2015-01-15&lt;/p&gt;&lt;p&gt;&lt;b&gt;requester&lt;/b&gt;: &lt;a href=\&quot;practitioner-f007.html\&quot;&gt;Practitioner/f007: Patrick Pump&lt;/a&gt; &amp;quot;Simone HEPS&amp;quot;&lt;/p&gt;&lt;/div&gt;&quot;
-  },
-  &quot;contained&quot;: [
-    {
-      &quot;resourceType&quot;: &quot;Medication&quot;,
-      &quot;id&quot;: &quot;med0336&quot;,
-      &quot;form&quot;: {
-        &quot;coding&quot;: [
-          {
-            &quot;system&quot;: &quot;http://snomed.info/sct&quot;,
-            &quot;code&quot;: &quot;385219001&quot;,
-            &quot;display&quot;: &quot;Injection Solution (qualifier value)&quot;
-          }
-        ],
-        &quot;text&quot;: &quot;Injection Solution (qualifier value)&quot;
-      },
-      &quot;ingredient&quot;: [
-        {
-          &quot;itemCodeableConcept&quot;: {
-            &quot;coding&quot;: [
-              {
-                &quot;system&quot;: &quot;http://www.nlm.nih.gov/research/umls/rxnorm&quot;,
-                &quot;code&quot;: &quot;1114879&quot;,
-                &quot;display&quot;: &quot;Dopamine&quot;
-              }
-            ]
-          },
-          &quot;strength&quot;: {
-            &quot;numerator&quot;: {
-              &quot;value&quot;: 400,
-              &quot;system&quot;: &quot;http://unitsofmeasure.org&quot;,
-              &quot;code&quot;: &quot;mg&quot;
-            },
-            &quot;denominator&quot;: {
-              &quot;value&quot;: 500,
-              &quot;system&quot;: &quot;http://unitsofmeasure.org&quot;,
-              &quot;code&quot;: &quot;mL&quot;
-            }
-          }
-        },
-        {
-          &quot;itemCodeableConcept&quot;: {
-            &quot;coding&quot;: [
-              {
-                &quot;system&quot;: &quot;http://hl7.org/fhir/sid/ndc&quot;,
-                &quot;code&quot;: &quot;0264751010&quot;,
-                &quot;display&quot;: &quot;Dextrose 5% injection USP&quot;
-              }
-            ]
-          },
-          &quot;strength&quot;: {
-            &quot;numerator&quot;: {
-              &quot;value&quot;: 5,
-              &quot;system&quot;: &quot;http://unitsofmeasure.org&quot;,
-              &quot;code&quot;: &quot;g&quot;
-            },
-            &quot;denominator&quot;: {
-              &quot;value&quot;: 100,
-              &quot;system&quot;: &quot;http://unitsofmeasure.org&quot;,
-              &quot;code&quot;: &quot;mL&quot;
-            }
-          }
-        }
-      ]
+<pre class="prettyprint"><code class="language-json">[ {
+  &quot;sequence&quot; : 1,
+  &quot;text&quot; : &quot;Dopamine 4mcg/kg/min&quot;,
+  &quot;timing&quot; : {
+    &quot;repeat&quot; : {
+      &quot;duration&quot; : 33.33,
+      &quot;durationUnit&quot; : &quot;h&quot;
     }
-  ],
-  &quot;identifier&quot;: [
-    {
-      &quot;use&quot;: &quot;official&quot;,
-      &quot;system&quot;: &quot;http://www.bmc.nl/portal/prescriptions&quot;,
-      &quot;value&quot;: &quot;12345689&quot;
-    }
-  ],
-  &quot;status&quot;: &quot;completed&quot;,
-  &quot;intent&quot;: &quot;order&quot;,
-  &quot;medicationReference&quot;: {
-    &quot;reference&quot;: &quot;#med0336&quot;,
-    &quot;display&quot;: &quot;Dopamine 400mg in 500mL D5W&quot;
   },
-  &quot;subject&quot;: {
-    &quot;reference&quot;: &quot;Patient/pat1&quot;,
-    &quot;display&quot;: &quot;Donald Duck&quot;
+  &quot;route&quot; : {
+    &quot;coding&quot; : [ {
+      &quot;system&quot; : &quot;http://snomed.info/sct&quot;,
+      &quot;code&quot; : &quot;47625008&quot;,
+      &quot;display&quot; : &quot;Intravenous route (qualifier value)&quot;
+    } ]
   },
-  &quot;supportingInformation&quot;: [
-    {
-      &quot;reference&quot;: &quot;Observation/example&quot;
+  &quot;doseAndRate&quot; : [ {
+    &quot;type&quot; : {
+      &quot;coding&quot; : [ {
+        &quot;system&quot; : &quot;http://terminology.hl7.org/CodeSystem/dose-rate-type&quot;,
+        &quot;code&quot; : &quot;ordered&quot;,
+        &quot;display&quot; : &quot;Ordered&quot;
+      } ]
+    },
+    &quot;rateQuantity&quot; : {
+      &quot;value&quot; : 4,
+      &quot;unit&quot; : &quot;ug/kg/min&quot;,
+      &quot;system&quot; : &quot;http://unitsofmeasure.org&quot;
     }
-  ],
-  &quot;authoredOn&quot;: &quot;2015-01-15&quot;,
-  &quot;requester&quot;: {
-    &quot;reference&quot;: &quot;Practitioner/f007&quot;,
-    &quot;display&quot;: &quot;Patrick Pump&quot;
-  },
-  &quot;dosageInstruction&quot;: [
-    {
-      &quot;sequence&quot;: 1,
-      &quot;text&quot;: &quot;Dopamine 4mcg/kg/min&quot;,
-      &quot;timing&quot;: {
-        &quot;repeat&quot;: {
-          &quot;duration&quot;: 33.33,
-          &quot;durationUnit&quot;: &quot;h&quot;
-        }
-      },
-      &quot;route&quot;: {
-        &quot;coding&quot;: [
-          {
-            &quot;system&quot;: &quot;http://snomed.info/sct&quot;,
-            &quot;code&quot;: &quot;47625008&quot;,
-            &quot;display&quot;: &quot;Intravenous route (qualifier value)&quot;
-          }
-        ]
-      },
-      &quot;doseAndRate&quot;: [
-        {
-          &quot;type&quot;: {
-            &quot;coding&quot;: [
-              {
-                &quot;system&quot;: &quot;http://terminology.hl7.org/CodeSystem/dose-rate-type&quot;,
-                &quot;code&quot;: &quot;ordered&quot;,
-                &quot;display&quot;: &quot;Ordered&quot;
-              }
-            ]
-          },
-          &quot;rateQuantity&quot;: {
-            &quot;value&quot;: 4,
-            &quot;unit&quot;: &quot;ug/kg/min&quot;,
-            &quot;system&quot;: &quot;http://unitsofmeasure.org&quot;
-          }
-        }
-      ]
-    }
-  ]
-}</code></pre></td>
+  } ]
+} ]</code></pre></td>
       
 <td>at a rate of 4 ug/kg/min - over 33.33 hours - Intravenous route (qualifier value)</td>
     </tr>

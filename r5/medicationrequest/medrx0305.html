@@ -81,137 +81,64 @@
 <tr class="b">
       
 <td>
-<pre class="prettyprint"><code class="language-json">{
-  &quot;resourceType&quot; : &quot;MedicationRequest&quot;,
-  &quot;id&quot; : &quot;medrx0305&quot;,
-  &quot;text&quot; : {
-    &quot;status&quot; : &quot;generated&quot;,
-    &quot;div&quot; : &quot;&lt;div xmlns=\&quot;http://www.w3.org/1999/xhtml\&quot;&gt;&lt;p&gt;&lt;b&gt;Generated Narrative: MedicationRequest&lt;/b&gt;&lt;a name=\&quot;medrx0305\&quot;&gt; &lt;/a&gt;&lt;/p&gt;&lt;div style=\&quot;display: inline-block; background-color: #d9e0e7; padding: 6px; margin: 4px; border: 1px solid #8da1b4; border-radius: 5px; line-height: 60%\&quot;&gt;&lt;p style=\&quot;margin-bottom: 0px\&quot;&gt;Resource MedicationRequest &amp;quot;medrx0305&amp;quot; &lt;/p&gt;&lt;/div&gt;&lt;p&gt;&lt;b&gt;identifier&lt;/b&gt;: id:\u00a012345689\u00a0(use:\u00a0OFFICIAL)&lt;/p&gt;&lt;p&gt;&lt;b&gt;status&lt;/b&gt;: completed&lt;/p&gt;&lt;p&gt;&lt;b&gt;intent&lt;/b&gt;: order&lt;/p&gt;&lt;h3&gt;Medications&lt;/h3&gt;&lt;table class=\&quot;grid\&quot;&gt;&lt;tr&gt;&lt;td&gt;-&lt;/td&gt;&lt;td&gt;&lt;b&gt;Reference&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;*&lt;/td&gt;&lt;td&gt;&lt;span title=\&quot;  Linked to a RESOURCE Medication  \&quot;&gt;&lt;a name=\&quot;med0314\&quot;&gt; &lt;/a&gt;&lt;/span&gt;&lt;blockquote&gt;&lt;p/&gt;&lt;p&gt;&lt;a name=\&quot;med0314\&quot;&gt; &lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;code&lt;/b&gt;: Alprazolam 0.25mg Oral Tablet &lt;span style=\&quot;background: LightGoldenRodYellow; margin: 4px; border: 1px solid khaki\&quot;&gt; (&lt;a href=\&quot;http://terminology.hl7.org/5.1.0/CodeSystem-v3-rxNorm.html\&quot;&gt;RxNorm&lt;/a&gt;#308047)&lt;/span&gt;&lt;/p&gt;&lt;/blockquote&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;&lt;b&gt;subject&lt;/b&gt;: &lt;a href=\&quot;patient-example-a.html\&quot;&gt;Patient/pat1: Donald Duck&lt;/a&gt; &amp;quot;Donald DUCK&amp;quot;&lt;/p&gt;&lt;p&gt;&lt;b&gt;encounter&lt;/b&gt;: &lt;a href=\&quot;encounter-example-f001-heart.html\&quot;&gt;Encounter/f001: encounter who leads to this prescription&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;authoredOn&lt;/b&gt;: 2015-01-15&lt;/p&gt;&lt;p&gt;&lt;b&gt;requester&lt;/b&gt;: &lt;a href=\&quot;practitioner-example-f007-sh.html\&quot;&gt;Practitioner/f007: Patrick Pump&lt;/a&gt; &amp;quot;Simone HEPS&amp;quot;&lt;/p&gt;&lt;blockquote&gt;&lt;p&gt;&lt;b&gt;dosageInstruction&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;sequence&lt;/b&gt;: 1&lt;/p&gt;&lt;p&gt;&lt;b&gt;text&lt;/b&gt;: 0.25mg PO every 6-12 hours as needed for menses from Jan 15-20, 2015.  Do not exceed more than 4mg per day&lt;/p&gt;&lt;p&gt;&lt;b&gt;additionalInstruction&lt;/b&gt;: Warning. May cause drowsiness. If affected do not drive or operate machinery. Avoid alcoholic drink (qualifier value) &lt;span style=\&quot;background: LightGoldenRodYellow; margin: 4px; border: 1px solid khaki\&quot;&gt; (&lt;a href=\&quot;https://browser.ihtsdotools.org/\&quot;&gt;SNOMED CT&lt;/a&gt;#418914006)&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;timing&lt;/b&gt;: Starting 2015-01-15, Once per 6-12 hours, Until 2015-01-20&lt;/p&gt;&lt;p&gt;&lt;b&gt;asNeededFor&lt;/b&gt;: Dysmenorrhea (disorder) &lt;span style=\&quot;background: LightGoldenRodYellow; margin: 4px; border: 1px solid khaki\&quot;&gt; (&lt;a href=\&quot;https://browser.ihtsdotools.org/\&quot;&gt;SNOMED CT&lt;/a&gt;#266599000)&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;route&lt;/b&gt;: Oral Route &lt;span style=\&quot;background: LightGoldenRodYellow; margin: 4px; border: 1px solid khaki\&quot;&gt; (&lt;a href=\&quot;https://browser.ihtsdotools.org/\&quot;&gt;SNOMED CT&lt;/a&gt;#26643006)&lt;/span&gt;&lt;/p&gt;&lt;blockquote&gt;&lt;p&gt;&lt;b&gt;doseAndRate&lt;/b&gt;&lt;/p&gt;&lt;/blockquote&gt;&lt;p&gt;&lt;b&gt;maxDosePerAdministration&lt;/b&gt;: 4 mg&lt;span style=\&quot;background: LightGoldenRodYellow\&quot;&gt; (Details: UCUM code mg = 'mg')&lt;/span&gt;&lt;/p&gt;&lt;/blockquote&gt;&lt;blockquote&gt;&lt;p&gt;&lt;b&gt;dispenseRequest&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;validityPeriod&lt;/b&gt;: 2015-01-15 --&amp;gt; 2016-01-15&lt;/p&gt;&lt;p&gt;&lt;b&gt;numberOfRepeatsAllowed&lt;/b&gt;: 1&lt;/p&gt;&lt;p&gt;&lt;b&gt;quantity&lt;/b&gt;: 30 TAB&lt;span style=\&quot;background: LightGoldenRodYellow\&quot;&gt; (Details: http://terminology.hl7.org/CodeSystem/v3-orderableDrugForm code TAB = 'Tablet')&lt;/span&gt;&lt;/p&gt;&lt;h3&gt;ExpectedSupplyDurations&lt;/h3&gt;&lt;table class=\&quot;grid\&quot;&gt;&lt;tr&gt;&lt;td&gt;-&lt;/td&gt;&lt;td&gt;&lt;b&gt;Value&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Unit&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;System&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Code&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;*&lt;/td&gt;&lt;td&gt;10&lt;/td&gt;&lt;td&gt;days&lt;/td&gt;&lt;td&gt;&lt;a href=\&quot;http://terminology.hl7.org/5.1.0/CodeSystem-v3-ucum.html\&quot;&gt;Unified Code for Units of Measure (UCUM)&lt;/a&gt;&lt;/td&gt;&lt;td&gt;d&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/blockquote&gt;&lt;h3&gt;Substitutions&lt;/h3&gt;&lt;table class=\&quot;grid\&quot;&gt;&lt;tr&gt;&lt;td&gt;-&lt;/td&gt;&lt;td&gt;&lt;b&gt;Allowed[x]&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Reason&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;*&lt;/td&gt;&lt;td&gt;true&lt;/td&gt;&lt;td&gt;formulary policy &lt;span style=\&quot;background: LightGoldenRodYellow; margin: 4px; border: 1px solid khaki\&quot;&gt; (&lt;a href=\&quot;http://terminology.hl7.org/5.1.0/CodeSystem-v3-ActReason.html\&quot;&gt;ActReason&lt;/a&gt;#FP)&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&quot;
-  },
-  &quot;contained&quot; : [{
-    &quot;resourceType&quot; : &quot;Medication&quot;,
-    &quot;id&quot; : &quot;med0314&quot;,
-    &quot;code&quot; : {
-      &quot;coding&quot; : [{
-        &quot;system&quot; : &quot;http://www.nlm.nih.gov/research/umls/rxnorm&quot;,
-        &quot;code&quot; : &quot;308047&quot;,
-        &quot;display&quot; : &quot;Alprazolam 0.25mg Oral Tablet&quot;
-      }]
-    }
-  }],
-  &quot;identifier&quot; : [{
-    &quot;use&quot; : &quot;official&quot;,
-    &quot;system&quot; : &quot;http://www.bmc.nl/portal/prescriptions&quot;,
-    &quot;value&quot; : &quot;12345689&quot;
-  }],
-  &quot;status&quot; : &quot;completed&quot;,
-  &quot;intent&quot; : &quot;order&quot;,
-  &quot;medication&quot; : {
-    &quot;reference&quot; : {
-      &quot;reference&quot; : &quot;#med0314&quot;
-    }
-  },
-  &quot;subject&quot; : {
-    &quot;reference&quot; : &quot;Patient/pat1&quot;,
-    &quot;display&quot; : &quot;Donald Duck&quot;
-  },
-  &quot;encounter&quot; : {
-    &quot;reference&quot; : &quot;Encounter/f001&quot;,
-    &quot;display&quot; : &quot;encounter who leads to this prescription&quot;
-  },
-  &quot;authoredOn&quot; : &quot;2015-01-15&quot;,
-  &quot;requester&quot; : {
-    &quot;reference&quot; : &quot;Practitioner/f007&quot;,
-    &quot;display&quot; : &quot;Patrick Pump&quot;
-  },
-  &quot;dosageInstruction&quot; : [{
-    &quot;sequence&quot; : 1,
-    &quot;text&quot; : &quot;0.25mg PO every 6-12 hours as needed for menses from Jan 15-20, 2015.  Do not exceed more than 4mg per day&quot;,
-    &quot;additionalInstruction&quot; : [{
-      &quot;coding&quot; : [{
-        &quot;system&quot; : &quot;http://snomed.info/sct&quot;,
-        &quot;code&quot; : &quot;418914006&quot;,
-        &quot;display&quot; : &quot;Warning. May cause drowsiness. If affected do not drive or operate machinery. Avoid alcoholic drink (qualifier value)&quot;
-      }]
-    }],
-    &quot;timing&quot; : {
-      &quot;repeat&quot; : {
-        &quot;boundsPeriod&quot; : {
-          &quot;start&quot; : &quot;2015-01-15&quot;,
-          &quot;end&quot; : &quot;2015-01-20&quot;
-        },
-        &quot;frequency&quot; : 1,
-        &quot;period&quot; : 6,
-        &quot;periodMax&quot; : 12,
-        &quot;periodUnit&quot; : &quot;h&quot;
-      }
-    },
-    &quot;asNeededFor&quot; : [{
-      &quot;coding&quot; : [{
-        &quot;system&quot; : &quot;http://snomed.info/sct&quot;,
-        &quot;code&quot; : &quot;266599000&quot;,
-        &quot;display&quot; : &quot;Dysmenorrhea (disorder)&quot;
-      }]
-    }],
-    &quot;route&quot; : {
-      &quot;coding&quot; : [{
-        &quot;system&quot; : &quot;http://snomed.info/sct&quot;,
-        &quot;code&quot; : &quot;26643006&quot;,
-        &quot;display&quot; : &quot;Oral Route&quot;
-      }]
-    },
-    &quot;doseAndRate&quot; : [{
-      &quot;type&quot; : {
-        &quot;coding&quot; : [{
-          &quot;system&quot; : &quot;http://terminology.hl7.org/CodeSystem/dose-rate-type&quot;,
-          &quot;code&quot; : &quot;ordered&quot;,
-          &quot;display&quot; : &quot;Ordered&quot;
-        }]
+<pre class="prettyprint"><code class="language-json">[ {
+  &quot;sequence&quot; : 1,
+  &quot;text&quot; : &quot;0.25mg PO every 6-12 hours as needed for menses from Jan 15-20, 2015.  Do not exceed more than 4mg per day&quot;,
+  &quot;additionalInstruction&quot; : [ {
+    &quot;coding&quot; : [ {
+      &quot;system&quot; : &quot;http://snomed.info/sct&quot;,
+      &quot;code&quot; : &quot;418914006&quot;,
+      &quot;display&quot; : &quot;Warning. May cause drowsiness. If affected do not drive or operate machinery. Avoid alcoholic drink (qualifier value)&quot;
+    } ]
+  } ],
+  &quot;timing&quot; : {
+    &quot;repeat&quot; : {
+      &quot;boundsPeriod&quot; : {
+        &quot;start&quot; : &quot;2015-01-15&quot;,
+        &quot;end&quot; : &quot;2015-01-20&quot;
       },
-      &quot;doseQuantity&quot; : {
-        &quot;value&quot; : 1,
-        &quot;unit&quot; : &quot;TAB&quot;,
-        &quot;system&quot; : &quot;http://terminology.hl7.org/CodeSystem/v3-orderableDrugForm&quot;,
-        &quot;code&quot; : &quot;TAB&quot;
-      }
-    }],
-    &quot;maxDosePerAdministration&quot; : {
-      &quot;value&quot; : 4,
-      &quot;unit&quot; : &quot;mg&quot;,
-      &quot;system&quot; : &quot;http://unitsofmeasure.org&quot;,
-      &quot;code&quot; : &quot;mg&quot;
+      &quot;frequency&quot; : 1,
+      &quot;period&quot; : 6,
+      &quot;periodMax&quot; : 12,
+      &quot;periodUnit&quot; : &quot;h&quot;
     }
-  }],
-  &quot;dispenseRequest&quot; : {
-    &quot;validityPeriod&quot; : {
-      &quot;start&quot; : &quot;2015-01-15&quot;,
-      &quot;end&quot; : &quot;2016-01-15&quot;
+  },
+  &quot;asNeededFor&quot; : [ {
+    &quot;coding&quot; : [ {
+      &quot;system&quot; : &quot;http://snomed.info/sct&quot;,
+      &quot;code&quot; : &quot;266599000&quot;,
+      &quot;display&quot; : &quot;Dysmenorrhea (disorder)&quot;
+    } ]
+  } ],
+  &quot;route&quot; : {
+    &quot;coding&quot; : [ {
+      &quot;system&quot; : &quot;http://snomed.info/sct&quot;,
+      &quot;code&quot; : &quot;26643006&quot;,
+      &quot;display&quot; : &quot;Oral Route&quot;
+    } ]
+  },
+  &quot;doseAndRate&quot; : [ {
+    &quot;type&quot; : {
+      &quot;coding&quot; : [ {
+        &quot;system&quot; : &quot;http://terminology.hl7.org/CodeSystem/dose-rate-type&quot;,
+        &quot;code&quot; : &quot;ordered&quot;,
+        &quot;display&quot; : &quot;Ordered&quot;
+      } ]
     },
-    &quot;numberOfRepeatsAllowed&quot; : 1,
-    &quot;quantity&quot; : {
-      &quot;value&quot; : 30,
+    &quot;doseQuantity&quot; : {
+      &quot;value&quot; : 1,
       &quot;unit&quot; : &quot;TAB&quot;,
       &quot;system&quot; : &quot;http://terminology.hl7.org/CodeSystem/v3-orderableDrugForm&quot;,
       &quot;code&quot; : &quot;TAB&quot;
-    },
-    &quot;expectedSupplyDuration&quot; : {
-      &quot;value&quot; : 10,
-      &quot;unit&quot; : &quot;days&quot;,
-      &quot;system&quot; : &quot;http://unitsofmeasure.org&quot;,
-      &quot;code&quot; : &quot;d&quot;
     }
-  },
-  &quot;substitution&quot; : {
-    &quot;allowedBoolean&quot; : true,
-    &quot;reason&quot; : {
-      &quot;coding&quot; : [{
-        &quot;system&quot; : &quot;http://terminology.hl7.org/CodeSystem/v3-ActReason&quot;,
-        &quot;code&quot; : &quot;FP&quot;,
-        &quot;display&quot; : &quot;formulary policy&quot;
-      }]
-    }
+  } ],
+  &quot;maxDosePerAdministration&quot; : {
+    &quot;value&quot; : 4,
+    &quot;unit&quot; : &quot;mg&quot;,
+    &quot;system&quot; : &quot;http://unitsofmeasure.org&quot;,
+    &quot;code&quot; : &quot;mg&quot;
   }
-}</code></pre></td>
+} ]</code></pre></td>
       
 <td>1 TAB - 1 time every 6 to 12  hours - Oral Route - as required for Dysmenorrhea (disorder) - from Jan 15, 2015 to Jan 20, 2015 - up to a maximum of 4 mg per dose - Warning. May cause drowsiness. If affected do not drive or operate machinery. Avoid alcoholic drink (qualifier value)</td>
     </tr>
