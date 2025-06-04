@@ -1,0 +1,10 @@
+{
+  "timing": {
+    "repeat": {
+      "frequency": 3,
+      "frequencyMax": 4,
+      "period": 1,
+      "periodUnit": "d"
+    }
+  }
+}

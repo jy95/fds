@@ -1,0 +1,12 @@
+{
+  "timing": {
+    "repeat": {
+      "duration": 5,
+      "durationUnit": "min",
+      "when": [
+        "AC"
+      ],
+      "offset": 10
+    }
+  }
+}

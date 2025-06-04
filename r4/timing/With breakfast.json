@@ -1,0 +1,9 @@
+{
+  "timing": {
+    "repeat": {
+      "when": [
+        "CM"
+      ]
+    }
+  }
+}

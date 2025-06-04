@@ -1,0 +1,11 @@
+{
+  "timing": {
+    "repeat": {
+      "duration": 0.5,
+      "durationUnit": "h",
+      "frequency": 3,
+      "period": 1,
+      "periodUnit": "wk"
+    }
+  }
+}

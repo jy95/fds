@@ -1,0 +1,21 @@
+{
+  "doseAndRate": [
+    {
+      "doseQuantity": {
+        "value": 1,
+        "unit": "tablet"
+      }
+    }
+  ],
+  "timing": {
+    "repeat": {
+      "frequency": 3,
+      "period": 1,
+      "periodUnit": "d",
+      "when": [
+        "AC"
+      ],
+      "offset": 30
+    }
+  }
+}
