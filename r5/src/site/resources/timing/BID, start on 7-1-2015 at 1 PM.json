@@ -1,0 +1,12 @@
+{
+  "timing": {
+    "repeat": {
+      "frequency": 2,
+      "period": 1,
+      "periodUnit": "d",
+      "boundsPeriod": {
+        "start": "2015-07-01T13:00:00"
+      }
+    }
+  }
+}

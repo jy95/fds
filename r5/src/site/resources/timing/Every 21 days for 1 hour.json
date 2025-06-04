@@ -1,0 +1,11 @@
+{
+  "timing": {
+    "repeat": {
+      "duration": 1,
+      "durationUnit": "h",
+      "frequency": 1,
+      "period": 21,
+      "periodUnit": "d"
+    }
+  }
+}
