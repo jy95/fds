@@ -1,0 +1,18 @@
+{
+  "timing": {
+    "repeat": {
+      "frequency": 2,
+      "period": 1,
+      "periodUnit": "d",
+      "when": [
+        "AC"
+      ],
+      "offset": 30,
+      "boundsDuration": {
+        "value": 10,
+        "code": "d",
+        "system": "http://hl7.org/fhir/ValueSet/duration-units"
+      }
+    }
+  }
+}

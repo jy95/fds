@@ -1,0 +1,14 @@
+{
+  "timing": {
+    "repeat": {
+      "frequency": 3,
+      "period": 1,
+      "periodUnit": "d",
+      "boundsDuration": {
+        "value": 14,
+        "code": "d",
+        "system": "http://hl7.org/fhir/ValueSet/duration-units"
+      }
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "timing": {
+    "repeat": {
+      "frequency": 1,
+      "period": 1,
+      "periodUnit": "d",
+      "dayOfWeek": [
+        "mon",
+        "wed",
+        "fri"
+      ],
+      "when": [
+        "MORN"
+      ]
+    }
+  }
+}

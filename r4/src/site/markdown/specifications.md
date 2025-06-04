@@ -1,7 +1,7 @@
-keywords: roadmap, demo, example
-description: Examples
+keywords: roadmap, demo, example, specifications
+description: Specifications
 
-# Examples
+# 🔎 Specifications
 
 * [`text`](specs/text.html)
 * [`additionalInstruction`](specs/additionalInstruction.html)

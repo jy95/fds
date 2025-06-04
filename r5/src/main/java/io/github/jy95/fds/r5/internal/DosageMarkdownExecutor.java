@@ -22,13 +22,13 @@ import java.util.stream.Stream;
  */
 public class DosageMarkdownExecutor {
 
+    private final static String BASE_PATH = new File("").getAbsolutePath();
+    private final static String ROOT_PATH = "r5";
+
     /**
      * A custom implementation for the specification examples
      */
     static class SpecsR5 extends DosageMarkdownR5 {
-
-        private final String BASE_PATH = new File("").getAbsolutePath();
-        private final String ROOT_PATH = "r5";
 
         @Override
         public Path getResourcesDir() {
@@ -72,6 +72,18 @@ public class DosageMarkdownExecutor {
         }
     }
 
+    static class TimingR5 extends SpecsR5 {
+        @Override
+        public Path getResourcesDir() {
+            return Paths.get(BASE_PATH,ROOT_PATH, "src", "site", "resources", "timing");
+        }
+
+        @Override
+        public Path getBaseOutputDir(Locale locale) {
+            return Paths.get(BASE_PATH,ROOT_PATH, "src", "site", "markdown", "timing");
+        }
+    }
+
     /**
      * <p>main.</p>
      *
@@ -81,5 +93,7 @@ public class DosageMarkdownExecutor {
     public static void main(String[] args) throws Exception {
         var specsExamples = new SpecsR5();
         specsExamples.generateMarkdown();
+        var timingExamples = new TimingR5();
+        timingExamples.generateMarkdown();
     }
 }
