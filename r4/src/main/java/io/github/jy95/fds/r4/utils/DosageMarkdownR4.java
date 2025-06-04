@@ -72,7 +72,7 @@ public class DosageMarkdownR4 implements DosageMarkdown<DosageAPIR4, Dosage> {
         // Inject dosage data into the template
         workingCopy.set("dosageInstruction", dosageArray);
 
-        // Convert back to MedicationKnowledge
+        // Convert back to MedicationRequest
         String finalJson = MAPPER.writeValueAsString(workingCopy);
         MedicationRequest mr = JSON_PARSER.parseResource(MedicationRequest.class, finalJson);
 
