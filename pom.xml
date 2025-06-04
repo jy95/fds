@@ -51,7 +51,7 @@
     <properties>
         <lib.name>FHIR Dosage Support</lib.name>
         <!-- https://maven.apache.org/guides/mini/guide-maven-ci-friendly.html -->
-        <revision>1.0.6-SNAPSHOT</revision>
+        <revision>1.0.6</revision>
         <java.version>11</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <lombok.version>1.18.38</lombok.version>
