@@ -10,7 +10,7 @@ def main():
     parser.add_argument('--tgt-lang', required=True, help='Target language code')
     args = parser.parse_args()
 
-    TRANSLATE_URL = "https://libretranslate.de/translate"
+    TRANSLATE_URL = "https://libretranslate.com/translate"
 
     pattern = os.path.join(args.src_dir, f"*_en.properties")
     for path in glob.glob(pattern):
