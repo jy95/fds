@@ -20,6 +20,10 @@ categories:
   - it-development
 developmentStatus: stable
 softwareType: library
+intendedAudience:
+  scope:
+    - healthcare
+    - science-and-technology
 description:
   en:
     shortDescription: Turn FHIR Dosage into human-readable text in your desired
@@ -38,12 +42,10 @@ maintenance:
   type: community
   contacts:
     - name: Jacques Yakoub
-  contacts:
-    - name: Jacques Yakoub
-  contacts:
-    - name: Jacques Yakoub
 localisation:
   localisationReady: true
   availableLanguages:
+    - en
+    - fr
     - nl
     - de
