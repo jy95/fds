@@ -1,0 +1,55 @@
+publiccodeYmlVersion: 0.4.0
+name: FHIR Dosage Support
+url: "https://github.com/jy95/fds"
+landingURL: "https://jy95.github.io/fds/"
+softwareVersion: "1.0.6"
+releaseDate: "2025-06-04"
+logo: "src/site/resources/images/logo.png"
+platforms:
+  - web
+  - windows
+  - mac
+  - linux
+  - ios
+  - android
+categories:
+  - translation
+  - application-development
+  - communications
+  - data-visualization
+  - it-development
+roadmap: "https://github.com/users/jy95/projects/1/views/1"
+developmentStatus: stable
+softwareType: library
+intendedAudience:
+  scope:
+    - healthcare
+    - science-and-technology
+description:
+  en:
+    shortDescription: Turn FHIR Dosage into human-readable text in your desired
+      language (English, French, Dutch, German, ...) and much more.
+    longDescription: |
+      Convert medical dosage data into clear, human-readable instructions, improving communication between healthcare providers and patients.
+      The library helps reduce errors, support multilingual communication, and adapt to regional practices — making it a reliable solution for digital health applications & servers.
+    features:
+      - Translates dosage instructions into clear, understandable text for patients and professionals
+      - Integrates seamlessly with electronic health records (EHRs) and ePrescription tools
+      - Facilitates consistent communication of medication instructions across healthcare platforms
+      - Helps developers build multilingual healthcare apps and services with trusted dosage explanations
+      - Easily adaptable to national prescribing guidelines and local healthcare terminology
+      - Highly customizable to reflect institutional preferences and formatting standards
+legal:
+  license: Apache-2.0
+  mainCopyrightOwner: Jacques Yakoub
+maintenance:
+  type: community
+  contacts:
+    - name: Jacques Yakoub
+localisation:
+  localisationReady: true
+  availableLanguages:
+    - en
+    - fr
+    - nl
+    - de
