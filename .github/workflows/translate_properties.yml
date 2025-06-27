@@ -1,0 +1,31 @@
+name: Translate Properties Files
+
+on:
+  workflow_dispatch:
+    inputs:
+      tgt_lang:
+        description: 'Target language code (e.g., fr, de, es)'
+        required: true
+
+jobs:
+  translate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: pip install requests
+      - name: Translate _en.properties files
+        run: |
+          python scripts/translate_properties.py --tgt-lang "${{ github.event.inputs.tgt_lang }}"
+        env:
+          SRC_DIR: common/src/main/resources
+      - name: Commit and push translated files
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Add translated properties files (${{ github.event.inputs.tgt_lang }})"
+          file_pattern: 'common/src/main/resources/*_${{ github.event.inputs.tgt_lang }}.properties'
