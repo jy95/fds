@@ -72,8 +72,8 @@ jobs:
           cache: 'pip'
       - name: Install dependencies
         run: | 
-          pip install requests
           pip install argostranslate
+          pip install javaproperties
       - name: Translate _en.properties files
         run: |
           python scripts/translate_properties.py --tgt-lang "${{ github.event.inputs.tgt_lang }}"
