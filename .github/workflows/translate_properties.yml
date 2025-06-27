@@ -70,17 +70,18 @@ jobs:
         with:
           python-version: '3.12'
           cache: 'pip'
-      - name: Install dependencies
+      - name: ☕ Install dependencies
         run: | 
           pip install argostranslate
           pip install javaproperties
-      - name: Translate _en.properties files
+      - name: 🤖 Translate _en.properties files
         run: |
           python scripts/translate_properties.py --tgt-lang "${{ github.event.inputs.tgt_lang }}"
         env:
           SRC_DIR: common/src/main/resources
-      - name: Commit and push translated files
-        uses: stefanzweifel/git-auto-commit-action@v5
+      - name: 💅 Commit and push translated files
+        uses: peter-evans/create-pull-request@v7.0.8
         with:
-          commit_message: "Add translated properties files (${{ github.event.inputs.tgt_lang }})"
-          file_pattern: 'common/src/main/resources/*_${{ github.event.inputs.tgt_lang }}.properties'
+          title: "Add translated properties files (${{ github.event.inputs.tgt_lang }})"
+          branch: "automated/translator-${{github.event.inputs.tgt_lang}}-${{ github.run_id }}"
+          base: main
