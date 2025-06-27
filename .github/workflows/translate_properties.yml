@@ -4,8 +4,60 @@ on:
   workflow_dispatch:
     inputs:
       tgt_lang:
-        description: 'Target language code (e.g., fr, de, es)'
+        description: 'Target language (must be supported by argostranslate)'
         required: true
+        type: choice
+        options:
+          - ar
+          - az
+          - bg
+          - bn
+          - ca
+          - cs
+          - da
+          - de
+          - el
+          - en
+          - eo
+          - es
+          - et
+          - eu
+          - fa
+          - fi
+          - fr
+          - ga
+          - gl
+          - he
+          - hi
+          - hu
+          - id
+          - it
+          - ja
+          - ko
+          - ky
+          - lt
+          - lv
+          - ms
+          - nb
+          - nl
+          - pt-BR
+          - pl
+          - pt
+          - ro
+          - ru
+          - sk
+          - sl
+          - sq
+          - sr
+          - sv
+          - th
+          - tl
+          - tr
+          - uk
+          - ur
+          - vi
+          - zh-Hans
+          - zh-Hant
 
 jobs:
   translate:
