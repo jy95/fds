@@ -1,0 +1,2 @@
+argostranslate == 1.9.6
+javaproperties == 0.8.2
