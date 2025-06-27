@@ -3,32 +3,16 @@ import glob
 import argparse
 import argostranslate.package
 import argostranslate.translate
-import urllib.request
-
-MODEL_BASE_URL = "https://argosopentech.nyc3.digitaloceanspaces.com/argospm/packages"
 
 def ensure_model_installed(src_lang, tgt_lang):
-    installed_languages = argostranslate.translate.get_installed_languages()
-    from_lang = next((lang for lang in installed_languages if lang.code == src_lang), None)
-    to_lang = next((lang for lang in installed_languages if lang.code == tgt_lang), None)
-
-    if from_lang and to_lang:
-        return
-
-    # Download and install model
-    model_filename = f"{src_lang}_{tgt_lang}.argosmodel"
-    model_url = f"{MODEL_BASE_URL}/{model_filename}"
-    local_path = os.path.join("/tmp", model_filename)
-
-    print(f"Téléchargement du modèle de traduction {src_lang}->{tgt_lang}...")
-    urllib.request.urlretrieve(model_url, local_path)
-    argostranslate.package.install_from_path(local_path)
-
-def get_translator(src_lang, tgt_lang):
-    installed_languages = argostranslate.translate.get_installed_languages()
-    from_lang = next(lang for lang in installed_languages if lang.code == src_lang)
-    to_lang = next(lang for lang in installed_languages if lang.code == tgt_lang)
-    return from_lang.get_translation(to_lang)
+    argostranslate.package.update_package_index()
+    available_packages = argostranslate.package.get_available_packages()
+    package_to_install = next(
+        filter(
+            lambda x: x.from_code == src_lang and x.to_code == tgt_lang, available_packages
+        )
+    )
+    argostranslate.package.install_from_path(package_to_install.download())
 
 def main():
     parser = argparse.ArgumentParser(description="Translate .properties files using Argos Translate.")
@@ -38,7 +22,6 @@ def main():
     args = parser.parse_args()
 
     ensure_model_installed(args.src_lang, args.tgt_lang)
-    translator = get_translator(args.src_lang, args.tgt_lang)
 
     pattern = os.path.join(args.src_dir, f"*_en.properties")
     for path in glob.glob(pattern):
@@ -48,7 +31,7 @@ def main():
             for line in src:
                 if "=" in line and not line.strip().startswith("#"):
                     k, v = line.split("=", 1)
-                    v_trans = translator.translate(v.strip())
+                    v_trans = argostranslate.translate.translate(v.strip(), args.src_lang, args.tgt_lang)
                     out_lines.append(f"{k}={v_trans}\n")
                 else:
                     out_lines.append(line)
