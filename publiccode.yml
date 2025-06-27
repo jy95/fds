@@ -33,9 +33,12 @@ description:
       text. The library is used in clinical applications, mobile health
       solutions and backend services to present dosage instructions to end-users.
     features:
-      - Render dosage instructions in English, French, Dutch and German
-      - Pluggable translation layer to add new languages easily
-      - Supports simple, repeating and complex dosage definitions
+      - Translates dosage instructions into clear, understandable text for patients and professionals
+      - Integrates seamlessly with electronic health records (EHRs) and ePrescription tools
+      - Facilitates consistent communication of medication instructions across healthcare platforms
+      - Helps developers build multilingual healthcare apps and services with trusted dosage explanations
+      - Easily adaptable to national prescribing guidelines and local healthcare terminology
+      - Highly customizable to reflect institutional preferences and formatting standards
 legal:
   license: Apache-2.0
 maintenance:
