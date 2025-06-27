@@ -38,6 +38,8 @@ maintenance:
   type: community
   contacts:
     - name: Jacques Yakoub
+  contacts:
+    - name: Jacques Yakoub
 localisation:
   localisationReady: true
   availableLanguages:
