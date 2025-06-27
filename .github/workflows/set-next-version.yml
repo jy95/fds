@@ -47,6 +47,10 @@ jobs:
       - name: 🤖 Update softwareVersion in publiccode.yml
         run: |
           sed -i "s/^softwareVersion: .*/softwareVersion: \"${{ needs.extract_version.outputs.next_patch }}\"/" publiccode.yml
+      - name: 🤖 Update releaseDate in publiccode.yml
+        run: |
+          today=$(date +'%Y-%m-%d')
+          sed -i "s/^releaseDate: .*/releaseDate: \"$today\"/" publiccode.yml 
       - name: 💅 Create Pull Request
         uses: peter-evans/create-pull-request@v7.0.8
         with:
