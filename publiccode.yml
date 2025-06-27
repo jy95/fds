@@ -1,0 +1,40 @@
+publiccodeYmlVersion: 0.4.0
+name: FHIR Dosage Support
+url: https://github.com/jy95/fds
+landingURL: https://jy95.github.io/fds/
+softwareVersion: 1.0.6
+releaseDate: 2025-06-04
+logo: https://raw.githubusercontent.com/jy95/fds/refs/heads/main/src/site/resources/images/logo.png
+platforms:
+  - web
+  - windows
+  - mac
+  - linux
+  - ios
+  - android
+categories:
+  - translation
+  - application-development
+  - communications
+  - data-visualization
+  - it-development
+developmentStatus: stable
+softwareType: library
+description:
+  en:
+    shortDescription: Turn FHIR Dosage into human-readable text in your desired
+      language (English, French, Dutch, German, ...) and much more.
+    longDescription: TODO
+    features:
+      - TODO
+legal:
+  license: Apache-2.0
+maintenance:
+  type: community
+localisation:
+  localisationReady: true
+  availableLanguages:
+    - en
+    - fr
+    - nl
+    - de
