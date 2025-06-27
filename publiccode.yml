@@ -40,10 +40,10 @@ maintenance:
     - name: Jacques Yakoub
   contacts:
     - name: Jacques Yakoub
+  contacts:
+    - name: Jacques Yakoub
 localisation:
   localisationReady: true
   availableLanguages:
-    - en
-    - fr
     - nl
     - de
