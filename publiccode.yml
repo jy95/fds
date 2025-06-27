@@ -29,9 +29,8 @@ description:
     shortDescription: Turn FHIR Dosage into human-readable text in your desired
       language (English, French, Dutch, German, ...) and much more.
     longDescription: |
-      Converts FHIR Dosage resources into concise, localised, human-readable
-      text. The library is used in clinical applications, mobile health
-      solutions and backend services to present dosage instructions to end-users.
+      Convert medical dosage data into clear, human-readable instructions, improving communication between healthcare providers and patients.
+      The library helps reduce errors, support multilingual communication, and adapt to regional practices — making it a reliable solution for digital health applications & servers.
     features:
       - Translates dosage instructions into clear, understandable text for patients and professionals
       - Integrates seamlessly with electronic health records (EHRs) and ePrescription tools
