@@ -41,9 +41,12 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
           cache: 'maven'
-      - name: Update Maven POM
+      - name: 🤖 Update Maven POM
         run: |
           mvn versions:set-property -Dproperty=revision -DnewVersion=${{ needs.extract_version.outputs.next_patch }}-SNAPSHOT -DgenerateBackupPoms=false
+      - name: 🤖 Update softwareVersion in publiccode.yml
+        run: |
+          sed -i "s/^softwareVersion: .*/softwareVersion: \"${{ needs.extract_version.outputs.next_patch }}\"/" publiccode.yml
       - name: 💅 Create Pull Request
         uses: peter-evans/create-pull-request@v7.0.8
         with:
