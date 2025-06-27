@@ -4,7 +4,7 @@ url: https://github.com/jy95/fds
 landingURL: https://jy95.github.io/fds/
 softwareVersion: 1.0.6
 releaseDate: 2025-06-04
-logo: https://raw.githubusercontent.com/jy95/fds/refs/heads/main/src/site/resources/images/logo.png
+logo: https://raw.githubusercontent.com/jy95/fds/main/src/site/resources/images/logo.png
 platforms:
   - web
   - windows
