@@ -36,6 +36,8 @@ legal:
   license: Apache-2.0
 maintenance:
   type: community
+  contacts:
+    - name: Jacques Yakoub
 localisation:
   localisationReady: true
   availableLanguages:
