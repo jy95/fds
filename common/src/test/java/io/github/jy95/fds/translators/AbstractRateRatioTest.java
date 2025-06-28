@@ -72,6 +72,9 @@ public abstract class AbstractRateRatioTest<C extends FDSConfig, D> extends Abst
     private String getExpectedText2(Locale locale) {
         if (locale.equals(Locale.ENGLISH)) {
             return "at a rate of 10 ml";
+        }
+        else if (locale.equals(Locale.forLanguageTag("it"))) {
+            return "a una velocità di 10 ml";
         } else if (locale.equals(Locale.FRENCH)) {
             return "au taux de 10 ml";
         } else if (locale.equals(Locale.GERMAN)) {
@@ -96,6 +99,9 @@ public abstract class AbstractRateRatioTest<C extends FDSConfig, D> extends Abst
     private String getExpectedText3(Locale locale) {
         if (locale.equals(Locale.ENGLISH)) {
             return "at a rate of 10 mg per ml";
+        }
+        else if (locale.equals(Locale.forLanguageTag("it"))) {
+            return "a un tasso di 10 mg per ml";
         } else if (locale.equals(Locale.FRENCH)) {
             return "au taux de 10 mg par ml";
         } else if (locale.equals(Locale.GERMAN)) {
@@ -120,6 +126,9 @@ public abstract class AbstractRateRatioTest<C extends FDSConfig, D> extends Abst
     private String getExpectedText4(Locale locale) {
         if (locale.equals(Locale.ENGLISH)) {
             return "at a rate of 1 : 128";
+        }
+        else if (locale.equals(Locale.forLanguageTag("it"))) {
+            return "a tasso 1 : 128";
         } else if (locale.equals(Locale.FRENCH)) {
             return "au taux de 1 : 128";
         } else if (locale.equals(Locale.GERMAN)) {
@@ -144,6 +153,9 @@ public abstract class AbstractRateRatioTest<C extends FDSConfig, D> extends Abst
     private String getExpectedText5(Locale locale) {
         if (locale.equals(Locale.ENGLISH)) {
             return "at a rate of 10 mg every 2 ml";
+        }
+        else if (locale.equals(Locale.forLanguageTag("it"))) {
+            return "ad un tasso di 10 mg ogni 2 ml";
         } else if (locale.equals(Locale.FRENCH)) {
             return "au taux de 10 mg chaque 2 ml";
         } else if (locale.equals(Locale.GERMAN)) {

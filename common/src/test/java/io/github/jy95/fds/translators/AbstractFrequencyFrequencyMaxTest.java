@@ -38,6 +38,9 @@ public abstract class AbstractFrequencyFrequencyMaxTest<C extends FDSConfig, D> 
     private String getExpectedText1(Locale locale) {
         if (locale.equals(Locale.ENGLISH)) {
             return "3 times";
+        }
+        else if (locale.equals(Locale.forLanguageTag("it"))) {
+            return "3 volte";
         } else if (locale.equals(Locale.FRENCH)) {
             return "3 fois";
         } else if (locale.equals(Locale.GERMAN)) {
@@ -62,6 +65,9 @@ public abstract class AbstractFrequencyFrequencyMaxTest<C extends FDSConfig, D> 
     private String getExpectedText2(Locale locale) {
         if (locale.equals(Locale.ENGLISH)) {
             return "up to 3 times";
+        }
+        else if (locale.equals(Locale.forLanguageTag("it"))) {
+            return "fino a 3 volte";
         } else if (locale.equals(Locale.FRENCH)) {
             return "jusqu'à 3 fois";
         } else if (locale.equals(Locale.GERMAN)) {
@@ -86,6 +92,9 @@ public abstract class AbstractFrequencyFrequencyMaxTest<C extends FDSConfig, D> 
     private String getExpectedText3(Locale locale) {
         if (locale.equals(Locale.ENGLISH)) {
             return "3-5 times";
+        }
+        else if (locale.equals(Locale.forLanguageTag("it"))) {
+            return "3-5 volte";
         } else if (locale.equals(Locale.FRENCH)) {
             return "3-5 fois";
         } else if (locale.equals(Locale.GERMAN)) {

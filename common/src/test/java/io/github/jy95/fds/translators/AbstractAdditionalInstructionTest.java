@@ -50,6 +50,9 @@ public abstract class AbstractAdditionalInstructionTest<C extends FDSConfig, D> 
     protected String getExpectedMultipleAdditionalInstruction(Locale locale) {
         if (locale.equals(Locale.ENGLISH)) {
             return "Instruction 1 and Instruction 2";
+        }
+        else if (locale.equals(Locale.forLanguageTag("it"))) {
+            return "Istruzione 1 e Istruzione 2";
         } else if (locale.equals(Locale.FRENCH)) {
             return "Instruction 1 et Instruction 2";
         } else if (locale.equals(Locale.GERMAN)) {

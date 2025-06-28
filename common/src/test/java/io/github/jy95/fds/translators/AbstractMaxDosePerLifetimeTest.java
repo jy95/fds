@@ -37,6 +37,9 @@ public abstract class AbstractMaxDosePerLifetimeTest<C extends FDSConfig, D> ext
     private String getExpectedText(Locale locale) {
         if (locale.equals(Locale.ENGLISH)) {
             return "up to a maximum of 50 mg for the lifetime of the patient";
+        }
+        else if (locale.equals(Locale.forLanguageTag("it"))) {
+            return "fino a un massimo di 50 mg per la vita del paziente";
         } else if (locale.equals(Locale.FRENCH)) {
             return "jusqu’à un maximum de 50 mg pour la durée de vie du patient";
         } else if (locale.equals(Locale.GERMAN)) {

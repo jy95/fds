@@ -99,6 +99,9 @@ public abstract class AbstractBoundsRangeTest<C extends FDSConfig, D> extends Ab
     private static String getExpectedText1(Locale locale) {
         if (locale.equals(Locale.ENGLISH)) {
             return "for 1 to 3";
+        }
+        else if (locale.equals(Locale.forLanguageTag("it"))) {
+            return "da 1 a 3";
         } else if (locale.equals(Locale.FRENCH)) {
             return "pour 1 à 3";
         } else if (locale.equals(Locale.GERMAN)) {
@@ -112,6 +115,9 @@ public abstract class AbstractBoundsRangeTest<C extends FDSConfig, D> extends Ab
     private String getExpectedText2(Locale locale) {
         if (locale.equals(Locale.ENGLISH)) {
             return "for 1 to 3 days";
+        }
+        else if (locale.equals(Locale.forLanguageTag("it"))) {
+            return "da 1 a 3 giorni";
         } else if (locale.equals(Locale.FRENCH)) {
             return "pour 1 à 3 jours";
         } else if (locale.equals(Locale.GERMAN)) {
@@ -125,6 +131,9 @@ public abstract class AbstractBoundsRangeTest<C extends FDSConfig, D> extends Ab
     private String getExpectedText3(Locale locale) {
         if (locale.equals(Locale.ENGLISH)) {
             return "for up to 3";
+        }
+        else if (locale.equals(Locale.forLanguageTag("it"))) {
+            return "fino a 3";
         } else if (locale.equals(Locale.FRENCH)) {
             return "pour 3 maximum";
         } else if (locale.equals(Locale.GERMAN)) {
@@ -138,6 +147,9 @@ public abstract class AbstractBoundsRangeTest<C extends FDSConfig, D> extends Ab
     private String getExpectedText4(Locale locale) {
         if (locale.equals(Locale.ENGLISH)) {
             return "for up to 3 days";
+        }
+        else if (locale.equals(Locale.forLanguageTag("it"))) {
+            return "fino a 3 giorni";
         } else if (locale.equals(Locale.FRENCH)) {
             return "pour 3 jours maximum";
         } else if (locale.equals(Locale.GERMAN)) {
@@ -151,6 +163,9 @@ public abstract class AbstractBoundsRangeTest<C extends FDSConfig, D> extends Ab
     private String getExpectedText5(Locale locale) {
         if (locale.equals(Locale.ENGLISH)) {
             return "for at least 3";
+        }
+        else if (locale.equals(Locale.forLanguageTag("it"))) {
+            return "per almeno 3";
         } else if (locale.equals(Locale.FRENCH)) {
             return "pour au moins 3";
         } else if (locale.equals(Locale.GERMAN)) {
@@ -164,6 +179,9 @@ public abstract class AbstractBoundsRangeTest<C extends FDSConfig, D> extends Ab
     private String getExpectedText6(Locale locale) {
         if (locale.equals(Locale.ENGLISH)) {
             return "for at least 3 days";
+        }
+        else if (locale.equals(Locale.forLanguageTag("it"))) {
+            return "per almeno 3 giorni";
         } else if (locale.equals(Locale.FRENCH)) {
             return "pour au moins 3 jours";
         } else if (locale.equals(Locale.GERMAN)) {
