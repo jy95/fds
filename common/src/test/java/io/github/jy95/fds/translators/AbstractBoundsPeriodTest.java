@@ -62,7 +62,7 @@ public abstract class AbstractBoundsPeriodTest<C extends FDSConfig, D> extends A
     private static String getExpectedText1(Locale locale) {
         if (locale.equals(Locale.ENGLISH)) {
             return "from May 23, 2011 to May 27, 2011";
-        } else if (locale.equals(Locale.FRENCH)) {
+        } else if (locale.equals(Locale.forLanguageTag("it"))) { return "dal 23 maggio 2011 al 27 maggio 2011"; } else if (locale.equals(Locale.FRENCH)) {
             return "du 23 mai 2011 au 27 mai 2011";
         } else if (locale.equals(Locale.GERMAN)) {
             return "von 23.05.2011 bis 27.05.2011";
@@ -98,7 +98,7 @@ public abstract class AbstractBoundsPeriodTest<C extends FDSConfig, D> extends A
     private String getExpectedText3(Locale locale) {
         if (locale.equals(Locale.ENGLISH)) {
             return "from May 23, 2011";
-        } else if (locale.equals(Locale.FRENCH)) {
+        } else if (locale.equals(Locale.forLanguageTag("it"))) { return "dal 23 maggio 2011"; } else if (locale.equals(Locale.FRENCH)) {
             return "à partir du 23 mai 2011";
         } else if (locale.equals(Locale.GERMAN)) {
             return "ab 23.05.2011";

@@ -38,7 +38,7 @@ public abstract class AbstractBoundsDurationTest<C extends FDSConfig, D> extends
     private static String getExpectedText(Locale locale) {
         if (locale.equals(Locale.ENGLISH)) {
             return "for 3 days";
-        } else if (locale.equals(Locale.FRENCH)) {
+        } else if (locale.equals(Locale.forLanguageTag("it"))) { return "per 3 giorni"; } else if (locale.equals(Locale.FRENCH)) {
             return "pour 3 jours";
         } else if (locale.equals(Locale.GERMAN)) {
             return "für 3 Tage";

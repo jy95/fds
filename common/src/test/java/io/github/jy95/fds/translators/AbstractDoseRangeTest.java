@@ -37,7 +37,7 @@ public abstract class AbstractDoseRangeTest<C extends FDSConfig, D> extends Abst
     private String getExpectedText(Locale locale) {
         if (locale.equals(Locale.ENGLISH)) {
             return "1 to 3";
-        } else if (locale.equals(Locale.FRENCH)) {
+        } else if (locale.equals(Locale.forLanguageTag("it"))) { return "Da 1 a 3"; } else if (locale.equals(Locale.FRENCH)) {
             return "1 à 3";
         } else if (locale.equals(Locale.GERMAN)) {
             return "zwischen 1 und 3";

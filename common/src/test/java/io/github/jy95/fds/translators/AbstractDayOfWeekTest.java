@@ -50,7 +50,7 @@ public abstract class AbstractDayOfWeekTest<C extends FDSConfig, D> extends Abst
     private static String getExpectedSingleDayText(Locale locale) {
         if (locale.equals(Locale.ENGLISH)) {
             return "on Friday";
-        } else if (locale.equals(Locale.FRENCH)) {
+        } else if (locale.equals(Locale.forLanguageTag("it"))) { return "il venerdì"; } else if (locale.equals(Locale.FRENCH)) {
             return "le vendredi";
         } else if (locale.equals(Locale.GERMAN)) {
             return "am Freitag";
@@ -63,7 +63,7 @@ public abstract class AbstractDayOfWeekTest<C extends FDSConfig, D> extends Abst
     private String getExpectedMultipleDaysText(Locale locale) {
         if (locale.equals(Locale.ENGLISH)) {
             return "on Monday and Friday";
-        } else if (locale.equals(Locale.FRENCH)) {
+        } else if (locale.equals(Locale.forLanguageTag("it"))) { return "lunedì e venerdì"; } else if (locale.equals(Locale.FRENCH)) {
             return "les lundi et vendredi";
         } else if (locale.equals(Locale.GERMAN)) {
             return "am Montag und Freitag";

@@ -37,7 +37,7 @@ public abstract class AbstractOffsetWhenTest<C extends FDSConfig, D> extends Abs
     private String getExpectedText1(Locale locale) {
         if (locale.equals(Locale.ENGLISH)) {
             return "during the morning and during the night";
-        } else if (locale.equals(Locale.FRENCH)) {
+        } else if (locale.equals(Locale.forLanguageTag("it"))) { return "durante la mattina e durante la notte"; } else if (locale.equals(Locale.FRENCH)) {
             return "durant le matin et durant la nuit";
         } else if (locale.equals(Locale.GERMAN)) {
             return "während des Vormittags und über Nacht";
@@ -61,7 +61,7 @@ public abstract class AbstractOffsetWhenTest<C extends FDSConfig, D> extends Abs
     private String getExpectedText2(Locale locale) {
         if (locale.equals(Locale.ENGLISH)) {
             return "1 hour and 30 minutes during the morning and during the night";
-        } else if (locale.equals(Locale.FRENCH)) {
+        } else if (locale.equals(Locale.forLanguageTag("it"))) { return "1 ora e 30 minuti al mattino e durante la notte"; } else if (locale.equals(Locale.FRENCH)) {
             return "1 heure et 30 minutes durant le matin et durant la nuit";
         } else if (locale.equals(Locale.GERMAN)) {
             return "1 Stunde und 30 Minuten während des Vormittags und über Nacht";
@@ -85,7 +85,7 @@ public abstract class AbstractOffsetWhenTest<C extends FDSConfig, D> extends Abs
     private String getExpectedText3(Locale locale) {
         if (locale.equals(Locale.ENGLISH)) {
             return "30 minutes";
-        } else if (locale.equals(Locale.FRENCH)) {
+        } else if (locale.equals(Locale.forLanguageTag("it"))) { return "30 minuti"; } else if (locale.equals(Locale.FRENCH)) {
             return "30 minutes";
         } else if (locale.equals(Locale.GERMAN)) {
             return "30 Minuten";

@@ -37,7 +37,7 @@ public abstract class AbstractRateQuantityTest<C extends FDSConfig, D> extends A
     private String getExpectedText(Locale locale) {
         if (locale.equals(Locale.ENGLISH)) {
             return "at a rate of 5 ml";
-        } else if (locale.equals(Locale.FRENCH)) {
+        } else if (locale.equals(Locale.forLanguageTag("it"))) { return "a una velocità di 5 ml"; } else if (locale.equals(Locale.FRENCH)) {
             return "au taux de 5 ml";
         } else if (locale.equals(Locale.GERMAN)) {
             return "mit einem Verhältnis von 5 ml";

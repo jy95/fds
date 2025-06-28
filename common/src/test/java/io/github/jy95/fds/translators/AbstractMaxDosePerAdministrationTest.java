@@ -37,7 +37,7 @@ public abstract class AbstractMaxDosePerAdministrationTest<C extends FDSConfig, 
     private String getExpectedText(Locale locale) {
         if (locale.equals(Locale.ENGLISH)) {
             return "up to a maximum of 50 mg per dose";
-        } else if (locale.equals(Locale.FRENCH)) {
+        } else if (locale.equals(Locale.forLanguageTag("it"))) { return "fino a un massimo di 50 mg per dose"; } else if (locale.equals(Locale.FRENCH)) {
             return "jusqu’à un maximum de 50 mg par dose";
         } else if (locale.equals(Locale.GERMAN)) {
             return "bis zu einer maximalen Menge von 50 mg pro Dosis";
