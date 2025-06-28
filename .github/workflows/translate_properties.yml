@@ -82,6 +82,7 @@ jobs:
       - name: 💅 Commit and push translated files
         uses: peter-evans/create-pull-request@v7.0.8
         with:
-          title: "Add translated properties files (${{ github.event.inputs.tgt_lang }})"
+          title: "Add ${{ github.event.inputs.tgt_lang }} support"
+          commit-message: "feat: Add ${{github.event.inputs.tgt_lang}} support"
           branch: "automated/translator-${{github.event.inputs.tgt_lang}}-${{ github.run_id }}"
           base: main
