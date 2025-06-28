@@ -75,6 +75,7 @@ jobs:
           pip install -r requirements.txt
       - name: 🤖 Translate _en.properties files
         run: |
+          python scripts/translate_java_test_strings.py --tgt-lang "${{ github.event.inputs.tgt_lang }}"
           python scripts/translate_properties.py --tgt-lang "${{ github.event.inputs.tgt_lang }}"
         env:
           SRC_DIR: common/src/main/resources
