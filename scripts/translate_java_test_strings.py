@@ -58,8 +58,8 @@ def update_localeproviderbase(localeprovider_path, tgt_lang):
 
 def process_java_test_files(test_dir, tgt_lang, src_lang="en"):
     english_string_pattern = re.compile(
-        r'(if\s*\(\s*locale\.equals\(Locale\.ENGLISH\)\s*\)\s*\{\s*return\s*")((?:\\.|[^"\\])*)(";?\s*\})',
-        re.DOTALL
+        r'^(\s*)if\s*\(\s*locale\.equals\(Locale\.ENGLISH\)\s*\)\s*\{\s*return\s*"((?:\\.|[^"\\])*)";\s*\}',
+        re.MULTILINE
     )
 
     for root, _, files in os.walk(test_dir):
@@ -76,14 +76,18 @@ def process_java_test_files(test_dir, tgt_lang, src_lang="en"):
                 continue
 
             updated = False
-            for match in reversed(matches):
+            for match in reversed(matches):  # reversed = safe offsets
+                indent = match.group(1)
                 eng_text = match.group(2)
                 translated = translate_value(eng_text, src_lang, tgt_lang)
+
                 new_block = (
-                    f' else if (locale.equals(Locale.forLanguageTag("{tgt_lang}"))) {{ '
-                    f'return "{translated}"; }}'
+                    f'\n{indent}else if (locale.equals(Locale.forLanguageTag("{tgt_lang}"))) {{\n'
+                    f'{indent}    return "{translated}";\n'
+                    f'{indent}}}'
                 )
-                if new_block not in content:
+
+                if f'Locale.forLanguageTag("{tgt_lang}")' not in content:
                     insert_at = match.end()
                     content = content[:insert_at] + new_block + content[insert_at:]
                     updated = True
@@ -92,7 +96,6 @@ def process_java_test_files(test_dir, tgt_lang, src_lang="en"):
                 with open(path, "w", encoding="utf-8") as f:
                     f.write(content)
                 print(f"✅ Updated: {path}")
-
 
 def main():
     parser = argparse.ArgumentParser(
