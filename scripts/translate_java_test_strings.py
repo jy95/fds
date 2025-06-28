@@ -29,36 +29,36 @@ def update_localeproviderbase(localeprovider_path, tgt_lang):
         print(f"File not found: {localeprovider_path}")
         return
 
-    new_locale_line = f'                        Locale.forLanguageTag("{tgt_lang}"),\n'
-
-    if any(new_locale_line.strip() in l.strip() for l in lines):
+    new_locale = f'Locale.forLanguageTag("{tgt_lang}")'
+    if any(new_locale in line for line in lines):
         print(f"Locale {tgt_lang} already present in {localeprovider_path}")
         return
 
-    # Find where to insert inside Stream.of(...)
-    inside_stream = False
-    insert_idx = None
-
+    # Find end of Stream.of(...), insert before closing `)`
     for i, line in enumerate(lines):
-        if "Stream.of(" in line:
-            inside_stream = True
-        if inside_stream and ")" in line:
-            insert_idx = i  # Insert just before closing
+        if "Stream.of" in line:
+            start_idx = i
             break
-
-    if insert_idx is None:
-        print("Stream.of(...) block not found in LocaleProviderBase.java!")
+    else:
+        print("Stream.of(...) not found!")
         return
 
-    lines.insert(insert_idx, new_locale_line)
-    with open(localeprovider_path, "w", encoding="utf-8") as f:
-        f.writelines(lines)
-    print(f"✅ Added Locale.forLanguageTag(\"{tgt_lang}\") to {localeprovider_path}")
+    # Find the closing parenthesis line of Stream.of(...)
+    for j in range(start_idx + 1, len(lines)):
+        if ")" in lines[j]:
+            indent = re.match(r"(\s*)", lines[j]).group(1)
+            lines.insert(j, f"{indent}{new_locale},\n")
+            with open(localeprovider_path, "w", encoding="utf-8") as f:
+                f.writelines(lines)
+            print(f"✅ Added {new_locale} to {localeprovider_path}")
+            return
+
+    print("Could not find closing ')' of Stream.of(...)")
 
 
 def process_java_test_files(test_dir, tgt_lang, src_lang="en"):
     english_string_pattern = re.compile(
-        r'if\s*\(\s*locale\.equals\(Locale\.ENGLISH\)\s*\)\s*\{\s*return\s*"((?:\\.|[^"\\])*)";\s*\}',
+        r'(if\s*\(\s*locale\.equals\(Locale\.ENGLISH\)\s*\)\s*\{\s*return\s*")((?:\\.|[^"\\])*)(";?\s*\})',
         re.DOTALL
     )
 
@@ -77,12 +77,11 @@ def process_java_test_files(test_dir, tgt_lang, src_lang="en"):
 
             updated = False
             for match in reversed(matches):
-                eng_text = match.group(1)
+                eng_text = match.group(2)
                 translated = translate_value(eng_text, src_lang, tgt_lang)
                 new_block = (
-                    f'\n        else if (locale.equals(Locale.forLanguageTag("{tgt_lang}"))) {{\n'
-                    f'            return "{translated}";\n'
-                    f'        }}'
+                    f' else if (locale.equals(Locale.forLanguageTag("{tgt_lang}"))) {{ '
+                    f'return "{translated}"; }}'
                 )
                 if new_block not in content:
                     insert_at = match.end()
