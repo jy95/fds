@@ -1,8 +1,8 @@
-<h1 align="center">FHIR Dosage Support</h1>
-
 <div align="center">
 
 <img src="src/site/resources/images/logo.png" alt="FHIR Dosage Icon" style="width: 100px; object-fit: cover; object-position: center;" />
+
+<h1 align="center">FHIR Dosage Support</h1>
 
 Turn [FHIR Dosage](https://build.fhir.org/dosage.html) into human-readable text in your desired language 
 (English, French, Dutch, German, ...) and much more.
@@ -14,9 +14,7 @@ Turn [FHIR Dosage](https://build.fhir.org/dosage.html) into human-readable text 
 [![We ❤️ PRs](https://img.shields.io/badge/We%20%E2%9D%A4%EF%B8%8F-Pull%20Requests-brightgreen.svg)](https://github.com/jy95/fds/pulls)
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://github.com/jy95/fhir-dosage-utils/blob/main/LICENSE)
 
-<br />
 <a href="https://www.buymeacoffee.com/GPFR" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" height="41" width="174" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;" ></a>
-<br />
 
 </div>
 
