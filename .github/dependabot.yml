@@ -40,3 +40,11 @@ updates:
       include: "scope"
     schedule:
       interval: "weekly"
+  # Workflow files stored in the default location of `.github/workflows`
+  - package-ecosystem: "pip"
+    directory: "/"
+    commit-message:
+      prefix: ci
+      include: "scope"
+    schedule:
+      interval: "weekly"
