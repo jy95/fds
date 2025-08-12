@@ -1,8 +1,8 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
 FHIR Dosage Support - Common,io.github.jy95.fds.common.translators,TimeOfDay,43,0,4,0,6,0,4,0,2,0
 FHIR Dosage Support - Common,io.github.jy95.fds.common.translators,TimingEvent,10,0,0,0,2,0,1,0,1,0
-FHIR Dosage Support - Common,io.github.jy95.fds.common.translators,FrequencyFrequencyMaxPeriodPeriodMax,50,0,6,0,7,0,7,0,4,0
 FHIR Dosage Support - Common,io.github.jy95.fds.common.translators,BoundsRange,10,0,0,0,2,0,1,0,1,0
+FHIR Dosage Support - Common,io.github.jy95.fds.common.translators,FrequencyFrequencyMaxPeriodPeriodMax,50,0,6,0,7,0,7,0,4,0
 FHIR Dosage Support - Common,io.github.jy95.fds.common.translators,MaxDosePerPeriod,10,0,0,0,2,0,1,0,1,0
 FHIR Dosage Support - Common,io.github.jy95.fds.common.translators,FrequencyFrequencyMax,67,0,8,0,15,0,9,0,5,0
 FHIR Dosage Support - Common,io.github.jy95.fds.common.translators,BoundsDuration,10,0,0,0,2,0,1,0,1,0
