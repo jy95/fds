@@ -10,7 +10,7 @@ Turn [FHIR Dosage](https://build.fhir.org/dosage.html) into human-readable text 
 [![Build Status](https://github.com/jy95/fds/actions/workflows/maven.yml/badge.svg)](https://github.com/jy95/fds/actions/workflows/maven.yml)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/56beb6b5e12a4de481cd74ad164989f9)](https://app.codacy.com/gh/jy95/fds/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 [![Codacy Badge](https://app.codacy.com/project/badge/Coverage/56beb6b5e12a4de481cd74ad164989f9)](https://app.codacy.com/gh/jy95/fds/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_coverage)
-[![Java Version](https://img.shields.io/badge/Java-11%2B-brightgreen.svg)](https://www.oracle.com/java/)
+[![Java Version](https://img.shields.io/badge/Java-17%2B-brightgreen.svg)](https://www.oracle.com/java/)
 [![We ❤️ PRs](https://img.shields.io/badge/We%20%E2%9D%A4%EF%B8%8F-Pull%20Requests-brightgreen.svg)](https://github.com/jy95/fds/pulls)
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://github.com/jy95/fhir-dosage-utils/blob/main/LICENSE)
 
