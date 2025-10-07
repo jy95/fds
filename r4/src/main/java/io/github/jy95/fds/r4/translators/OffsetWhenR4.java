@@ -71,7 +71,7 @@ public class OffsetWhenR4 implements OffsetWhen<FDSConfigR4, Dosage> {
                     .stream()
                     .map(Enumeration::getCode)
                     .map(bundle::getString)
-                    .collect(Collectors.toList());
+                    .toList();
 
             return ListToString.convert(bundle, events);
         });
@@ -105,7 +105,7 @@ public class OffsetWhenR4 implements OffsetWhen<FDSConfigR4, Dosage> {
                         var amount = extractedTime.get(unit);
                         return UnitsOfTimeFormatter.formatWithCount(locale, unit, amount);
                     })
-                    .collect(Collectors.toList());
+                    .toList();
 
             return ListToString.convert(bundle, times);
         });

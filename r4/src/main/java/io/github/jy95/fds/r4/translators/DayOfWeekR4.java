@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
-import java.util.stream.Collectors;
 
 /**
  * R4 class for translating "timing.repeat.dayOfWeek"
@@ -64,7 +63,7 @@ public class DayOfWeekR4 implements DayOfWeek<FDSConfigR4, Dosage> {
                                     day.getCode().toLowerCase()
                             )
                     )
-                    .collect(Collectors.toList());
+                    .toList();
 
             return daysToText(dayOfWeeksCodes);
         });

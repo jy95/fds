@@ -9,7 +9,6 @@ import org.hl7.fhir.r5.model.Dosage;
 
 import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
-import java.util.stream.Collectors;
 
 /**
  * R5 class for translating "maxDosePerPeriod"
@@ -51,7 +50,7 @@ public class MaxDosePerPeriodR5 implements MaxDosePerPeriod<FDSConfigR5, Dosage>
                 .getMaxDosePerPeriod()
                 .stream()
                 .map(ratio -> RatioToStringR5.getInstance().convert(bundle, config, ratio))
-                .collect(Collectors.toList());
+                .toList();
 
         return CompletableFuture
                 .allOf(ratioFutures.toArray(CompletableFuture[]::new))
@@ -59,7 +58,7 @@ public class MaxDosePerPeriodR5 implements MaxDosePerPeriod<FDSConfigR5, Dosage>
                     var ratioTexts = ratioFutures
                             .stream()
                             .map(future -> future.getNow(""))
-                            .collect(Collectors.toList());
+                            .toList();
                     return ListToString.convert(bundle, ratioTexts);
                 })
                 .thenApplyAsync((ratioText) -> maxDosePerPeriodMsg.format(new Object[] { ratioText }));

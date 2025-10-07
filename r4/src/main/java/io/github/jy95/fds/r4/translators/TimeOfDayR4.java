@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
-import java.util.stream.Collectors;
 
 /**
  * R4 class for translating "timing.repeat.timeOfDay"
@@ -49,7 +48,7 @@ public class TimeOfDayR4 implements TimeOfDay<FDSConfigR4, Dosage> {
                 .getTimeOfDay()
                 .stream()
                 .map(PrimitiveType::getValue)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     /** {@inheritDoc} */
@@ -65,7 +64,7 @@ public class TimeOfDayR4 implements TimeOfDay<FDSConfigR4, Dosage> {
         return CompletableFuture.supplyAsync(() -> {
 
             var times = getTimes(dosage);
-            var timeOfDays = times.stream().map(this::formatString).collect(Collectors.toList());
+            var timeOfDays = times.stream().map(this::formatString).toList();
             var timeOfDaysAsString = ListToString.convert(bundle, timeOfDays);
 
             Map<String, Object> messageArguments = Map.of(

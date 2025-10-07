@@ -6,7 +6,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
 
 /**
  * A custom ResourceBundle.Control implementation that aggregates multiple ResourceBundles.
@@ -43,7 +42,7 @@ public class MultiResourceBundleControl extends ResourceBundle.Control {
         List<ResourceBundle> delegates = Arrays.stream(this.dependentBaseNames)
                 .filter(currentBaseName -> currentBaseName != null && !currentBaseName.trim().isEmpty())
                 .map(currentBaseName -> ResourceBundle.getBundle(currentBaseName, locale))
-                .collect(Collectors.toList());
+                .toList();
 
         return new MultiResourceBundle(delegates);
     }

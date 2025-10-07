@@ -14,7 +14,6 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.CompletableFuture;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.hl7.fhir.r4.model.Dosage;
@@ -71,7 +70,7 @@ public class DosageMarkdownExecutor {
                                     .stream(),
                             Stream.of(DisplayOrder.TEXT)
                     )
-                    .collect(Collectors.toList());
+                    .toList();
 
             // Return custom instance for docs
             return new DosageAPIR4(
