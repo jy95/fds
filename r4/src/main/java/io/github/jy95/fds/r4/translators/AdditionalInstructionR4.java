@@ -7,7 +7,6 @@ import org.hl7.fhir.r4.model.Dosage;
 
 import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
-import java.util.stream.Collectors;
 
 /**
  * R4 class for translating "additionalInstruction".

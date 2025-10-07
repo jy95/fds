@@ -7,7 +7,6 @@ import io.github.jy95.fds.common.types.Translator;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
-import java.util.stream.Collectors;
 
 /**
  * An interface for translating "additionalInstruction".

@@ -2,7 +2,6 @@ package io.github.jy95.fds.common.functions;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.stream.Collectors;
 
 /**
  * Interface for formatting DateTime objects into human-readable strings.
