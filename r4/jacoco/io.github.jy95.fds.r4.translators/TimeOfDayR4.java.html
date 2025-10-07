@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
-import java.util.stream.Collectors;
 
 /**
  * R4 class for translating &quot;timing.repeat.timeOfDay&quot;
@@ -35,52 +34,52 @@ public class TimeOfDayR4 implements TimeOfDay&lt;FDSConfigR4, Dosage&gt; {
      * @param config The configuration object used for translation.
      * @param bundle a {@link java.util.ResourceBundle} object
      */
-<span class="fc" id="L38">    public TimeOfDayR4(FDSConfigR4 config, ResourceBundle bundle) {</span>
-<span class="fc" id="L39">        this.timeOfDayMsg = getTimeOfDayMsg(bundle, config.getLocale());</span>
-<span class="fc" id="L40">        this.bundle = bundle;</span>
-<span class="fc" id="L41">    }</span>
+<span class="fc" id="L37">    public TimeOfDayR4(FDSConfigR4 config, ResourceBundle bundle) {</span>
+<span class="fc" id="L38">        this.timeOfDayMsg = getTimeOfDayMsg(bundle, config.getLocale());</span>
+<span class="fc" id="L39">        this.bundle = bundle;</span>
+<span class="fc" id="L40">    }</span>
 
     /** {@inheritDoc} */
     @Override
     public List&lt;String&gt; getTimes(Dosage dosage) {
-<span class="fc" id="L46">        return dosage</span>
-<span class="fc" id="L47">                .getTiming()</span>
-<span class="fc" id="L48">                .getRepeat()</span>
-<span class="fc" id="L49">                .getTimeOfDay()</span>
-<span class="fc" id="L50">                .stream()</span>
-<span class="fc" id="L51">                .map(PrimitiveType::getValue)</span>
-<span class="fc" id="L52">                .collect(Collectors.toList());</span>
+<span class="fc" id="L45">        return dosage</span>
+<span class="fc" id="L46">                .getTiming()</span>
+<span class="fc" id="L47">                .getRepeat()</span>
+<span class="fc" id="L48">                .getTimeOfDay()</span>
+<span class="fc" id="L49">                .stream()</span>
+<span class="fc" id="L50">                .map(PrimitiveType::getValue)</span>
+<span class="fc" id="L51">                .toList();</span>
     }
 
     /** {@inheritDoc} */
     @Override
     public boolean hasRequiredElements(Dosage dosage) {
-<span class="fc" id="L58">        var timing = dosage.getTiming();</span>
-<span class="pc bpc" id="L59" title="1 of 4 branches missed.">        return timing.hasRepeat() &amp;&amp; timing.getRepeat().hasTimeOfDay();</span>
+<span class="fc" id="L57">        var timing = dosage.getTiming();</span>
+<span class="pc bpc" id="L58" title="1 of 4 branches missed.">        return timing.hasRepeat() &amp;&amp; timing.getRepeat().hasTimeOfDay();</span>
     }
 
     /** {@inheritDoc} */
     @Override
     public CompletableFuture&lt;String&gt; convert(Dosage dosage) {
-<span class="fc" id="L65">        return CompletableFuture.supplyAsync(() -&gt; {</span>
+<span class="fc" id="L64">        return CompletableFuture.supplyAsync(() -&gt; {</span>
 
-<span class="fc" id="L67">            var times = getTimes(dosage);</span>
-<span class="fc" id="L68">            var timeOfDays = times.stream().map(this::formatString).collect(Collectors.toList());</span>
-<span class="fc" id="L69">            var timeOfDaysAsString = ListToString.convert(bundle, timeOfDays);</span>
+<span class="fc" id="L66">            var times = getTimes(dosage);</span>
+<span class="fc" id="L67">            var timeOfDays = times.stream().map(this::formatString).toList();</span>
+<span class="fc" id="L68">            var timeOfDaysAsString = ListToString.convert(bundle, timeOfDays);</span>
 
-<span class="fc" id="L71">            Map&lt;String, Object&gt; messageArguments = Map.of(</span>
+<span class="fc" id="L70">            Map&lt;String, Object&gt; messageArguments = Map.of(</span>
                     &quot;timeOfDay&quot;, timeOfDaysAsString,
-<span class="fc" id="L73">                    &quot;count&quot;, timeOfDays.size()</span>
+<span class="fc" id="L72">                    &quot;count&quot;, timeOfDays.size()</span>
             );
 
-<span class="fc" id="L76">            return timeOfDayMsg.format(messageArguments);</span>
+<span class="fc" id="L75">            return timeOfDayMsg.format(messageArguments);</span>
         });
     }
 
     /** {@inheritDoc} */
     @Override
     public boolean hasTiming(Dosage dosage) {
-<span class="fc" id="L83">        return dosage.hasTiming();</span>
+<span class="fc" id="L82">        return dosage.hasTiming();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

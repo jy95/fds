@@ -2,7 +2,6 @@
 
 import java.util.List;
 import java.util.Locale;
-import java.util.stream.Collectors;
 
 /**
  * Interface for formatting DateTime objects into human-readable strings.
@@ -29,10 +28,10 @@ public interface FormatDateTimes&lt;T&gt; {
      * @return A list of human-readable string representations of the dates or times.
      */
     default List&lt;String&gt; convert(Locale locale, List&lt;T&gt; dates) {
-<span class="nc" id="L32">        return dates</span>
-<span class="nc" id="L33">                .stream()</span>
-<span class="nc" id="L34">                .map(date -&gt; convert(locale, date))</span>
-<span class="nc" id="L35">                .collect(Collectors.toList());</span>
+<span class="nc" id="L31">        return dates</span>
+<span class="nc" id="L32">                .stream()</span>
+<span class="nc" id="L33">                .map(date -&gt; convert(locale, date))</span>
+<span class="nc" id="L34">                .toList();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

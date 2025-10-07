@@ -9,7 +9,6 @@ import org.hl7.fhir.r5.model.Dosage;
 
 import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
-import java.util.stream.Collectors;
 
 /**
  * R5 class for translating &quot;maxDosePerPeriod&quot;
@@ -38,37 +37,37 @@ public class MaxDosePerPeriodR5 implements MaxDosePerPeriod&lt;FDSConfigR5, Dosa
      * @param config The configuration object used for translation.
      * @param bundle a {@link java.util.ResourceBundle} object
      */
-<span class="fc" id="L41">    public MaxDosePerPeriodR5(FDSConfigR5 config, ResourceBundle bundle) {</span>
-<span class="fc" id="L42">        this.bundle = bundle;</span>
-<span class="fc" id="L43">        this.config = config;</span>
-<span class="fc" id="L44">        this.maxDosePerPeriodMsg = getMaxDosePerPeriodMsg(bundle, config.getLocale());</span>
-<span class="fc" id="L45">    }</span>
+<span class="fc" id="L40">    public MaxDosePerPeriodR5(FDSConfigR5 config, ResourceBundle bundle) {</span>
+<span class="fc" id="L41">        this.bundle = bundle;</span>
+<span class="fc" id="L42">        this.config = config;</span>
+<span class="fc" id="L43">        this.maxDosePerPeriodMsg = getMaxDosePerPeriodMsg(bundle, config.getLocale());</span>
+<span class="fc" id="L44">    }</span>
 
     /** {@inheritDoc} */
     @Override
     public CompletableFuture&lt;String&gt; convert(Dosage dosage) {
-<span class="fc" id="L50">        var ratioFutures = dosage</span>
-<span class="fc" id="L51">                .getMaxDosePerPeriod()</span>
-<span class="fc" id="L52">                .stream()</span>
-<span class="fc" id="L53">                .map(ratio -&gt; RatioToStringR5.getInstance().convert(bundle, config, ratio))</span>
-<span class="fc" id="L54">                .collect(Collectors.toList());</span>
+<span class="fc" id="L49">        var ratioFutures = dosage</span>
+<span class="fc" id="L50">                .getMaxDosePerPeriod()</span>
+<span class="fc" id="L51">                .stream()</span>
+<span class="fc" id="L52">                .map(ratio -&gt; RatioToStringR5.getInstance().convert(bundle, config, ratio))</span>
+<span class="fc" id="L53">                .toList();</span>
 
-<span class="fc" id="L56">        return CompletableFuture</span>
-<span class="fc" id="L57">                .allOf(ratioFutures.toArray(CompletableFuture[]::new))</span>
-<span class="fc" id="L58">                .thenApplyAsync(v -&gt; {</span>
-<span class="fc" id="L59">                    var ratioTexts = ratioFutures</span>
-<span class="fc" id="L60">                            .stream()</span>
-<span class="fc" id="L61">                            .map(future -&gt; future.getNow(&quot;&quot;))</span>
-<span class="fc" id="L62">                            .collect(Collectors.toList());</span>
-<span class="fc" id="L63">                    return ListToString.convert(bundle, ratioTexts);</span>
+<span class="fc" id="L55">        return CompletableFuture</span>
+<span class="fc" id="L56">                .allOf(ratioFutures.toArray(CompletableFuture[]::new))</span>
+<span class="fc" id="L57">                .thenApplyAsync(v -&gt; {</span>
+<span class="fc" id="L58">                    var ratioTexts = ratioFutures</span>
+<span class="fc" id="L59">                            .stream()</span>
+<span class="fc" id="L60">                            .map(future -&gt; future.getNow(&quot;&quot;))</span>
+<span class="fc" id="L61">                            .toList();</span>
+<span class="fc" id="L62">                    return ListToString.convert(bundle, ratioTexts);</span>
                 })
-<span class="fc" id="L65">                .thenApplyAsync((ratioText) -&gt; maxDosePerPeriodMsg.format(new Object[] { ratioText }));</span>
+<span class="fc" id="L64">                .thenApplyAsync((ratioText) -&gt; maxDosePerPeriodMsg.format(new Object[] { ratioText }));</span>
     }
 
     /** {@inheritDoc} */
     @Override
     public boolean isPresent(Dosage dosage) {
-<span class="fc" id="L71">        return dosage.hasMaxDosePerPeriod();</span>
+<span class="fc" id="L70">        return dosage.hasMaxDosePerPeriod();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
