@@ -79,7 +79,7 @@ public class AsNeededR5 implements AsNeeded<FDSConfigR5, Dosage> {
         var codesFutures = codes
                 .stream()
                 .map(config::fromCodeableConceptToString)
-                .collect(Collectors.toList());
+                .toList();
 
         return CompletableFuture
                 .allOf(codesFutures.toArray(CompletableFuture[]::new))
@@ -87,7 +87,7 @@ public class AsNeededR5 implements AsNeeded<FDSConfigR5, Dosage> {
                     var codesAsText = codesFutures
                             .stream()
                             .map(future -> future.getNow(""))
-                            .collect(Collectors.toList());
+                            .toList();
 
                     return ListToString.convert(bundle, codesAsText);
                 })

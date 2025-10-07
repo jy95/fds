@@ -34,7 +34,7 @@ public class AdditionalInstructionR5 implements AdditionalInstruction<FDSConfigR
                 .getAdditionalInstruction()
                 .stream()
                 .map(config::fromCodeableConceptToString)
-                .collect(Collectors.toList());
+                .toList();
 
         return instructionsFuture(additionalInstructions, bundle);
     }

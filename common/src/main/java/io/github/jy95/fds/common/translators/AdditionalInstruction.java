@@ -41,7 +41,7 @@ public interface AdditionalInstruction<C extends FDSConfig, D> extends Translato
                     var additionalInstructionsAsText = additionalInstructions
                             .stream()
                             .map(future -> future.getNow(""))
-                            .collect(Collectors.toList());
+                            .toList();
 
                     // Use ListToString.convert with the translators' resources
                     return ListToString.convert(bundle, additionalInstructionsAsText);

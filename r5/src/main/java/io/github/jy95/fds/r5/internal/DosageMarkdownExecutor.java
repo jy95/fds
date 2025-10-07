@@ -71,7 +71,7 @@ public class DosageMarkdownExecutor {
                                     .stream(),
                             Stream.of(DisplayOrder.TEXT)
                     )
-                    .collect(Collectors.toList());
+                    .toList();
 
             // Return custom instance for docs
             return new DosageAPIR5(

@@ -64,7 +64,7 @@ public class DayOfWeekR5 implements DayOfWeek<FDSConfigR5, Dosage> {
                                     day.getCode().toLowerCase()
                             )
                     )
-                    .collect(Collectors.toList());
+                    .toList();
 
             return daysToText(dayOfWeeksCodes);
         });

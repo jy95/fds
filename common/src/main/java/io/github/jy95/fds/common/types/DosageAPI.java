@@ -56,7 +56,7 @@ public abstract class DosageAPI<C extends FDSConfig, D> {
                 .filter(Objects::nonNull)
                 .filter(translator -> translator.isPresent(dosage))
                 .map(translator -> translator.convert(dosage))
-                .collect(Collectors.toList());
+                .toList();
 
         // Combine the results of all CompletableFutures into a single result
         return CompletableFuture
@@ -118,7 +118,7 @@ public abstract class DosageAPI<C extends FDSConfig, D> {
     protected CompletableFuture<String> convertSequentialDosagesToText(List<D> dosages) {
         List<CompletableFuture<String>> dosagesAsTextFutures = dosages.stream()
                 .map(this::asHumanReadableText)
-                .collect(Collectors.toList());
+                .toList();
 
         return CompletableFuture
                 .allOf(dosagesAsTextFutures.toArray(CompletableFuture[]::new))
@@ -139,7 +139,7 @@ public abstract class DosageAPI<C extends FDSConfig, D> {
 
         var sequentialInstructionsFutures = sortedDosages.stream()
                 .map(this::convertConcurrentDosagesToText)
-                .collect(Collectors.toList());
+                .toList();
 
         return CompletableFuture
                 .allOf(sequentialInstructionsFutures.toArray(CompletableFuture[]::new))
@@ -158,7 +158,7 @@ public abstract class DosageAPI<C extends FDSConfig, D> {
     protected CompletableFuture<String> convertConcurrentDosagesToText(List<D> dosages) {
         List<CompletableFuture<String>> concurrentInstructionsFutures = dosages.stream()
                 .map(this::asHumanReadableText)
-                .collect(Collectors.toList());
+                .toList();
 
         return CompletableFuture
                 .allOf(concurrentInstructionsFutures.toArray(CompletableFuture[]::new))
@@ -184,7 +184,7 @@ public abstract class DosageAPI<C extends FDSConfig, D> {
     private List<String> extractCompletedFutures(List<CompletableFuture<String>> futures) {
         return futures.stream()
                 .map(future -> future.getNow("")) // Extracting results with default fallback
-                .collect(Collectors.toList());
+                .toList();
     }
 
     /**

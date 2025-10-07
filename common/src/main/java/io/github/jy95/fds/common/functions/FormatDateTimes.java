@@ -32,6 +32,6 @@ public interface FormatDateTimes<T> {
         return dates
                 .stream()
                 .map(date -> convert(locale, date))
-                .collect(Collectors.toList());
+                .toList();
     }
 }

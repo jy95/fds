@@ -45,7 +45,7 @@ public class MultiResourceBundle extends ResourceBundle {
         List<String> keys = this.delegates.stream()
                 .filter(Objects::nonNull)
                 .flatMap(delegate -> Collections.list(delegate.getKeys()).stream())
-                .collect(Collectors.toList());
+                .toList();
 
         return Collections.enumeration(keys);
     }
