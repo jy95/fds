@@ -36,7 +36,7 @@ public class EventTiming_fr extends ListResourceBundle {
         {"C", "durant un repas"},
         {"CM", "au petit-déjeuner"},
         {"CD", "au déjeuner"},
-        {"CV", "au dinner"},
+        {"CV", "au dîner"},
         
         {"AC", "avant le repas"},
         {"ACM", "avant le petit-déjeuner"},
