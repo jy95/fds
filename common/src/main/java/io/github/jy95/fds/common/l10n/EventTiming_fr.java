@@ -46,6 +46,6 @@ public class EventTiming_fr extends ListResourceBundle {
         {"PC", "après le repas"},
         {"PCM", "après le petit-déjeuner"},
         {"PCD", "après le déjeuner"},
-        {"PCV", "après le dinner"},
+        {"PCV", "après le dîner"},
     };
 }
