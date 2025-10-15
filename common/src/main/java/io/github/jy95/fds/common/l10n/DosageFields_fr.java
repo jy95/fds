@@ -1,3 +1,4 @@
+package io.github.jy95.fds.common.l10n;
 import java.util.ListResourceBundle;
 
 /**
