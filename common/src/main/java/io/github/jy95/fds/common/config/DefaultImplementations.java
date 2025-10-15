@@ -26,9 +26,9 @@ public final class DefaultImplementations {
     public static ResourceBundle selectResourceBundle(Locale locale) {
         var bundleControl = new MultiResourceBundleControl(
                 "translations",
-                "common",
-                "eventTiming",
-                "quantityComparator"
+                "DosageFields",
+                "EventTiming",
+                "QuantityComparator"
         );
         return ResourceBundle.getBundle(
                 bundleControl.getBaseName(),
