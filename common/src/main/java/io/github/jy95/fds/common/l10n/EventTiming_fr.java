@@ -41,7 +41,7 @@ public class EventTiming_fr extends ListResourceBundle {
         {"AC", "avant le repas"},
         {"ACM", "avant le petit-déjeuner"},
         {"ACD", "avant le déjeuner"},
-        {"ACV", "avant le dinner"},
+        {"ACV", "avant le dîner"},
         
         {"PC", "après le repas"},
         {"PCM", "après le petit-déjeuner"},
