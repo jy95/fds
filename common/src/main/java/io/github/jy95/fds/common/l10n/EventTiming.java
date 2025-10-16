@@ -5,7 +5,7 @@ import java.util.ListResourceBundle;
  * English (en) resource bundle for event timing codes.
  * @see <a href="https://www.hl7.org/fhir/valueset-event-timing.html">FHIR Event Timing</a>
  */
-public class EventTiming_en extends ListResourceBundle {
+public class EventTiming extends ListResourceBundle {
     
     // English version
     @Override

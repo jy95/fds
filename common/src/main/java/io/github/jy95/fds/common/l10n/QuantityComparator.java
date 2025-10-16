@@ -5,7 +5,7 @@ import java.util.ListResourceBundle;
  * English (en) resource bundle for operator and symbol labels.
  * @see <a href="https://www.hl7.org/fhir/valueset-quantity-comparator.html">FHIR Quantity Comparator</a>
  */
-public class QuantityComparator_en extends ListResourceBundle {
+public class QuantityComparator extends ListResourceBundle {
     
     // English version
     @Override

@@ -4,7 +4,7 @@ import java.util.ListResourceBundle;
 /**
  * English (en) resource bundle for structured dosage and field labels.
  */
-public class DosageFields_en extends ListResourceBundle {
+public class DosageFields extends ListResourceBundle {
     
     // English version
     @Override
