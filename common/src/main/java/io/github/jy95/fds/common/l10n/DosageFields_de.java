@@ -7,12 +7,6 @@ import java.util.ListResourceBundle;
  */
 public class DosageFields_de extends ListResourceBundle {
     
-    // German version
-    @Override
-    public Object[][] getContents() {
-        return contents;
-    }
-
     // Static content array holding the key-value pairs
     static final Object[][] contents = {
         // Linkwords
@@ -63,5 +57,11 @@ public class DosageFields_de extends ListResourceBundle {
         {"fields.maxDosePerAdministration", "bis zu einer maximalen Menge von {0} pro Dosis"},
         {"fields.maxDosePerPeriod", "bis zu einer maximalen Menge von {0}"},
     };
+
+        // German version
+    @Override
+    public Object[][] getContents() {
+        return contents;
+    }
 
 }

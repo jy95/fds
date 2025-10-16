@@ -7,12 +7,6 @@ import java.util.ListResourceBundle;
  */
 public class QuantityComparator extends ListResourceBundle {
     
-    // English version
-    @Override
-    public Object[][] getContents() {
-        return contents;
-    }
-
     // Static content array holding the key-value pairs
     static final Object[][] contents = {
         // Inequality Operators
@@ -24,4 +18,10 @@ public class QuantityComparator extends ListResourceBundle {
         // Abbreviation
         {"ad", "ad"},
     };
+
+    // English version
+    @Override
+    public Object[][] getContents() {
+        return contents;
+    }
 }

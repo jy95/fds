@@ -7,12 +7,6 @@ import java.util.ListResourceBundle;
  */
 public class EventTiming_nl extends ListResourceBundle {
     
-    // Dutch version
-    @Override
-    public Object[][] getContents() {
-        return contents;
-    }
-
     // Static content array holding the key-value pairs
     static final Object[][] contents = {
         {"MORN", "tijdens de ochtend"},
@@ -48,5 +42,11 @@ public class EventTiming_nl extends ListResourceBundle {
         {"PCD", "na de lunch"},
         {"PCV", "na het diner"},
     };
+
+    // Dutch version
+    @Override
+    public Object[][] getContents() {
+        return contents;
+    }
 
 }

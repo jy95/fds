@@ -7,12 +7,6 @@ import java.util.ListResourceBundle;
  */
 public class EventTiming extends ListResourceBundle {
     
-    // English version
-    @Override
-    public Object[][] getContents() {
-        return contents;
-    }
-
     // Static content array holding the key-value pairs
     static final Object[][] contents = {
         {"MORN", "during the morning"},
@@ -48,4 +42,10 @@ public class EventTiming extends ListResourceBundle {
         {"PCD", "after lunch"},
         {"PCV", "after dinner"},
     };
+
+    // English version
+    @Override
+    public Object[][] getContents() {
+        return contents;
+    }
 }
