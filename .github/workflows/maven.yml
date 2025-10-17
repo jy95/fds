@@ -11,15 +11,16 @@ jobs:
       contents: read
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest]
+        os: [ubuntu-latest]
         java: [17, 21, 25]
+        distribution: [temurin,oracle]
     steps:
       - uses: actions/checkout@v5
-      - name: ☕ Set up JDK ${{ matrix.java }}
+      - name: ☕ Set up JDK ${{ matrix.java }} (${{ matrix.distribution }})
         uses: actions/setup-java@v5
         with:
           java-version: ${{ matrix.java }}
-          distribution: 'temurin'
+          distribution: ${{ matrix.distribution }}
           cache: 'maven'
       - name: 📦 Install dependencies
         run: mvn -P test install
