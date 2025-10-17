@@ -41,7 +41,7 @@ public class MultiResourceBundleControl extends ResourceBundle.Control {
     public ResourceBundle newBundle(String baseName, Locale locale, String format, ClassLoader loader, boolean reload) {
 <span class="fc" id="L42">        List&lt;ResourceBundle&gt; delegates = Arrays.stream(this.dependentBaseNames)</span>
 <span class="fc bfc" id="L43" title="All 4 branches covered.">                .filter(currentBaseName -&gt; currentBaseName != null &amp;&amp; !currentBaseName.trim().isEmpty())</span>
-<span class="fc" id="L44">                .map(currentBaseName -&gt; ResourceBundle.getBundle(currentBaseName, locale))</span>
+<span class="fc" id="L44">                .map(currentBaseName -&gt; ResourceBundle.getBundle(currentBaseName, locale, loader))</span>
 <span class="fc" id="L45">                .toList();</span>
 
 <span class="fc" id="L47">        return new MultiResourceBundle(delegates);</span>

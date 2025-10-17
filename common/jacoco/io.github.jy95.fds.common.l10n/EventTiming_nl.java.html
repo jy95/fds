@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EventTiming_nl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">FHIR Dosage Support - Common</a> &gt; <a href="index.source.html" class="el_package">io.github.jy95.fds.common.l10n</a> &gt; <span class="el_source">EventTiming_nl.java</span></div><h1>EventTiming_nl.java</h1><pre class="source lang-java linenums">package io.github.jy95.fds.common.l10n;
+import java.util.ListResourceBundle;
+
+/**
+ * Dutch (nl) resource bundle for event timing codes.
+ * @see &lt;a href=&quot;https://www.hl7.org/fhir/valueset-event-timing.html&quot;&gt;FHIR Event Timing&lt;/a&gt;
+ */
+<span class="nc" id="L8">public class EventTiming_nl extends ListResourceBundle {</span>
+    
+    // Static content array holding the key-value pairs
+<span class="nc" id="L11">    static final Object[][] contents = {</span>
+        {&quot;MORN&quot;, &quot;tijdens de ochtend&quot;},
+        {&quot;MORN.early&quot;, &quot;tijdens de vroege ochtend&quot;},
+        {&quot;MORN.late&quot;, &quot;tijdens de late ochtend&quot;},
+        {&quot;NOON&quot;, &quot;rond het middaguur&quot;},
+        {&quot;AFT&quot;, &quot;tijdens de namiddag&quot;},
+        {&quot;AFT.early&quot;, &quot;tijdens de vroege namiddag&quot;},
+        {&quot;AFT.late&quot;, &quot;tijdens de late namiddag&quot;},
+        {&quot;EVE&quot;, &quot;tijdens de avond&quot;},
+        {&quot;EVE.early&quot;, &quot;tijdens de vroege avond&quot;},
+        {&quot;EVE.late&quot;, &quot;tijdens de late avond&quot;},
+        {&quot;NIGHT&quot;, &quot;tijdens de nacht&quot;},
+        
+        {&quot;PHS&quot;, &quot;na het slapen&quot;},
+        {&quot;IMD&quot;, &quot;een enkele keer&quot;},
+        {&quot;HS&quot;, &quot;voor het slapen&quot;},
+        {&quot;WAKE&quot;, &quot;bij het ontwaken&quot;},
+        
+        // Meal-related timings
+        {&quot;C&quot;, &quot;tijdens een maaltijd&quot;},
+        {&quot;CM&quot;, &quot;bij het ontbijt&quot;},
+        {&quot;CD&quot;, &quot;bij de lunch&quot;},
+        {&quot;CV&quot;, &quot;bij het diner&quot;},
+        
+        {&quot;AC&quot;, &quot;voor de maaltijd&quot;},
+        {&quot;ACM&quot;, &quot;voor het ontbijt&quot;},
+        {&quot;ACD&quot;, &quot;voor de lunch&quot;},
+        {&quot;ACV&quot;, &quot;voor het diner&quot;},
+        
+        {&quot;PC&quot;, &quot;na de maaltijd&quot;},
+        {&quot;PCM&quot;, &quot;na het ontbijt&quot;},
+        {&quot;PCD&quot;, &quot;na de lunch&quot;},
+        {&quot;PCV&quot;, &quot;na het diner&quot;},
+    };
+
+    // Dutch version
+    @Override
+    public Object[][] getContents() {
+<span class="nc" id="L49">        return contents;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

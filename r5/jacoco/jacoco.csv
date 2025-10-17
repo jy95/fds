@@ -16,8 +16,8 @@ FHIR Dosage Support - R5,io.github.jy95.fds.r5.translators,ExtensionR5,0,9,0,0,0
 FHIR Dosage Support - R5,io.github.jy95.fds.r5.translators,DoseRangeR5,0,31,0,0,0,11,0,3,0,3
 FHIR Dosage Support - R5,io.github.jy95.fds.r5.translators,FrequencyFrequencyMaxPeriodPeriodMaxR5,0,36,0,4,0,8,0,6,0,4
 FHIR Dosage Support - R5,io.github.jy95.fds.r5.translators,ModifierExtensionR5,0,9,0,0,0,4,0,2,0,2
-FHIR Dosage Support - R5,io.github.jy95.fds.r5.translators,PatientInstructionR5,0,13,0,0,0,3,0,3,0,3
 FHIR Dosage Support - R5,io.github.jy95.fds.r5.translators,MaxDosePerLifetimeR5,0,43,0,0,0,11,0,4,0,4
+FHIR Dosage Support - R5,io.github.jy95.fds.r5.translators,PatientInstructionR5,0,13,0,0,0,3,0,3,0,3
 FHIR Dosage Support - R5,io.github.jy95.fds.r5.translators,FrequencyFrequencyMaxR5,0,125,1,5,0,26,1,13,0,11
 FHIR Dosage Support - R5,io.github.jy95.fds.r5.translators,BoundsRangeR5,0,58,1,3,0,12,1,6,0,5
 FHIR Dosage Support - R5,io.github.jy95.fds.r5.translators,BoundsPeriodR5,0,85,1,3,0,17,1,10,0,9
@@ -26,8 +26,8 @@ FHIR Dosage Support - R5,io.github.jy95.fds.r5.translators,DurationDurationMaxR5
 FHIR Dosage Support - R5,io.github.jy95.fds.r5.translators,MethodR5,0,9,0,0,0,4,0,2,0,2
 FHIR Dosage Support - R5,io.github.jy95.fds.r5.translators,RateQuantityR5,0,51,0,0,0,14,0,4,0,4
 FHIR Dosage Support - R5,io.github.jy95.fds.r5.translators,TimingModifierExtensionR5,0,18,1,3,0,4,1,3,0,2
-FHIR Dosage Support - R5,io.github.jy95.fds.r5.translators,MaxDosePerPeriodR5,0,77,0,0,0,20,0,8,0,8
 FHIR Dosage Support - R5,io.github.jy95.fds.r5.translators,CountCountMaxR5,5,79,4,4,0,17,3,7,0,6
+FHIR Dosage Support - R5,io.github.jy95.fds.r5.translators,MaxDosePerPeriodR5,0,77,0,0,0,20,0,8,0,8
 FHIR Dosage Support - R5,io.github.jy95.fds.r5.translators,RateRatioR5,0,51,0,0,0,14,0,4,0,4
 FHIR Dosage Support - R5,io.github.jy95.fds.r5.translators,AsNeededR5,0,106,0,6,0,25,0,13,0,10
 FHIR Dosage Support - R5,io.github.jy95.fds.r5.translators,AdditionalInstructionR5,0,21,0,0,0,7,0,2,0,2
@@ -45,5 +45,5 @@ FHIR Dosage Support - R5,io.github.jy95.fds.r5.functions,RatioToStringR5.Holder,
 FHIR Dosage Support - R5,io.github.jy95.fds.r5.functions,DoseAndRateRegistryR5,0,45,0,0,0,9,0,3,0,3
 FHIR Dosage Support - R5,io.github.jy95.fds.r5.functions,QuantityToStringR5,1,78,3,11,0,15,3,10,0,6
 FHIR Dosage Support - R5,io.github.jy95.fds.r5.functions,FormatDateTimesR5,0,12,0,0,0,5,0,2,0,2
-FHIR Dosage Support - R5,io.github.jy95.fds.r5.functions,DoseAndRateRegistryR5.Holder,0,5,0,0,0,1,0,1,0,1
 FHIR Dosage Support - R5,io.github.jy95.fds.r5.functions,RangeToStringR5.Holder,0,5,0,0,0,1,0,1,0,1
+FHIR Dosage Support - R5,io.github.jy95.fds.r5.functions,DoseAndRateRegistryR5.Holder,0,5,0,0,0,1,0,1,0,1
