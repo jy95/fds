@@ -41,7 +41,7 @@ public class MultiResourceBundleControl extends ResourceBundle.Control {
     public ResourceBundle newBundle(String baseName, Locale locale, String format, ClassLoader loader, boolean reload) {
         List<ResourceBundle> delegates = Arrays.stream(this.dependentBaseNames)
                 .filter(currentBaseName -> currentBaseName != null && !currentBaseName.trim().isEmpty())
-                .map(currentBaseName -> ResourceBundle.getBundle(currentBaseName, locale))
+                .map(currentBaseName -> ResourceBundle.getBundle(currentBaseName, locale, loader))
                 .toList();
 
         return new MultiResourceBundle(delegates);
