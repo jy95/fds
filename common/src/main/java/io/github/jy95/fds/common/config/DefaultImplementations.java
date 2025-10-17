@@ -12,6 +12,9 @@ import java.util.ResourceBundle;
  */
 public final class DefaultImplementations {
 
+    // Define the new package path for resource bundles
+    private static final String RESOURCE_PACKAGE = "io.github.jy95.fds.common.l10n.";
+
     /**
      * No constructor for this class
      */
@@ -26,9 +29,9 @@ public final class DefaultImplementations {
     public static ResourceBundle selectResourceBundle(Locale locale) {
         var bundleControl = new MultiResourceBundleControl(
                 "translations",
-                "common",
-                "eventTiming",
-                "quantityComparator"
+                RESOURCE_PACKAGE + "DosageFields",
+                RESOURCE_PACKAGE + "EventTiming",
+                RESOURCE_PACKAGE + "QuantityComparator"
         );
         return ResourceBundle.getBundle(
                 bundleControl.getBaseName(),
