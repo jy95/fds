@@ -6,11 +6,12 @@ on:
 
 jobs:
   support_java_lts_versions:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     permissions:
       contents: read
     strategy:
       matrix:
+        os: [ubuntu-latest, windows-latest]
         java: [17, 21, 25]
     steps:
       - uses: actions/checkout@v5
