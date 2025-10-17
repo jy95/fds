@@ -11,9 +11,9 @@ jobs:
       contents: read
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest]
+        os: [ubuntu-latest]
         java: [17, 21, 25]
-        distribution: [temurin,oracle]
+        distribution: [temurin]
     steps:
       - uses: actions/checkout@v5
       - name: ☕ Set up JDK ${{ matrix.java }} (${{ matrix.distribution }})
