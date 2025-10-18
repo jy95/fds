@@ -14,6 +14,7 @@ import java.util.ResourceBundle;
  * @param <C> The type of configuration, extending {@link io.github.jy95.fds.common.config.FDSConfig}.
  * @param <D> The type of the translated data.
  * @author jy95
+ * @since 1.0.0
  */
 public interface MaxDosePerLifetime<C extends FDSConfig, D> extends Translator<C, D> {
 

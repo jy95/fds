@@ -12,6 +12,7 @@ import java.util.ResourceBundle;
  * This class facilitates the creation of a MultiResourceBundle by combining dependent ResourceBundles.
  *
  * @author jy95
+ * @since 1.0.0
  */
 @Getter
 public class MultiResourceBundleControl extends ResourceBundle.Control {

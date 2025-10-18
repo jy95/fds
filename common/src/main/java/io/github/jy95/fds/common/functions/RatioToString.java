@@ -13,6 +13,7 @@ import java.util.stream.Stream;
  * @param <C> The type of configuration object extending FDSConfig.
  * @param <R> The type of ratio object to be converted.
  * @author jy95
+ * @since 1.0.0
  */
 public interface RatioToString<C extends FDSConfig, R> {
 

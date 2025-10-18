@@ -6,6 +6,7 @@ package io.github.jy95.fds.common.types;
  * @param <A> the type of the input from which the dose and rate will be extracted
  * @param <B> the type of the extracted dose and rate
  * @author jy95
+ * @since 1.0.0
  */
 @FunctionalInterface
 public interface DoseAndRateExtractor<A, B> {

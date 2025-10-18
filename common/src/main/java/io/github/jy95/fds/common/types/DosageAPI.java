@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
  * @param <C> the type of configuration extending {@link io.github.jy95.fds.common.config.FDSConfig}
  * @param <D> the type of dosage handled by this API
  * @author jy95
+ * @since 1.0.0
  */
 @Getter
 public abstract class DosageAPI<C extends FDSConfig, D> {

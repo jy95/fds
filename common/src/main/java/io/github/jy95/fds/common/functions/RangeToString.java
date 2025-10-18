@@ -14,6 +14,7 @@ import java.util.concurrent.CompletableFuture;
  * @param <C> The type of configuration object extending FDSConfig.
  * @param <R> The type of range object to be converted.
  * @author jy95
+ * @since 1.0.0
  */
 public interface RangeToString<C extends FDSConfig, R> {
 

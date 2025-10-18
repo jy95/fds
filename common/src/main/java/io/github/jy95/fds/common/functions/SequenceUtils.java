@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
  * Provides methods for checking sequential instructions and grouping by sequence.
  *
  * @author jy95
+ * @since 1.0.0
  */
 public final class SequenceUtils {
 

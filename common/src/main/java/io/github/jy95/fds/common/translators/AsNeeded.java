@@ -15,6 +15,7 @@ import java.util.concurrent.CompletableFuture;
  * @param <C> the type of configuration, which must extend {@link io.github.jy95.fds.common.config.FDSConfig}
  * @param <D> the type of data to be translated
  * @author jy95
+ * @since 1.0.0
  */
 public interface AsNeeded<C extends FDSConfig, D> extends Translator<C, D> {
 
