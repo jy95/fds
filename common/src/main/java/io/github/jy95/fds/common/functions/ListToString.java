@@ -9,6 +9,7 @@ import java.util.ResourceBundle;
  * Utility class for converting a list of strings into a human-readable string.
  *
  * @author jy95
+ * @since 1.0.0
  */
 public final class ListToString {
 

@@ -3,6 +3,9 @@ import java.util.ListResourceBundle;
 
 /**
  * English (en) resource bundle for structured dosage and field labels.
+ *
+ * @author jy95
+ * @since 2.0.1
  */
 public class DosageFields extends ListResourceBundle {
     
@@ -58,6 +61,7 @@ public class DosageFields extends ListResourceBundle {
     };
 
     // English version
+    /** {@inheritDoc} */
     @Override
     public Object[][] getContents() {
         return contents;

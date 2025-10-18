@@ -8,6 +8,7 @@ import java.util.List;
  * Represents the available display orders
  *
  * @author jy95
+ * @since 1.0.0
  */
 @Getter
 public enum DisplayOrder {

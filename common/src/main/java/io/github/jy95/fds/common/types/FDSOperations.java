@@ -15,6 +15,7 @@ import java.util.function.Predicate;
  * @param <R> The type representing DoseAndRateComponent in the FHIR version.
  * @param <T> The type representing a FHIR Type (Quantity, Duration, ...).
  * @author jy95
+ * @since 1.0.0
  */
 public interface FDSOperations<
         Q,

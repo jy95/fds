@@ -9,6 +9,7 @@ import java.util.ResourceBundle;
  * Provides default implementations for common operations in the library.
  *
  * @author jy95
+ * @since 1.0.0
  */
 public final class DefaultImplementations {
 

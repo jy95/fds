@@ -8,6 +8,7 @@ import java.util.*;
  * checking each bundle in the order they are provided.
  *
  * @author jy95
+ * @since 1.0.0
  */
 public class MultiResourceBundle extends ResourceBundle {
 

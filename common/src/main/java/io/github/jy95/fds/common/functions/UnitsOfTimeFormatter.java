@@ -12,6 +12,7 @@ import java.util.Map;
  * Class to format units of time
  *
  * @author jy95
+ * @since 1.0.2
  */
 public final class UnitsOfTimeFormatter {
 

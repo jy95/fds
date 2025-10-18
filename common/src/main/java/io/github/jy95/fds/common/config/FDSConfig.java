@@ -16,6 +16,7 @@ import io.github.jy95.fds.common.types.DisplayOrder;
  * Configuration class for controlling how dosages are handled and displayed.
  *
  * @author jy95
+ * @since 1.0.0
  */
 @Getter
 @SuperBuilder

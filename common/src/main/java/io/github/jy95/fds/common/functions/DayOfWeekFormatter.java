@@ -10,6 +10,7 @@ import java.util.Map;
  * Class to format day of week
  *
  * @author jy95
+ * @since 1.0.2
  */
 public final class DayOfWeekFormatter {
 

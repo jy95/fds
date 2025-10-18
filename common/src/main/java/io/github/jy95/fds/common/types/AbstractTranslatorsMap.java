@@ -14,6 +14,7 @@ import java.util.function.Supplier;
  * @param <C> the type of configuration extending {@link io.github.jy95.fds.common.config.FDSConfig}
  * @param <D> the type of dosage field handled by the translators
  * @author jy95
+ * @since 1.0.0
  */
 public abstract class AbstractTranslatorsMap<C extends FDSConfig, D> {
 

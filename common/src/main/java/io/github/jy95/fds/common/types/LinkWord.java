@@ -6,6 +6,7 @@ import lombok.Getter;
  * Enum representing the link words used to combine list elements.
  *
  * @author jy95
+ * @since 1.0.0
  */
 @Getter
 public enum LinkWord {
