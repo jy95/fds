@@ -14,6 +14,7 @@ import java.util.function.Supplier;
  * @param &lt;C&gt; the type of configuration extending {@link io.github.jy95.fds.common.config.FDSConfig}
  * @param &lt;D&gt; the type of dosage field handled by the translators
  * @author jy95
+ * @since 1.0.0
  */
 public abstract class AbstractTranslatorsMap&lt;C extends FDSConfig, D&gt; {
 
@@ -27,16 +28,16 @@ public abstract class AbstractTranslatorsMap&lt;C extends FDSConfig, D&gt; {
      * A map associating {@link DisplayOrder} values with their corresponding {@link Translator} instance.
      * So if you use part of the supported fields, you won't have a bunch of useless new calls to for your needs
      */
-<span class="nc" id="L30">    private final Map&lt;DisplayOrder, Translator&lt;C, D&gt;&gt; translatorCache = new ConcurrentHashMap&lt;&gt;();</span>
+<span class="nc" id="L31">    private final Map&lt;DisplayOrder, Translator&lt;C, D&gt;&gt; translatorCache = new ConcurrentHashMap&lt;&gt;();</span>
 
     /**
      * Constructs a new {@code AbstractTranslatorsMap} with the specified supplier map.
      *
      * @param translatorSuppliers a map of {@link io.github.jy95.fds.common.types.DisplayOrder} to lazy {@link java.util.function.Supplier} instances
      */
-<span class="nc" id="L37">    public AbstractTranslatorsMap(Map&lt;DisplayOrder, Supplier&lt;Translator&lt;C, D&gt;&gt;&gt; translatorSuppliers) {</span>
-<span class="nc" id="L38">        this.translatorSuppliers = translatorSuppliers;</span>
-<span class="nc" id="L39">    }</span>
+<span class="nc" id="L38">    public AbstractTranslatorsMap(Map&lt;DisplayOrder, Supplier&lt;Translator&lt;C, D&gt;&gt;&gt; translatorSuppliers) {</span>
+<span class="nc" id="L39">        this.translatorSuppliers = translatorSuppliers;</span>
+<span class="nc" id="L40">    }</span>
 
     /**
      * Retrieves the {@link io.github.jy95.fds.common.types.Translator} associated with the specified {@link io.github.jy95.fds.common.types.DisplayOrder}.
@@ -46,9 +47,9 @@ public abstract class AbstractTranslatorsMap&lt;C extends FDSConfig, D&gt; {
      * @return the corresponding {@link io.github.jy95.fds.common.types.Translator}, or {@code null} if no match is found
      */
     public Translator&lt;C, D&gt; getTranslator(DisplayOrder displayOrder) {
-<span class="nc" id="L49">        return translatorCache.computeIfAbsent(displayOrder, key -&gt; {</span>
-<span class="nc" id="L50">            Supplier&lt;Translator&lt;C, D&gt;&gt; supplier = translatorSuppliers.get(key);</span>
-<span class="nc bnc" id="L51" title="All 2 branches missed.">            return supplier != null ? supplier.get() : null;</span>
+<span class="nc" id="L50">        return translatorCache.computeIfAbsent(displayOrder, key -&gt; {</span>
+<span class="nc" id="L51">            Supplier&lt;Translator&lt;C, D&gt;&gt; supplier = translatorSuppliers.get(key);</span>
+<span class="nc bnc" id="L52" title="All 2 branches missed.">            return supplier != null ? supplier.get() : null;</span>
         });
     }
 }

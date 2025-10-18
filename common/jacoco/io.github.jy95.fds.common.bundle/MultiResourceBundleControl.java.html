@@ -12,6 +12,7 @@ import java.util.ResourceBundle;
  * This class facilitates the creation of a MultiResourceBundle by combining dependent ResourceBundles.
  *
  * @author jy95
+ * @since 1.0.0
  */
 @Getter
 public class MultiResourceBundleControl extends ResourceBundle.Control {
@@ -31,20 +32,20 @@ public class MultiResourceBundleControl extends ResourceBundle.Control {
      * @param baseName          the base name of the primary ResourceBundle.
      * @param dependentBaseNames the base names of additional ResourceBundles to aggregate.
      */
-<span class="fc" id="L34">    public MultiResourceBundleControl(String baseName, String... dependentBaseNames) {</span>
-<span class="fc" id="L35">        this.baseName = baseName;</span>
-<span class="fc" id="L36">        this.dependentBaseNames = dependentBaseNames;</span>
-<span class="fc" id="L37">    }</span>
+<span class="fc" id="L35">    public MultiResourceBundleControl(String baseName, String... dependentBaseNames) {</span>
+<span class="fc" id="L36">        this.baseName = baseName;</span>
+<span class="fc" id="L37">        this.dependentBaseNames = dependentBaseNames;</span>
+<span class="fc" id="L38">    }</span>
 
     /** {@inheritDoc} */
     @Override
     public ResourceBundle newBundle(String baseName, Locale locale, String format, ClassLoader loader, boolean reload) {
-<span class="fc" id="L42">        List&lt;ResourceBundle&gt; delegates = Arrays.stream(this.dependentBaseNames)</span>
-<span class="fc bfc" id="L43" title="All 4 branches covered.">                .filter(currentBaseName -&gt; currentBaseName != null &amp;&amp; !currentBaseName.trim().isEmpty())</span>
-<span class="fc" id="L44">                .map(currentBaseName -&gt; ResourceBundle.getBundle(currentBaseName, locale, loader))</span>
-<span class="fc" id="L45">                .toList();</span>
+<span class="fc" id="L43">        List&lt;ResourceBundle&gt; delegates = Arrays.stream(this.dependentBaseNames)</span>
+<span class="fc bfc" id="L44" title="All 4 branches covered.">                .filter(currentBaseName -&gt; currentBaseName != null &amp;&amp; !currentBaseName.trim().isEmpty())</span>
+<span class="fc" id="L45">                .map(currentBaseName -&gt; ResourceBundle.getBundle(currentBaseName, locale, loader))</span>
+<span class="fc" id="L46">                .toList();</span>
 
-<span class="fc" id="L47">        return new MultiResourceBundle(delegates);</span>
+<span class="fc" id="L48">        return new MultiResourceBundle(delegates);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -3,11 +3,14 @@ import java.util.ListResourceBundle;
 
 /**
  * English (en) resource bundle for structured dosage and field labels.
+ *
+ * @author jy95
+ * @since 2.0.1
  */
-<span class="fc" id="L7">public class DosageFields extends ListResourceBundle {</span>
+<span class="fc" id="L10">public class DosageFields extends ListResourceBundle {</span>
     
     // Static content array holding the key-value pairs
-<span class="fc" id="L10">    static final Object[][] contents = {</span>
+<span class="fc" id="L13">    static final Object[][] contents = {</span>
         // Linkwords
         {&quot;linkwords.and&quot;, &quot;and&quot;},
         {&quot;linkwords.then&quot;, &quot;then&quot;},
@@ -58,9 +61,10 @@ import java.util.ListResourceBundle;
     };
 
     // English version
+    /** {@inheritDoc} */
     @Override
     public Object[][] getContents() {
-<span class="fc" id="L63">        return contents;</span>
+<span class="fc" id="L67">        return contents;</span>
     }
 
 }

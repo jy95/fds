@@ -13,6 +13,7 @@ import java.util.stream.Stream;
  * @param &lt;C&gt; The type of configuration, extending {@link io.github.jy95.fds.common.config.FDSConfig}.
  * @param &lt;D&gt; The type of the translated data.
  * @author jy95
+ * @since 1.0.0
  */
 public interface FrequencyFrequencyMaxPeriodPeriodMax&lt;C extends FDSConfig, D&gt; extends Translator&lt;C, D&gt; {
 
@@ -35,19 +36,19 @@ public interface FrequencyFrequencyMaxPeriodPeriodMax&lt;C extends FDSConfig, D&
     /** {@inheritDoc} */
     @Override
     default boolean isPresent(D dosage) {
-<span class="nc bnc" id="L38" title="All 4 branches missed.">        return hasFrequency(dosage) || hasPeriod(dosage);</span>
+<span class="nc bnc" id="L39" title="All 4 branches missed.">        return hasFrequency(dosage) || hasPeriod(dosage);</span>
     }
 
     /** {@inheritDoc} */
     @Override
     default CompletableFuture&lt;String&gt; convert(D dosage) {
-<span class="nc" id="L44">        var frequencyPart = extractFrequency(dosage);</span>
-<span class="nc" id="L45">        var periodPart = extractPeriod(dosage);</span>
+<span class="nc" id="L45">        var frequencyPart = extractFrequency(dosage);</span>
+<span class="nc" id="L46">        var periodPart = extractPeriod(dosage);</span>
 
-<span class="nc" id="L47">        return frequencyPart.thenCombineAsync(periodPart, (freq, period) -&gt;</span>
-<span class="nc" id="L48">                Stream.of(freq, period)</span>
-<span class="nc bnc" id="L49" title="All 2 branches missed.">                        .filter(part -&gt; !part.isEmpty())</span>
-<span class="nc" id="L50">                        .collect(Collectors.joining(&quot; &quot;))</span>
+<span class="nc" id="L48">        return frequencyPart.thenCombineAsync(periodPart, (freq, period) -&gt;</span>
+<span class="nc" id="L49">                Stream.of(freq, period)</span>
+<span class="nc bnc" id="L50" title="All 2 branches missed.">                        .filter(part -&gt; !part.isEmpty())</span>
+<span class="nc" id="L51">                        .collect(Collectors.joining(&quot; &quot;))</span>
         );
     }
 

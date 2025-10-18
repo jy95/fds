@@ -14,6 +14,7 @@ import java.util.ResourceBundle;
  * @param &lt;C&gt; The type of configuration, extending {@link io.github.jy95.fds.common.config.FDSConfig}.
  * @param &lt;D&gt; The type of the translated data.
  * @author jy95
+ * @since 1.0.0
  */
 public interface BoundsPeriod&lt;C extends FDSConfig, D&gt; extends TranslatorTiming&lt;C, D&gt; {
 
@@ -25,8 +26,8 @@ public interface BoundsPeriod&lt;C extends FDSConfig, D&gt; extends TranslatorTi
      * @return The message template for &quot;boundsPeriod&quot;
      */
     default MessageFormat getBoundsPeriodMsg(ResourceBundle bundle, Locale locale) {
-<span class="nc" id="L28">        String msg = bundle.getString(&quot;fields.boundsPeriod&quot;);</span>
-<span class="nc" id="L29">        return new MessageFormat(msg, locale);</span>
+<span class="nc" id="L29">        String msg = bundle.getString(&quot;fields.boundsPeriod&quot;);</span>
+<span class="nc" id="L30">        return new MessageFormat(msg, locale);</span>
     }
 
     /**
@@ -37,18 +38,18 @@ public interface BoundsPeriod&lt;C extends FDSConfig, D&gt; extends TranslatorTi
      */
     default Map&lt;String, Object&gt; extractInformation(D dosage) {
         // Check conditions
-<span class="nc" id="L40">        var hasStart = hasStartPeriod(dosage);</span>
-<span class="nc" id="L41">        var hasEnd = hasEndPeriod(dosage);</span>
+<span class="nc" id="L41">        var hasStart = hasStartPeriod(dosage);</span>
+<span class="nc" id="L42">        var hasEnd = hasEndPeriod(dosage);</span>
 
         // Prepare date values using FormatDateTimes.convert()
-<span class="nc bnc" id="L44" title="All 2 branches missed.">        String startDate = hasStart ? formatStartPeriod(dosage) : &quot;&quot;;</span>
-<span class="nc bnc" id="L45" title="All 2 branches missed.">        String endDate = hasEnd ? formatEndPeriod(dosage) : &quot;&quot;;</span>
+<span class="nc bnc" id="L45" title="All 2 branches missed.">        String startDate = hasStart ? formatStartPeriod(dosage) : &quot;&quot;;</span>
+<span class="nc bnc" id="L46" title="All 2 branches missed.">        String endDate = hasEnd ? formatEndPeriod(dosage) : &quot;&quot;;</span>
 
         // Choose the correct condition based on the presence of start and end dates
-<span class="nc bnc" id="L48" title="All 6 branches missed.">        String condition = hasStart &amp;&amp; hasEnd ? &quot;0&quot; : (hasStart ? &quot;1&quot; : &quot;other&quot;);</span>
+<span class="nc bnc" id="L49" title="All 6 branches missed.">        String condition = hasStart &amp;&amp; hasEnd ? &quot;0&quot; : (hasStart ? &quot;1&quot; : &quot;other&quot;);</span>
 
         // Create a map of named arguments
-<span class="nc" id="L51">        return Map.of(</span>
+<span class="nc" id="L52">        return Map.of(</span>
                 &quot;startDate&quot;, startDate,
                 &quot;endDate&quot;, endDate,
                 &quot;condition&quot;, condition

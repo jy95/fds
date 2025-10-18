@@ -15,6 +15,7 @@ import java.util.stream.Stream;
  * @param &lt;C&gt; The type of configuration object extending FDSConfig.
  * @param &lt;Q&gt; The type of quantity object to be converted.
  * @author jy95
+ * @since 1.0.0
  */
 public interface QuantityToString&lt;C extends FDSConfig, Q&gt; {
 
@@ -29,7 +30,7 @@ public interface QuantityToString&lt;C extends FDSConfig, Q&gt; {
     /**
      * List of time-related systems.
      */
-<span class="nc" id="L32">    List&lt;String&gt; TIME_SYSTEMS = List.of(DURATION_SYSTEM, UNITS_OF_TIME_SYSTEM);</span>
+<span class="nc" id="L33">    List&lt;String&gt; TIME_SYSTEMS = List.of(DURATION_SYSTEM, UNITS_OF_TIME_SYSTEM);</span>
 
     /**
      * Converts a quantity object to a human-readable string asynchronously.
@@ -40,17 +41,17 @@ public interface QuantityToString&lt;C extends FDSConfig, Q&gt; {
      * @return A CompletableFuture that resolves to the human-readable string.
      */
     default CompletableFuture&lt;String&gt; convert(ResourceBundle bundle, C config, Q quantity) {
-<span class="nc" id="L43">        var comparator = comparatorToString(bundle, config, quantity);</span>
-<span class="nc bnc" id="L44" title="All 2 branches missed.">        var unit = hasUnit(quantity)</span>
-<span class="nc" id="L45">                ? enhancedFromUnitToString(config, quantity)</span>
-<span class="nc" id="L46">                : CompletableFuture.completedFuture(&quot;&quot;);</span>
-<span class="nc" id="L47">        var amount = getValue(quantity).toString();</span>
+<span class="nc" id="L44">        var comparator = comparatorToString(bundle, config, quantity);</span>
+<span class="nc bnc" id="L45" title="All 2 branches missed.">        var unit = hasUnit(quantity)</span>
+<span class="nc" id="L46">                ? enhancedFromUnitToString(config, quantity)</span>
+<span class="nc" id="L47">                : CompletableFuture.completedFuture(&quot;&quot;);</span>
+<span class="nc" id="L48">        var amount = getValue(quantity).toString();</span>
 
-<span class="nc" id="L49">        return comparator.thenCombineAsync(unit, (comparatorText, unitText) -&gt;</span>
+<span class="nc" id="L50">        return comparator.thenCombineAsync(unit, (comparatorText, unitText) -&gt;</span>
                 Stream
-<span class="nc" id="L51">                        .of(comparatorText, amount, unitText)</span>
-<span class="nc bnc" id="L52" title="All 2 branches missed.">                        .filter(part -&gt; !part.isEmpty())</span>
-<span class="nc" id="L53">                        .collect(Collectors.joining(&quot; &quot;))</span>
+<span class="nc" id="L52">                        .of(comparatorText, amount, unitText)</span>
+<span class="nc bnc" id="L53" title="All 2 branches missed.">                        .filter(part -&gt; !part.isEmpty())</span>
+<span class="nc" id="L54">                        .collect(Collectors.joining(&quot; &quot;))</span>
         );
     }
 

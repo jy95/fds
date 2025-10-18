@@ -13,6 +13,7 @@ import java.util.stream.Stream;
  * @param &lt;C&gt; The type of configuration object extending FDSConfig.
  * @param &lt;R&gt; The type of ratio object to be converted.
  * @author jy95
+ * @since 1.0.0
  */
 public interface RatioToString&lt;C extends FDSConfig, R&gt; {
 
@@ -25,20 +26,20 @@ public interface RatioToString&lt;C extends FDSConfig, R&gt; {
      * @return A CompletableFuture that resolves to the human-readable string.
      */
     default CompletableFuture&lt;String&gt; convert(ResourceBundle bundle, C config, R ratio) {
-<span class="nc" id="L28">        var linkword = retrieveRatioLinkWord(bundle, config, ratio);</span>
+<span class="nc" id="L29">        var linkword = retrieveRatioLinkWord(bundle, config, ratio);</span>
 
-<span class="nc bnc" id="L30" title="All 2 branches missed.">        var numeratorText = hasNumerator(ratio)</span>
-<span class="nc" id="L31">                ? convertNumerator(bundle, config, ratio)</span>
-<span class="nc" id="L32">                : CompletableFuture.completedFuture(&quot;&quot;);</span>
+<span class="nc bnc" id="L31" title="All 2 branches missed.">        var numeratorText = hasNumerator(ratio)</span>
+<span class="nc" id="L32">                ? convertNumerator(bundle, config, ratio)</span>
+<span class="nc" id="L33">                : CompletableFuture.completedFuture(&quot;&quot;);</span>
 
-<span class="nc bnc" id="L34" title="All 2 branches missed.">        var denominatorText = hasDenominator(ratio)</span>
-<span class="nc" id="L35">                ? convertDenominator(bundle, config, ratio)</span>
-<span class="nc" id="L36">                : CompletableFuture.completedFuture(&quot;&quot;);</span>
+<span class="nc bnc" id="L35" title="All 2 branches missed.">        var denominatorText = hasDenominator(ratio)</span>
+<span class="nc" id="L36">                ? convertDenominator(bundle, config, ratio)</span>
+<span class="nc" id="L37">                : CompletableFuture.completedFuture(&quot;&quot;);</span>
 
-<span class="nc" id="L38">        return numeratorText.thenCombineAsync(denominatorText, (num, dem) -&gt; Stream</span>
-<span class="nc" id="L39">                .of(num, linkword, dem)</span>
-<span class="nc bnc" id="L40" title="All 2 branches missed.">                .filter(s -&gt; !s.isEmpty())</span>
-<span class="nc" id="L41">                .collect(Collectors.joining(&quot; &quot;))</span>
+<span class="nc" id="L39">        return numeratorText.thenCombineAsync(denominatorText, (num, dem) -&gt; Stream</span>
+<span class="nc" id="L40">                .of(num, linkword, dem)</span>
+<span class="nc bnc" id="L41" title="All 2 branches missed.">                .filter(s -&gt; !s.isEmpty())</span>
+<span class="nc" id="L42">                .collect(Collectors.joining(&quot; &quot;))</span>
         );
     }
 

@@ -14,6 +14,7 @@ import java.util.concurrent.CompletableFuture;
  * @param &lt;C&gt; The type of configuration, extending {@link io.github.jy95.fds.common.config.FDSConfig}.
  * @param &lt;D&gt; The type of the translated data.
  * @author jy95
+ * @since 1.0.0
  */
 public interface FrequencyFrequencyMax&lt;C extends FDSConfig, D&gt; extends TranslatorTiming&lt;C, D&gt; {
 
@@ -25,8 +26,8 @@ public interface FrequencyFrequencyMax&lt;C extends FDSConfig, D&gt; extends Tra
      * @return The message template for &quot;frequency&quot; &amp;amp; &quot;frequencyMax&quot; translation
      */
     default MessageFormat getFrequencyAndFrequencyMaxMsg(ResourceBundle bundle, Locale locale) {
-<span class="nc" id="L28">        var msg = bundle.getString(&quot;fields.frequencyAndFrequencyMax&quot;);</span>
-<span class="nc" id="L29">        return new MessageFormat(msg, locale);</span>
+<span class="nc" id="L29">        var msg = bundle.getString(&quot;fields.frequencyAndFrequencyMax&quot;);</span>
+<span class="nc" id="L30">        return new MessageFormat(msg, locale);</span>
     }
 
     /**
@@ -37,8 +38,8 @@ public interface FrequencyFrequencyMax&lt;C extends FDSConfig, D&gt; extends Tra
      * @return The message template for &quot;frequencyMax&quot; translation
      */
     default MessageFormat getFrequencyMaxMsg(ResourceBundle bundle, Locale locale) {
-<span class="nc" id="L40">        var msg = bundle.getString(&quot;fields.frequencyMax&quot;);</span>
-<span class="nc" id="L41">        return new MessageFormat(msg, locale);</span>
+<span class="nc" id="L41">        var msg = bundle.getString(&quot;fields.frequencyMax&quot;);</span>
+<span class="nc" id="L42">        return new MessageFormat(msg, locale);</span>
     }
 
     /**
@@ -49,28 +50,28 @@ public interface FrequencyFrequencyMax&lt;C extends FDSConfig, D&gt; extends Tra
      * @return The message template for &quot;frequency&quot; translation
      */
     default MessageFormat getFrequencyMsg(ResourceBundle bundle, Locale locale) {
-<span class="nc" id="L52">        var msg = bundle.getString(&quot;fields.frequency&quot;);</span>
-<span class="nc" id="L53">        return new MessageFormat(msg, locale);</span>
+<span class="nc" id="L53">        var msg = bundle.getString(&quot;fields.frequency&quot;);</span>
+<span class="nc" id="L54">        return new MessageFormat(msg, locale);</span>
     }
 
     /** {@inheritDoc} */
     @Override
     default CompletableFuture&lt;String&gt; convert(D dosage) {
-<span class="nc" id="L59">        return CompletableFuture.supplyAsync(() -&gt; {</span>
+<span class="nc" id="L60">        return CompletableFuture.supplyAsync(() -&gt; {</span>
 
-<span class="nc" id="L61">            var hasFrequencyFlag = hasFrequency(dosage);</span>
-<span class="nc" id="L62">            var hasFrequencyMaxFlag = hasFrequencyMax(dosage);</span>
-<span class="nc bnc" id="L63" title="All 4 branches missed.">            var hasBoth = hasFrequencyFlag &amp;&amp; hasFrequencyMaxFlag;</span>
+<span class="nc" id="L62">            var hasFrequencyFlag = hasFrequency(dosage);</span>
+<span class="nc" id="L63">            var hasFrequencyMaxFlag = hasFrequencyMax(dosage);</span>
+<span class="nc bnc" id="L64" title="All 4 branches missed.">            var hasBoth = hasFrequencyFlag &amp;&amp; hasFrequencyMaxFlag;</span>
 
-<span class="nc bnc" id="L65" title="All 2 branches missed.">            if (hasBoth) {</span>
-<span class="nc" id="L66">                return turnFrequencyAndFrequencyMaxToString(dosage);</span>
+<span class="nc bnc" id="L66" title="All 2 branches missed.">            if (hasBoth) {</span>
+<span class="nc" id="L67">                return turnFrequencyAndFrequencyMaxToString(dosage);</span>
             }
 
-<span class="nc bnc" id="L69" title="All 2 branches missed.">            if (hasFrequencyMaxFlag) {</span>
-<span class="nc" id="L70">                return turnFrequencyMaxToString(dosage);</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">            if (hasFrequencyMaxFlag) {</span>
+<span class="nc" id="L71">                return turnFrequencyMaxToString(dosage);</span>
             }
 
-<span class="nc" id="L73">            return turnFrequencyToString(dosage);</span>
+<span class="nc" id="L74">            return turnFrequencyToString(dosage);</span>
         });
     }
 

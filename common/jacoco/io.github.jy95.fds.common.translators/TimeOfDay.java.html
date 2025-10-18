@@ -14,6 +14,7 @@ import java.util.ResourceBundle;
  * @param &lt;C&gt; The type of configuration, extending {@link io.github.jy95.fds.common.config.FDSConfig}.
  * @param &lt;D&gt; The type of the translated data.
  * @author jy95
+ * @since 1.0.0
  */
 public interface TimeOfDay&lt;C extends FDSConfig, D&gt; extends TranslatorTiming&lt;C, D&gt; {
 
@@ -25,8 +26,8 @@ public interface TimeOfDay&lt;C extends FDSConfig, D&gt; extends TranslatorTimin
      * @return The message template for &quot;timeOfDay&quot;
      */
     default MessageFormat getTimeOfDayMsg(ResourceBundle bundle, Locale locale) {
-<span class="nc" id="L28">        var msg = bundle.getString(&quot;fields.timeOfDay&quot;);</span>
-<span class="nc" id="L29">        return new MessageFormat(msg, locale);</span>
+<span class="nc" id="L29">        var msg = bundle.getString(&quot;fields.timeOfDay&quot;);</span>
+<span class="nc" id="L30">        return new MessageFormat(msg, locale);</span>
     }
 
     /**
@@ -45,13 +46,13 @@ public interface TimeOfDay&lt;C extends FDSConfig, D&gt; extends TranslatorTimin
      * @return A formatted time string with optional seconds removed.
      */
     default String formatString(String time) {
-<span class="nc" id="L48">        String[] parts = time.split(&quot;:&quot;);</span>
+<span class="nc" id="L49">        String[] parts = time.split(&quot;:&quot;);</span>
 
-<span class="nc bnc" id="L50" title="All 4 branches missed.">        if (parts.length &gt; 2 &amp;&amp; parts[2].equals(&quot;00&quot;)) {</span>
-<span class="nc" id="L51">            parts = new String[] { parts[0], parts[1] };</span>
+<span class="nc bnc" id="L51" title="All 4 branches missed.">        if (parts.length &gt; 2 &amp;&amp; parts[2].equals(&quot;00&quot;)) {</span>
+<span class="nc" id="L52">            parts = new String[] { parts[0], parts[1] };</span>
         }
 
-<span class="nc" id="L54">        return String.join(&quot;:&quot;, parts);</span>
+<span class="nc" id="L55">        return String.join(&quot;:&quot;, parts);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

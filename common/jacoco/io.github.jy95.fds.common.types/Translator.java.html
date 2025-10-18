@@ -12,6 +12,7 @@ import java.util.concurrent.CompletableFuture;
  * @param &lt;C&gt; the type of configuration extending {@link io.github.jy95.fds.common.config.FDSConfig}
  * @param &lt;D&gt; the type of dosage field to be translated
  * @author jy95
+ * @since 1.0.0
  */
 public interface Translator&lt;C extends FDSConfig, D&gt; {
     /**
@@ -29,7 +30,7 @@ public interface Translator&lt;C extends FDSConfig, D&gt; {
      * @return {@code true} if the dosage field is present, {@code false} otherwise
      */
     default boolean isPresent(D dosage) {
-<span class="fc" id="L32">        return false;</span>
+<span class="fc" id="L33">        return false;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

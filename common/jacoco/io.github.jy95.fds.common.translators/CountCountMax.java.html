@@ -13,6 +13,7 @@ import java.util.ResourceBundle;
  * @param &lt;C&gt; The type of configuration, extending {@link io.github.jy95.fds.common.config.FDSConfig}.
  * @param &lt;D&gt; The type of the translated data.
  * @author jy95
+ * @since 1.0.0
  */
 public interface CountCountMax&lt;C extends FDSConfig, D&gt; extends TranslatorTiming&lt;C, D&gt; {
 
@@ -24,8 +25,8 @@ public interface CountCountMax&lt;C extends FDSConfig, D&gt; extends TranslatorT
      * @return The message template for &quot;count&quot; &amp;amp; &quot;countMax&quot;
      */
     default MessageFormat getCountMaxMsg(ResourceBundle bundle, Locale locale) {
-<span class="nc" id="L27">        var msg = bundle.getString(&quot;fields.countMax&quot;);</span>
-<span class="nc" id="L28">        return new MessageFormat(msg, locale);</span>
+<span class="nc" id="L28">        var msg = bundle.getString(&quot;fields.countMax&quot;);</span>
+<span class="nc" id="L29">        return new MessageFormat(msg, locale);</span>
     }
 
     /**
@@ -36,8 +37,8 @@ public interface CountCountMax&lt;C extends FDSConfig, D&gt; extends TranslatorT
      * @return The message template for &quot;count&quot;
      */
     default MessageFormat getCountMsg(ResourceBundle bundle, Locale locale) {
-<span class="nc" id="L39">        var msg = bundle.getString(&quot;fields.count&quot;);</span>
-<span class="nc" id="L40">        return new MessageFormat(msg, locale);</span>
+<span class="nc" id="L40">        var msg = bundle.getString(&quot;fields.count&quot;);</span>
+<span class="nc" id="L41">        return new MessageFormat(msg, locale);</span>
     }
 
     /**

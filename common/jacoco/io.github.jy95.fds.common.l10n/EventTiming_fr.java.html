@@ -3,12 +3,15 @@ import java.util.ListResourceBundle;
 
 /**
  * French (fr) resource bundle for event timing codes.
+ *
  * @see &lt;a href=&quot;https://www.hl7.org/fhir/valueset-event-timing.html&quot;&gt;FHIR Event Timing&lt;/a&gt;
+ * @author jy95
+ * @since 2.0.1
  */
-<span class="nc" id="L8">public class EventTiming_fr extends ListResourceBundle {</span>
+<span class="nc" id="L11">public class EventTiming_fr extends ListResourceBundle {</span>
     
     // Static content array holding the key-value pairs
-<span class="nc" id="L11">    static final Object[][] contents = {</span>
+<span class="nc" id="L14">    static final Object[][] contents = {</span>
         {&quot;MORN&quot;, &quot;durant le matin&quot;},
         {&quot;MORN.early&quot;, &quot;en début de matinée&quot;},
         {&quot;MORN.late&quot;, &quot;en fin de matinée&quot;},
@@ -44,9 +47,10 @@ import java.util.ListResourceBundle;
     };
 
     // French version
+    /** {@inheritDoc} */
     @Override
     public Object[][] getContents() {
-<span class="nc" id="L49">        return contents;</span>
+<span class="nc" id="L53">        return contents;</span>
     }
 
 }

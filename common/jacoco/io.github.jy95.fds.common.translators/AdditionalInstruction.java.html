@@ -14,6 +14,7 @@ import java.util.concurrent.CompletableFuture;
  * @param &lt;C&gt; The type of configuration, extending {@link io.github.jy95.fds.common.config.FDSConfig}.
  * @param &lt;D&gt; The type of the translated data.
  * @author jy95
+ * @since 1.0.0
  */
 public interface AdditionalInstruction&lt;C extends FDSConfig, D&gt; extends Translator&lt;C, D&gt; {
 
@@ -34,16 +35,16 @@ public interface AdditionalInstruction&lt;C extends FDSConfig, D&gt; extends Tra
             List&lt;CompletableFuture&lt;String&gt;&gt; additionalInstructions,
             ResourceBundle bundle
     ) {
-<span class="nc" id="L37">        return CompletableFuture</span>
-<span class="nc" id="L38">                .allOf(additionalInstructions.toArray(CompletableFuture[]::new))</span>
-<span class="nc" id="L39">                .thenApplyAsync(v -&gt; {</span>
-<span class="nc" id="L40">                    var additionalInstructionsAsText = additionalInstructions</span>
-<span class="nc" id="L41">                            .stream()</span>
-<span class="nc" id="L42">                            .map(future -&gt; future.getNow(&quot;&quot;))</span>
-<span class="nc" id="L43">                            .toList();</span>
+<span class="nc" id="L38">        return CompletableFuture</span>
+<span class="nc" id="L39">                .allOf(additionalInstructions.toArray(CompletableFuture[]::new))</span>
+<span class="nc" id="L40">                .thenApplyAsync(v -&gt; {</span>
+<span class="nc" id="L41">                    var additionalInstructionsAsText = additionalInstructions</span>
+<span class="nc" id="L42">                            .stream()</span>
+<span class="nc" id="L43">                            .map(future -&gt; future.getNow(&quot;&quot;))</span>
+<span class="nc" id="L44">                            .toList();</span>
 
                     // Use ListToString.convert with the translators' resources
-<span class="nc" id="L46">                    return ListToString.convert(bundle, additionalInstructionsAsText);</span>
+<span class="nc" id="L47">                    return ListToString.convert(bundle, additionalInstructionsAsText);</span>
                 });
     }
 }

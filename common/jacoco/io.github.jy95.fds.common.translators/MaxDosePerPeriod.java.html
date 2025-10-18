@@ -13,6 +13,7 @@ import java.util.ResourceBundle;
  * @param &lt;C&gt; The type of configuration, extending {@link io.github.jy95.fds.common.config.FDSConfig}.
  * @param &lt;D&gt; The type of the translated data.
  * @author jy95
+ * @since 1.0.0
  */
 public interface MaxDosePerPeriod&lt;C extends FDSConfig, D&gt; extends Translator&lt;C, D&gt; {
 
@@ -24,8 +25,8 @@ public interface MaxDosePerPeriod&lt;C extends FDSConfig, D&gt; extends Translat
      * @return The message template for &quot;maxDosePerPeriod&quot;
      */
     default MessageFormat getMaxDosePerPeriodMsg(ResourceBundle bundle, Locale locale) {
-<span class="nc" id="L27">        var msg = bundle.getString(&quot;fields.maxDosePerPeriod&quot;);</span>
-<span class="nc" id="L28">        return new MessageFormat(msg, locale);</span>
+<span class="nc" id="L28">        var msg = bundle.getString(&quot;fields.maxDosePerPeriod&quot;);</span>
+<span class="nc" id="L29">        return new MessageFormat(msg, locale);</span>
     }
 
 }

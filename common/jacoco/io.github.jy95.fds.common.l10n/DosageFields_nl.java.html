@@ -4,11 +4,14 @@ import java.util.ListResourceBundle;
 /**
  * Dutch (nl) resource bundle for structured dosage and field labels.
  * Uses native UTF-8 characters to avoid encoding issues.
+ *
+ * @author jy95
+ * @since 2.0.1
  */
-<span class="nc" id="L8">public class DosageFields_nl extends ListResourceBundle {</span>
+<span class="nc" id="L11">public class DosageFields_nl extends ListResourceBundle {</span>
     
     // Static content array holding the key-value pairs
-<span class="nc" id="L11">    static final Object[][] contents = {</span>
+<span class="nc" id="L14">    static final Object[][] contents = {</span>
         // Linkwords
         {&quot;linkwords.and&quot;, &quot;en&quot;},
         {&quot;linkwords.then&quot;, &quot;vervolgens&quot;},
@@ -59,9 +62,10 @@ import java.util.ListResourceBundle;
     };
 
     // Dutch version
+    /** {@inheritDoc} */
     @Override
     public Object[][] getContents() {
-<span class="nc" id="L64">        return contents;</span>
+<span class="nc" id="L68">        return contents;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -14,6 +14,7 @@ import java.util.ResourceBundle;
  * @param &lt;C&gt; The type of configuration, extending {@link io.github.jy95.fds.common.config.FDSConfig}.
  * @param &lt;D&gt; The type of the translated data.
  * @author jy95
+ * @since 1.0.0
  */
 public interface RateRange&lt;C extends FDSConfig, D&gt; extends Translator&lt;C, D&gt; {
 
@@ -25,8 +26,8 @@ public interface RateRange&lt;C extends FDSConfig, D&gt; extends Translator&lt;C
      * @return The message template for &quot;rateRange&quot;
      */
     default MessageFormat getRateRangeMsg(ResourceBundle bundle, Locale locale) {
-<span class="nc" id="L28">        var msg = bundle.getString(&quot;fields.rateRange&quot;);</span>
-<span class="nc" id="L29">        return new MessageFormat(msg, locale);</span>
+<span class="nc" id="L29">        var msg = bundle.getString(&quot;fields.rateRange&quot;);</span>
+<span class="nc" id="L30">        return new MessageFormat(msg, locale);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

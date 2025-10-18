@@ -15,6 +15,7 @@ import java.util.concurrent.CompletableFuture;
  * @param &lt;C&gt; the type of configuration, which must extend {@link io.github.jy95.fds.common.config.FDSConfig}
  * @param &lt;D&gt; the type of data to be translated
  * @author jy95
+ * @since 1.0.0
  */
 public interface AsNeeded&lt;C extends FDSConfig, D&gt; extends Translator&lt;C, D&gt; {
 
@@ -26,8 +27,8 @@ public interface AsNeeded&lt;C extends FDSConfig, D&gt; extends Translator&lt;C,
      * @return The message template for &quot;asNeededFor&quot;
      */
     default MessageFormat getAsNeededForMsg(ResourceBundle bundle, Locale locale) {
-<span class="nc" id="L29">        var msg = bundle.getString(&quot;fields.asNeededFor&quot;);</span>
-<span class="nc" id="L30">        return new MessageFormat(msg, locale);</span>
+<span class="nc" id="L30">        var msg = bundle.getString(&quot;fields.asNeededFor&quot;);</span>
+<span class="nc" id="L31">        return new MessageFormat(msg, locale);</span>
     }
 
     /**
@@ -37,7 +38,7 @@ public interface AsNeeded&lt;C extends FDSConfig, D&gt; extends Translator&lt;C,
      * @return The message template for &quot;asNeeded&quot;
      */
     default String getAsNeededMsg(ResourceBundle bundle) {
-<span class="nc" id="L40">        return bundle.getString(&quot;fields.asNeeded&quot;);</span>
+<span class="nc" id="L41">        return bundle.getString(&quot;fields.asNeeded&quot;);</span>
     }
 
     /**

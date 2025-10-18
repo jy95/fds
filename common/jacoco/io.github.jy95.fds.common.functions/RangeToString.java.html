@@ -14,6 +14,7 @@ import java.util.concurrent.CompletableFuture;
  * @param &lt;C&gt; The type of configuration object extending FDSConfig.
  * @param &lt;R&gt; The type of range object to be converted.
  * @author jy95
+ * @since 1.0.0
  */
 public interface RangeToString&lt;C extends FDSConfig, R&gt; {
 
@@ -26,10 +27,10 @@ public interface RangeToString&lt;C extends FDSConfig, R&gt; {
      * @return A CompletableFuture that resolves to the human-readable string.
      */
     default CompletableFuture&lt;String&gt; convert(ResourceBundle bundle, C config, R range) {
-<span class="nc bnc" id="L29" title="All 2 branches missed.">        if (hasUnit(range)) {</span>
-<span class="nc" id="L30">            return convertWithUnit(bundle, config, range);</span>
+<span class="nc bnc" id="L30" title="All 2 branches missed.">        if (hasUnit(range)) {</span>
+<span class="nc" id="L31">            return convertWithUnit(bundle, config, range);</span>
         }
-<span class="nc" id="L32">        return convertWithoutUnit(bundle, config, range);</span>
+<span class="nc" id="L33">        return convertWithoutUnit(bundle, config, range);</span>
     }
 
     /**
@@ -49,22 +50,22 @@ public interface RangeToString&lt;C extends FDSConfig, R&gt; {
      * @return A CompletableFuture that resolves to the human-readable string.
      */
     default CompletableFuture&lt;String&gt; convertWithoutUnit(ResourceBundle bundle, C config, R range) {
-<span class="nc" id="L52">        return CompletableFuture.supplyAsync(() -&gt; {</span>
-<span class="nc" id="L53">            boolean hasLow = hasLow(range);</span>
-<span class="nc" id="L54">            boolean hasHigh = hasHigh(range);</span>
-<span class="nc" id="L55">            String msg = bundle.getString(&quot;amount.range.withoutUnit&quot;);</span>
+<span class="nc" id="L53">        return CompletableFuture.supplyAsync(() -&gt; {</span>
+<span class="nc" id="L54">            boolean hasLow = hasLow(range);</span>
+<span class="nc" id="L55">            boolean hasHigh = hasHigh(range);</span>
+<span class="nc" id="L56">            String msg = bundle.getString(&quot;amount.range.withoutUnit&quot;);</span>
 
-<span class="nc" id="L57">            MessageFormat messageFormat = new MessageFormat(msg, config.getLocale());</span>
+<span class="nc" id="L58">            MessageFormat messageFormat = new MessageFormat(msg, config.getLocale());</span>
 
-<span class="nc bnc" id="L59" title="All 8 branches missed.">            String condition = (hasLow &amp;&amp; hasHigh) ? &quot;0&quot; : (hasHigh) ? &quot;1&quot; : (hasLow) ? &quot;2&quot; : &quot;other&quot;;</span>
+<span class="nc bnc" id="L60" title="All 8 branches missed.">            String condition = (hasLow &amp;&amp; hasHigh) ? &quot;0&quot; : (hasHigh) ? &quot;1&quot; : (hasLow) ? &quot;2&quot; : &quot;other&quot;;</span>
 
-<span class="nc" id="L61">            Map&lt;String, Object&gt; arguments = Map.of(</span>
-<span class="nc bnc" id="L62" title="All 2 branches missed.">                    &quot;minValue&quot;, hasLow ? getLowValue(range) : &quot;&quot;,</span>
-<span class="nc bnc" id="L63" title="All 2 branches missed.">                    &quot;maxValue&quot;, hasHigh ? getHighValue(range) : &quot;&quot;,</span>
+<span class="nc" id="L62">            Map&lt;String, Object&gt; arguments = Map.of(</span>
+<span class="nc bnc" id="L63" title="All 2 branches missed.">                    &quot;minValue&quot;, hasLow ? getLowValue(range) : &quot;&quot;,</span>
+<span class="nc bnc" id="L64" title="All 2 branches missed.">                    &quot;maxValue&quot;, hasHigh ? getHighValue(range) : &quot;&quot;,</span>
                     &quot;condition&quot;, condition
             );
 
-<span class="nc" id="L67">            return messageFormat.format(arguments);</span>
+<span class="nc" id="L68">            return messageFormat.format(arguments);</span>
         });
     }
 
@@ -77,24 +78,24 @@ public interface RangeToString&lt;C extends FDSConfig, R&gt; {
      * @return A CompletableFuture that resolves to the human-readable string.
      */
     default CompletableFuture&lt;String&gt; convertWithUnit(ResourceBundle bundle, C config, R range) {
-<span class="nc" id="L80">        boolean hasLow = hasLow(range);</span>
-<span class="nc" id="L81">        boolean hasHigh = hasHigh(range);</span>
-<span class="nc" id="L82">        String msg = bundle.getString(&quot;amount.range.withUnit&quot;);</span>
-<span class="nc" id="L83">        CompletableFuture&lt;String&gt; unitRetrieval = getUnitText(bundle, config, range, hasLow, hasHigh);</span>
+<span class="nc" id="L81">        boolean hasLow = hasLow(range);</span>
+<span class="nc" id="L82">        boolean hasHigh = hasHigh(range);</span>
+<span class="nc" id="L83">        String msg = bundle.getString(&quot;amount.range.withUnit&quot;);</span>
+<span class="nc" id="L84">        CompletableFuture&lt;String&gt; unitRetrieval = getUnitText(bundle, config, range, hasLow, hasHigh);</span>
 
-<span class="nc bnc" id="L85" title="All 8 branches missed.">        String condition = (hasLow &amp;&amp; hasHigh) ? &quot;0&quot; : (hasHigh) ? &quot;1&quot; : (hasLow) ? &quot;2&quot; : &quot;other&quot;;</span>
+<span class="nc bnc" id="L86" title="All 8 branches missed.">        String condition = (hasLow &amp;&amp; hasHigh) ? &quot;0&quot; : (hasHigh) ? &quot;1&quot; : (hasLow) ? &quot;2&quot; : &quot;other&quot;;</span>
 
-<span class="nc" id="L87">        return unitRetrieval</span>
-<span class="nc" id="L88">                .thenApplyAsync(unitAsText -&gt; {</span>
-<span class="nc" id="L89">                    Map&lt;String, Object&gt; arguments = Map.of(</span>
-<span class="nc bnc" id="L90" title="All 2 branches missed.">                            &quot;minValue&quot;, hasLow ? getLowValue(range) : &quot;&quot;,</span>
-<span class="nc bnc" id="L91" title="All 2 branches missed.">                            &quot;maxValue&quot;, hasHigh ? getHighValue(range) : &quot;&quot;,</span>
+<span class="nc" id="L88">        return unitRetrieval</span>
+<span class="nc" id="L89">                .thenApplyAsync(unitAsText -&gt; {</span>
+<span class="nc" id="L90">                    Map&lt;String, Object&gt; arguments = Map.of(</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">                            &quot;minValue&quot;, hasLow ? getLowValue(range) : &quot;&quot;,</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">                            &quot;maxValue&quot;, hasHigh ? getHighValue(range) : &quot;&quot;,</span>
                             &quot;condition&quot;, condition,
                             &quot;unit&quot;, unitAsText
                     );
 
-<span class="nc" id="L96">                    MessageFormat messageFormat = new MessageFormat(msg, config.getLocale());</span>
-<span class="nc" id="L97">                    return messageFormat.format(arguments);</span>
+<span class="nc" id="L97">                    MessageFormat messageFormat = new MessageFormat(msg, config.getLocale());</span>
+<span class="nc" id="L98">                    return messageFormat.format(arguments);</span>
                 });
     }
 

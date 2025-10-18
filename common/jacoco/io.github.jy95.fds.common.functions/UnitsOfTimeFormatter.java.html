@@ -12,29 +12,30 @@ import java.util.Map;
  * Class to format units of time
  *
  * @author jy95
+ * @since 1.0.2
  */
 public final class UnitsOfTimeFormatter {
 
     /**
      * Map each code of &lt;a href=&quot;https://build.fhir.org/valueset-units-of-time.html&quot;&gt;Units of Time&lt;/a&gt; to their ICU4J units
      */
-<span class="nc" id="L21">    private static final Map&lt;String, MeasureUnit&gt; UNIT_MAPPING = Map.ofEntries(</span>
-<span class="nc" id="L22">            Map.entry(&quot;ms&quot;, MeasureUnit.MILLISECOND),</span>
-<span class="nc" id="L23">            Map.entry(&quot;s&quot;, MeasureUnit.SECOND),</span>
-<span class="nc" id="L24">            Map.entry(&quot;min&quot;, MeasureUnit.MINUTE),</span>
-<span class="nc" id="L25">            Map.entry(&quot;h&quot;, MeasureUnit.HOUR),</span>
-<span class="nc" id="L26">            Map.entry(&quot;d&quot;, MeasureUnit.DAY),</span>
-<span class="nc" id="L27">            Map.entry(&quot;wk&quot;, MeasureUnit.WEEK),</span>
-<span class="nc" id="L28">            Map.entry(&quot;mo&quot;, MeasureUnit.MONTH),</span>
-<span class="nc" id="L29">            Map.entry(&quot;a&quot;, MeasureUnit.YEAR)</span>
+<span class="nc" id="L22">    private static final Map&lt;String, MeasureUnit&gt; UNIT_MAPPING = Map.ofEntries(</span>
+<span class="nc" id="L23">            Map.entry(&quot;ms&quot;, MeasureUnit.MILLISECOND),</span>
+<span class="nc" id="L24">            Map.entry(&quot;s&quot;, MeasureUnit.SECOND),</span>
+<span class="nc" id="L25">            Map.entry(&quot;min&quot;, MeasureUnit.MINUTE),</span>
+<span class="nc" id="L26">            Map.entry(&quot;h&quot;, MeasureUnit.HOUR),</span>
+<span class="nc" id="L27">            Map.entry(&quot;d&quot;, MeasureUnit.DAY),</span>
+<span class="nc" id="L28">            Map.entry(&quot;wk&quot;, MeasureUnit.WEEK),</span>
+<span class="nc" id="L29">            Map.entry(&quot;mo&quot;, MeasureUnit.MONTH),</span>
+<span class="nc" id="L30">            Map.entry(&quot;a&quot;, MeasureUnit.YEAR)</span>
     );
 
     /**
      * Common formatter for all calls to this class
      */
-<span class="nc" id="L35">    private static final UnlocalizedNumberFormatter formatter = NumberFormatter</span>
-<span class="nc" id="L36">            .with()</span>
-<span class="nc" id="L37">            .unitWidth(NumberFormatter.UnitWidth.FULL_NAME);</span>
+<span class="nc" id="L36">    private static final UnlocalizedNumberFormatter formatter = NumberFormatter</span>
+<span class="nc" id="L37">            .with()</span>
+<span class="nc" id="L38">            .unitWidth(NumberFormatter.UnitWidth.FULL_NAME);</span>
 
     /**
      * No constructor for this class
@@ -50,11 +51,11 @@ public final class UnitsOfTimeFormatter {
      * @return A formatted time-unit string with a count
      */
     public static String formatWithCount(Locale locale, String unit, Number count) {
-<span class="nc" id="L53">        return formatter</span>
-<span class="nc" id="L54">                .locale(locale)</span>
-<span class="nc" id="L55">                .unit(UNIT_MAPPING.get(unit))</span>
-<span class="nc" id="L56">                .format(count)</span>
-<span class="nc" id="L57">                .toString();</span>
+<span class="nc" id="L54">        return formatter</span>
+<span class="nc" id="L55">                .locale(locale)</span>
+<span class="nc" id="L56">                .unit(UNIT_MAPPING.get(unit))</span>
+<span class="nc" id="L57">                .format(count)</span>
+<span class="nc" id="L58">                .toString();</span>
     }
 
     /**
@@ -67,13 +68,13 @@ public final class UnitsOfTimeFormatter {
      */
     public static String formatWithoutCount(Locale locale, String unit, Number count) {
         // ICU4j doesn't have a method for extracting only the unit with plural form so a bit of magic here
-<span class="nc" id="L70">        return formatter</span>
-<span class="nc" id="L71">                .unit(UNIT_MAPPING.get(unit))</span>
-<span class="nc" id="L72">                .locale(locale)</span>
-<span class="nc" id="L73">                .precision(Precision.maxSignificantDigits(1))</span>
-<span class="nc" id="L74">                .format(count)</span>
-<span class="nc" id="L75">                .toString()</span>
-<span class="nc" id="L76">                .substring(2); // 1 because of the number display + 1 because of spacing</span>
+<span class="nc" id="L71">        return formatter</span>
+<span class="nc" id="L72">                .unit(UNIT_MAPPING.get(unit))</span>
+<span class="nc" id="L73">                .locale(locale)</span>
+<span class="nc" id="L74">                .precision(Precision.maxSignificantDigits(1))</span>
+<span class="nc" id="L75">                .format(count)</span>
+<span class="nc" id="L76">                .toString()</span>
+<span class="nc" id="L77">                .substring(2); // 1 because of the number display + 1 because of spacing</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

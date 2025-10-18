@@ -14,6 +14,7 @@ import java.util.ResourceBundle;
  * @param &lt;C&gt; The type of configuration, extending {@link io.github.jy95.fds.common.config.FDSConfig}.
  * @param &lt;D&gt; The type of the translated data.
  * @author jy95
+ * @since 1.0.0
  */
 public interface BoundsDuration&lt;C extends FDSConfig, D&gt; extends TranslatorTiming&lt;C, D&gt; {
 
@@ -25,8 +26,8 @@ public interface BoundsDuration&lt;C extends FDSConfig, D&gt; extends Translator
      * @return The message template for &quot;boundsDuration&quot;
      */
     default MessageFormat getBoundsDurationMsg(ResourceBundle bundle, Locale locale) {
-<span class="nc" id="L28">        String msg = bundle.getString(&quot;fields.boundsDuration&quot;);</span>
-<span class="nc" id="L29">        return new MessageFormat(msg, locale);</span>
+<span class="nc" id="L29">        String msg = bundle.getString(&quot;fields.boundsDuration&quot;);</span>
+<span class="nc" id="L30">        return new MessageFormat(msg, locale);</span>
     }
 
 }

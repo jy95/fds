@@ -9,6 +9,7 @@ import java.util.ResourceBundle;
  * Utility class for converting a list of strings into a human-readable string.
  *
  * @author jy95
+ * @since 1.0.0
  */
 public final class ListToString {
 
@@ -28,21 +29,21 @@ public final class ListToString {
      */
     public static String convert(ResourceBundle bundle, List&lt;String&gt; list, LinkWord linkWord) {
 
-<span class="pc bpc" id="L31" title="1 of 2 branches missed.">        if (list.isEmpty()){</span>
-<span class="nc" id="L32">            return &quot;&quot;;</span>
+<span class="pc bpc" id="L32" title="1 of 2 branches missed.">        if (list.isEmpty()){</span>
+<span class="nc" id="L33">            return &quot;&quot;;</span>
         }
 
         // Build the first part of the string (all except the last item)
-<span class="fc" id="L36">        String firstString = String.join(&quot;, &quot;, list.subList(0, list.size() - 1));</span>
+<span class="fc" id="L37">        String firstString = String.join(&quot;, &quot;, list.subList(0, list.size() - 1));</span>
         // Get the last part of the string (the last item)
-<span class="fc" id="L38">        String lastString = list.get(list.size() - 1);</span>
+<span class="fc" id="L39">        String lastString = list.get(list.size() - 1);</span>
 
         // Get the translated link word via delegate
-<span class="fc" id="L41">        String linkWordTranslation = getLinkWordTranslation(bundle, linkWord);</span>
-<span class="pc bpc" id="L42" title="1 of 2 branches missed.">        String linkWordString = list.size() &gt; 1 ? &quot; &quot; + linkWordTranslation + &quot; &quot; : &quot;&quot;;</span>
+<span class="fc" id="L42">        String linkWordTranslation = getLinkWordTranslation(bundle, linkWord);</span>
+<span class="pc bpc" id="L43" title="1 of 2 branches missed.">        String linkWordString = list.size() &gt; 1 ? &quot; &quot; + linkWordTranslation + &quot; &quot; : &quot;&quot;;</span>
 
         // Combine everything into the final string
-<span class="fc" id="L45">        return firstString + linkWordString + lastString;</span>
+<span class="fc" id="L46">        return firstString + linkWordString + lastString;</span>
     }
 
     /**
@@ -54,7 +55,7 @@ public final class ListToString {
      * @return A human-readable string representation of the list.
      */
     public static String convert(ResourceBundle bundle, List&lt;String&gt; list) {
-<span class="nc" id="L57">        return convert(bundle,list,LinkWord.AND);</span>
+<span class="nc" id="L58">        return convert(bundle,list,LinkWord.AND);</span>
     }
 
     /**
@@ -66,7 +67,7 @@ public final class ListToString {
      */
     private static String getLinkWordTranslation(ResourceBundle bundle, LinkWord linkWord) {
         // Delegate method for link word translation
-<span class="fc" id="L69">        return bundle.getString(&quot;linkwords.&quot; + linkWord.getValue());</span>
+<span class="fc" id="L70">        return bundle.getString(&quot;linkwords.&quot; + linkWord.getValue());</span>
     }
 
 }
