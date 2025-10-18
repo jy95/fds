@@ -2,7 +2,11 @@
 
 <img src="src/site/resources/images/logo.png" alt="FHIR Dosage Icon" style="width: 100px; object-fit: cover; object-position: center;" />
 
-<h1 align="center">FHIR Dosage Support</h1>
+<h1 align="center">
+  <span style="color: #ff4500; text-shadow: 0 0 5px #ff8c00, 0 0 10px #ff4500; font-style: italic; font-size: 1.1em;">F</span><span style="color: #6c757d; font-weight: 300;">HIR</span> 
+  <span style="color: #004d99; text-shadow: 2px 2px #000033, 3px 3px #4682b4; font-weight: 900; font-style: italic; letter-spacing: 1px;">D</span><span style="color: #6c757d; font-weight: 300;">osage</span> 
+  <span style="color: #1f6b49; text-shadow: 2px 2px #003300, 3px 3px #3cb371; font-weight: 900; font-style: italic; letter-spacing: 1px;">S</span><span style="color: #6c757d; font-weight: 300;">upport</span>
+</h1>
 
 Turn [FHIR Dosage](https://build.fhir.org/dosage.html) into human-readable text in your desired language 
 (English, French, Dutch, German, ...) and much more.
