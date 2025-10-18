@@ -68,21 +68,27 @@
 <h2>&#x1f48a; Core Dosage Details</h2>
 <ul>
 
-<li><a href="specs/sequence.html"><code>sequence</code></a>: The order in which the dosage instructions should be applied or interpreted (integer).</li>
-<li><a href="specs/text.html"><code>text</code></a>: Free text instructions (e.g., SIG).</li>
-<li><a href="specs/additionalInstruction.html"><code>additionalInstruction</code></a>: Supplemental instructions or warnings (e.g., &#x201c;with meals&#x201d;).</li>
-<li><a href="specs/patientInstruction.html"><code>patientInstruction</code></a>: Patient or consumer-oriented instructions.</li>
+<li><strong><a href="specs/sequence.html"><code>sequence</code></a></strong>: The order in which the dosage instructions should be applied or interpreted (integer).</li>
+<li><strong><a href="specs/text.html"><code>text</code></a></strong>: Free text dosage instructions (e.g., SIG).</li>
+<li><strong><a href="specs/additionalInstruction.html"><code>additionalInstruction</code></a></strong>: Supplemental instructions or warnings (e.g., &#x201c;with meals&#x201d;).</li>
+<li><strong><a href="specs/patientInstruction.html"><code>patientInstruction</code></a></strong>: Instructions in terms understood by the patient or consumer.</li>
 <li><strong>As Needed</strong> (<code>asNeeded[x]</code>)
 <ul>
 
-<li><a href="specs/asNeeded.html"><code>asNeededBoolean</code></a>: Take &#x201c;as needed&#x201d; (Boolean).</li>
-<li><a href="specs/asNeeded.html"><code>asNeededCodeableConcept</code></a>: Take &#x201c;as needed&#x201d; (for a reason).</li>
+<li><strong><a href="specs/asNeeded.html"><code>asNeededBoolean</code></a></strong>: Take &#x201c;as needed&#x201d; (Boolean).</li>
+<li><strong><a href="specs/asNeeded.html"><code>asNeededCodeableConcept</code></a></strong>: Take &#x201c;as needed&#x201d; (for a reason).</li>
 </ul></li>
-<li><a href="specs/site.html"><code>site</code></a>: Body site to administer to.</li>
-<li><a href="specs/route.html"><code>route</code></a>: How drug should enter the body.</li>
-<li><a href="specs/method.html"><code>method</code></a>: Technique for administering medication.</li>
-</ul><hr /></section><section><a id="a.E2.8F.B1.EF.B8.8F_Timing_Details_.28timing.repeat.29"></a>
-<h2>&#x23f1;&#xfe0f; Timing Details (<code>timing.repeat</code>)</h2>
+<li><strong><a href="specs/site.html"><code>site</code></a></strong>: Body site to administer to.</li>
+<li><strong><a href="specs/route.html"><code>route</code></a></strong>: How drug should enter the body.</li>
+<li><strong><a href="specs/method.html"><code>method</code></a></strong>: Technique for administering medication.</li>
+</ul><hr /></section><section><a id="a.3F.3F.EF.B8.8F_Specific_Schedule_.28timing.29"></a>
+<h2>&#x1f5d3;&#xfe0f; Specific Schedule (<code>timing</code>)</h2>
+<ul>
+
+<li><strong><a href="specs/event.html"><code>timing.event</code></a></strong>: Specific Date/Times when the medication should be administered</li>
+<li><strong><a href="specs/code.html"><code>timing.code</code></a></strong>: Complete Statement of the schedule, provided as a code or descriptive text.</li>
+</ul></section><section><a id="a.E2.8F.B1.EF.B8.8F_Repetitive_Schedule_.28timing.repeat.29"></a>
+<h2>&#x23f1;&#xfe0f; Repetitive Schedule (<code>timing.repeat</code>)</h2>
 <ul>
 
 <li><strong>Administration Count</strong>
@@ -90,6 +96,12 @@
 
 <li><a href="specs/countCountMax.html"><code>timing.repeat.count</code></a>: Number of times dose is given.</li>
 <li><a href="specs/countCountMax.html"><code>timing.repeat.countMax</code></a>: Maximum number of times dose is given.</li>
+</ul></li>
+<li><strong>Frequency per Period</strong>
+<ul>
+
+<li><a href="specs/frequencyFrequencyMax.html"><code>timing.repeat.frequency</code></a>: Number of times dose is given per period (integer).</li>
+<li><a href="specs/frequencyFrequencyMax.html"><code>timing.repeat.frequencyMax</code></a>: Maximum number of times dose is given per period (integer).</li>
 </ul></li>
 <li><strong>Time Period</strong>
 <ul>
