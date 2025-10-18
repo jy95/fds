@@ -25,6 +25,9 @@ description: Specifications
 * **Administration Count**
     * [`timing.repeat.count`](specs/countCountMax.html): Number of times dose is given.
     * [`timing.repeat.countMax`](specs/countCountMax.html): Maximum number of times dose is given.
+* **Frequency per Period**
+    * [`timing.repeat.frequency`](specs/frequencyFrequencyMax.html): Number of times dose is given per period (integer).
+    * [`timing.repeat.frequencyMax`](specs/frequencyFrequencyMax.html): Maximum number of times dose is given per period (integer).
 * **Time Period**
     * [`timing.repeat.period`](specs/periodPeriodMax.html): The time interval between administrations.
     * [`timing.repeat.periodMax`](specs/periodPeriodMax.html): Maximum period interval.
