@@ -3,7 +3,10 @@ import java.util.ListResourceBundle;
 
 /**
  * German (de) resource bundle for event timing codes.
+ *
  * @see <a href="https://www.hl7.org/fhir/valueset-event-timing.html">FHIR Event Timing</a>
+ * @author jy95
+ * @since 2.0.1
  */
 public class EventTiming_de extends ListResourceBundle {
     
@@ -44,6 +47,7 @@ public class EventTiming_de extends ListResourceBundle {
     };
 
     // German version
+    /** {@inheritDoc} */
     @Override
     public Object[][] getContents() {
         return contents;

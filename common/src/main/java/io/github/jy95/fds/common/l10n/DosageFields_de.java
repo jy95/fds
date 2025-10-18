@@ -4,6 +4,9 @@ import java.util.ListResourceBundle;
 /**
  * German (de) resource bundle for structured dosage and field labels.
  * Uses native UTF-8 characters to avoid encoding issues.
+ *
+ * @author jy95
+ * @since 2.0.1
  */
 public class DosageFields_de extends ListResourceBundle {
     
@@ -59,6 +62,7 @@ public class DosageFields_de extends ListResourceBundle {
     };
 
         // German version
+    /** {@inheritDoc} */
     @Override
     public Object[][] getContents() {
         return contents;
