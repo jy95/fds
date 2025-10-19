@@ -126,3 +126,50 @@ public class Main {
     }
 }
 ```
+
+## Quantity value formatting
+
+A function to customize the display of [`Quantity value`](https://hl7.org/fhir/datatypes-definitions.html#Quantity.value)
+
+### Why this exists
+
+This allows advanced users to override the default formatting provided by the library, empowering users to :
+* Apply **locale-specific** number grouping and decimal separators (e.g., using commas in Europe).
+* Implement **strict safety rules** (like limiting precision).
+* Provide **human-friendly output** for common values (e.g., displaying `0.5` as `1/2`).
+
+### Example Usage
+
+```java
+import io.github.jy95.fds.common.config.FDSConfig;
+import com.ibm.icu.text.RuleBasedNumberFormat;
+
+import java.math.BigDecimal;
+import java.util.Locale;
+
+public class Main {
+    public static void main(String[] args) {
+        // Custom resource bundle selector
+        var config = FDSConfig.builder()
+                .formatQuantityNumber((locale, value) -> {
+                    // Custom logic for formatting
+                    // https://unicode-org.github.io/icu/userguide/format_parse/numbers/rbnf.html
+                    var formatter = new RuleBasedNumberFormat(
+                        locale,
+                        RuleBasedNumberFormat.SPELLOUT
+                    );
+                    return formatter.format(value);
+                })
+                .build();
+
+        BigDecimal testValue = new BigDecimal("5");
+        var formatter = config.getFormatQuantityNumber();
+
+        String resultUS = formatter.apply(Locale.US, testValue);
+        System.out.println("US: " + testValue + " -> " + resultUS);
+
+        String resultFR = formatter.apply(Locale.FRENCH, testValue);
+        System.out.println("FR: " + testValue + " -> " + resultFR);
+    }
+}
+```
