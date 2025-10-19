@@ -45,7 +45,13 @@ public interface QuantityToString<C extends FDSConfig, Q> {
         var unit = hasUnit(quantity)
                 ? enhancedFromUnitToString(config, quantity)
                 : CompletableFuture.completedFuture("");
-        var amount = getValue(quantity).toString();
+        
+        var amount = config
+            .getFormatQuantityNumber()
+            .apply(
+                config.getLocale(),
+                getValue(quantity)
+            );
 
         return comparator.thenCombineAsync(unit, (comparatorText, unitText) ->
                 Stream

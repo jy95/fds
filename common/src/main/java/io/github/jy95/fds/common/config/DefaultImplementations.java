@@ -2,8 +2,11 @@ package io.github.jy95.fds.common.config;
 
 import io.github.jy95.fds.common.bundle.MultiResourceBundleControl;
 
+import java.math.BigDecimal;
 import java.util.Locale;
 import java.util.ResourceBundle;
+
+import com.ibm.icu.number.NumberFormatter;
 
 /**
  * Provides default implementations for common operations in the library.
@@ -39,5 +42,17 @@ public final class DefaultImplementations {
                 locale,
                 bundleControl
         );
+    }
+
+    /**
+     * Formats a BigDecimal quantity number for display.
+     *
+     * @param locale the locale for formatting.
+     * @param value  the BigDecimal value to format.
+     * @return the formatted string representation of the quantity number.
+     * @since 2.0.2
+     */
+    public static String formatQuantityNumber(Locale locale, BigDecimal value) {
+        return NumberFormatter.withLocale(locale).format(value).toString();
     }
 }
