@@ -50,7 +50,7 @@ public final class DefaultImplementations {
      * @param locale the locale for formatting.
      * @param value  the BigDecimal value to format.
      * @return the formatted string representation of the quantity number.
-     * @since 2.0.2
+     * @since 2.1.0
      */
     public static String formatQuantityNumber(Locale locale, BigDecimal value) {
         return NumberFormatter.withLocale(locale).format(value).toString();
