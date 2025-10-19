@@ -11,6 +11,7 @@ jobs:
       contents: read
     outputs:
       next_patch: ${{ steps.semvers.outputs.patch }}
+      current_version: ${{ steps.get_latest_tag.outputs.latest_tag || github.event.release.tag_name }}
     steps:
       - uses: actions/checkout@v5
       - name: Fetch latest tag if manually triggered
@@ -46,7 +47,7 @@ jobs:
           mvn versions:set-property -Dproperty=revision -DnewVersion=${{ needs.extract_version.outputs.next_patch }}-SNAPSHOT -DgenerateBackupPoms=false
       - name: 🤖 Update softwareVersion in publiccode.yml
         run: |
-          sed -i "s/^softwareVersion: .*/softwareVersion: \"${{ needs.extract_version.outputs.next_patch }}\"/" publiccode.yml
+          sed -i "s/^softwareVersion: .*/softwareVersion: \"${{ needs.extract_version.outputs.current_version }}\"/" publiccode.yml
       - name: 🤖 Update releaseDate in publiccode.yml
         run: |
           today=$(date +'%Y-%m-%d')
