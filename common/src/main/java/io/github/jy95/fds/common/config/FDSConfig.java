@@ -74,5 +74,5 @@ public class FDSConfig {
      * Useful in case you would like to customize number formatting.
      * By default, it uses ICU4J-based formatting via DefaultImplementations.
      */
-    private final BiFunction<Locale, java.math.BigDecimal, String> formatQuantityNumber = DefaultImplementations::formatQuantityNumber;
+    @Builder.Default private final BiFunction<Locale, java.math.BigDecimal, String> formatQuantityNumber = DefaultImplementations::formatQuantityNumber;
 }
