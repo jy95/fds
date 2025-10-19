@@ -8,6 +8,7 @@ import java.util.Locale;
 import java.util.List;
 
 import java.util.ResourceBundle;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 import io.github.jy95.fds.common.types.DisplayOrder;
@@ -67,4 +68,11 @@ public class FDSConfig {
      * Consider contributing improvements or additional locales as well.
      */
     @Builder.Default private final Function<Locale, ResourceBundle> selectResourceBundle = DefaultImplementations::selectResourceBundle;
+
+    /**
+     * Function to format quantity numbers for display.
+     * Useful in case you would like to customize number formatting.
+     * By default, it uses ICU4J-based formatting via DefaultImplementations.
+     */
+    private final BiFunction<Locale, java.math.BigDecimal, String> formatQuantityNumber = DefaultImplementations::formatQuantityNumber;
 }
