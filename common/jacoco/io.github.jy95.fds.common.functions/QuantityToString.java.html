@@ -45,13 +45,19 @@ public interface QuantityToString&lt;C extends FDSConfig, Q&gt; {
 <span class="nc bnc" id="L45" title="All 2 branches missed.">        var unit = hasUnit(quantity)</span>
 <span class="nc" id="L46">                ? enhancedFromUnitToString(config, quantity)</span>
 <span class="nc" id="L47">                : CompletableFuture.completedFuture(&quot;&quot;);</span>
-<span class="nc" id="L48">        var amount = getValue(quantity).toString();</span>
+        
+<span class="nc" id="L49">        var amount = config</span>
+<span class="nc" id="L50">            .getFormatQuantityNumber()</span>
+<span class="nc" id="L51">            .apply(</span>
+<span class="nc" id="L52">                config.getLocale(),</span>
+<span class="nc" id="L53">                getValue(quantity)</span>
+            );
 
-<span class="nc" id="L50">        return comparator.thenCombineAsync(unit, (comparatorText, unitText) -&gt;</span>
+<span class="nc" id="L56">        return comparator.thenCombineAsync(unit, (comparatorText, unitText) -&gt;</span>
                 Stream
-<span class="nc" id="L52">                        .of(comparatorText, amount, unitText)</span>
-<span class="nc bnc" id="L53" title="All 2 branches missed.">                        .filter(part -&gt; !part.isEmpty())</span>
-<span class="nc" id="L54">                        .collect(Collectors.joining(&quot; &quot;))</span>
+<span class="nc" id="L58">                        .of(comparatorText, amount, unitText)</span>
+<span class="nc bnc" id="L59" title="All 2 branches missed.">                        .filter(part -&gt; !part.isEmpty())</span>
+<span class="nc" id="L60">                        .collect(Collectors.joining(&quot; &quot;))</span>
         );
     }
 
