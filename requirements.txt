@@ -1,2 +1,2 @@
-argostranslate == 1.9.6
+argostranslate == 1.10.0
 javaproperties == 0.8.2
