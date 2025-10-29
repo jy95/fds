@@ -16,6 +16,15 @@
         <url>https://github.com/jy95/fds</url>
     </scm>
 
+    <dependencies>
+        <!-- Add HAPi FHIR core library for reuseable code -->
+        <dependency>
+            <groupId>ca.uhn.hapi.fhir</groupId>
+            <artifactId>hapi-fhir-base</artifactId>
+			<version>${hapi.fhir.version}</version>
+		</dependency>
+    </dependencies>
+
     <build>
         <plugins>
             <plugin>
