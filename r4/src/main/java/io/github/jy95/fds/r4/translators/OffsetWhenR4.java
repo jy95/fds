@@ -1,7 +1,6 @@
 package io.github.jy95.fds.r4.translators;
 
 import io.github.jy95.fds.common.functions.ListToString;
-import io.github.jy95.fds.common.functions.UnitsOfTimeFormatter;
 import io.github.jy95.fds.common.translators.OffsetWhen;
 import io.github.jy95.fds.r4.config.FDSConfigR4;
 import lombok.RequiredArgsConstructor;
@@ -83,31 +82,6 @@ public class OffsetWhenR4 implements OffsetWhen<FDSConfigR4, Dosage> {
         if (!repeat.hasOffset()) {
             return CompletableFuture.completedFuture("");
         }
-        return turnOffsetValueToText(repeat.getOffset());
-    }
-
-    /**
-     * Converts an offset value (in minutes) into a human-readable time string.
-     * The result combines the extracted time components (days, hours, minutes) into a formatted string.
-     *
-     * @param offset The offset in minutes to be converted.
-     * @return A {@link java.util.concurrent.CompletableFuture} containing the formatted string representing the offset.
-     */
-    protected CompletableFuture<String> turnOffsetValueToText(int offset) {
-        return CompletableFuture.supplyAsync(() -> {
-            var extractedTime = extractTime(offset);
-
-            var times = OffsetWhen
-                    .order
-                    .stream()
-                    .filter(unit -> extractedTime.getOrDefault(unit, 0) > 0)
-                    .map(unit -> {
-                        var amount = extractedTime.get(unit);
-                        return UnitsOfTimeFormatter.formatWithCount(locale, unit, amount);
-                    })
-                    .toList();
-
-            return ListToString.convert(bundle, times);
-        });
+        return turnOffsetValueToText(repeat.getOffset(), bundle, locale);
     }
 }
