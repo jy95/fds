@@ -97,10 +97,7 @@ public final class DefaultImplementations {
                             sb.append(",");
                         }
 
-                        if (hasValue) {
-                            
-                            var valuIPrimitiveType = (IPrimitiveType<?>) ext.getValue();
-
+                        if (hasValue && ext.getValue() instanceof IPrimitiveType<?> valuIPrimitiveType) {
                             sb
                                 .append("\"value[x]\":\"")
                                 .append(
