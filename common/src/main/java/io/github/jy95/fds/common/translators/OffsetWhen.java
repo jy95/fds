@@ -56,7 +56,8 @@ public interface OffsetWhen<C extends FDSConfig, D> extends TranslatorTiming<C, 
         return CompletableFuture.supplyAsync(() -> {
             var extractedTime = extractTime(offset);
 
-            var times = order.stream() // 'order' est un champ statique de cette interface, accessible directement
+            var times = order
+                    .stream()
                     .filter(unit -> extractedTime.getOrDefault(unit, 0) > 0)
                     .map(unit -> {
                         var amount = extractedTime.get(unit);

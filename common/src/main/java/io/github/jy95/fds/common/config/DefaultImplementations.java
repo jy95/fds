@@ -26,6 +26,15 @@ public final class DefaultImplementations {
     // Define the new package path for resource bundles
     private static final String RESOURCE_PACKAGE = "io.github.jy95.fds.common.l10n.";
 
+    // Initialize the MultiResourceBundleControl with resource bundle names
+    private static final MultiResourceBundleControl BUNDLE_CONTROL =
+        new MultiResourceBundleControl(
+                "translations",
+                RESOURCE_PACKAGE + "DosageFields",
+                RESOURCE_PACKAGE + "EventTiming",
+                RESOURCE_PACKAGE + "QuantityComparator"
+        );
+
     /**
      * No constructor for this class
      */
@@ -38,16 +47,10 @@ public final class DefaultImplementations {
      * @return the aggregated ResourceBundle for the specified locale.
      */
     public static ResourceBundle selectResourceBundle(Locale locale) {
-        var bundleControl = new MultiResourceBundleControl(
-                "translations",
-                RESOURCE_PACKAGE + "DosageFields",
-                RESOURCE_PACKAGE + "EventTiming",
-                RESOURCE_PACKAGE + "QuantityComparator"
-        );
         return ResourceBundle.getBundle(
-                bundleControl.getBaseName(),
+                BUNDLE_CONTROL.getBaseName(),
                 locale,
-                bundleControl
+                BUNDLE_CONTROL
         );
     }
 
