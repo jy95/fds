@@ -21,6 +21,11 @@ import java.util.List;
  */
 public interface DurationDurationMax<C extends FDSConfig, D> extends TranslatorTiming<C, D> {
 
+    // Key constants for duration message
+    String KEY_DURATION = "fields.duration";
+    // Key constant for durationMax message
+    String KEY_DURATION_MAX = "fields.durationMax";
+
     /**
      * MessageFormat instance used for "duration" translation
      *

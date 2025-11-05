@@ -17,6 +17,9 @@ import java.util.ResourceBundle;
  */
 public interface DayOfWeek<C extends FDSConfig, D> extends TranslatorTiming<C, D> {
 
+    // Key constant for dayOfWeek message
+    String KEY_DAY_OF_WEEK = "fields.dayOfWeek";
+
     /**
      * MessageFormat instance used for "dayOfWeek" translation
      *

@@ -1,12 +1,13 @@
 package io.github.jy95.fds.r4.translators;
 
-import com.ibm.icu.text.MessageFormat;
+import io.github.jy95.fds.common.functions.TranslationService;
 import io.github.jy95.fds.common.translators.CountCountMax;
 import io.github.jy95.fds.r4.config.FDSConfigR4;
+import lombok.RequiredArgsConstructor;
+
 import org.hl7.fhir.r4.model.Dosage;
 
 import java.util.Map;
-import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -14,24 +15,11 @@ import java.util.concurrent.CompletableFuture;
  *
  * @author jy95
  */
+@RequiredArgsConstructor
 public class CountCountMaxR4 implements CountCountMax<FDSConfigR4, Dosage> {
 
-    // Translations
-    /** MessageFormat instance used for "count" &amp; "countMax" translation */
-    protected final MessageFormat countMaxMsg;
-    /** MessageFormat instance used for "count" translation. */
-    protected final MessageFormat countMsg;
-
-    /**
-     * Constructor for {@code CountCountMaxR4}.
-     *
-     * @param config The configuration object used for translation.
-     * @param bundle a {@link java.util.ResourceBundle} object
-     */
-    public CountCountMaxR4(FDSConfigR4 config, ResourceBundle bundle) {
-        this.countMaxMsg = getCountMaxMsg(bundle, config.getLocale());
-        this.countMsg = getCountMsg(bundle, config.getLocale());
-    }
+    /** Translation service */
+    private final TranslationService<FDSConfigR4> translationService;
 
     /** {@inheritDoc} */
     @Override
@@ -64,9 +52,11 @@ public class CountCountMaxR4 implements CountCountMax<FDSConfigR4, Dosage> {
                         "minCount", dosage.getTiming().getRepeat().getCount(),
                         "maxCount", dosage.getTiming().getRepeat().getCountMax()
                 );
+                var countMaxMsg = translationService.getMessage(KEY_COUNT_MAX);
                 return countMaxMsg.format(arguments);
             }
 
+            var countMsg = translationService.getMessage(KEY_COUNT);
             return countMsg.format(new Object[]{
                     dosage.getTiming().getRepeat().getCount()
             });

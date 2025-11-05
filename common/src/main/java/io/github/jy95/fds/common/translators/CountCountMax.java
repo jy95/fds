@@ -17,6 +17,11 @@ import java.util.ResourceBundle;
  */
 public interface CountCountMax<C extends FDSConfig, D> extends TranslatorTiming<C, D> {
 
+    // Key constant for countMax message
+    String KEY_COUNT_MAX = "fields.countMax";
+    // Key constant for count message
+    String KEY_COUNT = "fields.count";
+
     /**
      * MessageFormat instance used for "count" &amp; "countMax" translation
      *

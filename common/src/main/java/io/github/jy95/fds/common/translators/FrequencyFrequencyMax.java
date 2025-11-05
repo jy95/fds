@@ -18,6 +18,13 @@ import java.util.concurrent.CompletableFuture;
  */
 public interface FrequencyFrequencyMax<C extends FDSConfig, D> extends TranslatorTiming<C, D> {
 
+    // Key constants for frequency message
+    String KEY_FREQUENCY = "fields.frequency";
+    // Key constant for frequencyMax message
+    String KEY_FREQUENCY_MAX = "fields.frequencyMax";
+    // Key constant for frequencyAndFrequencyMax message
+    String KEY_FREQUENCY_AND_FREQUENCY_MAX = "fields.frequencyAndFrequencyMax";
+
     /**
      * MessageFormat instance used for "frequency" &amp; "frequencyMax" translation
      *

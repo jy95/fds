@@ -18,6 +18,9 @@ import java.util.ResourceBundle;
  */
 public interface RateRange<C extends FDSConfig, D> extends Translator<C, D> {
 
+    // Key constant for rateRange message
+    String KEY_RATE_RANGE = "fields.rateRange";
+
     /**
      * MessageFormat instance used for "rateRange" translation
      *

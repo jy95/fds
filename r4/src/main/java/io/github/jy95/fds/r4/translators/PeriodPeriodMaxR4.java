@@ -1,44 +1,26 @@
 package io.github.jy95.fds.r4.translators;
 
-import com.ibm.icu.text.MessageFormat;
+import io.github.jy95.fds.common.functions.TranslationService;
 import io.github.jy95.fds.common.functions.UnitsOfTimeFormatter;
 import io.github.jy95.fds.common.translators.PeriodPeriodMax;
 import io.github.jy95.fds.r4.config.FDSConfigR4;
+import lombok.RequiredArgsConstructor;
+
 import org.hl7.fhir.r4.model.Dosage;
 
 import java.math.BigDecimal;
 import java.util.Map;
-import java.util.ResourceBundle;
 
 /**
  * R4 class for translating "timing.repeat.period" / "timing.repeat.periodMax"
  *
  * @author jy95
  */
+@RequiredArgsConstructor
 public class PeriodPeriodMaxR4 implements PeriodPeriodMax<FDSConfigR4, Dosage> {
 
-    // Translations
-    /** MessageFormat instance used for "period" &amp; "periodMax" translation */
-    protected final MessageFormat periodMaxMsg;
-    /** MessageFormat instance used for "period" */
-    protected final MessageFormat periodMsg;
-
-    /**
-     * The configuration object used by this API.
-     */
-    private final FDSConfigR4 config;
-
-    /**
-     * Constructor for {@code PeriodPeriodMaxR4}.
-     *
-     * @param config The configuration object used for translation.
-     * @param bundle a {@link java.util.ResourceBundle} object
-     */
-    public PeriodPeriodMaxR4(FDSConfigR4 config, ResourceBundle bundle) {
-        this.config = config;
-        this.periodMaxMsg = getPeriodMaxMsg(bundle, config.getLocale());
-        this.periodMsg = getPeriodMsg(bundle, config.getLocale());
-    }
+    /** Translation service */
+    private final TranslationService<FDSConfigR4> translationService;
 
     /** {@inheritDoc} */
     @Override
@@ -74,6 +56,8 @@ public class PeriodPeriodMaxR4 implements PeriodPeriodMax<FDSConfigR4, Dosage> {
         var periodMin = repeat.getPeriod();
         var periodUnit = repeat.getPeriodUnit().toCode();
 
+        var config = translationService.getConfig();
+
         var unitText = UnitsOfTimeFormatter.formatWithoutCount(config.getLocale(), periodUnit, periodMax);
         return formatPeriodAndPeriodMaxText(periodMin, periodMax, unitText);
     }
@@ -85,6 +69,8 @@ public class PeriodPeriodMaxR4 implements PeriodPeriodMax<FDSConfigR4, Dosage> {
         var repeat = dosage.getTiming().getRepeat();
         var period = repeat.getPeriod();
         var periodUnit = repeat.getPeriodUnit().toCode();
+
+        var config = translationService.getConfig();
 
         var unitText = UnitsOfTimeFormatter.formatWithoutCount(config.getLocale(), periodUnit, period);
         return formatPeriodText(period, unitText);
@@ -102,6 +88,7 @@ public class PeriodPeriodMaxR4 implements PeriodPeriodMax<FDSConfigR4, Dosage> {
                 "period", period,
                 "periodUnit",unitText
         );
+        var periodMsg = translationService.getMessage(KEY_PERIOD);
         return periodMsg.format(arguments);
     }
 
@@ -119,6 +106,7 @@ public class PeriodPeriodMaxR4 implements PeriodPeriodMax<FDSConfigR4, Dosage> {
                 "minPeriod", periodMin,
                 "unit",unitText
         );
+        var periodMaxMsg = translationService.getMessage(KEY_PERIOD_MAX);
         return periodMaxMsg.format(arguments);
     }
 }

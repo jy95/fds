@@ -18,6 +18,9 @@ import java.util.ResourceBundle;
  */
 public interface BoundsRange<C extends FDSConfig, D> extends TranslatorTiming<C, D> {
 
+    // Key constant for boundsRange message
+    String KEY_BOUNDS_RANGE = "fields.boundsRange";
+
     /**
      * MessageFormat instance used for "boundsRange" translation.
      *

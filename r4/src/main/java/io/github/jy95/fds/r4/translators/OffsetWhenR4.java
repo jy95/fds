@@ -1,14 +1,13 @@
 package io.github.jy95.fds.r4.translators;
 
 import io.github.jy95.fds.common.functions.ListToString;
+import io.github.jy95.fds.common.functions.TranslationService;
 import io.github.jy95.fds.common.translators.OffsetWhen;
 import io.github.jy95.fds.r4.config.FDSConfigR4;
 import lombok.RequiredArgsConstructor;
 import org.hl7.fhir.r4.model.Dosage;
 import org.hl7.fhir.r4.model.Enumeration;
 
-import java.util.Locale;
-import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -21,15 +20,8 @@ import java.util.stream.Stream;
 @RequiredArgsConstructor
 public class OffsetWhenR4 implements OffsetWhen<FDSConfigR4, Dosage> {
 
-    /**
-     * The resource bundle containing localized strings for translation.
-     */
-    private final ResourceBundle bundle;
-
-    /**
-     * The locale for translation.
-     */
-    private final Locale locale;
+    /** Translation service */
+    private final TranslationService<FDSConfigR4> translationService;
 
     /** {@inheritDoc} */
     @Override
@@ -64,6 +56,8 @@ public class OffsetWhenR4 implements OffsetWhen<FDSConfigR4, Dosage> {
             return CompletableFuture.completedFuture("");
         }
 
+        var bundle = translationService.getBundle();
+
         return CompletableFuture.supplyAsync(() -> {
             var events = repeat
                     .getWhen()
@@ -82,6 +76,8 @@ public class OffsetWhenR4 implements OffsetWhen<FDSConfigR4, Dosage> {
         if (!repeat.hasOffset()) {
             return CompletableFuture.completedFuture("");
         }
+        var bundle = translationService.getBundle();
+        var locale = translationService.getConfig().getLocale();
         return turnOffsetValueToText(repeat.getOffset(), bundle, locale);
     }
 }

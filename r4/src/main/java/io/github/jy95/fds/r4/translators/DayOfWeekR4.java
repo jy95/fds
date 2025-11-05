@@ -1,15 +1,15 @@
 package io.github.jy95.fds.r4.translators;
 
-import com.ibm.icu.text.MessageFormat;
 import io.github.jy95.fds.common.functions.DayOfWeekFormatter;
 import io.github.jy95.fds.common.functions.ListToString;
+import io.github.jy95.fds.common.functions.TranslationService;
 import io.github.jy95.fds.common.translators.DayOfWeek;
 import io.github.jy95.fds.r4.config.FDSConfigR4;
+
 import org.hl7.fhir.r4.model.Dosage;
 
 import java.util.List;
 import java.util.Map;
-import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -19,9 +19,8 @@ import java.util.concurrent.CompletableFuture;
  */
 public class DayOfWeekR4 implements DayOfWeek<FDSConfigR4, Dosage> {
 
-    // Translations
-    /** MessageFormat instance used for "dayOfWeek" translation. */
-    protected final MessageFormat dayOfWeekMsg;
+    /** Translation service */
+    private final TranslationService<FDSConfigR4> translationService;
 
     /**
      * Day of week formatter
@@ -29,20 +28,12 @@ public class DayOfWeekR4 implements DayOfWeek<FDSConfigR4, Dosage> {
     private final DayOfWeekFormatter dayOfWeekFormatter;
 
     /**
-     * The resource bundle containing localized strings for translation.
-     */
-    private final ResourceBundle bundle;
-
-    /**
      * Constructor for {@code DayOfWeekR4}.
-     *
-     * @param config The configuration object used for translation.
-     * @param bundle a {@link java.util.ResourceBundle} object
+     * @param translationService the translation service
      */
-    public DayOfWeekR4(FDSConfigR4 config, ResourceBundle bundle) {
-        this.bundle = bundle;
-        this.dayOfWeekMsg = getDayOfWeekMsg(bundle, config.getLocale());
-        this.dayOfWeekFormatter = new DayOfWeekFormatter(config.getLocale());
+    public DayOfWeekR4(TranslationService<FDSConfigR4> translationService) {
+        this.translationService = translationService;
+        this.dayOfWeekFormatter = new DayOfWeekFormatter(translationService.getConfig().getLocale());
     }
 
     /** {@inheritDoc} */
@@ -82,7 +73,9 @@ public class DayOfWeekR4 implements DayOfWeek<FDSConfigR4, Dosage> {
      * @return the translated days of the week as a formatted string.
      */
     private String daysToText(List<String> days) {
+        var bundle = translationService.getBundle();
         var dayOfWeeksAsString = ListToString.convert(bundle, days);
+        var dayOfWeekMsg = translationService.getMessage(KEY_DAY_OF_WEEK);
 
         Map<String, Object> messageArguments = Map.of(
                 "dayCondition", days.size(),

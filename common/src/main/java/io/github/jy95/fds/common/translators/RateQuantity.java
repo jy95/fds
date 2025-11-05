@@ -18,6 +18,9 @@ import java.util.ResourceBundle;
  */
 public interface RateQuantity<C extends FDSConfig, D> extends Translator<C, D> {
 
+    // Key constant for rateQuantity message
+    String KEY_RATE_QUANTITY = "fields.rateQuantity";
+
     /**
      * MessageFormat instance used for "rateQuantity" translation
      *

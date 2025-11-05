@@ -18,6 +18,9 @@ import java.util.ResourceBundle;
  */
 public interface TimeOfDay<C extends FDSConfig, D> extends TranslatorTiming<C, D> {
 
+    // Key constant for timeOfDay message
+    String KEY_TIME_OF_DAY = "fields.timeOfDay";
+
     /**
      * MessageFormat instance used for "timeOfDay" translation
      *

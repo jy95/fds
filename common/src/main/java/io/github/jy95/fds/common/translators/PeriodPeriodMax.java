@@ -18,6 +18,11 @@ import java.util.concurrent.CompletableFuture;
  */
 public interface PeriodPeriodMax<C extends FDSConfig, D> extends TranslatorTiming<C, D> {
     
+    // Key constant for periodMax message
+    String KEY_PERIOD_MAX = "fields.periodMax";
+    // Key constant for period message
+    String KEY_PERIOD = "fields.period";
+
     /**
      * MessageFormat instance used for "period" &amp; "periodMax" translation
      *

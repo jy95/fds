@@ -17,6 +17,9 @@ import java.util.ResourceBundle;
  */
 public interface MaxDosePerPeriod<C extends FDSConfig, D> extends Translator<C, D> {
 
+    // Key constant for maxDosePerPeriod message
+    String KEY_MAX_DOSE_PER_PERIOD = "fields.maxDosePerPeriod";
+
     /**
      * MessageFormat instance used for "maxDosePerPeriod" translation
      *

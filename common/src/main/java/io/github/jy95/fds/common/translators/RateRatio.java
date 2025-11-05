@@ -18,6 +18,9 @@ import java.util.ResourceBundle;
  */
 public interface RateRatio<C extends FDSConfig, D> extends Translator<C, D> {
 
+    // Key constant for rateRatio message
+    String KEY_RATE_RATIO = "fields.rateRatio";
+
     /**
      * MessageFormat instance used for "rateRatio" translation
      *

@@ -18,6 +18,9 @@ import java.util.ResourceBundle;
  */
 public interface TimingEvent<C extends FDSConfig, D> extends TranslatorTiming<C, D> {
 
+    // Key constant for event message
+    String KEY_EVENT = "fields.event";
+
     /**
      * MessageFormat instance used for "event" translation
      *

@@ -19,6 +19,11 @@ import java.util.concurrent.CompletableFuture;
  */
 public interface AsNeeded<C extends FDSConfig, D> extends Translator<C, D> {
 
+    // Key constant for asNeededFor message
+    String KEY_AS_NEEDED_FOR = "fields.asNeededFor";
+    // Key constant for asNeeded message
+    String KEY_AS_NEEDED = "fields.asNeeded";
+
     /**
      * MessageFormat instance used for "asNeededFor" translation
      *

@@ -18,6 +18,9 @@ import java.util.ResourceBundle;
  */
 public interface BoundsPeriod<C extends FDSConfig, D> extends TranslatorTiming<C, D> {
 
+    // Key constant for boundsPeriod message
+    String KEY_BOUNDS_PERIOD = "fields.boundsPeriod";
+
     /**
      * MessageFormat instance used for "boundsPeriod" translation
      *
