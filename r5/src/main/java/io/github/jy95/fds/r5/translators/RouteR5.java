@@ -1,5 +1,6 @@
 package io.github.jy95.fds.r5.translators;
 
+import io.github.jy95.fds.common.functions.TranslationService;
 import io.github.jy95.fds.common.types.Translator;
 import io.github.jy95.fds.r5.config.FDSConfigR5;
 import lombok.RequiredArgsConstructor;
@@ -15,15 +16,14 @@ import java.util.concurrent.CompletableFuture;
 @RequiredArgsConstructor
 public class RouteR5 implements Translator<FDSConfigR5, Dosage> {
 
-    /**
-     * The configuration object used by this API.
-     */
-    private final FDSConfigR5 config;
+    /** Translation service */
+    private final TranslationService<FDSConfigR5> translationService;
 
     /** {@inheritDoc} */
     @Override
     public CompletableFuture<String> convert(Dosage dosage) {
-        return config
+        return translationService
+                .getConfig()
                 .fromCodeableConceptToString(
                         dosage.getRoute()
                 );

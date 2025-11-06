@@ -1,5 +1,6 @@
 package io.github.jy95.fds.r5.utils;
 
+import io.github.jy95.fds.common.functions.TranslationService;
 import io.github.jy95.fds.common.types.AbstractTranslatorsMap;
 import io.github.jy95.fds.common.types.DisplayOrder;
 import io.github.jy95.fds.common.types.Translator;
@@ -47,40 +48,44 @@ public class TranslatorsMapR5 extends AbstractTranslatorsMap<FDSConfigR5, Dosage
     private static Map<DisplayOrder, Supplier<Translator<FDSConfigR5, Dosage>>> createTranslatorsSuppliers(
             FDSConfigR5 config, ResourceBundle bundle) {
         EnumMap<DisplayOrder, Supplier<Translator<FDSConfigR5, Dosage>>> suppliers = new EnumMap<>(DisplayOrder.class);
+        var translationService = TranslationService.<FDSConfigR5>builder()
+                .config(config)
+                .bundle(bundle)
+                .build();
 
         // All display order supported by R5 are initialized here
         suppliers.put(DisplayOrder.TEXT, TextR5::new);
         suppliers.put(DisplayOrder.PATIENT_INSTRUCTION, PatientInstructionR5::new);
-        suppliers.put(DisplayOrder.DAY_OF_WEEK, () -> new DayOfWeekR5(config, bundle));
-        suppliers.put(DisplayOrder.TIME_OF_DAY, () -> new TimeOfDayR5(config, bundle));
-        suppliers.put(DisplayOrder.TIMING_CODE, () -> new TimingCodeR5(config));
-        suppliers.put(DisplayOrder.TIMING_EVENT, () -> new TimingEventR5(config, bundle));
-        suppliers.put(DisplayOrder.METHOD, () -> new MethodR5(config));
-        suppliers.put(DisplayOrder.ROUTE, () -> new RouteR5(config));
-        suppliers.put(DisplayOrder.SITE, () -> new SiteR5(config));
-        suppliers.put(DisplayOrder.EXTENSION, () -> new ExtensionR5(config));
-        suppliers.put(DisplayOrder.TIMING_EXTENSION, () -> new TimingExtensionR5(config));
-        suppliers.put(DisplayOrder.TIMING_REPEAT_EXTENSION, () -> new TimingRepeatExtensionR5(config));
-        suppliers.put(DisplayOrder.MODIFIER_EXTENSION, () -> new ModifierExtensionR5(config));
-        suppliers.put(DisplayOrder.TIMING_MODIFIER_EXTENSION, () -> new TimingModifierExtensionR5(config));
-        suppliers.put(DisplayOrder.ADDITIONAL_INSTRUCTION, () -> new AdditionalInstructionR5(config, bundle));
-        suppliers.put(DisplayOrder.AS_NEEDED, () -> new AsNeededR5(config, bundle));
-        suppliers.put(DisplayOrder.BOUNDS_PERIOD, () -> new BoundsPeriodR5(config, bundle));
-        suppliers.put(DisplayOrder.BOUNDS_RANGE, () -> new BoundsRangeR5(config, bundle));
-        suppliers.put(DisplayOrder.DURATION_DURATION_MAX, () -> new DurationDurationMaxR5(config, bundle));
-        suppliers.put(DisplayOrder.FREQUENCY_FREQUENCY_MAX, () -> new FrequencyFrequencyMaxR5(config, bundle));
-        suppliers.put(DisplayOrder.PERIOD_PERIOD_MAX, () -> new PeriodPeriodMaxR5(config, bundle));
-        suppliers.put(DisplayOrder.COUNT_COUNT_MAX, () -> new CountCountMaxR5(config, bundle));
-        suppliers.put(DisplayOrder.DOSE_QUANTITY, () -> new DoseQuantityR5(config, bundle));
-        suppliers.put(DisplayOrder.DOSE_RANGE, () -> new DoseRangeR5(config, bundle));
-        suppliers.put(DisplayOrder.RATE_QUANTITY, () -> new RateQuantityR5(config, bundle));
-        suppliers.put(DisplayOrder.RATE_RANGE, () -> new RateRangeR5(config, bundle));
-        suppliers.put(DisplayOrder.RATE_RATIO, () -> new RateRatioR5(config, bundle));
-        suppliers.put(DisplayOrder.OFFSET_WHEN, () -> new OffsetWhenR5(bundle, config.getLocale()));
-        suppliers.put(DisplayOrder.MAX_DOSE_PER_LIFETIME, () -> new MaxDosePerLifetimeR5(config, bundle));
-        suppliers.put(DisplayOrder.MAX_DOSE_PER_ADMINISTRATION, () -> new MaxDosePerAdministrationR5(config, bundle));
-        suppliers.put(DisplayOrder.MAX_DOSE_PER_PERIOD, () -> new MaxDosePerPeriodR5(config, bundle));
-        suppliers.put(DisplayOrder.BOUNDS_DURATION, () -> new BoundsDurationR5(config, bundle));
+        suppliers.put(DisplayOrder.DAY_OF_WEEK, () -> new DayOfWeekR5(translationService));
+        suppliers.put(DisplayOrder.TIME_OF_DAY, () -> new TimeOfDayR5(translationService));
+        suppliers.put(DisplayOrder.TIMING_CODE, () -> new TimingCodeR5(translationService));
+        suppliers.put(DisplayOrder.TIMING_EVENT, () -> new TimingEventR5(translationService));
+        suppliers.put(DisplayOrder.METHOD, () -> new MethodR5(translationService));
+        suppliers.put(DisplayOrder.ROUTE, () -> new RouteR5(translationService));
+        suppliers.put(DisplayOrder.SITE, () -> new SiteR5(translationService));
+        suppliers.put(DisplayOrder.EXTENSION, () -> new ExtensionR5(translationService));
+        suppliers.put(DisplayOrder.TIMING_EXTENSION, () -> new TimingExtensionR5(translationService));
+        suppliers.put(DisplayOrder.TIMING_REPEAT_EXTENSION, () -> new TimingRepeatExtensionR5(translationService));
+        suppliers.put(DisplayOrder.MODIFIER_EXTENSION, () -> new ModifierExtensionR5(translationService));
+        suppliers.put(DisplayOrder.TIMING_MODIFIER_EXTENSION, () -> new TimingModifierExtensionR5(translationService));
+        suppliers.put(DisplayOrder.ADDITIONAL_INSTRUCTION, () -> new AdditionalInstructionR5(translationService));
+        suppliers.put(DisplayOrder.AS_NEEDED, () -> new AsNeededR5(translationService));
+        suppliers.put(DisplayOrder.BOUNDS_PERIOD, () -> new BoundsPeriodR5(translationService));
+        suppliers.put(DisplayOrder.BOUNDS_RANGE, () -> new BoundsRangeR5(translationService));
+        suppliers.put(DisplayOrder.DURATION_DURATION_MAX, () -> new DurationDurationMaxR5(translationService));
+        suppliers.put(DisplayOrder.FREQUENCY_FREQUENCY_MAX, () -> new FrequencyFrequencyMaxR5(translationService));
+        suppliers.put(DisplayOrder.PERIOD_PERIOD_MAX, () -> new PeriodPeriodMaxR5(translationService));
+        suppliers.put(DisplayOrder.COUNT_COUNT_MAX, () -> new CountCountMaxR5(translationService));
+        suppliers.put(DisplayOrder.DOSE_QUANTITY, () -> new DoseQuantityR5(translationService));
+        suppliers.put(DisplayOrder.DOSE_RANGE, () -> new DoseRangeR5(translationService));
+        suppliers.put(DisplayOrder.RATE_QUANTITY, () -> new RateQuantityR5(translationService));
+        suppliers.put(DisplayOrder.RATE_RANGE, () -> new RateRangeR5(translationService));
+        suppliers.put(DisplayOrder.RATE_RATIO, () -> new RateRatioR5(translationService));
+        suppliers.put(DisplayOrder.OFFSET_WHEN, () -> new OffsetWhenR5(translationService));
+        suppliers.put(DisplayOrder.MAX_DOSE_PER_LIFETIME, () -> new MaxDosePerLifetimeR5(translationService));
+        suppliers.put(DisplayOrder.MAX_DOSE_PER_ADMINISTRATION, () -> new MaxDosePerAdministrationR5(translationService));
+        suppliers.put(DisplayOrder.MAX_DOSE_PER_PERIOD, () -> new MaxDosePerPeriodR5(translationService));
+        suppliers.put(DisplayOrder.BOUNDS_DURATION, () -> new BoundsDurationR5(translationService));
 
         // Composite translator with dependencies
         suppliers.put(

@@ -1,12 +1,13 @@
 package io.github.jy95.fds.r5.translators;
 
-import com.ibm.icu.text.MessageFormat;
 import io.github.jy95.fds.common.functions.ListToString;
+import io.github.jy95.fds.common.functions.TranslationService;
 import io.github.jy95.fds.common.translators.AsNeeded;
 import io.github.jy95.fds.r5.config.FDSConfigR5;
+import lombok.RequiredArgsConstructor;
+
 import org.hl7.fhir.r5.model.Dosage;
 
-import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -14,36 +15,11 @@ import java.util.concurrent.CompletableFuture;
  *
  * @author jy95
  */
+@RequiredArgsConstructor
 public class AsNeededR5 implements AsNeeded<FDSConfigR5, Dosage> {
 
-    // Translations
-    /** MessageFormat instance used for "asNeededFor" translation. */
-    protected final MessageFormat asNeededForMsg;
-    /** The message for "asNeeded". */
-    protected final String asNeededMsg;
-
-    /**
-     * The configuration object used by this API.
-     */
-    private final FDSConfigR5 config;
-
-    /**
-     * The resource bundle containing localized strings for translation.
-     */
-    private final ResourceBundle bundle;
-
-    /**
-     * Constructor for {@code AsNeededR5}.
-     *
-     * @param config The configuration object used for translation.
-     * @param bundle a {@link java.util.ResourceBundle} object
-     */
-    public AsNeededR5(FDSConfigR5 config, ResourceBundle bundle) {
-        this.config = config;
-        this.bundle = bundle;
-        this.asNeededForMsg = getAsNeededForMsg(bundle, config.getLocale());
-        this.asNeededMsg = getAsNeededMsg(bundle);
-    }
+    /** Translation service */
+    private final TranslationService<FDSConfigR5> translationService;
 
     /** {@inheritDoc} */
     @Override
@@ -53,6 +29,8 @@ public class AsNeededR5 implements AsNeeded<FDSConfigR5, Dosage> {
         if (hasCodeableConcepts(dosage)) {
             return convertCodeableConcepts(dosage);
         }
+
+        var asNeededMsg = translationService.getMessage(KEY_AS_NEEDED).format(new Object[]{});
 
         // Simple case - only "as-needed"
         return CompletableFuture.supplyAsync(() -> asNeededMsg);
@@ -74,11 +52,15 @@ public class AsNeededR5 implements AsNeeded<FDSConfigR5, Dosage> {
     @Override
     public CompletableFuture<String> convertCodeableConcepts(Dosage dosage) {
         var codes = dosage.getAsNeededFor();
+        var config = translationService.getConfig();
+        var bundle = translationService.getBundle();
 
         var codesFutures = codes
                 .stream()
                 .map(config::fromCodeableConceptToString)
                 .toList();
+
+        var asNeededForMsg = translationService.getMessage(KEY_AS_NEEDED_FOR);
 
         return CompletableFuture
                 .allOf(codesFutures.toArray(CompletableFuture[]::new))

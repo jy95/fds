@@ -1,12 +1,13 @@
 package io.github.jy95.fds.r5.translators;
 
-import com.ibm.icu.text.MessageFormat;
+import io.github.jy95.fds.common.functions.TranslationService;
 import io.github.jy95.fds.common.translators.CountCountMax;
 import io.github.jy95.fds.r5.config.FDSConfigR5;
+import lombok.RequiredArgsConstructor;
+
 import org.hl7.fhir.r5.model.Dosage;
 
 import java.util.Map;
-import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -14,24 +15,11 @@ import java.util.concurrent.CompletableFuture;
  *
  * @author jy95
  */
+@RequiredArgsConstructor
 public class CountCountMaxR5 implements CountCountMax<FDSConfigR5, Dosage> {
 
-    // Translations
-    /** MessageFormat instance used for "count" &amp; "countMax" translation */
-    protected final MessageFormat countMaxMsg;
-    /** MessageFormat instance used for "count" translation. */
-    protected final MessageFormat countMsg;
-
-    /**
-     * Constructor for {@code CountCountMaxR5}.
-     *
-     * @param config The configuration object used for translation.
-     * @param bundle a {@link java.util.ResourceBundle} object
-     */
-    public CountCountMaxR5(FDSConfigR5 config, ResourceBundle bundle) {
-        this.countMaxMsg = getCountMaxMsg(bundle, config.getLocale());
-        this.countMsg = getCountMsg(bundle, config.getLocale());
-    }
+    /** Translation service */
+    private final TranslationService<FDSConfigR5> translationService;
 
     /** {@inheritDoc} */
     @Override
@@ -60,6 +48,7 @@ public class CountCountMaxR5 implements CountCountMax<FDSConfigR5, Dosage> {
 
             // Rule: If there's a countMax, there must be a count
             if (hasCountMax(dosage)) {
+                var countMaxMsg = translationService.getMessage(KEY_COUNT_MAX);
                 Map<String, Object> arguments = Map.of(
                         "minCount", dosage.getTiming().getRepeat().getCount(),
                         "maxCount", dosage.getTiming().getRepeat().getCountMax()
@@ -67,6 +56,7 @@ public class CountCountMaxR5 implements CountCountMax<FDSConfigR5, Dosage> {
                 return countMaxMsg.format(arguments);
             }
 
+            var countMsg = translationService.getMessage(KEY_COUNT);
             return countMsg.format(new Object[]{
                     dosage.getTiming().getRepeat().getCount()
             });
