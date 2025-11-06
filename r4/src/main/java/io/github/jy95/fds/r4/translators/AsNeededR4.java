@@ -31,7 +31,7 @@ public class AsNeededR4 implements AsNeeded<FDSConfigR4, Dosage> {
             return convertCodeableConcepts(dosage);
         }
 
-        var asNeededMsg = translationService.getMessage(KEY_AS_NEEDED).format(new Object[]{});
+        var asNeededMsg = translationService.getText(KEY_AS_NEEDED);
 
         // Simple case - only "as-needed"
         return CompletableFuture.supplyAsync(() -> asNeededMsg);

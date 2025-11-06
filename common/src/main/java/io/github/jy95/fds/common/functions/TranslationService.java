@@ -24,19 +24,31 @@ public final class TranslationService<C extends FDSConfig> {
      *
      * @param messageSuppliers a map of message keys to lazy {@link java.util.function.Supplier} instances
      */
-    @Builder.Default private final Map<String, MessageFormat> messagesCache = new ConcurrentHashMap<>();
+    @Builder.Default private final Map<String, String> messagesCache = new ConcurrentHashMap<>();
 
     /**
      * Retrieves the localized message format for the specified key.
      *
      * @param key the message key
-     * @return the localized {@link com.ibm.icu.text.MessageFormat} instance
+     * @return a new, localized {@link com.ibm.icu.text.MessageFormat} instance
      */
     public MessageFormat getMessage(String key) {
-        return messagesCache.computeIfAbsent(key, k -> {
-            var msg = bundle.getString(k);
-            return new MessageFormat(msg, config.getLocale());
-        });
+        // 1. Cache only the raw format String, which IS thread-safe to share.
+        var msg = getText(key);
+        
+        // 2. Return a brand-new MessageFormat instance every time.
+        // This ensures each thread has its own dedicated, non-shared instance.
+        return new MessageFormat(msg, config.getLocale());
+    }
+
+    /**
+     * Retrieves the localized message for the specified key without arguments.
+     *
+     * @param key the message key
+     * @return the localized message string
+     */
+    public String getText(String key) {
+        return messagesCache.computeIfAbsent(key, k -> bundle.getString(k));
     }
 
 }
