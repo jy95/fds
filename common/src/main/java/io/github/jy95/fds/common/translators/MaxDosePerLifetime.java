@@ -19,7 +19,7 @@ import java.util.ResourceBundle;
 public interface MaxDosePerLifetime<C extends FDSConfig, D> extends Translator<C, D> {
 
     // Key constant for maxDosePerAdministration message
-    String KEY_MAX_DOSE_PER_ADMINISTRATION = "fields.maxDosePerAdministration";
+    String KEY_MAX_DOSE_PER_LIFETIME = "fields.maxDosePerLifetime";
 
     /**
      * MessageFormat instance used for "maxDosePerLifetime" translation

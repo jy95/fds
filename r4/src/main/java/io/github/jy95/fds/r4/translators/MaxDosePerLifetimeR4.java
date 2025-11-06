@@ -27,7 +27,7 @@ public class MaxDosePerLifetimeR4 implements MaxDosePerLifetime<FDSConfigR4, Dos
         var quantity = dosage.getMaxDosePerLifetime();
         var config = translationService.getConfig();
         var bundle = translationService.getBundle();
-        var maxDosePerLifetimeMsg = translationService.getMessage(KEY_MAX_DOSE_PER_ADMINISTRATION);
+        var maxDosePerLifetimeMsg = translationService.getMessage(KEY_MAX_DOSE_PER_LIFETIME);
 
         return QuantityToStringR4
                 .getInstance()
