@@ -29,8 +29,7 @@ public class DayOfWeekR5 implements DayOfWeek<FDSConfigR5, Dosage> {
     /**
      * Constructor for {@code DayOfWeekR5}.
      *
-     * @param config The configuration object used for translation.
-     * @param bundle a {@link java.util.ResourceBundle} object
+     * @param translationService the translation service
      */
     public DayOfWeekR5(TranslationService<FDSConfigR5> translationService) {
         this.translationService = translationService;
