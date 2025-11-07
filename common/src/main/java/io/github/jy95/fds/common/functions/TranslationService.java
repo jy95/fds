@@ -20,7 +20,7 @@ public final class TranslationService<C extends FDSConfig> {
     private final ResourceBundle bundle;
     private final C config;
     /**
-     * Constructs a new {@code TranslationMessagesMap} with the specified supplier map.
+     * Constructs a new {@code TranslationService} with the specified supplier map.
      *
      * @param messagesCache a map of message keys to lazy String instances
      */
