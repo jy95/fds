@@ -22,7 +22,7 @@ public final class TranslationService<C extends FDSConfig> {
     /**
      * Constructs a new {@code TranslationMessagesMap} with the specified supplier map.
      *
-     * @param messageSuppliers a map of message keys to lazy {@link java.util.function.Supplier} instances
+     * @param messagesCache a map of message keys to lazy String instances
      */
     @Builder.Default private final Map<String, String> messagesCache = new ConcurrentHashMap<>();
 
