@@ -17,14 +17,23 @@ import lombok.Getter;
 @Getter
 public final class TranslationService<C extends FDSConfig> {
     
-    private final ResourceBundle bundle;
-    private final C config;
     /**
-     * Constructs a new {@code TranslationService} with the specified supplier map.
-     *
-     * @param messagesCache a map of message keys to lazy String instances
+     * The resource bundle containing localized strings for translation.
      */
-    @Builder.Default private final Map<String, String> messagesCache = new ConcurrentHashMap<>();
+    @Getter
+    private final ResourceBundle bundle;
+
+    /**
+     * The configuration object containing locale and other settings.
+     */
+    @Getter
+    private final C config;
+
+    /**
+     * A thread-safe cache for storing localized message strings.
+     */
+    @Builder.Default
+    private final Map<String, String> messagesCache = new ConcurrentHashMap<>();
 
     /**
      * Retrieves the localized message format for the specified key.
