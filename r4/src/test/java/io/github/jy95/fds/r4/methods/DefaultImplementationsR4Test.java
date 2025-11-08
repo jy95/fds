@@ -42,6 +42,6 @@ public class DefaultImplementationsR4Test {
 
     @Test
     void fromExtensionsToStringEmptyList() {
-        assertNull(DefaultImplementationsR4.fromExtensionsToString(List.of()).join());
+        assertEquals("[]", DefaultImplementationsR4.fromExtensionsToString(List.of()).join());
     }
 }

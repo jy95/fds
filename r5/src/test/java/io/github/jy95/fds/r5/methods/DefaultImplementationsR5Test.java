@@ -42,6 +42,6 @@ public class DefaultImplementationsR5Test {
 
     @Test
     void fromExtensionsToStringEmptyList() {
-        assertNull(DefaultImplementationsR5.fromExtensionsToString(List.of()).join());
+        assertEquals("[]", DefaultImplementationsR5.fromExtensionsToString(List.of()).join());
     }
 }

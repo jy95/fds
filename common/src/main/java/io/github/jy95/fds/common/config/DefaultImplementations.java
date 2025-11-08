@@ -76,12 +76,8 @@ public final class DefaultImplementations {
      * @return a {@link java.util.concurrent.CompletableFuture} that resolves to a JSON-like string representing the extensions.
      * @since 2.1.1
      */
-    public static CompletableFuture<String> fromExtensionsToString(List<? extends IBaseExtension<?, ?>> extensions) {
+    public static CompletableFuture<String> fromExtensionsToString(@NonNull List<? extends IBaseExtension<?, ?>> extensions) {
         return CompletableFuture.supplyAsync(() -> {
-
-            if (extensions.isEmpty()) {
-                return null;
-            }
 
             return extensions
                     .stream()
