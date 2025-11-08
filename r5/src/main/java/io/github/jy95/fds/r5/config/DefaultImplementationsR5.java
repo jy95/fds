@@ -69,10 +69,7 @@ public final class DefaultImplementationsR5 {
             }
 
             var firstCode = codeableConcept.getCodingFirstRep();
-            var display = firstCode.getDisplay();
-            var code = firstCode.getCode();
-
-            return (Objects.nonNull(display)) ? display : code;
+            return DefaultImplementations.fromCodingToString(firstCode);
         });
     }
 

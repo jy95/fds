@@ -14,6 +14,9 @@ import com.ibm.icu.number.NumberFormatter;
 
 import org.hl7.fhir.instance.model.api.IBaseExtension;
 import org.hl7.fhir.instance.model.api.IPrimitiveType;
+import org.hl7.fhir.instance.model.api.IBaseCoding;
+
+import lombok.NonNull;
 
 /**
  * Provides default implementations for common operations in the library.
@@ -113,6 +116,20 @@ public final class DefaultImplementations {
                     })
                     .collect(Collectors.joining(", ", "[", "]"));
         });
+    }
+
+    /**
+     * Converts a FHIR {@link org.hl7.fhir.instance.model.api.IBaseCoding} to a string representation.
+     *
+     * @param coding the {@link org.hl7.fhir.instance.model.api.IBaseCoding} to be converted.
+     * @return the display or code of the coding.
+     * @since 2.1.1
+     */
+    public static String fromCodingToString(@NonNull IBaseCoding coding) {
+        var display = coding.getDisplay();
+        var code = coding.getCode();
+
+        return (Objects.nonNull(display)) ? display : code;
     }
 
 }
