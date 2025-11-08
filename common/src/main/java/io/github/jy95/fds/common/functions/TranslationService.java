@@ -14,7 +14,6 @@ import lombok.Getter;
  * @param <C> the type of FDSConfig
  */
 @Builder
-@Getter
 public final class TranslationService<C extends FDSConfig> {
     
     /**
