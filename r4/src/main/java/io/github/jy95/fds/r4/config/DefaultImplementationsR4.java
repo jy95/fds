@@ -18,11 +18,6 @@ import java.util.function.Predicate;
  */
 public final class DefaultImplementationsR4 {
 
-    /**
-     * No constructor for this class
-     */
-    private DefaultImplementationsR4(){}
-
     // Mapping of DoseAndRateKey to corresponding extractor functions
     private static final Map<DoseAndRateKey, DoseAndRateExtractor<Dosage.DosageDoseAndRateComponent, Type>> EXTRACTOR_MAP = Map.of(
         DoseAndRateKey.DOSE_QUANTITY, Dosage.DosageDoseAndRateComponent::getDoseQuantity,
@@ -31,6 +26,11 @@ public final class DefaultImplementationsR4 {
         DoseAndRateKey.RATE_RANGE, Dosage.DosageDoseAndRateComponent::getRateRange,
         DoseAndRateKey.RATE_RATIO, Dosage.DosageDoseAndRateComponent::getRateRatio
     );
+
+    /**
+     * No constructor for this class
+     */
+    private DefaultImplementationsR4(){}
 
     /**
      * Converts a FHIR {@link org.hl7.fhir.r4.model.Quantity} object to a string representation of its unit or code.
