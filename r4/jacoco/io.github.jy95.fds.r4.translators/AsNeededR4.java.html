@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AsNeededR4.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">FHIR Dosage Support - R4</a> &gt; <a href="index.source.html" class="el_package">io.github.jy95.fds.r4.translators</a> &gt; <span class="el_source">AsNeededR4.java</span></div><h1>AsNeededR4.java</h1><pre class="source lang-java linenums">package io.github.jy95.fds.r4.translators;
 
-import com.ibm.icu.text.MessageFormat;
 import io.github.jy95.fds.common.functions.ListToString;
+import io.github.jy95.fds.common.functions.TranslationService;
 import io.github.jy95.fds.common.translators.AsNeeded;
 import io.github.jy95.fds.r4.config.FDSConfigR4;
+import lombok.RequiredArgsConstructor;
+
 import org.hl7.fhir.r4.model.Dosage;
 
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -15,72 +16,52 @@ import java.util.concurrent.CompletableFuture;
  *
  * @author jy95
  */
+@RequiredArgsConstructor
 public class AsNeededR4 implements AsNeeded&lt;FDSConfigR4, Dosage&gt; {
 
-    // Translations
-    /** MessageFormat instance used for &quot;asNeededFor&quot; translation. */
-    protected final MessageFormat asNeededForMsg;
-    /** The message for &quot;asNeeded&quot;. */
-    protected final String asNeededMsg;
-
-    /**
-     * The configuration object used by this API.
-     */
-    private final FDSConfigR4 config;
-
-    /**
-     * The resource bundle containing localized strings for translation.
-     */
-    private final ResourceBundle bundle;
-
-    /**
-     * Constructor for {@code AsNeededR4}.
-     *
-     * @param config The configuration object used for translation.
-     * @param bundle a {@link java.util.ResourceBundle} object
-     */
-<span class="fc" id="L42">    public AsNeededR4(FDSConfigR4 config, ResourceBundle bundle) {</span>
-<span class="fc" id="L43">        this.config = config;</span>
-<span class="fc" id="L44">        this.bundle = bundle;</span>
-<span class="fc" id="L45">        this.asNeededForMsg = getAsNeededForMsg(bundle, config.getLocale());</span>
-<span class="fc" id="L46">        this.asNeededMsg = getAsNeededMsg(bundle);</span>
-<span class="fc" id="L47">    }</span>
+    /** Translation service */
+    private final TranslationService&lt;FDSConfigR4&gt; translationService;
 
     /** {@inheritDoc} */
     @Override
     public CompletableFuture&lt;String&gt; convert(Dosage dosage) {
 
         // Complex case - &quot;as-need&quot; for ...
-<span class="fc bfc" id="L54" title="All 2 branches covered.">        if (hasCodeableConcepts(dosage)) {</span>
-<span class="fc" id="L55">            return convertCodeableConcepts(dosage);</span>
+<span class="fc bfc" id="L30" title="All 2 branches covered.">        if (hasCodeableConcepts(dosage)) {</span>
+<span class="fc" id="L31">            return convertCodeableConcepts(dosage);</span>
         }
 
+<span class="fc" id="L34">        var asNeededMsg = translationService.getText(KEY_AS_NEEDED);</span>
+
         // Simple case - only &quot;as-needed&quot;
-<span class="fc" id="L59">        return CompletableFuture.supplyAsync(() -&gt; asNeededMsg);</span>
+<span class="fc" id="L37">        return CompletableFuture.supplyAsync(() -&gt; asNeededMsg);</span>
     }
 
     /** {@inheritDoc} */
     @Override
     public boolean isPresent(Dosage dosage) {
-<span class="fc" id="L65">        return dosage.hasAsNeeded();</span>
+<span class="fc" id="L43">        return dosage.hasAsNeeded();</span>
     }
 
     /** {@inheritDoc} */
     @Override
     public boolean hasCodeableConcepts(Dosage dosage) {
-<span class="fc" id="L71">        return dosage.hasAsNeededCodeableConcept();</span>
+<span class="fc" id="L49">        return dosage.hasAsNeededCodeableConcept();</span>
     }
 
     /** {@inheritDoc} */
     @Override
     public CompletableFuture&lt;String&gt; convertCodeableConcepts(Dosage dosage) {
-<span class="fc" id="L77">        var code = dosage.getAsNeededCodeableConcept();</span>
-<span class="fc" id="L78">        var codeAsText = config</span>
-<span class="fc" id="L79">                .fromCodeableConceptToString(code);</span>
+<span class="fc" id="L55">        var code = dosage.getAsNeededCodeableConcept();</span>
+<span class="fc" id="L56">        var config = translationService.getConfig();</span>
+<span class="fc" id="L57">        var bundle = translationService.getBundle();</span>
+<span class="fc" id="L58">        var asNeededForMsg = translationService.getMessage(KEY_AS_NEEDED_FOR);</span>
+<span class="fc" id="L59">        var codeAsText = config</span>
+<span class="fc" id="L60">                .fromCodeableConceptToString(code);</span>
 
-<span class="fc" id="L81">        return codeAsText</span>
-<span class="fc" id="L82">                .thenApplyAsync(v -&gt; ListToString.convert(bundle, List.of(v)))</span>
-<span class="fc" id="L83">                .thenApplyAsync(v -&gt; asNeededForMsg.format(new Object[]{v}));</span>
+<span class="fc" id="L62">        return codeAsText</span>
+<span class="fc" id="L63">                .thenApplyAsync(v -&gt; ListToString.convert(bundle, List.of(v)))</span>
+<span class="fc" id="L64">                .thenApplyAsync(v -&gt; asNeededForMsg.format(new Object[]{v}));</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

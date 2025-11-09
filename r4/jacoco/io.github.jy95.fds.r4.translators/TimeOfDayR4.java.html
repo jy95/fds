@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TimeOfDayR4.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">FHIR Dosage Support - R4</a> &gt; <a href="index.source.html" class="el_package">io.github.jy95.fds.r4.translators</a> &gt; <span class="el_source">TimeOfDayR4.java</span></div><h1>TimeOfDayR4.java</h1><pre class="source lang-java linenums">package io.github.jy95.fds.r4.translators;
 
-import com.ibm.icu.text.MessageFormat;
 import io.github.jy95.fds.common.functions.ListToString;
+import io.github.jy95.fds.common.functions.TranslationService;
 import io.github.jy95.fds.common.translators.TimeOfDay;
 import io.github.jy95.fds.r4.config.FDSConfigR4;
+import lombok.RequiredArgsConstructor;
+
 import org.hl7.fhir.r4.model.Dosage;
 import org.hl7.fhir.r4.model.PrimitiveType;
 
 import java.util.List;
 import java.util.Map;
-import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -17,69 +18,55 @@ import java.util.concurrent.CompletableFuture;
  *
  * @author jy95
  */
+@RequiredArgsConstructor
 public class TimeOfDayR4 implements TimeOfDay&lt;FDSConfigR4, Dosage&gt; {
 
-    // Translations
-    /** MessageFormat instance used for &quot;timeOfDay&quot; translation. */
-    protected final MessageFormat timeOfDayMsg;
-
-    /**
-     * The resource bundle containing localized strings for translation.
-     */
-    private final ResourceBundle bundle;
-
-    /**
-     * Constructor for {@code TimeOfDayR4}.
-     *
-     * @param config The configuration object used for translation.
-     * @param bundle a {@link java.util.ResourceBundle} object
-     */
-<span class="fc" id="L37">    public TimeOfDayR4(FDSConfigR4 config, ResourceBundle bundle) {</span>
-<span class="fc" id="L38">        this.timeOfDayMsg = getTimeOfDayMsg(bundle, config.getLocale());</span>
-<span class="fc" id="L39">        this.bundle = bundle;</span>
-<span class="fc" id="L40">    }</span>
+    /** Translation service */
+    private final TranslationService&lt;FDSConfigR4&gt; translationService;
 
     /** {@inheritDoc} */
     @Override
     public List&lt;String&gt; getTimes(Dosage dosage) {
-<span class="fc" id="L45">        return dosage</span>
-<span class="fc" id="L46">                .getTiming()</span>
-<span class="fc" id="L47">                .getRepeat()</span>
-<span class="fc" id="L48">                .getTimeOfDay()</span>
-<span class="fc" id="L49">                .stream()</span>
-<span class="fc" id="L50">                .map(PrimitiveType::getValue)</span>
-<span class="fc" id="L51">                .toList();</span>
+<span class="fc" id="L30">        return dosage</span>
+<span class="fc" id="L31">                .getTiming()</span>
+<span class="fc" id="L32">                .getRepeat()</span>
+<span class="fc" id="L33">                .getTimeOfDay()</span>
+<span class="fc" id="L34">                .stream()</span>
+<span class="fc" id="L35">                .map(PrimitiveType::getValue)</span>
+<span class="fc" id="L36">                .toList();</span>
     }
 
     /** {@inheritDoc} */
     @Override
     public boolean hasRequiredElements(Dosage dosage) {
-<span class="fc" id="L57">        var timing = dosage.getTiming();</span>
-<span class="pc bpc" id="L58" title="1 of 4 branches missed.">        return timing.hasRepeat() &amp;&amp; timing.getRepeat().hasTimeOfDay();</span>
+<span class="fc" id="L42">        var timing = dosage.getTiming();</span>
+<span class="pc bpc" id="L43" title="1 of 4 branches missed.">        return timing.hasRepeat() &amp;&amp; timing.getRepeat().hasTimeOfDay();</span>
     }
 
     /** {@inheritDoc} */
     @Override
     public CompletableFuture&lt;String&gt; convert(Dosage dosage) {
-<span class="fc" id="L64">        return CompletableFuture.supplyAsync(() -&gt; {</span>
+<span class="fc" id="L49">        return CompletableFuture.supplyAsync(() -&gt; {</span>
 
-<span class="fc" id="L66">            var times = getTimes(dosage);</span>
-<span class="fc" id="L67">            var timeOfDays = times.stream().map(this::formatString).toList();</span>
-<span class="fc" id="L68">            var timeOfDaysAsString = ListToString.convert(bundle, timeOfDays);</span>
+<span class="fc" id="L51">            var times = getTimes(dosage);</span>
+<span class="fc" id="L52">            var timeOfDays = times.stream().map(this::formatString).toList();</span>
+<span class="fc" id="L53">            var bundle = translationService.getBundle();</span>
+<span class="fc" id="L54">            var timeOfDayMsg = translationService.getMessage(KEY_TIME_OF_DAY);</span>
+<span class="fc" id="L55">            var timeOfDaysAsString = ListToString.convert(bundle, timeOfDays);</span>
 
-<span class="fc" id="L70">            Map&lt;String, Object&gt; messageArguments = Map.of(</span>
+<span class="fc" id="L57">            Map&lt;String, Object&gt; messageArguments = Map.of(</span>
                     &quot;timeOfDay&quot;, timeOfDaysAsString,
-<span class="fc" id="L72">                    &quot;count&quot;, timeOfDays.size()</span>
+<span class="fc" id="L59">                    &quot;count&quot;, timeOfDays.size()</span>
             );
 
-<span class="fc" id="L75">            return timeOfDayMsg.format(messageArguments);</span>
+<span class="fc" id="L62">            return timeOfDayMsg.format(messageArguments);</span>
         });
     }
 
     /** {@inheritDoc} */
     @Override
     public boolean hasTiming(Dosage dosage) {
-<span class="fc" id="L82">        return dosage.hasTiming();</span>
+<span class="fc" id="L69">        return dosage.hasTiming();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

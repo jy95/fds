@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CountCountMaxR5.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">FHIR Dosage Support - R5</a> &gt; <a href="index.source.html" class="el_package">io.github.jy95.fds.r5.translators</a> &gt; <span class="el_source">CountCountMaxR5.java</span></div><h1>CountCountMaxR5.java</h1><pre class="source lang-java linenums">package io.github.jy95.fds.r5.translators;
 
-import com.ibm.icu.text.MessageFormat;
+import io.github.jy95.fds.common.functions.TranslationService;
 import io.github.jy95.fds.common.translators.CountCountMax;
 import io.github.jy95.fds.r5.config.FDSConfigR5;
+import lombok.RequiredArgsConstructor;
+
 import org.hl7.fhir.r5.model.Dosage;
 
 import java.util.Map;
-import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -14,61 +15,50 @@ import java.util.concurrent.CompletableFuture;
  *
  * @author jy95
  */
+@RequiredArgsConstructor
 public class CountCountMaxR5 implements CountCountMax&lt;FDSConfigR5, Dosage&gt; {
 
-    // Translations
-    /** MessageFormat instance used for &quot;count&quot; &amp;amp; &quot;countMax&quot; translation */
-    protected final MessageFormat countMaxMsg;
-    /** MessageFormat instance used for &quot;count&quot; translation. */
-    protected final MessageFormat countMsg;
-
-    /**
-     * Constructor for {@code CountCountMaxR5}.
-     *
-     * @param config The configuration object used for translation.
-     * @param bundle a {@link java.util.ResourceBundle} object
-     */
-<span class="fc" id="L31">    public CountCountMaxR5(FDSConfigR5 config, ResourceBundle bundle) {</span>
-<span class="fc" id="L32">        this.countMaxMsg = getCountMaxMsg(bundle, config.getLocale());</span>
-<span class="fc" id="L33">        this.countMsg = getCountMsg(bundle, config.getLocale());</span>
-<span class="fc" id="L34">    }</span>
+    /** Translation service */
+    private final TranslationService&lt;FDSConfigR5&gt; translationService;
 
     /** {@inheritDoc} */
     @Override
     public boolean hasRequiredElements(Dosage dosage) {
-<span class="pc bpc" id="L39" title="1 of 2 branches missed.">        return dosage.getTiming().hasRepeat()</span>
-<span class="pc bpc" id="L40" title="1 of 2 branches missed.">                &amp;&amp; (dosage.getTiming().getRepeat().hasCount()</span>
-<span class="pc bnc" id="L41" title="All 2 branches missed.">                || hasCountMax(dosage));</span>
+<span class="pc bpc" id="L27" title="1 of 2 branches missed.">        return dosage.getTiming().hasRepeat()</span>
+<span class="pc bpc" id="L28" title="1 of 2 branches missed.">                &amp;&amp; (dosage.getTiming().getRepeat().hasCount()</span>
+<span class="pc bnc" id="L29" title="All 2 branches missed.">                || hasCountMax(dosage));</span>
     }
 
     /** {@inheritDoc} */
     @Override
     public boolean hasTiming(Dosage dosage) {
-<span class="fc" id="L47">        return dosage.hasTiming();</span>
+<span class="fc" id="L35">        return dosage.hasTiming();</span>
     }
 
     /** {@inheritDoc} */
     @Override
     public boolean hasCountMax(Dosage dosage) {
-<span class="fc" id="L53">        return dosage.getTiming().getRepeat().hasCountMax();</span>
+<span class="fc" id="L41">        return dosage.getTiming().getRepeat().hasCountMax();</span>
     }
 
     /** {@inheritDoc} */
     @Override
     public CompletableFuture&lt;String&gt; convert(Dosage dosage) {
-<span class="fc" id="L59">        return CompletableFuture.supplyAsync(() -&gt; {</span>
+<span class="fc" id="L47">        return CompletableFuture.supplyAsync(() -&gt; {</span>
 
             // Rule: If there's a countMax, there must be a count
-<span class="fc bfc" id="L62" title="All 2 branches covered.">            if (hasCountMax(dosage)) {</span>
-<span class="fc" id="L63">                Map&lt;String, Object&gt; arguments = Map.of(</span>
-<span class="fc" id="L64">                        &quot;minCount&quot;, dosage.getTiming().getRepeat().getCount(),</span>
-<span class="fc" id="L65">                        &quot;maxCount&quot;, dosage.getTiming().getRepeat().getCountMax()</span>
+<span class="fc bfc" id="L50" title="All 2 branches covered.">            if (hasCountMax(dosage)) {</span>
+<span class="fc" id="L51">                var countMaxMsg = translationService.getMessage(KEY_COUNT_MAX);</span>
+<span class="fc" id="L52">                Map&lt;String, Object&gt; arguments = Map.of(</span>
+<span class="fc" id="L53">                        &quot;minCount&quot;, dosage.getTiming().getRepeat().getCount(),</span>
+<span class="fc" id="L54">                        &quot;maxCount&quot;, dosage.getTiming().getRepeat().getCountMax()</span>
                 );
-<span class="fc" id="L67">                return countMaxMsg.format(arguments);</span>
+<span class="fc" id="L56">                return countMaxMsg.format(arguments);</span>
             }
 
-<span class="fc" id="L70">            return countMsg.format(new Object[]{</span>
-<span class="fc" id="L71">                    dosage.getTiming().getRepeat().getCount()</span>
+<span class="fc" id="L59">            var countMsg = translationService.getMessage(KEY_COUNT);</span>
+<span class="fc" id="L60">            return countMsg.format(new Object[]{</span>
+<span class="fc" id="L61">                    dosage.getTiming().getRepeat().getCount()</span>
             });
 
         });

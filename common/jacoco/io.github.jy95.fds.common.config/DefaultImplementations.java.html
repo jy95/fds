@@ -3,10 +3,20 @@
 import io.github.jy95.fds.common.bundle.MultiResourceBundleControl;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
 
 import com.ibm.icu.number.NumberFormatter;
+
+import org.hl7.fhir.instance.model.api.IBaseExtension;
+import org.hl7.fhir.instance.model.api.IPrimitiveType;
+import org.hl7.fhir.instance.model.api.IBaseCoding;
+
+import lombok.NonNull;
 
 /**
  * Provides default implementations for common operations in the library.
@@ -18,6 +28,15 @@ public final class DefaultImplementations {
 
     // Define the new package path for resource bundles
     private static final String RESOURCE_PACKAGE = &quot;io.github.jy95.fds.common.l10n.&quot;;
+
+    // Initialize the MultiResourceBundleControl with resource bundle names
+<span class="fc" id="L33">    private static final MultiResourceBundleControl BUNDLE_CONTROL =</span>
+        new MultiResourceBundleControl(
+                &quot;translations&quot;,
+                RESOURCE_PACKAGE + &quot;DosageFields&quot;,
+                RESOURCE_PACKAGE + &quot;EventTiming&quot;,
+                RESOURCE_PACKAGE + &quot;QuantityComparator&quot;
+        );
 
     /**
      * No constructor for this class
@@ -31,16 +50,10 @@ public final class DefaultImplementations {
      * @return the aggregated ResourceBundle for the specified locale.
      */
     public static ResourceBundle selectResourceBundle(Locale locale) {
-<span class="fc" id="L34">        var bundleControl = new MultiResourceBundleControl(</span>
-                &quot;translations&quot;,
-                RESOURCE_PACKAGE + &quot;DosageFields&quot;,
-                RESOURCE_PACKAGE + &quot;EventTiming&quot;,
-                RESOURCE_PACKAGE + &quot;QuantityComparator&quot;
-        );
-<span class="fc" id="L40">        return ResourceBundle.getBundle(</span>
-<span class="fc" id="L41">                bundleControl.getBaseName(),</span>
+<span class="fc" id="L53">        return ResourceBundle.getBundle(</span>
+<span class="fc" id="L54">                BUNDLE_CONTROL.getBaseName(),</span>
                 locale,
-                bundleControl
+                BUNDLE_CONTROL
         );
     }
 
@@ -53,7 +66,67 @@ public final class DefaultImplementations {
      * @since 2.1.0
      */
     public static String formatQuantityNumber(Locale locale, BigDecimal value) {
-<span class="nc" id="L56">        return NumberFormatter.withLocale(locale).format(value).toString();</span>
+<span class="nc" id="L69">        return NumberFormatter.withLocale(locale).format(value).toString();</span>
     }
+
+    /**
+     * Converts a list of FHIR {@link org.hl7.fhir.instance.model.api.IBaseExtension} objects to a JSON-like string representation.
+     *
+     * @param extensions the list of {@link org.hl7.fhir.instance.model.api.IBaseExtension} objects to be converted.
+     * @return a {@link java.util.concurrent.CompletableFuture} that resolves to a JSON-like string representing the extensions.
+     * @since 2.1.1
+     */
+<span class="nc bnc" id="L79" title="All 2 branches missed.">    public static CompletableFuture&lt;String&gt; fromExtensionsToString(@NonNull List&lt;? extends IBaseExtension&lt;?, ?&gt;&gt; extensions) {</span>
+<span class="nc" id="L80">        return CompletableFuture.supplyAsync(() -&gt; {</span>
+
+<span class="nc" id="L82">            return extensions</span>
+<span class="nc" id="L83">                    .stream()</span>
+<span class="nc" id="L84">                    .map(ext -&gt; {</span>
+
+<span class="nc" id="L86">                        StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L87">                        sb.append(&quot;{&quot;);</span>
+
+<span class="nc" id="L89">                        var hasUrl = Objects.nonNull(ext.getUrl());</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">                        if (hasUrl) {</span>
+<span class="nc" id="L91">                            sb</span>
+<span class="nc" id="L92">                                .append(&quot;\&quot;url\&quot;:\&quot;&quot;)</span>
+<span class="nc" id="L93">                                .append(ext.getUrl())</span>
+<span class="nc" id="L94">                                .append(&quot;\&quot;&quot;);</span>
+                        }
+
+<span class="nc" id="L97">                        var hasValue = Objects.nonNull(ext.getValue());</span>
+<span class="nc bnc" id="L98" title="All 4 branches missed.">                        if (hasUrl &amp;&amp; hasValue) {</span>
+<span class="nc" id="L99">                            sb.append(&quot;,&quot;);</span>
+                        }
+
+<span class="nc bnc" id="L102" title="All 4 branches missed.">                        if (hasValue &amp;&amp; ext.getValue() instanceof IPrimitiveType&lt;?&gt; valuIPrimitiveType) {</span>
+<span class="nc" id="L103">                            sb</span>
+<span class="nc" id="L104">                                .append(&quot;\&quot;value[x]\&quot;:\&quot;&quot;)</span>
+<span class="nc" id="L105">                                .append(</span>
+<span class="nc" id="L106">                                    valuIPrimitiveType.getValueAsString()</span>
+<span class="nc" id="L107">                                ).append(&quot;\&quot;&quot;);</span>
+                        }
+
+<span class="nc" id="L110">                        sb.append(&quot;}&quot;);</span>
+<span class="nc" id="L111">                        return sb.toString();</span>
+                    })
+<span class="nc" id="L113">                    .collect(Collectors.joining(&quot;, &quot;, &quot;[&quot;, &quot;]&quot;));</span>
+        });
+    }
+
+    /**
+     * Converts a FHIR {@link org.hl7.fhir.instance.model.api.IBaseCoding} to a string representation.
+     *
+     * @param coding the {@link org.hl7.fhir.instance.model.api.IBaseCoding} to be converted.
+     * @return the display or code of the coding.
+     * @since 2.1.1
+     */
+<span class="nc bnc" id="L124" title="All 2 branches missed.">    public static String fromCodingToString(@NonNull IBaseCoding coding) {</span>
+<span class="nc" id="L125">        var display = coding.getDisplay();</span>
+<span class="nc" id="L126">        var code = coding.getCode();</span>
+
+<span class="nc bnc" id="L128" title="All 2 branches missed.">        return (Objects.nonNull(display)) ? display : code;</span>
+    }
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

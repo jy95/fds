@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DoseQuantityR4.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">FHIR Dosage Support - R4</a> &gt; <a href="index.source.html" class="el_package">io.github.jy95.fds.r4.translators</a> &gt; <span class="el_source">DoseQuantityR4.java</span></div><h1>DoseQuantityR4.java</h1><pre class="source lang-java linenums">package io.github.jy95.fds.r4.translators;
 
+import io.github.jy95.fds.common.functions.TranslationService;
 import io.github.jy95.fds.common.types.DoseAndRateKey;
 import io.github.jy95.fds.common.types.Translator;
 import io.github.jy95.fds.r4.config.FDSConfigR4;
 import io.github.jy95.fds.r4.functions.QuantityToStringR4;
+import lombok.RequiredArgsConstructor;
+
 import org.hl7.fhir.r4.model.Dosage;
 import org.hl7.fhir.r4.model.Quantity;
 
-import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -15,47 +17,33 @@ import java.util.concurrent.CompletableFuture;
  *
  * @author jy95
  */
+@RequiredArgsConstructor
 public class DoseQuantityR4 implements Translator&lt;FDSConfigR4, Dosage&gt; {
 
-    /**
-     * The configuration object used by this API.
-     */
-    private final FDSConfigR4 config;
-
-    /**
-     * The resource bundle containing localized strings for translation.
-     */
-    private final ResourceBundle bundle;
-
-    /**
-     * Constructor for {@code DoseQuantityR4}.
-     *
-     * @param config The configuration object used for translation.
-     * @param bundle a {@link java.util.ResourceBundle} object
-     */
-<span class="fc" id="L36">    public DoseQuantityR4(FDSConfigR4 config, ResourceBundle bundle) {</span>
-<span class="fc" id="L37">        this.config = config;</span>
-<span class="fc" id="L38">        this.bundle = bundle;</span>
-<span class="fc" id="L39">    }</span>
+    /** Translation service */
+    private final TranslationService&lt;FDSConfigR4&gt; translationService;
 
     /** {@inheritDoc} */
     @Override
     public CompletableFuture&lt;String&gt; convert(Dosage dosage) {
-<span class="fc" id="L44">        var doseQuantity = config</span>
-<span class="fc" id="L45">                .selectDosageAndRateField(</span>
-<span class="fc" id="L46">                        dosage.getDoseAndRate(),</span>
+<span class="fc" id="L29">        var config = translationService.getConfig();</span>
+<span class="fc" id="L30">        var bundle = translationService.getBundle();</span>
+<span class="fc" id="L31">        var doseQuantity = config</span>
+<span class="fc" id="L32">                .selectDosageAndRateField(</span>
+<span class="fc" id="L33">                        dosage.getDoseAndRate(),</span>
                         DoseAndRateKey.DOSE_QUANTITY)
                 ;
-<span class="fc" id="L49">        return QuantityToStringR4</span>
-<span class="fc" id="L50">                .getInstance()</span>
-<span class="fc" id="L51">                .convert(bundle, config, (Quantity) doseQuantity);</span>
+<span class="fc" id="L36">        return QuantityToStringR4</span>
+<span class="fc" id="L37">                .getInstance()</span>
+<span class="fc" id="L38">                .convert(bundle, config, (Quantity) doseQuantity);</span>
     }
 
     /** {@inheritDoc} */
     @Override
     public boolean isPresent(Dosage dosage) {
-<span class="fc" id="L57">        return config</span>
-<span class="fc" id="L58">                .hasMatchingComponent(</span>
+<span class="fc" id="L44">        var config = translationService.getConfig();</span>
+<span class="fc" id="L45">        return config</span>
+<span class="fc" id="L46">                .hasMatchingComponent(</span>
                         dosage,
                         Dosage.DosageDoseAndRateComponent::hasDoseQuantity
                 );

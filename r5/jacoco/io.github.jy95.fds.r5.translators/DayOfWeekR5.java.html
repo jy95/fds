@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DayOfWeekR5.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">FHIR Dosage Support - R5</a> &gt; <a href="index.source.html" class="el_package">io.github.jy95.fds.r5.translators</a> &gt; <span class="el_source">DayOfWeekR5.java</span></div><h1>DayOfWeekR5.java</h1><pre class="source lang-java linenums">package io.github.jy95.fds.r5.translators;
 
-import com.ibm.icu.text.MessageFormat;
 import io.github.jy95.fds.common.functions.DayOfWeekFormatter;
 import io.github.jy95.fds.common.functions.ListToString;
+import io.github.jy95.fds.common.functions.TranslationService;
 import io.github.jy95.fds.common.translators.DayOfWeek;
 import io.github.jy95.fds.r5.config.FDSConfigR5;
 import org.hl7.fhir.r5.model.Dosage;
 
 import java.util.List;
 import java.util.Map;
-import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -19,9 +18,8 @@ import java.util.concurrent.CompletableFuture;
  */
 public class DayOfWeekR5 implements DayOfWeek&lt;FDSConfigR5, Dosage&gt; {
 
-    // Translations
-    /** MessageFormat instance used for &quot;dayOfWeek&quot; translation. */
-    protected final MessageFormat dayOfWeekMsg;
+    /** Translation service */
+    private final TranslationService&lt;FDSConfigR5&gt; translationService;
 
     /**
      * Day of week formatter
@@ -29,50 +27,43 @@ public class DayOfWeekR5 implements DayOfWeek&lt;FDSConfigR5, Dosage&gt; {
     private final DayOfWeekFormatter dayOfWeekFormatter;
 
     /**
-     * The resource bundle containing localized strings for translation.
-     */
-    private final ResourceBundle bundle;
-
-    /**
      * Constructor for {@code DayOfWeekR5}.
      *
-     * @param config The configuration object used for translation.
-     * @param bundle a {@link java.util.ResourceBundle} object
+     * @param translationService the translation service
      */
-<span class="fc" id="L42">    public DayOfWeekR5(FDSConfigR5 config, ResourceBundle bundle) {</span>
-<span class="fc" id="L43">        this.bundle = bundle;</span>
-<span class="fc" id="L44">        this.dayOfWeekMsg = getDayOfWeekMsg(bundle, config.getLocale());</span>
-<span class="fc" id="L45">        this.dayOfWeekFormatter = new DayOfWeekFormatter(config.getLocale());</span>
-<span class="fc" id="L46">    }</span>
+<span class="fc" id="L34">    public DayOfWeekR5(TranslationService&lt;FDSConfigR5&gt; translationService) {</span>
+<span class="fc" id="L35">        this.translationService = translationService;</span>
+<span class="fc" id="L36">        this.dayOfWeekFormatter = new DayOfWeekFormatter(translationService.getConfig().getLocale());</span>
+<span class="fc" id="L37">    }</span>
 
     /** {@inheritDoc} */
     @Override
     public boolean hasRequiredElements(Dosage dosage) {
-<span class="pc bpc" id="L51" title="1 of 4 branches missed.">        return dosage.getTiming().hasRepeat() &amp;&amp; dosage.getTiming().getRepeat().hasDayOfWeek();</span>
+<span class="pc bpc" id="L42" title="1 of 4 branches missed.">        return dosage.getTiming().hasRepeat() &amp;&amp; dosage.getTiming().getRepeat().hasDayOfWeek();</span>
     }
 
     /** {@inheritDoc} */
     @Override
     public CompletableFuture&lt;String&gt; convert(Dosage dosage) {
-<span class="fc" id="L57">        return CompletableFuture.supplyAsync(() -&gt; {</span>
-<span class="fc" id="L58">            var dayOfWeeks = dosage.getTiming().getRepeat().getDayOfWeek();</span>
-<span class="fc" id="L59">            var dayOfWeeksCodes = dayOfWeeks</span>
-<span class="fc" id="L60">                    .stream()</span>
-<span class="fc" id="L61">                    .map(day -&gt; dayOfWeekFormatter</span>
-<span class="fc" id="L62">                            .codeToLongText(</span>
-<span class="fc" id="L63">                                    day.getCode().toLowerCase()</span>
+<span class="fc" id="L48">        return CompletableFuture.supplyAsync(() -&gt; {</span>
+<span class="fc" id="L49">            var dayOfWeeks = dosage.getTiming().getRepeat().getDayOfWeek();</span>
+<span class="fc" id="L50">            var dayOfWeeksCodes = dayOfWeeks</span>
+<span class="fc" id="L51">                    .stream()</span>
+<span class="fc" id="L52">                    .map(day -&gt; dayOfWeekFormatter</span>
+<span class="fc" id="L53">                            .codeToLongText(</span>
+<span class="fc" id="L54">                                    day.getCode().toLowerCase()</span>
                             )
                     )
-<span class="fc" id="L66">                    .toList();</span>
+<span class="fc" id="L57">                    .toList();</span>
 
-<span class="fc" id="L68">            return daysToText(dayOfWeeksCodes);</span>
+<span class="fc" id="L59">            return daysToText(dayOfWeeksCodes);</span>
         });
     }
 
     /** {@inheritDoc} */
     @Override
     public boolean hasTiming(Dosage dosage) {
-<span class="fc" id="L75">        return dosage.hasTiming();</span>
+<span class="fc" id="L66">        return dosage.hasTiming();</span>
     }
 
     /**
@@ -82,15 +73,17 @@ public class DayOfWeekR5 implements DayOfWeek&lt;FDSConfigR5, Dosage&gt; {
      * @return the translated days of the week as a formatted string.
      */
     private String daysToText(List&lt;String&gt; days) {
-<span class="fc" id="L85">        var dayOfWeeksAsString = ListToString.convert(bundle, days);</span>
+<span class="fc" id="L76">        var bundle = translationService.getBundle();</span>
+<span class="fc" id="L77">        var dayOfWeeksAsString = ListToString.convert(bundle, days);</span>
 
-<span class="fc" id="L87">        Map&lt;String, Object&gt; messageArguments = Map.of(</span>
-<span class="fc" id="L88">                &quot;dayCondition&quot;, days.size(),</span>
+<span class="fc" id="L79">        Map&lt;String, Object&gt; messageArguments = Map.of(</span>
+<span class="fc" id="L80">                &quot;dayCondition&quot;, days.size(),</span>
                 &quot;day&quot;, dayOfWeeksAsString
         );
 
         // Use ICU MessageFormat for plural and select formatting
-<span class="fc" id="L93">        return dayOfWeekMsg.format(messageArguments);</span>
+<span class="fc" id="L85">        var dayOfWeekMsg = translationService.getMessage(KEY_DAY_OF_WEEK);</span>
+<span class="fc" id="L86">        return dayOfWeekMsg.format(messageArguments);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

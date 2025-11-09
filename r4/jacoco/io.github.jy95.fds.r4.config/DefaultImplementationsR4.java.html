@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DefaultImplementationsR4.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">FHIR Dosage Support - R4</a> &gt; <a href="index.source.html" class="el_package">io.github.jy95.fds.r4.config</a> &gt; <span class="el_source">DefaultImplementationsR4.java</span></div><h1>DefaultImplementationsR4.java</h1><pre class="source lang-java linenums">package io.github.jy95.fds.r4.config;
 
+import io.github.jy95.fds.common.config.DefaultImplementations;
 import io.github.jy95.fds.common.types.DoseAndRateKey;
 import io.github.jy95.fds.r4.functions.DoseAndRateRegistryR4;
 import org.hl7.fhir.r4.model.*;
@@ -8,7 +9,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 /**
  * Provides FHIR R4 implementations for common operations in the library.
@@ -69,10 +69,7 @@ public final class DefaultImplementationsR4 {
             }
 
 <span class="fc" id="L71">            var firstCode = codeableConcept.getCodingFirstRep();</span>
-<span class="fc" id="L72">            var display = firstCode.getDisplay();</span>
-<span class="fc" id="L73">            var code = firstCode.getCode();</span>
-
-<span class="fc bfc" id="L75" title="All 2 branches covered.">            return (Objects.nonNull(display)) ? display : code;</span>
+<span class="fc" id="L72">            return DefaultImplementations.fromCodingToString(firstCode);</span>
         });
     }
 
@@ -83,36 +80,7 @@ public final class DefaultImplementationsR4 {
      * @return a {@link java.util.concurrent.CompletableFuture} that resolves to a JSON-like string representing the extensions.
      */
     public static CompletableFuture&lt;String&gt; fromExtensionsToString(List&lt;Extension&gt; extensions) {
-<span class="fc" id="L86">        return CompletableFuture.supplyAsync(() -&gt; {</span>
-
-<span class="fc bfc" id="L88" title="All 2 branches covered.">            if (extensions.isEmpty()) {</span>
-<span class="fc" id="L89">                return null;</span>
-            }
-
-<span class="fc" id="L92">            return extensions</span>
-<span class="fc" id="L93">                    .stream()</span>
-<span class="fc" id="L94">                    .map(ext -&gt; {</span>
-
-<span class="fc" id="L96">                        StringBuilder sb = new StringBuilder();</span>
-<span class="fc" id="L97">                        sb.append(&quot;{&quot;);</span>
-
-<span class="pc bpc" id="L99" title="1 of 2 branches missed.">                        if (ext.hasUrl()) {</span>
-<span class="fc" id="L100">                            sb.append(&quot;\&quot;url\&quot;:\&quot;&quot;).append(ext.getUrl()).append(&quot;\&quot;&quot;);</span>
-                        }
-<span class="pc bpc" id="L102" title="2 of 4 branches missed.">                        if (ext.hasUrl() &amp;&amp; ext.hasValue()) {</span>
-<span class="fc" id="L103">                            sb.append(&quot;,&quot;);</span>
-                        }
-<span class="pc bpc" id="L105" title="1 of 2 branches missed.">                        if (ext.hasValue()) {</span>
-<span class="fc" id="L106">                            sb.append(&quot;\&quot;value[x]\&quot;:\&quot;&quot;).append(</span>
-<span class="fc" id="L107">                                    ext.getValueAsPrimitive().getValueAsString()</span>
-<span class="fc" id="L108">                            ).append(&quot;\&quot;&quot;);</span>
-                        }
-
-<span class="fc" id="L111">                        sb.append(&quot;}&quot;);</span>
-<span class="fc" id="L112">                        return sb.toString();</span>
-                    })
-<span class="fc" id="L114">                    .collect(Collectors.joining(&quot;, &quot;, &quot;[&quot;, &quot;]&quot;));</span>
-        });
+<span class="fc" id="L83">        return DefaultImplementations.fromExtensionsToString(extensions);</span>
     }
 
     /**
@@ -123,9 +91,9 @@ public final class DefaultImplementationsR4 {
      * @return the extracted {@link org.hl7.fhir.r4.model.Type} value.
      */
     public static Type selectDosageAndRateField(List&lt;Dosage.DosageDoseAndRateComponent&gt; doseAndRateComponentList, DoseAndRateKey doseAndRateKey) {
-<span class="fc" id="L126">        var extractor = DoseAndRateRegistryR4.getInstance().getExtractor(doseAndRateKey);</span>
-<span class="fc" id="L127">        var firstRep = doseAndRateComponentList.get(0);</span>
-<span class="fc" id="L128">        return extractor.extract(firstRep);</span>
+<span class="fc" id="L94">        var extractor = DoseAndRateRegistryR4.getInstance().getExtractor(doseAndRateKey);</span>
+<span class="fc" id="L95">        var firstRep = doseAndRateComponentList.get(0);</span>
+<span class="fc" id="L96">        return extractor.extract(firstRep);</span>
     }
 
     /**
@@ -136,10 +104,10 @@ public final class DefaultImplementationsR4 {
      * @return {@code true} if any component matches the predicate; {@code false} otherwise.
      */
     public static boolean hasMatchingComponent(Dosage dosage, Predicate&lt;Dosage.DosageDoseAndRateComponent&gt; predicate) {
-<span class="fc bfc" id="L139" title="All 2 branches covered.">        return dosage.hasDoseAndRate() &amp;&amp; dosage</span>
-<span class="fc" id="L140">                .getDoseAndRate()</span>
-<span class="fc" id="L141">                .stream()</span>
-<span class="pc bpc" id="L142" title="1 of 2 branches missed.">                .anyMatch(predicate);</span>
+<span class="fc bfc" id="L107" title="All 2 branches covered.">        return dosage.hasDoseAndRate() &amp;&amp; dosage</span>
+<span class="fc" id="L108">                .getDoseAndRate()</span>
+<span class="fc" id="L109">                .stream()</span>
+<span class="pc bpc" id="L110" title="1 of 2 branches missed.">                .anyMatch(predicate);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

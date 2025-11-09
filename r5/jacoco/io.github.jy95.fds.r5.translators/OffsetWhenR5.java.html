@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OffsetWhenR5.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">FHIR Dosage Support - R5</a> &gt; <a href="index.source.html" class="el_package">io.github.jy95.fds.r5.translators</a> &gt; <span class="el_source">OffsetWhenR5.java</span></div><h1>OffsetWhenR5.java</h1><pre class="source lang-java linenums">package io.github.jy95.fds.r5.translators;
 
 import io.github.jy95.fds.common.functions.ListToString;
-import io.github.jy95.fds.common.functions.UnitsOfTimeFormatter;
+import io.github.jy95.fds.common.functions.TranslationService;
 import io.github.jy95.fds.common.translators.OffsetWhen;
 import io.github.jy95.fds.r5.config.FDSConfigR5;
 import lombok.RequiredArgsConstructor;
 import org.hl7.fhir.r5.model.Dosage;
 import org.hl7.fhir.r5.model.Enumeration;
 
-import java.util.Locale;
-import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -22,93 +20,68 @@ import java.util.stream.Stream;
 @RequiredArgsConstructor
 public class OffsetWhenR5 implements OffsetWhen&lt;FDSConfigR5, Dosage&gt; {
 
-    /**
-     * The resource bundle containing localized strings for translation.
-     */
-    private final ResourceBundle bundle;
-
-    /**
-     * The locale for translation.
-     */
-    private final Locale locale;
+    /** Translation service */
+    private final TranslationService&lt;FDSConfigR5&gt; translationService;
 
     /** {@inheritDoc} */
     @Override
     public CompletableFuture&lt;String&gt; convert(Dosage dosage) {
-<span class="fc" id="L38">        var offsetPart = turnOffsetToText(dosage);</span>
-<span class="fc" id="L39">        var whenPart = turnWhenToText(dosage);</span>
+<span class="fc" id="L29">        var offsetPart = turnOffsetToText(dosage);</span>
+<span class="fc" id="L30">        var whenPart = turnWhenToText(dosage);</span>
 
-<span class="fc" id="L41">        return offsetPart.thenCombineAsync(whenPart,(offsetText, whenText) -&gt; Stream</span>
-<span class="fc" id="L42">                .of(offsetText, whenText)</span>
-<span class="fc bfc" id="L43" title="All 2 branches covered.">                .filter(s -&gt; !s.isEmpty())</span>
-<span class="fc" id="L44">                .collect(Collectors.joining(&quot; &quot;)));</span>
+<span class="fc" id="L32">        return offsetPart.thenCombineAsync(whenPart,(offsetText, whenText) -&gt; Stream</span>
+<span class="fc" id="L33">                .of(offsetText, whenText)</span>
+<span class="fc bfc" id="L34" title="All 2 branches covered.">                .filter(s -&gt; !s.isEmpty())</span>
+<span class="fc" id="L35">                .collect(Collectors.joining(&quot; &quot;)));</span>
     }
 
     /** {@inheritDoc} */
     @Override
     public boolean hasRequiredElements(Dosage dosage) {
-<span class="fc" id="L50">        var timing = dosage.getTiming();</span>
+<span class="fc" id="L41">        var timing = dosage.getTiming();</span>
         // Rule: If there's an offset, there must be a when (and not C, CM, CD, CV)
-<span class="pc bpc" id="L52" title="1 of 6 branches missed.">        return timing.hasRepeat() &amp;&amp; (timing.getRepeat().hasOffset() || timing.getRepeat().hasWhen());</span>
+<span class="pc bpc" id="L43" title="1 of 6 branches missed.">        return timing.hasRepeat() &amp;&amp; (timing.getRepeat().hasOffset() || timing.getRepeat().hasWhen());</span>
     }
 
     /** {@inheritDoc} */
     @Override
     public boolean hasTiming(Dosage dosage) {
-<span class="fc" id="L58">        return dosage.hasTiming();</span>
+<span class="fc" id="L49">        return dosage.hasTiming();</span>
     }
 
     private CompletableFuture&lt;String&gt; turnWhenToText(Dosage dosage) {
-<span class="fc" id="L62">        var repeat = dosage.getTiming().getRepeat();</span>
+<span class="fc" id="L53">        var repeat = dosage.getTiming().getRepeat();</span>
 
-<span class="fc bfc" id="L64" title="All 2 branches covered.">        if (!repeat.hasWhen()) {</span>
-<span class="fc" id="L65">            return CompletableFuture.completedFuture(&quot;&quot;);</span>
+<span class="fc bfc" id="L55" title="All 2 branches covered.">        if (!repeat.hasWhen()) {</span>
+<span class="fc" id="L56">            return CompletableFuture.completedFuture(&quot;&quot;);</span>
         }
 
-<span class="fc" id="L68">        return CompletableFuture.supplyAsync(() -&gt; {</span>
-<span class="fc" id="L69">            var events = repeat</span>
-<span class="fc" id="L70">                    .getWhen()</span>
-<span class="fc" id="L71">                    .stream()</span>
-<span class="fc" id="L72">                    .map(Enumeration::getCode)</span>
-<span class="fc" id="L73">                    .map(bundle::getString)</span>
-<span class="fc" id="L74">                    .toList();</span>
+<span class="fc" id="L59">        var bundle = translationService.getBundle();</span>
 
-<span class="fc" id="L76">            return ListToString.convert(bundle, events);</span>
+<span class="fc" id="L61">        return CompletableFuture.supplyAsync(() -&gt; {</span>
+<span class="fc" id="L62">            var events = repeat</span>
+<span class="fc" id="L63">                    .getWhen()</span>
+<span class="fc" id="L64">                    .stream()</span>
+<span class="fc" id="L65">                    .map(Enumeration::getCode)</span>
+<span class="fc" id="L66">                    .map(bundle::getString)</span>
+<span class="fc" id="L67">                    .toList();</span>
+
+<span class="fc" id="L69">            return ListToString.convert(bundle, events);</span>
         });
     }
 
     private CompletableFuture&lt;String&gt; turnOffsetToText(Dosage dosage) {
-<span class="fc" id="L81">        var repeat = dosage.getTiming().getRepeat();</span>
+<span class="fc" id="L74">        var repeat = dosage.getTiming().getRepeat();</span>
 
-<span class="fc bfc" id="L83" title="All 2 branches covered.">        if (!repeat.hasOffset()) {</span>
-<span class="fc" id="L84">            return CompletableFuture.completedFuture(&quot;&quot;);</span>
+<span class="fc bfc" id="L76" title="All 2 branches covered.">        if (!repeat.hasOffset()) {</span>
+<span class="fc" id="L77">            return CompletableFuture.completedFuture(&quot;&quot;);</span>
         }
-<span class="fc" id="L86">        return turnOffsetValueToText(repeat.getOffset());</span>
+
+<span class="fc" id="L80">        var bundle = translationService.getBundle();</span>
+<span class="fc" id="L81">        var locale = translationService.getConfig().getLocale();</span>
+
+<span class="fc" id="L83">        return turnOffsetValueToText(repeat.getOffset(), bundle, locale);</span>
     }
 
-    /**
-     * Converts an offset value (in minutes) into a human-readable time string.
-     * The result combines the extracted time components (days, hours, minutes) into a formatted string.
-     *
-     * @param offset The offset in minutes to be converted.
-     * @return A {@link java.util.concurrent.CompletableFuture} containing the formatted string representing the offset.
-     */
-    protected CompletableFuture&lt;String&gt; turnOffsetValueToText(int offset) {
-<span class="fc" id="L97">        return CompletableFuture.supplyAsync(() -&gt; {</span>
-<span class="fc" id="L98">            var extractedTime = extractTime(offset);</span>
-
-<span class="fc" id="L100">            var times = OffsetWhen</span>
-                    .order
-<span class="fc" id="L102">                    .stream()</span>
-<span class="fc bfc" id="L103" title="All 2 branches covered.">                    .filter(unit -&gt; extractedTime.getOrDefault(unit, 0) &gt; 0)</span>
-<span class="fc" id="L104">                    .map(unit -&gt; {</span>
-<span class="fc" id="L105">                        var amount = extractedTime.get(unit);</span>
-<span class="fc" id="L106">                        return UnitsOfTimeFormatter.formatWithCount(locale, unit, amount);</span>
-                    })
-<span class="fc" id="L108">                    .toList();</span>
-
-<span class="fc" id="L110">            return ListToString.convert(bundle, times);</span>
-        });
-    }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
