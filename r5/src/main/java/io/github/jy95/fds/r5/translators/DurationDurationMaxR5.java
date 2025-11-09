@@ -1,43 +1,23 @@
 package io.github.jy95.fds.r5.translators;
 
-import com.ibm.icu.text.MessageFormat;
+import io.github.jy95.fds.common.functions.TranslationService;
 import io.github.jy95.fds.common.functions.UnitsOfTimeFormatter;
 import io.github.jy95.fds.common.translators.DurationDurationMax;
 import io.github.jy95.fds.r5.config.FDSConfigR5;
-import org.hl7.fhir.r5.model.Dosage;
+import lombok.RequiredArgsConstructor;
 
-import java.util.Locale;
-import java.util.ResourceBundle;
+import org.hl7.fhir.r5.model.Dosage;
 
 /**
  * R5 class for translating "timing.repeat.duration" / "timing.repeat.durationMax"
  *
  * @author jy95
  */
+@RequiredArgsConstructor
 public class DurationDurationMaxR5 implements DurationDurationMax<FDSConfigR5, Dosage> {
 
-    // Translations
-    /** MessageFormat instance used for "duration" translation. */
-    protected final MessageFormat durationMsg;
-    /** MessageFormat instance used for "duration" &amp; "durationMax" translation */
-    protected final MessageFormat durationMaxMsg;
-
-    /**
-     * The locale for translation.
-     */
-    private final Locale locale;
-
-    /**
-     * Constructor for {@code DurationDurationMaxR5}.
-     *
-     * @param config The configuration object used for translation.
-     * @param bundle a {@link java.util.ResourceBundle} object
-     */
-    public DurationDurationMaxR5(FDSConfigR5 config, ResourceBundle bundle) {
-        this.locale = config.getLocale();
-        this.durationMsg = getDurationMsg(bundle, locale);
-        this.durationMaxMsg = getDurationMaxMsg(bundle, locale);
-    }
+    /** Translation service */
+    private final TranslationService<FDSConfigR5> translationService;
 
     /** {@inheritDoc} */
     @Override
@@ -72,6 +52,9 @@ public class DurationDurationMaxR5 implements DurationDurationMax<FDSConfigR5, D
         var durationUnit = repeat.getDurationUnit().toCode();
         var durationQuantity = repeat.getDuration();
 
+        var locale = translationService.getConfig().getLocale();
+        var durationMsg = translationService.getMessage(KEY_DURATION);
+
         var durationText = UnitsOfTimeFormatter.formatWithCount(locale, durationUnit, durationQuantity);
         return durationMsg.format(new Object[]{durationText});
     }
@@ -82,6 +65,9 @@ public class DurationDurationMaxR5 implements DurationDurationMax<FDSConfigR5, D
         var repeat = dosage.getTiming().getRepeat();
         var durationUnit = repeat.getDurationUnit().toCode();
         var durationQuantity = repeat.getDurationMax();
+
+        var locale = translationService.getConfig().getLocale();
+        var durationMaxMsg = translationService.getMessage(KEY_DURATION_MAX);
 
         var durationText = UnitsOfTimeFormatter.formatWithCount(locale, durationUnit, durationQuantity);
         return durationMaxMsg.format(new Object[]{durationText});

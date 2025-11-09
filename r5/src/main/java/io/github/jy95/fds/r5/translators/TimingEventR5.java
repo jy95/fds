@@ -1,15 +1,15 @@
 package io.github.jy95.fds.r5.translators;
 
-import com.ibm.icu.text.MessageFormat;
 import io.github.jy95.fds.common.functions.ListToString;
+import io.github.jy95.fds.common.functions.TranslationService;
 import io.github.jy95.fds.common.translators.TimingEvent;
 import io.github.jy95.fds.r5.config.FDSConfigR5;
-import io.github.jy95.fds.r5.functions.FormatDateTimesR5;
+import lombok.RequiredArgsConstructor;
+
 import org.hl7.fhir.r5.model.Dosage;
 
 import java.util.List;
 import java.util.Map;
-import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -17,33 +17,11 @@ import java.util.concurrent.CompletableFuture;
  *
  * @author jy95
  */
+@RequiredArgsConstructor
 public class TimingEventR5 implements TimingEvent<FDSConfigR5, Dosage> {
 
-    // Translations
-    /** MessageFormat instance used for "event" translation. */
-    protected final MessageFormat timingEventMsg;
-
-    /**
-     * The configuration object used by this API.
-     */
-    private final FDSConfigR5 config;
-
-    /**
-     * The resource bundle containing localized strings for translation.
-     */
-    private final ResourceBundle bundle;
-
-    /**
-     * Constructor for {@code TimingEventR5}.
-     *
-     * @param config The configuration object used for translation.
-     * @param bundle a {@link java.util.ResourceBundle} object
-     */
-    public TimingEventR5(FDSConfigR5 config, ResourceBundle bundle) {
-        this.config = config;
-        this.bundle = bundle;
-        this.timingEventMsg = getTimingEventMsg(bundle, config.getLocale());
-    }
+    /** Translation service */
+    private final TranslationService<FDSConfigR5> translationService;
 
     /** {@inheritDoc} */
     @Override
@@ -55,7 +33,14 @@ public class TimingEventR5 implements TimingEvent<FDSConfigR5, Dosage> {
     @Override
     public List<String> getEvents(Dosage dosage) {
         var events = dosage.getTiming().getEvent();
-        return FormatDateTimesR5.getInstance().convert(config.getLocale(), events);
+        return events
+            .stream()
+            .map(event -> translationService.dateTimeToHumanDisplay(
+                event.getValue(), 
+                event.getTimeZone(), 
+                event.getPrecision()
+            ))
+            .toList();
     }
 
     /** {@inheritDoc} */
@@ -67,6 +52,10 @@ public class TimingEventR5 implements TimingEvent<FDSConfigR5, Dosage> {
     /** {@inheritDoc} */
     @Override
     public CompletableFuture<String> convert(Dosage dosage) {
+
+        var bundle = translationService.getBundle();
+        var timingEventMsg = translationService.getMessage(KEY_EVENT);
+
         return CompletableFuture.supplyAsync(() -> {
             var eventsList = getEvents(dosage);
 

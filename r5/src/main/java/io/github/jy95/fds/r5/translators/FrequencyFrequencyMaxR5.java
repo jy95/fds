@@ -1,40 +1,24 @@
 package io.github.jy95.fds.r5.translators;
 
-import com.ibm.icu.text.MessageFormat;
+import io.github.jy95.fds.common.functions.TranslationService;
 import io.github.jy95.fds.common.translators.FrequencyFrequencyMax;
 import io.github.jy95.fds.r5.config.FDSConfigR5;
+import lombok.RequiredArgsConstructor;
+
 import org.hl7.fhir.r5.model.Dosage;
 
 import java.util.Map;
-import java.util.ResourceBundle;
 
 /**
  * R5 class for translating "timing.repeat.frequency" / "timing.repeat.frequencyMax"
  *
  * @author jy95
  */
+@RequiredArgsConstructor
 public class FrequencyFrequencyMaxR5 implements FrequencyFrequencyMax<FDSConfigR5, Dosage> {
 
-    // Translations
-    /** MessageFormat instance used for "frequency" &amp; "frequencyMax" translation */
-    protected final MessageFormat frequencyAndFrequencyMaxMsg;
-    /** MessageFormat instance used for "frequencyMax" translation */
-    protected final MessageFormat frequencyMaxMsg;
-    /** MessageFormat instance used for "frequencyMax" translation */
-    protected final MessageFormat frequencyMsg;
-
-    /**
-     * Constructor for {@code FrequencyFrequencyMaxR5}.
-     *
-     * @param config The configuration object used for translation.
-     * @param bundle a {@link java.util.ResourceBundle} object
-     */
-    public FrequencyFrequencyMaxR5(FDSConfigR5 config, ResourceBundle bundle) {
-        var locale = config.getLocale();
-        this.frequencyAndFrequencyMaxMsg = getFrequencyAndFrequencyMaxMsg(bundle, locale);
-        this.frequencyMaxMsg = getFrequencyMaxMsg(bundle, locale);
-        this.frequencyMsg = getFrequencyMsg(bundle, locale);
-    }
+    /** Translation service */
+    private final TranslationService<FDSConfigR5> translationService;
 
     /** {@inheritDoc} */
     @Override
@@ -49,18 +33,21 @@ public class FrequencyFrequencyMaxR5 implements FrequencyFrequencyMax<FDSConfigR
                 "frequency", frequencyMin,
                 "maxFrequency", frequencyMax
         );
+        var frequencyAndFrequencyMaxMsg = translationService.getMessage(KEY_FREQUENCY_AND_FREQUENCY_MAX);
         return frequencyAndFrequencyMaxMsg.format(arguments);
     }
 
     /** {@inheritDoc} */
     @Override
     public String formatFrequencyMaxText(int frequencyMax) {
+        var frequencyMaxMsg = translationService.getMessage(KEY_FREQUENCY_MAX);
         return frequencyMaxMsg.format(new Object[]{frequencyMax});
     }
 
     /** {@inheritDoc} */
     @Override
     public String formatFrequencyText(int frequency) {
+        var frequencyMsg = translationService.getMessage(KEY_FREQUENCY);
         return frequencyMsg.format(new Object[]{frequency});
     }
 

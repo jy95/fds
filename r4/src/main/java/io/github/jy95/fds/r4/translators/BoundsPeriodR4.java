@@ -1,12 +1,12 @@
 package io.github.jy95.fds.r4.translators;
 
-import com.ibm.icu.text.MessageFormat;
+import io.github.jy95.fds.common.functions.TranslationService;
 import io.github.jy95.fds.common.translators.BoundsPeriod;
 import io.github.jy95.fds.r4.config.FDSConfigR4;
-import io.github.jy95.fds.r4.functions.FormatDateTimesR4;
+import lombok.RequiredArgsConstructor;
+
 import org.hl7.fhir.r4.model.Dosage;
 
-import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -14,27 +14,11 @@ import java.util.concurrent.CompletableFuture;
  *
  * @author jy95
  */
+@RequiredArgsConstructor
 public class BoundsPeriodR4 implements BoundsPeriod<FDSConfigR4, Dosage> {
 
-    // Translations
-    /** MessageFormat instance used for "boundsPeriod" translation. */
-    protected final MessageFormat boundsPeriodMsg;
-
-    /**
-     * The configuration object used by this API.
-     */
-    private final FDSConfigR4 config;
-
-    /**
-     * Constructor for {@code BoundsPeriodR4}.
-     *
-     * @param config The configuration object used for translation.
-     * @param bundle a {@link java.util.ResourceBundle} object
-     */
-    public BoundsPeriodR4(FDSConfigR4 config, ResourceBundle bundle) {
-        this.config = config;
-        this.boundsPeriodMsg = getBoundsPeriodMsg(bundle, config.getLocale());
-    }
+    /** Translation service */
+    private final TranslationService<FDSConfigR4> translationService;
 
     /** {@inheritDoc} */
     @Override
@@ -64,16 +48,24 @@ public class BoundsPeriodR4 implements BoundsPeriod<FDSConfigR4, Dosage> {
     @Override
     public String formatStartPeriod(Dosage dosage) {
         var boundPeriods = dosage.getTiming().getRepeat().getBoundsPeriod();
-        var locale = config.getLocale();
-        return FormatDateTimesR4.getInstance().convert(locale, boundPeriods.getStartElement());
+        var start = boundPeriods.getStartElement();
+        return translationService.dateTimeToHumanDisplay(
+            start.getValue(), 
+            start.getTimeZone(), 
+            start.getPrecision()
+        );
     }
 
     /** {@inheritDoc} */
     @Override
     public String formatEndPeriod(Dosage dosage) {
-        var locale = config.getLocale();
         var boundPeriods = dosage.getTiming().getRepeat().getBoundsPeriod();
-        return FormatDateTimesR4.getInstance().convert(locale, boundPeriods.getEndElement());
+        var end = boundPeriods.getEndElement();
+        return translationService.dateTimeToHumanDisplay(
+            end.getValue(), 
+            end.getTimeZone(), 
+            end.getPrecision()
+        );
     }
 
     /** {@inheritDoc} */
@@ -82,6 +74,7 @@ public class BoundsPeriodR4 implements BoundsPeriod<FDSConfigR4, Dosage> {
         return CompletableFuture.supplyAsync(() -> {
             var arguments = extractInformation(dosage);
             // Format the message with the named arguments
+            var boundsPeriodMsg = translationService.getMessage(KEY_BOUNDS_PERIOD);
             return boundsPeriodMsg.format(arguments);
         });
     }

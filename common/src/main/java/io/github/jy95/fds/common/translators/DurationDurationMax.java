@@ -1,13 +1,9 @@
 package io.github.jy95.fds.common.translators;
 
-import com.ibm.icu.text.MessageFormat;
-
 import io.github.jy95.fds.common.config.FDSConfig;
 import io.github.jy95.fds.common.types.TranslatorTiming;
 
 import java.util.ArrayList;
-import java.util.Locale;
-import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
 import java.util.List;
 
@@ -21,29 +17,10 @@ import java.util.List;
  */
 public interface DurationDurationMax<C extends FDSConfig, D> extends TranslatorTiming<C, D> {
 
-    /**
-     * MessageFormat instance used for "duration" translation
-     *
-     * @param bundle The bundle to extract the key
-     * @param locale The locale for the message
-     * @return The message template for "duration"
-     */
-    default MessageFormat getDurationMsg(ResourceBundle bundle, Locale locale) {
-        var msg = bundle.getString("fields.duration");
-        return new MessageFormat(msg, locale);
-    }
-
-    /**
-     * MessageFormat instance used for "duration" &amp; "durationMax" translation
-     *
-     * @param bundle The bundle to extract the key
-     * @param locale The locale for the message
-     * @return The message template for "duration" &amp; "durationMax"
-     */
-    default MessageFormat getDurationMaxMsg(ResourceBundle bundle, Locale locale) {
-        var msg = bundle.getString("fields.durationMax");
-        return new MessageFormat(msg, locale);
-    }
+    // Key constants for duration message
+    String KEY_DURATION = "fields.duration";
+    // Key constant for durationMax message
+    String KEY_DURATION_MAX = "fields.durationMax";
 
     /** {@inheritDoc} */
     @Override

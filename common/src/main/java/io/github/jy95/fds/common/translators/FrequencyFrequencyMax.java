@@ -1,11 +1,8 @@
 package io.github.jy95.fds.common.translators;
 
-import com.ibm.icu.text.MessageFormat;
 import io.github.jy95.fds.common.config.FDSConfig;
 import io.github.jy95.fds.common.types.TranslatorTiming;
 
-import java.util.Locale;
-import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -18,41 +15,12 @@ import java.util.concurrent.CompletableFuture;
  */
 public interface FrequencyFrequencyMax<C extends FDSConfig, D> extends TranslatorTiming<C, D> {
 
-    /**
-     * MessageFormat instance used for "frequency" &amp; "frequencyMax" translation
-     *
-     * @param bundle The bundle to extract the key
-     * @param locale The locale for the message
-     * @return The message template for "frequency" &amp; "frequencyMax" translation
-     */
-    default MessageFormat getFrequencyAndFrequencyMaxMsg(ResourceBundle bundle, Locale locale) {
-        var msg = bundle.getString("fields.frequencyAndFrequencyMax");
-        return new MessageFormat(msg, locale);
-    }
-
-    /**
-     * MessageFormat instance used for "frequencyMax" translation
-     *
-     * @param bundle The bundle to extract the key
-     * @param locale The locale for the message
-     * @return The message template for "frequencyMax" translation
-     */
-    default MessageFormat getFrequencyMaxMsg(ResourceBundle bundle, Locale locale) {
-        var msg = bundle.getString("fields.frequencyMax");
-        return new MessageFormat(msg, locale);
-    }
-
-    /**
-     * MessageFormat instance used for "frequency" translation
-     *
-     * @param bundle The bundle to extract the key
-     * @param locale The locale for the message
-     * @return The message template for "frequency" translation
-     */
-    default MessageFormat getFrequencyMsg(ResourceBundle bundle, Locale locale) {
-        var msg = bundle.getString("fields.frequency");
-        return new MessageFormat(msg, locale);
-    }
+    // Key constants for frequency message
+    String KEY_FREQUENCY = "fields.frequency";
+    // Key constant for frequencyMax message
+    String KEY_FREQUENCY_MAX = "fields.frequencyMax";
+    // Key constant for frequencyAndFrequencyMax message
+    String KEY_FREQUENCY_AND_FREQUENCY_MAX = "fields.frequencyAndFrequencyMax";
 
     /** {@inheritDoc} */
     @Override

@@ -1,5 +1,6 @@
 package io.github.jy95.fds.r4.translators;
 
+import io.github.jy95.fds.common.functions.TranslationService;
 import io.github.jy95.fds.common.types.TranslatorTiming;
 import io.github.jy95.fds.r4.config.FDSConfigR4;
 import lombok.RequiredArgsConstructor;
@@ -15,10 +16,8 @@ import java.util.concurrent.CompletableFuture;
 @RequiredArgsConstructor
 public class TimingCodeR4 implements TranslatorTiming<FDSConfigR4, Dosage> {
 
-    /**
-     * The configuration object used by this API.
-     */
-    private final FDSConfigR4 config;
+    /** Translation service */
+    private final TranslationService<FDSConfigR4> translationService;
 
     /** {@inheritDoc} */
     @Override
@@ -29,10 +28,11 @@ public class TimingCodeR4 implements TranslatorTiming<FDSConfigR4, Dosage> {
     /** {@inheritDoc} */
     @Override
     public CompletableFuture<String> convert(Dosage dosage) {
-        return config
-                .fromCodeableConceptToString(
-                        dosage.getTiming().getCode()
-                );
+        return translationService
+            .getConfig()
+            .fromCodeableConceptToString(
+                dosage.getTiming().getCode()
+            );
     }
 
     /** {@inheritDoc} */

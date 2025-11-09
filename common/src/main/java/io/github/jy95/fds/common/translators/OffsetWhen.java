@@ -1,10 +1,15 @@
 package io.github.jy95.fds.common.translators;
 
 import io.github.jy95.fds.common.config.FDSConfig;
+import io.github.jy95.fds.common.functions.ListToString;
+import io.github.jy95.fds.common.functions.UnitsOfTimeFormatter;
 import io.github.jy95.fds.common.types.TranslatorTiming;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * Interface for translating "timing.repeat.offset" / "timing.repeat.when".
@@ -35,6 +40,33 @@ public interface OffsetWhen<C extends FDSConfig, D> extends TranslatorTiming<C, 
                 "h", h,
                 "min", min
         );
+    }
+
+    /**
+     * Converts an offset value (in minutes) into a human-readable time string.
+     * The result combines the extracted time components (days, hours, minutes) into a formatted string.
+     *
+     * @param offset The offset in minutes to be converted.
+     * @param bundle The resource bundle for localized strings.
+     * @param locale The locale for time unit formatting.
+     * @return A {@link java.util.concurrent.CompletableFuture} containing the formatted string representing the offset.
+     * @since 2.1.1
+     */
+    default CompletableFuture<String> turnOffsetValueToText(int offset, ResourceBundle bundle, Locale locale) {
+        return CompletableFuture.supplyAsync(() -> {
+            var extractedTime = extractTime(offset);
+
+            var times = order
+                    .stream()
+                    .filter(unit -> extractedTime.getOrDefault(unit, 0) > 0)
+                    .map(unit -> {
+                        var amount = extractedTime.get(unit);
+                        return UnitsOfTimeFormatter.formatWithCount(locale, unit, amount);
+                    })
+                    .toList();
+
+            return ListToString.convert(bundle, times);
+        });
     }
 
 }

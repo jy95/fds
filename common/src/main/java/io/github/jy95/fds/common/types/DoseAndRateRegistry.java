@@ -1,5 +1,7 @@
 package io.github.jy95.fds.common.types;
 
+import org.hl7.fhir.instance.model.api.IBase;
+
 /**
  * Abstract class representing a registry for handling dose and rate extractors.
  * This class allows mapping {@link io.github.jy95.fds.common.types.DoseAndRateKey} instances to corresponding
@@ -10,7 +12,7 @@ package io.github.jy95.fds.common.types;
  * @author jy95
  * @since 1.0.0
  */
-public interface DoseAndRateRegistry<D, T> {
+public interface DoseAndRateRegistry<D extends IBase, T extends IBase> {
 
     /**
      * Retrieves the {@link io.github.jy95.fds.common.types.DoseAndRateExtractor} associated with the given {@link io.github.jy95.fds.common.types.DoseAndRateKey}.

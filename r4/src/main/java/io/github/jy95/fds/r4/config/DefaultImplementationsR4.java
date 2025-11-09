@@ -1,5 +1,6 @@
 package io.github.jy95.fds.r4.config;
 
+import io.github.jy95.fds.common.config.DefaultImplementations;
 import io.github.jy95.fds.common.types.DoseAndRateKey;
 import io.github.jy95.fds.r4.functions.DoseAndRateRegistryR4;
 import org.hl7.fhir.r4.model.*;
@@ -8,7 +9,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 /**
  * Provides FHIR R4 implementations for common operations in the library.
@@ -69,10 +69,7 @@ public final class DefaultImplementationsR4 {
             }
 
             var firstCode = codeableConcept.getCodingFirstRep();
-            var display = firstCode.getDisplay();
-            var code = firstCode.getCode();
-
-            return (Objects.nonNull(display)) ? display : code;
+            return DefaultImplementations.fromCodingToString(firstCode);
         });
     }
 
@@ -83,36 +80,7 @@ public final class DefaultImplementationsR4 {
      * @return a {@link java.util.concurrent.CompletableFuture} that resolves to a JSON-like string representing the extensions.
      */
     public static CompletableFuture<String> fromExtensionsToString(List<Extension> extensions) {
-        return CompletableFuture.supplyAsync(() -> {
-
-            if (extensions.isEmpty()) {
-                return null;
-            }
-
-            return extensions
-                    .stream()
-                    .map(ext -> {
-
-                        StringBuilder sb = new StringBuilder();
-                        sb.append("{");
-
-                        if (ext.hasUrl()) {
-                            sb.append("\"url\":\"").append(ext.getUrl()).append("\"");
-                        }
-                        if (ext.hasUrl() && ext.hasValue()) {
-                            sb.append(",");
-                        }
-                        if (ext.hasValue()) {
-                            sb.append("\"value[x]\":\"").append(
-                                    ext.getValueAsPrimitive().getValueAsString()
-                            ).append("\"");
-                        }
-
-                        sb.append("}");
-                        return sb.toString();
-                    })
-                    .collect(Collectors.joining(", ", "[", "]"));
-        });
+        return DefaultImplementations.fromExtensionsToString(extensions);
     }
 
     /**

@@ -1,12 +1,8 @@
 package io.github.jy95.fds.common.translators;
 
-import com.ibm.icu.text.MessageFormat;
-
 import io.github.jy95.fds.common.config.FDSConfig;
 import io.github.jy95.fds.common.types.Translator;
 
-import java.util.Locale;
-import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -19,27 +15,10 @@ import java.util.concurrent.CompletableFuture;
  */
 public interface AsNeeded<C extends FDSConfig, D> extends Translator<C, D> {
 
-    /**
-     * MessageFormat instance used for "asNeededFor" translation
-     *
-     * @param bundle The bundle to extract the key
-     * @param locale The locale for the message
-     * @return The message template for "asNeededFor"
-     */
-    default MessageFormat getAsNeededForMsg(ResourceBundle bundle, Locale locale) {
-        var msg = bundle.getString("fields.asNeededFor");
-        return new MessageFormat(msg, locale);
-    }
-
-    /**
-     * The message for "asNeeded"
-     *
-     * @param bundle The bundle to extract the key
-     * @return The message template for "asNeeded"
-     */
-    default String getAsNeededMsg(ResourceBundle bundle) {
-        return bundle.getString("fields.asNeeded");
-    }
+    // Key constant for asNeededFor message
+    String KEY_AS_NEEDED_FOR = "fields.asNeededFor";
+    // Key constant for asNeeded message
+    String KEY_AS_NEEDED = "fields.asNeeded";
 
     /**
      * Check if "as needed" is expressed with CodeableConcept ("asNeededFor" / "asNeededCodeableConcept")
