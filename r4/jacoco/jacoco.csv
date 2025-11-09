@@ -1,12 +1,10 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
 FHIR Dosage Support - R4,io.github.jy95.fds.r4.functions,QuantityToStringR4.Holder,0,5,0,0,0,1,0,1,0,1
 FHIR Dosage Support - R4,io.github.jy95.fds.r4.functions,RangeToStringR4,0,51,0,10,0,12,0,12,0,7
-FHIR Dosage Support - R4,io.github.jy95.fds.r4.functions,DoseAndRateRegistryR4,0,45,0,0,0,9,0,3,0,3
 FHIR Dosage Support - R4,io.github.jy95.fds.r4.functions,RatioToStringR4,0,124,0,28,0,28,0,20,0,6
 FHIR Dosage Support - R4,io.github.jy95.fds.r4.functions,QuantityToStringR4,1,78,3,11,0,15,3,10,0,6
 FHIR Dosage Support - R4,io.github.jy95.fds.r4.functions,RatioToStringR4.Holder,0,5,0,0,0,1,0,1,0,1
 FHIR Dosage Support - R4,io.github.jy95.fds.r4.functions,RangeToStringR4.Holder,0,5,0,0,0,1,0,1,0,1
-FHIR Dosage Support - R4,io.github.jy95.fds.r4.functions,DoseAndRateRegistryR4.Holder,0,5,0,0,0,1,0,1,0,1
 FHIR Dosage Support - R4,io.github.jy95.fds.r4,DosageAPIR4,0,36,0,0,0,9,0,5,0,5
 FHIR Dosage Support - R4,io.github.jy95.fds.r4.translators,SiteR4,0,11,0,0,0,5,0,2,0,2
 FHIR Dosage Support - R4,io.github.jy95.fds.r4.translators,PeriodPeriodMaxR4,0,121,2,4,0,24,2,9,0,8
@@ -44,4 +42,4 @@ FHIR Dosage Support - R4,io.github.jy95.fds.r4.translators,MaxDosePerAdministrat
 FHIR Dosage Support - R4,io.github.jy95.fds.r4.utils,TranslatorsMapR4,0,382,0,0,0,44,0,33,0,33
 FHIR Dosage Support - R4,io.github.jy95.fds.r4.utils,DosageMarkdownR4,0,78,0,2,0,22,0,6,0,5
 FHIR Dosage Support - R4,io.github.jy95.fds.r4.config,FDSConfigR4,0,33,0,0,0,5,0,5,0,5
-FHIR Dosage Support - R4,io.github.jy95.fds.r4.config,DefaultImplementationsR4,0,82,1,15,0,25,1,14,0,7
+FHIR Dosage Support - R4,io.github.jy95.fds.r4.config,DefaultImplementationsR4,0,96,1,15,0,26,1,15,0,8

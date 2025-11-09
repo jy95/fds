@@ -2,10 +2,11 @@
 
 import io.github.jy95.fds.common.config.DefaultImplementations;
 import io.github.jy95.fds.common.types.DoseAndRateKey;
-import io.github.jy95.fds.r4.functions.DoseAndRateRegistryR4;
+import io.github.jy95.fds.common.types.DoseAndRateExtractor;
 import org.hl7.fhir.r4.model.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Predicate;
@@ -16,6 +17,15 @@ import java.util.function.Predicate;
  * @author jy95
  */
 public final class DefaultImplementationsR4 {
+
+    // Mapping of DoseAndRateKey to corresponding extractor functions
+<span class="fc" id="L22">    private static final Map&lt;DoseAndRateKey, DoseAndRateExtractor&lt;Dosage.DosageDoseAndRateComponent, Type&gt;&gt; EXTRACTOR_MAP = Map.of(</span>
+        DoseAndRateKey.DOSE_QUANTITY, Dosage.DosageDoseAndRateComponent::getDoseQuantity,
+        DoseAndRateKey.DOSE_RANGE, Dosage.DosageDoseAndRateComponent::getDoseRange,
+        DoseAndRateKey.RATE_QUANTITY, Dosage.DosageDoseAndRateComponent::getRateQuantity,
+        DoseAndRateKey.RATE_RANGE, Dosage.DosageDoseAndRateComponent::getRateRange,
+        DoseAndRateKey.RATE_RATIO, Dosage.DosageDoseAndRateComponent::getRateRatio
+    );
 
     /**
      * No constructor for this class
@@ -29,21 +39,21 @@ public final class DefaultImplementationsR4 {
      * @return a {@link java.util.concurrent.CompletableFuture} that resolves to the unit or code of the {@link org.hl7.fhir.r4.model.Quantity}
      */
     public static CompletableFuture&lt;String&gt; fromFHIRQuantityUnitToString(Quantity quantity) {
-<span class="fc" id="L32">        return CompletableFuture.supplyAsync(() -&gt; {</span>
+<span class="fc" id="L42">        return CompletableFuture.supplyAsync(() -&gt; {</span>
 
-<span class="fc bfc" id="L34" title="All 2 branches covered.">            if (Objects.isNull(quantity)) {</span>
-<span class="fc" id="L35">                return null;</span>
+<span class="fc bfc" id="L44" title="All 2 branches covered.">            if (Objects.isNull(quantity)) {</span>
+<span class="fc" id="L45">                return null;</span>
             }
 
-<span class="fc bfc" id="L38" title="All 2 branches covered.">            if (Objects.nonNull(quantity.getCode())) {</span>
-<span class="fc" id="L39">                return quantity.getCode();</span>
+<span class="fc bfc" id="L48" title="All 2 branches covered.">            if (Objects.nonNull(quantity.getCode())) {</span>
+<span class="fc" id="L49">                return quantity.getCode();</span>
             }
 
-<span class="fc bfc" id="L42" title="All 2 branches covered.">            if (Objects.nonNull(quantity.getUnit())) {</span>
-<span class="fc" id="L43">                return quantity.getUnit();</span>
+<span class="fc bfc" id="L52" title="All 2 branches covered.">            if (Objects.nonNull(quantity.getUnit())) {</span>
+<span class="fc" id="L53">                return quantity.getUnit();</span>
             }
 
-<span class="fc" id="L46">            return &quot;&quot;;</span>
+<span class="fc" id="L56">            return &quot;&quot;;</span>
         });
     }
 
@@ -54,22 +64,22 @@ public final class DefaultImplementationsR4 {
      * @return a {@link java.util.concurrent.CompletableFuture} that resolves to the text, display, or code of the first coding
      */
     public static CompletableFuture&lt;String&gt; fromCodeableConceptToString(CodeableConcept codeableConcept) {
-<span class="fc" id="L57">        return CompletableFuture.supplyAsync(() -&gt; {</span>
+<span class="fc" id="L67">        return CompletableFuture.supplyAsync(() -&gt; {</span>
 
-<span class="fc bfc" id="L59" title="All 2 branches covered.">            if (Objects.isNull(codeableConcept)) {</span>
-<span class="fc" id="L60">                return null;</span>
+<span class="fc bfc" id="L69" title="All 2 branches covered.">            if (Objects.isNull(codeableConcept)) {</span>
+<span class="fc" id="L70">                return null;</span>
             }
 
-<span class="fc bfc" id="L63" title="All 2 branches covered.">            if (Objects.nonNull(codeableConcept.getText())) {</span>
-<span class="fc" id="L64">                return codeableConcept.getText();</span>
+<span class="fc bfc" id="L73" title="All 2 branches covered.">            if (Objects.nonNull(codeableConcept.getText())) {</span>
+<span class="fc" id="L74">                return codeableConcept.getText();</span>
             }
 
-<span class="fc bfc" id="L67" title="All 2 branches covered.">            if (!codeableConcept.hasCoding()) {</span>
-<span class="fc" id="L68">                return null;</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">            if (!codeableConcept.hasCoding()) {</span>
+<span class="fc" id="L78">                return null;</span>
             }
 
-<span class="fc" id="L71">            var firstCode = codeableConcept.getCodingFirstRep();</span>
-<span class="fc" id="L72">            return DefaultImplementations.fromCodingToString(firstCode);</span>
+<span class="fc" id="L81">            var firstCode = codeableConcept.getCodingFirstRep();</span>
+<span class="fc" id="L82">            return DefaultImplementations.fromCodingToString(firstCode);</span>
         });
     }
 
@@ -80,7 +90,7 @@ public final class DefaultImplementationsR4 {
      * @return a {@link java.util.concurrent.CompletableFuture} that resolves to a JSON-like string representing the extensions.
      */
     public static CompletableFuture&lt;String&gt; fromExtensionsToString(List&lt;Extension&gt; extensions) {
-<span class="fc" id="L83">        return DefaultImplementations.fromExtensionsToString(extensions);</span>
+<span class="fc" id="L93">        return DefaultImplementations.fromExtensionsToString(extensions);</span>
     }
 
     /**
@@ -91,9 +101,9 @@ public final class DefaultImplementationsR4 {
      * @return the extracted {@link org.hl7.fhir.r4.model.Type} value.
      */
     public static Type selectDosageAndRateField(List&lt;Dosage.DosageDoseAndRateComponent&gt; doseAndRateComponentList, DoseAndRateKey doseAndRateKey) {
-<span class="fc" id="L94">        var extractor = DoseAndRateRegistryR4.getInstance().getExtractor(doseAndRateKey);</span>
-<span class="fc" id="L95">        var firstRep = doseAndRateComponentList.get(0);</span>
-<span class="fc" id="L96">        return extractor.extract(firstRep);</span>
+<span class="fc" id="L104">        var doseAndRateExtractor = EXTRACTOR_MAP.get(doseAndRateKey);</span>
+<span class="fc" id="L105">        var firstRep = doseAndRateComponentList.get(0);</span>
+<span class="fc" id="L106">        return doseAndRateExtractor.extract(firstRep);</span>
     }
 
     /**
@@ -104,10 +114,10 @@ public final class DefaultImplementationsR4 {
      * @return {@code true} if any component matches the predicate; {@code false} otherwise.
      */
     public static boolean hasMatchingComponent(Dosage dosage, Predicate&lt;Dosage.DosageDoseAndRateComponent&gt; predicate) {
-<span class="fc bfc" id="L107" title="All 2 branches covered.">        return dosage.hasDoseAndRate() &amp;&amp; dosage</span>
-<span class="fc" id="L108">                .getDoseAndRate()</span>
-<span class="fc" id="L109">                .stream()</span>
-<span class="pc bpc" id="L110" title="1 of 2 branches missed.">                .anyMatch(predicate);</span>
+<span class="fc bfc" id="L117" title="All 2 branches covered.">        return dosage.hasDoseAndRate() &amp;&amp; dosage</span>
+<span class="fc" id="L118">                .getDoseAndRate()</span>
+<span class="fc" id="L119">                .stream()</span>
+<span class="pc bpc" id="L120" title="1 of 2 branches missed.">                .anyMatch(predicate);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

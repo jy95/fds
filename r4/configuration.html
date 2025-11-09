@@ -203,9 +203,8 @@ This method provides a standardized way to extract the relevant field for a spec
 
 <pre class="prettyprint"><code class="language-java">import io.github.jy95.fds.common.types.DoseAndRateKey;
 import io.github.jy95.fds.r4.config.FDSConfigR4;
-import io.github.jy95.fds.r4.functions.DoseAndRateRegistryR4;
-import org.hl7.fhir.r4.model.Dosage;
-import org.hl7.fhir.r4.model.Quantity;
+import io.github.jy95.fds.common.types.DoseAndRateExtractor;
+import org.hl7.fhir.r4.model.*;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -223,9 +222,15 @@ public class Main {
                         (doseAndRateComponentList, doseAndRateKey) -&gt; {
                             // TODO Your custom &quot;selectDosageAndRateField&quot; logic here
                             // Here is the default implementation in the library
-                            var extractor = DoseAndRateRegistryR4.getInstance().getExtractor(doseAndRateKey);
-                            var firstRep = doseAndRateComponentList.getFirst();
-                            return extractor.extract(firstRep);
+                            DoseAndRateExtractor&lt;Dosage.DosageDoseAndRateComponent, Type&gt; doseAndRateExtractor = switch (doseAndRateKey) {
+                                case DOSE_QUANTITY -&gt; Dosage.DosageDoseAndRateComponent::getDoseQuantity;
+                                case DOSE_RANGE -&gt; Dosage.DosageDoseAndRateComponent::getDoseRange;
+                                case RATE_QUANTITY -&gt; Dosage.DosageDoseAndRateComponent::getRateQuantity;
+                                case RATE_RANGE -&gt; Dosage.DosageDoseAndRateComponent::getRateRange;
+                                case RATE_RATIO -&gt; Dosage.DosageDoseAndRateComponent::getRateRatio;
+                            };
+                            var firstRep = doseAndRateComponentList.get(0);
+                            return doseAndRateExtractor.extract(firstRep);
                         }
                 ).build();
 
