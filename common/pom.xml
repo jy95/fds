@@ -23,6 +23,12 @@
             <artifactId>hapi-fhir-base</artifactId>
 			<version>${hapi.fhir.version}</version>
 		</dependency>
+        <!-- Add HAPi FHIR utilities library for reuseable code -->
+        <dependency>
+            <groupId>ca.uhn.hapi.fhir</groupId>
+            <artifactId>org.hl7.fhir.utilities</artifactId>
+            <version>6.7.7</version>
+        </dependency>
     </dependencies>
 
     <build>

@@ -3,7 +3,6 @@ package io.github.jy95.fds.r5.translators;
 import io.github.jy95.fds.common.functions.TranslationService;
 import io.github.jy95.fds.common.translators.BoundsPeriod;
 import io.github.jy95.fds.r5.config.FDSConfigR5;
-import io.github.jy95.fds.r5.functions.FormatDateTimesR5;
 import lombok.RequiredArgsConstructor;
 
 import org.hl7.fhir.r5.model.Dosage;
@@ -49,18 +48,24 @@ public class BoundsPeriodR5 implements BoundsPeriod<FDSConfigR5, Dosage> {
     @Override
     public String formatStartPeriod(Dosage dosage) {
         var boundPeriods = dosage.getTiming().getRepeat().getBoundsPeriod();
-        var config = translationService.getConfig();
-        var locale = config.getLocale();
-        return FormatDateTimesR5.getInstance().convert(locale, boundPeriods.getStartElement());
+        var start = boundPeriods.getStartElement();
+        return translationService.dateTimeToHumanDisplay(
+            start.getValue(), 
+            start.getTimeZone(), 
+            start.getPrecision()
+        );
     }
 
     /** {@inheritDoc} */
     @Override
     public String formatEndPeriod(Dosage dosage) {
-        var config = translationService.getConfig();
-        var locale = config.getLocale();
         var boundPeriods = dosage.getTiming().getRepeat().getBoundsPeriod();
-        return FormatDateTimesR5.getInstance().convert(locale, boundPeriods.getEndElement());
+        var end = boundPeriods.getEndElement();
+        return translationService.dateTimeToHumanDisplay(
+            end.getValue(), 
+            end.getTimeZone(), 
+            end.getPrecision()
+        );
     }
 
     /** {@inheritDoc} */

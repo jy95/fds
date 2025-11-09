@@ -4,7 +4,6 @@ import io.github.jy95.fds.common.functions.ListToString;
 import io.github.jy95.fds.common.functions.TranslationService;
 import io.github.jy95.fds.common.translators.TimingEvent;
 import io.github.jy95.fds.r4.config.FDSConfigR4;
-import io.github.jy95.fds.r4.functions.FormatDateTimesR4;
 import lombok.RequiredArgsConstructor;
 
 import org.hl7.fhir.r4.model.Dosage;
@@ -33,9 +32,16 @@ public class TimingEventR4 implements TimingEvent<FDSConfigR4, Dosage> {
     /** {@inheritDoc} */
     @Override
     public List<String> getEvents(Dosage dosage) {
-        var events = dosage.getTiming().getEvent();
-        var locale = translationService.getConfig().getLocale();
-        return FormatDateTimesR4.getInstance().convert(locale, events);
+        return dosage
+            .getTiming()
+            .getEvent()
+            .stream()
+            .map(event -> translationService.dateTimeToHumanDisplay(
+                event.getValue(), 
+                event.getTimeZone(), 
+                event.getPrecision()
+            ))
+            .toList();
     }
 
     /** {@inheritDoc} */

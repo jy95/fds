@@ -1,17 +1,23 @@
 package io.github.jy95.fds.common.functions;
 
+import java.util.Date;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.TimeZone;
 import java.util.concurrent.ConcurrentHashMap;
 import com.ibm.icu.text.MessageFormat;
 import io.github.jy95.fds.common.config.FDSConfig;
 import lombok.Builder;
 import lombok.Getter;
+import ca.uhn.fhir.model.api.TemporalPrecisionEnum;
+import org.hl7.fhir.utilities.DateTimeUtil;
 
 /**
  * A class that provides localized translation messages for a given configuration and resource bundle.
  *
  * @param <C> the type of FDSConfig
+ * @author jy95
+ * @since 2.1.1
  */
 @Builder
 public final class TranslationService<C extends FDSConfig> {
@@ -57,6 +63,28 @@ public final class TranslationService<C extends FDSConfig> {
      */
     public String getText(String key) {
         return messagesCache.computeIfAbsent(key, k -> bundle.getString(k));
+    }
+
+    /**
+     * Converts a Date object to a human-readable string based on the configuration's locale.
+     *
+     * @param date      the Date object to convert
+     * @param timeZone  the TimeZone of the date
+     * @param precision the TemporalPrecisionEnum indicating the precision of the date
+     * @return a human-readable string representation of the date
+     */
+    public String dateTimeToHumanDisplay(
+        Date date,
+        TimeZone timeZone,
+        TemporalPrecisionEnum precision
+    ) {
+        var locale = config.getLocale();
+        return DateTimeUtil.toHumanDisplay(
+                locale,
+                timeZone,
+                precision,
+                date
+        );
     }
 
 }
