@@ -1,11 +1,12 @@
 package io.github.jy95.fds.r5.config;
 
 import io.github.jy95.fds.common.config.DefaultImplementations;
+import io.github.jy95.fds.common.types.DoseAndRateExtractor;
 import io.github.jy95.fds.common.types.DoseAndRateKey;
-import io.github.jy95.fds.r5.functions.DoseAndRateRegistryR5;
 import org.hl7.fhir.r5.model.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Predicate;
@@ -16,6 +17,15 @@ import java.util.function.Predicate;
  * @author jy95
  */
 public final class DefaultImplementationsR5 {
+
+    // Mapping of DoseAndRateKey to corresponding extractor functions
+    private static final Map<DoseAndRateKey, DoseAndRateExtractor<Dosage.DosageDoseAndRateComponent, DataType>> EXTRACTOR_MAP = Map.of(
+        DoseAndRateKey.DOSE_QUANTITY, Dosage.DosageDoseAndRateComponent::getDoseQuantity,
+        DoseAndRateKey.DOSE_RANGE, Dosage.DosageDoseAndRateComponent::getDoseRange,
+        DoseAndRateKey.RATE_QUANTITY, Dosage.DosageDoseAndRateComponent::getRateQuantity,
+        DoseAndRateKey.RATE_RANGE, Dosage.DosageDoseAndRateComponent::getRateRange,
+        DoseAndRateKey.RATE_RATIO, Dosage.DosageDoseAndRateComponent::getRateRatio
+    );
 
     /**
      * No constructor for this class
@@ -91,9 +101,9 @@ public final class DefaultImplementationsR5 {
      * @return the extracted {@link org.hl7.fhir.r5.model.DataType} value.
      */
     public static DataType selectDosageAndRateField(List<Dosage.DosageDoseAndRateComponent> doseAndRateComponentList, DoseAndRateKey doseAndRateKey) {
-        var extractor = DoseAndRateRegistryR5.getInstance().getExtractor(doseAndRateKey);
+        var doseAndRateExtractor = EXTRACTOR_MAP.get(doseAndRateKey);
         var firstRep = doseAndRateComponentList.get(0);
-        return extractor.extract(firstRep);
+        return doseAndRateExtractor.extract(firstRep);
     }
 
     /**
