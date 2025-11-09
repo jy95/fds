@@ -6,6 +6,7 @@ import io.github.jy95.fds.common.types.DoseAndRateExtractor;
 import org.hl7.fhir.r4.model.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Predicate;
@@ -21,6 +22,15 @@ public final class DefaultImplementationsR4 {
      * No constructor for this class
      */
     private DefaultImplementationsR4(){}
+
+    // Mapping of DoseAndRateKey to corresponding extractor functions
+    private static final Map<DoseAndRateKey, DoseAndRateExtractor<Dosage.DosageDoseAndRateComponent, Type>> EXTRACTOR_MAP = Map.of(
+        DoseAndRateKey.DOSE_QUANTITY, Dosage.DosageDoseAndRateComponent::getDoseQuantity,
+        DoseAndRateKey.DOSE_RANGE, Dosage.DosageDoseAndRateComponent::getDoseRange,
+        DoseAndRateKey.RATE_QUANTITY, Dosage.DosageDoseAndRateComponent::getRateQuantity,
+        DoseAndRateKey.RATE_RANGE, Dosage.DosageDoseAndRateComponent::getRateRange,
+        DoseAndRateKey.RATE_RATIO, Dosage.DosageDoseAndRateComponent::getRateRatio
+    );
 
     /**
      * Converts a FHIR {@link org.hl7.fhir.r4.model.Quantity} object to a string representation of its unit or code.
@@ -91,13 +101,7 @@ public final class DefaultImplementationsR4 {
      * @return the extracted {@link org.hl7.fhir.r4.model.Type} value.
      */
     public static Type selectDosageAndRateField(List<Dosage.DosageDoseAndRateComponent> doseAndRateComponentList, DoseAndRateKey doseAndRateKey) {
-        DoseAndRateExtractor<Dosage.DosageDoseAndRateComponent, Type> doseAndRateExtractor = switch (doseAndRateKey) {
-            case DOSE_QUANTITY -> Dosage.DosageDoseAndRateComponent::getDoseQuantity;
-            case DOSE_RANGE -> Dosage.DosageDoseAndRateComponent::getDoseRange;
-            case RATE_QUANTITY -> Dosage.DosageDoseAndRateComponent::getRateQuantity;
-            case RATE_RANGE -> Dosage.DosageDoseAndRateComponent::getRateRange;
-            case RATE_RATIO -> Dosage.DosageDoseAndRateComponent::getRateRatio;
-        };
+        var doseAndRateExtractor = EXTRACTOR_MAP.get(doseAndRateKey);
         var firstRep = doseAndRateComponentList.get(0);
         return doseAndRateExtractor.extract(firstRep);
     }
