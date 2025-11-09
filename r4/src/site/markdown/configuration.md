@@ -157,9 +157,8 @@ This method provides a standardized way to extract the relevant field for a spec
 ```java
 import io.github.jy95.fds.common.types.DoseAndRateKey;
 import io.github.jy95.fds.r4.config.FDSConfigR4;
-import io.github.jy95.fds.r4.functions.DoseAndRateRegistryR4;
-import org.hl7.fhir.r4.model.Dosage;
-import org.hl7.fhir.r4.model.Quantity;
+import io.github.jy95.fds.common.types.DoseAndRateExtractor;
+import org.hl7.fhir.r4.model.*;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -177,9 +176,15 @@ public class Main {
                         (doseAndRateComponentList, doseAndRateKey) -> {
                             // TODO Your custom "selectDosageAndRateField" logic here
                             // Here is the default implementation in the library
-                            var extractor = DoseAndRateRegistryR4.getInstance().getExtractor(doseAndRateKey);
-                            var firstRep = doseAndRateComponentList.getFirst();
-                            return extractor.extract(firstRep);
+                            DoseAndRateExtractor<Dosage.DosageDoseAndRateComponent, Type> doseAndRateExtractor = switch (doseAndRateKey) {
+                                case DOSE_QUANTITY -> Dosage.DosageDoseAndRateComponent::getDoseQuantity;
+                                case DOSE_RANGE -> Dosage.DosageDoseAndRateComponent::getDoseRange;
+                                case RATE_QUANTITY -> Dosage.DosageDoseAndRateComponent::getRateQuantity;
+                                case RATE_RANGE -> Dosage.DosageDoseAndRateComponent::getRateRange;
+                                case RATE_RATIO -> Dosage.DosageDoseAndRateComponent::getRateRatio;
+                            };
+                            var firstRep = doseAndRateComponentList.get(0);
+                            return doseAndRateExtractor.extract(firstRep);
                         }
                 ).build();
 

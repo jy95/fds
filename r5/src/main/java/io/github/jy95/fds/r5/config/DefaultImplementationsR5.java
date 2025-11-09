@@ -1,8 +1,8 @@
 package io.github.jy95.fds.r5.config;
 
 import io.github.jy95.fds.common.config.DefaultImplementations;
+import io.github.jy95.fds.common.types.DoseAndRateExtractor;
 import io.github.jy95.fds.common.types.DoseAndRateKey;
-import io.github.jy95.fds.r5.functions.DoseAndRateRegistryR5;
 import org.hl7.fhir.r5.model.*;
 
 import java.util.List;
@@ -91,9 +91,15 @@ public final class DefaultImplementationsR5 {
      * @return the extracted {@link org.hl7.fhir.r5.model.DataType} value.
      */
     public static DataType selectDosageAndRateField(List<Dosage.DosageDoseAndRateComponent> doseAndRateComponentList, DoseAndRateKey doseAndRateKey) {
-        var extractor = DoseAndRateRegistryR5.getInstance().getExtractor(doseAndRateKey);
+        DoseAndRateExtractor<Dosage.DosageDoseAndRateComponent, DataType> doseAndRateExtractor = switch (doseAndRateKey) {
+            case DOSE_QUANTITY -> Dosage.DosageDoseAndRateComponent::getDoseQuantity;
+            case DOSE_RANGE -> Dosage.DosageDoseAndRateComponent::getDoseRange;
+            case RATE_QUANTITY -> Dosage.DosageDoseAndRateComponent::getRateQuantity;
+            case RATE_RANGE -> Dosage.DosageDoseAndRateComponent::getRateRange;
+            case RATE_RATIO -> Dosage.DosageDoseAndRateComponent::getRateRatio;
+        };
         var firstRep = doseAndRateComponentList.get(0);
-        return extractor.extract(firstRep);
+        return doseAndRateExtractor.extract(firstRep);
     }
 
     /**
