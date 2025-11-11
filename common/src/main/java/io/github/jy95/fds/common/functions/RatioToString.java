@@ -25,8 +25,7 @@ public interface RatioToString<C extends FDSConfig, R> {
      * @return A CompletableFuture that resolves to the human-readable string.
      */
     default CompletableFuture<String> convert(TranslationService<C> translationService, R ratio) {
-        // retrieveRatioLinkWord now returns a Future<String> or is converted to one if synchronous
-        var linkword = retrieveRatioLinkWord(translationService, ratio); 
+        var separator = retrieveRatioLinkWord(translationService, ratio); 
 
         var numeratorText = hasNumerator(ratio)
                 ? convertNumerator(translationService, ratio)
@@ -36,9 +35,7 @@ public interface RatioToString<C extends FDSConfig, R> {
                 ? convertDenominator(translationService, ratio)
                 : CompletableFuture.completedFuture("");
 
-        return numeratorText.thenCombineAsync(denominatorText, (num, dem) -> {
-            String separator = linkword; 
-            
+        return numeratorText.thenCombineAsync(denominatorText, (num, dem) -> {            
             return Stream
                 .of(num, separator, dem)
                 .filter(s -> !s.isEmpty())
