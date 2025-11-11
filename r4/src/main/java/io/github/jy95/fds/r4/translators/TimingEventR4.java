@@ -55,9 +55,8 @@ public class TimingEventR4 implements TimingEvent<FDSConfigR4, Dosage> {
     public CompletableFuture<String> convert(Dosage dosage) {
         return CompletableFuture.supplyAsync(() -> {
             var eventsList = getEvents(dosage);
-            var bundle = translationService.getBundle();
 
-            String eventsAsString = ListToString.convert(bundle, eventsList);
+            String eventsAsString = ListToString.convert(translationService, eventsList);
             var timingEventMsg = translationService.getMessage(KEY_EVENT);
 
             // Create a map of named arguments

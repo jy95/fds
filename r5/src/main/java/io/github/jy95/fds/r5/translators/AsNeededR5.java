@@ -53,7 +53,6 @@ public class AsNeededR5 implements AsNeeded<FDSConfigR5, Dosage> {
     public CompletableFuture<String> convertCodeableConcepts(Dosage dosage) {
         var codes = dosage.getAsNeededFor();
         var config = translationService.getConfig();
-        var bundle = translationService.getBundle();
 
         var codesFutures = codes
                 .stream()
@@ -70,7 +69,7 @@ public class AsNeededR5 implements AsNeeded<FDSConfigR5, Dosage> {
                             .map(future -> future.getNow(""))
                             .toList();
 
-                    return ListToString.convert(bundle, codesAsText);
+                    return ListToString.convert(translationService, codesAsText);
                 })
                 .thenApplyAsync(v -> asNeededForMsg.format(new Object[]{v}));
     }

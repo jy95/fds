@@ -1,13 +1,12 @@
 package io.github.jy95.fds.r5.functions;
 
-import com.ibm.icu.text.MessageFormat;
 import io.github.jy95.fds.common.functions.QuantityToString;
+import io.github.jy95.fds.common.functions.TranslationService;
 import io.github.jy95.fds.common.functions.UnitsOfTimeFormatter;
 import io.github.jy95.fds.r5.config.FDSConfigR5;
 import org.hl7.fhir.r5.model.Quantity;
 
 import java.math.BigDecimal;
-import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -49,7 +48,9 @@ public class QuantityToStringR5 implements QuantityToString<FDSConfigR5, Quantit
 
     /** {@inheritDoc} */
     @Override
-    public CompletableFuture<String> enhancedFromUnitToString(FDSConfigR5 config, Quantity quantity) {
+    public CompletableFuture<String> enhancedFromUnitToString(TranslationService<FDSConfigR5> translationService, Quantity quantity) {
+        var config = translationService.getConfig();
+
         // Duration units are built-in supported
         if (quantity.hasSystem() && quantity.hasCode() && TIME_SYSTEMS.contains(quantity.getSystem())) {
             return CompletableFuture.supplyAsync(() -> {
@@ -65,13 +66,13 @@ public class QuantityToStringR5 implements QuantityToString<FDSConfigR5, Quantit
 
     /** {@inheritDoc} */
     @Override
-    public CompletableFuture<String> comparatorToString(ResourceBundle bundle, FDSConfigR5 config, Quantity quantity) {
-        if (quantity.hasComparator()) {
-            var code = quantity.getComparator().toCode();
-            var comparatorMsg = bundle.getString(code);
-            var text = new MessageFormat(comparatorMsg, config.getLocale()).format(new Object[]{});
-            return CompletableFuture.completedFuture(text);
-        }
-        return CompletableFuture.completedFuture("");
+    public boolean hasComparator(Quantity quantity) {
+        return quantity.hasComparator();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public String getComparatorCode(Quantity quantity) {
+        return quantity.getComparator().toCode();
     }
 }

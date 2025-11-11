@@ -66,7 +66,7 @@ public class OffsetWhenR5 implements OffsetWhen<FDSConfigR5, Dosage> {
                     .map(bundle::getString)
                     .toList();
 
-            return ListToString.convert(bundle, events);
+            return ListToString.convert(translationService, events);
         });
     }
 
@@ -77,10 +77,7 @@ public class OffsetWhenR5 implements OffsetWhen<FDSConfigR5, Dosage> {
             return CompletableFuture.completedFuture("");
         }
 
-        var bundle = translationService.getBundle();
-        var locale = translationService.getConfig().getLocale();
-
-        return turnOffsetValueToText(repeat.getOffset(), bundle, locale);
+        return turnOffsetValueToText(translationService, repeat.getOffset());
     }
 
 }

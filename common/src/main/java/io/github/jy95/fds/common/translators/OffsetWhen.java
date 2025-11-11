@@ -1,14 +1,13 @@
 package io.github.jy95.fds.common.translators;
 
 import io.github.jy95.fds.common.config.FDSConfig;
+import io.github.jy95.fds.common.functions.TranslationService;
 import io.github.jy95.fds.common.functions.ListToString;
 import io.github.jy95.fds.common.functions.UnitsOfTimeFormatter;
 import io.github.jy95.fds.common.types.TranslatorTiming;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
-import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -46,15 +45,15 @@ public interface OffsetWhen<C extends FDSConfig, D> extends TranslatorTiming<C, 
      * Converts an offset value (in minutes) into a human-readable time string.
      * The result combines the extracted time components (days, hours, minutes) into a formatted string.
      *
+     * @param translationService a {@link io.github.jy95.fds.common.functions.TranslationService} object
      * @param offset The offset in minutes to be converted.
-     * @param bundle The resource bundle for localized strings.
-     * @param locale The locale for time unit formatting.
      * @return A {@link java.util.concurrent.CompletableFuture} containing the formatted string representing the offset.
      * @since 2.1.1
      */
-    default CompletableFuture<String> turnOffsetValueToText(int offset, ResourceBundle bundle, Locale locale) {
+    default CompletableFuture<String> turnOffsetValueToText(TranslationService<C> translationService, int offset) {
         return CompletableFuture.supplyAsync(() -> {
             var extractedTime = extractTime(offset);
+            var locale = translationService.getConfig().getLocale();
 
             var times = order
                     .stream()
@@ -65,7 +64,7 @@ public interface OffsetWhen<C extends FDSConfig, D> extends TranslatorTiming<C, 
                     })
                     .toList();
 
-            return ListToString.convert(bundle, times);
+            return ListToString.convert(translationService, times);
         });
     }
 

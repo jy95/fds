@@ -50,9 +50,8 @@ public class TimeOfDayR4 implements TimeOfDay<FDSConfigR4, Dosage> {
 
             var times = getTimes(dosage);
             var timeOfDays = times.stream().map(this::formatString).toList();
-            var bundle = translationService.getBundle();
             var timeOfDayMsg = translationService.getMessage(KEY_TIME_OF_DAY);
-            var timeOfDaysAsString = ListToString.convert(bundle, timeOfDays);
+            var timeOfDaysAsString = ListToString.convert(translationService, timeOfDays);
 
             Map<String, Object> messageArguments = Map.of(
                     "timeOfDay", timeOfDaysAsString,

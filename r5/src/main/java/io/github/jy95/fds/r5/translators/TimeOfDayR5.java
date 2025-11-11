@@ -46,14 +46,13 @@ public class TimeOfDayR5 implements TimeOfDay<FDSConfigR5, Dosage> {
     /** {@inheritDoc} */
     @Override
     public CompletableFuture<String> convert(Dosage dosage) {
-        var bundle = translationService.getBundle();
         var timeOfDayMsg = translationService.getMessage(KEY_TIME_OF_DAY);
 
         return CompletableFuture.supplyAsync(() -> {
 
             var times = getTimes(dosage);
             var timeOfDays = times.stream().map(this::formatString).toList();
-            var timeOfDaysAsString = ListToString.convert(bundle, timeOfDays);
+            var timeOfDaysAsString = ListToString.convert(translationService, timeOfDays);
 
             Map<String, Object> messageArguments = Map.of(
                     "timeOfDay", timeOfDaysAsString,

@@ -27,13 +27,12 @@ public class DoseRangeR4 implements Translator<FDSConfigR4, Dosage> {
     @Override
     public CompletableFuture<String> convert(Dosage dosage) {
         var config = translationService.getConfig();
-        var bundle = translationService.getBundle();
         var doseRange = config
                 .selectDosageAndRateField(dosage.getDoseAndRate(), DoseAndRateKey.DOSE_RANGE);
 
         return RangeToStringR4
                 .getInstance()
-                .convert(bundle, config, (Range) doseRange);
+                .convert(translationService, (Range) doseRange);
     }
 
     /** {@inheritDoc} */

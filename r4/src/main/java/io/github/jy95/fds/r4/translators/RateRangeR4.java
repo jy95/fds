@@ -27,7 +27,6 @@ public class RateRangeR4 implements RateRange<FDSConfigR4, Dosage> {
     @Override
     public CompletableFuture<String> convert(Dosage dosage) {
         var config = translationService.getConfig();
-        var bundle = translationService.getBundle(); 
 
         var rateRange = config
                 .selectDosageAndRateField(
@@ -38,7 +37,7 @@ public class RateRangeR4 implements RateRange<FDSConfigR4, Dosage> {
 
         return RangeToStringR4
                 .getInstance()
-                .convert(bundle, config, (Range) rateRange)
+                .convert(translationService, (Range) rateRange)
                 .thenApplyAsync(rateRatioText -> rateRangeMsg.format(new Object[]{rateRatioText}));
     }
 

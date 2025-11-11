@@ -52,14 +52,12 @@ public class TimingEventR5 implements TimingEvent<FDSConfigR5, Dosage> {
     /** {@inheritDoc} */
     @Override
     public CompletableFuture<String> convert(Dosage dosage) {
-
-        var bundle = translationService.getBundle();
         var timingEventMsg = translationService.getMessage(KEY_EVENT);
 
         return CompletableFuture.supplyAsync(() -> {
             var eventsList = getEvents(dosage);
 
-            String eventsAsString = ListToString.convert(bundle, eventsList);
+            String eventsAsString = ListToString.convert(translationService, eventsList);
 
             // Create a map of named arguments
             Map<String, Object> arguments = Map.of(

@@ -2,7 +2,6 @@ package io.github.jy95.fds.common.functions;
 
 import io.github.jy95.fds.common.config.FDSConfig;
 
-import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -20,38 +19,40 @@ public interface RatioToString<C extends FDSConfig, R> {
     /**
      * Converts a ratio object to a human-readable string asynchronously.
      *
-     * @param bundle  The resource bundle for localization.
-     * @param config  The configuration object for additional logic.
-     * @param ratio   The ratio object to convert.
+     * @param translationService The service providing localized strings and configuration context.
+     * @param ratio              The ratio object to convert.
      * @return A CompletableFuture that resolves to the human-readable string.
      */
-    default CompletableFuture<String> convert(ResourceBundle bundle, C config, R ratio) {
-        var linkword = retrieveRatioLinkWord(bundle, config, ratio);
+    default CompletableFuture<String> convert(TranslationService<C> translationService, R ratio) {
+        // retrieveRatioLinkWord now returns a Future<String> or is converted to one if synchronous
+        var linkword = retrieveRatioLinkWord(translationService, ratio); 
 
         var numeratorText = hasNumerator(ratio)
-                ? convertNumerator(bundle, config, ratio)
+                ? convertNumerator(translationService, ratio)
                 : CompletableFuture.completedFuture("");
 
         var denominatorText = hasDenominator(ratio)
-                ? convertDenominator(bundle, config, ratio)
+                ? convertDenominator(translationService, ratio)
                 : CompletableFuture.completedFuture("");
 
-        return numeratorText.thenCombineAsync(denominatorText, (num, dem) -> Stream
-                .of(num, linkword, dem)
+        return numeratorText.thenCombineAsync(denominatorText, (num, dem) -> {
+            String separator = linkword; 
+            
+            return Stream
+                .of(num, separator, dem)
                 .filter(s -> !s.isEmpty())
-                .collect(Collectors.joining(" "))
-        );
+                .collect(Collectors.joining(" "));
+        });
     }
 
     /**
      * Retrieves the link word based on the ratio's components.
      *
-     * @param bundle   The resource bundle for localization.
-     * @param config   The configuration object for additional logic.
-     * @param ratio    The ratio object.
+     * @param translationService The service providing localized strings and configuration context.
+     * @param ratio              The ratio object.
      * @return The link word as a string.
      */
-    String retrieveRatioLinkWord(ResourceBundle bundle, C config, R ratio);
+    String retrieveRatioLinkWord(TranslationService<C> translationService, R ratio);
 
     /**
      * Determines if the ratio has a numerator.
@@ -64,12 +65,11 @@ public interface RatioToString<C extends FDSConfig, R> {
     /**
      * Converts the numerator to a human-readable string.
      *
-     * @param bundle   The resource bundle for localization.
-     * @param config   The configuration object for additional logic.
-     * @param ratio    The ratio object.
+     * @param translationService The service providing localized strings and configuration context.
+     * @param ratio              The ratio object.
      * @return A CompletableFuture that resolves to the human-readable string for the numerator.
      */
-    CompletableFuture<String> convertNumerator(ResourceBundle bundle, C config, R ratio);
+    CompletableFuture<String> convertNumerator(TranslationService<C> translationService, R ratio);
 
     /**
      * Determines if the ratio has a denominator.
@@ -82,10 +82,9 @@ public interface RatioToString<C extends FDSConfig, R> {
     /**
      * Converts the denominator to a human-readable string.
      *
-     * @param bundle   The resource bundle for localization.
-     * @param config   The configuration object for additional logic.
-     * @param ratio    The ratio object.
+     * @param translationService The service providing localized strings and configuration context.
+     * @param ratio              The ratio object.
      * @return A CompletableFuture that resolves to the human-readable string for the denominator.
      */
-    CompletableFuture<String> convertDenominator(ResourceBundle bundle, C config, R ratio);
+    CompletableFuture<String> convertDenominator(TranslationService<C> translationService, R ratio);
 }

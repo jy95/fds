@@ -25,13 +25,10 @@ public class MaxDosePerPeriodR5 implements MaxDosePerPeriod<FDSConfigR5, Dosage>
     /** {@inheritDoc} */
     @Override
     public CompletableFuture<String> convert(Dosage dosage) {
-        var config = translationService.getConfig();
-        var bundle = translationService.getBundle();
-
         var ratioFutures = dosage
                 .getMaxDosePerPeriod()
                 .stream()
-                .map(ratio -> RatioToStringR5.getInstance().convert(bundle, config, ratio))
+                .map(ratio -> RatioToStringR5.getInstance().convert(translationService, ratio))
                 .toList();
 
         var maxDosePerPeriodMsg = translationService.getMessage(KEY_MAX_DOSE_PER_PERIOD);
@@ -43,7 +40,7 @@ public class MaxDosePerPeriodR5 implements MaxDosePerPeriod<FDSConfigR5, Dosage>
                             .stream()
                             .map(future -> future.getNow(""))
                             .toList();
-                    return ListToString.convert(bundle, ratioTexts);
+                    return ListToString.convert(translationService, ratioTexts);
                 })
                 .thenApplyAsync((ratioText) -> maxDosePerPeriodMsg.format(new Object[] { ratioText }));
     }

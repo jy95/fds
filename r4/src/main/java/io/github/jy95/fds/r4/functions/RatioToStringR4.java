@@ -1,12 +1,11 @@
 package io.github.jy95.fds.r4.functions;
 
-import com.ibm.icu.text.MessageFormat;
 import io.github.jy95.fds.common.functions.RatioToString;
+import io.github.jy95.fds.common.functions.TranslationService;
 import io.github.jy95.fds.r4.config.FDSConfigR4;
 import org.hl7.fhir.r4.model.Ratio;
 
 import java.math.BigDecimal;
-import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -36,7 +35,7 @@ public class RatioToStringR4 implements RatioToString<FDSConfigR4, Ratio> {
 
     /** {@inheritDoc} */
     @Override
-    public String retrieveRatioLinkWord(ResourceBundle bundle, FDSConfigR4 config, Ratio ratio) {
+    public String retrieveRatioLinkWord(TranslationService<FDSConfigR4> translationService, Ratio ratio) {
         var hasNumerator = ratio.hasNumerator();
         var hasDenominator = ratio.hasDenominator();
         var hasNumeratorUnit = hasNumerator && QuantityToStringR4.getInstance().hasUnit(ratio.getNumerator());
@@ -46,8 +45,8 @@ public class RatioToStringR4 implements RatioToString<FDSConfigR4, Ratio> {
         var denominatorValue = hasDenominator ? ratio.getDenominator().getValue() : BigDecimal.ONE;
 
         if (hasUnitRatio && hasBothElements) {
-            var linkWordMsg = bundle.getString("amount.ratio.denominatorLinkword");
-            return new MessageFormat(linkWordMsg, config.getLocale()).format(new Object[]{denominatorValue});
+            var linkWordMsg = translationService.getMessage("amount.ratio.denominatorLinkword");
+            return linkWordMsg.format(new Object[]{denominatorValue});
         }
 
         return hasBothElements ? ":" : "";
@@ -61,10 +60,10 @@ public class RatioToStringR4 implements RatioToString<FDSConfigR4, Ratio> {
 
     /** {@inheritDoc} */
     @Override
-    public CompletableFuture<String> convertNumerator(ResourceBundle bundle, FDSConfigR4 config, Ratio ratio) {
+    public CompletableFuture<String> convertNumerator(TranslationService<FDSConfigR4> translationService, Ratio ratio) {
         return QuantityToStringR4
                 .getInstance()
-                .convert(bundle, config, ratio.getNumerator());
+                .convert(translationService, ratio.getNumerator());
     }
 
     /** {@inheritDoc} */
@@ -75,7 +74,7 @@ public class RatioToStringR4 implements RatioToString<FDSConfigR4, Ratio> {
 
     /** {@inheritDoc} */
     @Override
-    public CompletableFuture<String> convertDenominator(ResourceBundle bundle, FDSConfigR4 config, Ratio ratio) {
+    public CompletableFuture<String> convertDenominator(TranslationService<FDSConfigR4> translationService, Ratio ratio) {
         var denominator = ratio.getDenominator();
         // Where the denominator value is known to be fixed to "1", Quantity should be used instead of Ratio
         var denominatorValue = denominator.getValue();
@@ -89,11 +88,11 @@ public class RatioToStringR4 implements RatioToString<FDSConfigR4, Ratio> {
         if (BigDecimal.ONE.equals(denominatorValue)) {
             return QuantityToStringR4
                     .getInstance()
-                    .enhancedFromUnitToString(config, denominator);
+                    .enhancedFromUnitToString(translationService, denominator);
         }
 
         return QuantityToStringR4
                 .getInstance()
-                .convert(bundle, config, denominator);
+                .convert(translationService, denominator);
     }
 }

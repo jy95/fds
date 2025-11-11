@@ -1,11 +1,11 @@
 package io.github.jy95.fds.r4.functions;
 
 import io.github.jy95.fds.common.functions.RangeToString;
+import io.github.jy95.fds.common.functions.TranslationService;
 import io.github.jy95.fds.r4.config.FDSConfigR4;
 import org.hl7.fhir.r4.model.Range;
 
 import java.math.BigDecimal;
-import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -46,11 +46,11 @@ public class RangeToStringR4 implements RangeToString<FDSConfigR4, Range> {
 
     /** {@inheritDoc} */
     @Override
-    public CompletableFuture<String> getUnitText(ResourceBundle bundle, FDSConfigR4 config, Range range, boolean hasLow, boolean hasHigh) {
+    public CompletableFuture<String> getUnitText(TranslationService<FDSConfigR4> translationService, Range range, boolean hasLow, boolean hasHigh) {
         return QuantityToStringR4
                 .getInstance()
                 .enhancedFromUnitToString(
-                        config,
+                        translationService,
                         (hasHigh) ? range.getHigh() : range.getLow()
                 );
     }

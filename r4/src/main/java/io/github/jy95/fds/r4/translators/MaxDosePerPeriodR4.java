@@ -24,13 +24,11 @@ public class MaxDosePerPeriodR4 implements MaxDosePerPeriod<FDSConfigR4, Dosage>
     @Override
     public CompletableFuture<String> convert(Dosage dosage) {
         var ratio = dosage.getMaxDosePerPeriod();
-        var config = translationService.getConfig();
-        var bundle = translationService.getBundle();
         var maxDosePerPeriodMsg = translationService.getMessage(KEY_MAX_DOSE_PER_PERIOD);
 
         return RatioToStringR4
                 .getInstance()
-                .convert(bundle, config, ratio)
+                .convert(translationService, ratio)
                 .thenApplyAsync((ratioText) -> maxDosePerPeriodMsg.format(new Object[] { ratioText }));
     }
 

@@ -31,13 +31,11 @@ public class BoundsRangeR4 implements BoundsRange<FDSConfigR4, Dosage> {
     @Override
     public CompletableFuture<String> convert(Dosage dosage) {
         var boundsRange = dosage.getTiming().getRepeat().getBoundsRange();
-        var config = translationService.getConfig();
-        var bundle = translationService.getBundle();
         var boundsRangeMsg = translationService.getMessage(KEY_BOUNDS_RANGE);
 
         return RangeToStringR4
                 .getInstance()
-                .convert(bundle, config, boundsRange)
+                .convert(translationService, boundsRange)
                 .thenApplyAsync(v -> boundsRangeMsg.format(new Object[]{v}));
     }
 

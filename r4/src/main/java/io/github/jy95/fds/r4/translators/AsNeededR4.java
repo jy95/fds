@@ -54,13 +54,12 @@ public class AsNeededR4 implements AsNeeded<FDSConfigR4, Dosage> {
     public CompletableFuture<String> convertCodeableConcepts(Dosage dosage) {
         var code = dosage.getAsNeededCodeableConcept();
         var config = translationService.getConfig();
-        var bundle = translationService.getBundle();
         var asNeededForMsg = translationService.getMessage(KEY_AS_NEEDED_FOR);
         var codeAsText = config
                 .fromCodeableConceptToString(code);
 
         return codeAsText
-                .thenApplyAsync(v -> ListToString.convert(bundle, List.of(v)))
+                .thenApplyAsync(v -> ListToString.convert(translationService, List.of(v)))
                 .thenApplyAsync(v -> asNeededForMsg.format(new Object[]{v}));
     }
 }

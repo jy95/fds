@@ -25,13 +25,11 @@ public class MaxDosePerLifetimeR4 implements MaxDosePerLifetime<FDSConfigR4, Dos
     @Override
     public CompletableFuture<String> convert(Dosage dosage) {
         var quantity = dosage.getMaxDosePerLifetime();
-        var config = translationService.getConfig();
-        var bundle = translationService.getBundle();
         var maxDosePerLifetimeMsg = translationService.getMessage(KEY_MAX_DOSE_PER_LIFETIME);
 
         return QuantityToStringR4
                 .getInstance()
-                .convert(bundle, config, quantity)
+                .convert(translationService, quantity)
                 .thenApplyAsync((quantityText) -> maxDosePerLifetimeMsg.format(new Object[] { quantityText }));
     }
 
