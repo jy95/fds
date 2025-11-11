@@ -37,12 +37,10 @@ public class BoundsDurationR5 implements BoundsDuration<FDSConfigR5, Dosage> {
     @Override
     public CompletableFuture<String> convert(Dosage dosage) {
         var boundsDuration = dosage.getTiming().getRepeat().getBoundsDuration();
-        var config = translationService.getConfig();
-        var bundle = translationService.getBundle();
         var boundsDurationMsg = translationService.getMessage(KEY_BOUNDS_DURATION);
         return QuantityToStringR5
-                .getInstance()
-                .convert(bundle, config, boundsDuration)
+                .INSTANCE
+                .convert(translationService, boundsDuration)
                 .thenApplyAsync((durationText) -> boundsDurationMsg.format(new Object[]{durationText}));
     }
 }

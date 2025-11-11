@@ -27,7 +27,6 @@ public class RateQuantityR5 implements RateQuantity<FDSConfigR5, Dosage> {
     @Override
     public CompletableFuture<String> convert(Dosage dosage) {
         var config = translationService.getConfig();
-        var bundle = translationService.getBundle();
         var rateQuantity = config
                 .selectDosageAndRateField(
                         dosage.getDoseAndRate(),
@@ -36,8 +35,8 @@ public class RateQuantityR5 implements RateQuantity<FDSConfigR5, Dosage> {
 
         var rateQuantityMsg = translationService.getMessage(KEY_RATE_QUANTITY);
         return QuantityToStringR5
-                .getInstance()
-                .convert(bundle, config, (Quantity) rateQuantity)
+                .INSTANCE
+                .convert(translationService, (Quantity) rateQuantity)
                 .thenApplyAsync(rateQuantityText -> rateQuantityMsg.format(new Object[]{rateQuantityText}));
     }
 

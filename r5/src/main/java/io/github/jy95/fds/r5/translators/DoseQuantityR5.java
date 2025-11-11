@@ -28,15 +28,14 @@ public class DoseQuantityR5 implements Translator<FDSConfigR5, Dosage> {
     public CompletableFuture<String> convert(Dosage dosage) {
         
         var config = translationService.getConfig();
-        var bundle = translationService.getBundle();
         var doseQuantity = config
                 .selectDosageAndRateField(
                         dosage.getDoseAndRate(),
                         DoseAndRateKey.DOSE_QUANTITY)
                 ;
         return QuantityToStringR5
-                .getInstance()
-                .convert(bundle, config, (Quantity) doseQuantity);
+                .INSTANCE
+                .convert(translationService, (Quantity) doseQuantity);
     }
 
     /** {@inheritDoc} */

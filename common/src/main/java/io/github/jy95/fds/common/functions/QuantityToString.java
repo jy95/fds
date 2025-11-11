@@ -4,7 +4,6 @@ import io.github.jy95.fds.common.config.FDSConfig;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -35,15 +34,15 @@ public interface QuantityToString<C extends FDSConfig, Q> {
     /**
      * Converts a quantity object to a human-readable string asynchronously.
      *
-     * @param bundle  The resource bundle for localization.
-     * @param config  The configuration object for additional logic.
-     * @param quantity The quantity object to convert.
+     * @param translationService The service providing localized string translations.
+     * @param quantity           The quantity object to convert.
      * @return A CompletableFuture that resolves to the human-readable string.
      */
-    default CompletableFuture<String> convert(ResourceBundle bundle, C config, Q quantity) {
-        var comparator = comparatorToString(bundle, config, quantity);
+    default CompletableFuture<String> convert(TranslationService<C> translationService, Q quantity) {
+        var config = translationService.getConfig();
+        var comparator = comparatorToString(translationService, quantity);
         var unit = hasUnit(quantity)
-                ? enhancedFromUnitToString(config, quantity)
+                ? enhancedFromUnitToString(translationService, quantity)
                 : CompletableFuture.completedFuture("");
         
         var amount = config
@@ -78,21 +77,43 @@ public interface QuantityToString<C extends FDSConfig, Q> {
     BigDecimal getValue(Q quantity);
 
     /**
+     * Checks if the quantity has a comparator.
+     *
+     * @param quantity The quantity object.
+     * @return True if the quantity has a comparator, false otherwise.
+     */
+    boolean hasComparator(Q quantity);
+
+    /**
+     * Retrieves the comparator code of the quantity.
+     *
+     * @param quantity The quantity object.
+     * @return The comparator code as a string.
+     */
+    String getComparatorCode(Q quantity);
+
+    /**
      * Provides enhanced logic for converting units to a human-readable string.
      *
-     * @param config   The configuration object for additional logic.
+     * @param translationService The service providing localized string translations.
      * @param quantity The quantity object.
      * @return A CompletableFuture that resolves to the human-readable string for the unit.
      */
-    CompletableFuture<String> enhancedFromUnitToString(C config, Q quantity);
+    CompletableFuture<String> enhancedFromUnitToString(TranslationService<C> translationService, Q quantity);
 
     /**
      * Converts the comparator of a quantity to a human-readable string.
      *
-     * @param bundle   The resource bundle for localization.
-     * @param config   The configuration object for additional logic.
-     * @param quantity The quantity object.
+     * @param translationService The service providing localized string translations.
+     * @param quantity           The quantity object.
      * @return A CompletableFuture that resolves to the human-readable string for the comparator.
      */
-    CompletableFuture<String> comparatorToString(ResourceBundle bundle, C config, Q quantity);
+    default CompletableFuture<String> comparatorToString(TranslationService<C> translationService, Q quantity) {
+        if (hasComparator(quantity)) {
+            var code = getComparatorCode(quantity);
+            var comparatorMsg = translationService.getText(code);
+            return CompletableFuture.completedFuture(comparatorMsg);
+        }
+        return CompletableFuture.completedFuture("");
+    }
 }

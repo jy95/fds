@@ -2,12 +2,12 @@ package io.github.jy95.fds.common.types;
 
 import io.github.jy95.fds.common.config.FDSConfig;
 import io.github.jy95.fds.common.functions.ListToString;
+import io.github.jy95.fds.common.functions.TranslationService;
 import lombok.Getter;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
@@ -25,10 +25,11 @@ public abstract class DosageAPI<C extends FDSConfig, D> {
      * The configuration object used by this API.
      */
     private final C config;
+    
     /**
-     * The resource bundle containing localized strings for translation.
+     * The translation service used for localization.
      */
-    private final ResourceBundle resources;
+    private final TranslationService<C> translationService;
 
     /**
      * Constructs a new {@code DosageAPI} with the specified configuration.
@@ -37,7 +38,11 @@ public abstract class DosageAPI<C extends FDSConfig, D> {
      */
     public DosageAPI(C config) {
         this.config = config;
-        this.resources = config.getSelectResourceBundle().apply(config.getLocale());
+        var bundle = config.getSelectResourceBundle().apply(config.getLocale());
+        this.translationService = TranslationService.<C>builder()
+                .config(config)
+                .bundle(bundle)
+                .build();
     }
 
     /**
@@ -195,7 +200,6 @@ public abstract class DosageAPI<C extends FDSConfig, D> {
      * @return the combined string
      */
     private String convertToText(List<String> textList, LinkWord linkWord) {
-        var bundle = this.getResources();
-        return ListToString.convert(bundle, textList, linkWord);
+        return ListToString.convert(translationService, textList, linkWord);
     }
 }

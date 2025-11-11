@@ -73,8 +73,7 @@ public class DayOfWeekR5 implements DayOfWeek<FDSConfigR5, Dosage> {
      * @return the translated days of the week as a formatted string.
      */
     private String daysToText(List<String> days) {
-        var bundle = translationService.getBundle();
-        var dayOfWeeksAsString = ListToString.convert(bundle, days);
+        var dayOfWeeksAsString = ListToString.convert(translationService, days);
 
         Map<String, Object> messageArguments = Map.of(
                 "dayCondition", days.size(),

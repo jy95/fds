@@ -23,14 +23,13 @@ public class AdditionalInstructionR4 implements AdditionalInstruction<FDSConfigR
     @Override
     public CompletableFuture<String> convert(Dosage dosage) {
         var config = translationService.getConfig();
-        var bundle = translationService.getBundle();
         var additionalInstructions = dosage
                 .getAdditionalInstruction()
                 .stream()
                 .map(config::fromCodeableConceptToString)
                 .toList();
 
-        return instructionsFuture(additionalInstructions, bundle);
+        return instructionsFuture(translationService, additionalInstructions);
     }
 
     /** {@inheritDoc} */

@@ -24,13 +24,11 @@ public class MaxDosePerAdministrationR4 implements MaxDosePerAdministration<FDSC
     @Override
     public CompletableFuture<String> convert(Dosage dosage) {
         var quantity = dosage.getMaxDosePerAdministration();
-        var config = translationService.getConfig();
-        var bundle = translationService.getBundle();
         var maxDosePerAdministrationMsg = translationService.getMessage(KEY_MAX_DOSE_PER_ADMINISTRATION);
 
         return QuantityToStringR4
-                .getInstance()
-                .convert(bundle, config, quantity)
+                .INSTANCE
+                .convert(translationService, quantity)
                 .thenApplyAsync(
                         (quantityText) -> maxDosePerAdministrationMsg.format(new Object[] { quantityText })
                 );

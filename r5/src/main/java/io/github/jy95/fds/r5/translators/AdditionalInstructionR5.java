@@ -23,7 +23,6 @@ public class AdditionalInstructionR5 implements AdditionalInstruction<FDSConfigR
     @Override
     public CompletableFuture<String> convert(Dosage dosage) {
         var config = translationService.getConfig();
-        var bundle = translationService.getBundle();
 
         var additionalInstructions = dosage
                 .getAdditionalInstruction()
@@ -31,7 +30,7 @@ public class AdditionalInstructionR5 implements AdditionalInstruction<FDSConfigR
                 .map(config::fromCodeableConceptToString)
                 .toList();
 
-        return instructionsFuture(additionalInstructions, bundle);
+        return instructionsFuture(translationService, additionalInstructions);
     }
 
     /** {@inheritDoc} */
