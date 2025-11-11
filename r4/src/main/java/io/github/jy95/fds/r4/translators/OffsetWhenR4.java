@@ -56,14 +56,12 @@ public class OffsetWhenR4 implements OffsetWhen<FDSConfigR4, Dosage> {
             return CompletableFuture.completedFuture("");
         }
 
-        var bundle = translationService.getBundle();
-
         return CompletableFuture.supplyAsync(() -> {
             var events = repeat
                     .getWhen()
                     .stream()
                     .map(Enumeration::getCode)
-                    .map(bundle::getString)
+                    .map(translationService::getText)
                     .toList();
 
             return ListToString.convert(translationService, events);
