@@ -35,25 +35,6 @@ public class RatioToStringR5 implements RatioToString<FDSConfigR5, Ratio> {
 
     /** {@inheritDoc} */
     @Override
-    public String retrieveRatioLinkWord(TranslationService<FDSConfigR5> translationService, Ratio ratio) {
-        var hasNumerator = ratio.hasNumerator();
-        var hasDenominator = ratio.hasDenominator();
-        var hasNumeratorUnit = hasNumerator && QuantityToStringR5.getInstance().hasUnit(ratio.getNumerator());
-        var hasBothElements = hasNumerator && hasDenominator;
-        var hasDenominatorUnit = hasDenominator && QuantityToStringR5.getInstance().hasUnit(ratio.getDenominator());
-        var hasUnitRatio = hasNumeratorUnit || hasDenominatorUnit;
-        var denominatorValue = hasDenominator ? ratio.getDenominator().getValue() : BigDecimal.ONE;
-
-        if (hasUnitRatio && hasBothElements) {
-            var linkWordMsg = translationService.getMessage("amount.ratio.denominatorLinkword");
-            return linkWordMsg.format(new Object[]{denominatorValue});
-        }
-
-        return hasBothElements ? ":" : "";
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public boolean hasNumerator(Ratio ratio) {
         return ratio.hasNumerator();
     }
