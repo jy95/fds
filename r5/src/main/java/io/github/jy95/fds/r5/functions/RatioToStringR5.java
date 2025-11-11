@@ -95,4 +95,18 @@ public class RatioToStringR5 implements RatioToString<FDSConfigR5, Ratio> {
                 .getInstance()
                 .convert(translationService, denominator);
     }
+
+    /** {@inheritDoc} */
+    @Override
+    public BigDecimal getDenominatorValue(Ratio ratio) {
+        return hasDenominator(ratio) ? ratio.getDenominator().getValue() : BigDecimal.ONE;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public boolean hasUnitRatio(Ratio ratio) {
+        var hasNumeratorUnit = hasNumerator(ratio) && QuantityToStringR5.getInstance().hasUnit(ratio.getNumerator());
+        var hasDenominatorUnit = hasDenominator(ratio) && QuantityToStringR5.getInstance().hasUnit(ratio.getDenominator());
+        return hasNumeratorUnit || hasDenominatorUnit;
+    }
 }

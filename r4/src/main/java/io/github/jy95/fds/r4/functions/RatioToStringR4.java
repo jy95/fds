@@ -35,25 +35,6 @@ public class RatioToStringR4 implements RatioToString<FDSConfigR4, Ratio> {
 
     /** {@inheritDoc} */
     @Override
-    public String retrieveRatioLinkWord(TranslationService<FDSConfigR4> translationService, Ratio ratio) {
-        var hasNumerator = ratio.hasNumerator();
-        var hasDenominator = ratio.hasDenominator();
-        var hasNumeratorUnit = hasNumerator && QuantityToStringR4.getInstance().hasUnit(ratio.getNumerator());
-        var hasBothElements = hasNumerator && hasDenominator;
-        var hasDenominatorUnit = hasDenominator && QuantityToStringR4.getInstance().hasUnit(ratio.getDenominator());
-        var hasUnitRatio = hasNumeratorUnit || hasDenominatorUnit;
-        var denominatorValue = hasDenominator ? ratio.getDenominator().getValue() : BigDecimal.ONE;
-
-        if (hasUnitRatio && hasBothElements) {
-            var linkWordMsg = translationService.getMessage("amount.ratio.denominatorLinkword");
-            return linkWordMsg.format(new Object[]{denominatorValue});
-        }
-
-        return hasBothElements ? ":" : "";
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public boolean hasNumerator(Ratio ratio) {
         return ratio.hasNumerator();
     }
@@ -94,5 +75,19 @@ public class RatioToStringR4 implements RatioToString<FDSConfigR4, Ratio> {
         return QuantityToStringR4
                 .getInstance()
                 .convert(translationService, denominator);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public boolean hasUnitRatio(Ratio ratio) {
+        var hasNumeratorUnit = hasNumerator(ratio) && QuantityToStringR4.getInstance().hasUnit(ratio.getNumerator());
+        var hasDenominatorUnit = hasDenominator(ratio) && QuantityToStringR4.getInstance().hasUnit(ratio.getDenominator());
+        return hasNumeratorUnit || hasDenominatorUnit;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public BigDecimal getDenominatorValue(Ratio ratio) {
+        return hasDenominator(ratio) ? ratio.getDenominator().getValue() : BigDecimal.ONE;
     }
 }

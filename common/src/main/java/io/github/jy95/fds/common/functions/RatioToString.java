@@ -2,6 +2,7 @@ package io.github.jy95.fds.common.functions;
 
 import io.github.jy95.fds.common.config.FDSConfig;
 
+import java.math.BigDecimal;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -52,7 +53,37 @@ public interface RatioToString<C extends FDSConfig, R> {
      * @param ratio              The ratio object.
      * @return The link word as a string.
      */
-    String retrieveRatioLinkWord(TranslationService<C> translationService, R ratio);
+    default String retrieveRatioLinkWord(TranslationService<C> translationService, R ratio) {
+        var hasNumerator = hasNumerator(ratio);
+        var hasDenominator = hasDenominator(ratio);
+        var hasBothElements = hasNumerator && hasDenominator;
+
+        var hasUnitRatio = hasUnitRatio(ratio);
+        var denominatorValue = getDenominatorValue(ratio);
+
+        if (hasUnitRatio && hasBothElements) {
+            var linkWordMsg = translationService.getMessage("amount.ratio.denominatorLinkword");
+            return linkWordMsg.format(new Object[]{denominatorValue});
+        }
+
+        return hasBothElements ? ":" : "";
+    }
+
+    /**
+     * Retrieves the denominator value of the ratio.
+     *
+     * @param ratio The ratio object.
+     * @return The denominator value as BigDecimal.
+     */
+    BigDecimal getDenominatorValue(R ratio);
+
+    /**
+     * Determines if the ratio has a unit in either numerator or denominator.
+     *
+     * @param ratio The ratio object.
+     * @return True if either the numerator or denominator has a unit, false otherwise.
+     */
+    boolean hasUnitRatio(R ratio);
 
     /**
      * Determines if the ratio has a numerator.
