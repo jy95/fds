@@ -36,14 +36,12 @@ public class BoundsDurationR4 implements BoundsDuration&lt;FDSConfigR4, Dosage&g
     @Override
     public CompletableFuture&lt;String&gt; convert(Dosage dosage) {
 <span class="fc" id="L38">        var boundsDuration = dosage.getTiming().getRepeat().getBoundsDuration();</span>
-<span class="fc" id="L39">        var config = translationService.getConfig();</span>
-<span class="fc" id="L40">        var bundle = translationService.getBundle();</span>
-<span class="fc" id="L41">        var boundsDurationMsg = translationService.getMessage(KEY_BOUNDS_DURATION);</span>
+<span class="fc" id="L39">        var boundsDurationMsg = translationService.getMessage(KEY_BOUNDS_DURATION);</span>
 
-<span class="fc" id="L43">        return QuantityToStringR4</span>
-<span class="fc" id="L44">                .getInstance()</span>
-<span class="fc" id="L45">                .convert(bundle, config, boundsDuration)</span>
-<span class="fc" id="L46">                .thenApplyAsync((durationText) -&gt; boundsDurationMsg.format(new Object[]{durationText}));</span>
+<span class="fc" id="L41">        return QuantityToStringR4</span>
+                .INSTANCE
+<span class="fc" id="L43">                .convert(translationService, boundsDuration)</span>
+<span class="fc" id="L44">                .thenApplyAsync((durationText) -&gt; boundsDurationMsg.format(new Object[]{durationText}));</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -55,19 +55,18 @@ public class TimingEventR4 implements TimingEvent&lt;FDSConfigR4, Dosage&gt; {
     public CompletableFuture&lt;String&gt; convert(Dosage dosage) {
 <span class="fc" id="L56">        return CompletableFuture.supplyAsync(() -&gt; {</span>
 <span class="fc" id="L57">            var eventsList = getEvents(dosage);</span>
-<span class="fc" id="L58">            var bundle = translationService.getBundle();</span>
 
-<span class="fc" id="L60">            String eventsAsString = ListToString.convert(bundle, eventsList);</span>
-<span class="fc" id="L61">            var timingEventMsg = translationService.getMessage(KEY_EVENT);</span>
+<span class="fc" id="L59">            String eventsAsString = ListToString.convert(translationService, eventsList);</span>
+<span class="fc" id="L60">            var timingEventMsg = translationService.getMessage(KEY_EVENT);</span>
 
             // Create a map of named arguments
-<span class="fc" id="L64">            Map&lt;String, Object&gt; arguments = Map.of(</span>
-<span class="fc" id="L65">                    &quot;eventCondition&quot;, eventsList.size(),</span>
+<span class="fc" id="L63">            Map&lt;String, Object&gt; arguments = Map.of(</span>
+<span class="fc" id="L64">                    &quot;eventCondition&quot;, eventsList.size(),</span>
                     &quot;event&quot;, eventsAsString
             );
 
             // Format the message with the named arguments
-<span class="fc" id="L70">            return timingEventMsg.format(arguments);</span>
+<span class="fc" id="L69">            return timingEventMsg.format(arguments);</span>
         });
     }
 }

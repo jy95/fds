@@ -2,12 +2,12 @@
 
 import io.github.jy95.fds.common.config.FDSConfig;
 import io.github.jy95.fds.common.functions.ListToString;
+import io.github.jy95.fds.common.functions.TranslationService;
 import lombok.Getter;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
@@ -25,20 +25,25 @@ public abstract class DosageAPI&lt;C extends FDSConfig, D&gt; {
      * The configuration object used by this API.
      */
     private final C config;
+    
     /**
-     * The resource bundle containing localized strings for translation.
+     * The translation service used for localization.
      */
-    private final ResourceBundle resources;
+    private final TranslationService&lt;C&gt; translationService;
 
     /**
      * Constructs a new {@code DosageAPI} with the specified configuration.
      *
      * @param config the configuration object providing locale and resource bundle
      */
-<span class="fc" id="L38">    public DosageAPI(C config) {</span>
-<span class="fc" id="L39">        this.config = config;</span>
-<span class="fc" id="L40">        this.resources = config.getSelectResourceBundle().apply(config.getLocale());</span>
-<span class="fc" id="L41">    }</span>
+<span class="fc" id="L39">    public DosageAPI(C config) {</span>
+<span class="fc" id="L40">        this.config = config;</span>
+<span class="fc" id="L41">        var bundle = config.getSelectResourceBundle().apply(config.getLocale());</span>
+<span class="fc" id="L42">        this.translationService = TranslationService.&lt;C&gt;builder()</span>
+<span class="fc" id="L43">                .config(config)</span>
+<span class="fc" id="L44">                .bundle(bundle)</span>
+<span class="fc" id="L45">                .build();</span>
+<span class="fc" id="L46">    }</span>
 
     /**
      * Converts specified dosage fields into a human-readable string representation asynchronously.
@@ -48,24 +53,24 @@ public abstract class DosageAPI&lt;C extends FDSConfig, D&gt; {
      * @return a {@link java.util.concurrent.CompletableFuture} with the combined human-readable string
      */
     public CompletableFuture&lt;String&gt; getFields(D dosage, DisplayOrder... fields) {
-<span class="fc" id="L51">        var separator = this.config.getDisplaySeparator();</span>
+<span class="fc" id="L56">        var separator = this.config.getDisplaySeparator();</span>
 
         // Create a list of CompletableFutures for each field translation
-<span class="fc" id="L54">        var translatorsFields = Arrays</span>
-<span class="fc" id="L55">                .stream(fields)</span>
-<span class="fc" id="L56">                .map(this::getTranslator)</span>
-<span class="fc" id="L57">                .filter(Objects::nonNull)</span>
-<span class="fc" id="L58">                .filter(translator -&gt; translator.isPresent(dosage))</span>
-<span class="fc" id="L59">                .map(translator -&gt; translator.convert(dosage))</span>
-<span class="fc" id="L60">                .toList();</span>
+<span class="fc" id="L59">        var translatorsFields = Arrays</span>
+<span class="fc" id="L60">                .stream(fields)</span>
+<span class="fc" id="L61">                .map(this::getTranslator)</span>
+<span class="fc" id="L62">                .filter(Objects::nonNull)</span>
+<span class="fc" id="L63">                .filter(translator -&gt; translator.isPresent(dosage))</span>
+<span class="fc" id="L64">                .map(translator -&gt; translator.convert(dosage))</span>
+<span class="fc" id="L65">                .toList();</span>
 
         // Combine the results of all CompletableFutures into a single result
-<span class="fc" id="L63">        return CompletableFuture</span>
-<span class="fc" id="L64">                .allOf(translatorsFields.toArray(CompletableFuture[]::new))</span>
-<span class="fc" id="L65">                .thenApplyAsync(v -&gt; translatorsFields</span>
-<span class="fc" id="L66">                        .stream()</span>
-<span class="fc" id="L67">                        .map(s -&gt; s.getNow(&quot;&quot;))</span>
-<span class="fc" id="L68">                        .collect(Collectors.joining(separator))</span>
+<span class="fc" id="L68">        return CompletableFuture</span>
+<span class="fc" id="L69">                .allOf(translatorsFields.toArray(CompletableFuture[]::new))</span>
+<span class="fc" id="L70">                .thenApplyAsync(v -&gt; translatorsFields</span>
+<span class="fc" id="L71">                        .stream()</span>
+<span class="fc" id="L72">                        .map(s -&gt; s.getNow(&quot;&quot;))</span>
+<span class="fc" id="L73">                        .collect(Collectors.joining(separator))</span>
                 );
     }
 
@@ -92,8 +97,8 @@ public abstract class DosageAPI&lt;C extends FDSConfig, D&gt; {
      * @return a {@link java.util.concurrent.CompletableFuture} with the human-readable string
      */
     public CompletableFuture&lt;String&gt; asHumanReadableText(D dosage) {
-<span class="fc" id="L95">        var fields = this.config.getDisplayOrder().toArray(DisplayOrder[]::new);</span>
-<span class="fc" id="L96">        return getFields(dosage, fields);</span>
+<span class="fc" id="L100">        var fields = this.config.getDisplayOrder().toArray(DisplayOrder[]::new);</span>
+<span class="fc" id="L101">        return getFields(dosage, fields);</span>
     }
 
     /**
@@ -104,10 +109,10 @@ public abstract class DosageAPI&lt;C extends FDSConfig, D&gt; {
      * @return a {@link java.util.concurrent.CompletableFuture} with the combined human-readable string
      */
     public CompletableFuture&lt;String&gt; asHumanReadableText(List&lt;D&gt; dosages) {
-<span class="pc bpc" id="L107" title="1 of 2 branches missed.">        if (containsOnlySequentialInstructions(dosages)) {</span>
-<span class="fc" id="L108">            return convertSequentialDosagesToText(dosages);</span>
+<span class="pc bpc" id="L112" title="1 of 2 branches missed.">        if (containsOnlySequentialInstructions(dosages)) {</span>
+<span class="fc" id="L113">            return convertSequentialDosagesToText(dosages);</span>
         }
-<span class="nc" id="L110">        return convertGroupedDosagesToText(dosages);</span>
+<span class="nc" id="L115">        return convertGroupedDosagesToText(dosages);</span>
     }
 
     /**
@@ -117,15 +122,15 @@ public abstract class DosageAPI&lt;C extends FDSConfig, D&gt; {
      * @return a {@link java.util.concurrent.CompletableFuture} with the human-readable string
      */
     protected CompletableFuture&lt;String&gt; convertSequentialDosagesToText(List&lt;D&gt; dosages) {
-<span class="fc" id="L120">        List&lt;CompletableFuture&lt;String&gt;&gt; dosagesAsTextFutures = dosages.stream()</span>
-<span class="fc" id="L121">                .map(this::asHumanReadableText)</span>
-<span class="fc" id="L122">                .toList();</span>
+<span class="fc" id="L125">        List&lt;CompletableFuture&lt;String&gt;&gt; dosagesAsTextFutures = dosages.stream()</span>
+<span class="fc" id="L126">                .map(this::asHumanReadableText)</span>
+<span class="fc" id="L127">                .toList();</span>
 
-<span class="fc" id="L124">        return CompletableFuture</span>
-<span class="fc" id="L125">                .allOf(dosagesAsTextFutures.toArray(CompletableFuture[]::new))</span>
-<span class="fc" id="L126">                .thenApplyAsync(v -&gt; {</span>
-<span class="fc" id="L127">                    var dosagesAsText = extractCompletedFutures(dosagesAsTextFutures);</span>
-<span class="fc" id="L128">                    return convertToText(dosagesAsText, LinkWord.THEN);</span>
+<span class="fc" id="L129">        return CompletableFuture</span>
+<span class="fc" id="L130">                .allOf(dosagesAsTextFutures.toArray(CompletableFuture[]::new))</span>
+<span class="fc" id="L131">                .thenApplyAsync(v -&gt; {</span>
+<span class="fc" id="L132">                    var dosagesAsText = extractCompletedFutures(dosagesAsTextFutures);</span>
+<span class="fc" id="L133">                    return convertToText(dosagesAsText, LinkWord.THEN);</span>
                 });
     }
 
@@ -136,17 +141,17 @@ public abstract class DosageAPI&lt;C extends FDSConfig, D&gt; {
      * @return a {@link java.util.concurrent.CompletableFuture} with the human-readable string
      */
     protected CompletableFuture&lt;String&gt; convertGroupedDosagesToText(List&lt;D&gt; dosages) {
-<span class="nc" id="L139">        var sortedDosages = groupBySequence(dosages);</span>
+<span class="nc" id="L144">        var sortedDosages = groupBySequence(dosages);</span>
 
-<span class="nc" id="L141">        var sequentialInstructionsFutures = sortedDosages.stream()</span>
-<span class="nc" id="L142">                .map(this::convertConcurrentDosagesToText)</span>
-<span class="nc" id="L143">                .toList();</span>
+<span class="nc" id="L146">        var sequentialInstructionsFutures = sortedDosages.stream()</span>
+<span class="nc" id="L147">                .map(this::convertConcurrentDosagesToText)</span>
+<span class="nc" id="L148">                .toList();</span>
 
-<span class="nc" id="L145">        return CompletableFuture</span>
-<span class="nc" id="L146">                .allOf(sequentialInstructionsFutures.toArray(CompletableFuture[]::new))</span>
-<span class="nc" id="L147">                .thenApplyAsync(v -&gt; {</span>
-<span class="nc" id="L148">                    var dosagesAsText = extractCompletedFutures(sequentialInstructionsFutures);</span>
-<span class="nc" id="L149">                    return convertToText(dosagesAsText, LinkWord.THEN);</span>
+<span class="nc" id="L150">        return CompletableFuture</span>
+<span class="nc" id="L151">                .allOf(sequentialInstructionsFutures.toArray(CompletableFuture[]::new))</span>
+<span class="nc" id="L152">                .thenApplyAsync(v -&gt; {</span>
+<span class="nc" id="L153">                    var dosagesAsText = extractCompletedFutures(sequentialInstructionsFutures);</span>
+<span class="nc" id="L154">                    return convertToText(dosagesAsText, LinkWord.THEN);</span>
                 });
     }
 
@@ -157,15 +162,15 @@ public abstract class DosageAPI&lt;C extends FDSConfig, D&gt; {
      * @return a {@link java.util.concurrent.CompletableFuture} with the human-readable string
      */
     protected CompletableFuture&lt;String&gt; convertConcurrentDosagesToText(List&lt;D&gt; dosages) {
-<span class="nc" id="L160">        List&lt;CompletableFuture&lt;String&gt;&gt; concurrentInstructionsFutures = dosages.stream()</span>
-<span class="nc" id="L161">                .map(this::asHumanReadableText)</span>
-<span class="nc" id="L162">                .toList();</span>
+<span class="nc" id="L165">        List&lt;CompletableFuture&lt;String&gt;&gt; concurrentInstructionsFutures = dosages.stream()</span>
+<span class="nc" id="L166">                .map(this::asHumanReadableText)</span>
+<span class="nc" id="L167">                .toList();</span>
 
-<span class="nc" id="L164">        return CompletableFuture</span>
-<span class="nc" id="L165">                .allOf(concurrentInstructionsFutures.toArray(CompletableFuture[]::new))</span>
-<span class="nc" id="L166">                .thenApplyAsync(v -&gt; {</span>
-<span class="nc" id="L167">                    var dosagesAsText = extractCompletedFutures(concurrentInstructionsFutures);</span>
-<span class="nc" id="L168">                    return convertToText(dosagesAsText, LinkWord.AND); // Defaults to LinkWord.AND</span>
+<span class="nc" id="L169">        return CompletableFuture</span>
+<span class="nc" id="L170">                .allOf(concurrentInstructionsFutures.toArray(CompletableFuture[]::new))</span>
+<span class="nc" id="L171">                .thenApplyAsync(v -&gt; {</span>
+<span class="nc" id="L172">                    var dosagesAsText = extractCompletedFutures(concurrentInstructionsFutures);</span>
+<span class="nc" id="L173">                    return convertToText(dosagesAsText, LinkWord.AND); // Defaults to LinkWord.AND</span>
                 });
     }
 
@@ -183,9 +188,9 @@ public abstract class DosageAPI&lt;C extends FDSConfig, D&gt; {
      * @return a list of completed results
      */
     private List&lt;String&gt; extractCompletedFutures(List&lt;CompletableFuture&lt;String&gt;&gt; futures) {
-<span class="fc" id="L186">        return futures.stream()</span>
-<span class="fc" id="L187">                .map(future -&gt; future.getNow(&quot;&quot;)) // Extracting results with default fallback</span>
-<span class="fc" id="L188">                .toList();</span>
+<span class="fc" id="L191">        return futures.stream()</span>
+<span class="fc" id="L192">                .map(future -&gt; future.getNow(&quot;&quot;)) // Extracting results with default fallback</span>
+<span class="fc" id="L193">                .toList();</span>
     }
 
     /**
@@ -195,8 +200,7 @@ public abstract class DosageAPI&lt;C extends FDSConfig, D&gt; {
      * @return the combined string
      */
     private String convertToText(List&lt;String&gt; textList, LinkWord linkWord) {
-<span class="fc" id="L198">        var bundle = this.getResources();</span>
-<span class="fc" id="L199">        return ListToString.convert(bundle, textList, linkWord);</span>
+<span class="fc" id="L203">        return ListToString.convert(translationService, textList, linkWord);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

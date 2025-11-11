@@ -53,26 +53,25 @@ public class AsNeededR5 implements AsNeeded&lt;FDSConfigR5, Dosage&gt; {
     public CompletableFuture&lt;String&gt; convertCodeableConcepts(Dosage dosage) {
 <span class="fc" id="L54">        var codes = dosage.getAsNeededFor();</span>
 <span class="fc" id="L55">        var config = translationService.getConfig();</span>
-<span class="fc" id="L56">        var bundle = translationService.getBundle();</span>
 
-<span class="fc" id="L58">        var codesFutures = codes</span>
-<span class="fc" id="L59">                .stream()</span>
-<span class="fc" id="L60">                .map(config::fromCodeableConceptToString)</span>
-<span class="fc" id="L61">                .toList();</span>
+<span class="fc" id="L57">        var codesFutures = codes</span>
+<span class="fc" id="L58">                .stream()</span>
+<span class="fc" id="L59">                .map(config::fromCodeableConceptToString)</span>
+<span class="fc" id="L60">                .toList();</span>
 
-<span class="fc" id="L63">        var asNeededForMsg = translationService.getMessage(KEY_AS_NEEDED_FOR);</span>
+<span class="fc" id="L62">        var asNeededForMsg = translationService.getMessage(KEY_AS_NEEDED_FOR);</span>
 
-<span class="fc" id="L65">        return CompletableFuture</span>
-<span class="fc" id="L66">                .allOf(codesFutures.toArray(CompletableFuture[]::new))</span>
-<span class="fc" id="L67">                .thenApplyAsync(v -&gt; {</span>
-<span class="fc" id="L68">                    var codesAsText = codesFutures</span>
-<span class="fc" id="L69">                            .stream()</span>
-<span class="fc" id="L70">                            .map(future -&gt; future.getNow(&quot;&quot;))</span>
-<span class="fc" id="L71">                            .toList();</span>
+<span class="fc" id="L64">        return CompletableFuture</span>
+<span class="fc" id="L65">                .allOf(codesFutures.toArray(CompletableFuture[]::new))</span>
+<span class="fc" id="L66">                .thenApplyAsync(v -&gt; {</span>
+<span class="fc" id="L67">                    var codesAsText = codesFutures</span>
+<span class="fc" id="L68">                            .stream()</span>
+<span class="fc" id="L69">                            .map(future -&gt; future.getNow(&quot;&quot;))</span>
+<span class="fc" id="L70">                            .toList();</span>
 
-<span class="fc" id="L73">                    return ListToString.convert(bundle, codesAsText);</span>
+<span class="fc" id="L72">                    return ListToString.convert(translationService, codesAsText);</span>
                 })
-<span class="fc" id="L75">                .thenApplyAsync(v -&gt; asNeededForMsg.format(new Object[]{v}));</span>
+<span class="fc" id="L74">                .thenApplyAsync(v -&gt; asNeededForMsg.format(new Object[]{v}));</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

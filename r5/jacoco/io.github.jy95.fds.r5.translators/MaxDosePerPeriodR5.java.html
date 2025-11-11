@@ -25,33 +25,30 @@ public class MaxDosePerPeriodR5 implements MaxDosePerPeriod&lt;FDSConfigR5, Dosa
     /** {@inheritDoc} */
     @Override
     public CompletableFuture&lt;String&gt; convert(Dosage dosage) {
-<span class="fc" id="L28">        var config = translationService.getConfig();</span>
-<span class="fc" id="L29">        var bundle = translationService.getBundle();</span>
+<span class="fc" id="L28">        var ratioFutures = dosage</span>
+<span class="fc" id="L29">                .getMaxDosePerPeriod()</span>
+<span class="fc" id="L30">                .stream()</span>
+<span class="fc" id="L31">                .map(ratio -&gt; RatioToStringR5.INSTANCE.convert(translationService, ratio))</span>
+<span class="fc" id="L32">                .toList();</span>
 
-<span class="fc" id="L31">        var ratioFutures = dosage</span>
-<span class="fc" id="L32">                .getMaxDosePerPeriod()</span>
-<span class="fc" id="L33">                .stream()</span>
-<span class="fc" id="L34">                .map(ratio -&gt; RatioToStringR5.getInstance().convert(bundle, config, ratio))</span>
-<span class="fc" id="L35">                .toList();</span>
+<span class="fc" id="L34">        var maxDosePerPeriodMsg = translationService.getMessage(KEY_MAX_DOSE_PER_PERIOD);</span>
 
-<span class="fc" id="L37">        var maxDosePerPeriodMsg = translationService.getMessage(KEY_MAX_DOSE_PER_PERIOD);</span>
-
-<span class="fc" id="L39">        return CompletableFuture</span>
-<span class="fc" id="L40">                .allOf(ratioFutures.toArray(CompletableFuture[]::new))</span>
-<span class="fc" id="L41">                .thenApplyAsync(v -&gt; {</span>
-<span class="fc" id="L42">                    var ratioTexts = ratioFutures</span>
-<span class="fc" id="L43">                            .stream()</span>
-<span class="fc" id="L44">                            .map(future -&gt; future.getNow(&quot;&quot;))</span>
-<span class="fc" id="L45">                            .toList();</span>
-<span class="fc" id="L46">                    return ListToString.convert(bundle, ratioTexts);</span>
+<span class="fc" id="L36">        return CompletableFuture</span>
+<span class="fc" id="L37">                .allOf(ratioFutures.toArray(CompletableFuture[]::new))</span>
+<span class="fc" id="L38">                .thenApplyAsync(v -&gt; {</span>
+<span class="fc" id="L39">                    var ratioTexts = ratioFutures</span>
+<span class="fc" id="L40">                            .stream()</span>
+<span class="fc" id="L41">                            .map(future -&gt; future.getNow(&quot;&quot;))</span>
+<span class="fc" id="L42">                            .toList();</span>
+<span class="fc" id="L43">                    return ListToString.convert(translationService, ratioTexts);</span>
                 })
-<span class="fc" id="L48">                .thenApplyAsync((ratioText) -&gt; maxDosePerPeriodMsg.format(new Object[] { ratioText }));</span>
+<span class="fc" id="L45">                .thenApplyAsync((ratioText) -&gt; maxDosePerPeriodMsg.format(new Object[] { ratioText }));</span>
     }
 
     /** {@inheritDoc} */
     @Override
     public boolean isPresent(Dosage dosage) {
-<span class="fc" id="L54">        return dosage.hasMaxDosePerPeriod();</span>
+<span class="fc" id="L51">        return dosage.hasMaxDosePerPeriod();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -54,14 +54,13 @@ public class AsNeededR4 implements AsNeeded&lt;FDSConfigR4, Dosage&gt; {
     public CompletableFuture&lt;String&gt; convertCodeableConcepts(Dosage dosage) {
 <span class="fc" id="L55">        var code = dosage.getAsNeededCodeableConcept();</span>
 <span class="fc" id="L56">        var config = translationService.getConfig();</span>
-<span class="fc" id="L57">        var bundle = translationService.getBundle();</span>
-<span class="fc" id="L58">        var asNeededForMsg = translationService.getMessage(KEY_AS_NEEDED_FOR);</span>
-<span class="fc" id="L59">        var codeAsText = config</span>
-<span class="fc" id="L60">                .fromCodeableConceptToString(code);</span>
+<span class="fc" id="L57">        var asNeededForMsg = translationService.getMessage(KEY_AS_NEEDED_FOR);</span>
+<span class="fc" id="L58">        var codeAsText = config</span>
+<span class="fc" id="L59">                .fromCodeableConceptToString(code);</span>
 
-<span class="fc" id="L62">        return codeAsText</span>
-<span class="fc" id="L63">                .thenApplyAsync(v -&gt; ListToString.convert(bundle, List.of(v)))</span>
-<span class="fc" id="L64">                .thenApplyAsync(v -&gt; asNeededForMsg.format(new Object[]{v}));</span>
+<span class="fc" id="L61">        return codeAsText</span>
+<span class="fc" id="L62">                .thenApplyAsync(v -&gt; ListToString.convert(translationService, List.of(v)))</span>
+<span class="fc" id="L63">                .thenApplyAsync(v -&gt; asNeededForMsg.format(new Object[]{v}));</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

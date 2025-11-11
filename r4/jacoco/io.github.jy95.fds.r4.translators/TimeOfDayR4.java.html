@@ -50,23 +50,22 @@ public class TimeOfDayR4 implements TimeOfDay&lt;FDSConfigR4, Dosage&gt; {
 
 <span class="fc" id="L51">            var times = getTimes(dosage);</span>
 <span class="fc" id="L52">            var timeOfDays = times.stream().map(this::formatString).toList();</span>
-<span class="fc" id="L53">            var bundle = translationService.getBundle();</span>
-<span class="fc" id="L54">            var timeOfDayMsg = translationService.getMessage(KEY_TIME_OF_DAY);</span>
-<span class="fc" id="L55">            var timeOfDaysAsString = ListToString.convert(bundle, timeOfDays);</span>
+<span class="fc" id="L53">            var timeOfDayMsg = translationService.getMessage(KEY_TIME_OF_DAY);</span>
+<span class="fc" id="L54">            var timeOfDaysAsString = ListToString.convert(translationService, timeOfDays);</span>
 
-<span class="fc" id="L57">            Map&lt;String, Object&gt; messageArguments = Map.of(</span>
+<span class="fc" id="L56">            Map&lt;String, Object&gt; messageArguments = Map.of(</span>
                     &quot;timeOfDay&quot;, timeOfDaysAsString,
-<span class="fc" id="L59">                    &quot;count&quot;, timeOfDays.size()</span>
+<span class="fc" id="L58">                    &quot;count&quot;, timeOfDays.size()</span>
             );
 
-<span class="fc" id="L62">            return timeOfDayMsg.format(messageArguments);</span>
+<span class="fc" id="L61">            return timeOfDayMsg.format(messageArguments);</span>
         });
     }
 
     /** {@inheritDoc} */
     @Override
     public boolean hasTiming(Dosage dosage) {
-<span class="fc" id="L69">        return dosage.hasTiming();</span>
+<span class="fc" id="L68">        return dosage.hasTiming();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

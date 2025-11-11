@@ -27,23 +27,22 @@ public class DoseQuantityR4 implements Translator&lt;FDSConfigR4, Dosage&gt; {
     @Override
     public CompletableFuture&lt;String&gt; convert(Dosage dosage) {
 <span class="fc" id="L29">        var config = translationService.getConfig();</span>
-<span class="fc" id="L30">        var bundle = translationService.getBundle();</span>
-<span class="fc" id="L31">        var doseQuantity = config</span>
-<span class="fc" id="L32">                .selectDosageAndRateField(</span>
-<span class="fc" id="L33">                        dosage.getDoseAndRate(),</span>
+<span class="fc" id="L30">        var doseQuantity = config</span>
+<span class="fc" id="L31">                .selectDosageAndRateField(</span>
+<span class="fc" id="L32">                        dosage.getDoseAndRate(),</span>
                         DoseAndRateKey.DOSE_QUANTITY)
                 ;
-<span class="fc" id="L36">        return QuantityToStringR4</span>
-<span class="fc" id="L37">                .getInstance()</span>
-<span class="fc" id="L38">                .convert(bundle, config, (Quantity) doseQuantity);</span>
+<span class="fc" id="L35">        return QuantityToStringR4</span>
+                .INSTANCE
+<span class="fc" id="L37">                .convert(translationService, (Quantity) doseQuantity);</span>
     }
 
     /** {@inheritDoc} */
     @Override
     public boolean isPresent(Dosage dosage) {
-<span class="fc" id="L44">        var config = translationService.getConfig();</span>
-<span class="fc" id="L45">        return config</span>
-<span class="fc" id="L46">                .hasMatchingComponent(</span>
+<span class="fc" id="L43">        var config = translationService.getConfig();</span>
+<span class="fc" id="L44">        return config</span>
+<span class="fc" id="L45">                .hasMatchingComponent(</span>
                         dosage,
                         Dosage.DosageDoseAndRateComponent::hasDoseQuantity
                 );

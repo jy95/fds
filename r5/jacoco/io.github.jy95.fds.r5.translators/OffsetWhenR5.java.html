@@ -56,31 +56,26 @@ public class OffsetWhenR5 implements OffsetWhen&lt;FDSConfigR5, Dosage&gt; {
 <span class="fc" id="L56">            return CompletableFuture.completedFuture(&quot;&quot;);</span>
         }
 
-<span class="fc" id="L59">        var bundle = translationService.getBundle();</span>
+<span class="fc" id="L59">        return CompletableFuture.supplyAsync(() -&gt; {</span>
+<span class="fc" id="L60">            var events = repeat</span>
+<span class="fc" id="L61">                    .getWhen()</span>
+<span class="fc" id="L62">                    .stream()</span>
+<span class="fc" id="L63">                    .map(Enumeration::getCode)</span>
+<span class="fc" id="L64">                    .map(translationService::getText)</span>
+<span class="fc" id="L65">                    .toList();</span>
 
-<span class="fc" id="L61">        return CompletableFuture.supplyAsync(() -&gt; {</span>
-<span class="fc" id="L62">            var events = repeat</span>
-<span class="fc" id="L63">                    .getWhen()</span>
-<span class="fc" id="L64">                    .stream()</span>
-<span class="fc" id="L65">                    .map(Enumeration::getCode)</span>
-<span class="fc" id="L66">                    .map(bundle::getString)</span>
-<span class="fc" id="L67">                    .toList();</span>
-
-<span class="fc" id="L69">            return ListToString.convert(bundle, events);</span>
+<span class="fc" id="L67">            return ListToString.convert(translationService, events);</span>
         });
     }
 
     private CompletableFuture&lt;String&gt; turnOffsetToText(Dosage dosage) {
-<span class="fc" id="L74">        var repeat = dosage.getTiming().getRepeat();</span>
+<span class="fc" id="L72">        var repeat = dosage.getTiming().getRepeat();</span>
 
-<span class="fc bfc" id="L76" title="All 2 branches covered.">        if (!repeat.hasOffset()) {</span>
-<span class="fc" id="L77">            return CompletableFuture.completedFuture(&quot;&quot;);</span>
+<span class="fc bfc" id="L74" title="All 2 branches covered.">        if (!repeat.hasOffset()) {</span>
+<span class="fc" id="L75">            return CompletableFuture.completedFuture(&quot;&quot;);</span>
         }
 
-<span class="fc" id="L80">        var bundle = translationService.getBundle();</span>
-<span class="fc" id="L81">        var locale = translationService.getConfig().getLocale();</span>
-
-<span class="fc" id="L83">        return turnOffsetValueToText(repeat.getOffset(), bundle, locale);</span>
+<span class="fc" id="L78">        return turnOffsetValueToText(translationService, repeat.getOffset());</span>
     }
 
 }

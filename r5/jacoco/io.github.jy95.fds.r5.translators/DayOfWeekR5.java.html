@@ -73,17 +73,16 @@ public class DayOfWeekR5 implements DayOfWeek&lt;FDSConfigR5, Dosage&gt; {
      * @return the translated days of the week as a formatted string.
      */
     private String daysToText(List&lt;String&gt; days) {
-<span class="fc" id="L76">        var bundle = translationService.getBundle();</span>
-<span class="fc" id="L77">        var dayOfWeeksAsString = ListToString.convert(bundle, days);</span>
+<span class="fc" id="L76">        var dayOfWeeksAsString = ListToString.convert(translationService, days);</span>
 
-<span class="fc" id="L79">        Map&lt;String, Object&gt; messageArguments = Map.of(</span>
-<span class="fc" id="L80">                &quot;dayCondition&quot;, days.size(),</span>
+<span class="fc" id="L78">        Map&lt;String, Object&gt; messageArguments = Map.of(</span>
+<span class="fc" id="L79">                &quot;dayCondition&quot;, days.size(),</span>
                 &quot;day&quot;, dayOfWeeksAsString
         );
 
         // Use ICU MessageFormat for plural and select formatting
-<span class="fc" id="L85">        var dayOfWeekMsg = translationService.getMessage(KEY_DAY_OF_WEEK);</span>
-<span class="fc" id="L86">        return dayOfWeekMsg.format(messageArguments);</span>
+<span class="fc" id="L84">        var dayOfWeekMsg = translationService.getMessage(KEY_DAY_OF_WEEK);</span>
+<span class="fc" id="L85">        return dayOfWeekMsg.format(messageArguments);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

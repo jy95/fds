@@ -25,22 +25,20 @@ public class MaxDosePerAdministrationR5 implements MaxDosePerAdministration&lt;F
     @Override
     public CompletableFuture&lt;String&gt; convert(Dosage dosage) {
 <span class="fc" id="L27">        var quantity = dosage.getMaxDosePerAdministration();</span>
-<span class="fc" id="L28">        var config = translationService.getConfig();</span>
-<span class="fc" id="L29">        var bundle = translationService.getBundle();</span>
-<span class="fc" id="L30">        var maxDosePerAdministrationMsg = translationService.getMessage(KEY_MAX_DOSE_PER_ADMINISTRATION);</span>
+<span class="fc" id="L28">        var maxDosePerAdministrationMsg = translationService.getMessage(KEY_MAX_DOSE_PER_ADMINISTRATION);</span>
 
-<span class="fc" id="L32">        return QuantityToStringR5</span>
-<span class="fc" id="L33">                .getInstance()</span>
-<span class="fc" id="L34">                .convert(bundle, config, quantity)</span>
-<span class="fc" id="L35">                .thenApplyAsync(</span>
-<span class="fc" id="L36">                        (quantityText) -&gt; maxDosePerAdministrationMsg.format(new Object[] { quantityText })</span>
+<span class="fc" id="L30">        return QuantityToStringR5</span>
+                .INSTANCE
+<span class="fc" id="L32">                .convert(translationService, quantity)</span>
+<span class="fc" id="L33">                .thenApplyAsync(</span>
+<span class="fc" id="L34">                        (quantityText) -&gt; maxDosePerAdministrationMsg.format(new Object[] { quantityText })</span>
                 );
     }
 
     /** {@inheritDoc} */
     @Override
     public boolean isPresent(Dosage dosage) {
-<span class="fc" id="L43">        return dosage.hasMaxDosePerAdministration();</span>
+<span class="fc" id="L41">        return dosage.hasMaxDosePerAdministration();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -23,21 +23,20 @@ public class AdditionalInstructionR5 implements AdditionalInstruction&lt;FDSConf
     @Override
     public CompletableFuture&lt;String&gt; convert(Dosage dosage) {
 <span class="fc" id="L25">        var config = translationService.getConfig();</span>
-<span class="fc" id="L26">        var bundle = translationService.getBundle();</span>
 
-<span class="fc" id="L28">        var additionalInstructions = dosage</span>
-<span class="fc" id="L29">                .getAdditionalInstruction()</span>
-<span class="fc" id="L30">                .stream()</span>
-<span class="fc" id="L31">                .map(config::fromCodeableConceptToString)</span>
-<span class="fc" id="L32">                .toList();</span>
+<span class="fc" id="L27">        var additionalInstructions = dosage</span>
+<span class="fc" id="L28">                .getAdditionalInstruction()</span>
+<span class="fc" id="L29">                .stream()</span>
+<span class="fc" id="L30">                .map(config::fromCodeableConceptToString)</span>
+<span class="fc" id="L31">                .toList();</span>
 
-<span class="fc" id="L34">        return instructionsFuture(additionalInstructions, bundle);</span>
+<span class="fc" id="L33">        return instructionsFuture(translationService, additionalInstructions);</span>
     }
 
     /** {@inheritDoc} */
     @Override
     public boolean isPresent(Dosage dosage) {
-<span class="fc" id="L40">        return dosage.hasAdditionalInstruction();</span>
+<span class="fc" id="L39">        return dosage.hasAdditionalInstruction();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

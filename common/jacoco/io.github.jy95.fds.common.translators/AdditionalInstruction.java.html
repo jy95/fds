@@ -2,10 +2,10 @@
 
 import io.github.jy95.fds.common.config.FDSConfig;
 import io.github.jy95.fds.common.functions.ListToString;
+import io.github.jy95.fds.common.functions.TranslationService;
 import io.github.jy95.fds.common.types.Translator;
 
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -25,15 +25,15 @@ public interface AdditionalInstruction&lt;C extends FDSConfig, D&gt; extends Tra
      * collects their results as strings, and then uses {@link io.github.jy95.fds.common.functions.ListToString#convert}
      * to combine them into a single string representation.&lt;/p&gt;
      *
+     * @param translationService The translation service used for obtaining configuration and resources.
      * @param additionalInstructions A list of {@link java.util.concurrent.CompletableFuture} objects representing
      *                               the additional instructions to be processed.
      * @return A {@link java.util.concurrent.CompletableFuture} that, when completed, returns a string
      *         representing all the additional instructions combined.
-     * @param bundle a {@link java.util.ResourceBundle} object
      */
     default CompletableFuture&lt;String&gt; instructionsFuture(
-            List&lt;CompletableFuture&lt;String&gt;&gt; additionalInstructions,
-            ResourceBundle bundle
+            TranslationService&lt;C&gt; translationService,
+            List&lt;CompletableFuture&lt;String&gt;&gt; additionalInstructions
     ) {
 <span class="nc" id="L38">        return CompletableFuture</span>
 <span class="nc" id="L39">                .allOf(additionalInstructions.toArray(CompletableFuture[]::new))</span>
@@ -44,7 +44,7 @@ public interface AdditionalInstruction&lt;C extends FDSConfig, D&gt; extends Tra
 <span class="nc" id="L44">                            .toList();</span>
 
                     // Use ListToString.convert with the translators' resources
-<span class="nc" id="L47">                    return ListToString.convert(bundle, additionalInstructionsAsText);</span>
+<span class="nc" id="L47">                    return ListToString.convert(translationService, additionalInstructionsAsText);</span>
                 });
     }
 }

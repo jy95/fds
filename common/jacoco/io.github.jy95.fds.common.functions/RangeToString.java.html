@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RangeToString.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">FHIR Dosage Support - Common</a> &gt; <a href="index.source.html" class="el_package">io.github.jy95.fds.common.functions</a> &gt; <span class="el_source">RangeToString.java</span></div><h1>RangeToString.java</h1><pre class="source lang-java linenums">package io.github.jy95.fds.common.functions;
 
-import com.ibm.icu.text.MessageFormat;
 import io.github.jy95.fds.common.config.FDSConfig;
 
 import java.math.BigDecimal;
 import java.util.Map;
-import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -21,16 +19,15 @@ public interface RangeToString&lt;C extends FDSConfig, R&gt; {
     /**
      * Converts a range object to a human-readable string asynchronously.
      *
-     * @param bundle  The resource bundle for localization.
-     * @param config  The configuration object for additional logic.
-     * @param range   The range object to convert.
+     * @param translationService The service providing localized strings and configuration context.
+     * @param range              The range object to convert.
      * @return A CompletableFuture that resolves to the human-readable string.
      */
-    default CompletableFuture&lt;String&gt; convert(ResourceBundle bundle, C config, R range) {
-<span class="nc bnc" id="L30" title="All 2 branches missed.">        if (hasUnit(range)) {</span>
-<span class="nc" id="L31">            return convertWithUnit(bundle, config, range);</span>
+    default CompletableFuture&lt;String&gt; convert(TranslationService&lt;C&gt; translationService, R range) {
+<span class="nc bnc" id="L27" title="All 2 branches missed.">        if (hasUnit(range)) {</span>
+<span class="nc" id="L28">            return convertWithUnit(translationService, range);</span>
         }
-<span class="nc" id="L33">        return convertWithoutUnit(bundle, config, range);</span>
+<span class="nc" id="L30">        return convertWithoutUnit(translationService, range);</span>
     }
 
     /**
@@ -44,72 +41,78 @@ public interface RangeToString&lt;C extends FDSConfig, R&gt; {
     /**
      * Convert a range without a unit to a human-readable string.
      *
-     * @param bundle  The resource bundle for localization.
-     * @param config  The configuration object for additional logic.
-     * @param range   The range object.
+     * @param translationService The service providing localized strings and configuration context.
+     * @param range              The range object.
      * @return A CompletableFuture that resolves to the human-readable string.
      */
-    default CompletableFuture&lt;String&gt; convertWithoutUnit(ResourceBundle bundle, C config, R range) {
-<span class="nc" id="L53">        return CompletableFuture.supplyAsync(() -&gt; {</span>
-<span class="nc" id="L54">            boolean hasLow = hasLow(range);</span>
-<span class="nc" id="L55">            boolean hasHigh = hasHigh(range);</span>
-<span class="nc" id="L56">            String msg = bundle.getString(&quot;amount.range.withoutUnit&quot;);</span>
+    default CompletableFuture&lt;String&gt; convertWithoutUnit(TranslationService&lt;C&gt; translationService, R range) {
+<span class="nc" id="L49">        return CompletableFuture.supplyAsync(() -&gt; {</span>
+<span class="nc" id="L50">            boolean hasLow = hasLow(range);</span>
+<span class="nc" id="L51">            boolean hasHigh = hasHigh(range);</span>
+            
+            // Retrieve message format using the service
+<span class="nc" id="L54">            var messageFormat = translationService.getMessage(&quot;amount.range.withoutUnit&quot;);</span>
 
-<span class="nc" id="L58">            MessageFormat messageFormat = new MessageFormat(msg, config.getLocale());</span>
+<span class="nc bnc" id="L56" title="All 8 branches missed.">            String condition = (hasLow &amp;&amp; hasHigh) ? &quot;0&quot; : (hasHigh) ? &quot;1&quot; : (hasLow) ? &quot;2&quot; : &quot;other&quot;;</span>
 
-<span class="nc bnc" id="L60" title="All 8 branches missed.">            String condition = (hasLow &amp;&amp; hasHigh) ? &quot;0&quot; : (hasHigh) ? &quot;1&quot; : (hasLow) ? &quot;2&quot; : &quot;other&quot;;</span>
-
-<span class="nc" id="L62">            Map&lt;String, Object&gt; arguments = Map.of(</span>
-<span class="nc bnc" id="L63" title="All 2 branches missed.">                    &quot;minValue&quot;, hasLow ? getLowValue(range) : &quot;&quot;,</span>
-<span class="nc bnc" id="L64" title="All 2 branches missed.">                    &quot;maxValue&quot;, hasHigh ? getHighValue(range) : &quot;&quot;,</span>
+            // Note: getValue methods are expected to return BigDecimals which MessageFormat handles
+<span class="nc" id="L59">            Map&lt;String, Object&gt; arguments = Map.of(</span>
+<span class="nc bnc" id="L60" title="All 2 branches missed.">                    &quot;minValue&quot;, hasLow ? getLowValue(range) : &quot;&quot;,</span>
+<span class="nc bnc" id="L61" title="All 2 branches missed.">                    &quot;maxValue&quot;, hasHigh ? getHighValue(range) : &quot;&quot;,</span>
                     &quot;condition&quot;, condition
             );
 
-<span class="nc" id="L68">            return messageFormat.format(arguments);</span>
+<span class="nc" id="L65">            return messageFormat.format(arguments);</span>
         });
     }
 
     /**
      * Convert a range with a unit to a human-readable string.
      *
-     * @param bundle  The resource bundle for localization.
-     * @param config  The configuration object for additional logic.
-     * @param range   The range object.
+     * @param translationService The service providing localized strings and configuration context.
+     * @param range              The range object.
      * @return A CompletableFuture that resolves to the human-readable string.
      */
-    default CompletableFuture&lt;String&gt; convertWithUnit(ResourceBundle bundle, C config, R range) {
-<span class="nc" id="L81">        boolean hasLow = hasLow(range);</span>
-<span class="nc" id="L82">        boolean hasHigh = hasHigh(range);</span>
-<span class="nc" id="L83">        String msg = bundle.getString(&quot;amount.range.withUnit&quot;);</span>
-<span class="nc" id="L84">        CompletableFuture&lt;String&gt; unitRetrieval = getUnitText(bundle, config, range, hasLow, hasHigh);</span>
+    default CompletableFuture&lt;String&gt; convertWithUnit(TranslationService&lt;C&gt; translationService, R range) {
+<span class="nc" id="L77">        boolean hasLow = hasLow(range);</span>
+<span class="nc" id="L78">        boolean hasHigh = hasHigh(range);</span>
+        
+        // Retrieve message format using the service
+<span class="nc" id="L81">        var messageFormat = translationService.getMessage(&quot;amount.range.withUnit&quot;);</span>
+        
+        // Retrieve unit text, passing the service
+<span class="nc" id="L84">        CompletableFuture&lt;String&gt; unitRetrieval = getUnitText(translationService, range, hasLow, hasHigh);</span>
 
 <span class="nc bnc" id="L86" title="All 8 branches missed.">        String condition = (hasLow &amp;&amp; hasHigh) ? &quot;0&quot; : (hasHigh) ? &quot;1&quot; : (hasLow) ? &quot;2&quot; : &quot;other&quot;;</span>
 
 <span class="nc" id="L88">        return unitRetrieval</span>
 <span class="nc" id="L89">                .thenApplyAsync(unitAsText -&gt; {</span>
-<span class="nc" id="L90">                    Map&lt;String, Object&gt; arguments = Map.of(</span>
-<span class="nc bnc" id="L91" title="All 2 branches missed.">                            &quot;minValue&quot;, hasLow ? getLowValue(range) : &quot;&quot;,</span>
-<span class="nc bnc" id="L92" title="All 2 branches missed.">                            &quot;maxValue&quot;, hasHigh ? getHighValue(range) : &quot;&quot;,</span>
+                    // Use the non-shared MessageFormat instance retrieved earlier
+<span class="nc" id="L91">                    Map&lt;String, Object&gt; arguments = Map.of(</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">                            &quot;minValue&quot;, hasLow ? getLowValue(range) : &quot;&quot;,</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">                            &quot;maxValue&quot;, hasHigh ? getHighValue(range) : &quot;&quot;,</span>
                             &quot;condition&quot;, condition,
                             &quot;unit&quot;, unitAsText
                     );
 
-<span class="nc" id="L97">                    MessageFormat messageFormat = new MessageFormat(msg, config.getLocale());</span>
-<span class="nc" id="L98">                    return messageFormat.format(arguments);</span>
+                    // Note: The format method on MessageFormat is not thread-safe, 
+                    // but translationService.getMessage(key) returns a new instance, 
+                    // and this block is executed inside a .thenApplyAsync, 
+                    // so it is confined to a thread, which makes it safe.
+<span class="nc" id="L102">                    return messageFormat.format(arguments);</span>
                 });
     }
 
     /**
      * Retrieves the unit as text (either code or text).
      *
-     * @param bundle   The resource bundle for localization.
-     * @param config   The configuration object for additional logic.
-     * @param range    The range object.
-     * @param hasLow   Boolean indicating if a low value is present.
-     * @param hasHigh  Boolean indicating if high value is present.
+     * @param translationService The service providing localized strings and configuration context.
+     * @param range              The range object.
+     * @param hasLow             Boolean indicating if a low value is present.
+     * @param hasHigh            Boolean indicating if high value is present.
      * @return A CompletableFuture that resolves to the unit string.
      */
-    CompletableFuture&lt;String&gt; getUnitText(ResourceBundle bundle, C config, R range, boolean hasLow, boolean hasHigh);
+    CompletableFuture&lt;String&gt; getUnitText(TranslationService&lt;C&gt; translationService, R range, boolean hasLow, boolean hasHigh);
 
     /**
      * Checks if the range has a low value.

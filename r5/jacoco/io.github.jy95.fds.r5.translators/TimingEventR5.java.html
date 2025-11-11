@@ -52,23 +52,21 @@ public class TimingEventR5 implements TimingEvent&lt;FDSConfigR5, Dosage&gt; {
     /** {@inheritDoc} */
     @Override
     public CompletableFuture&lt;String&gt; convert(Dosage dosage) {
+<span class="fc" id="L55">        var timingEventMsg = translationService.getMessage(KEY_EVENT);</span>
 
-<span class="fc" id="L56">        var bundle = translationService.getBundle();</span>
-<span class="fc" id="L57">        var timingEventMsg = translationService.getMessage(KEY_EVENT);</span>
+<span class="fc" id="L57">        return CompletableFuture.supplyAsync(() -&gt; {</span>
+<span class="fc" id="L58">            var eventsList = getEvents(dosage);</span>
 
-<span class="fc" id="L59">        return CompletableFuture.supplyAsync(() -&gt; {</span>
-<span class="fc" id="L60">            var eventsList = getEvents(dosage);</span>
-
-<span class="fc" id="L62">            String eventsAsString = ListToString.convert(bundle, eventsList);</span>
+<span class="fc" id="L60">            String eventsAsString = ListToString.convert(translationService, eventsList);</span>
 
             // Create a map of named arguments
-<span class="fc" id="L65">            Map&lt;String, Object&gt; arguments = Map.of(</span>
-<span class="fc" id="L66">                    &quot;eventCondition&quot;, eventsList.size(),</span>
+<span class="fc" id="L63">            Map&lt;String, Object&gt; arguments = Map.of(</span>
+<span class="fc" id="L64">                    &quot;eventCondition&quot;, eventsList.size(),</span>
                     &quot;event&quot;, eventsAsString
             );
 
             // Format the message with the named arguments
-<span class="fc" id="L71">            return timingEventMsg.format(arguments);</span>
+<span class="fc" id="L69">            return timingEventMsg.format(arguments);</span>
         });
     }
 }

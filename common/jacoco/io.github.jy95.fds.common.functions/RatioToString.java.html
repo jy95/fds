@@ -2,7 +2,7 @@
 
 import io.github.jy95.fds.common.config.FDSConfig;
 
-import java.util.ResourceBundle;
+import java.math.BigDecimal;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -20,38 +20,68 @@ public interface RatioToString&lt;C extends FDSConfig, R&gt; {
     /**
      * Converts a ratio object to a human-readable string asynchronously.
      *
-     * @param bundle  The resource bundle for localization.
-     * @param config  The configuration object for additional logic.
-     * @param ratio   The ratio object to convert.
+     * @param translationService The service providing localized strings and configuration context.
+     * @param ratio              The ratio object to convert.
      * @return A CompletableFuture that resolves to the human-readable string.
      */
-    default CompletableFuture&lt;String&gt; convert(ResourceBundle bundle, C config, R ratio) {
-<span class="nc" id="L29">        var linkword = retrieveRatioLinkWord(bundle, config, ratio);</span>
+    default CompletableFuture&lt;String&gt; convert(TranslationService&lt;C&gt; translationService, R ratio) {
+<span class="nc" id="L28">        var separator = retrieveRatioLinkWord(translationService, ratio); </span>
 
-<span class="nc bnc" id="L31" title="All 2 branches missed.">        var numeratorText = hasNumerator(ratio)</span>
-<span class="nc" id="L32">                ? convertNumerator(bundle, config, ratio)</span>
-<span class="nc" id="L33">                : CompletableFuture.completedFuture(&quot;&quot;);</span>
+<span class="nc bnc" id="L30" title="All 2 branches missed.">        var numeratorText = hasNumerator(ratio)</span>
+<span class="nc" id="L31">                ? convertNumerator(translationService, ratio)</span>
+<span class="nc" id="L32">                : CompletableFuture.completedFuture(&quot;&quot;);</span>
 
-<span class="nc bnc" id="L35" title="All 2 branches missed.">        var denominatorText = hasDenominator(ratio)</span>
-<span class="nc" id="L36">                ? convertDenominator(bundle, config, ratio)</span>
-<span class="nc" id="L37">                : CompletableFuture.completedFuture(&quot;&quot;);</span>
+<span class="nc bnc" id="L34" title="All 2 branches missed.">        var denominatorText = hasDenominator(ratio)</span>
+<span class="nc" id="L35">                ? convertDenominator(translationService, ratio)</span>
+<span class="nc" id="L36">                : CompletableFuture.completedFuture(&quot;&quot;);</span>
 
-<span class="nc" id="L39">        return numeratorText.thenCombineAsync(denominatorText, (num, dem) -&gt; Stream</span>
-<span class="nc" id="L40">                .of(num, linkword, dem)</span>
+<span class="nc" id="L38">        return numeratorText.thenCombineAsync(denominatorText, (num, dem) -&gt; {            </span>
+<span class="nc" id="L39">            return Stream</span>
+<span class="nc" id="L40">                .of(num, separator, dem)</span>
 <span class="nc bnc" id="L41" title="All 2 branches missed.">                .filter(s -&gt; !s.isEmpty())</span>
-<span class="nc" id="L42">                .collect(Collectors.joining(&quot; &quot;))</span>
-        );
+<span class="nc" id="L42">                .collect(Collectors.joining(&quot; &quot;));</span>
+        });
     }
 
     /**
      * Retrieves the link word based on the ratio's components.
      *
-     * @param bundle   The resource bundle for localization.
-     * @param config   The configuration object for additional logic.
-     * @param ratio    The ratio object.
+     * @param translationService The service providing localized strings and configuration context.
+     * @param ratio              The ratio object.
      * @return The link word as a string.
      */
-    String retrieveRatioLinkWord(ResourceBundle bundle, C config, R ratio);
+    default String retrieveRatioLinkWord(TranslationService&lt;C&gt; translationService, R ratio) {
+<span class="nc" id="L54">        var hasNumerator = hasNumerator(ratio);</span>
+<span class="nc" id="L55">        var hasDenominator = hasDenominator(ratio);</span>
+<span class="nc bnc" id="L56" title="All 4 branches missed.">        var hasBothElements = hasNumerator &amp;&amp; hasDenominator;</span>
+
+<span class="nc" id="L58">        var hasUnitRatio = hasUnitRatio(ratio);</span>
+<span class="nc" id="L59">        var denominatorValue = getDenominatorValue(ratio);</span>
+<span class="nc bnc" id="L60" title="All 4 branches missed.">        var mustUseLinkword = hasUnitRatio &amp;&amp; hasBothElements;</span>
+
+<span class="nc bnc" id="L62" title="All 2 branches missed.">        if (mustUseLinkword) {</span>
+<span class="nc" id="L63">            var linkWordMsg = translationService.getMessage(&quot;amount.ratio.denominatorLinkword&quot;);</span>
+<span class="nc" id="L64">            return linkWordMsg.format(new Object[]{denominatorValue});</span>
+        }
+
+<span class="nc bnc" id="L67" title="All 2 branches missed.">        return hasBothElements ? &quot;:&quot; : &quot;&quot;;</span>
+    }
+
+    /**
+     * Retrieves the denominator value of the ratio.
+     *
+     * @param ratio The ratio object.
+     * @return The denominator value as BigDecimal.
+     */
+    BigDecimal getDenominatorValue(R ratio);
+
+    /**
+     * Determines if the ratio has a unit in either numerator or denominator.
+     *
+     * @param ratio The ratio object.
+     * @return True if either the numerator or denominator has a unit, false otherwise.
+     */
+    boolean hasUnitRatio(R ratio);
 
     /**
      * Determines if the ratio has a numerator.
@@ -64,12 +94,11 @@ public interface RatioToString&lt;C extends FDSConfig, R&gt; {
     /**
      * Converts the numerator to a human-readable string.
      *
-     * @param bundle   The resource bundle for localization.
-     * @param config   The configuration object for additional logic.
-     * @param ratio    The ratio object.
+     * @param translationService The service providing localized strings and configuration context.
+     * @param ratio              The ratio object.
      * @return A CompletableFuture that resolves to the human-readable string for the numerator.
      */
-    CompletableFuture&lt;String&gt; convertNumerator(ResourceBundle bundle, C config, R ratio);
+    CompletableFuture&lt;String&gt; convertNumerator(TranslationService&lt;C&gt; translationService, R ratio);
 
     /**
      * Determines if the ratio has a denominator.
@@ -82,11 +111,10 @@ public interface RatioToString&lt;C extends FDSConfig, R&gt; {
     /**
      * Converts the denominator to a human-readable string.
      *
-     * @param bundle   The resource bundle for localization.
-     * @param config   The configuration object for additional logic.
-     * @param ratio    The ratio object.
+     * @param translationService The service providing localized strings and configuration context.
+     * @param ratio              The ratio object.
      * @return A CompletableFuture that resolves to the human-readable string for the denominator.
      */
-    CompletableFuture&lt;String&gt; convertDenominator(ResourceBundle bundle, C config, R ratio);
+    CompletableFuture&lt;String&gt; convertDenominator(TranslationService&lt;C&gt; translationService, R ratio);
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
