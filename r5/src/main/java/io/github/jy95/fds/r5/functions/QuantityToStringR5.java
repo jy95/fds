@@ -10,29 +10,13 @@ import java.math.BigDecimal;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * R5 class for converting quantity objects to human-readable strings.
- * Implements the Bill Pugh Singleton pattern for thread-safe lazy initialization.
+ * R5 enum for converting quantity objects to human-readable strings.
  *
  * @author jy95
  */
-public class QuantityToStringR5 implements QuantityToString<FDSConfigR5, Quantity> {
+public enum QuantityToStringR5 implements QuantityToString<FDSConfigR5, Quantity> {
 
-    // Private constructor to prevent instantiation
-    private QuantityToStringR5() {}
-
-    // Static inner class for holding the singleton instance
-    private static class Holder {
-        private static final QuantityToStringR5 INSTANCE = new QuantityToStringR5();
-    }
-
-    /**
-     * Returns the singleton instance of QuantityToStringR5.
-     *
-     * @return the singleton instance
-     */
-    public static QuantityToStringR5 getInstance() {
-        return Holder.INSTANCE;
-    }
+    INSTANCE;
 
     /** {@inheritDoc} */
     @Override

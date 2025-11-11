@@ -34,7 +34,7 @@ public class BoundsRangeR5 implements BoundsRange<FDSConfigR5, Dosage> {
         var boundsRangeMsg = translationService.getMessage(KEY_BOUNDS_RANGE);
 
         return RangeToStringR5
-                .getInstance()
+                .INSTANCE
                 .convert(translationService, boundsRange)
                 .thenApplyAsync(v -> boundsRangeMsg.format(new Object[]{v}));
     }

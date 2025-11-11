@@ -36,7 +36,7 @@ public class RateRangeR4 implements RateRange<FDSConfigR4, Dosage> {
         var rateRangeMsg = translationService.getMessage(KEY_RATE_RANGE);
 
         return RangeToStringR4
-                .getInstance()
+                .INSTANCE
                 .convert(translationService, (Range) rateRange)
                 .thenApplyAsync(rateRatioText -> rateRangeMsg.format(new Object[]{rateRatioText}));
     }

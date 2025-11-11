@@ -27,7 +27,7 @@ public class MaxDosePerPeriodR4 implements MaxDosePerPeriod<FDSConfigR4, Dosage>
         var maxDosePerPeriodMsg = translationService.getMessage(KEY_MAX_DOSE_PER_PERIOD);
 
         return RatioToStringR4
-                .getInstance()
+                .INSTANCE
                 .convert(translationService, ratio)
                 .thenApplyAsync((ratioText) -> maxDosePerPeriodMsg.format(new Object[] { ratioText }));
     }

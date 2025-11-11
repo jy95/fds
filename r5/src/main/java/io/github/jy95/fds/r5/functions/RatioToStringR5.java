@@ -9,29 +9,13 @@ import java.math.BigDecimal;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * R5 class for converting ratio objects to human-readable strings.
- * Implements the Bill Pugh Singleton pattern for thread-safe lazy initialization.
+ * R5 enum for converting ratio objects to human-readable strings.
  *
  * @author jy95
  */
-public class RatioToStringR5 implements RatioToString<FDSConfigR5, Ratio> {
+public enum RatioToStringR5 implements RatioToString<FDSConfigR5, Ratio> {
 
-    // Private constructor to prevent instantiation
-    private RatioToStringR5() {}
-
-    // Static inner class for holding the singleton instance
-    private static class Holder {
-        private static final RatioToStringR5 INSTANCE = new RatioToStringR5();
-    }
-
-    /**
-     * Returns the singleton instance of RatioToStringR5.
-     *
-     * @return the singleton instance
-     */
-    public static RatioToStringR5 getInstance() {
-        return Holder.INSTANCE;
-    }
+    INSTANCE;
 
     /** {@inheritDoc} */
     @Override
@@ -43,7 +27,7 @@ public class RatioToStringR5 implements RatioToString<FDSConfigR5, Ratio> {
     @Override
     public CompletableFuture<String> convertNumerator(TranslationService<FDSConfigR5> translationService, Ratio ratio) {
         return QuantityToStringR5
-                .getInstance()
+                .INSTANCE
                 .convert(translationService, ratio.getNumerator());
     }
 
@@ -61,19 +45,19 @@ public class RatioToStringR5 implements RatioToString<FDSConfigR5, Ratio> {
         var denominatorValue = denominator.getValue();
 
         // For titers cases (e.g., 1:128)
-        if (!QuantityToStringR5.getInstance().hasUnit(denominator)) {
+        if (!QuantityToStringR5.INSTANCE.hasUnit(denominator)) {
             return CompletableFuture.completedFuture(denominatorValue.toString());
         }
 
         // For the per case
         if (BigDecimal.ONE.equals(denominatorValue)) {
             return QuantityToStringR5
-                    .getInstance()
+                    .INSTANCE
                     .enhancedFromUnitToString(translationService, denominator);
         }
 
         return QuantityToStringR5
-                .getInstance()
+                .INSTANCE
                 .convert(translationService, denominator);
     }
 
@@ -86,8 +70,8 @@ public class RatioToStringR5 implements RatioToString<FDSConfigR5, Ratio> {
     /** {@inheritDoc} */
     @Override
     public boolean hasUnitRatio(Ratio ratio) {
-        var hasNumeratorUnit = hasNumerator(ratio) && QuantityToStringR5.getInstance().hasUnit(ratio.getNumerator());
-        var hasDenominatorUnit = hasDenominator(ratio) && QuantityToStringR5.getInstance().hasUnit(ratio.getDenominator());
+        var hasNumeratorUnit = hasNumerator(ratio) && QuantityToStringR5.INSTANCE.hasUnit(ratio.getNumerator());
+        var hasDenominatorUnit = hasDenominator(ratio) && QuantityToStringR5.INSTANCE.hasUnit(ratio.getDenominator());
         return hasNumeratorUnit || hasDenominatorUnit;
     }
 }

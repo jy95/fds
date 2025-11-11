@@ -28,7 +28,7 @@ public class MaxDosePerPeriodR5 implements MaxDosePerPeriod<FDSConfigR5, Dosage>
         var ratioFutures = dosage
                 .getMaxDosePerPeriod()
                 .stream()
-                .map(ratio -> RatioToStringR5.getInstance().convert(translationService, ratio))
+                .map(ratio -> RatioToStringR5.INSTANCE.convert(translationService, ratio))
                 .toList();
 
         var maxDosePerPeriodMsg = translationService.getMessage(KEY_MAX_DOSE_PER_PERIOD);

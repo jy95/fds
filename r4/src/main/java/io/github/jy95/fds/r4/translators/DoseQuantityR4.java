@@ -33,7 +33,7 @@ public class DoseQuantityR4 implements Translator<FDSConfigR4, Dosage> {
                         DoseAndRateKey.DOSE_QUANTITY)
                 ;
         return QuantityToStringR4
-                .getInstance()
+                .INSTANCE
                 .convert(translationService, (Quantity) doseQuantity);
     }
 

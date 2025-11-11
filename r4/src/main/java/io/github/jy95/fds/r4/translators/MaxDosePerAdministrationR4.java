@@ -27,7 +27,7 @@ public class MaxDosePerAdministrationR4 implements MaxDosePerAdministration<FDSC
         var maxDosePerAdministrationMsg = translationService.getMessage(KEY_MAX_DOSE_PER_ADMINISTRATION);
 
         return QuantityToStringR4
-                .getInstance()
+                .INSTANCE
                 .convert(translationService, quantity)
                 .thenApplyAsync(
                         (quantityText) -> maxDosePerAdministrationMsg.format(new Object[] { quantityText })

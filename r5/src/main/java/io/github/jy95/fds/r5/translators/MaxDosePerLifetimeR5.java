@@ -28,7 +28,7 @@ public class MaxDosePerLifetimeR5 implements MaxDosePerLifetime<FDSConfigR5, Dos
         var maxDosePerLifetimeMsg = translationService.getMessage(KEY_MAX_DOSE_PER_LIFETIME);
 
         return QuantityToStringR5
-                .getInstance()
+                .INSTANCE
                 .convert(translationService, quantity)
                 .thenApplyAsync((quantityText) -> maxDosePerLifetimeMsg.format(new Object[] { quantityText }));
     }

@@ -31,7 +31,7 @@ public class DoseRangeR5 implements Translator<FDSConfigR5, Dosage> {
                 .selectDosageAndRateField(dosage.getDoseAndRate(), DoseAndRateKey.DOSE_RANGE);
 
         return RangeToStringR5
-                .getInstance()
+                .INSTANCE
                 .convert(translationService, (Range) doseRange);
     }
 

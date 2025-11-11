@@ -36,7 +36,7 @@ public class RateQuantityR4 implements RateQuantity<FDSConfigR4, Dosage> {
         var rateQuantityMsg = translationService.getMessage(KEY_RATE_QUANTITY);
 
         return QuantityToStringR4
-                .getInstance()
+                .INSTANCE
                 .convert(translationService, (Quantity) rateQuantity)
                 .thenApplyAsync(rateQuantityText -> rateQuantityMsg.format(new Object[]{rateQuantityText}));
     }

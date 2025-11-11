@@ -36,7 +36,7 @@ public class RateRatioR4 implements RateRatio<FDSConfigR4, Dosage> {
         var rateRatioMsg = translationService.getMessage(KEY_RATE_RATIO);
 
         return RatioToStringR4
-                .getInstance()
+                .INSTANCE
                 .convert(translationService, (Ratio) rateRatio)
                 .thenApplyAsync(rateRatioText -> rateRatioMsg.format(new Object[]{rateRatioText}));
     }

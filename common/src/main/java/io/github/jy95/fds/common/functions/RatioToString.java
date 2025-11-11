@@ -57,8 +57,9 @@ public interface RatioToString<C extends FDSConfig, R> {
 
         var hasUnitRatio = hasUnitRatio(ratio);
         var denominatorValue = getDenominatorValue(ratio);
+        var mustUseLinkword = hasUnitRatio && hasBothElements;
 
-        if (hasUnitRatio && hasBothElements) {
+        if (mustUseLinkword) {
             var linkWordMsg = translationService.getMessage("amount.ratio.denominatorLinkword");
             return linkWordMsg.format(new Object[]{denominatorValue});
         }

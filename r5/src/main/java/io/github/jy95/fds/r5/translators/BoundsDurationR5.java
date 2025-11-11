@@ -39,7 +39,7 @@ public class BoundsDurationR5 implements BoundsDuration<FDSConfigR5, Dosage> {
         var boundsDuration = dosage.getTiming().getRepeat().getBoundsDuration();
         var boundsDurationMsg = translationService.getMessage(KEY_BOUNDS_DURATION);
         return QuantityToStringR5
-                .getInstance()
+                .INSTANCE
                 .convert(translationService, boundsDuration)
                 .thenApplyAsync((durationText) -> boundsDurationMsg.format(new Object[]{durationText}));
     }

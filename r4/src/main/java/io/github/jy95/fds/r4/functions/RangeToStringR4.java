@@ -9,46 +9,30 @@ import java.math.BigDecimal;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * R4 class for converting range objects to human-readable strings.
- * Implements the Bill Pugh Singleton pattern for thread-safe lazy initialization.
+ * R4 enum for converting range objects to human-readable strings.
  *
  * @author jy95
  */
-public class RangeToStringR4 implements RangeToString<FDSConfigR4, Range> {
+public enum RangeToStringR4 implements RangeToString<FDSConfigR4, Range> {
 
-    // Private constructor to prevent instantiation
-    private RangeToStringR4() {}
-
-    // Static inner class for holding the singleton instance
-    private static class Holder {
-        private static final RangeToStringR4 INSTANCE = new RangeToStringR4();
-    }
-
-    /**
-     * Returns the singleton instance of RangeToStringR4.
-     *
-     * @return the singleton instance
-     */
-    public static RangeToStringR4 getInstance() {
-        return Holder.INSTANCE;
-    }
+    INSTANCE;
 
     /** {@inheritDoc} */
     @Override
     public boolean hasUnit(Range range) {
         // Check high first, more likely to be found in it
-        if (hasHigh(range) && QuantityToStringR4.getInstance().hasUnit(range.getHigh())) {
+        if (hasHigh(range) && QuantityToStringR4.INSTANCE.hasUnit(range.getHigh())) {
             return true;
         }
         // Otherwise check low
-        return hasLow(range) && QuantityToStringR4.getInstance().hasUnit(range.getLow());
+        return hasLow(range) && QuantityToStringR4.INSTANCE.hasUnit(range.getLow());
     }
 
     /** {@inheritDoc} */
     @Override
     public CompletableFuture<String> getUnitText(TranslationService<FDSConfigR4> translationService, Range range, boolean hasLow, boolean hasHigh) {
         return QuantityToStringR4
-                .getInstance()
+                .INSTANCE
                 .enhancedFromUnitToString(
                         translationService,
                         (hasHigh) ? range.getHigh() : range.getLow()
