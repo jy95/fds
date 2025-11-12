@@ -36,26 +36,25 @@ public class DosageAPIR4 extends DosageAPI&lt;FDSConfigR4, Dosage&gt; {
      */
     public DosageAPIR4(FDSConfigR4 config) {
 <span class="fc" id="L38">        super(config);</span>
-<span class="fc" id="L39">        var bundle = config.getSelectResourceBundle().apply(config.getLocale());</span>
-<span class="fc" id="L40">        translatorsMapR4 = new TranslatorsMapR4(config, bundle);</span>
-<span class="fc" id="L41">    }</span>
+<span class="fc" id="L39">        translatorsMapR4 = new TranslatorsMapR4(translationService);</span>
+<span class="fc" id="L40">    }</span>
 
     /** {@inheritDoc} */
     @Override
     public Translator&lt;FDSConfigR4, Dosage&gt; getTranslator(DisplayOrder displayOrder) {
-<span class="fc" id="L46">        return translatorsMapR4.getTranslator(displayOrder);</span>
+<span class="fc" id="L45">        return translatorsMapR4.getTranslator(displayOrder);</span>
     }
 
     /** {@inheritDoc} */
     @Override
     public boolean containsOnlySequentialInstructions(List&lt;Dosage&gt; dosages) {
-<span class="fc" id="L52">        return SequenceUtils.containsOnlySequentialInstructions(dosages, Dosage::getSequence);</span>
+<span class="fc" id="L51">        return SequenceUtils.containsOnlySequentialInstructions(dosages, Dosage::getSequence);</span>
     }
 
     /** {@inheritDoc} */
     @Override
     protected List&lt;List&lt;Dosage&gt;&gt; groupBySequence(List&lt;Dosage&gt; dosages) {
-<span class="fc" id="L58">        return SequenceUtils.groupBySequence(dosages, Dosage::getSequence);</span>
+<span class="fc" id="L57">        return SequenceUtils.groupBySequence(dosages, Dosage::getSequence);</span>
     }
 
 }

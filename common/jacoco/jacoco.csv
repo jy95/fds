@@ -23,7 +23,7 @@ FHIR Dosage Support - Common,io.github.jy95.fds.common.types,DoseAndRateKey,33,0
 FHIR Dosage Support - Common,io.github.jy95.fds.common.types,TranslatorTiming,12,0,4,0,1,0,3,0,1,0
 FHIR Dosage Support - Common,io.github.jy95.fds.common.types,LinkWord,0,25,0,0,0,6,0,2,0,2
 FHIR Dosage Support - Common,io.github.jy95.fds.common.types,Translator,0,2,0,0,0,1,0,1,0,1
-FHIR Dosage Support - Common,io.github.jy95.fds.common.types,AbstractTranslatorsMap,33,0,2,0,7,0,4,0,3,0
+FHIR Dosage Support - Common,io.github.jy95.fds.common.types,AbstractTranslatorsMap,37,0,2,0,8,0,4,0,3,0
 FHIR Dosage Support - Common,io.github.jy95.fds.common.types,DosageMarkdown,0,342,0,6,0,84,0,23,0,20
 FHIR Dosage Support - Common,io.github.jy95.fds.common.types,DisplayOrder,0,286,0,0,0,37,0,2,0,2
 FHIR Dosage Support - Common,io.github.jy95.fds.common.types,DosageAPI,66,144,1,1,18,38,7,16,6,16
@@ -38,4 +38,4 @@ FHIR Dosage Support - Common,io.github.jy95.fds.common.functions,SequenceUtils,6
 FHIR Dosage Support - Common,io.github.jy95.fds.common.functions,ListToString,45,12,2,2,9,3,4,1,2,1
 FHIR Dosage Support - Common,io.github.jy95.fds.common.bundle,MultiResourceBundle,23,29,0,2,5,8,3,4,3,3
 FHIR Dosage Support - Common,io.github.jy95.fds.common.bundle,MultiResourceBundleControl,0,40,0,4,0,9,0,6,0,4
-FHIR Dosage Support - Common,io.github.jy95.fds.common.config,DefaultImplementations,110,26,16,0,30,3,13,2,5,2
+FHIR Dosage Support - Common,io.github.jy95.fds.common.config,DefaultImplementations,108,43,15,1,27,9,12,4,4,4

@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DefaultImplementations.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">FHIR Dosage Support - Common</a> &gt; <a href="index.source.html" class="el_package">io.github.jy95.fds.common.config</a> &gt; <span class="el_source">DefaultImplementations.java</span></div><h1>DefaultImplementations.java</h1><pre class="source lang-java linenums">package io.github.jy95.fds.common.config;
 
 import io.github.jy95.fds.common.bundle.MultiResourceBundleControl;
+import io.github.jy95.fds.common.types.DoseAndRateExtractor;
+import io.github.jy95.fds.common.types.DoseAndRateKey;
 
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
@@ -15,6 +18,7 @@ import com.ibm.icu.number.NumberFormatter;
 import org.hl7.fhir.instance.model.api.IBaseExtension;
 import org.hl7.fhir.instance.model.api.IPrimitiveType;
 import org.hl7.fhir.instance.model.api.IBaseCoding;
+import org.hl7.fhir.instance.model.api.IBase;
 
 import lombok.NonNull;
 
@@ -30,7 +34,7 @@ public final class DefaultImplementations {
     private static final String RESOURCE_PACKAGE = &quot;io.github.jy95.fds.common.l10n.&quot;;
 
     // Initialize the MultiResourceBundleControl with resource bundle names
-<span class="fc" id="L33">    private static final MultiResourceBundleControl BUNDLE_CONTROL =</span>
+<span class="fc" id="L37">    private static final MultiResourceBundleControl BUNDLE_CONTROL =</span>
         new MultiResourceBundleControl(
                 &quot;translations&quot;,
                 RESOURCE_PACKAGE + &quot;DosageFields&quot;,
@@ -50,8 +54,8 @@ public final class DefaultImplementations {
      * @return the aggregated ResourceBundle for the specified locale.
      */
     public static ResourceBundle selectResourceBundle(Locale locale) {
-<span class="fc" id="L53">        return ResourceBundle.getBundle(</span>
-<span class="fc" id="L54">                BUNDLE_CONTROL.getBaseName(),</span>
+<span class="fc" id="L57">        return ResourceBundle.getBundle(</span>
+<span class="fc" id="L58">                BUNDLE_CONTROL.getBaseName(),</span>
                 locale,
                 BUNDLE_CONTROL
         );
@@ -66,7 +70,7 @@ public final class DefaultImplementations {
      * @since 2.1.0
      */
     public static String formatQuantityNumber(Locale locale, BigDecimal value) {
-<span class="nc" id="L69">        return NumberFormatter.withLocale(locale).format(value).toString();</span>
+<span class="nc" id="L73">        return NumberFormatter.withLocale(locale).format(value).toString();</span>
     }
 
     /**
@@ -76,41 +80,41 @@ public final class DefaultImplementations {
      * @return a {@link java.util.concurrent.CompletableFuture} that resolves to a JSON-like string representing the extensions.
      * @since 2.1.1
      */
-<span class="nc bnc" id="L79" title="All 2 branches missed.">    public static CompletableFuture&lt;String&gt; fromExtensionsToString(@NonNull List&lt;? extends IBaseExtension&lt;?, ?&gt;&gt; extensions) {</span>
-<span class="nc" id="L80">        return CompletableFuture.supplyAsync(() -&gt; {</span>
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">    public static CompletableFuture&lt;String&gt; fromExtensionsToString(@NonNull List&lt;? extends IBaseExtension&lt;?, ?&gt;&gt; extensions) {</span>
+<span class="fc" id="L84">        return CompletableFuture.supplyAsync(() -&gt; {</span>
 
-<span class="nc" id="L82">            return extensions</span>
-<span class="nc" id="L83">                    .stream()</span>
-<span class="nc" id="L84">                    .map(ext -&gt; {</span>
+<span class="fc" id="L86">            return extensions</span>
+<span class="fc" id="L87">                    .stream()</span>
+<span class="fc" id="L88">                    .map(ext -&gt; {</span>
 
-<span class="nc" id="L86">                        StringBuilder sb = new StringBuilder();</span>
-<span class="nc" id="L87">                        sb.append(&quot;{&quot;);</span>
+<span class="nc" id="L90">                        StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L91">                        sb.append(&quot;{&quot;);</span>
 
-<span class="nc" id="L89">                        var hasUrl = Objects.nonNull(ext.getUrl());</span>
-<span class="nc bnc" id="L90" title="All 2 branches missed.">                        if (hasUrl) {</span>
-<span class="nc" id="L91">                            sb</span>
-<span class="nc" id="L92">                                .append(&quot;\&quot;url\&quot;:\&quot;&quot;)</span>
-<span class="nc" id="L93">                                .append(ext.getUrl())</span>
-<span class="nc" id="L94">                                .append(&quot;\&quot;&quot;);</span>
+<span class="nc" id="L93">                        var hasUrl = Objects.nonNull(ext.getUrl());</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">                        if (hasUrl) {</span>
+<span class="nc" id="L95">                            sb</span>
+<span class="nc" id="L96">                                .append(&quot;\&quot;url\&quot;:\&quot;&quot;)</span>
+<span class="nc" id="L97">                                .append(ext.getUrl())</span>
+<span class="nc" id="L98">                                .append(&quot;\&quot;&quot;);</span>
                         }
 
-<span class="nc" id="L97">                        var hasValue = Objects.nonNull(ext.getValue());</span>
-<span class="nc bnc" id="L98" title="All 4 branches missed.">                        if (hasUrl &amp;&amp; hasValue) {</span>
-<span class="nc" id="L99">                            sb.append(&quot;,&quot;);</span>
+<span class="nc" id="L101">                        var hasValue = Objects.nonNull(ext.getValue());</span>
+<span class="nc bnc" id="L102" title="All 4 branches missed.">                        if (hasUrl &amp;&amp; hasValue) {</span>
+<span class="nc" id="L103">                            sb.append(&quot;,&quot;);</span>
                         }
 
-<span class="nc bnc" id="L102" title="All 4 branches missed.">                        if (hasValue &amp;&amp; ext.getValue() instanceof IPrimitiveType&lt;?&gt; valuIPrimitiveType) {</span>
-<span class="nc" id="L103">                            sb</span>
-<span class="nc" id="L104">                                .append(&quot;\&quot;value[x]\&quot;:\&quot;&quot;)</span>
-<span class="nc" id="L105">                                .append(</span>
-<span class="nc" id="L106">                                    valuIPrimitiveType.getValueAsString()</span>
-<span class="nc" id="L107">                                ).append(&quot;\&quot;&quot;);</span>
+<span class="nc bnc" id="L106" title="All 4 branches missed.">                        if (hasValue &amp;&amp; ext.getValue() instanceof IPrimitiveType&lt;?&gt; valuIPrimitiveType) {</span>
+<span class="nc" id="L107">                            sb</span>
+<span class="nc" id="L108">                                .append(&quot;\&quot;value[x]\&quot;:\&quot;&quot;)</span>
+<span class="nc" id="L109">                                .append(</span>
+<span class="nc" id="L110">                                    valuIPrimitiveType.getValueAsString()</span>
+<span class="nc" id="L111">                                ).append(&quot;\&quot;&quot;);</span>
                         }
 
-<span class="nc" id="L110">                        sb.append(&quot;}&quot;);</span>
-<span class="nc" id="L111">                        return sb.toString();</span>
+<span class="nc" id="L114">                        sb.append(&quot;}&quot;);</span>
+<span class="nc" id="L115">                        return sb.toString();</span>
                     })
-<span class="nc" id="L113">                    .collect(Collectors.joining(&quot;, &quot;, &quot;[&quot;, &quot;]&quot;));</span>
+<span class="fc" id="L117">                    .collect(Collectors.joining(&quot;, &quot;, &quot;[&quot;, &quot;]&quot;));</span>
         });
     }
 
@@ -121,11 +125,32 @@ public final class DefaultImplementations {
      * @return the display or code of the coding.
      * @since 2.1.1
      */
-<span class="nc bnc" id="L124" title="All 2 branches missed.">    public static String fromCodingToString(@NonNull IBaseCoding coding) {</span>
-<span class="nc" id="L125">        var display = coding.getDisplay();</span>
-<span class="nc" id="L126">        var code = coding.getCode();</span>
+<span class="nc bnc" id="L128" title="All 2 branches missed.">    public static String fromCodingToString(@NonNull IBaseCoding coding) {</span>
+<span class="nc" id="L129">        var display = coding.getDisplay();</span>
+<span class="nc" id="L130">        var code = coding.getCode();</span>
 
-<span class="nc bnc" id="L128" title="All 2 branches missed.">        return (Objects.nonNull(display)) ? display : code;</span>
+<span class="nc bnc" id="L132" title="All 2 branches missed.">        return (Objects.nonNull(display)) ? display : code;</span>
+    }
+
+    /**
+     * Selects a specific dosage and rate field from a list of dose and rate components.
+     *
+     * @param doseAndRateComponentList the list of dose and rate components.
+     * @param doseAndRateKey the key indicating which field to extract.
+     * @param extractorMap a map of dose and rate keys to their corresponding extractor functions.
+     * @param &lt;T&gt; the type of the dose and rate component.
+     * @param &lt;U&gt; the type of the extracted field.
+     * @return the extracted field from the first dose and rate component.
+     * @since 2.1.3
+     */
+    public static &lt;T extends IBase, U extends IBase&gt; U selectDosageAndRateField(
+        List&lt;T&gt; doseAndRateComponentList,
+        DoseAndRateKey doseAndRateKey,
+        Map&lt;DoseAndRateKey, DoseAndRateExtractor&lt;T, U&gt;&gt; extractorMap
+    ) {
+<span class="nc" id="L151">        var doseAndRateExtractor = extractorMap.get(doseAndRateKey);</span>
+<span class="nc" id="L152">        var firstRep = doseAndRateComponentList.get(0);</span>
+<span class="nc" id="L153">        return doseAndRateExtractor.extract(firstRep);</span>
     }
 
 }
