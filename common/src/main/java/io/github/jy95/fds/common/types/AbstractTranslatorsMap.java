@@ -38,8 +38,8 @@ public abstract class AbstractTranslatorsMap<C extends FDSConfig, D> {
 
     /**
      * Constructs a new {@code AbstractTranslatorsMap} with the specified supplier map.
+     * @param translationService the translation service used by translators
      *
-     * @param translatorSuppliers a map of {@link io.github.jy95.fds.common.types.DisplayOrder} to lazy {@link java.util.function.Supplier} instances
      */
     public AbstractTranslatorsMap(TranslationService<C> translationService) {
         this.translationService = translationService;
