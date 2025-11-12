@@ -1,6 +1,7 @@
 package io.github.jy95.fds.common.types;
 
 import io.github.jy95.fds.common.config.FDSConfig;
+import io.github.jy95.fds.common.functions.TranslationService;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -25,6 +26,11 @@ public abstract class AbstractTranslatorsMap<C extends FDSConfig, D> {
     private final Map<DisplayOrder, Supplier<Translator<C, D>>> translatorSuppliers;
 
     /**
+     * The translation service used by translators.
+     */
+    protected final TranslationService<C> translationService;
+
+    /**
      * A map associating {@link DisplayOrder} values with their corresponding {@link Translator} instance.
      * So if you use part of the supported fields, you won't have a bunch of useless new calls to for your needs
      */
@@ -32,11 +38,12 @@ public abstract class AbstractTranslatorsMap<C extends FDSConfig, D> {
 
     /**
      * Constructs a new {@code AbstractTranslatorsMap} with the specified supplier map.
+     * @param translationService the translation service used by translators
      *
-     * @param translatorSuppliers a map of {@link io.github.jy95.fds.common.types.DisplayOrder} to lazy {@link java.util.function.Supplier} instances
      */
-    public AbstractTranslatorsMap(Map<DisplayOrder, Supplier<Translator<C, D>>> translatorSuppliers) {
-        this.translatorSuppliers = translatorSuppliers;
+    public AbstractTranslatorsMap(TranslationService<C> translationService) {
+        this.translationService = translationService;
+        this.translatorSuppliers = createTranslatorsSuppliers();
     }
 
     /**
@@ -52,4 +59,18 @@ public abstract class AbstractTranslatorsMap<C extends FDSConfig, D> {
             return supplier != null ? supplier.get() : null;
         });
     }
+
+    /**
+     * Creates a map of {@link io.github.jy95.fds.common.types.DisplayOrder} to {@link Supplier} instances that lazily initialize the corresponding
+     * {@link Translator} objects for the needed configuration.
+     * <p>
+     * This method ensures that translators are only created when needed, improving efficiency and reducing
+     * unnecessary resource usage. It supports both simple translators and composite translators that depend
+     * on other translators.
+     * </p>
+     *
+     * @return a {@link Map} where the keys are {@link io.github.jy95.fds.common.types.DisplayOrder} values and the values 
+     * are {@link Supplier} instances that provide {@link io.github.jy95.fds.common.types.Translator} objects
+     */   
+    protected abstract Map<DisplayOrder, Supplier<Translator<C, D>>> createTranslatorsSuppliers();
 }

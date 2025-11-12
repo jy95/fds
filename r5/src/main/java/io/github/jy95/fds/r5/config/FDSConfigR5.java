@@ -1,5 +1,6 @@
 package io.github.jy95.fds.r5.config;
 
+import io.github.jy95.fds.common.config.DefaultImplementations;
 import io.github.jy95.fds.common.config.FDSConfig;
 
 import io.github.jy95.fds.common.types.FDSOperations;
@@ -35,8 +36,13 @@ public class FDSConfigR5 extends FDSConfig implements FDSOperations<
     // Default implementations, in case not provided by user
     @Builder.Default private final Function<Quantity, CompletableFuture<String>> fromFHIRQuantityUnitToString = DefaultImplementationsR5::fromFHIRQuantityUnitToString;
     @Builder.Default private final Function<CodeableConcept, CompletableFuture<String>> fromCodeableConceptToString = DefaultImplementationsR5::fromCodeableConceptToString;
-    @Builder.Default private final Function<List<Extension>, CompletableFuture<String>> fromExtensionsToString = DefaultImplementationsR5::fromExtensionsToString;
-    @Builder.Default private final BiFunction<List<DosageDoseAndRateComponent>, DoseAndRateKey, DataType> selectDosageAndRateField = DefaultImplementationsR5::selectDosageAndRateField;
+    @Builder.Default private final Function<List<Extension>, CompletableFuture<String>> fromExtensionsToString = DefaultImplementations::fromExtensionsToString;
+    @Builder.Default private final BiFunction<List<DosageDoseAndRateComponent>, DoseAndRateKey, DataType> selectDosageAndRateField = (doseAndRateComponentList, doseAndRateKey) ->
+        DefaultImplementations.selectDosageAndRateField(
+            doseAndRateComponentList,
+            doseAndRateKey,
+            DefaultImplementationsR5.EXTRACTOR_MAP
+        );
     @Builder.Default private final BiFunction<Dosage, Predicate<Dosage.DosageDoseAndRateComponent>, Boolean> hasMatchingComponent = DefaultImplementationsR5::hasMatchingComponent;
 
     /** {@inheritDoc} */

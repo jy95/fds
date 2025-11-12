@@ -36,8 +36,7 @@ public class DosageAPIR5 extends DosageAPI<FDSConfigR5, Dosage> {
      */
     public DosageAPIR5(FDSConfigR5 config) {
         super(config);
-        var bundle = config.getSelectResourceBundle().apply(config.getLocale());
-        translatorsMapR5 = new TranslatorsMapR5(config, bundle);
+        translatorsMapR5 = new TranslatorsMapR5(translationService);
     }
 
     /** {@inheritDoc} */

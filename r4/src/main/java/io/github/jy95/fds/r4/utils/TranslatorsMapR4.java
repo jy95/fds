@@ -10,7 +10,6 @@ import org.hl7.fhir.r4.model.Dosage;
 
 import java.util.EnumMap;
 import java.util.Map;
-import java.util.ResourceBundle;
 import java.util.function.Supplier;
 
 /**
@@ -23,35 +22,16 @@ public class TranslatorsMapR4 extends AbstractTranslatorsMap<FDSConfigR4, Dosage
     /**
      * Constructor for {@code TranslatorsMapR4}.
      *
-     * @param config The configuration object used for translation.
-     * @param bundle a {@link java.util.ResourceBundle} object
+     * @param translationService The translation service used for translation.
      */
-    public TranslatorsMapR4(FDSConfigR4 config, ResourceBundle bundle) {
-        super(createTranslatorsSuppliers(config, bundle));
+    public TranslatorsMapR4(TranslationService<FDSConfigR4> translationService) {
+        super(translationService);
     }
 
-
-    /**
-     * Creates a map of {@link DisplayOrder} to {@link Supplier} instances that lazily initialize the corresponding
-     * {@link Translator} objects for the R4 configuration.
-     * <p>
-     * This method ensures that translators are only created when needed, improving efficiency and reducing
-     * unnecessary resource usage.It supports both simple translators and composite translators that depend
-     * on other translators.
-     * </p>
-     *
-     * @param config the {@link FDSConfigR4} configuration object used by the translators
-     * @param bundle the {@link ResourceBundle} providing localized resources for the translators
-     * @return a {@link Map} where the keys are {@link DisplayOrder} values and the values are {@link Supplier}
-     *         instances that produce the corresponding {@link Translator} objects
-     */
-    private static Map<DisplayOrder, Supplier<Translator<FDSConfigR4, Dosage>>> createTranslatorsSuppliers(
-            FDSConfigR4 config, ResourceBundle bundle) {
+    /** {@inheritDoc} */
+    @Override
+    protected Map<DisplayOrder, Supplier<Translator<FDSConfigR4, Dosage>>> createTranslatorsSuppliers() {
         EnumMap<DisplayOrder, Supplier<Translator<FDSConfigR4, Dosage>>> suppliers = new EnumMap<>(DisplayOrder.class);
-        var translationService = TranslationService.<FDSConfigR4>builder()
-                .config(config)
-                .bundle(bundle)
-                .build();
 
         // All display order supported by R4 are initialized here
         suppliers.put(DisplayOrder.TEXT, TextR4::new);
@@ -98,4 +78,5 @@ public class TranslatorsMapR4 extends AbstractTranslatorsMap<FDSConfigR4, Dosage
 
         return suppliers;
     }
+
 }

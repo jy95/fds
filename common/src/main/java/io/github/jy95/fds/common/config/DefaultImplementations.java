@@ -1,10 +1,13 @@
 package io.github.jy95.fds.common.config;
 
 import io.github.jy95.fds.common.bundle.MultiResourceBundleControl;
+import io.github.jy95.fds.common.types.DoseAndRateExtractor;
+import io.github.jy95.fds.common.types.DoseAndRateKey;
 
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
@@ -15,6 +18,7 @@ import com.ibm.icu.number.NumberFormatter;
 import org.hl7.fhir.instance.model.api.IBaseExtension;
 import org.hl7.fhir.instance.model.api.IPrimitiveType;
 import org.hl7.fhir.instance.model.api.IBaseCoding;
+import org.hl7.fhir.instance.model.api.IBase;
 
 import lombok.NonNull;
 
@@ -126,6 +130,27 @@ public final class DefaultImplementations {
         var code = coding.getCode();
 
         return (Objects.nonNull(display)) ? display : code;
+    }
+
+    /**
+     * Selects a specific dosage and rate field from a list of dose and rate components.
+     *
+     * @param doseAndRateComponentList the list of dose and rate components.
+     * @param doseAndRateKey the key indicating which field to extract.
+     * @param extractorMap a map of dose and rate keys to their corresponding extractor functions.
+     * @param <T> the type of the dose and rate component.
+     * @param <U> the type of the extracted field.
+     * @return the extracted field from the first dose and rate component.
+     * @since 2.1.3
+     */
+    public static <T extends IBase, U extends IBase> U selectDosageAndRateField(
+        List<T> doseAndRateComponentList,
+        DoseAndRateKey doseAndRateKey,
+        Map<DoseAndRateKey, DoseAndRateExtractor<T, U>> extractorMap
+    ) {
+        var doseAndRateExtractor = extractorMap.get(doseAndRateKey);
+        var firstRep = doseAndRateComponentList.get(0);
+        return doseAndRateExtractor.extract(firstRep);
     }
 
 }

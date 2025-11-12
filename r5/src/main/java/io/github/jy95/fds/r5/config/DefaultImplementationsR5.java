@@ -5,7 +5,6 @@ import io.github.jy95.fds.common.types.DoseAndRateExtractor;
 import io.github.jy95.fds.common.types.DoseAndRateKey;
 import org.hl7.fhir.r5.model.*;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
@@ -19,7 +18,7 @@ import java.util.function.Predicate;
 public final class DefaultImplementationsR5 {
 
     // Mapping of DoseAndRateKey to corresponding extractor functions
-    private static final Map<DoseAndRateKey, DoseAndRateExtractor<Dosage.DosageDoseAndRateComponent, DataType>> EXTRACTOR_MAP = Map.of(
+    public static final Map<DoseAndRateKey, DoseAndRateExtractor<Dosage.DosageDoseAndRateComponent, DataType>> EXTRACTOR_MAP = Map.of(
         DoseAndRateKey.DOSE_QUANTITY, Dosage.DosageDoseAndRateComponent::getDoseQuantity,
         DoseAndRateKey.DOSE_RANGE, Dosage.DosageDoseAndRateComponent::getDoseRange,
         DoseAndRateKey.RATE_QUANTITY, Dosage.DosageDoseAndRateComponent::getRateQuantity,
@@ -81,29 +80,6 @@ public final class DefaultImplementationsR5 {
             var firstCode = codeableConcept.getCodingFirstRep();
             return DefaultImplementations.fromCodingToString(firstCode);
         });
-    }
-
-    /**
-     * Converts a list of FHIR {@link org.hl7.fhir.r5.model.Extension} objects to a JSON-like string representation.
-     *
-     * @param extensions the list of {@link org.hl7.fhir.r5.model.Extension} objects to be converted.
-     * @return a {@link java.util.concurrent.CompletableFuture} that resolves to a JSON-like string representing the extensions.
-     */
-    public static CompletableFuture<String> fromExtensionsToString(List<Extension> extensions) {
-        return DefaultImplementations.fromExtensionsToString(extensions);
-    }
-
-    /**
-     * Selects a specific dosage and rate field from a list of {@link org.hl7.fhir.r5.model.Dosage.DosageDoseAndRateComponent}.
-     *
-     * @param doseAndRateComponentList the list of dosage components.
-     * @param doseAndRateKey the key used to extract the specific field.
-     * @return the extracted {@link org.hl7.fhir.r5.model.DataType} value.
-     */
-    public static DataType selectDosageAndRateField(List<Dosage.DosageDoseAndRateComponent> doseAndRateComponentList, DoseAndRateKey doseAndRateKey) {
-        var doseAndRateExtractor = EXTRACTOR_MAP.get(doseAndRateKey);
-        var firstRep = doseAndRateComponentList.get(0);
-        return doseAndRateExtractor.extract(firstRep);
     }
 
     /**
