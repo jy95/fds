@@ -29,7 +29,7 @@ public abstract class DosageAPI<C extends FDSConfig, D> {
     /**
      * The translation service used for localization.
      */
-    private final TranslationService<C> translationService;
+    protected final TranslationService<C> translationService;
 
     /**
      * Constructs a new {@code DosageAPI} with the specified configuration.
