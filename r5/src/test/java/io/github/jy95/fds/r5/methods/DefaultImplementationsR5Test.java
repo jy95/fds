@@ -6,8 +6,6 @@ import org.junit.jupiter.api.Test;
 import org.hl7.fhir.r5.model.Quantity;
 import org.hl7.fhir.r5.model.CodeableConcept;
 
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class DefaultImplementationsR5Test {
@@ -40,8 +38,4 @@ public class DefaultImplementationsR5Test {
         assertNull(DefaultImplementationsR5.fromCodeableConceptToString(codeableConcept).join());
     }
 
-    @Test
-    void fromExtensionsToStringEmptyList() {
-        assertEquals("[]", DefaultImplementationsR5.fromExtensionsToString(List.of()).join());
-    }
 }
