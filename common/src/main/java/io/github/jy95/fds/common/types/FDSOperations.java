@@ -4,6 +4,10 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Predicate;
 
+import org.hl7.fhir.instance.model.api.IBaseExtension;
+import org.hl7.fhir.instance.model.api.IBase;
+import org.hl7.fhir.instance.model.api.IBaseBackboneElement;
+
 /**
  * A version-independent interface for FHIR operations.
  * Subclasses must implement methods for specific FHIR versions.
@@ -18,12 +22,12 @@ import java.util.function.Predicate;
  * @since 1.0.0
  */
 public interface FDSOperations<
-        Q,
-        C,
-        E,
-        D,
-        R,
-        T
+        Q extends IBase,
+        C extends IBase,
+        E extends IBaseExtension<?, ?>,
+        D extends IBaseBackboneElement,
+        R extends IBase,
+        T extends IBase
 > {
 
     /**
