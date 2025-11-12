@@ -61,15 +61,16 @@ public abstract class AbstractTranslatorsMap<C extends FDSConfig, D> {
     }
 
     /**
-     * Creates a map of {@link DisplayOrder} to {@link Supplier} instances that lazily initialize the corresponding
+     * Creates a map of {@link io.github.jy95.fds.common.types.DisplayOrder} to {@link Supplier} instances that lazily initialize the corresponding
      * {@link Translator} objects for the needed configuration.
      * <p>
      * This method ensures that translators are only created when needed, improving efficiency and reducing
-     * unnecessary resource usage.It supports both simple translators and composite translators that depend
+     * unnecessary resource usage. It supports both simple translators and composite translators that depend
      * on other translators.
      * </p>
      *
-     * @return a {@link Map} where the keys are {@link DisplayOrder} values and the values are {@link Supplier}
+     * @return a {@link Map} where the keys are {@link io.github.jy95.fds.common.types.DisplayOrder} values and the values 
+     * are {@link Supplier} instances that provide {@link io.github.jy95.fds.common.types.Translator} objects
      */   
     protected abstract Map<DisplayOrder, Supplier<Translator<C, D>>> createTranslatorsSuppliers();
 }
