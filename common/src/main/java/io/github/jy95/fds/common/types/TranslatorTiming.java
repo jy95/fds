@@ -11,7 +11,7 @@ import io.github.jy95.fds.common.config.FDSConfig;
  * @author jy95
  * @since 1.0.0
  */
-public interface TranslatorTiming<C extends FDSConfig, D> extends Translator<C, D> {
+public interface TranslatorTiming<C extends FDSConfig, D> extends Translator<D> {
 
     /**
      * Checks if the given dosage object contains a "Timing" element.

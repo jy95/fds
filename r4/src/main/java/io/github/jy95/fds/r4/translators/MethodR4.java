@@ -14,7 +14,7 @@ import java.util.concurrent.CompletableFuture;
  * @author jy95
  */
 @RequiredArgsConstructor
-public class MethodR4 implements Translator<FDSConfigR4, Dosage> {
+public class MethodR4 implements Translator<Dosage> {
 
     /** Translation service */
     private final TranslationService<FDSConfigR4> translationService;

@@ -16,7 +16,7 @@ import java.util.concurrent.CompletableFuture;
  * @author jy95
  * @since 1.0.0
  */
-public interface AdditionalInstruction<C extends FDSConfig, D> extends Translator<C, D> {
+public interface AdditionalInstruction<C extends FDSConfig, D> extends Translator<D> {
 
     /**
      * Processes a list of asynchronous additional instructions and converts them to a single string.

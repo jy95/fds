@@ -13,7 +13,7 @@ import java.util.concurrent.CompletableFuture;
  * @author jy95
  * @since 1.0.0
  */
-public interface AsNeeded<C extends FDSConfig, D> extends Translator<C, D> {
+public interface AsNeeded<C extends FDSConfig, D> extends Translator<D> {
 
     // Key constant for asNeededFor message
     String KEY_AS_NEEDED_FOR = "fields.asNeededFor";

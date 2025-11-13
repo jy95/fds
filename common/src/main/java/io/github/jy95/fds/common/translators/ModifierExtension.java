@@ -13,7 +13,7 @@ import io.github.jy95.fds.common.types.Translator;
  * @author jy95
  * @since 2.1.4
  */
-public interface ModifierExtension<C extends FDSConfig, D extends IBaseHasModifierExtensions> extends Translator<C, D> {
+public interface ModifierExtension<C extends FDSConfig, D extends IBaseHasModifierExtensions> extends Translator<D> {
     
     /** {@inheritDoc} */
     @Override

@@ -2,7 +2,6 @@ package io.github.jy95.fds.r5.translators;
 
 import io.github.jy95.fds.common.translators.FrequencyFrequencyMaxPeriodPeriodMax;
 import io.github.jy95.fds.common.types.Translator;
-import io.github.jy95.fds.r5.config.FDSConfigR5;
 import lombok.RequiredArgsConstructor;
 import org.hl7.fhir.r5.model.Dosage;
 
@@ -14,16 +13,16 @@ import java.util.concurrent.CompletableFuture;
  * @author jy95
  */
 @RequiredArgsConstructor
-public class FrequencyFrequencyMaxPeriodPeriodMaxR5 implements FrequencyFrequencyMaxPeriodPeriodMax<FDSConfigR5, Dosage> {
+public class FrequencyFrequencyMaxPeriodPeriodMaxR5 implements FrequencyFrequencyMaxPeriodPeriodMax<Dosage> {
 
     /**
      * Class implementing the parsing of "timing.repeat.frequency" / "timing.repeat.frequencyMax"
      */
-    protected final Translator<FDSConfigR5, Dosage> frequencyTranslator;
+    protected final Translator<Dosage> frequencyTranslator;
     /**
      * Class implementing the parsing of "timing.repeat.period" / "timing.repeat.periodMax"
      */
-    protected final Translator<FDSConfigR5, Dosage> periodTranslator;
+    protected final Translator<Dosage> periodTranslator;
 
     /** {@inheritDoc} */
     @Override

@@ -3,7 +3,7 @@ package io.github.jy95.fds.r5.config;
 import io.github.jy95.fds.common.config.DefaultImplementations;
 import io.github.jy95.fds.common.config.FDSConfig;
 
-import io.github.jy95.fds.common.types.FDSOperations;
+import io.github.jy95.fds.common.operations.*;
 import io.github.jy95.fds.common.types.DoseAndRateKey;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,13 +25,13 @@ import org.hl7.fhir.r5.model.Dosage.DosageDoseAndRateComponent;
  */
 @Getter
 @SuperBuilder
-public class FDSConfigR5 extends FDSConfig implements FDSOperations<
-        Quantity,
-        CodeableConcept,
-        Extension,
-        Dosage,
-        DosageDoseAndRateComponent,
-        DataType>  {
+public class FDSConfigR5
+extends FDSConfig 
+implements CodeableConceptProcessor<CodeableConcept>, 
+DosageAndRateProcessor<Dosage, Dosage.DosageDoseAndRateComponent, DataType>,
+ExtensionProcessor<Extension>,
+QuantityProcessor<Quantity>
+{
 
     // Default implementations, in case not provided by user
     @Builder.Default private final Function<Quantity, CompletableFuture<String>> fromFHIRQuantityUnitToString = DefaultImplementationsR5::fromFHIRQuantityUnitToString;

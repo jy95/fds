@@ -11,7 +11,7 @@ import io.github.jy95.fds.common.types.Translator;
  * @author jy95
  * @since 1.0.0
  */
-public interface MaxDosePerAdministration<C extends FDSConfig, D> extends Translator<C, D> {
+public interface MaxDosePerAdministration<C extends FDSConfig, D> extends Translator<D> {
 
     // Key constant for maxDosePerAdministration message
     String KEY_MAX_DOSE_PER_ADMINISTRATION = "fields.maxDosePerAdministration";

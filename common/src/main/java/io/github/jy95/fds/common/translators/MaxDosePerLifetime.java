@@ -11,7 +11,7 @@ import io.github.jy95.fds.common.types.Translator;
  * @author jy95
  * @since 1.0.0
  */
-public interface MaxDosePerLifetime<C extends FDSConfig, D> extends Translator<C, D> {
+public interface MaxDosePerLifetime<C extends FDSConfig, D> extends Translator<D> {
 
     // Key constant for maxDosePerLifetime message
     String KEY_MAX_DOSE_PER_LIFETIME = "fields.maxDosePerLifetime";

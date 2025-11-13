@@ -1,6 +1,5 @@
 package io.github.jy95.fds;
 
-import io.github.jy95.fds.common.config.FDSConfig;
 import io.github.jy95.fds.common.types.Translator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class TranslatorTest {
 
     // Concrete implementation of Translator
-    private static class TestTranslator implements Translator<FDSConfig, String> {
+    private static class TestTranslator implements Translator<String> {
 
         @Override
         public CompletableFuture<String> convert(String dosage) {
@@ -20,7 +19,7 @@ public class TranslatorTest {
         }
     }
 
-    private Translator<FDSConfig, String> translator;
+    private Translator<String> translator;
 
     @BeforeEach
     void setUp() {

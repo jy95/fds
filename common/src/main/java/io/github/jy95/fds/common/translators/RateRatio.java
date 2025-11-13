@@ -11,7 +11,7 @@ import io.github.jy95.fds.common.types.Translator;
  * @author jy95
  * @since 1.0.0
  */
-public interface RateRatio<C extends FDSConfig, D> extends Translator<C, D> {
+public interface RateRatio<C extends FDSConfig, D> extends Translator<D> {
 
     // Key constant for rateRatio message
     String KEY_RATE_RATIO = "fields.rateRatio";
