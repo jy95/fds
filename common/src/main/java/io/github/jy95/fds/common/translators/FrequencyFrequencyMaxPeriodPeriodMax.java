@@ -9,7 +9,6 @@ import java.util.stream.Stream;
 /**
  * Interface for translating "timing.repeat.frequency" / "timing.repeat.frequencyMax" / "timing.repeat.period" / "timing.repeat.periodMax".
  *
- * @param <C> The type of configuration, extending {@link io.github.jy95.fds.common.config.FDSConfig}.
  * @param <D> The type of the translated data.
  * @author jy95
  * @since 1.0.0
