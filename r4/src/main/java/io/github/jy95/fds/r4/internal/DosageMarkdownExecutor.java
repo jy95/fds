@@ -4,6 +4,7 @@ import io.github.jy95.fds.common.types.DisplayOrder;
 import io.github.jy95.fds.r4.config.FDSConfigR4;
 import io.github.jy95.fds.r4.utils.DosageMarkdownR4;
 import io.github.jy95.fds.r4.DosageAPIR4;
+import io.github.jy95.fds.common.config.DefaultImplementations;
 import io.github.jy95.fds.common.config.FDSConfig;
 
 import java.io.File;
@@ -147,7 +148,7 @@ public class DosageMarkdownExecutor {
             return new DosageAPIR4Custom(
                     FDSConfigR4
                             .builder()
-                            .displayOrder(FDSConfig.builder().build().getDisplayOrder())
+                            .displayOrder(DefaultImplementations.DEFAULT_DISPLAY_ORDER)
                             .locale(locale)
                             .build()
             );
