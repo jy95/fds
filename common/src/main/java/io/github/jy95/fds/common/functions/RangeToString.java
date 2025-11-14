@@ -87,19 +87,15 @@ public interface RangeToString<C extends FDSConfig, R> {
 
         return unitRetrieval
                 .thenApplyAsync(unitAsText -> {
-                    // Use the non-shared MessageFormat instance retrieved earlier
+
                     Map<String, Object> arguments = Map.of(
                             "minValue", hasLow ? getLowValue(range) : "",
                             "maxValue", hasHigh ? getHighValue(range) : "",
                             "condition", condition,
                             "unit", unitAsText
                     );
-
-                    // Note: The format method on MessageFormat is not thread-safe, 
-                    // but translationService.getMessage(key) returns a new instance, 
-                    // and this block is executed inside a .thenApplyAsync, 
-                    // so it is confined to a thread, which makes it safe.
                     return messageFormat.format(arguments);
+                    
                 });
     }
 

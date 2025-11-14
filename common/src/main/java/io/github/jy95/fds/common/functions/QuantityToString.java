@@ -1,22 +1,26 @@
 package io.github.jy95.fds.common.functions;
 
 import io.github.jy95.fds.common.config.FDSConfig;
+import io.github.jy95.fds.common.operations.QuantityProcessor;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.hl7.fhir.instance.model.api.IBase;
+
 /**
  * Interface for converting quantity objects to human-readable strings.
  *
- * @param <C> The type of configuration object extending FDSConfig.
  * @param <Q> The type of quantity object to be converted.
+ * @param <C> The type of configuration object extending FDSConfig.
  * @author jy95
  * @since 1.0.0
  */
-public interface QuantityToString<C extends FDSConfig, Q> {
+public interface QuantityToString<Q extends IBase, C extends FDSConfig & QuantityProcessor<Q>> {
 
     /**
      * System URI for duration units in FHIR.
@@ -93,13 +97,62 @@ public interface QuantityToString<C extends FDSConfig, Q> {
     String getComparatorCode(Q quantity);
 
     /**
+     * Check if the quantity has a system 
+     * 
+     * @param quantity The quantity object.
+     * @return True if the quantity has a system, false otherwise.
+     */
+    boolean hasSystem(Q quantity);
+
+    /**
+     * Check if the quantity has a code 
+     * 
+     * @param quantity The quantity object.
+     * @return True if the quantity has a code, false otherwise.
+     */
+    boolean hasCode(Q quantity);
+
+    /**
+     * Retrieves the system of the quantity.
+     * 
+     * @param quantity The quantity object.
+     * @return The system as a string.
+     */
+    String getSystem(Q quantity);
+
+    /**
+     * Retrieves the code of the quantity.
+     * 
+     * @param quantity The quantity object.
+     * @return The code as a string.
+     */
+    String getCode(Q quantity);
+
+    /**
      * Provides enhanced logic for converting units to a human-readable string.
      *
      * @param translationService The service providing localized string translations.
      * @param quantity The quantity object.
      * @return A CompletableFuture that resolves to the human-readable string for the unit.
      */
-    CompletableFuture<String> enhancedFromUnitToString(TranslationService<C> translationService, Q quantity);
+    default CompletableFuture<String> enhancedFromUnitToString(TranslationService<C> translationService, Q quantity) {
+        var config = translationService.getConfig();
+        var hasSystemAndCode = hasSystem(quantity) & hasCode(quantity);
+        var isUnitOfTime = hasSystemAndCode && TIME_SYSTEMS.contains(getSystem(quantity));
+
+        if (isUnitOfTime) {
+            return CompletableFuture.supplyAsync(() -> {
+                String code = getCode(quantity);
+                BigDecimal amount = Optional
+                    .ofNullable(getValue(quantity))
+                    .orElse(BigDecimal.ONE);
+                return UnitsOfTimeFormatter.formatWithoutCount(config.getLocale(), code, amount);
+            });
+        }
+
+        // Otherwise, let config do the charm
+        return config.fromFHIRQuantityUnitToString(quantity);
+    }
 
     /**
      * Converts the comparator of a quantity to a human-readable string.
