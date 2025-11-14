@@ -7,8 +7,6 @@ import io.github.jy95.fds.r5.config.FDSConfigR5;
 import org.hl7.fhir.r5.model.Quantity;
 import org.hl7.fhir.r5.model.Range;
 
-import java.math.BigDecimal;
-
 /**
  * R5 enum for converting range objects to human-readable strings.
  *
@@ -29,18 +27,6 @@ public enum RangeToStringR5 implements RangeToString<Range, Quantity, FDSConfigR
     @Override
     public boolean hasHigh(Range range) {
         return range.hasHigh();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public BigDecimal getLowValue(Range range) {
-        return range.getLow().getValue();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public BigDecimal getHighValue(Range range) {
-        return range.getHigh().getValue();
     }
 
     /** {@inheritDoc} */

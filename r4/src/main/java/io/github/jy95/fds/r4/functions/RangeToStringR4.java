@@ -7,8 +7,6 @@ import io.github.jy95.fds.r4.config.FDSConfigR4;
 import org.hl7.fhir.r4.model.Quantity;
 import org.hl7.fhir.r4.model.Range;
 
-import java.math.BigDecimal;
-
 /**
  * R4 enum for converting range objects to human-readable strings.
  *
@@ -41,18 +39,6 @@ public enum RangeToStringR4 implements RangeToString<Range, Quantity, FDSConfigR
     @Override
     public Quantity getLow(Range range) {
         return range.getLow();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public BigDecimal getLowValue(Range range) {
-        return range.getLow().getValue();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public BigDecimal getHighValue(Range range) {
-        return range.getHigh().getValue();
     }
 
     @Override
