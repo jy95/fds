@@ -15,7 +15,7 @@ import java.util.concurrent.CompletableFuture;
  * @author jy95
  */
 @RequiredArgsConstructor
-public class BoundsPeriodR4 implements BoundsPeriod<FDSConfigR4, Dosage> {
+public class BoundsPeriodR4 implements BoundsPeriod<Dosage> {
 
     /** Translation service */
     private final TranslationService<FDSConfigR4> translationService;

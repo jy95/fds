@@ -15,7 +15,7 @@ import java.util.Map;
  * @author jy95
  */
 @RequiredArgsConstructor
-public class FrequencyFrequencyMaxR4 implements FrequencyFrequencyMax<FDSConfigR4, Dosage> {
+public class FrequencyFrequencyMaxR4 implements FrequencyFrequencyMax<Dosage> {
 
     /** Translation service */
     private final TranslationService<FDSConfigR4> translationService;

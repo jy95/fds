@@ -1,19 +1,16 @@
 package io.github.jy95.fds.common.translators;
 
-import io.github.jy95.fds.common.config.FDSConfig;
 import io.github.jy95.fds.common.types.TranslatorTiming;
-
 import java.util.List;
 
 /**
  * Interface for translating "timing.event".
  *
- * @param <C> The type of configuration, extending {@link io.github.jy95.fds.common.config.FDSConfig}.
  * @param <D> The type of the translated data.
  * @author jy95
  * @since 1.0.0
  */
-public interface TimingEvent<C extends FDSConfig, D> extends TranslatorTiming<C, D> {
+public interface TimingEvent<D> extends TranslatorTiming<D> {
 
     // Key constant for event message
     String KEY_EVENT = "fields.event";

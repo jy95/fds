@@ -16,7 +16,7 @@ import java.util.concurrent.CompletableFuture;
  * @author jy95
  */
 @RequiredArgsConstructor
-public class BoundsDurationR5 implements BoundsDuration<FDSConfigR5, Dosage> {
+public class BoundsDurationR5 implements BoundsDuration<Dosage> {
 
     /** Translation service */
     private final TranslationService<FDSConfigR5> translationService;

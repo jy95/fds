@@ -14,7 +14,7 @@ import java.util.concurrent.CompletableFuture;
  * @author jy95
  */
 @RequiredArgsConstructor
-public class AdditionalInstructionR5 implements AdditionalInstruction<FDSConfigR5, Dosage> {
+public class AdditionalInstructionR5 implements AdditionalInstruction<Dosage> {
 
     /** Translation service */
     private final TranslationService<FDSConfigR5> translationService;

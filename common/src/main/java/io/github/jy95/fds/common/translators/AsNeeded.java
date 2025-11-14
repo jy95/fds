@@ -1,6 +1,5 @@
 package io.github.jy95.fds.common.translators;
 
-import io.github.jy95.fds.common.config.FDSConfig;
 import io.github.jy95.fds.common.types.Translator;
 
 import java.util.concurrent.CompletableFuture;
@@ -8,12 +7,11 @@ import java.util.concurrent.CompletableFuture;
 /**
  * Interface for translating fields related to the "as needed" / "as needed for" concepts.
  *
- * @param <C> the type of configuration, which must extend {@link io.github.jy95.fds.common.config.FDSConfig}
  * @param <D> the type of data to be translated
  * @author jy95
  * @since 1.0.0
  */
-public interface AsNeeded<C extends FDSConfig, D> extends Translator<D> {
+public interface AsNeeded<D> extends Translator<D> {
 
     // Key constant for asNeededFor message
     String KEY_AS_NEEDED_FOR = "fields.asNeededFor";

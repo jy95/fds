@@ -1,6 +1,5 @@
 package io.github.jy95.fds.common.translators;
 
-import io.github.jy95.fds.common.config.FDSConfig;
 import io.github.jy95.fds.common.functions.ListToString;
 import io.github.jy95.fds.common.functions.TranslationService;
 import io.github.jy95.fds.common.types.Translator;
@@ -11,12 +10,11 @@ import java.util.concurrent.CompletableFuture;
 /**
  * An interface for translating "additionalInstruction".
  *
- * @param <C> The type of configuration, extending {@link io.github.jy95.fds.common.config.FDSConfig}.
  * @param <D> The type of the translated data.
  * @author jy95
  * @since 1.0.0
  */
-public interface AdditionalInstruction<C extends FDSConfig, D> extends Translator<D> {
+public interface AdditionalInstruction<D> extends Translator<D> {
 
     /**
      * Processes a list of asynchronous additional instructions and converts them to a single string.
@@ -32,7 +30,7 @@ public interface AdditionalInstruction<C extends FDSConfig, D> extends Translato
      *         representing all the additional instructions combined.
      */
     default CompletableFuture<String> instructionsFuture(
-            TranslationService<C> translationService,
+            TranslationService<?> translationService,
             List<CompletableFuture<String>> additionalInstructions
     ) {
         return CompletableFuture

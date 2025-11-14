@@ -14,7 +14,7 @@ import org.hl7.fhir.r5.model.Dosage;
  * @author jy95
  */
 @RequiredArgsConstructor
-public class DurationDurationMaxR5 implements DurationDurationMax<FDSConfigR5, Dosage> {
+public class DurationDurationMaxR5 implements DurationDurationMax<Dosage> {
 
     /** Translation service */
     private final TranslationService<FDSConfigR5> translationService;

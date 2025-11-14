@@ -14,7 +14,7 @@ import java.util.concurrent.CompletableFuture;
  * @author jy95
  */
 @RequiredArgsConstructor
-public class ExtensionR4 implements Extension<FDSConfigR4, Dosage> {
+public class ExtensionR4 implements Extension<Dosage> {
 
     /** Translation service */
     private final TranslationService<FDSConfigR4> translationService;

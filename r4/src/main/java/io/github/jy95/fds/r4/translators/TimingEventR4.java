@@ -18,7 +18,7 @@ import java.util.concurrent.CompletableFuture;
  * @author jy95
  */
 @RequiredArgsConstructor
-public class TimingEventR4 implements TimingEvent<FDSConfigR4, Dosage> {
+public class TimingEventR4 implements TimingEvent<Dosage> {
 
     /** Translation service */
     private final TranslationService<FDSConfigR4> translationService;

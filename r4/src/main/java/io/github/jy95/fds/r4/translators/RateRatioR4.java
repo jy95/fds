@@ -18,7 +18,7 @@ import java.util.concurrent.CompletableFuture;
  * @author jy95
  */
 @RequiredArgsConstructor
-public class RateRatioR4 implements RateRatio<FDSConfigR4, Dosage> {
+public class RateRatioR4 implements RateRatio<Dosage> {
 
     /** Translation service */
     private final TranslationService<FDSConfigR4> translationService;
