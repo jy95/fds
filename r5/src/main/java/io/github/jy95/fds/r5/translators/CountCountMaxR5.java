@@ -16,7 +16,7 @@ import java.util.concurrent.CompletableFuture;
  * @author jy95
  */
 @RequiredArgsConstructor
-public class CountCountMaxR5 implements CountCountMax<FDSConfigR5, Dosage> {
+public class CountCountMaxR5 implements CountCountMax<Dosage> {
 
     /** Translation service */
     private final TranslationService<FDSConfigR5> translationService;

@@ -16,7 +16,7 @@ import java.util.concurrent.CompletableFuture;
  * @author jy95
  */
 @RequiredArgsConstructor
-public class AsNeededR5 implements AsNeeded<FDSConfigR5, Dosage> {
+public class AsNeededR5 implements AsNeeded<Dosage> {
 
     /** Translation service */
     private final TranslationService<FDSConfigR5> translationService;

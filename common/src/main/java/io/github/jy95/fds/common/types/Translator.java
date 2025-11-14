@@ -1,7 +1,5 @@
 package io.github.jy95.fds.common.types;
 
-import io.github.jy95.fds.common.config.FDSConfig;
-
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -9,12 +7,11 @@ import java.util.concurrent.CompletableFuture;
  * This class provides base functionality for configuration and resource bundle handling,
  * while requiring subclasses to define specific translation behavior.
  *
- * @param <C> the type of configuration extending {@link io.github.jy95.fds.common.config.FDSConfig}
  * @param <D> the type of dosage field to be translated
  * @author jy95
  * @since 1.0.0
  */
-public interface Translator<C extends FDSConfig, D> {
+public interface Translator<D> {
     /**
      * Converts a dosage field into a human-readable string representation asynchronously.
      *

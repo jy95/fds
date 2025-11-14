@@ -19,7 +19,7 @@ import java.util.concurrent.CompletableFuture;
  * @author jy95
  */
 @RequiredArgsConstructor
-public class TimeOfDayR4 implements TimeOfDay<FDSConfigR4, Dosage> {
+public class TimeOfDayR4 implements TimeOfDay<Dosage> {
 
     /** Translation service */
     private final TranslationService<FDSConfigR4> translationService;

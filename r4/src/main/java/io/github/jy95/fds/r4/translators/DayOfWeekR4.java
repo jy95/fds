@@ -17,7 +17,7 @@ import java.util.concurrent.CompletableFuture;
  *
  * @author jy95
  */
-public class DayOfWeekR4 implements DayOfWeek<FDSConfigR4, Dosage> {
+public class DayOfWeekR4 implements DayOfWeek<Dosage> {
 
     /** Translation service */
     private final TranslationService<FDSConfigR4> translationService;

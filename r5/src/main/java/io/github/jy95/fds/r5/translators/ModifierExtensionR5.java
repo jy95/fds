@@ -1,7 +1,7 @@
 package io.github.jy95.fds.r5.translators;
 
 import io.github.jy95.fds.common.functions.TranslationService;
-import io.github.jy95.fds.common.types.Translator;
+import io.github.jy95.fds.common.translators.ModifierExtension;
 import io.github.jy95.fds.r5.config.FDSConfigR5;
 import lombok.RequiredArgsConstructor;
 import org.hl7.fhir.r5.model.Dosage;
@@ -14,7 +14,7 @@ import java.util.concurrent.CompletableFuture;
  * @author jy95
  */
 @RequiredArgsConstructor
-public class ModifierExtensionR5 implements Translator<FDSConfigR5, Dosage> {
+public class ModifierExtensionR5 implements ModifierExtension<Dosage> {
 
     /** Translation service */
     private final TranslationService<FDSConfigR5> translationService;
@@ -29,9 +29,4 @@ public class ModifierExtensionR5 implements Translator<FDSConfigR5, Dosage> {
                 );
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public boolean isPresent(Dosage dosage) {
-        return dosage.hasModifierExtension();
-    }
 }

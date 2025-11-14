@@ -33,8 +33,8 @@ public class DosageMarkdownTest {
         }
 
         @Override
-        public Translator<FDSConfig, String> getTranslator(DisplayOrder displayOrder) {
-            return new Translator<FDSConfig, String>() {
+        public Translator<String> getTranslator(DisplayOrder displayOrder) {
+            return new Translator<String>() {
                 @Override
                 public CompletableFuture<String> convert(String dosage) {
                     return CompletableFuture.completedFuture(dosage);

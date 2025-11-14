@@ -14,7 +14,7 @@ import java.util.concurrent.CompletableFuture;
  * @author jy95
  */
 @RequiredArgsConstructor
-public class TimingCodeR4 implements TranslatorTiming<FDSConfigR4, Dosage> {
+public class TimingCodeR4 implements TranslatorTiming<Dosage> {
 
     /** Translation service */
     private final TranslationService<FDSConfigR4> translationService;

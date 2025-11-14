@@ -41,7 +41,7 @@ public class DosageAPIR5 extends DosageAPI<FDSConfigR5, Dosage> {
 
     /** {@inheritDoc} */
     @Override
-    public Translator<FDSConfigR5, Dosage> getTranslator(DisplayOrder displayOrder) {
+    public Translator<Dosage> getTranslator(DisplayOrder displayOrder) {
         return translatorsMapR5.getTranslator(displayOrder);
     }
 

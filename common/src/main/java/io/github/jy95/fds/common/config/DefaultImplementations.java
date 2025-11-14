@@ -1,6 +1,7 @@
 package io.github.jy95.fds.common.config;
 
 import io.github.jy95.fds.common.bundle.MultiResourceBundleControl;
+import io.github.jy95.fds.common.types.DisplayOrder;
 import io.github.jy95.fds.common.types.DoseAndRateExtractor;
 import io.github.jy95.fds.common.types.DoseAndRateKey;
 
@@ -41,6 +42,38 @@ public final class DefaultImplementations {
                 RESOURCE_PACKAGE + "EventTiming",
                 RESOURCE_PACKAGE + "QuantityComparator"
         );
+
+    // Default display order list
+    public static final List<DisplayOrder> DEFAULT_DISPLAY_ORDER = List.of(
+        DisplayOrder.METHOD,
+        DisplayOrder.DOSE_QUANTITY,
+        DisplayOrder.DOSE_RANGE,
+        DisplayOrder.RATE_RATIO,
+        DisplayOrder.RATE_QUANTITY,
+        DisplayOrder.RATE_RANGE,
+        DisplayOrder.DURATION_DURATION_MAX,
+        DisplayOrder.FREQUENCY_FREQUENCY_MAX_PERIOD_PERIOD_MAX,
+        DisplayOrder.OFFSET_WHEN,
+        DisplayOrder.DAY_OF_WEEK,
+        DisplayOrder.TIME_OF_DAY,
+        DisplayOrder.ROUTE,
+        DisplayOrder.SITE,
+        DisplayOrder.AS_NEEDED,
+        DisplayOrder.BOUNDS_DURATION,
+        DisplayOrder.BOUNDS_PERIOD,
+        DisplayOrder.BOUNDS_RANGE,
+        DisplayOrder.COUNT_COUNT_MAX,
+        DisplayOrder.TIMING_EVENT,
+        DisplayOrder.TIMING_CODE,
+        DisplayOrder.MAX_DOSE_PER_PERIOD,
+        DisplayOrder.MAX_DOSE_PER_ADMINISTRATION,
+        DisplayOrder.MAX_DOSE_PER_LIFETIME,
+        DisplayOrder.ADDITIONAL_INSTRUCTION,
+        DisplayOrder.PATIENT_INSTRUCTION
+    );
+
+    // Default separator between each part of "Dosage"
+    public static final String DEFAULT_SEPARATOR = " - ";
 
     /**
      * No constructor for this class

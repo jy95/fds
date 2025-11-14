@@ -16,7 +16,7 @@ import java.util.concurrent.CompletableFuture;
  * @author jy95
  */
 @RequiredArgsConstructor
-public class MaxDosePerLifetimeR4 implements MaxDosePerLifetime<FDSConfigR4, Dosage> {
+public class MaxDosePerLifetimeR4 implements MaxDosePerLifetime<Dosage> {
 
     /** Translation service */
     private final TranslationService<FDSConfigR4> translationService;

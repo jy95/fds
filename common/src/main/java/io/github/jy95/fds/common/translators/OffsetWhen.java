@@ -1,6 +1,5 @@
 package io.github.jy95.fds.common.translators;
 
-import io.github.jy95.fds.common.config.FDSConfig;
 import io.github.jy95.fds.common.functions.TranslationService;
 import io.github.jy95.fds.common.functions.ListToString;
 import io.github.jy95.fds.common.functions.UnitsOfTimeFormatter;
@@ -13,12 +12,11 @@ import java.util.concurrent.CompletableFuture;
 /**
  * Interface for translating "timing.repeat.offset" / "timing.repeat.when".
  *
- * @param <C> The type of configuration, extending {@link io.github.jy95.fds.common.config.FDSConfig}.
  * @param <D> The type of the translated data.
  * @author jy95
  * @since 1.0.0
  */
-public interface OffsetWhen<C extends FDSConfig, D> extends TranslatorTiming<C, D> {
+public interface OffsetWhen<D> extends TranslatorTiming<D> {
 
     /** Constant <code>order</code> */
     List<String> order = List.of("d", "h", "min");
@@ -50,7 +48,7 @@ public interface OffsetWhen<C extends FDSConfig, D> extends TranslatorTiming<C, 
      * @return A {@link java.util.concurrent.CompletableFuture} containing the formatted string representing the offset.
      * @since 2.1.1
      */
-    default CompletableFuture<String> turnOffsetValueToText(TranslationService<C> translationService, int offset) {
+    default CompletableFuture<String> turnOffsetValueToText(TranslationService<?> translationService, int offset) {
         return CompletableFuture.supplyAsync(() -> {
             var extractedTime = extractTime(offset);
             var locale = translationService.getConfig().getLocale();

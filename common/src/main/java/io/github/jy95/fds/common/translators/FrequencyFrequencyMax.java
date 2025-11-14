@@ -1,19 +1,16 @@
 package io.github.jy95.fds.common.translators;
 
-import io.github.jy95.fds.common.config.FDSConfig;
 import io.github.jy95.fds.common.types.TranslatorTiming;
-
 import java.util.concurrent.CompletableFuture;
 
 /**
  * Interface for translating "timing.repeat.frequency" / "timing.repeat.frequencyMax".
  *
- * @param <C> The type of configuration, extending {@link io.github.jy95.fds.common.config.FDSConfig}.
  * @param <D> The type of the translated data.
  * @author jy95
  * @since 1.0.0
  */
-public interface FrequencyFrequencyMax<C extends FDSConfig, D> extends TranslatorTiming<C, D> {
+public interface FrequencyFrequencyMax<D> extends TranslatorTiming<D> {
 
     // Key constants for frequency message
     String KEY_FREQUENCY = "fields.frequency";

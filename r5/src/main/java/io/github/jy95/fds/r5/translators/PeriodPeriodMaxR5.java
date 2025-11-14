@@ -17,7 +17,7 @@ import java.util.Map;
  * @author jy95
  */
 @RequiredArgsConstructor
-public class PeriodPeriodMaxR5 implements PeriodPeriodMax<FDSConfigR5, Dosage> {
+public class PeriodPeriodMaxR5 implements PeriodPeriodMax<Dosage> {
 
     /** Translation service */
     private final TranslationService<FDSConfigR5> translationService;

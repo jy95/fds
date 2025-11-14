@@ -18,7 +18,7 @@ import java.util.stream.Stream;
  * @author jy95
  */
 @RequiredArgsConstructor
-public class OffsetWhenR5 implements OffsetWhen<FDSConfigR5, Dosage> {
+public class OffsetWhenR5 implements OffsetWhen<Dosage> {
 
     /** Translation service */
     private final TranslationService<FDSConfigR5> translationService;

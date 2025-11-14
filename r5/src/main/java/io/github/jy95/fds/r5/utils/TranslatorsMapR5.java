@@ -31,8 +31,8 @@ public class TranslatorsMapR5 extends AbstractTranslatorsMap<FDSConfigR5, Dosage
 
     /** {@inheritDoc} */
     @Override
-    protected Map<DisplayOrder, Supplier<Translator<FDSConfigR5, Dosage>>> createTranslatorsSuppliers() {
-        EnumMap<DisplayOrder, Supplier<Translator<FDSConfigR5, Dosage>>> suppliers = new EnumMap<>(DisplayOrder.class);
+    protected Map<DisplayOrder, Supplier<Translator<Dosage>>> createTranslatorsSuppliers() {
+        EnumMap<DisplayOrder, Supplier<Translator<Dosage>>> suppliers = new EnumMap<>(DisplayOrder.class);
 
         // All display order supported by R5 are initialized here
         suppliers.put(DisplayOrder.TEXT, TextR5::new);

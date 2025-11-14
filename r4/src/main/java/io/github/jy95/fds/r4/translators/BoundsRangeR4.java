@@ -16,7 +16,7 @@ import java.util.concurrent.CompletableFuture;
  * @author jy95
  */
 @RequiredArgsConstructor
-public class BoundsRangeR4 implements BoundsRange<FDSConfigR4, Dosage> {
+public class BoundsRangeR4 implements BoundsRange<Dosage> {
 
     /** Translation service */
     private final TranslationService<FDSConfigR4> translationService;

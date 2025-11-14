@@ -23,7 +23,7 @@ public abstract class AbstractTranslatorsMap<C extends FDSConfig, D> {
      * A map associating {@link DisplayOrder} values with their corresponding
      * lazy {@link Supplier} instances for {@link Translator}.
      */
-    private final Map<DisplayOrder, Supplier<Translator<C, D>>> translatorSuppliers;
+    private final Map<DisplayOrder, Supplier<Translator<D>>> translatorSuppliers;
 
     /**
      * The translation service used by translators.
@@ -34,7 +34,7 @@ public abstract class AbstractTranslatorsMap<C extends FDSConfig, D> {
      * A map associating {@link DisplayOrder} values with their corresponding {@link Translator} instance.
      * So if you use part of the supported fields, you won't have a bunch of useless new calls to for your needs
      */
-    private final Map<DisplayOrder, Translator<C, D>> translatorCache = new ConcurrentHashMap<>();
+    private final Map<DisplayOrder, Translator<D>> translatorCache = new ConcurrentHashMap<>();
 
     /**
      * Constructs a new {@code AbstractTranslatorsMap} with the specified supplier map.
@@ -53,9 +53,9 @@ public abstract class AbstractTranslatorsMap<C extends FDSConfig, D> {
      * @param displayOrder the {@link io.github.jy95.fds.common.types.DisplayOrder} used to locate the translator
      * @return the corresponding {@link io.github.jy95.fds.common.types.Translator}, or {@code null} if no match is found
      */
-    public Translator<C, D> getTranslator(DisplayOrder displayOrder) {
+    public Translator<D> getTranslator(DisplayOrder displayOrder) {
         return translatorCache.computeIfAbsent(displayOrder, key -> {
-            Supplier<Translator<C, D>> supplier = translatorSuppliers.get(key);
+            Supplier<Translator<D>> supplier = translatorSuppliers.get(key);
             return supplier != null ? supplier.get() : null;
         });
     }
@@ -72,5 +72,5 @@ public abstract class AbstractTranslatorsMap<C extends FDSConfig, D> {
      * @return a {@link Map} where the keys are {@link io.github.jy95.fds.common.types.DisplayOrder} values and the values 
      * are {@link Supplier} instances that provide {@link io.github.jy95.fds.common.types.Translator} objects
      */   
-    protected abstract Map<DisplayOrder, Supplier<Translator<C, D>>> createTranslatorsSuppliers();
+    protected abstract Map<DisplayOrder, Supplier<Translator<D>>> createTranslatorsSuppliers();
 }
