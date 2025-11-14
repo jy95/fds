@@ -24,6 +24,12 @@ public enum QuantityToStringR5 implements QuantityToString<Quantity, FDSConfigR5
 
     /** {@inheritDoc} */
     @Override
+    public boolean hasValue(Quantity quantity) {
+        return quantity.hasValue();
+    }
+
+    /** {@inheritDoc} */
+    @Override
     public BigDecimal getValue(Quantity quantity) {
         return quantity.getValue();
     }

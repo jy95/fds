@@ -66,13 +66,11 @@ public interface RangeToString<R, Q extends IBase, C extends FDSConfig & Quantit
         var solver = getQuantityToString();
         
         // Check high first, more likely to be found in it
-        var hasUnitHigh = hasHigh(range) && solver.hasUnit(getHigh(range));
-        if (hasUnitHigh) {
-            return true;
-        }
+        var hasHighUnit = hasHigh(range) && solver.hasUnit(getHigh(range));
+        var hasLowUnit = hasLow(range) && solver.hasUnit(getLow(range));
 
         // Otherwise check low
-        return hasLow(range) && solver.hasUnit(getLow(range));
+        return hasHighUnit || hasLowUnit;
     }
 
     /**
@@ -122,7 +120,7 @@ public interface RangeToString<R, Q extends IBase, C extends FDSConfig & Quantit
         var messageFormat = translationService.getMessage("amount.range.withUnit");
         
         // Retrieve unit text, passing the service
-        CompletableFuture<String> unitRetrieval = getUnitText(translationService, range, hasLow, hasHigh);
+        CompletableFuture<String> unitRetrieval = getUnitText(translationService, range);
 
         String condition = (hasLow && hasHigh) ? "0" : (hasHigh) ? "1" : (hasLow) ? "2" : "other";
         var minValue = hasLow ? solver.getValue(getLow(range)) : "";
@@ -147,13 +145,11 @@ public interface RangeToString<R, Q extends IBase, C extends FDSConfig & Quantit
      *
      * @param translationService The service providing localized strings and configuration context.
      * @param range              The range object.
-     * @param hasLow             Boolean indicating if a low value is present.
-     * @param hasHigh            Boolean indicating if high value is present.
      * @return A CompletableFuture that resolves to the unit string.
      */
-    default CompletableFuture<String> getUnitText(TranslationService<C> translationService, R range, boolean hasLow, boolean hasHigh) {
+    default CompletableFuture<String> getUnitText(TranslationService<C> translationService, R range) {
         var solver = getQuantityToString();
-        var quantity = (hasHigh) ? getHigh(range) : getLow(range);
+        var quantity = hasHigh(range) ? getHigh(range) : getLow(range);
         return solver.enhancedFromUnitToString(translationService,quantity);
     }
 

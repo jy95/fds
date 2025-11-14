@@ -5,7 +5,6 @@ import io.github.jy95.fds.common.operations.QuantityProcessor;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -73,6 +72,14 @@ public interface QuantityToString<Q extends IBase, C extends FDSConfig & Quantit
     boolean hasUnit(Q quantity);
 
     /**
+     * Determines if a quantity has a value
+     * 
+     * @param quantity The quantity object.
+     * @return True if the quantity has a value, false otherwise.
+     */
+    boolean hasValue(Q quantity);
+
+    /**
      * Retrieves the numeric value of the quantity.
      *
      * @param quantity The quantity object.
@@ -137,15 +144,13 @@ public interface QuantityToString<Q extends IBase, C extends FDSConfig & Quantit
      */
     default CompletableFuture<String> enhancedFromUnitToString(TranslationService<C> translationService, Q quantity) {
         var config = translationService.getConfig();
-        var hasSystemAndCode = hasSystem(quantity) & hasCode(quantity);
+        var hasSystemAndCode = hasSystem(quantity) && hasCode(quantity);
         var isUnitOfTime = hasSystemAndCode && TIME_SYSTEMS.contains(getSystem(quantity));
 
         if (isUnitOfTime) {
             return CompletableFuture.supplyAsync(() -> {
-                String code = getCode(quantity);
-                BigDecimal amount = Optional
-                    .ofNullable(getValue(quantity))
-                    .orElse(BigDecimal.ONE);
+                var code = getCode(quantity);
+                var amount = hasValue(quantity) ? getValue(quantity) : BigDecimal.ONE;
                 return UnitsOfTimeFormatter.formatWithoutCount(config.getLocale(), code, amount);
             });
         }

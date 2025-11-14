@@ -64,5 +64,11 @@ public enum QuantityToStringR4 implements QuantityToString<Quantity, FDSConfigR4
     public String getCode(Quantity quantity) {
         return quantity.getCode();
     }
+
+    /** {@inheritDoc} */
+    @Override
+    public boolean hasValue(Quantity quantity) {
+        return quantity.hasValue();
+    }
     
 }
