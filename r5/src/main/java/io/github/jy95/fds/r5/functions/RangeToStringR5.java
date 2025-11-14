@@ -38,7 +38,7 @@ public enum RangeToStringR5 implements RangeToString<Range, Quantity, FDSConfigR
     /** {@inheritDoc} */
     @Override
     public Quantity getHigh(Range range) {
-        return range.getLow();
+        return range.getHigh();
     }
 
     /** {@inheritDoc} */
