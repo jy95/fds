@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DurationDurationMax.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">FHIR Dosage Support - Common</a> &gt; <a href="index.source.html" class="el_package">io.github.jy95.fds.common.translators</a> &gt; <span class="el_source">DurationDurationMax.java</span></div><h1>DurationDurationMax.java</h1><pre class="source lang-java linenums">package io.github.jy95.fds.common.translators;
 
-import io.github.jy95.fds.common.config.FDSConfig;
 import io.github.jy95.fds.common.types.TranslatorTiming;
 
 import java.util.ArrayList;
@@ -10,12 +9,11 @@ import java.util.List;
 /**
  * Interface for translating &quot;timing.repeat.duration&quot; / &quot;timing.repeat.durationMax&quot;.
  *
- * @param &lt;C&gt; The type of configuration, extending {@link io.github.jy95.fds.common.config.FDSConfig}.
  * @param &lt;D&gt; The type of the translated data.
  * @author jy95
  * @since 1.0.0
  */
-public interface DurationDurationMax&lt;C extends FDSConfig, D&gt; extends TranslatorTiming&lt;C, D&gt; {
+public interface DurationDurationMax&lt;D&gt; extends TranslatorTiming&lt;D&gt; {
 
     // Key constants for duration message
     String KEY_DURATION = &quot;fields.duration&quot;;
@@ -25,34 +23,34 @@ public interface DurationDurationMax&lt;C extends FDSConfig, D&gt; extends Trans
     /** {@inheritDoc} */
     @Override
     default CompletableFuture&lt;String&gt; convert(D dosage) {
-<span class="nc" id="L28">        return CompletableFuture.supplyAsync(() -&gt; {</span>
+<span class="nc" id="L26">        return CompletableFuture.supplyAsync(() -&gt; {</span>
 
             // Rule: duration SHALL be a non-negative value
             // Rule: if there's a duration, there needs to be duration units
             // Rule: If there's a durationMax, there must be a duration
-<span class="nc" id="L33">            var hasDurationFlag = hasDuration(dosage);</span>
-<span class="nc" id="L34">            var hasDurationMaxFlag = hasDurationMax(dosage);</span>
-<span class="nc bnc" id="L35" title="All 4 branches missed.">            var hasBoth = hasDurationFlag &amp;&amp; hasDurationMaxFlag;</span>
+<span class="nc" id="L31">            var hasDurationFlag = hasDuration(dosage);</span>
+<span class="nc" id="L32">            var hasDurationMaxFlag = hasDurationMax(dosage);</span>
+<span class="nc bnc" id="L33" title="All 4 branches missed.">            var hasBoth = hasDurationFlag &amp;&amp; hasDurationMaxFlag;</span>
 
-<span class="nc" id="L37">            List&lt;String&gt; texts = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L35">            List&lt;String&gt; texts = new ArrayList&lt;&gt;();</span>
 
-<span class="nc bnc" id="L39" title="All 2 branches missed.">            if (hasDurationFlag) {</span>
-<span class="nc" id="L40">                texts.add(turnDurationToString(dosage));</span>
+<span class="nc bnc" id="L37" title="All 2 branches missed.">            if (hasDurationFlag) {</span>
+<span class="nc" id="L38">                texts.add(turnDurationToString(dosage));</span>
             }
 
-<span class="nc bnc" id="L43" title="All 2 branches missed.">            if (hasBoth) {</span>
-<span class="nc" id="L44">                texts.add(&quot;(&quot;);</span>
+<span class="nc bnc" id="L41" title="All 2 branches missed.">            if (hasBoth) {</span>
+<span class="nc" id="L42">                texts.add(&quot;(&quot;);</span>
             }
 
-<span class="nc bnc" id="L47" title="All 2 branches missed.">            if (hasDurationMaxFlag) {</span>
-<span class="nc" id="L48">                texts.add(turnDurationMaxToString(dosage));</span>
+<span class="nc bnc" id="L45" title="All 2 branches missed.">            if (hasDurationMaxFlag) {</span>
+<span class="nc" id="L46">                texts.add(turnDurationMaxToString(dosage));</span>
             }
 
-<span class="nc bnc" id="L51" title="All 2 branches missed.">            if (hasBoth) {</span>
-<span class="nc" id="L52">                texts.add(&quot;)&quot;);</span>
+<span class="nc bnc" id="L49" title="All 2 branches missed.">            if (hasBoth) {</span>
+<span class="nc" id="L50">                texts.add(&quot;)&quot;);</span>
             }
 
-<span class="nc" id="L55">            return String.join(&quot; &quot;, texts);</span>
+<span class="nc" id="L53">            return String.join(&quot; &quot;, texts);</span>
         });
     }
 

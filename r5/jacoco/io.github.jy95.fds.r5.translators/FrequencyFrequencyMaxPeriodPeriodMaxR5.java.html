@@ -2,7 +2,6 @@
 
 import io.github.jy95.fds.common.translators.FrequencyFrequencyMaxPeriodPeriodMax;
 import io.github.jy95.fds.common.types.Translator;
-import io.github.jy95.fds.r5.config.FDSConfigR5;
 import lombok.RequiredArgsConstructor;
 import org.hl7.fhir.r5.model.Dosage;
 
@@ -14,43 +13,43 @@ import java.util.concurrent.CompletableFuture;
  * @author jy95
  */
 @RequiredArgsConstructor
-public class FrequencyFrequencyMaxPeriodPeriodMaxR5 implements FrequencyFrequencyMaxPeriodPeriodMax&lt;FDSConfigR5, Dosage&gt; {
+public class FrequencyFrequencyMaxPeriodPeriodMaxR5 implements FrequencyFrequencyMaxPeriodPeriodMax&lt;Dosage&gt; {
 
     /**
      * Class implementing the parsing of &quot;timing.repeat.frequency&quot; / &quot;timing.repeat.frequencyMax&quot;
      */
-    protected final Translator&lt;FDSConfigR5, Dosage&gt; frequencyTranslator;
+    protected final Translator&lt;Dosage&gt; frequencyTranslator;
     /**
      * Class implementing the parsing of &quot;timing.repeat.period&quot; / &quot;timing.repeat.periodMax&quot;
      */
-    protected final Translator&lt;FDSConfigR5, Dosage&gt; periodTranslator;
+    protected final Translator&lt;Dosage&gt; periodTranslator;
 
     /** {@inheritDoc} */
     @Override
     public boolean hasFrequency(Dosage dosage) {
-<span class="fc" id="L31">        return frequencyTranslator.isPresent(dosage);</span>
+<span class="fc" id="L30">        return frequencyTranslator.isPresent(dosage);</span>
     }
 
     /** {@inheritDoc} */
     @Override
     public boolean hasPeriod(Dosage dosage) {
-<span class="fc" id="L37">        return periodTranslator.isPresent(dosage);</span>
+<span class="fc" id="L36">        return periodTranslator.isPresent(dosage);</span>
     }
 
     /** {@inheritDoc} */
     @Override
     public CompletableFuture&lt;String&gt; extractFrequency(Dosage dosage) {
-<span class="fc bfc" id="L43" title="All 2 branches covered.">        return frequencyTranslator.isPresent(dosage)</span>
-<span class="fc" id="L44">                ? frequencyTranslator.convert(dosage)</span>
-<span class="fc" id="L45">                : CompletableFuture.completedFuture(&quot;&quot;);</span>
+<span class="fc bfc" id="L42" title="All 2 branches covered.">        return frequencyTranslator.isPresent(dosage)</span>
+<span class="fc" id="L43">                ? frequencyTranslator.convert(dosage)</span>
+<span class="fc" id="L44">                : CompletableFuture.completedFuture(&quot;&quot;);</span>
     }
 
     /** {@inheritDoc} */
     @Override
     public CompletableFuture&lt;String&gt; extractPeriod(Dosage dosage) {
-<span class="fc bfc" id="L51" title="All 2 branches covered.">        return periodTranslator.isPresent(dosage)</span>
-<span class="fc" id="L52">                ? periodTranslator.convert(dosage)</span>
-<span class="fc" id="L53">                : CompletableFuture.completedFuture(&quot;&quot;);</span>
+<span class="fc bfc" id="L50" title="All 2 branches covered.">        return periodTranslator.isPresent(dosage)</span>
+<span class="fc" id="L51">                ? periodTranslator.convert(dosage)</span>
+<span class="fc" id="L52">                : CompletableFuture.completedFuture(&quot;&quot;);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

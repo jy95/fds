@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AdditionalInstruction.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">FHIR Dosage Support - Common</a> &gt; <a href="index.source.html" class="el_package">io.github.jy95.fds.common.translators</a> &gt; <span class="el_source">AdditionalInstruction.java</span></div><h1>AdditionalInstruction.java</h1><pre class="source lang-java linenums">package io.github.jy95.fds.common.translators;
 
-import io.github.jy95.fds.common.config.FDSConfig;
 import io.github.jy95.fds.common.functions.ListToString;
 import io.github.jy95.fds.common.functions.TranslationService;
 import io.github.jy95.fds.common.types.Translator;
@@ -11,12 +10,11 @@ import java.util.concurrent.CompletableFuture;
 /**
  * An interface for translating &quot;additionalInstruction&quot;.
  *
- * @param &lt;C&gt; The type of configuration, extending {@link io.github.jy95.fds.common.config.FDSConfig}.
  * @param &lt;D&gt; The type of the translated data.
  * @author jy95
  * @since 1.0.0
  */
-public interface AdditionalInstruction&lt;C extends FDSConfig, D&gt; extends Translator&lt;C, D&gt; {
+public interface AdditionalInstruction&lt;D&gt; extends Translator&lt;D&gt; {
 
     /**
      * Processes a list of asynchronous additional instructions and converts them to a single string.
@@ -32,19 +30,19 @@ public interface AdditionalInstruction&lt;C extends FDSConfig, D&gt; extends Tra
      *         representing all the additional instructions combined.
      */
     default CompletableFuture&lt;String&gt; instructionsFuture(
-            TranslationService&lt;C&gt; translationService,
+            TranslationService&lt;?&gt; translationService,
             List&lt;CompletableFuture&lt;String&gt;&gt; additionalInstructions
     ) {
-<span class="nc" id="L38">        return CompletableFuture</span>
-<span class="nc" id="L39">                .allOf(additionalInstructions.toArray(CompletableFuture[]::new))</span>
-<span class="nc" id="L40">                .thenApplyAsync(v -&gt; {</span>
-<span class="nc" id="L41">                    var additionalInstructionsAsText = additionalInstructions</span>
-<span class="nc" id="L42">                            .stream()</span>
-<span class="nc" id="L43">                            .map(future -&gt; future.getNow(&quot;&quot;))</span>
-<span class="nc" id="L44">                            .toList();</span>
+<span class="nc" id="L36">        return CompletableFuture</span>
+<span class="nc" id="L37">                .allOf(additionalInstructions.toArray(CompletableFuture[]::new))</span>
+<span class="nc" id="L38">                .thenApplyAsync(v -&gt; {</span>
+<span class="nc" id="L39">                    var additionalInstructionsAsText = additionalInstructions</span>
+<span class="nc" id="L40">                            .stream()</span>
+<span class="nc" id="L41">                            .map(future -&gt; future.getNow(&quot;&quot;))</span>
+<span class="nc" id="L42">                            .toList();</span>
 
                     // Use ListToString.convert with the translators' resources
-<span class="nc" id="L47">                    return ListToString.convert(translationService, additionalInstructionsAsText);</span>
+<span class="nc" id="L45">                    return ListToString.convert(translationService, additionalInstructionsAsText);</span>
                 });
     }
 }

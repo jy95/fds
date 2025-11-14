@@ -1,5 +1,6 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
 FHIR Dosage Support - Common,io.github.jy95.fds.common.translators,FrequencyFrequencyMaxPeriodPeriodMax,50,0,6,0,7,0,7,0,4,0
+FHIR Dosage Support - Common,io.github.jy95.fds.common.translators,ModifierExtension,3,0,0,0,1,0,1,0,1,0
 FHIR Dosage Support - Common,io.github.jy95.fds.common.translators,AdditionalInstruction,28,0,0,0,8,0,4,0,4,0
 FHIR Dosage Support - Common,io.github.jy95.fds.common.translators,PeriodPeriodMax,31,0,6,0,7,0,5,0,2,0
 FHIR Dosage Support - Common,io.github.jy95.fds.common.translators,OffsetWhen,82,0,2,0,19,0,7,0,6,0
@@ -7,6 +8,7 @@ FHIR Dosage Support - Common,io.github.jy95.fds.common.translators,DurationDurat
 FHIR Dosage Support - Common,io.github.jy95.fds.common.translators,TimeOfDay,33,0,4,0,4,0,3,0,1,0
 FHIR Dosage Support - Common,io.github.jy95.fds.common.translators,FrequencyFrequencyMax,37,0,8,0,9,0,6,0,2,0
 FHIR Dosage Support - Common,io.github.jy95.fds.common.translators,BoundsPeriod,44,0,10,0,6,0,6,0,1,0
+FHIR Dosage Support - Common,io.github.jy95.fds.common.translators,Extension,3,0,0,0,1,0,1,0,1,0
 FHIR Dosage Support - Common,io.github.jy95.fds.common.l10n,QuantityComparator_nl,74,0,0,0,3,0,3,0,3,0
 FHIR Dosage Support - Common,io.github.jy95.fds.common.l10n,EventTiming_nl,360,0,0,0,3,0,3,0,3,0
 FHIR Dosage Support - Common,io.github.jy95.fds.common.l10n,DosageFields_nl,373,0,0,0,3,0,3,0,3,0
@@ -38,4 +40,4 @@ FHIR Dosage Support - Common,io.github.jy95.fds.common.functions,SequenceUtils,6
 FHIR Dosage Support - Common,io.github.jy95.fds.common.functions,ListToString,45,12,2,2,9,3,4,1,2,1
 FHIR Dosage Support - Common,io.github.jy95.fds.common.bundle,MultiResourceBundle,23,29,0,2,5,8,3,4,3,3
 FHIR Dosage Support - Common,io.github.jy95.fds.common.bundle,MultiResourceBundleControl,0,40,0,4,0,9,0,6,0,4
-FHIR Dosage Support - Common,io.github.jy95.fds.common.config,DefaultImplementations,108,43,15,1,27,9,12,4,4,4
+FHIR Dosage Support - Common,io.github.jy95.fds.common.config,DefaultImplementations,108,147,15,1,27,10,12,4,4,4

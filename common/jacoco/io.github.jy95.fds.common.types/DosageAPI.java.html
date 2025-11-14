@@ -80,7 +80,7 @@ public abstract class DosageAPI&lt;C extends FDSConfig, D&gt; {
      * @param displayOrder the display order used to find the translator
      * @return the corresponding {@link io.github.jy95.fds.common.types.Translator}, or {@code null} if not found
      */
-    public abstract Translator&lt;C, D&gt; getTranslator(DisplayOrder displayOrder);
+    public abstract Translator&lt;D&gt; getTranslator(DisplayOrder displayOrder);
 
     /**
      * Checks if the given list of dosages contains only sequential instructions.

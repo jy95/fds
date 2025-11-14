@@ -1,19 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FrequencyFrequencyMax.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">FHIR Dosage Support - Common</a> &gt; <a href="index.source.html" class="el_package">io.github.jy95.fds.common.translators</a> &gt; <span class="el_source">FrequencyFrequencyMax.java</span></div><h1>FrequencyFrequencyMax.java</h1><pre class="source lang-java linenums">package io.github.jy95.fds.common.translators;
 
-import io.github.jy95.fds.common.config.FDSConfig;
 import io.github.jy95.fds.common.types.TranslatorTiming;
-
 import java.util.concurrent.CompletableFuture;
 
 /**
  * Interface for translating &quot;timing.repeat.frequency&quot; / &quot;timing.repeat.frequencyMax&quot;.
  *
- * @param &lt;C&gt; The type of configuration, extending {@link io.github.jy95.fds.common.config.FDSConfig}.
  * @param &lt;D&gt; The type of the translated data.
  * @author jy95
  * @since 1.0.0
  */
-public interface FrequencyFrequencyMax&lt;C extends FDSConfig, D&gt; extends TranslatorTiming&lt;C, D&gt; {
+public interface FrequencyFrequencyMax&lt;D&gt; extends TranslatorTiming&lt;D&gt; {
 
     // Key constants for frequency message
     String KEY_FREQUENCY = &quot;fields.frequency&quot;;
@@ -25,21 +22,21 @@ public interface FrequencyFrequencyMax&lt;C extends FDSConfig, D&gt; extends Tra
     /** {@inheritDoc} */
     @Override
     default CompletableFuture&lt;String&gt; convert(D dosage) {
-<span class="nc" id="L28">        return CompletableFuture.supplyAsync(() -&gt; {</span>
+<span class="nc" id="L25">        return CompletableFuture.supplyAsync(() -&gt; {</span>
 
-<span class="nc" id="L30">            var hasFrequencyFlag = hasFrequency(dosage);</span>
-<span class="nc" id="L31">            var hasFrequencyMaxFlag = hasFrequencyMax(dosage);</span>
-<span class="nc bnc" id="L32" title="All 4 branches missed.">            var hasBoth = hasFrequencyFlag &amp;&amp; hasFrequencyMaxFlag;</span>
+<span class="nc" id="L27">            var hasFrequencyFlag = hasFrequency(dosage);</span>
+<span class="nc" id="L28">            var hasFrequencyMaxFlag = hasFrequencyMax(dosage);</span>
+<span class="nc bnc" id="L29" title="All 4 branches missed.">            var hasBoth = hasFrequencyFlag &amp;&amp; hasFrequencyMaxFlag;</span>
 
-<span class="nc bnc" id="L34" title="All 2 branches missed.">            if (hasBoth) {</span>
-<span class="nc" id="L35">                return turnFrequencyAndFrequencyMaxToString(dosage);</span>
+<span class="nc bnc" id="L31" title="All 2 branches missed.">            if (hasBoth) {</span>
+<span class="nc" id="L32">                return turnFrequencyAndFrequencyMaxToString(dosage);</span>
             }
 
-<span class="nc bnc" id="L38" title="All 2 branches missed.">            if (hasFrequencyMaxFlag) {</span>
-<span class="nc" id="L39">                return turnFrequencyMaxToString(dosage);</span>
+<span class="nc bnc" id="L35" title="All 2 branches missed.">            if (hasFrequencyMaxFlag) {</span>
+<span class="nc" id="L36">                return turnFrequencyMaxToString(dosage);</span>
             }
 
-<span class="nc" id="L42">            return turnFrequencyToString(dosage);</span>
+<span class="nc" id="L39">            return turnFrequencyToString(dosage);</span>
         });
     }
 

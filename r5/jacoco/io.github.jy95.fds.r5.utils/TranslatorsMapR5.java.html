@@ -31,8 +31,8 @@ public class TranslatorsMapR5 extends AbstractTranslatorsMap&lt;FDSConfigR5, Dos
 
     /** {@inheritDoc} */
     @Override
-    protected Map&lt;DisplayOrder, Supplier&lt;Translator&lt;FDSConfigR5, Dosage&gt;&gt;&gt; createTranslatorsSuppliers() {
-<span class="fc" id="L35">        EnumMap&lt;DisplayOrder, Supplier&lt;Translator&lt;FDSConfigR5, Dosage&gt;&gt;&gt; suppliers = new EnumMap&lt;&gt;(DisplayOrder.class);</span>
+    protected Map&lt;DisplayOrder, Supplier&lt;Translator&lt;Dosage&gt;&gt;&gt; createTranslatorsSuppliers() {
+<span class="fc" id="L35">        EnumMap&lt;DisplayOrder, Supplier&lt;Translator&lt;Dosage&gt;&gt;&gt; suppliers = new EnumMap&lt;&gt;(DisplayOrder.class);</span>
 
         // All display order supported by R5 are initialized here
 <span class="fc" id="L38">        suppliers.put(DisplayOrder.TEXT, TextR5::new);</span>
