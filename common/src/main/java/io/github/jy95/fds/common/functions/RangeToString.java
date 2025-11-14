@@ -1,20 +1,24 @@
 package io.github.jy95.fds.common.functions;
 
 import io.github.jy95.fds.common.config.FDSConfig;
+import io.github.jy95.fds.common.operations.QuantityProcessor;
 
 import java.math.BigDecimal;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
+import org.hl7.fhir.instance.model.api.IBase;
+
 /**
  * Interface for converting range objects to human-readable strings.
  *
- * @param <C> The type of configuration object extending FDSConfig.
  * @param <R> The type of range object to be converted.
+ * @param <Q> The type of quantity object to be converted.
+ * @param <C> The type of configuration object extending FDSConfig.
  * @author jy95
  * @since 1.0.0
  */
-public interface RangeToString<C extends FDSConfig, R> {
+public interface RangeToString<R, Q extends IBase, C extends FDSConfig & QuantityProcessor<Q>> {
 
     /**
      * Converts a range object to a human-readable string asynchronously.
@@ -31,12 +35,46 @@ public interface RangeToString<C extends FDSConfig, R> {
     }
 
     /**
+     * Retrieves the utility class for processing Quantity within the ratio object
+     * 
+     * @return a QuantityToString bound to the FHIR version
+     */
+    QuantityToString<Q, C> getQuantityToString();
+
+    /**
+     * Retrieve the high Quantity
+     * 
+     * @param range The range object.
+     * @return The "high" quantity of the range
+     */
+    Q getHigh(R range);
+
+    /**
+     * Retrieve the low Quantity
+     * 
+     * @param range The range object.
+     * @return The "low" quantity of the range
+     */
+    Q getLow(R range);
+
+    /**
      * Determines if a range has a unit (either code or text).
      *
      * @param range The range object.
      * @return True if the range has a unit, false otherwise.
      */
-    boolean hasUnit(R range);
+    default boolean hasUnit(R range) {
+        var solver = getQuantityToString();
+        
+        // Check high first, more likely to be found in it
+        var hasUnitHigh = hasHigh(range) && solver.hasUnit(getHigh(range));
+        if (hasUnitHigh) {
+            return true;
+        }
+
+        // Otherwise check low
+        return hasLow(range) && solver.hasUnit(getLow(range));
+    }
 
     /**
      * Convert a range without a unit to a human-readable string.
@@ -108,7 +146,11 @@ public interface RangeToString<C extends FDSConfig, R> {
      * @param hasHigh            Boolean indicating if high value is present.
      * @return A CompletableFuture that resolves to the unit string.
      */
-    CompletableFuture<String> getUnitText(TranslationService<C> translationService, R range, boolean hasLow, boolean hasHigh);
+    default CompletableFuture<String> getUnitText(TranslationService<C> translationService, R range, boolean hasLow, boolean hasHigh) {
+        var solver = getQuantityToString();
+        var quantity = (hasHigh) ? getHigh(range) : getLow(range);
+        return solver.enhancedFromUnitToString(translationService,quantity);
+    }
 
     /**
      * Checks if the range has a low value.
