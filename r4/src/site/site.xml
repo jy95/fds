@@ -1,12 +1,14 @@
-<project>
+<?xml version="1.0" encoding="UTF-8"?>
+
+<site name="${project.name}"
+  xmlns="http://maven.apache.org/SITE/2.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/SITE/2.0.0 http://maven.apache.org/xsd/site-2.0.0.xsd">
 
     <!-- https://maven.apache.org/plugins/maven-site-plugin/examples/sitedescriptor.html -->
 
     <!-- Top link -->
-    <bannerLeft>
-        <name>${project.name}</name>
-        <href>${project.scm.url}</href>
-    </bannerLeft>
+    <bannerLeft name="${project.name}" href="${project.scm.url}" />
 
     <body>
         <menu name="🗺️ Overview">
@@ -32,4 +34,4 @@
         <version>2.1.0</version>
     </skin>
 
-</project>
+</site>
