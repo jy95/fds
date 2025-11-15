@@ -1,43 +1,21 @@
 package io.github.jy95.fds.r4.functions;
 
+import io.github.jy95.fds.common.functions.QuantityToString;
 import io.github.jy95.fds.common.functions.RangeToString;
-import io.github.jy95.fds.common.functions.TranslationService;
 import io.github.jy95.fds.r4.config.FDSConfigR4;
-import org.hl7.fhir.r4.model.Range;
 
-import java.math.BigDecimal;
-import java.util.concurrent.CompletableFuture;
+import org.hl7.fhir.r4.model.Quantity;
+import org.hl7.fhir.r4.model.Range;
 
 /**
  * R4 enum for converting range objects to human-readable strings.
  *
  * @author jy95
  */
-public enum RangeToStringR4 implements RangeToString<FDSConfigR4, Range> {
+public enum RangeToStringR4 implements RangeToString<Range, Quantity, FDSConfigR4> {
 
+    // Singleton
     INSTANCE;
-
-    /** {@inheritDoc} */
-    @Override
-    public boolean hasUnit(Range range) {
-        // Check high first, more likely to be found in it
-        if (hasHigh(range) && QuantityToStringR4.INSTANCE.hasUnit(range.getHigh())) {
-            return true;
-        }
-        // Otherwise check low
-        return hasLow(range) && QuantityToStringR4.INSTANCE.hasUnit(range.getLow());
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public CompletableFuture<String> getUnitText(TranslationService<FDSConfigR4> translationService, Range range, boolean hasLow, boolean hasHigh) {
-        return QuantityToStringR4
-                .INSTANCE
-                .enhancedFromUnitToString(
-                        translationService,
-                        (hasHigh) ? range.getHigh() : range.getLow()
-                );
-    }
 
     /** {@inheritDoc} */
     @Override
@@ -53,13 +31,18 @@ public enum RangeToStringR4 implements RangeToString<FDSConfigR4, Range> {
 
     /** {@inheritDoc} */
     @Override
-    public BigDecimal getLowValue(Range range) {
-        return range.getLow().getValue();
+    public Quantity getHigh(Range range) {
+        return range.getHigh();
     }
 
     /** {@inheritDoc} */
     @Override
-    public BigDecimal getHighValue(Range range) {
-        return range.getHigh().getValue();
+    public Quantity getLow(Range range) {
+        return range.getLow();
+    }
+
+    @Override
+    public QuantityToString<Quantity, FDSConfigR4> getQuantityToString() {
+        return QuantityToStringR4.INSTANCE;
     }
 }

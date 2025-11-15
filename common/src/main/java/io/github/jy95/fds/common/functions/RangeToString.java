@@ -1,20 +1,23 @@
 package io.github.jy95.fds.common.functions;
 
 import io.github.jy95.fds.common.config.FDSConfig;
+import io.github.jy95.fds.common.operations.QuantityProcessor;
 
-import java.math.BigDecimal;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
+
+import org.hl7.fhir.instance.model.api.IBase;
 
 /**
  * Interface for converting range objects to human-readable strings.
  *
- * @param <C> The type of configuration object extending FDSConfig.
  * @param <R> The type of range object to be converted.
+ * @param <Q> The type of quantity object to be converted.
+ * @param <C> The type of configuration object extending FDSConfig.
  * @author jy95
  * @since 1.0.0
  */
-public interface RangeToString<C extends FDSConfig, R> {
+public interface RangeToString<R, Q extends IBase, C extends FDSConfig & QuantityProcessor<Q>> {
 
     /**
      * Converts a range object to a human-readable string asynchronously.
@@ -31,12 +34,68 @@ public interface RangeToString<C extends FDSConfig, R> {
     }
 
     /**
+     * Retrieves the utility class for processing Quantity within the range object
+     * 
+     * @return a QuantityToString bound to the FHIR version
+     */
+    QuantityToString<Q, C> getQuantityToString();
+
+    /**
+     * Retrieve the high Quantity
+     * 
+     * @param range The range object.
+     * @return The "high" quantity of the range
+     */
+    Q getHigh(R range);
+
+    /**
+     * Retrieve the low Quantity
+     * 
+     * @param range The range object.
+     * @return The "low" quantity of the range
+     */
+    Q getLow(R range);
+
+    /**
      * Determines if a range has a unit (either code or text).
      *
      * @param range The range object.
      * @return True if the range has a unit, false otherwise.
      */
-    boolean hasUnit(R range);
+    default boolean hasUnit(R range) {
+        var solver = getQuantityToString();
+        
+        // Check high first, more likely to be found in it
+        var hasHighUnit = hasHigh(range) && solver.hasUnit(getHigh(range));
+        var hasLowUnit = hasLow(range) && solver.hasUnit(getLow(range));
+
+        // Otherwise check low
+        return hasHighUnit || hasLowUnit;
+    }
+
+    /**
+     * Compute the base arguments required for formatting the range object.
+     * @param range The range object.
+     * @param unitAsText The unit, if present
+     * @return A Map containing "minValue", "maxValue", and "condition" at least
+     */
+    default Map<String, Object> getBaseArguments(R range, String unitAsText) {
+        var hasLow = hasLow(range);
+        var hasHigh = hasHigh(range);
+        var solver = getQuantityToString();
+
+        var condition = (hasLow && hasHigh) ? "0" : (hasHigh) ? "1" : (hasLow) ? "2" : "other";
+
+        var minValue = hasLow ? solver.getValue(getLow(range)) : "";
+        var maxValue = hasHigh ? solver.getValue(getHigh(range)) : "";
+
+        return Map.of(
+            "minValue", minValue,
+            "maxValue", maxValue,
+            "condition", condition,
+            "unit", unitAsText
+        );
+    }
 
     /**
      * Convert a range without a unit to a human-readable string.
@@ -47,21 +106,8 @@ public interface RangeToString<C extends FDSConfig, R> {
      */
     default CompletableFuture<String> convertWithoutUnit(TranslationService<C> translationService, R range) {
         return CompletableFuture.supplyAsync(() -> {
-            boolean hasLow = hasLow(range);
-            boolean hasHigh = hasHigh(range);
-            
-            // Retrieve message format using the service
+            var arguments = getBaseArguments(range, "");
             var messageFormat = translationService.getMessage("amount.range.withoutUnit");
-
-            String condition = (hasLow && hasHigh) ? "0" : (hasHigh) ? "1" : (hasLow) ? "2" : "other";
-
-            // Note: getValue methods are expected to return BigDecimals which MessageFormat handles
-            Map<String, Object> arguments = Map.of(
-                    "minValue", hasLow ? getLowValue(range) : "",
-                    "maxValue", hasHigh ? getHighValue(range) : "",
-                    "condition", condition
-            );
-
             return messageFormat.format(arguments);
         });
     }
@@ -74,32 +120,16 @@ public interface RangeToString<C extends FDSConfig, R> {
      * @return A CompletableFuture that resolves to the human-readable string.
      */
     default CompletableFuture<String> convertWithUnit(TranslationService<C> translationService, R range) {
-        boolean hasLow = hasLow(range);
-        boolean hasHigh = hasHigh(range);
         
-        // Retrieve message format using the service
         var messageFormat = translationService.getMessage("amount.range.withUnit");
-        
-        // Retrieve unit text, passing the service
-        CompletableFuture<String> unitRetrieval = getUnitText(translationService, range, hasLow, hasHigh);
-
-        String condition = (hasLow && hasHigh) ? "0" : (hasHigh) ? "1" : (hasLow) ? "2" : "other";
+        var unitRetrieval = getUnitText(translationService, range);
 
         return unitRetrieval
                 .thenApplyAsync(unitAsText -> {
-                    // Use the non-shared MessageFormat instance retrieved earlier
-                    Map<String, Object> arguments = Map.of(
-                            "minValue", hasLow ? getLowValue(range) : "",
-                            "maxValue", hasHigh ? getHighValue(range) : "",
-                            "condition", condition,
-                            "unit", unitAsText
-                    );
 
-                    // Note: The format method on MessageFormat is not thread-safe, 
-                    // but translationService.getMessage(key) returns a new instance, 
-                    // and this block is executed inside a .thenApplyAsync, 
-                    // so it is confined to a thread, which makes it safe.
+                    var arguments = getBaseArguments(range, unitAsText);
                     return messageFormat.format(arguments);
+                    
                 });
     }
 
@@ -108,11 +138,13 @@ public interface RangeToString<C extends FDSConfig, R> {
      *
      * @param translationService The service providing localized strings and configuration context.
      * @param range              The range object.
-     * @param hasLow             Boolean indicating if a low value is present.
-     * @param hasHigh            Boolean indicating if high value is present.
      * @return A CompletableFuture that resolves to the unit string.
      */
-    CompletableFuture<String> getUnitText(TranslationService<C> translationService, R range, boolean hasLow, boolean hasHigh);
+    default CompletableFuture<String> getUnitText(TranslationService<C> translationService, R range) {
+        var solver = getQuantityToString();
+        var quantity = hasHigh(range) ? getHigh(range) : getLow(range);
+        return solver.enhancedFromUnitToString(translationService,quantity);
+    }
 
     /**
      * Checks if the range has a low value.
@@ -129,20 +161,4 @@ public interface RangeToString<C extends FDSConfig, R> {
      * @return True if the range has a high value, false otherwise.
      */
     boolean hasHigh(R range);
-
-    /**
-     * Retrieves the low value of the range.
-     *
-     * @param range The range object.
-     * @return The low value.
-     */
-    BigDecimal getLowValue(R range);
-
-    /**
-     * Retrieves the high value of the range.
-     *
-     * @param range The range object.
-     * @return The high value.
-     */
-    BigDecimal getHighValue(R range);
 }
