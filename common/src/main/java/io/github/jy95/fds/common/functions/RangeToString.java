@@ -74,6 +74,30 @@ public interface RangeToString<R, Q extends IBase, C extends FDSConfig & Quantit
     }
 
     /**
+     * Compute the base arguments required for formatting the range object.
+     * @param range The range object.
+     * @param unitAsText The unit, if present
+     * @return A Map containing "minValue", "maxValue", and "condition" at least
+     */
+    default Map<String, Object> getBaseArguments(R range, String unitAsText) {
+        var hasLow = hasLow(range);
+        var hasHigh = hasHigh(range);
+        var solver = getQuantityToString();
+
+        var condition = (hasLow && hasHigh) ? "0" : (hasHigh) ? "1" : (hasLow) ? "2" : "other";
+
+        var minValue = hasLow ? solver.getValue(getLow(range)) : "";
+        var maxValue = hasHigh ? solver.getValue(getHigh(range)) : "";
+
+        return Map.of(
+            "minValue", minValue,
+            "maxValue", maxValue,
+            "condition", condition,
+            "unit", unitAsText
+        );
+    }
+
+    /**
      * Convert a range without a unit to a human-readable string.
      *
      * @param translationService The service providing localized strings and configuration context.
@@ -82,24 +106,8 @@ public interface RangeToString<R, Q extends IBase, C extends FDSConfig & Quantit
      */
     default CompletableFuture<String> convertWithoutUnit(TranslationService<C> translationService, R range) {
         return CompletableFuture.supplyAsync(() -> {
-            boolean hasLow = hasLow(range);
-            boolean hasHigh = hasHigh(range);
-            var solver = getQuantityToString();
-            
-            // Retrieve message format using the service
+            var arguments = getBaseArguments(range, "");
             var messageFormat = translationService.getMessage("amount.range.withoutUnit");
-
-            String condition = (hasLow && hasHigh) ? "0" : (hasHigh) ? "1" : (hasLow) ? "2" : "other";
-            var minValue = hasLow ? solver.getValue(getLow(range)) : "";
-            var maxValue = hasHigh ? solver.getValue(getHigh(range)) : "";
-
-            // Note: getValue methods are expected to return BigDecimals which MessageFormat handles
-            Map<String, Object> arguments = Map.of(
-                    "minValue", minValue,
-                    "maxValue", maxValue,
-                    "condition", condition
-            );
-
             return messageFormat.format(arguments);
         });
     }
@@ -112,29 +120,14 @@ public interface RangeToString<R, Q extends IBase, C extends FDSConfig & Quantit
      * @return A CompletableFuture that resolves to the human-readable string.
      */
     default CompletableFuture<String> convertWithUnit(TranslationService<C> translationService, R range) {
-        var hasLow = hasLow(range);
-        var hasHigh = hasHigh(range);
-        var solver = getQuantityToString();
         
-        // Retrieve message format using the service
         var messageFormat = translationService.getMessage("amount.range.withUnit");
-        
-        // Retrieve unit text, passing the service
-        CompletableFuture<String> unitRetrieval = getUnitText(translationService, range);
-
-        String condition = (hasLow && hasHigh) ? "0" : (hasHigh) ? "1" : (hasLow) ? "2" : "other";
-        var minValue = hasLow ? solver.getValue(getLow(range)) : "";
-        var maxValue = hasHigh ? solver.getValue(getHigh(range)) : "";
+        var unitRetrieval = getUnitText(translationService, range);
 
         return unitRetrieval
                 .thenApplyAsync(unitAsText -> {
 
-                    Map<String, Object> arguments = Map.of(
-                            "minValue", minValue,
-                            "maxValue", maxValue,
-                            "condition", condition,
-                            "unit", unitAsText
-                    );
+                    var arguments = getBaseArguments(range, unitAsText);
                     return messageFormat.format(arguments);
                     
                 });
