@@ -1,21 +1,48 @@
 package io.github.jy95.fds.common.functions;
 
 import io.github.jy95.fds.common.config.FDSConfig;
+import io.github.jy95.fds.common.operations.QuantityProcessor;
 
 import java.math.BigDecimal;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.hl7.fhir.instance.model.api.IBase;
+
 /**
  * Interface for converting ratio objects to human-readable strings.
  *
- * @param <C> The type of configuration object extending FDSConfig.
  * @param <R> The type of ratio object to be converted.
+ * @param <Q> The type of quantity object to be converted.
+ * @param <C> The type of configuration object extending FDSConfig.
  * @author jy95
  * @since 1.0.0
  */
-public interface RatioToString<C extends FDSConfig, R> {
+public interface RatioToString<R, Q extends IBase, C extends FDSConfig & QuantityProcessor<Q>> {
+
+    /**
+     * Retrieves the utility class for processing Quantity within the ratio object
+     * 
+     * @return a QuantityToString bound to the FHIR version
+     */
+    QuantityToString<Q, C> getQuantityToString();
+
+    /**
+     * Retrieve the numerator
+     * 
+     * @param ratio The ratio object.
+     * @return The "numerator" quantity of the ratio
+     */
+    Q getNumerator(R ratio);
+
+    /**
+     * Retrieve the denominator
+     * 
+     * @param ratio The ratio object.
+     * @return The "denominator" quantity of the ratio
+     */
+    Q getDenominator(R ratio);
 
     /**
      * Converts a ratio object to a human-readable string asynchronously.
@@ -55,8 +82,10 @@ public interface RatioToString<C extends FDSConfig, R> {
         var hasDenominator = hasDenominator(ratio);
         var hasBothElements = hasNumerator && hasDenominator;
 
+        var solver = getQuantityToString();
+
         var hasUnitRatio = hasUnitRatio(ratio);
-        var denominatorValue = getDenominatorValue(ratio);
+        var denominatorValue = hasDenominator ? solver.getValue(getDenominator(ratio)) : BigDecimal.ONE;
         var mustUseLinkword = hasUnitRatio && hasBothElements;
 
         if (mustUseLinkword) {
@@ -67,13 +96,6 @@ public interface RatioToString<C extends FDSConfig, R> {
         return hasBothElements ? ":" : "";
     }
 
-    /**
-     * Retrieves the denominator value of the ratio.
-     *
-     * @param ratio The ratio object.
-     * @return The denominator value as BigDecimal.
-     */
-    BigDecimal getDenominatorValue(R ratio);
 
     /**
      * Determines if the ratio has a unit in either numerator or denominator.
@@ -81,7 +103,13 @@ public interface RatioToString<C extends FDSConfig, R> {
      * @param ratio The ratio object.
      * @return True if either the numerator or denominator has a unit, false otherwise.
      */
-    boolean hasUnitRatio(R ratio);
+    default boolean hasUnitRatio(R ratio) {
+        var solver = getQuantityToString();
+
+        var hasNumeratorUnit = hasNumerator(ratio) && solver.hasUnit(getNumerator(ratio));
+        var hasDenominatorUnit = hasDenominator(ratio) && solver.hasUnit(getDenominator(ratio));
+        return hasNumeratorUnit || hasDenominatorUnit;
+    }
 
     /**
      * Determines if the ratio has a numerator.
@@ -98,7 +126,10 @@ public interface RatioToString<C extends FDSConfig, R> {
      * @param ratio              The ratio object.
      * @return A CompletableFuture that resolves to the human-readable string for the numerator.
      */
-    CompletableFuture<String> convertNumerator(TranslationService<C> translationService, R ratio);
+    default CompletableFuture<String> convertNumerator(TranslationService<C> translationService, R ratio) {
+        var solver = getQuantityToString();
+        return solver.convert(translationService, getNumerator(ratio));
+    }
 
     /**
      * Determines if the ratio has a denominator.
@@ -115,5 +146,23 @@ public interface RatioToString<C extends FDSConfig, R> {
      * @param ratio              The ratio object.
      * @return A CompletableFuture that resolves to the human-readable string for the denominator.
      */
-    CompletableFuture<String> convertDenominator(TranslationService<C> translationService, R ratio);
+    default CompletableFuture<String> convertDenominator(TranslationService<C> translationService, R ratio) {
+        var solver = getQuantityToString();
+        
+        var denominator = getDenominator(ratio);
+        // Where the denominator value is known to be fixed to "1", Quantity should be used instead of Ratio
+        var denominatorValue = solver.getValue(denominator);
+
+        // For titers cases (e.g., 1:128)
+        if (!solver.hasUnit(denominator)) {
+            return CompletableFuture.completedFuture(denominatorValue.toString());
+        }
+
+        // For the per case
+        if (BigDecimal.ONE.equals(denominatorValue)) {
+            return solver.enhancedFromUnitToString(translationService, denominator);
+        }
+
+        return solver.convert(translationService, denominator);
+    }
 }

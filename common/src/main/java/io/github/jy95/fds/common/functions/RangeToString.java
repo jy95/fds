@@ -34,7 +34,7 @@ public interface RangeToString<R, Q extends IBase, C extends FDSConfig & Quantit
     }
 
     /**
-     * Retrieves the utility class for processing Quantity within the ratio object
+     * Retrieves the utility class for processing Quantity within the range object
      * 
      * @return a QuantityToString bound to the FHIR version
      */
