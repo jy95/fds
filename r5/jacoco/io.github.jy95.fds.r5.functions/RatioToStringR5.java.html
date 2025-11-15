@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RatioToStringR5.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">FHIR Dosage Support - R5</a> &gt; <a href="index.source.html" class="el_package">io.github.jy95.fds.r5.functions</a> &gt; <span class="el_source">RatioToStringR5.java</span></div><h1>RatioToStringR5.java</h1><pre class="source lang-java linenums">package io.github.jy95.fds.r5.functions;
 
+import io.github.jy95.fds.common.functions.QuantityToString;
 import io.github.jy95.fds.common.functions.RatioToString;
-import io.github.jy95.fds.common.functions.TranslationService;
 import io.github.jy95.fds.r5.config.FDSConfigR5;
-import org.hl7.fhir.r5.model.Ratio;
 
-import java.math.BigDecimal;
-import java.util.concurrent.CompletableFuture;
+import org.hl7.fhir.r5.model.Quantity;
+import org.hl7.fhir.r5.model.Ratio;
 
 /**
  * R5 enum for converting ratio objects to human-readable strings.
  *
  * @author jy95
  */
-<span class="fc" id="L16">public enum RatioToStringR5 implements RatioToString&lt;FDSConfigR5, Ratio&gt; {</span>
+<span class="fc" id="L15">public enum RatioToStringR5 implements RatioToString&lt;Ratio, Quantity, FDSConfigR5&gt; {</span>
 
+    // Singleton
 <span class="fc" id="L18">    INSTANCE;</span>
 
     /** {@inheritDoc} */
@@ -25,54 +25,27 @@ import java.util.concurrent.CompletableFuture;
 
     /** {@inheritDoc} */
     @Override
-    public CompletableFuture&lt;String&gt; convertNumerator(TranslationService&lt;FDSConfigR5&gt; translationService, Ratio ratio) {
-<span class="fc" id="L29">        return QuantityToStringR5</span>
-                .INSTANCE
-<span class="fc" id="L31">                .convert(translationService, ratio.getNumerator());</span>
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public boolean hasDenominator(Ratio ratio) {
-<span class="fc" id="L37">        return ratio.hasDenominator();</span>
+<span class="fc" id="L29">        return ratio.hasDenominator();</span>
     }
 
     /** {@inheritDoc} */
     @Override
-    public CompletableFuture&lt;String&gt; convertDenominator(TranslationService&lt;FDSConfigR5&gt; translationService, Ratio ratio) {
-<span class="fc" id="L43">        var denominator = ratio.getDenominator();</span>
-        // Where the denominator value is known to be fixed to &quot;1&quot;, Quantity should be used instead of Ratio
-<span class="fc" id="L45">        var denominatorValue = denominator.getValue();</span>
-
-        // For titers cases (e.g., 1:128)
-<span class="fc bfc" id="L48" title="All 2 branches covered.">        if (!QuantityToStringR5.INSTANCE.hasUnit(denominator)) {</span>
-<span class="fc" id="L49">            return CompletableFuture.completedFuture(denominatorValue.toString());</span>
-        }
-
-        // For the per case
-<span class="fc bfc" id="L53" title="All 2 branches covered.">        if (BigDecimal.ONE.equals(denominatorValue)) {</span>
-<span class="fc" id="L54">            return QuantityToStringR5</span>
-                    .INSTANCE
-<span class="fc" id="L56">                    .enhancedFromUnitToString(translationService, denominator);</span>
-        }
-
-<span class="fc" id="L59">        return QuantityToStringR5</span>
-                .INSTANCE
-<span class="fc" id="L61">                .convert(translationService, denominator);</span>
+    public QuantityToString&lt;Quantity, FDSConfigR5&gt; getQuantityToString() {
+<span class="fc" id="L35">        return QuantityToStringR5.INSTANCE;</span>
     }
 
     /** {@inheritDoc} */
     @Override
-    public BigDecimal getDenominatorValue(Ratio ratio) {
-<span class="fc bfc" id="L67" title="All 2 branches covered.">        return hasDenominator(ratio) ? ratio.getDenominator().getValue() : BigDecimal.ONE;</span>
+    public Quantity getNumerator(Ratio ratio) {
+<span class="fc" id="L41">        return ratio.getNumerator();</span>
     }
 
     /** {@inheritDoc} */
     @Override
-    public boolean hasUnitRatio(Ratio ratio) {
-<span class="fc bfc" id="L73" title="All 4 branches covered.">        var hasNumeratorUnit = hasNumerator(ratio) &amp;&amp; QuantityToStringR5.INSTANCE.hasUnit(ratio.getNumerator());</span>
-<span class="fc bfc" id="L74" title="All 4 branches covered.">        var hasDenominatorUnit = hasDenominator(ratio) &amp;&amp; QuantityToStringR5.INSTANCE.hasUnit(ratio.getDenominator());</span>
-<span class="fc bfc" id="L75" title="All 4 branches covered.">        return hasNumeratorUnit || hasDenominatorUnit;</span>
+    public Quantity getDenominator(Ratio ratio) {
+<span class="fc" id="L47">        return ratio.getDenominator();</span>
     }
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

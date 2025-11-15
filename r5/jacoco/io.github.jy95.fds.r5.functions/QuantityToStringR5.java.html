@@ -1,63 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>QuantityToStringR5.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">FHIR Dosage Support - R5</a> &gt; <a href="index.source.html" class="el_package">io.github.jy95.fds.r5.functions</a> &gt; <span class="el_source">QuantityToStringR5.java</span></div><h1>QuantityToStringR5.java</h1><pre class="source lang-java linenums">package io.github.jy95.fds.r5.functions;
 
 import io.github.jy95.fds.common.functions.QuantityToString;
-import io.github.jy95.fds.common.functions.TranslationService;
-import io.github.jy95.fds.common.functions.UnitsOfTimeFormatter;
 import io.github.jy95.fds.r5.config.FDSConfigR5;
 import org.hl7.fhir.r5.model.Quantity;
 
 import java.math.BigDecimal;
-import java.util.concurrent.CompletableFuture;
 
 /**
  * R5 enum for converting quantity objects to human-readable strings.
  *
  * @author jy95
  */
-<span class="fc" id="L17">public enum QuantityToStringR5 implements QuantityToString&lt;FDSConfigR5, Quantity&gt; {</span>
+<span class="fc" id="L14">public enum QuantityToStringR5 implements QuantityToString&lt;Quantity, FDSConfigR5&gt; {</span>
 
-<span class="fc" id="L19">    INSTANCE;</span>
+    // Singleton instance
+<span class="fc" id="L17">    INSTANCE;</span>
 
     /** {@inheritDoc} */
     @Override
     public boolean hasUnit(Quantity quantity) {
-<span class="fc bfc" id="L24" title="All 4 branches covered.">        return quantity.hasUnit() || quantity.hasCode();</span>
+<span class="fc bfc" id="L22" title="All 4 branches covered.">        return quantity.hasUnit() || quantity.hasCode();</span>
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public boolean hasValue(Quantity quantity) {
+<span class="fc" id="L28">        return quantity.hasValue();</span>
     }
 
     /** {@inheritDoc} */
     @Override
     public BigDecimal getValue(Quantity quantity) {
-<span class="fc" id="L30">        return quantity.getValue();</span>
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public CompletableFuture&lt;String&gt; enhancedFromUnitToString(TranslationService&lt;FDSConfigR5&gt; translationService, Quantity quantity) {
-<span class="fc" id="L36">        var config = translationService.getConfig();</span>
-
-        // Duration units are built-in supported
-<span class="pc bpc" id="L39" title="2 of 6 branches missed.">        if (quantity.hasSystem() &amp;&amp; quantity.hasCode() &amp;&amp; TIME_SYSTEMS.contains(quantity.getSystem())) {</span>
-<span class="fc" id="L40">            return CompletableFuture.supplyAsync(() -&gt; {</span>
-<span class="fc" id="L41">                String code = quantity.getCode();</span>
-<span class="pc bpc" id="L42" title="1 of 2 branches missed.">                BigDecimal amount = quantity.hasValue() ? quantity.getValue() : BigDecimal.ONE;</span>
-<span class="fc" id="L43">                return UnitsOfTimeFormatter.formatWithoutCount(config.getLocale(), code, amount);</span>
-            });
-        }
-
-        // Otherwise, let config do the charm
-<span class="fc" id="L48">        return config.fromFHIRQuantityUnitToString(quantity);</span>
+<span class="fc" id="L34">        return quantity.getValue();</span>
     }
 
     /** {@inheritDoc} */
     @Override
     public boolean hasComparator(Quantity quantity) {
-<span class="fc" id="L54">        return quantity.hasComparator();</span>
+<span class="fc" id="L40">        return quantity.hasComparator();</span>
     }
 
     /** {@inheritDoc} */
     @Override
     public String getComparatorCode(Quantity quantity) {
-<span class="fc" id="L60">        return quantity.getComparator().toCode();</span>
+<span class="fc" id="L46">        return quantity.getComparator().toCode();</span>
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public boolean hasSystem(Quantity quantity) {
+<span class="fc" id="L52">        return quantity.hasSystem();</span>
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public boolean hasCode(Quantity quantity) {
+<span class="fc" id="L58">        return quantity.hasCode();</span>
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public String getSystem(Quantity quantity) {
+<span class="fc" id="L64">        return quantity.getSystem();</span>
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public String getCode(Quantity quantity) {
+<span class="fc" id="L70">        return quantity.getCode();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
