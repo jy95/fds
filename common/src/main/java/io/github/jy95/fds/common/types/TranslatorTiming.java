@@ -1,8 +1,10 @@
 package io.github.jy95.fds.common.types;
 
 /**
- * Interface for translators that specifically handle dosage objects with "Timing" elements.
- * This class extends {@link io.github.jy95.fds.common.types.Translator} to provide additional checks for timing-related data.
+ * Interface for translators that specifically handle dosage objects with
+ * "Timing" elements.
+ * This class extends {@link io.github.jy95.fds.common.types.Translator} to
+ * provide additional checks for timing-related data.
  *
  * @param <D> the type of dosage field to be translated
  * @author jy95
@@ -14,16 +16,19 @@ public interface TranslatorTiming<D> extends Translator<D> {
      * Checks if the given dosage object contains a "Timing" element.
      *
      * @param dosage the dosage object to check
-     * @return {@code true} if the dosage object has a "Timing" element, {@code false} otherwise
+     * @return {@code true} if the dosage object has a "Timing" element,
+     *         {@code false} otherwise
      */
     boolean hasTiming(D dosage);
 
     /**
-     * Checks if the "Timing" element of the given dosage object contains the required conditions
+     * Checks if the "Timing" element of the given dosage object contains the
+     * required conditions
      * for this translator.
      *
      * @param dosage the dosage object to check
-     * @return {@code true} if the "Timing" element has the required conditions, {@code false} otherwise
+     * @return {@code true} if the "Timing" element has the required conditions,
+     *         {@code false} otherwise
      */
     boolean hasRequiredElements(D dosage);
 

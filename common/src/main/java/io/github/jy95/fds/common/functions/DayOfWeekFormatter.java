@@ -19,7 +19,9 @@ import java.util.concurrent.ConcurrentHashMap;
 public final class DayOfWeekFormatter {
 
     /**
-     * Map each code of <a href="https://build.fhir.org/valueset-days-of-week.html">Day Of Week</a> to their ICU4J values
+     * Map each code of
+     * <a href="https://build.fhir.org/valueset-days-of-week.html">Day Of Week</a>
+     * to their ICU4J values
      */
     private static final Map<String, Integer> DAY_MAPPING = Map.ofEntries(
             Map.entry("mon", Calendar.MONDAY),
@@ -28,8 +30,7 @@ public final class DayOfWeekFormatter {
             Map.entry("thu", Calendar.THURSDAY),
             Map.entry("fri", Calendar.FRIDAY),
             Map.entry("sat", Calendar.SATURDAY),
-            Map.entry("sun", Calendar.SUNDAY)
-    );
+            Map.entry("sun", Calendar.SUNDAY));
 
     /**
      * Cache for storing localized DateFormatSymbols instances.
@@ -46,18 +47,18 @@ public final class DayOfWeekFormatter {
      */
     private static String[] getLongWeekDays(Locale locale) {
         // Use computeIfAbsent for thread-safe caching and calculation
-        return WEEKDAYS_CACHE.computeIfAbsent(locale, loc -> 
-            DateFormatSymbols
+        return WEEKDAYS_CACHE.computeIfAbsent(locale, loc -> DateFormatSymbols
                 .getInstance(loc)
-                .getWeekdays()
-        );
+                .getWeekdays());
     }
 
     /**
      * Translates a single-day code into its corresponding day of the week in text,
      * utilizing the specified locale.
      *
-     * @param code The <a href="https://build.fhir.org/valueset-days-of-week.html">Day Of Week</a> code to translate
+     * @param code   The
+     *               <a href="https://build.fhir.org/valueset-days-of-week.html">Day
+     *               Of Week</a> code to translate
      * @param locale The locale to use for translation
      * @return the translated day of the week as a string.
      */
@@ -65,5 +66,5 @@ public final class DayOfWeekFormatter {
         var dayIndex = DAY_MAPPING.get(code);
         var longWeekDays = getLongWeekDays(locale);
         return longWeekDays[dayIndex];
-    }   
+    }
 }

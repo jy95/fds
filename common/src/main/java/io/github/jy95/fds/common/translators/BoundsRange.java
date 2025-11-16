@@ -11,7 +11,9 @@ import io.github.jy95.fds.common.types.TranslatorTiming;
  */
 public interface BoundsRange<D> extends TranslatorTiming<D> {
 
-    // Key constant for boundsRange message
+    /**
+     * Key constant for boundsRange message
+     */
     String KEY_BOUNDS_RANGE = "fields.boundsRange";
 
 }

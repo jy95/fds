@@ -11,10 +11,14 @@ import java.util.concurrent.CompletableFuture;
  * @since 1.0.0
  */
 public interface PeriodPeriodMax<D> extends TranslatorTiming<D> {
-    
-    // Key constant for periodMax message
+
+    /**
+     * Key constant for periodMax message
+     */
     String KEY_PERIOD_MAX = "fields.periodMax";
-    // Key constant for period message
+    /**
+     * Key constant for period message
+     */
     String KEY_PERIOD = "fields.period";
 
     /** {@inheritDoc} */
@@ -49,7 +53,8 @@ public interface PeriodPeriodMax<D> extends TranslatorTiming<D> {
      * Checks whether a periodMax value is present in the data object.
      *
      * @param dosage The data object to check.
-     * @return {@code true} if a periodMax value is present; {@code false} otherwise.
+     * @return {@code true} if a periodMax value is present; {@code false}
+     *         otherwise.
      */
     boolean hasPeriodMax(D dosage);
 

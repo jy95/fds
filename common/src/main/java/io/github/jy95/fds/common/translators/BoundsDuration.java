@@ -11,7 +11,9 @@ import io.github.jy95.fds.common.types.TranslatorTiming;
  */
 public interface BoundsDuration<D> extends TranslatorTiming<D> {
 
-    // Key constant for boundsDuration message
+    /**
+     * Key constant for boundsDuration message
+     */
     String KEY_BOUNDS_DURATION = "fields.boundsDuration";
 
 }

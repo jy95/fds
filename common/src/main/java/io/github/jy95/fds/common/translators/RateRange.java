@@ -11,7 +11,9 @@ import io.github.jy95.fds.common.types.Translator;
  */
 public interface RateRange<D> extends Translator<D> {
 
-    // Key constant for rateRange message
+    /**
+     * Key constant for rateRange message
+     */
     String KEY_RATE_RANGE = "fields.rateRange";
 
 }

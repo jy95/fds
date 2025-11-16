@@ -8,8 +8,10 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 /**
- * A custom ResourceBundle.Control implementation that aggregates multiple ResourceBundles.
- * This class facilitates the creation of a MultiResourceBundle by combining dependent ResourceBundles.
+ * A custom ResourceBundle.Control implementation that aggregates multiple
+ * ResourceBundles.
+ * This class facilitates the creation of a MultiResourceBundle by combining
+ * dependent ResourceBundles.
  *
  * @author jy95
  * @since 1.0.0
@@ -27,10 +29,12 @@ public class MultiResourceBundleControl extends ResourceBundle.Control {
     private final String[] dependentBaseNames;
 
     /**
-     * Constructs a MultiResourceBundleControl with the specified base name and dependent base names.
+     * Constructs a MultiResourceBundleControl with the specified base name and
+     * dependent base names.
      *
-     * @param baseName          the base name of the primary ResourceBundle.
-     * @param dependentBaseNames the base names of additional ResourceBundles to aggregate.
+     * @param baseName           the base name of the primary ResourceBundle.
+     * @param dependentBaseNames the base names of additional ResourceBundles to
+     *                           aggregate.
      */
     public MultiResourceBundleControl(String baseName, String... dependentBaseNames) {
         this.baseName = baseName;

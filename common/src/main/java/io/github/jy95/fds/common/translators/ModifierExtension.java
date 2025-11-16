@@ -11,7 +11,7 @@ import io.github.jy95.fds.common.types.Translator;
  * @since 2.1.4
  */
 public interface ModifierExtension<D extends IBaseHasModifierExtensions> extends Translator<D> {
-    
+
     /** {@inheritDoc} */
     @Override
     default boolean isPresent(D dosage) {

@@ -13,7 +13,8 @@ import java.util.Locale;
 public interface FormatDateTimes<T> {
 
     /**
-     * Converts a single date or time object to a human-readable string using the specified locale.
+     * Converts a single date or time object to a human-readable string using the
+     * specified locale.
      *
      * @param locale The locale to use for formatting.
      * @param date   The date or time object to format.
@@ -22,11 +23,13 @@ public interface FormatDateTimes<T> {
     String convert(Locale locale, T date);
 
     /**
-     * Converts multiple date or time objects to human-readable strings using the specified locale.
+     * Converts multiple date or time objects to human-readable strings using the
+     * specified locale.
      *
      * @param locale The locale to use for formatting.
      * @param dates  The date or time objects to format.
-     * @return A list of human-readable string representations of the dates or times.
+     * @return A list of human-readable string representations of the dates or
+     *         times.
      */
     default List<String> convert(Locale locale, List<T> dates) {
         return dates

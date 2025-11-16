@@ -49,9 +49,11 @@ public enum DisplayOrder {
      */
     PERIOD_PERIOD_MAX(List.of("timing.repeat.period", "timing.repeat.periodMax")),
     /**
-     * Display "timing.repeat.frequency" / "timing.repeat.frequencyMax" / "timing.repeat.period" / "timing.repeat.periodMax"
+     * Display "timing.repeat.frequency" / "timing.repeat.frequencyMax" /
+     * "timing.repeat.period" / "timing.repeat.periodMax"
      */
-    FREQUENCY_FREQUENCY_MAX_PERIOD_PERIOD_MAX(List.of("timing.repeat.frequency", "timing.repeat.frequencyMax", "timing.repeat.period", "timing.repeat.periodMax")),
+    FREQUENCY_FREQUENCY_MAX_PERIOD_PERIOD_MAX(List.of("timing.repeat.frequency", "timing.repeat.frequencyMax",
+            "timing.repeat.period", "timing.repeat.periodMax")),
     /**
      * Display "timing.repeat.offset" / "timing.repeat.when"
      */
@@ -73,7 +75,8 @@ public enum DisplayOrder {
      */
     SITE(List.of("site")),
     /**
-     * Display "asNeededBoolean" / "asNeededCodeableConcept" / "asNeeded" / "asNeededFor"
+     * Display "asNeededBoolean" / "asNeededCodeableConcept" / "asNeeded" /
+     * "asNeededFor"
      */
     AS_NEEDED(List.of("asNeededBoolean", "asNeededCodeableConcept", "asNeeded", "asNeededFor")),
     /**
@@ -146,7 +149,7 @@ public enum DisplayOrder {
     TIMING_MODIFIER_EXTENSION(List.of("timing.modifierExtension"));
 
     /**
-     *  Getter for the <code>field</code>(s) covered by the display order
+     * Getter for the <code>field</code>(s) covered by the display order
      */
     private final List<String> fields;
 

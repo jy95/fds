@@ -11,7 +11,9 @@ import io.github.jy95.fds.common.types.TranslatorTiming;
  */
 public interface DayOfWeek<D> extends TranslatorTiming<D> {
 
-    // Key constant for dayOfWeek message
+    /**
+     * Key constant for dayOfWeek message
+     */
     String KEY_DAY_OF_WEEK = "fields.dayOfWeek";
 
 }

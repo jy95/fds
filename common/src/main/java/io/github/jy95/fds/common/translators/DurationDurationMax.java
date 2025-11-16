@@ -7,7 +7,8 @@ import java.util.concurrent.CompletableFuture;
 import java.util.List;
 
 /**
- * Interface for translating "timing.repeat.duration" / "timing.repeat.durationMax".
+ * Interface for translating "timing.repeat.duration" /
+ * "timing.repeat.durationMax".
  *
  * @param <D> The type of the translated data.
  * @author jy95
@@ -15,9 +16,13 @@ import java.util.List;
  */
 public interface DurationDurationMax<D> extends TranslatorTiming<D> {
 
-    // Key constants for duration message
+    /**
+     * Key constants for duration message
+     */
     String KEY_DURATION = "fields.duration";
-    // Key constant for durationMax message
+    /**
+     * Key constant for durationMax message
+     */
     String KEY_DURATION_MAX = "fields.durationMax";
 
     /** {@inheritDoc} */

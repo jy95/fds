@@ -11,7 +11,9 @@ import io.github.jy95.fds.common.types.Translator;
  */
 public interface RateQuantity<D> extends Translator<D> {
 
-    // Key constant for rateQuantity message
+    /**
+     * Key constant for rateQuantity message
+     */
     String KEY_RATE_QUANTITY = "fields.rateQuantity";
 
 }

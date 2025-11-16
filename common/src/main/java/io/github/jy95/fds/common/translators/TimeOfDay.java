@@ -13,7 +13,9 @@ import java.util.List;
  */
 public interface TimeOfDay<D> extends TranslatorTiming<D> {
 
-    // Key constant for timeOfDay message
+    /**
+     * Key constant for timeOfDay message
+     */
     String KEY_TIME_OF_DAY = "fields.timeOfDay";
 
     /**
@@ -26,7 +28,8 @@ public interface TimeOfDay<D> extends TranslatorTiming<D> {
 
     /**
      * Formats a time string to remove unnecessary seconds if they are zero.
-     * The input must follow the format hh:mm:ss, where seconds may be ignored if zero.
+     * The input must follow the format hh:mm:ss, where seconds may be ignored if
+     * zero.
      *
      * @param time A time string in the format hh:mm:ss.
      * @return A formatted time string with optional seconds removed.

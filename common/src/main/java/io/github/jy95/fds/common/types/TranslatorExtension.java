@@ -10,8 +10,10 @@ import io.github.jy95.fds.common.functions.TranslationService;
 import io.github.jy95.fds.common.operations.ExtensionProcessor;
 
 /**
- * Interface for translators that specifically handle dosage objects with "extension" elements.
- * This class extends {@link io.github.jy95.fds.common.types.Translator} to provide additional reusable code for "extension"
+ * Interface for translators that specifically handle dosage objects with
+ * "extension" elements.
+ * This class extends {@link io.github.jy95.fds.common.types.Translator} to
+ * provide additional reusable code for "extension"
  *
  * @param <D> the type of dosage field to be translated
  * @param <E> the type of extension field to be translated
@@ -19,8 +21,9 @@ import io.github.jy95.fds.common.operations.ExtensionProcessor;
  * @author jy95
  * @since 2.1.5
  */
-public interface TranslatorExtension<D, E extends IBaseExtension<E, ?>, C extends FDSConfig & ExtensionProcessor<E>> extends Translator<D> {
-    
+public interface TranslatorExtension<D, E extends IBaseExtension<E, ?>, C extends FDSConfig & ExtensionProcessor<E>>
+        extends Translator<D> {
+
     /**
      * Return a list of extension contained in the dosage field
      * 
@@ -41,7 +44,7 @@ public interface TranslatorExtension<D, E extends IBaseExtension<E, ?>, C extend
     default CompletableFuture<String> convert(D dosage) {
         var extensions = getExtension(dosage);
         return getTranslationService()
-            .getConfig()
-            .fromExtensionsToString(extensions);
+                .getConfig()
+                .fromExtensionsToString(extensions);
     }
 }

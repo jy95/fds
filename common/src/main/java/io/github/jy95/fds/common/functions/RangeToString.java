@@ -22,7 +22,8 @@ public interface RangeToString<R, Q extends IBase, C extends FDSConfig & Quantit
     /**
      * Converts a range object to a human-readable string asynchronously.
      *
-     * @param translationService The service providing localized strings and configuration context.
+     * @param translationService The service providing localized strings and
+     *                           configuration context.
      * @param range              The range object to convert.
      * @return A CompletableFuture that resolves to the human-readable string.
      */
@@ -64,7 +65,7 @@ public interface RangeToString<R, Q extends IBase, C extends FDSConfig & Quantit
      */
     default boolean hasUnit(R range) {
         var solver = getQuantityToString();
-        
+
         // Check high first, more likely to be found in it
         var hasHighUnit = hasHigh(range) && solver.hasUnit(getHigh(range));
         var hasLowUnit = hasLow(range) && solver.hasUnit(getLow(range));
@@ -75,7 +76,8 @@ public interface RangeToString<R, Q extends IBase, C extends FDSConfig & Quantit
 
     /**
      * Compute the base arguments required for formatting the range object.
-     * @param range The range object.
+     * 
+     * @param range      The range object.
      * @param unitAsText The unit, if present
      * @return A Map containing "minValue", "maxValue", and "condition" at least
      */
@@ -90,17 +92,16 @@ public interface RangeToString<R, Q extends IBase, C extends FDSConfig & Quantit
         var maxValue = hasHigh ? solver.getValue(getHigh(range)) : "";
 
         return Map.of(
-            "minValue", minValue,
-            "maxValue", maxValue,
-            "condition", condition,
-            "unit", unitAsText
-        );
+                "minValue", minValue,
+                "maxValue", maxValue,
+                "condition", condition,
+                "unit", unitAsText);
     }
 
     /**
      * Determines the formatting condition code for the range.
      * 
-     * @param hasLow True if the range has a low bound.
+     * @param hasLow  True if the range has a low bound.
      * @param hasHigh True if the range has a high bound.
      * @return The conditional code ("0", "1" or "2").
      */
@@ -122,7 +123,8 @@ public interface RangeToString<R, Q extends IBase, C extends FDSConfig & Quantit
     /**
      * Convert a range without a unit to a human-readable string.
      *
-     * @param translationService The service providing localized strings and configuration context.
+     * @param translationService The service providing localized strings and
+     *                           configuration context.
      * @param range              The range object.
      * @return A CompletableFuture that resolves to the human-readable string.
      */
@@ -137,12 +139,13 @@ public interface RangeToString<R, Q extends IBase, C extends FDSConfig & Quantit
     /**
      * Convert a range with a unit to a human-readable string.
      *
-     * @param translationService The service providing localized strings and configuration context.
+     * @param translationService The service providing localized strings and
+     *                           configuration context.
      * @param range              The range object.
      * @return A CompletableFuture that resolves to the human-readable string.
      */
     default CompletableFuture<String> convertWithUnit(TranslationService<C> translationService, R range) {
-        
+
         var messageFormat = translationService.getMessage("amount.range.withUnit");
         var unitRetrieval = getUnitText(translationService, range);
 
@@ -151,21 +154,22 @@ public interface RangeToString<R, Q extends IBase, C extends FDSConfig & Quantit
 
                     var arguments = getBaseArguments(range, unitAsText);
                     return messageFormat.format(arguments);
-                    
+
                 });
     }
 
     /**
      * Retrieves the unit as text (either code or text).
      *
-     * @param translationService The service providing localized strings and configuration context.
+     * @param translationService The service providing localized strings and
+     *                           configuration context.
      * @param range              The range object.
      * @return A CompletableFuture that resolves to the unit string.
      */
     default CompletableFuture<String> getUnitText(TranslationService<C> translationService, R range) {
         var solver = getQuantityToString();
         var quantity = hasHigh(range) ? getHigh(range) : getLow(range);
-        return solver.enhancedFromUnitToString(translationService,quantity);
+        return solver.enhancedFromUnitToString(translationService, quantity);
     }
 
     /**

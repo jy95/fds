@@ -12,7 +12,9 @@ import java.util.List;
  */
 public interface TimingEvent<D> extends TranslatorTiming<D> {
 
-    // Key constant for event message
+    /**
+     * Key constant for event message
+     */
     String KEY_EVENT = "fields.event";
 
     /**
