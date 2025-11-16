@@ -1,6 +1,10 @@
 package io.github.jy95.fds.common.translators;
 
+import io.github.jy95.fds.common.config.FDSConfig;
+import io.github.jy95.fds.common.functions.TranslationService;
 import io.github.jy95.fds.common.types.TranslatorTiming;
+
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -11,20 +15,14 @@ import java.util.concurrent.CompletableFuture;
  * @author jy95
  * @since 1.0.0
  */
-public interface FrequencyFrequencyMax<D> extends TranslatorTiming<D> {
+public interface FrequencyFrequencyMax<D, C extends FDSConfig> extends TranslatorTiming<D> {
 
     /**
-     * Key constant for frequency message
+     * Return the TranslationService responsible for handling frequency
+     * 
+     * @return the TranslationService
      */
-    String KEY_FREQUENCY = "fields.frequency";
-    /**
-     * Key constant for frequencyMax message
-     */
-    String KEY_FREQUENCY_MAX = "fields.frequencyMax";
-    /**
-     * Key constant for frequencyAndFrequencyMax message
-     */
-    String KEY_FREQUENCY_AND_FREQUENCY_MAX = "fields.frequencyAndFrequencyMax";
+    TranslationService<C> getTranslationService();
 
     /** {@inheritDoc} */
     @Override
@@ -55,7 +53,14 @@ public interface FrequencyFrequencyMax<D> extends TranslatorTiming<D> {
      * @param frequencyMax The maximum frequency.
      * @return A formatted string representing both "frequency" and "frequencyMax".
      */
-    String formatFrequencyAndFrequencyMaxText(int frequencyMin, int frequencyMax);
+    default String formatFrequencyAndFrequencyMaxText(int frequencyMin, int frequencyMax) {
+        Map<String, Object> arguments = Map.of(
+                "frequency", frequencyMin,
+                "maxFrequency", frequencyMax
+        );
+        var frequencyAndFrequencyMaxMsg = getTranslationService().getMessage("fields.frequencyAndFrequencyMax");
+        return frequencyAndFrequencyMaxMsg.format(arguments);
+    }
 
     /**
      * Formats the text for cases where only "frequencyMax" is present.
@@ -63,7 +68,10 @@ public interface FrequencyFrequencyMax<D> extends TranslatorTiming<D> {
      * @param frequencyMax The maximum frequency.
      * @return A formatted string representing "frequencyMax".
      */
-    String formatFrequencyMaxText(int frequencyMax);
+    default String formatFrequencyMaxText(int frequencyMax) {
+        var frequencyMaxMsg = getTranslationService().getMessage("fields.frequencyMax");
+        return frequencyMaxMsg.format(new Object[]{frequencyMax});
+    }
 
     /**
      * Formats the text for cases where only "frequency" is present.
@@ -71,7 +79,10 @@ public interface FrequencyFrequencyMax<D> extends TranslatorTiming<D> {
      * @param frequency The frequency.
      * @return A formatted string representing "frequency".
      */
-    String formatFrequencyText(int frequency);
+    default String formatFrequencyText(int frequency) {
+        var frequencyMsg = getTranslationService().getMessage("fields.frequency");
+        return frequencyMsg.format(new Object[]{frequency});
+    }
 
     /**
      * Checks if the dosage data contains a valid "frequency" value.

@@ -14,7 +14,9 @@ import org.hl7.fhir.r4.model.Ratio;
  */
 public enum RatioToStringR4 implements RatioToString<Ratio, Quantity, FDSConfigR4> {
 
-    // Singleton
+    /**
+     * Singleton
+     */
     INSTANCE;
 
     /** {@inheritDoc} */
