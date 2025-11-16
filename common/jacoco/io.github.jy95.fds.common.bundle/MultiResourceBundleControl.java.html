@@ -8,8 +8,10 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 /**
- * A custom ResourceBundle.Control implementation that aggregates multiple ResourceBundles.
- * This class facilitates the creation of a MultiResourceBundle by combining dependent ResourceBundles.
+ * A custom ResourceBundle.Control implementation that aggregates multiple
+ * ResourceBundles.
+ * This class facilitates the creation of a MultiResourceBundle by combining
+ * dependent ResourceBundles.
  *
  * @author jy95
  * @since 1.0.0
@@ -27,25 +29,27 @@ public class MultiResourceBundleControl extends ResourceBundle.Control {
     private final String[] dependentBaseNames;
 
     /**
-     * Constructs a MultiResourceBundleControl with the specified base name and dependent base names.
+     * Constructs a MultiResourceBundleControl with the specified base name and
+     * dependent base names.
      *
-     * @param baseName          the base name of the primary ResourceBundle.
-     * @param dependentBaseNames the base names of additional ResourceBundles to aggregate.
+     * @param baseName           the base name of the primary ResourceBundle.
+     * @param dependentBaseNames the base names of additional ResourceBundles to
+     *                           aggregate.
      */
-<span class="fc" id="L35">    public MultiResourceBundleControl(String baseName, String... dependentBaseNames) {</span>
-<span class="fc" id="L36">        this.baseName = baseName;</span>
-<span class="fc" id="L37">        this.dependentBaseNames = dependentBaseNames;</span>
-<span class="fc" id="L38">    }</span>
+<span class="fc" id="L39">    public MultiResourceBundleControl(String baseName, String... dependentBaseNames) {</span>
+<span class="fc" id="L40">        this.baseName = baseName;</span>
+<span class="fc" id="L41">        this.dependentBaseNames = dependentBaseNames;</span>
+<span class="fc" id="L42">    }</span>
 
     /** {@inheritDoc} */
     @Override
     public ResourceBundle newBundle(String baseName, Locale locale, String format, ClassLoader loader, boolean reload) {
-<span class="fc" id="L43">        List&lt;ResourceBundle&gt; delegates = Arrays.stream(this.dependentBaseNames)</span>
-<span class="fc bfc" id="L44" title="All 4 branches covered.">                .filter(currentBaseName -&gt; currentBaseName != null &amp;&amp; !currentBaseName.trim().isEmpty())</span>
-<span class="fc" id="L45">                .map(currentBaseName -&gt; ResourceBundle.getBundle(currentBaseName, locale, loader))</span>
-<span class="fc" id="L46">                .toList();</span>
+<span class="fc" id="L47">        List&lt;ResourceBundle&gt; delegates = Arrays.stream(this.dependentBaseNames)</span>
+<span class="fc bfc" id="L48" title="All 4 branches covered.">                .filter(currentBaseName -&gt; currentBaseName != null &amp;&amp; !currentBaseName.trim().isEmpty())</span>
+<span class="fc" id="L49">                .map(currentBaseName -&gt; ResourceBundle.getBundle(currentBaseName, locale, loader))</span>
+<span class="fc" id="L50">                .toList();</span>
 
-<span class="fc" id="L48">        return new MultiResourceBundle(delegates);</span>
+<span class="fc" id="L52">        return new MultiResourceBundle(delegates);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

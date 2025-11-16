@@ -8,11 +8,14 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Supplier;
 
 /**
- * Abstract class representing a map of translators for various {@link io.github.jy95.fds.common.types.DisplayOrder} values.
- * This class provides a mechanism to retrieve an {@link io.github.jy95.fds.common.types.Translator} based on the specified
+ * Abstract class representing a map of translators for various
+ * {@link io.github.jy95.fds.common.types.DisplayOrder} values.
+ * This class provides a mechanism to retrieve an
+ * {@link io.github.jy95.fds.common.types.Translator} based on the specified
  * display order.
  *
- * @param &lt;C&gt; the type of configuration extending {@link io.github.jy95.fds.common.config.FDSConfig}
+ * @param &lt;C&gt; the type of configuration extending
+ *            {@link io.github.jy95.fds.common.config.FDSConfig}
  * @param &lt;D&gt; the type of dosage field handled by the translators
  * @author jy95
  * @since 1.0.0
@@ -31,47 +34,60 @@ public abstract class AbstractTranslatorsMap&lt;C extends FDSConfig, D&gt; {
     protected final TranslationService&lt;C&gt; translationService;
 
     /**
-     * A map associating {@link DisplayOrder} values with their corresponding {@link Translator} instance.
-     * So if you use part of the supported fields, you won't have a bunch of useless new calls to for your needs
+     * A map associating {@link DisplayOrder} values with their corresponding
+     * {@link Translator} instance.
+     * So if you use part of the supported fields, you won't have a bunch of useless
+     * new calls to for your needs
      */
-<span class="nc" id="L37">    private final Map&lt;DisplayOrder, Translator&lt;D&gt;&gt; translatorCache = new ConcurrentHashMap&lt;&gt;();</span>
+<span class="nc" id="L42">    private final Map&lt;DisplayOrder, Translator&lt;D&gt;&gt; translatorCache = new ConcurrentHashMap&lt;&gt;();</span>
 
     /**
-     * Constructs a new {@code AbstractTranslatorsMap} with the specified supplier map.
+     * Constructs a new {@code AbstractTranslatorsMap} with the specified supplier
+     * map.
+     * 
      * @param translationService the translation service used by translators
      *
      */
-<span class="nc" id="L44">    public AbstractTranslatorsMap(TranslationService&lt;C&gt; translationService) {</span>
-<span class="nc" id="L45">        this.translationService = translationService;</span>
-<span class="nc" id="L46">        this.translatorSuppliers = createTranslatorsSuppliers();</span>
-<span class="nc" id="L47">    }</span>
+<span class="nc" id="L51">    public AbstractTranslatorsMap(TranslationService&lt;C&gt; translationService) {</span>
+<span class="nc" id="L52">        this.translationService = translationService;</span>
+<span class="nc" id="L53">        this.translatorSuppliers = createTranslatorsSuppliers();</span>
+<span class="nc" id="L54">    }</span>
 
     /**
-     * Retrieves the {@link io.github.jy95.fds.common.types.Translator} associated with the specified {@link io.github.jy95.fds.common.types.DisplayOrder}.
+     * Retrieves the {@link io.github.jy95.fds.common.types.Translator} associated
+     * with the specified {@link io.github.jy95.fds.common.types.DisplayOrder}.
      * The translator is created lazily on first access.
      *
-     * @param displayOrder the {@link io.github.jy95.fds.common.types.DisplayOrder} used to locate the translator
-     * @return the corresponding {@link io.github.jy95.fds.common.types.Translator}, or {@code null} if no match is found
+     * @param displayOrder the {@link io.github.jy95.fds.common.types.DisplayOrder}
+     *                     used to locate the translator
+     * @return the corresponding {@link io.github.jy95.fds.common.types.Translator},
+     *         or {@code null} if no match is found
      */
     public Translator&lt;D&gt; getTranslator(DisplayOrder displayOrder) {
-<span class="nc" id="L57">        return translatorCache.computeIfAbsent(displayOrder, key -&gt; {</span>
-<span class="nc" id="L58">            Supplier&lt;Translator&lt;D&gt;&gt; supplier = translatorSuppliers.get(key);</span>
-<span class="nc bnc" id="L59" title="All 2 branches missed.">            return supplier != null ? supplier.get() : null;</span>
+<span class="nc" id="L67">        return translatorCache.computeIfAbsent(displayOrder, key -&gt; {</span>
+<span class="nc" id="L68">            Supplier&lt;Translator&lt;D&gt;&gt; supplier = translatorSuppliers.get(key);</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">            return supplier != null ? supplier.get() : null;</span>
         });
     }
 
     /**
-     * Creates a map of {@link io.github.jy95.fds.common.types.DisplayOrder} to {@link Supplier} instances that lazily initialize the corresponding
+     * Creates a map of {@link io.github.jy95.fds.common.types.DisplayOrder} to
+     * {@link Supplier} instances that lazily initialize the corresponding
      * {@link Translator} objects for the needed configuration.
      * &lt;p&gt;
-     * This method ensures that translators are only created when needed, improving efficiency and reducing
-     * unnecessary resource usage. It supports both simple translators and composite translators that depend
+     * This method ensures that translators are only created when needed, improving
+     * efficiency and reducing
+     * unnecessary resource usage. It supports both simple translators and composite
+     * translators that depend
      * on other translators.
      * &lt;/p&gt;
      *
-     * @return a {@link Map} where the keys are {@link io.github.jy95.fds.common.types.DisplayOrder} values and the values 
-     * are {@link Supplier} instances that provide {@link io.github.jy95.fds.common.types.Translator} objects
-     */   
+     * @return a {@link Map} where the keys are
+     *         {@link io.github.jy95.fds.common.types.DisplayOrder} values and the
+     *         values
+     *         are {@link Supplier} instances that provide
+     *         {@link io.github.jy95.fds.common.types.Translator} objects
+     */
     protected abstract Map&lt;DisplayOrder, Supplier&lt;Translator&lt;D&gt;&gt;&gt; createTranslatorsSuppliers();
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

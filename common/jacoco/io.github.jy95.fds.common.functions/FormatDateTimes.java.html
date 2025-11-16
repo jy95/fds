@@ -13,7 +13,8 @@ import java.util.Locale;
 public interface FormatDateTimes&lt;T&gt; {
 
     /**
-     * Converts a single date or time object to a human-readable string using the specified locale.
+     * Converts a single date or time object to a human-readable string using the
+     * specified locale.
      *
      * @param locale The locale to use for formatting.
      * @param date   The date or time object to format.
@@ -22,17 +23,19 @@ public interface FormatDateTimes&lt;T&gt; {
     String convert(Locale locale, T date);
 
     /**
-     * Converts multiple date or time objects to human-readable strings using the specified locale.
+     * Converts multiple date or time objects to human-readable strings using the
+     * specified locale.
      *
      * @param locale The locale to use for formatting.
      * @param dates  The date or time objects to format.
-     * @return A list of human-readable string representations of the dates or times.
+     * @return A list of human-readable string representations of the dates or
+     *         times.
      */
     default List&lt;String&gt; convert(Locale locale, List&lt;T&gt; dates) {
-<span class="nc" id="L32">        return dates</span>
-<span class="nc" id="L33">                .stream()</span>
-<span class="nc" id="L34">                .map(date -&gt; convert(locale, date))</span>
-<span class="nc" id="L35">                .toList();</span>
+<span class="nc" id="L35">        return dates</span>
+<span class="nc" id="L36">                .stream()</span>
+<span class="nc" id="L37">                .map(date -&gt; convert(locale, date))</span>
+<span class="nc" id="L38">                .toList();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

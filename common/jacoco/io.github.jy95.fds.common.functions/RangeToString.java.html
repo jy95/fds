@@ -22,15 +22,16 @@ public interface RangeToString&lt;R, Q extends IBase, C extends FDSConfig &amp; 
     /**
      * Converts a range object to a human-readable string asynchronously.
      *
-     * @param translationService The service providing localized strings and configuration context.
+     * @param translationService The service providing localized strings and
+     *                           configuration context.
      * @param range              The range object to convert.
      * @return A CompletableFuture that resolves to the human-readable string.
      */
     default CompletableFuture&lt;String&gt; convert(TranslationService&lt;C&gt; translationService, R range) {
-<span class="nc bnc" id="L30" title="All 2 branches missed.">        if (hasUnit(range)) {</span>
-<span class="nc" id="L31">            return convertWithUnit(translationService, range);</span>
+<span class="nc bnc" id="L31" title="All 2 branches missed.">        if (hasUnit(range)) {</span>
+<span class="nc" id="L32">            return convertWithUnit(translationService, range);</span>
         }
-<span class="nc" id="L33">        return convertWithoutUnit(translationService, range);</span>
+<span class="nc" id="L34">        return convertWithoutUnit(translationService, range);</span>
     }
 
     /**
@@ -63,87 +64,112 @@ public interface RangeToString&lt;R, Q extends IBase, C extends FDSConfig &amp; 
      * @return True if the range has a unit, false otherwise.
      */
     default boolean hasUnit(R range) {
-<span class="nc" id="L66">        var solver = getQuantityToString();</span>
-        
+<span class="nc" id="L67">        var solver = getQuantityToString();</span>
+
         // Check high first, more likely to be found in it
-<span class="nc bnc" id="L69" title="All 4 branches missed.">        var hasHighUnit = hasHigh(range) &amp;&amp; solver.hasUnit(getHigh(range));</span>
-<span class="nc bnc" id="L70" title="All 4 branches missed.">        var hasLowUnit = hasLow(range) &amp;&amp; solver.hasUnit(getLow(range));</span>
+<span class="nc bnc" id="L70" title="All 4 branches missed.">        var hasHighUnit = hasHigh(range) &amp;&amp; solver.hasUnit(getHigh(range));</span>
+<span class="nc bnc" id="L71" title="All 4 branches missed.">        var hasLowUnit = hasLow(range) &amp;&amp; solver.hasUnit(getLow(range));</span>
 
         // Otherwise check low
-<span class="nc bnc" id="L73" title="All 4 branches missed.">        return hasHighUnit || hasLowUnit;</span>
+<span class="nc bnc" id="L74" title="All 4 branches missed.">        return hasHighUnit || hasLowUnit;</span>
     }
 
     /**
      * Compute the base arguments required for formatting the range object.
-     * @param range The range object.
+     * 
+     * @param range      The range object.
      * @param unitAsText The unit, if present
      * @return A Map containing &quot;minValue&quot;, &quot;maxValue&quot;, and &quot;condition&quot; at least
      */
     default Map&lt;String, Object&gt; getBaseArguments(R range, String unitAsText) {
-<span class="nc" id="L83">        var hasLow = hasLow(range);</span>
-<span class="nc" id="L84">        var hasHigh = hasHigh(range);</span>
-<span class="nc" id="L85">        var solver = getQuantityToString();</span>
+<span class="nc" id="L85">        var hasLow = hasLow(range);</span>
+<span class="nc" id="L86">        var hasHigh = hasHigh(range);</span>
+<span class="nc" id="L87">        var solver = getQuantityToString();</span>
 
-<span class="nc bnc" id="L87" title="All 8 branches missed.">        var condition = (hasLow &amp;&amp; hasHigh) ? &quot;0&quot; : (hasHigh) ? &quot;1&quot; : (hasLow) ? &quot;2&quot; : &quot;other&quot;;</span>
+<span class="nc" id="L89">        var condition = getConditionCode(hasLow, hasHigh);</span>
 
-<span class="nc bnc" id="L89" title="All 2 branches missed.">        var minValue = hasLow ? solver.getValue(getLow(range)) : &quot;&quot;;</span>
-<span class="nc bnc" id="L90" title="All 2 branches missed.">        var maxValue = hasHigh ? solver.getValue(getHigh(range)) : &quot;&quot;;</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">        var minValue = hasLow ? solver.getValue(getLow(range)) : &quot;&quot;;</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">        var maxValue = hasHigh ? solver.getValue(getHigh(range)) : &quot;&quot;;</span>
 
-<span class="nc" id="L92">        return Map.of(</span>
-            &quot;minValue&quot;, minValue,
-            &quot;maxValue&quot;, maxValue,
-            &quot;condition&quot;, condition,
-            &quot;unit&quot;, unitAsText
-        );
+<span class="nc" id="L94">        return Map.of(</span>
+                &quot;minValue&quot;, minValue,
+                &quot;maxValue&quot;, maxValue,
+                &quot;condition&quot;, condition,
+                &quot;unit&quot;, unitAsText);
+    }
+
+    /**
+     * Determines the formatting condition code for the range.
+     * 
+     * @param hasLow  True if the range has a low bound.
+     * @param hasHigh True if the range has a high bound.
+     * @return The conditional code (&quot;0&quot;, &quot;1&quot; or &quot;2&quot;).
+     */
+    private String getConditionCode(boolean hasLow, boolean hasHigh) {
+        // Full range [min - max]
+<span class="nc bnc" id="L110" title="All 4 branches missed.">        if (hasLow &amp;&amp; hasHigh) {</span>
+<span class="nc" id="L111">            return &quot;0&quot;;</span>
+        }
+
+        // Max only [ - max]
+<span class="nc bnc" id="L115" title="All 2 branches missed.">        if (hasHigh) {</span>
+<span class="nc" id="L116">            return &quot;1&quot;;</span>
+        }
+
+        // Min only [min - ]
+<span class="nc" id="L120">        return &quot;2&quot;;</span>
     }
 
     /**
      * Convert a range without a unit to a human-readable string.
      *
-     * @param translationService The service providing localized strings and configuration context.
+     * @param translationService The service providing localized strings and
+     *                           configuration context.
      * @param range              The range object.
      * @return A CompletableFuture that resolves to the human-readable string.
      */
     default CompletableFuture&lt;String&gt; convertWithoutUnit(TranslationService&lt;C&gt; translationService, R range) {
-<span class="nc" id="L108">        return CompletableFuture.supplyAsync(() -&gt; {</span>
-<span class="nc" id="L109">            var arguments = getBaseArguments(range, &quot;&quot;);</span>
-<span class="nc" id="L110">            var messageFormat = translationService.getMessage(&quot;amount.range.withoutUnit&quot;);</span>
-<span class="nc" id="L111">            return messageFormat.format(arguments);</span>
+<span class="nc" id="L132">        return CompletableFuture.supplyAsync(() -&gt; {</span>
+<span class="nc" id="L133">            var arguments = getBaseArguments(range, &quot;&quot;);</span>
+<span class="nc" id="L134">            var messageFormat = translationService.getMessage(&quot;amount.range.withoutUnit&quot;);</span>
+<span class="nc" id="L135">            return messageFormat.format(arguments);</span>
         });
     }
 
     /**
      * Convert a range with a unit to a human-readable string.
      *
-     * @param translationService The service providing localized strings and configuration context.
+     * @param translationService The service providing localized strings and
+     *                           configuration context.
      * @param range              The range object.
      * @return A CompletableFuture that resolves to the human-readable string.
      */
     default CompletableFuture&lt;String&gt; convertWithUnit(TranslationService&lt;C&gt; translationService, R range) {
-        
-<span class="nc" id="L124">        var messageFormat = translationService.getMessage(&quot;amount.range.withUnit&quot;);</span>
-<span class="nc" id="L125">        var unitRetrieval = getUnitText(translationService, range);</span>
 
-<span class="nc" id="L127">        return unitRetrieval</span>
-<span class="nc" id="L128">                .thenApplyAsync(unitAsText -&gt; {</span>
+<span class="nc" id="L149">        var messageFormat = translationService.getMessage(&quot;amount.range.withUnit&quot;);</span>
+<span class="nc" id="L150">        var unitRetrieval = getUnitText(translationService, range);</span>
 
-<span class="nc" id="L130">                    var arguments = getBaseArguments(range, unitAsText);</span>
-<span class="nc" id="L131">                    return messageFormat.format(arguments);</span>
-                    
+<span class="nc" id="L152">        return unitRetrieval</span>
+<span class="nc" id="L153">                .thenApplyAsync(unitAsText -&gt; {</span>
+
+<span class="nc" id="L155">                    var arguments = getBaseArguments(range, unitAsText);</span>
+<span class="nc" id="L156">                    return messageFormat.format(arguments);</span>
+
                 });
     }
 
     /**
      * Retrieves the unit as text (either code or text).
      *
-     * @param translationService The service providing localized strings and configuration context.
+     * @param translationService The service providing localized strings and
+     *                           configuration context.
      * @param range              The range object.
      * @return A CompletableFuture that resolves to the unit string.
      */
     default CompletableFuture&lt;String&gt; getUnitText(TranslationService&lt;C&gt; translationService, R range) {
-<span class="nc" id="L144">        var solver = getQuantityToString();</span>
-<span class="nc bnc" id="L145" title="All 2 branches missed.">        var quantity = hasHigh(range) ? getHigh(range) : getLow(range);</span>
-<span class="nc" id="L146">        return solver.enhancedFromUnitToString(translationService,quantity);</span>
+<span class="nc" id="L170">        var solver = getQuantityToString();</span>
+<span class="nc bnc" id="L171" title="All 2 branches missed.">        var quantity = hasHigh(range) ? getHigh(range) : getLow(range);</span>
+<span class="nc" id="L172">        return solver.enhancedFromUnitToString(translationService, quantity);</span>
     }
 
     /**

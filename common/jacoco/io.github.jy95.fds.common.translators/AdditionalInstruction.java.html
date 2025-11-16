@@ -17,32 +17,40 @@ import java.util.concurrent.CompletableFuture;
 public interface AdditionalInstruction&lt;D&gt; extends Translator&lt;D&gt; {
 
     /**
-     * Processes a list of asynchronous additional instructions and converts them to a single string.
+     * Processes a list of asynchronous additional instructions and converts them to
+     * a single string.
      *
-     * &lt;p&gt;This method waits for all the provided CompletableFuture instances to complete,
-     * collects their results as strings, and then uses {@link io.github.jy95.fds.common.functions.ListToString#convert}
-     * to combine them into a single string representation.&lt;/p&gt;
+     * &lt;p&gt;
+     * This method waits for all the provided CompletableFuture instances to
+     * complete,
+     * collects their results as strings, and then uses
+     * {@link io.github.jy95.fds.common.functions.ListToString#convert}
+     * to combine them into a single string representation.
+     * &lt;/p&gt;
      *
-     * @param translationService The translation service used for obtaining configuration and resources.
-     * @param additionalInstructions A list of {@link java.util.concurrent.CompletableFuture} objects representing
+     * @param translationService     The translation service used for obtaining
+     *                               configuration and resources.
+     * @param additionalInstructions A list of
+     *                               {@link java.util.concurrent.CompletableFuture}
+     *                               objects representing
      *                               the additional instructions to be processed.
-     * @return A {@link java.util.concurrent.CompletableFuture} that, when completed, returns a string
+     * @return A {@link java.util.concurrent.CompletableFuture} that, when
+     *         completed, returns a string
      *         representing all the additional instructions combined.
      */
     default CompletableFuture&lt;String&gt; instructionsFuture(
             TranslationService&lt;?&gt; translationService,
-            List&lt;CompletableFuture&lt;String&gt;&gt; additionalInstructions
-    ) {
-<span class="nc" id="L36">        return CompletableFuture</span>
-<span class="nc" id="L37">                .allOf(additionalInstructions.toArray(CompletableFuture[]::new))</span>
-<span class="nc" id="L38">                .thenApplyAsync(v -&gt; {</span>
-<span class="nc" id="L39">                    var additionalInstructionsAsText = additionalInstructions</span>
-<span class="nc" id="L40">                            .stream()</span>
-<span class="nc" id="L41">                            .map(future -&gt; future.getNow(&quot;&quot;))</span>
-<span class="nc" id="L42">                            .toList();</span>
+            List&lt;CompletableFuture&lt;String&gt;&gt; additionalInstructions) {
+<span class="nc" id="L44">        return CompletableFuture</span>
+<span class="nc" id="L45">                .allOf(additionalInstructions.toArray(CompletableFuture[]::new))</span>
+<span class="nc" id="L46">                .thenApplyAsync(v -&gt; {</span>
+<span class="nc" id="L47">                    var additionalInstructionsAsText = additionalInstructions</span>
+<span class="nc" id="L48">                            .stream()</span>
+<span class="nc" id="L49">                            .map(future -&gt; future.getNow(&quot;&quot;))</span>
+<span class="nc" id="L50">                            .toList();</span>
 
                     // Use ListToString.convert with the translators' resources
-<span class="nc" id="L45">                    return ListToString.convert(translationService, additionalInstructionsAsText);</span>
+<span class="nc" id="L53">                    return ListToString.convert(translationService, additionalInstructionsAsText);</span>
                 });
     }
 }

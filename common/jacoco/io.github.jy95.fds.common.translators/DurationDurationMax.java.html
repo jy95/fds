@@ -7,7 +7,8 @@ import java.util.concurrent.CompletableFuture;
 import java.util.List;
 
 /**
- * Interface for translating &quot;timing.repeat.duration&quot; / &quot;timing.repeat.durationMax&quot;.
+ * Interface for translating &quot;timing.repeat.duration&quot; /
+ * &quot;timing.repeat.durationMax&quot;.
  *
  * @param &lt;D&gt; The type of the translated data.
  * @author jy95
@@ -15,42 +16,46 @@ import java.util.List;
  */
 public interface DurationDurationMax&lt;D&gt; extends TranslatorTiming&lt;D&gt; {
 
-    // Key constants for duration message
+    /**
+     * Key constant for duration message
+     */
     String KEY_DURATION = &quot;fields.duration&quot;;
-    // Key constant for durationMax message
+    /**
+     * Key constant for durationMax message
+     */
     String KEY_DURATION_MAX = &quot;fields.durationMax&quot;;
 
     /** {@inheritDoc} */
     @Override
     default CompletableFuture&lt;String&gt; convert(D dosage) {
-<span class="nc" id="L26">        return CompletableFuture.supplyAsync(() -&gt; {</span>
+<span class="nc" id="L31">        return CompletableFuture.supplyAsync(() -&gt; {</span>
 
             // Rule: duration SHALL be a non-negative value
             // Rule: if there's a duration, there needs to be duration units
             // Rule: If there's a durationMax, there must be a duration
-<span class="nc" id="L31">            var hasDurationFlag = hasDuration(dosage);</span>
-<span class="nc" id="L32">            var hasDurationMaxFlag = hasDurationMax(dosage);</span>
-<span class="nc bnc" id="L33" title="All 4 branches missed.">            var hasBoth = hasDurationFlag &amp;&amp; hasDurationMaxFlag;</span>
+<span class="nc" id="L36">            var hasDurationFlag = hasDuration(dosage);</span>
+<span class="nc" id="L37">            var hasDurationMaxFlag = hasDurationMax(dosage);</span>
+<span class="nc bnc" id="L38" title="All 4 branches missed.">            var hasBoth = hasDurationFlag &amp;&amp; hasDurationMaxFlag;</span>
 
-<span class="nc" id="L35">            List&lt;String&gt; texts = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L40">            List&lt;String&gt; texts = new ArrayList&lt;&gt;();</span>
 
-<span class="nc bnc" id="L37" title="All 2 branches missed.">            if (hasDurationFlag) {</span>
-<span class="nc" id="L38">                texts.add(turnDurationToString(dosage));</span>
+<span class="nc bnc" id="L42" title="All 2 branches missed.">            if (hasDurationFlag) {</span>
+<span class="nc" id="L43">                texts.add(turnDurationToString(dosage));</span>
             }
 
-<span class="nc bnc" id="L41" title="All 2 branches missed.">            if (hasBoth) {</span>
-<span class="nc" id="L42">                texts.add(&quot;(&quot;);</span>
+<span class="nc bnc" id="L46" title="All 2 branches missed.">            if (hasBoth) {</span>
+<span class="nc" id="L47">                texts.add(&quot;(&quot;);</span>
             }
 
-<span class="nc bnc" id="L45" title="All 2 branches missed.">            if (hasDurationMaxFlag) {</span>
-<span class="nc" id="L46">                texts.add(turnDurationMaxToString(dosage));</span>
+<span class="nc bnc" id="L50" title="All 2 branches missed.">            if (hasDurationMaxFlag) {</span>
+<span class="nc" id="L51">                texts.add(turnDurationMaxToString(dosage));</span>
             }
 
-<span class="nc bnc" id="L49" title="All 2 branches missed.">            if (hasBoth) {</span>
-<span class="nc" id="L50">                texts.add(&quot;)&quot;);</span>
+<span class="nc bnc" id="L54" title="All 2 branches missed.">            if (hasBoth) {</span>
+<span class="nc" id="L55">                texts.add(&quot;)&quot;);</span>
             }
 
-<span class="nc" id="L53">            return String.join(&quot; &quot;, texts);</span>
+<span class="nc" id="L58">            return String.join(&quot; &quot;, texts);</span>
         });
     }
 

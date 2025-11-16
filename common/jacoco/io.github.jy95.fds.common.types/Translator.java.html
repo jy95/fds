@@ -4,7 +4,8 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * Interface for translating dosage fields into human-readable representations.
- * This class provides base functionality for configuration and resource bundle handling,
+ * This class provides base functionality for configuration and resource bundle
+ * handling,
  * while requiring subclasses to define specific translation behavior.
  *
  * @param &lt;D&gt; the type of dosage field to be translated
@@ -13,10 +14,12 @@ import java.util.concurrent.CompletableFuture;
  */
 public interface Translator&lt;D&gt; {
     /**
-     * Converts a dosage field into a human-readable string representation asynchronously.
+     * Converts a dosage field into a human-readable string representation
+     * asynchronously.
      *
      * @param dosage the dosage field to be converted
-     * @return a {@link java.util.concurrent.CompletableFuture} that will complete with the human-readable string
+     * @return a {@link java.util.concurrent.CompletableFuture} that will complete
+     *         with the human-readable string
      */
     CompletableFuture&lt;String&gt; convert(D dosage);
 
@@ -27,7 +30,7 @@ public interface Translator&lt;D&gt; {
      * @return {@code true} if the dosage field is present, {@code false} otherwise
      */
     default boolean isPresent(D dosage) {
-<span class="fc" id="L30">        return false;</span>
+<span class="fc" id="L33">        return false;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

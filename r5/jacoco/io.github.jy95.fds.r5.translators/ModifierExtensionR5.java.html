@@ -2,11 +2,14 @@
 
 import io.github.jy95.fds.common.functions.TranslationService;
 import io.github.jy95.fds.common.translators.ModifierExtension;
+import io.github.jy95.fds.common.types.TranslatorExtension;
 import io.github.jy95.fds.r5.config.FDSConfigR5;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.hl7.fhir.r5.model.Dosage;
+import org.hl7.fhir.r5.model.Extension;
 
-import java.util.concurrent.CompletableFuture;
+import java.util.List;
 
 /**
  * R5 class for translating &quot;modifierExtension&quot;
@@ -14,19 +17,17 @@ import java.util.concurrent.CompletableFuture;
  * @author jy95
  */
 @RequiredArgsConstructor
-public class ModifierExtensionR5 implements ModifierExtension&lt;Dosage&gt; {
+public class ModifierExtensionR5 
+implements ModifierExtension&lt;Dosage&gt;, TranslatorExtension&lt;Dosage, Extension, FDSConfigR5&gt; {
 
     /** Translation service */
+    @Getter
     private final TranslationService&lt;FDSConfigR5&gt; translationService;
 
     /** {@inheritDoc} */
     @Override
-    public CompletableFuture&lt;String&gt; convert(Dosage dosage) {
-<span class="fc" id="L25">        return translationService</span>
-<span class="fc" id="L26">                .getConfig()</span>
-<span class="fc" id="L27">                .fromExtensionsToString(</span>
-<span class="fc" id="L28">                        dosage.getModifierExtension()</span>
-                );
+    public List&lt;Extension&gt; getExtension(Dosage dosage) {
+<span class="fc" id="L30">        return dosage.getModifierExtension();</span>
     }
 
 }

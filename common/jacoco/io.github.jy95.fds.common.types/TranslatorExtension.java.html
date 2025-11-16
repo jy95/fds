@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TranslatorExtension.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">FHIR Dosage Support - Common</a> &gt; <a href="index.source.html" class="el_package">io.github.jy95.fds.common.types</a> &gt; <span class="el_source">TranslatorExtension.java</span></div><h1>TranslatorExtension.java</h1><pre class="source lang-java linenums">package io.github.jy95.fds.common.types;
+
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+
+import org.hl7.fhir.instance.model.api.IBaseExtension;
+
+import io.github.jy95.fds.common.config.FDSConfig;
+import io.github.jy95.fds.common.functions.TranslationService;
+import io.github.jy95.fds.common.operations.ExtensionProcessor;
+
+/**
+ * Interface for translators that specifically handle dosage objects with
+ * &quot;extension&quot; elements.
+ * This class extends {@link io.github.jy95.fds.common.types.Translator} to
+ * provide additional reusable code for &quot;extension&quot;
+ *
+ * @param &lt;D&gt; the type of dosage field to be translated
+ * @param &lt;E&gt; the type of extension field to be translated
+ * @param &lt;C&gt; the type of config supporting the extension processing
+ * @author jy95
+ * @since 2.1.5
+ */
+public interface TranslatorExtension&lt;D, E extends IBaseExtension&lt;E, ?&gt;, C extends FDSConfig &amp; ExtensionProcessor&lt;E&gt;&gt;
+        extends Translator&lt;D&gt; {
+
+    /**
+     * Return a list of extension contained in the dosage field
+     * 
+     * @param dosage the dosage field to be converted
+     * @return The list of extension
+     */
+    List&lt;E&gt; getExtension(D dosage);
+
+    /**
+     * Return the TranslationService responsible for handling extensions
+     * 
+     * @return the TranslationService
+     */
+    TranslationService&lt;C&gt; getTranslationService();
+
+    /** {@inheritDoc} */
+    @Override
+    default CompletableFuture&lt;String&gt; convert(D dosage) {
+<span class="nc" id="L45">        var extensions = getExtension(dosage);</span>
+<span class="nc" id="L46">        return getTranslationService()</span>
+<span class="nc" id="L47">                .getConfig()</span>
+<span class="nc" id="L48">                .fromExtensionsToString(extensions);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

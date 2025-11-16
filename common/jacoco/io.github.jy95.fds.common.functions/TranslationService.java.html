@@ -13,7 +13,8 @@ import ca.uhn.fhir.model.api.TemporalPrecisionEnum;
 import org.hl7.fhir.utilities.DateTimeUtil;
 
 /**
- * A class that provides localized translation messages for a given configuration and resource bundle.
+ * A class that provides localized translation messages for a given
+ * configuration and resource bundle.
  *
  * @param &lt;C&gt; the type of FDSConfig
  * @author jy95
@@ -21,7 +22,7 @@ import org.hl7.fhir.utilities.DateTimeUtil;
  */
 @Builder
 public final class TranslationService&lt;C extends FDSConfig&gt; {
-    
+
     /**
      * The resource bundle containing localized strings for translation.
      */
@@ -48,11 +49,11 @@ public final class TranslationService&lt;C extends FDSConfig&gt; {
      */
     public MessageFormat getMessage(String key) {
         // 1. Cache only the raw format String, which IS thread-safe to share.
-<span class="nc" id="L51">        var msg = getText(key);</span>
-        
+<span class="nc" id="L52">        var msg = getText(key);</span>
+
         // 2. Return a brand-new MessageFormat instance every time.
         // This ensures each thread has its own dedicated, non-shared instance.
-<span class="nc" id="L55">        return new MessageFormat(msg, config.getLocale());</span>
+<span class="nc" id="L56">        return new MessageFormat(msg, config.getLocale());</span>
     }
 
     /**
@@ -62,29 +63,29 @@ public final class TranslationService&lt;C extends FDSConfig&gt; {
      * @return the localized message string
      */
     public String getText(String key) {
-<span class="nc" id="L65">        return messagesCache.computeIfAbsent(key, k -&gt; bundle.getString(k));</span>
+<span class="nc" id="L66">        return messagesCache.computeIfAbsent(key, k -&gt; bundle.getString(k));</span>
     }
 
     /**
-     * Converts a Date object to a human-readable string based on the configuration's locale.
+     * Converts a Date object to a human-readable string based on the
+     * configuration's locale.
      *
      * @param date      the Date object to convert
      * @param timeZone  the TimeZone of the date
-     * @param precision the TemporalPrecisionEnum indicating the precision of the date
+     * @param precision the TemporalPrecisionEnum indicating the precision of the
+     *                  date
      * @return a human-readable string representation of the date
      */
     public String dateTimeToHumanDisplay(
-        Date date,
-        TimeZone timeZone,
-        TemporalPrecisionEnum precision
-    ) {
-<span class="nc" id="L81">        var locale = config.getLocale();</span>
-<span class="nc" id="L82">        return DateTimeUtil.toHumanDisplay(</span>
+            Date date,
+            TimeZone timeZone,
+            TemporalPrecisionEnum precision) {
+<span class="nc" id="L83">        var locale = config.getLocale();</span>
+<span class="nc" id="L84">        return DateTimeUtil.toHumanDisplay(</span>
                 locale,
                 timeZone,
                 precision,
-                date
-        );
+                date);
     }
 
 }

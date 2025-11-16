@@ -3,8 +3,11 @@
 import com.ibm.icu.text.DateFormatSymbols;
 import com.ibm.icu.util.Calendar;
 
+import lombok.*;
+
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Class to format day of week
@@ -12,45 +15,57 @@ import java.util.Map;
  * @author jy95
  * @since 1.0.2
  */
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class DayOfWeekFormatter {
 
     /**
-     * Map each code of &lt;a href=&quot;https://build.fhir.org/valueset-days-of-week.html&quot;&gt;Day Of Week&lt;/a&gt; to their ICU4J values
+     * Map each code of
+     * &lt;a href=&quot;https://build.fhir.org/valueset-days-of-week.html&quot;&gt;Day Of Week&lt;/a&gt;
+     * to their ICU4J values
      */
-<span class="nc" id="L20">    private static final Map&lt;String, Integer&gt; DAY_MAPPING = Map.ofEntries(</span>
-<span class="nc" id="L21">            Map.entry(&quot;mon&quot;, Calendar.MONDAY),</span>
-<span class="nc" id="L22">            Map.entry(&quot;tue&quot;, Calendar.TUESDAY),</span>
-<span class="nc" id="L23">            Map.entry(&quot;wed&quot;, Calendar.WEDNESDAY),</span>
-<span class="nc" id="L24">            Map.entry(&quot;thu&quot;, Calendar.THURSDAY),</span>
-<span class="nc" id="L25">            Map.entry(&quot;fri&quot;, Calendar.FRIDAY),</span>
-<span class="nc" id="L26">            Map.entry(&quot;sat&quot;, Calendar.SATURDAY),</span>
-<span class="nc" id="L27">            Map.entry(&quot;sun&quot;, Calendar.SUNDAY)</span>
-    );
+<span class="nc" id="L26">    private static final Map&lt;String, Integer&gt; DAY_MAPPING = Map.ofEntries(</span>
+<span class="nc" id="L27">            Map.entry(&quot;mon&quot;, Calendar.MONDAY),</span>
+<span class="nc" id="L28">            Map.entry(&quot;tue&quot;, Calendar.TUESDAY),</span>
+<span class="nc" id="L29">            Map.entry(&quot;wed&quot;, Calendar.WEDNESDAY),</span>
+<span class="nc" id="L30">            Map.entry(&quot;thu&quot;, Calendar.THURSDAY),</span>
+<span class="nc" id="L31">            Map.entry(&quot;fri&quot;, Calendar.FRIDAY),</span>
+<span class="nc" id="L32">            Map.entry(&quot;sat&quot;, Calendar.SATURDAY),</span>
+<span class="nc" id="L33">            Map.entry(&quot;sun&quot;, Calendar.SUNDAY));</span>
 
     /**
-     * Bundle that contains translations
+     * Cache for storing localized DateFormatSymbols instances.
+     * Locale -&gt; longWeekDays String array
      */
-    private final String[] longWeekDays;
+<span class="nc" id="L39">    private static final Map&lt;Locale, String[]&gt; WEEKDAYS_CACHE = new ConcurrentHashMap&lt;&gt;();</span>
 
     /**
-     * Constructor for the formatter
+     * Retrieves the long weekday names array for the given locale, using the cache.
+     * If the array is not in the cache, it computes it and stores it.
      *
      * @param locale The locale to use
+     * @return The array of long weekday names (index 1=Sunday, 7=Saturday)
      */
-<span class="nc" id="L40">    public DayOfWeekFormatter(Locale locale) {</span>
-<span class="nc" id="L41">        longWeekDays = DateFormatSymbols</span>
-<span class="nc" id="L42">                .getInstance(locale)</span>
-<span class="nc" id="L43">                .getWeekdays();</span>
-<span class="nc" id="L44">    }</span>
+    private static String[] getLongWeekDays(Locale locale) {
+        // Use computeIfAbsent for thread-safe caching and calculation
+<span class="nc" id="L50">        return WEEKDAYS_CACHE.computeIfAbsent(locale, loc -&gt; DateFormatSymbols</span>
+<span class="nc" id="L51">                .getInstance(loc)</span>
+<span class="nc" id="L52">                .getWeekdays());</span>
+    }
 
     /**
-     * Translates a single-day code into its corresponding day of the week in text.
+     * Translates a single-day code into its corresponding day of the week in text,
+     * utilizing the specified locale.
      *
-     * @param code The &lt;a href=&quot;https://build.fhir.org/valueset-days-of-week.html&quot;&gt;Day Of Week&lt;/a&gt; code to translate
+     * @param code   The
+     *               &lt;a href=&quot;https://build.fhir.org/valueset-days-of-week.html&quot;&gt;Day
+     *               Of Week&lt;/a&gt; code to translate
+     * @param locale The locale to use for translation
      * @return the translated day of the week as a string.
      */
-    public String codeToLongText(String code) {
-<span class="nc" id="L53">        return longWeekDays[DAY_MAPPING.get(code)];</span>
+<span class="nc bnc" id="L65" title="All 4 branches missed.">    public static String codeToLongText(@NonNull String code, @NonNull Locale locale) {</span>
+<span class="nc" id="L66">        var dayIndex = DAY_MAPPING.get(code);</span>
+<span class="nc" id="L67">        var longWeekDays = getLongWeekDays(locale);</span>
+<span class="nc" id="L68">        return longWeekDays[dayIndex];</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

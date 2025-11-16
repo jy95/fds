@@ -4,7 +4,8 @@ import io.github.jy95.fds.common.types.TranslatorTiming;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * Interface for translating &quot;timing.repeat.frequency&quot; / &quot;timing.repeat.frequencyMax&quot;.
+ * Interface for translating &quot;timing.repeat.frequency&quot; /
+ * &quot;timing.repeat.frequencyMax&quot;.
  *
  * @param &lt;D&gt; The type of the translated data.
  * @author jy95
@@ -12,36 +13,43 @@ import java.util.concurrent.CompletableFuture;
  */
 public interface FrequencyFrequencyMax&lt;D&gt; extends TranslatorTiming&lt;D&gt; {
 
-    // Key constants for frequency message
+    /**
+     * Key constant for frequency message
+     */
     String KEY_FREQUENCY = &quot;fields.frequency&quot;;
-    // Key constant for frequencyMax message
+    /**
+     * Key constant for frequencyMax message
+     */
     String KEY_FREQUENCY_MAX = &quot;fields.frequencyMax&quot;;
-    // Key constant for frequencyAndFrequencyMax message
+    /**
+     * Key constant for frequencyAndFrequencyMax message
+     */
     String KEY_FREQUENCY_AND_FREQUENCY_MAX = &quot;fields.frequencyAndFrequencyMax&quot;;
 
     /** {@inheritDoc} */
     @Override
     default CompletableFuture&lt;String&gt; convert(D dosage) {
-<span class="nc" id="L25">        return CompletableFuture.supplyAsync(() -&gt; {</span>
+<span class="nc" id="L32">        return CompletableFuture.supplyAsync(() -&gt; {</span>
 
-<span class="nc" id="L27">            var hasFrequencyFlag = hasFrequency(dosage);</span>
-<span class="nc" id="L28">            var hasFrequencyMaxFlag = hasFrequencyMax(dosage);</span>
-<span class="nc bnc" id="L29" title="All 4 branches missed.">            var hasBoth = hasFrequencyFlag &amp;&amp; hasFrequencyMaxFlag;</span>
+<span class="nc" id="L34">            var hasFrequencyFlag = hasFrequency(dosage);</span>
+<span class="nc" id="L35">            var hasFrequencyMaxFlag = hasFrequencyMax(dosage);</span>
+<span class="nc bnc" id="L36" title="All 4 branches missed.">            var hasBoth = hasFrequencyFlag &amp;&amp; hasFrequencyMaxFlag;</span>
 
-<span class="nc bnc" id="L31" title="All 2 branches missed.">            if (hasBoth) {</span>
-<span class="nc" id="L32">                return turnFrequencyAndFrequencyMaxToString(dosage);</span>
+<span class="nc bnc" id="L38" title="All 2 branches missed.">            if (hasBoth) {</span>
+<span class="nc" id="L39">                return turnFrequencyAndFrequencyMaxToString(dosage);</span>
             }
 
-<span class="nc bnc" id="L35" title="All 2 branches missed.">            if (hasFrequencyMaxFlag) {</span>
-<span class="nc" id="L36">                return turnFrequencyMaxToString(dosage);</span>
+<span class="nc bnc" id="L42" title="All 2 branches missed.">            if (hasFrequencyMaxFlag) {</span>
+<span class="nc" id="L43">                return turnFrequencyMaxToString(dosage);</span>
             }
 
-<span class="nc" id="L39">            return turnFrequencyToString(dosage);</span>
+<span class="nc" id="L46">            return turnFrequencyToString(dosage);</span>
         });
     }
 
     /**
-     * Formats the text for cases where both &quot;frequency&quot; and &quot;frequencyMax&quot; are present.
+     * Formats the text for cases where both &quot;frequency&quot; and &quot;frequencyMax&quot; are
+     * present.
      *
      * @param frequencyMin The minimum frequency.
      * @param frequencyMax The maximum frequency.
@@ -82,7 +90,8 @@ public interface FrequencyFrequencyMax&lt;D&gt; extends TranslatorTiming&lt;D&gt
     boolean hasFrequencyMax(D dosage);
 
     /**
-     * Converts the dosage data containing both &quot;frequency&quot; and &quot;frequencyMax&quot; into a formatted string.
+     * Converts the dosage data containing both &quot;frequency&quot; and &quot;frequencyMax&quot; into
+     * a formatted string.
      *
      * @param dosage The dosage data.
      * @return A formatted string representing both &quot;frequency&quot; and &quot;frequencyMax&quot;.

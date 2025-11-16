@@ -11,29 +11,33 @@ import java.util.concurrent.CompletableFuture;
  * @since 1.0.0
  */
 public interface PeriodPeriodMax&lt;D&gt; extends TranslatorTiming&lt;D&gt; {
-    
-    // Key constant for periodMax message
+
+    /**
+     * Key constant for periodMax message
+     */
     String KEY_PERIOD_MAX = &quot;fields.periodMax&quot;;
-    // Key constant for period message
+    /**
+     * Key constant for period message
+     */
     String KEY_PERIOD = &quot;fields.period&quot;;
 
     /** {@inheritDoc} */
     @Override
     default CompletableFuture&lt;String&gt; convert(D dosage) {
-<span class="nc" id="L23">        return CompletableFuture.supplyAsync(() -&gt; {</span>
+<span class="nc" id="L27">        return CompletableFuture.supplyAsync(() -&gt; {</span>
 
             // Rule: if there's a period, there needs to be period units
             // Rule: period SHALL be a non-negative value
             // Rule: If there's a periodMax, there must be a period
-<span class="nc" id="L28">            var hasPeriodFlag = hasPeriod(dosage);</span>
-<span class="nc" id="L29">            var hasPeriodMaxFlag = hasPeriodMax(dosage);</span>
-<span class="nc bnc" id="L30" title="All 4 branches missed.">            var hasBoth = hasPeriodFlag &amp;&amp; hasPeriodMaxFlag;</span>
+<span class="nc" id="L32">            var hasPeriodFlag = hasPeriod(dosage);</span>
+<span class="nc" id="L33">            var hasPeriodMaxFlag = hasPeriodMax(dosage);</span>
+<span class="nc bnc" id="L34" title="All 4 branches missed.">            var hasBoth = hasPeriodFlag &amp;&amp; hasPeriodMaxFlag;</span>
 
-<span class="nc bnc" id="L32" title="All 2 branches missed.">            if (hasBoth) {</span>
-<span class="nc" id="L33">                return turnPeriodAndPeriodMaxToString(dosage);</span>
+<span class="nc bnc" id="L36" title="All 2 branches missed.">            if (hasBoth) {</span>
+<span class="nc" id="L37">                return turnPeriodAndPeriodMaxToString(dosage);</span>
             }
 
-<span class="nc" id="L36">            return turnPeriodToString(dosage);</span>
+<span class="nc" id="L40">            return turnPeriodToString(dosage);</span>
         });
     }
 
@@ -49,7 +53,8 @@ public interface PeriodPeriodMax&lt;D&gt; extends TranslatorTiming&lt;D&gt; {
      * Checks whether a periodMax value is present in the data object.
      *
      * @param dosage The data object to check.
-     * @return {@code true} if a periodMax value is present; {@code false} otherwise.
+     * @return {@code true} if a periodMax value is present; {@code false}
+     *         otherwise.
      */
     boolean hasPeriodMax(D dosage);
 

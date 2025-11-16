@@ -13,7 +13,9 @@ import java.util.List;
  */
 public interface TimeOfDay&lt;D&gt; extends TranslatorTiming&lt;D&gt; {
 
-    // Key constant for timeOfDay message
+    /**
+     * Key constant for timeOfDay message
+     */
     String KEY_TIME_OF_DAY = &quot;fields.timeOfDay&quot;;
 
     /**
@@ -26,19 +28,20 @@ public interface TimeOfDay&lt;D&gt; extends TranslatorTiming&lt;D&gt; {
 
     /**
      * Formats a time string to remove unnecessary seconds if they are zero.
-     * The input must follow the format hh:mm:ss, where seconds may be ignored if zero.
+     * The input must follow the format hh:mm:ss, where seconds may be ignored if
+     * zero.
      *
      * @param time A time string in the format hh:mm:ss.
      * @return A formatted time string with optional seconds removed.
      */
     default String formatString(String time) {
-<span class="nc" id="L35">        String[] parts = time.split(&quot;:&quot;);</span>
+<span class="nc" id="L38">        String[] parts = time.split(&quot;:&quot;);</span>
 
-<span class="nc bnc" id="L37" title="All 4 branches missed.">        if (parts.length &gt; 2 &amp;&amp; parts[2].equals(&quot;00&quot;)) {</span>
-<span class="nc" id="L38">            parts = new String[] { parts[0], parts[1] };</span>
+<span class="nc bnc" id="L40" title="All 4 branches missed.">        if (parts.length &gt; 2 &amp;&amp; parts[2].equals(&quot;00&quot;)) {</span>
+<span class="nc" id="L41">            parts = new String[] { parts[0], parts[1] };</span>
         }
 
-<span class="nc" id="L41">        return String.join(&quot;:&quot;, parts);</span>
+<span class="nc" id="L44">        return String.join(&quot;:&quot;, parts);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

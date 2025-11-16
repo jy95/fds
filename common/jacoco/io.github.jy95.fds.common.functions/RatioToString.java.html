@@ -47,68 +47,71 @@ public interface RatioToString&lt;R, Q extends IBase, C extends FDSConfig &amp; 
     /**
      * Converts a ratio object to a human-readable string asynchronously.
      *
-     * @param translationService The service providing localized strings and configuration context.
+     * @param translationService The service providing localized strings and
+     *                           configuration context.
      * @param ratio              The ratio object to convert.
      * @return A CompletableFuture that resolves to the human-readable string.
      */
     default CompletableFuture&lt;String&gt; convert(TranslationService&lt;C&gt; translationService, R ratio) {
-<span class="nc" id="L55">        var separator = retrieveRatioLinkWord(translationService, ratio); </span>
+<span class="nc" id="L56">        var separator = retrieveRatioLinkWord(translationService, ratio);</span>
 
-<span class="nc bnc" id="L57" title="All 2 branches missed.">        var numeratorText = hasNumerator(ratio)</span>
-<span class="nc" id="L58">                ? convertNumerator(translationService, ratio)</span>
-<span class="nc" id="L59">                : CompletableFuture.completedFuture(&quot;&quot;);</span>
+<span class="nc bnc" id="L58" title="All 2 branches missed.">        var numeratorText = hasNumerator(ratio)</span>
+<span class="nc" id="L59">                ? convertNumerator(translationService, ratio)</span>
+<span class="nc" id="L60">                : CompletableFuture.completedFuture(&quot;&quot;);</span>
 
-<span class="nc bnc" id="L61" title="All 2 branches missed.">        var denominatorText = hasDenominator(ratio)</span>
-<span class="nc" id="L62">                ? convertDenominator(translationService, ratio)</span>
-<span class="nc" id="L63">                : CompletableFuture.completedFuture(&quot;&quot;);</span>
+<span class="nc bnc" id="L62" title="All 2 branches missed.">        var denominatorText = hasDenominator(ratio)</span>
+<span class="nc" id="L63">                ? convertDenominator(translationService, ratio)</span>
+<span class="nc" id="L64">                : CompletableFuture.completedFuture(&quot;&quot;);</span>
 
-<span class="nc" id="L65">        return numeratorText.thenCombineAsync(denominatorText, (num, dem) -&gt; {            </span>
-<span class="nc" id="L66">            return Stream</span>
-<span class="nc" id="L67">                .of(num, separator, dem)</span>
-<span class="nc bnc" id="L68" title="All 2 branches missed.">                .filter(s -&gt; !s.isEmpty())</span>
-<span class="nc" id="L69">                .collect(Collectors.joining(&quot; &quot;));</span>
+<span class="nc" id="L66">        return numeratorText.thenCombineAsync(denominatorText, (num, dem) -&gt; {</span>
+<span class="nc" id="L67">            return Stream</span>
+<span class="nc" id="L68">                    .of(num, separator, dem)</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">                    .filter(s -&gt; !s.isEmpty())</span>
+<span class="nc" id="L70">                    .collect(Collectors.joining(&quot; &quot;));</span>
         });
     }
 
     /**
      * Retrieves the link word based on the ratio's components.
      *
-     * @param translationService The service providing localized strings and configuration context.
+     * @param translationService The service providing localized strings and
+     *                           configuration context.
      * @param ratio              The ratio object.
      * @return The link word as a string.
      */
     default String retrieveRatioLinkWord(TranslationService&lt;C&gt; translationService, R ratio) {
-<span class="nc" id="L81">        var hasNumerator = hasNumerator(ratio);</span>
-<span class="nc" id="L82">        var hasDenominator = hasDenominator(ratio);</span>
-<span class="nc bnc" id="L83" title="All 4 branches missed.">        var hasBothElements = hasNumerator &amp;&amp; hasDenominator;</span>
+<span class="nc" id="L83">        var hasNum = hasNumerator(ratio);</span>
+<span class="nc" id="L84">        var hasDen = hasDenominator(ratio);</span>
+<span class="nc bnc" id="L85" title="All 4 branches missed.">        var hasBoth = hasNum &amp;&amp; hasDen;</span>
 
-<span class="nc" id="L85">        var solver = getQuantityToString();</span>
-
-<span class="nc" id="L87">        var hasUnitRatio = hasUnitRatio(ratio);</span>
-<span class="nc bnc" id="L88" title="All 2 branches missed.">        var denominatorValue = hasDenominator ? solver.getValue(getDenominator(ratio)) : BigDecimal.ONE;</span>
-<span class="nc bnc" id="L89" title="All 4 branches missed.">        var mustUseLinkword = hasUnitRatio &amp;&amp; hasBothElements;</span>
-
-<span class="nc bnc" id="L91" title="All 2 branches missed.">        if (mustUseLinkword) {</span>
-<span class="nc" id="L92">            var linkWordMsg = translationService.getMessage(&quot;amount.ratio.denominatorLinkword&quot;);</span>
-<span class="nc" id="L93">            return linkWordMsg.format(new Object[]{denominatorValue});</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">        if (!hasBoth) {</span>
+<span class="nc" id="L88">            return &quot;&quot;;</span>
         }
 
-<span class="nc bnc" id="L96" title="All 2 branches missed.">        return hasBothElements ? &quot;:&quot; : &quot;&quot;;</span>
-    }
+<span class="nc bnc" id="L91" title="All 2 branches missed.">        if (hasUnitRatio(ratio)) {</span>
+<span class="nc" id="L92">            var solver = getQuantityToString();</span>
+<span class="nc" id="L93">            var denominatorValue = solver.getValue(getDenominator(ratio));</span>
 
+<span class="nc" id="L95">            var linkWordMsg = translationService.getMessage(&quot;amount.ratio.denominatorLinkword&quot;);</span>
+<span class="nc" id="L96">            return linkWordMsg.format(new Object[] { denominatorValue });</span>
+        }
+
+<span class="nc" id="L99">        return &quot;:&quot;;</span>
+    }
 
     /**
      * Determines if the ratio has a unit in either numerator or denominator.
      *
      * @param ratio The ratio object.
-     * @return True if either the numerator or denominator has a unit, false otherwise.
+     * @return True if either the numerator or denominator has a unit, false
+     *         otherwise.
      */
     default boolean hasUnitRatio(R ratio) {
-<span class="nc" id="L107">        var solver = getQuantityToString();</span>
+<span class="nc" id="L110">        var solver = getQuantityToString();</span>
 
-<span class="nc bnc" id="L109" title="All 4 branches missed.">        var hasNumeratorUnit = hasNumerator(ratio) &amp;&amp; solver.hasUnit(getNumerator(ratio));</span>
-<span class="nc bnc" id="L110" title="All 4 branches missed.">        var hasDenominatorUnit = hasDenominator(ratio) &amp;&amp; solver.hasUnit(getDenominator(ratio));</span>
-<span class="nc bnc" id="L111" title="All 4 branches missed.">        return hasNumeratorUnit || hasDenominatorUnit;</span>
+<span class="nc bnc" id="L112" title="All 4 branches missed.">        var hasNumeratorUnit = hasNumerator(ratio) &amp;&amp; solver.hasUnit(getNumerator(ratio));</span>
+<span class="nc bnc" id="L113" title="All 4 branches missed.">        var hasDenominatorUnit = hasDenominator(ratio) &amp;&amp; solver.hasUnit(getDenominator(ratio));</span>
+<span class="nc bnc" id="L114" title="All 4 branches missed.">        return hasNumeratorUnit || hasDenominatorUnit;</span>
     }
 
     /**
@@ -122,13 +125,15 @@ public interface RatioToString&lt;R, Q extends IBase, C extends FDSConfig &amp; 
     /**
      * Converts the numerator to a human-readable string.
      *
-     * @param translationService The service providing localized strings and configuration context.
+     * @param translationService The service providing localized strings and
+     *                           configuration context.
      * @param ratio              The ratio object.
-     * @return A CompletableFuture that resolves to the human-readable string for the numerator.
+     * @return A CompletableFuture that resolves to the human-readable string for
+     *         the numerator.
      */
     default CompletableFuture&lt;String&gt; convertNumerator(TranslationService&lt;C&gt; translationService, R ratio) {
-<span class="nc" id="L130">        var solver = getQuantityToString();</span>
-<span class="nc" id="L131">        return solver.convert(translationService, getNumerator(ratio));</span>
+<span class="nc" id="L135">        var solver = getQuantityToString();</span>
+<span class="nc" id="L136">        return solver.convert(translationService, getNumerator(ratio));</span>
     }
 
     /**
@@ -142,28 +147,31 @@ public interface RatioToString&lt;R, Q extends IBase, C extends FDSConfig &amp; 
     /**
      * Converts the denominator to a human-readable string.
      *
-     * @param translationService The service providing localized strings and configuration context.
+     * @param translationService The service providing localized strings and
+     *                           configuration context.
      * @param ratio              The ratio object.
-     * @return A CompletableFuture that resolves to the human-readable string for the denominator.
+     * @return A CompletableFuture that resolves to the human-readable string for
+     *         the denominator.
      */
     default CompletableFuture&lt;String&gt; convertDenominator(TranslationService&lt;C&gt; translationService, R ratio) {
-<span class="nc" id="L150">        var solver = getQuantityToString();</span>
-        
-<span class="nc" id="L152">        var denominator = getDenominator(ratio);</span>
-        // Where the denominator value is known to be fixed to &quot;1&quot;, Quantity should be used instead of Ratio
-<span class="nc" id="L154">        var denominatorValue = solver.getValue(denominator);</span>
+<span class="nc" id="L157">        var solver = getQuantityToString();</span>
+
+<span class="nc" id="L159">        var denominator = getDenominator(ratio);</span>
+        // Where the denominator value is known to be fixed to &quot;1&quot;, Quantity should be
+        // used instead of Ratio
+<span class="nc" id="L162">        var denominatorValue = solver.getValue(denominator);</span>
 
         // For titers cases (e.g., 1:128)
-<span class="nc bnc" id="L157" title="All 2 branches missed.">        if (!solver.hasUnit(denominator)) {</span>
-<span class="nc" id="L158">            return CompletableFuture.completedFuture(denominatorValue.toString());</span>
+<span class="nc bnc" id="L165" title="All 2 branches missed.">        if (!solver.hasUnit(denominator)) {</span>
+<span class="nc" id="L166">            return CompletableFuture.completedFuture(denominatorValue.toString());</span>
         }
 
         // For the per case
-<span class="nc bnc" id="L162" title="All 2 branches missed.">        if (BigDecimal.ONE.equals(denominatorValue)) {</span>
-<span class="nc" id="L163">            return solver.enhancedFromUnitToString(translationService, denominator);</span>
+<span class="nc bnc" id="L170" title="All 2 branches missed.">        if (BigDecimal.ONE.equals(denominatorValue)) {</span>
+<span class="nc" id="L171">            return solver.enhancedFromUnitToString(translationService, denominator);</span>
         }
 
-<span class="nc" id="L166">        return solver.convert(translationService, denominator);</span>
+<span class="nc" id="L174">        return solver.convert(translationService, denominator);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DosageFields_de.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">FHIR Dosage Support - Common</a> &gt; <a href="index.source.html" class="el_package">io.github.jy95.fds.common.l10n</a> &gt; <span class="el_source">DosageFields_de.java</span></div><h1>DosageFields_de.java</h1><pre class="source lang-java linenums">package io.github.jy95.fds.common.l10n;
+
 import java.util.ListResourceBundle;
 
 /**
@@ -8,64 +9,69 @@ import java.util.ListResourceBundle;
  * @author jy95
  * @since 2.0.1
  */
-<span class="nc" id="L11">public class DosageFields_de extends ListResourceBundle {</span>
-    
+<span class="nc" id="L12">public class DosageFields_de extends ListResourceBundle {</span>
+
     // Static content array holding the key-value pairs
-<span class="nc" id="L14">    static final Object[][] contents = {</span>
-        // Linkwords
-        {&quot;linkwords.and&quot;, &quot;und&quot;},
-        {&quot;linkwords.then&quot;, &quot;dann&quot;},
+<span class="nc" id="L15">    static final Object[][] contents = {</span>
+            // Linkwords
+            { &quot;linkwords.and&quot;, &quot;und&quot; },
+            { &quot;linkwords.then&quot;, &quot;dann&quot; },
 
-        // Amount
-        {&quot;amount.range.withUnit&quot;, &quot;{condition, select, 0{zwischen {minValue} und {maxValue} {unit}} 1{bis {maxValue} {unit}} other{mindestens {minValue} {unit}}}&quot;},
-        {&quot;amount.range.withoutUnit&quot;, &quot;{condition, select, 0{zwischen {minValue} und {maxValue}} 1{bis {maxValue}} other{mindestens {minValue}}}&quot;},
-        {&quot;amount.ratio.denominatorLinkword&quot;, &quot;{0, choice, 1#pro|1.0&lt;jeder}&quot;},
+            // Amount
+            { &quot;amount.range.withUnit&quot;,
+                    &quot;{condition, select, 0{zwischen {minValue} und {maxValue} {unit}} 1{bis {maxValue} {unit}} other{mindestens {minValue} {unit}}}&quot; },
+            { &quot;amount.range.withoutUnit&quot;,
+                    &quot;{condition, select, 0{zwischen {minValue} und {maxValue}} 1{bis {maxValue}} other{mindestens {minValue}}}&quot; },
+            { &quot;amount.ratio.denominatorLinkword&quot;, &quot;{0, choice, 1#pro|1.0&lt;jeder}&quot; },
 
-        // Fields - Rate/Duration
-        {&quot;fields.rateQuantity&quot;, &quot;mit einem Verhältnis von {0}&quot;},
-        {&quot;fields.rateRange&quot;, &quot;mit einem Verhältnis von {0}&quot;},
-        {&quot;fields.rateRatio&quot;, &quot;mit einem Verhältnis von {0}&quot;},
-        {&quot;fields.duration&quot;, &quot;für {0}&quot;},
-        {&quot;fields.durationMax&quot;, &quot;maximal {0}&quot;},
+            // Fields - Rate/Duration
+            { &quot;fields.rateQuantity&quot;, &quot;mit einem Verhältnis von {0}&quot; },
+            { &quot;fields.rateRange&quot;, &quot;mit einem Verhältnis von {0}&quot; },
+            { &quot;fields.rateRatio&quot;, &quot;mit einem Verhältnis von {0}&quot; },
+            { &quot;fields.duration&quot;, &quot;für {0}&quot; },
+            { &quot;fields.durationMax&quot;, &quot;maximal {0}&quot; },
 
-        // Fields - Frequency
-        {&quot;fields.frequency&quot;, &quot;{0, plural, one{{0} Mal} other{{0} Mal}}&quot;},
-        {&quot;fields.frequencyAndFrequencyMax&quot;, &quot;{maxFrequency, plural, one{{frequency}-{maxFrequency} Mal} other{{frequency}-{maxFrequency} Mal}}&quot;},
-        {&quot;fields.frequencyMax&quot;, &quot;{0, plural, one{bis zu {0} Mal} other{bis zu {0} Mal}}&quot;},
+            // Fields - Frequency
+            { &quot;fields.frequency&quot;, &quot;{0, plural, one{{0} Mal} other{{0} Mal}}&quot; },
+            { &quot;fields.frequencyAndFrequencyMax&quot;,
+                    &quot;{maxFrequency, plural, one{{frequency}-{maxFrequency} Mal} other{{frequency}-{maxFrequency} Mal}}&quot; },
+            { &quot;fields.frequencyMax&quot;, &quot;{0, plural, one{bis zu {0} Mal} other{bis zu {0} Mal}}&quot; },
 
-        // Fields - Period
-        {&quot;fields.period&quot;, &quot;{period, plural, one{jede {periodUnit}} other{alle {period} {periodUnit}}}&quot;},
-        {&quot;fields.periodMax&quot;, &quot;jede {minPeriod} bis zu {maxPeriod} {unit}&quot;},
+            // Fields - Period
+            { &quot;fields.period&quot;, &quot;{period, plural, one{jede {periodUnit}} other{alle {period} {periodUnit}}}&quot; },
+            { &quot;fields.periodMax&quot;, &quot;jede {minPeriod} bis zu {maxPeriod} {unit}&quot; },
 
-        // Fields - Day/Time
-        {&quot;fields.dayOfWeek&quot;, &quot;{dayCondition, plural, one{am {day}} other{am {day}}}&quot;},
-        {&quot;fields.timeOfDay&quot;, &quot;um {timeOfDay}&quot;},
-        {&quot;fields.asNeeded&quot;, &quot;bei Bedarf&quot;},
-        {&quot;fields.asNeededFor&quot;, &quot;bei Bedarf für {0}&quot;},
+            // Fields - Day/Time
+            { &quot;fields.dayOfWeek&quot;, &quot;{dayCondition, plural, one{am {day}} other{am {day}}}&quot; },
+            { &quot;fields.timeOfDay&quot;, &quot;um {timeOfDay}&quot; },
+            { &quot;fields.asNeeded&quot;, &quot;bei Bedarf&quot; },
+            { &quot;fields.asNeededFor&quot;, &quot;bei Bedarf für {0}&quot; },
 
-        // Fields - Bounds
-        {&quot;fields.boundsDuration&quot;, &quot;für {0}&quot;},
-        {&quot;fields.boundsPeriod&quot;, &quot;{condition, select, 0{von {startDate} bis {endDate}} 1{ab {startDate}} other{bis {endDate}} }&quot;},
-        {&quot;fields.boundsRange&quot;, &quot;für {0}&quot;},
+            // Fields - Bounds
+            { &quot;fields.boundsDuration&quot;, &quot;für {0}&quot; },
+            { &quot;fields.boundsPeriod&quot;,
+                    &quot;{condition, select, 0{von {startDate} bis {endDate}} 1{ab {startDate}} other{bis {endDate}} }&quot; },
+            { &quot;fields.boundsRange&quot;, &quot;für {0}&quot; },
 
-        // Fields - Count
-        {&quot;fields.count&quot;, &quot;{0, plural, one{{0} Mal nehmen} other{{0} Mal nehmen}}&quot;},
-        {&quot;fields.countMax&quot;, &quot;{maxCount, plural, one{von {minCount} bis {maxCount} Mal nehmen} other{von {minCount} bis {maxCount} Mal nehmen}}&quot;},
+            // Fields - Count
+            { &quot;fields.count&quot;, &quot;{0, plural, one{{0} Mal nehmen} other{{0} Mal nehmen}}&quot; },
+            { &quot;fields.countMax&quot;,
+                    &quot;{maxCount, plural, one{von {minCount} bis {maxCount} Mal nehmen} other{von {minCount} bis {maxCount} Mal nehmen}}&quot; },
 
-        // Fields - Event
-        {&quot;fields.event&quot;, &quot;{eventCondition, plural, one{am {event}} other{am {event}}}&quot;},
+            // Fields - Event
+            { &quot;fields.event&quot;, &quot;{eventCondition, plural, one{am {event}} other{am {event}}}&quot; },
 
-        // Fields - Max Dose
-        {&quot;fields.maxDosePerLifetime&quot;, &quot;bis zu einer maximalen Menge von {0} über die Lebenszeit des Patienten&quot;},
-        {&quot;fields.maxDosePerAdministration&quot;, &quot;bis zu einer maximalen Menge von {0} pro Dosis&quot;},
-        {&quot;fields.maxDosePerPeriod&quot;, &quot;bis zu einer maximalen Menge von {0}&quot;},
+            // Fields - Max Dose
+            { &quot;fields.maxDosePerLifetime&quot;, &quot;bis zu einer maximalen Menge von {0} über die Lebenszeit des Patienten&quot; },
+            { &quot;fields.maxDosePerAdministration&quot;, &quot;bis zu einer maximalen Menge von {0} pro Dosis&quot; },
+            { &quot;fields.maxDosePerPeriod&quot;, &quot;bis zu einer maximalen Menge von {0}&quot; },
     };
 
-        // German version
+    // German version
     /** {@inheritDoc} */
     @Override
     public Object[][] getContents() {
-<span class="nc" id="L68">        return contents;</span>
+<span class="nc" id="L74">        return contents;</span>
     }
 
 }
