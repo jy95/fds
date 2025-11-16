@@ -3,7 +3,7 @@ package io.github.jy95.fds.common.functions;
 import com.ibm.icu.text.DateFormatSymbols;
 import com.ibm.icu.util.Calendar;
 
-import lombok.NonNull;
+import lombok.*;
 
 import java.util.Locale;
 import java.util.Map;
@@ -15,6 +15,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author jy95
  * @since 1.0.2
  */
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class DayOfWeekFormatter {
 
     /**
