@@ -14,7 +14,9 @@ import org.hl7.fhir.r4.model.Range;
  */
 public enum RangeToStringR4 implements RangeToString<Range, Quantity, FDSConfigR4> {
 
-    // Singleton
+    /**
+     * Singleton
+     */
     INSTANCE;
 
     /** {@inheritDoc} */
