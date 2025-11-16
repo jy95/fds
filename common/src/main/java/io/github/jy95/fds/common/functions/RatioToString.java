@@ -78,22 +78,23 @@ public interface RatioToString<R, Q extends IBase, C extends FDSConfig & Quantit
      * @return The link word as a string.
      */
     default String retrieveRatioLinkWord(TranslationService<C> translationService, R ratio) {
-        var hasNumerator = hasNumerator(ratio);
-        var hasDenominator = hasDenominator(ratio);
-        var hasBothElements = hasNumerator && hasDenominator;
+        var hasNum = hasNumerator(ratio);
+        var hasDen = hasDenominator(ratio);
+        var hasBoth = hasNum && hasDen;
 
-        var solver = getQuantityToString();
+        if (!hasBoth) {
+            return "";
+        }
 
-        var hasUnitRatio = hasUnitRatio(ratio);
-        var denominatorValue = hasDenominator ? solver.getValue(getDenominator(ratio)) : BigDecimal.ONE;
-        var mustUseLinkword = hasUnitRatio && hasBothElements;
+        if (hasUnitRatio(ratio)) {
+            var solver = getQuantityToString();
+            var denominatorValue = solver.getValue(getDenominator(ratio));
 
-        if (mustUseLinkword) {
             var linkWordMsg = translationService.getMessage("amount.ratio.denominatorLinkword");
             return linkWordMsg.format(new Object[]{denominatorValue});
         }
 
-        return hasBothElements ? ":" : "";
+        return ":";
     }
 
 
