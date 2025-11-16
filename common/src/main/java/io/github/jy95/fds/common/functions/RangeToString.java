@@ -84,7 +84,7 @@ public interface RangeToString<R, Q extends IBase, C extends FDSConfig & Quantit
         var hasHigh = hasHigh(range);
         var solver = getQuantityToString();
 
-        var condition = (hasLow && hasHigh) ? "0" : (hasHigh) ? "1" : (hasLow) ? "2" : "other";
+        var condition = getConditionCode(hasLow, hasHigh);
 
         var minValue = hasLow ? solver.getValue(getLow(range)) : "";
         var maxValue = hasHigh ? solver.getValue(getHigh(range)) : "";
@@ -95,6 +95,28 @@ public interface RangeToString<R, Q extends IBase, C extends FDSConfig & Quantit
             "condition", condition,
             "unit", unitAsText
         );
+    }
+
+    /**
+     * Determines the formatting condition code for the range.
+     * 
+     * @param hasLow True if the range has a low bound.
+     * @param hasHigh True if the range has a high bound.
+     * @return The conditional code ("0", "1" or "2").
+     */
+    private String getConditionCode(boolean hasLow, boolean hasHigh) {
+        // Full range [min - max]
+        if (hasLow && hasHigh) {
+            return "0";
+        }
+
+        // Max only [ - max]
+        if (hasHigh) {
+            return "1";
+        }
+
+        // Min only [min - ]
+        return "2";
     }
 
     /**
