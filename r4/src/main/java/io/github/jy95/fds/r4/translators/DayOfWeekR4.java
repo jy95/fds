@@ -5,6 +5,7 @@ import io.github.jy95.fds.common.functions.ListToString;
 import io.github.jy95.fds.common.functions.TranslationService;
 import io.github.jy95.fds.common.translators.DayOfWeek;
 import io.github.jy95.fds.r4.config.FDSConfigR4;
+import lombok.RequiredArgsConstructor;
 
 import org.hl7.fhir.r4.model.Dosage;
 
@@ -17,24 +18,11 @@ import java.util.concurrent.CompletableFuture;
  *
  * @author jy95
  */
+@RequiredArgsConstructor
 public class DayOfWeekR4 implements DayOfWeek<Dosage> {
 
     /** Translation service */
     private final TranslationService<FDSConfigR4> translationService;
-
-    /**
-     * Day of week formatter
-     */
-    private final DayOfWeekFormatter dayOfWeekFormatter;
-
-    /**
-     * Constructor for {@code DayOfWeekR4}.
-     * @param translationService the translation service
-     */
-    public DayOfWeekR4(TranslationService<FDSConfigR4> translationService) {
-        this.translationService = translationService;
-        this.dayOfWeekFormatter = new DayOfWeekFormatter(translationService.getConfig().getLocale());
-    }
 
     /** {@inheritDoc} */
     @Override
@@ -47,11 +35,13 @@ public class DayOfWeekR4 implements DayOfWeek<Dosage> {
     public CompletableFuture<String> convert(Dosage dosage) {
         return CompletableFuture.supplyAsync(() -> {
             var dayOfWeeks = dosage.getTiming().getRepeat().getDayOfWeek();
+            var locale = translationService.getConfig().getLocale();
             var dayOfWeeksCodes = dayOfWeeks
                     .stream()
-                    .map(day -> dayOfWeekFormatter
+                    .map(day -> DayOfWeekFormatter
                             .codeToLongText(
-                                    day.getCode().toLowerCase()
+                                day.getCode().toLowerCase(),
+                                locale
                             )
                     )
                     .toList();
