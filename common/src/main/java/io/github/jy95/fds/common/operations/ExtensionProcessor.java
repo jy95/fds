@@ -10,7 +10,7 @@ import org.hl7.fhir.instance.model.api.IBaseExtension;
  * @param <E> The type representing Extension in the FHIR version.
  * @since 2.1.4
  */
-public interface ExtensionProcessor<E extends IBaseExtension<?, ?>> {
+public interface ExtensionProcessor<E extends IBaseExtension<E, ?>> {
     /**
      * Converts a list of FHIR Extension objects to a JSON-like string representation.
      *

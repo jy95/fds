@@ -1,12 +1,14 @@
 package io.github.jy95.fds.r4.translators;
 
 import io.github.jy95.fds.common.functions.TranslationService;
-import io.github.jy95.fds.common.types.Translator;
+import io.github.jy95.fds.common.types.TranslatorExtension;
 import io.github.jy95.fds.r4.config.FDSConfigR4;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.hl7.fhir.r4.model.Dosage;
+import org.hl7.fhir.r4.model.Extension;
 
-import java.util.concurrent.CompletableFuture;
+import java.util.List;
 
 /**
  * R4 class for translating "timing.modifierExtension"
@@ -14,24 +16,22 @@ import java.util.concurrent.CompletableFuture;
  * @author jy95
  */
 @RequiredArgsConstructor
-public class TimingModifierExtensionR4 implements Translator<Dosage> {
+public class TimingModifierExtensionR4 
+implements TranslatorExtension<Dosage, Extension, FDSConfigR4> {
 
     /** Translation service */
+    @Getter
     private final TranslationService<FDSConfigR4> translationService;
-
-    /** {@inheritDoc} */
-    @Override
-    public CompletableFuture<String> convert(Dosage dosage) {
-        return translationService
-                .getConfig()
-                .fromExtensionsToString(
-                        dosage.getTiming().getModifierExtension()
-                );
-    }
 
     /** {@inheritDoc} */
     @Override
     public boolean isPresent(Dosage dosage) {
         return dosage.hasTiming() && dosage.getTiming().hasModifierExtension();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public List<Extension> getExtension(Dosage dosage) {
+        return dosage.getTiming().getModifierExtension();
     }
 }
