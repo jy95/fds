@@ -17,7 +17,7 @@ import java.util.List;
 public interface DurationDurationMax<D> extends TranslatorTiming<D> {
 
     /**
-     * Key constants for duration message
+     * Key constant for duration message
      */
     String KEY_DURATION = "fields.duration";
     /**
