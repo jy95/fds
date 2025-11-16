@@ -14,37 +14,39 @@ import org.hl7.fhir.r5.model.Range;
  */
 <span class="fc" id="L15">public enum RangeToStringR5 implements RangeToString&lt;Range, Quantity, FDSConfigR5&gt; {</span>
 
-    // Singleton
-<span class="fc" id="L18">    INSTANCE;</span>
+    /**
+     * Singleton
+     */
+<span class="fc" id="L20">    INSTANCE;</span>
 
     /** {@inheritDoc} */
     @Override
     public boolean hasLow(Range range) {
-<span class="fc" id="L23">        return range.hasLow();</span>
+<span class="fc" id="L25">        return range.hasLow();</span>
     }
 
     /** {@inheritDoc} */
     @Override
     public boolean hasHigh(Range range) {
-<span class="fc" id="L29">        return range.hasHigh();</span>
+<span class="fc" id="L31">        return range.hasHigh();</span>
     }
 
     /** {@inheritDoc} */
     @Override
     public QuantityToString&lt;Quantity, FDSConfigR5&gt; getQuantityToString() {
-<span class="fc" id="L35">        return QuantityToStringR5.INSTANCE;</span>
+<span class="fc" id="L37">        return QuantityToStringR5.INSTANCE;</span>
     }
 
     /** {@inheritDoc} */
     @Override
     public Quantity getHigh(Range range) {
-<span class="fc" id="L41">        return range.getHigh();</span>
+<span class="fc" id="L43">        return range.getHigh();</span>
     }
 
     /** {@inheritDoc} */
     @Override
     public Quantity getLow(Range range) {
-<span class="fc" id="L47">        return range.getLow();</span>
+<span class="fc" id="L49">        return range.getLow();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

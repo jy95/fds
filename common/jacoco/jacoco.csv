@@ -6,7 +6,7 @@ FHIR Dosage Support - Common,io.github.jy95.fds.common.translators,PeriodPeriodM
 FHIR Dosage Support - Common,io.github.jy95.fds.common.translators,OffsetWhen,82,0,2,0,19,0,7,0,6,0
 FHIR Dosage Support - Common,io.github.jy95.fds.common.translators,DurationDurationMax,57,0,12,0,14,0,8,0,2,0
 FHIR Dosage Support - Common,io.github.jy95.fds.common.translators,TimeOfDay,33,0,4,0,4,0,3,0,1,0
-FHIR Dosage Support - Common,io.github.jy95.fds.common.translators,FrequencyFrequencyMax,37,0,8,0,9,0,6,0,2,0
+FHIR Dosage Support - Common,io.github.jy95.fds.common.translators,FrequencyFrequencyMax,84,0,8,0,18,0,9,0,5,0
 FHIR Dosage Support - Common,io.github.jy95.fds.common.translators,BoundsPeriod,44,0,10,0,6,0,6,0,1,0
 FHIR Dosage Support - Common,io.github.jy95.fds.common.translators,Extension,3,0,0,0,1,0,1,0,1,0
 FHIR Dosage Support - Common,io.github.jy95.fds.common.l10n,QuantityComparator_nl,74,0,0,0,3,0,3,0,3,0

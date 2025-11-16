@@ -14,37 +14,39 @@ import org.hl7.fhir.r4.model.Ratio;
  */
 <span class="fc" id="L15">public enum RatioToStringR4 implements RatioToString&lt;Ratio, Quantity, FDSConfigR4&gt; {</span>
 
-    // Singleton
-<span class="fc" id="L18">    INSTANCE;</span>
+    /**
+     * Singleton
+     */
+<span class="fc" id="L20">    INSTANCE;</span>
 
     /** {@inheritDoc} */
     @Override
     public boolean hasNumerator(Ratio ratio) {
-<span class="fc" id="L23">        return ratio.hasNumerator();</span>
+<span class="fc" id="L25">        return ratio.hasNumerator();</span>
     }
 
     /** {@inheritDoc} */
     @Override
     public boolean hasDenominator(Ratio ratio) {
-<span class="fc" id="L29">        return ratio.hasDenominator();</span>
+<span class="fc" id="L31">        return ratio.hasDenominator();</span>
     }
 
     /** {@inheritDoc} */
     @Override
     public QuantityToString&lt;Quantity, FDSConfigR4&gt; getQuantityToString() {
-<span class="fc" id="L35">        return QuantityToStringR4.INSTANCE;</span>
+<span class="fc" id="L37">        return QuantityToStringR4.INSTANCE;</span>
     }
 
     /** {@inheritDoc} */
     @Override
     public Quantity getNumerator(Ratio ratio) {
-<span class="fc" id="L41">        return ratio.getNumerator();</span>
+<span class="fc" id="L43">        return ratio.getNumerator();</span>
     }
 
     /** {@inheritDoc} */
     @Override
     public Quantity getDenominator(Ratio ratio) {
-<span class="fc" id="L47">        return ratio.getDenominator();</span>
+<span class="fc" id="L49">        return ratio.getDenominator();</span>
     }
 
 }

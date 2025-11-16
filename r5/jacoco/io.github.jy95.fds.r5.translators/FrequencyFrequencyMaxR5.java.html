@@ -3,11 +3,10 @@
 import io.github.jy95.fds.common.functions.TranslationService;
 import io.github.jy95.fds.common.translators.FrequencyFrequencyMax;
 import io.github.jy95.fds.r5.config.FDSConfigR5;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import org.hl7.fhir.r5.model.Dosage;
-
-import java.util.Map;
 
 /**
  * R5 class for translating &quot;timing.repeat.frequency&quot; / &quot;timing.repeat.frequencyMax&quot;
@@ -15,9 +14,10 @@ import java.util.Map;
  * @author jy95
  */
 @RequiredArgsConstructor
-public class FrequencyFrequencyMaxR5 implements FrequencyFrequencyMax&lt;Dosage&gt; {
+public class FrequencyFrequencyMaxR5 implements FrequencyFrequencyMax&lt;Dosage, FDSConfigR5&gt; {
 
     /** Translation service */
+    @Getter
     private final TranslationService&lt;FDSConfigR5&gt; translationService;
 
     /** {@inheritDoc} */
@@ -28,70 +28,45 @@ public class FrequencyFrequencyMaxR5 implements FrequencyFrequencyMax&lt;Dosage&
 
     /** {@inheritDoc} */
     @Override
-    public String formatFrequencyAndFrequencyMaxText(int frequencyMin, int frequencyMax) {
-<span class="fc" id="L32">        Map&lt;String, Object&gt; arguments = Map.of(</span>
-<span class="fc" id="L33">                &quot;frequency&quot;, frequencyMin,</span>
-<span class="fc" id="L34">                &quot;maxFrequency&quot;, frequencyMax</span>
-        );
-<span class="fc" id="L36">        var frequencyAndFrequencyMaxMsg = translationService.getMessage(KEY_FREQUENCY_AND_FREQUENCY_MAX);</span>
-<span class="fc" id="L37">        return frequencyAndFrequencyMaxMsg.format(arguments);</span>
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public String formatFrequencyMaxText(int frequencyMax) {
-<span class="fc" id="L43">        var frequencyMaxMsg = translationService.getMessage(KEY_FREQUENCY_MAX);</span>
-<span class="fc" id="L44">        return frequencyMaxMsg.format(new Object[]{frequencyMax});</span>
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public String formatFrequencyText(int frequency) {
-<span class="fc" id="L50">        var frequencyMsg = translationService.getMessage(KEY_FREQUENCY);</span>
-<span class="fc" id="L51">        return frequencyMsg.format(new Object[]{frequency});</span>
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public boolean hasFrequency(Dosage dosage) {
-<span class="fc" id="L57">        return dosage.getTiming().getRepeat().hasFrequency();</span>
+<span class="fc" id="L32">        return dosage.getTiming().getRepeat().hasFrequency();</span>
     }
 
     /** {@inheritDoc} */
     @Override
     public boolean hasFrequencyMax(Dosage dosage) {
-<span class="fc" id="L63">        return dosage.getTiming().getRepeat().hasFrequencyMax();</span>
+<span class="fc" id="L38">        return dosage.getTiming().getRepeat().hasFrequencyMax();</span>
     }
 
     /** {@inheritDoc} */
     @Override
     public boolean hasRequiredElements(Dosage dosage) {
-<span class="pc bpc" id="L69" title="1 of 6 branches missed.">        return dosage.getTiming().hasRepeat() &amp;&amp; (hasFrequency(dosage) || hasFrequencyMax(dosage));</span>
+<span class="pc bpc" id="L44" title="1 of 6 branches missed.">        return dosage.getTiming().hasRepeat() &amp;&amp; (hasFrequency(dosage) || hasFrequencyMax(dosage));</span>
     }
 
     /** {@inheritDoc} */
     @Override
     public String turnFrequencyAndFrequencyMaxToString(Dosage dosage) {
-<span class="fc" id="L75">        var repeat = dosage.getTiming().getRepeat();</span>
-<span class="fc" id="L76">        var frequencyMin = repeat.getFrequency();</span>
-<span class="fc" id="L77">        var frequencyMax = repeat.getFrequencyMax();</span>
-<span class="fc" id="L78">        return formatFrequencyAndFrequencyMaxText(frequencyMin, frequencyMax);</span>
+<span class="fc" id="L50">        var repeat = dosage.getTiming().getRepeat();</span>
+<span class="fc" id="L51">        var frequencyMin = repeat.getFrequency();</span>
+<span class="fc" id="L52">        var frequencyMax = repeat.getFrequencyMax();</span>
+<span class="fc" id="L53">        return formatFrequencyAndFrequencyMaxText(frequencyMin, frequencyMax);</span>
     }
 
     /** {@inheritDoc} */
     @Override
     public String turnFrequencyMaxToString(Dosage dosage) {
-<span class="fc" id="L84">        var repeat = dosage.getTiming().getRepeat();</span>
-<span class="fc" id="L85">        var frequencyMax = repeat.getFrequencyMax();</span>
-<span class="fc" id="L86">        return formatFrequencyMaxText(frequencyMax);</span>
+<span class="fc" id="L59">        var repeat = dosage.getTiming().getRepeat();</span>
+<span class="fc" id="L60">        var frequencyMax = repeat.getFrequencyMax();</span>
+<span class="fc" id="L61">        return formatFrequencyMaxText(frequencyMax);</span>
     }
 
     /** {@inheritDoc} */
     @Override
     public String turnFrequencyToString(Dosage dosage) {
-<span class="fc" id="L92">        var repeat = dosage.getTiming().getRepeat();</span>
-<span class="fc" id="L93">        var frequency = repeat.getFrequency();</span>
-<span class="fc" id="L94">        return formatFrequencyText(frequency);</span>
+<span class="fc" id="L67">        var repeat = dosage.getTiming().getRepeat();</span>
+<span class="fc" id="L68">        var frequency = repeat.getFrequency();</span>
+<span class="fc" id="L69">        return formatFrequencyText(frequency);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
