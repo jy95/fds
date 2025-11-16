@@ -14,7 +14,7 @@ import java.util.concurrent.CompletableFuture;
 public interface FrequencyFrequencyMax<D> extends TranslatorTiming<D> {
 
     /**
-     * Key constants for frequency message
+     * Key constant for frequency message
      */
     String KEY_FREQUENCY = "fields.frequency";
     /**
