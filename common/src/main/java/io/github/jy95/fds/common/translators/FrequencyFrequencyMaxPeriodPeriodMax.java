@@ -7,7 +7,9 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * Interface for translating "timing.repeat.frequency" / "timing.repeat.frequencyMax" / "timing.repeat.period" / "timing.repeat.periodMax".
+ * Interface for translating "timing.repeat.frequency" /
+ * "timing.repeat.frequencyMax" / "timing.repeat.period" /
+ * "timing.repeat.periodMax".
  *
  * @param <D> The type of the translated data.
  * @author jy95
@@ -43,15 +45,15 @@ public interface FrequencyFrequencyMaxPeriodPeriodMax<D> extends Translator<D> {
         var frequencyPart = extractFrequency(dosage);
         var periodPart = extractPeriod(dosage);
 
-        return frequencyPart.thenCombineAsync(periodPart, (freq, period) ->
-                Stream.of(freq, period)
-                        .filter(part -> !part.isEmpty())
-                        .collect(Collectors.joining(" "))
-        );
+        return frequencyPart.thenCombineAsync(periodPart, (freq, period) -> Stream.of(freq, period)
+                .filter(part -> !part.isEmpty())
+                .collect(Collectors.joining(" ")));
     }
 
     /**
-     * <p>extractFrequency.</p>
+     * <p>
+     * extractFrequency.
+     * </p>
      *
      * @param dosage a D object
      * @return a {@link java.util.concurrent.CompletableFuture} object
@@ -59,7 +61,9 @@ public interface FrequencyFrequencyMaxPeriodPeriodMax<D> extends Translator<D> {
     CompletableFuture<String> extractFrequency(D dosage);
 
     /**
-     * <p>extractPeriod.</p>
+     * <p>
+     * extractPeriod.
+     * </p>
      *
      * @param dosage a D object
      * @return a {@link java.util.concurrent.CompletableFuture} object

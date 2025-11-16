@@ -14,7 +14,8 @@ public interface CodeableConceptProcessor<C extends IBase> {
      * Converts a FHIR CodeableConcept to a string representation.
      *
      * @param codeableConcept the CodeableConcept to be converted.
-     * @return a {@link java.util.concurrent.CompletableFuture} that resolves to the text, display, or code of the first coding
+     * @return a {@link java.util.concurrent.CompletableFuture} that resolves to the
+     *         text, display, or code of the first coding
      */
     CompletableFuture<String> fromCodeableConceptToString(C codeableConcept);
 }

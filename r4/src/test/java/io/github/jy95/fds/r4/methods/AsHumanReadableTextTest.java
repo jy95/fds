@@ -107,7 +107,7 @@ public class AsHumanReadableTextTest extends AbstractFhirTest {
         if (locale.equals(Locale.ENGLISH)) {
             return "for 2 weeks - take 2 times then every day - take 1 time and as required - take 1 time";
         } else if (locale.equals(Locale.FRENCH)) {
-            return "pour 2 semaines - 2 fois puis chaque jour - prendre 1 fois et si nécessaire - prendre 1 fois";
+            return "pour 2 semaines - prendre 2 fois puis chaque jour - prendre 1 fois et si nécessaire - prendre 1 fois";
         } else if (locale.equals(Locale.GERMAN)) {
             return "für 2 Wochen - 2 Mal nehmen dann jede Tag - 1 Mal nehmen und bei Bedarf - 1 Mal nehmen";
         } else {

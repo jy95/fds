@@ -13,7 +13,8 @@ import ca.uhn.fhir.model.api.TemporalPrecisionEnum;
 import org.hl7.fhir.utilities.DateTimeUtil;
 
 /**
- * A class that provides localized translation messages for a given configuration and resource bundle.
+ * A class that provides localized translation messages for a given
+ * configuration and resource bundle.
  *
  * @param <C> the type of FDSConfig
  * @author jy95
@@ -21,7 +22,7 @@ import org.hl7.fhir.utilities.DateTimeUtil;
  */
 @Builder
 public final class TranslationService<C extends FDSConfig> {
-    
+
     /**
      * The resource bundle containing localized strings for translation.
      */
@@ -49,7 +50,7 @@ public final class TranslationService<C extends FDSConfig> {
     public MessageFormat getMessage(String key) {
         // 1. Cache only the raw format String, which IS thread-safe to share.
         var msg = getText(key);
-        
+
         // 2. Return a brand-new MessageFormat instance every time.
         // This ensures each thread has its own dedicated, non-shared instance.
         return new MessageFormat(msg, config.getLocale());
@@ -66,25 +67,25 @@ public final class TranslationService<C extends FDSConfig> {
     }
 
     /**
-     * Converts a Date object to a human-readable string based on the configuration's locale.
+     * Converts a Date object to a human-readable string based on the
+     * configuration's locale.
      *
      * @param date      the Date object to convert
      * @param timeZone  the TimeZone of the date
-     * @param precision the TemporalPrecisionEnum indicating the precision of the date
+     * @param precision the TemporalPrecisionEnum indicating the precision of the
+     *                  date
      * @return a human-readable string representation of the date
      */
     public String dateTimeToHumanDisplay(
-        Date date,
-        TimeZone timeZone,
-        TemporalPrecisionEnum precision
-    ) {
+            Date date,
+            TimeZone timeZone,
+            TemporalPrecisionEnum precision) {
         var locale = config.getLocale();
         return DateTimeUtil.toHumanDisplay(
                 locale,
                 timeZone,
                 precision,
-                date
-        );
+                date);
     }
 
 }

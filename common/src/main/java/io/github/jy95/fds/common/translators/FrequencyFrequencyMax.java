@@ -4,7 +4,8 @@ import io.github.jy95.fds.common.types.TranslatorTiming;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * Interface for translating "timing.repeat.frequency" / "timing.repeat.frequencyMax".
+ * Interface for translating "timing.repeat.frequency" /
+ * "timing.repeat.frequencyMax".
  *
  * @param <D> The type of the translated data.
  * @author jy95
@@ -12,11 +13,17 @@ import java.util.concurrent.CompletableFuture;
  */
 public interface FrequencyFrequencyMax<D> extends TranslatorTiming<D> {
 
-    // Key constants for frequency message
+    /**
+     * Key constant for frequency message
+     */
     String KEY_FREQUENCY = "fields.frequency";
-    // Key constant for frequencyMax message
+    /**
+     * Key constant for frequencyMax message
+     */
     String KEY_FREQUENCY_MAX = "fields.frequencyMax";
-    // Key constant for frequencyAndFrequencyMax message
+    /**
+     * Key constant for frequencyAndFrequencyMax message
+     */
     String KEY_FREQUENCY_AND_FREQUENCY_MAX = "fields.frequencyAndFrequencyMax";
 
     /** {@inheritDoc} */
@@ -41,7 +48,8 @@ public interface FrequencyFrequencyMax<D> extends TranslatorTiming<D> {
     }
 
     /**
-     * Formats the text for cases where both "frequency" and "frequencyMax" are present.
+     * Formats the text for cases where both "frequency" and "frequencyMax" are
+     * present.
      *
      * @param frequencyMin The minimum frequency.
      * @param frequencyMax The maximum frequency.
@@ -82,7 +90,8 @@ public interface FrequencyFrequencyMax<D> extends TranslatorTiming<D> {
     boolean hasFrequencyMax(D dosage);
 
     /**
-     * Converts the dosage data containing both "frequency" and "frequencyMax" into a formatted string.
+     * Converts the dosage data containing both "frequency" and "frequencyMax" into
+     * a formatted string.
      *
      * @param dosage The dosage data.
      * @return A formatted string representing both "frequency" and "frequencyMax".

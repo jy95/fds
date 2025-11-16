@@ -22,10 +22,13 @@ public interface OffsetWhen<D> extends TranslatorTiming<D> {
     List<String> order = List.of("d", "h", "min");
 
     /**
-     * Extracts the time components (days, hours, minutes) from a given offset in minutes.
+     * Extracts the time components (days, hours, minutes) from a given offset in
+     * minutes.
      *
-     * @param minutes The offset in minutes to be converted into days, hours, and minutes.
-     * @return A {@link java.util.Map} with keys "d" (days), "h" (hours), and "min" (minutes), and their corresponding values.
+     * @param minutes The offset in minutes to be converted into days, hours, and
+     *                minutes.
+     * @return A {@link java.util.Map} with keys "d" (days), "h" (hours), and "min"
+     *         (minutes), and their corresponding values.
      */
     default Map<String, Integer> extractTime(int minutes) {
         int d = minutes / 1440;
@@ -35,17 +38,20 @@ public interface OffsetWhen<D> extends TranslatorTiming<D> {
         return Map.of(
                 "d", d,
                 "h", h,
-                "min", min
-        );
+                "min", min);
     }
 
     /**
      * Converts an offset value (in minutes) into a human-readable time string.
-     * The result combines the extracted time components (days, hours, minutes) into a formatted string.
+     * The result combines the extracted time components (days, hours, minutes) into
+     * a formatted string.
      *
-     * @param translationService a {@link io.github.jy95.fds.common.functions.TranslationService} object
-     * @param offset The offset in minutes to be converted.
-     * @return A {@link java.util.concurrent.CompletableFuture} containing the formatted string representing the offset.
+     * @param translationService a
+     *                           {@link io.github.jy95.fds.common.functions.TranslationService}
+     *                           object
+     * @param offset             The offset in minutes to be converted.
+     * @return A {@link java.util.concurrent.CompletableFuture} containing the
+     *         formatted string representing the offset.
      * @since 2.1.1
      */
     default CompletableFuture<String> turnOffsetValueToText(TranslationService<?> translationService, int offset) {

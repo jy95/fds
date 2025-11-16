@@ -47,12 +47,13 @@ public interface RatioToString<R, Q extends IBase, C extends FDSConfig & Quantit
     /**
      * Converts a ratio object to a human-readable string asynchronously.
      *
-     * @param translationService The service providing localized strings and configuration context.
+     * @param translationService The service providing localized strings and
+     *                           configuration context.
      * @param ratio              The ratio object to convert.
      * @return A CompletableFuture that resolves to the human-readable string.
      */
     default CompletableFuture<String> convert(TranslationService<C> translationService, R ratio) {
-        var separator = retrieveRatioLinkWord(translationService, ratio); 
+        var separator = retrieveRatioLinkWord(translationService, ratio);
 
         var numeratorText = hasNumerator(ratio)
                 ? convertNumerator(translationService, ratio)
@@ -62,46 +63,48 @@ public interface RatioToString<R, Q extends IBase, C extends FDSConfig & Quantit
                 ? convertDenominator(translationService, ratio)
                 : CompletableFuture.completedFuture("");
 
-        return numeratorText.thenCombineAsync(denominatorText, (num, dem) -> {            
+        return numeratorText.thenCombineAsync(denominatorText, (num, dem) -> {
             return Stream
-                .of(num, separator, dem)
-                .filter(s -> !s.isEmpty())
-                .collect(Collectors.joining(" "));
+                    .of(num, separator, dem)
+                    .filter(s -> !s.isEmpty())
+                    .collect(Collectors.joining(" "));
         });
     }
 
     /**
      * Retrieves the link word based on the ratio's components.
      *
-     * @param translationService The service providing localized strings and configuration context.
+     * @param translationService The service providing localized strings and
+     *                           configuration context.
      * @param ratio              The ratio object.
      * @return The link word as a string.
      */
     default String retrieveRatioLinkWord(TranslationService<C> translationService, R ratio) {
-        var hasNumerator = hasNumerator(ratio);
-        var hasDenominator = hasDenominator(ratio);
-        var hasBothElements = hasNumerator && hasDenominator;
+        var hasNum = hasNumerator(ratio);
+        var hasDen = hasDenominator(ratio);
+        var hasBoth = hasNum && hasDen;
 
-        var solver = getQuantityToString();
-
-        var hasUnitRatio = hasUnitRatio(ratio);
-        var denominatorValue = hasDenominator ? solver.getValue(getDenominator(ratio)) : BigDecimal.ONE;
-        var mustUseLinkword = hasUnitRatio && hasBothElements;
-
-        if (mustUseLinkword) {
-            var linkWordMsg = translationService.getMessage("amount.ratio.denominatorLinkword");
-            return linkWordMsg.format(new Object[]{denominatorValue});
+        if (!hasBoth) {
+            return "";
         }
 
-        return hasBothElements ? ":" : "";
-    }
+        if (hasUnitRatio(ratio)) {
+            var solver = getQuantityToString();
+            var denominatorValue = solver.getValue(getDenominator(ratio));
 
+            var linkWordMsg = translationService.getMessage("amount.ratio.denominatorLinkword");
+            return linkWordMsg.format(new Object[] { denominatorValue });
+        }
+
+        return ":";
+    }
 
     /**
      * Determines if the ratio has a unit in either numerator or denominator.
      *
      * @param ratio The ratio object.
-     * @return True if either the numerator or denominator has a unit, false otherwise.
+     * @return True if either the numerator or denominator has a unit, false
+     *         otherwise.
      */
     default boolean hasUnitRatio(R ratio) {
         var solver = getQuantityToString();
@@ -122,9 +125,11 @@ public interface RatioToString<R, Q extends IBase, C extends FDSConfig & Quantit
     /**
      * Converts the numerator to a human-readable string.
      *
-     * @param translationService The service providing localized strings and configuration context.
+     * @param translationService The service providing localized strings and
+     *                           configuration context.
      * @param ratio              The ratio object.
-     * @return A CompletableFuture that resolves to the human-readable string for the numerator.
+     * @return A CompletableFuture that resolves to the human-readable string for
+     *         the numerator.
      */
     default CompletableFuture<String> convertNumerator(TranslationService<C> translationService, R ratio) {
         var solver = getQuantityToString();
@@ -142,15 +147,18 @@ public interface RatioToString<R, Q extends IBase, C extends FDSConfig & Quantit
     /**
      * Converts the denominator to a human-readable string.
      *
-     * @param translationService The service providing localized strings and configuration context.
+     * @param translationService The service providing localized strings and
+     *                           configuration context.
      * @param ratio              The ratio object.
-     * @return A CompletableFuture that resolves to the human-readable string for the denominator.
+     * @return A CompletableFuture that resolves to the human-readable string for
+     *         the denominator.
      */
     default CompletableFuture<String> convertDenominator(TranslationService<C> translationService, R ratio) {
         var solver = getQuantityToString();
-        
+
         var denominator = getDenominator(ratio);
-        // Where the denominator value is known to be fixed to "1", Quantity should be used instead of Ratio
+        // Where the denominator value is known to be fixed to "1", Quantity should be
+        // used instead of Ratio
         var denominatorValue = solver.getValue(denominator);
 
         // For titers cases (e.g., 1:128)

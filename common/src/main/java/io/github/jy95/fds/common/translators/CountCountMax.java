@@ -11,9 +11,13 @@ import io.github.jy95.fds.common.types.TranslatorTiming;
  */
 public interface CountCountMax<D> extends TranslatorTiming<D> {
 
-    // Key constant for countMax message
+    /**
+     * Key constant for countMax message
+     */
     String KEY_COUNT_MAX = "fields.countMax";
-    // Key constant for count message
+    /**
+     * Key constant for count message
+     */
     String KEY_COUNT = "fields.count";
 
     /**

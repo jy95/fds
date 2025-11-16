@@ -17,22 +17,30 @@ import java.util.concurrent.CompletableFuture;
 public interface AdditionalInstruction<D> extends Translator<D> {
 
     /**
-     * Processes a list of asynchronous additional instructions and converts them to a single string.
+     * Processes a list of asynchronous additional instructions and converts them to
+     * a single string.
      *
-     * <p>This method waits for all the provided CompletableFuture instances to complete,
-     * collects their results as strings, and then uses {@link io.github.jy95.fds.common.functions.ListToString#convert}
-     * to combine them into a single string representation.</p>
+     * <p>
+     * This method waits for all the provided CompletableFuture instances to
+     * complete,
+     * collects their results as strings, and then uses
+     * {@link io.github.jy95.fds.common.functions.ListToString#convert}
+     * to combine them into a single string representation.
+     * </p>
      *
-     * @param translationService The translation service used for obtaining configuration and resources.
-     * @param additionalInstructions A list of {@link java.util.concurrent.CompletableFuture} objects representing
+     * @param translationService     The translation service used for obtaining
+     *                               configuration and resources.
+     * @param additionalInstructions A list of
+     *                               {@link java.util.concurrent.CompletableFuture}
+     *                               objects representing
      *                               the additional instructions to be processed.
-     * @return A {@link java.util.concurrent.CompletableFuture} that, when completed, returns a string
+     * @return A {@link java.util.concurrent.CompletableFuture} that, when
+     *         completed, returns a string
      *         representing all the additional instructions combined.
      */
     default CompletableFuture<String> instructionsFuture(
             TranslationService<?> translationService,
-            List<CompletableFuture<String>> additionalInstructions
-    ) {
+            List<CompletableFuture<String>> additionalInstructions) {
         return CompletableFuture
                 .allOf(additionalInstructions.toArray(CompletableFuture[]::new))
                 .thenApplyAsync(v -> {

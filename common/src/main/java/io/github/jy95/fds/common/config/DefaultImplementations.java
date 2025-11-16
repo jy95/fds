@@ -35,42 +35,39 @@ public final class DefaultImplementations {
     private static final String RESOURCE_PACKAGE = "io.github.jy95.fds.common.l10n.";
 
     // Initialize the MultiResourceBundleControl with resource bundle names
-    private static final MultiResourceBundleControl BUNDLE_CONTROL =
-        new MultiResourceBundleControl(
-                "translations",
-                RESOURCE_PACKAGE + "DosageFields",
-                RESOURCE_PACKAGE + "EventTiming",
-                RESOURCE_PACKAGE + "QuantityComparator"
-        );
+    private static final MultiResourceBundleControl BUNDLE_CONTROL = new MultiResourceBundleControl(
+            "translations",
+            RESOURCE_PACKAGE + "DosageFields",
+            RESOURCE_PACKAGE + "EventTiming",
+            RESOURCE_PACKAGE + "QuantityComparator");
 
     // Default display order list
     public static final List<DisplayOrder> DEFAULT_DISPLAY_ORDER = List.of(
-        DisplayOrder.METHOD,
-        DisplayOrder.DOSE_QUANTITY,
-        DisplayOrder.DOSE_RANGE,
-        DisplayOrder.RATE_RATIO,
-        DisplayOrder.RATE_QUANTITY,
-        DisplayOrder.RATE_RANGE,
-        DisplayOrder.DURATION_DURATION_MAX,
-        DisplayOrder.FREQUENCY_FREQUENCY_MAX_PERIOD_PERIOD_MAX,
-        DisplayOrder.OFFSET_WHEN,
-        DisplayOrder.DAY_OF_WEEK,
-        DisplayOrder.TIME_OF_DAY,
-        DisplayOrder.ROUTE,
-        DisplayOrder.SITE,
-        DisplayOrder.AS_NEEDED,
-        DisplayOrder.BOUNDS_DURATION,
-        DisplayOrder.BOUNDS_PERIOD,
-        DisplayOrder.BOUNDS_RANGE,
-        DisplayOrder.COUNT_COUNT_MAX,
-        DisplayOrder.TIMING_EVENT,
-        DisplayOrder.TIMING_CODE,
-        DisplayOrder.MAX_DOSE_PER_PERIOD,
-        DisplayOrder.MAX_DOSE_PER_ADMINISTRATION,
-        DisplayOrder.MAX_DOSE_PER_LIFETIME,
-        DisplayOrder.ADDITIONAL_INSTRUCTION,
-        DisplayOrder.PATIENT_INSTRUCTION
-    );
+            DisplayOrder.METHOD,
+            DisplayOrder.DOSE_QUANTITY,
+            DisplayOrder.DOSE_RANGE,
+            DisplayOrder.RATE_RATIO,
+            DisplayOrder.RATE_QUANTITY,
+            DisplayOrder.RATE_RANGE,
+            DisplayOrder.DURATION_DURATION_MAX,
+            DisplayOrder.FREQUENCY_FREQUENCY_MAX_PERIOD_PERIOD_MAX,
+            DisplayOrder.OFFSET_WHEN,
+            DisplayOrder.DAY_OF_WEEK,
+            DisplayOrder.TIME_OF_DAY,
+            DisplayOrder.ROUTE,
+            DisplayOrder.SITE,
+            DisplayOrder.AS_NEEDED,
+            DisplayOrder.BOUNDS_DURATION,
+            DisplayOrder.BOUNDS_PERIOD,
+            DisplayOrder.BOUNDS_RANGE,
+            DisplayOrder.COUNT_COUNT_MAX,
+            DisplayOrder.TIMING_EVENT,
+            DisplayOrder.TIMING_CODE,
+            DisplayOrder.MAX_DOSE_PER_PERIOD,
+            DisplayOrder.MAX_DOSE_PER_ADMINISTRATION,
+            DisplayOrder.MAX_DOSE_PER_LIFETIME,
+            DisplayOrder.ADDITIONAL_INSTRUCTION,
+            DisplayOrder.PATIENT_INSTRUCTION);
 
     // Default separator between each part of "Dosage"
     public static final String DEFAULT_SEPARATOR = " - ";
@@ -78,10 +75,12 @@ public final class DefaultImplementations {
     /**
      * No constructor for this class
      */
-    private DefaultImplementations(){}
+    private DefaultImplementations() {
+    }
 
     /**
-     * Selects a ResourceBundle for the specified locale using a MultiResourceBundleControl.
+     * Selects a ResourceBundle for the specified locale using a
+     * MultiResourceBundleControl.
      *
      * @param locale the locale for which the ResourceBundle is desired.
      * @return the aggregated ResourceBundle for the specified locale.
@@ -90,8 +89,7 @@ public final class DefaultImplementations {
         return ResourceBundle.getBundle(
                 BUNDLE_CONTROL.getBaseName(),
                 locale,
-                BUNDLE_CONTROL
-        );
+                BUNDLE_CONTROL);
     }
 
     /**
@@ -107,13 +105,19 @@ public final class DefaultImplementations {
     }
 
     /**
-     * Converts a list of FHIR {@link org.hl7.fhir.instance.model.api.IBaseExtension} objects to a JSON-like string representation.
+     * Converts a list of FHIR
+     * {@link org.hl7.fhir.instance.model.api.IBaseExtension} objects to a JSON-like
+     * string representation.
      *
-     * @param extensions the list of {@link org.hl7.fhir.instance.model.api.IBaseExtension} objects to be converted.
-     * @return a {@link java.util.concurrent.CompletableFuture} that resolves to a JSON-like string representing the extensions.
+     * @param extensions the list of
+     *                   {@link org.hl7.fhir.instance.model.api.IBaseExtension}
+     *                   objects to be converted.
+     * @return a {@link java.util.concurrent.CompletableFuture} that resolves to a
+     *         JSON-like string representing the extensions.
      * @since 2.1.1
      */
-    public static CompletableFuture<String> fromExtensionsToString(@NonNull List<? extends IBaseExtension<?, ?>> extensions) {
+    public static CompletableFuture<String> fromExtensionsToString(
+            @NonNull List<? extends IBaseExtension<?, ?>> extensions) {
         return CompletableFuture.supplyAsync(() -> {
 
             return extensions
@@ -126,9 +130,9 @@ public final class DefaultImplementations {
                         var hasUrl = Objects.nonNull(ext.getUrl());
                         if (hasUrl) {
                             sb
-                                .append("\"url\":\"")
-                                .append(ext.getUrl())
-                                .append("\"");
+                                    .append("\"url\":\"")
+                                    .append(ext.getUrl())
+                                    .append("\"");
                         }
 
                         var hasValue = Objects.nonNull(ext.getValue());
@@ -138,10 +142,10 @@ public final class DefaultImplementations {
 
                         if (hasValue && ext.getValue() instanceof IPrimitiveType<?> valuIPrimitiveType) {
                             sb
-                                .append("\"value[x]\":\"")
-                                .append(
-                                    valuIPrimitiveType.getValueAsString()
-                                ).append("\"");
+                                    .append("\"value[x]\":\"")
+                                    .append(
+                                            valuIPrimitiveType.getValueAsString())
+                                    .append("\"");
                         }
 
                         sb.append("}");
@@ -152,9 +156,11 @@ public final class DefaultImplementations {
     }
 
     /**
-     * Converts a FHIR {@link org.hl7.fhir.instance.model.api.IBaseCoding} to a string representation.
+     * Converts a FHIR {@link org.hl7.fhir.instance.model.api.IBaseCoding} to a
+     * string representation.
      *
-     * @param coding the {@link org.hl7.fhir.instance.model.api.IBaseCoding} to be converted.
+     * @param coding the {@link org.hl7.fhir.instance.model.api.IBaseCoding} to be
+     *               converted.
      * @return the display or code of the coding.
      * @since 2.1.1
      */
@@ -166,21 +172,22 @@ public final class DefaultImplementations {
     }
 
     /**
-     * Selects a specific dosage and rate field from a list of dose and rate components.
+     * Selects a specific dosage and rate field from a list of dose and rate
+     * components.
      *
      * @param doseAndRateComponentList the list of dose and rate components.
-     * @param doseAndRateKey the key indicating which field to extract.
-     * @param extractorMap a map of dose and rate keys to their corresponding extractor functions.
-     * @param <T> the type of the dose and rate component.
-     * @param <U> the type of the extracted field.
+     * @param doseAndRateKey           the key indicating which field to extract.
+     * @param extractorMap             a map of dose and rate keys to their
+     *                                 corresponding extractor functions.
+     * @param <T>                      the type of the dose and rate component.
+     * @param <U>                      the type of the extracted field.
      * @return the extracted field from the first dose and rate component.
      * @since 2.1.3
      */
     public static <T extends IBase, U extends IBase> U selectDosageAndRateField(
-        List<T> doseAndRateComponentList,
-        DoseAndRateKey doseAndRateKey,
-        Map<DoseAndRateKey, DoseAndRateExtractor<T, U>> extractorMap
-    ) {
+            List<T> doseAndRateComponentList,
+            DoseAndRateKey doseAndRateKey,
+            Map<DoseAndRateKey, DoseAndRateExtractor<T, U>> extractorMap) {
         var doseAndRateExtractor = extractorMap.get(doseAndRateKey);
         var firstRep = doseAndRateComponentList.get(0);
         return doseAndRateExtractor.extract(firstRep);

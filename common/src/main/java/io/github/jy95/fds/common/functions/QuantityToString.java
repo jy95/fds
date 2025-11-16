@@ -37,7 +37,8 @@ public interface QuantityToString<Q extends IBase, C extends FDSConfig & Quantit
     /**
      * Converts a quantity object to a human-readable string asynchronously.
      *
-     * @param translationService The service providing localized string translations.
+     * @param translationService The service providing localized string
+     *                           translations.
      * @param quantity           The quantity object to convert.
      * @return A CompletableFuture that resolves to the human-readable string.
      */
@@ -47,20 +48,17 @@ public interface QuantityToString<Q extends IBase, C extends FDSConfig & Quantit
         var unit = hasUnit(quantity)
                 ? enhancedFromUnitToString(translationService, quantity)
                 : CompletableFuture.completedFuture("");
-        
-        var amount = config
-            .getFormatQuantityNumber()
-            .apply(
-                config.getLocale(),
-                getValue(quantity)
-            );
 
-        return comparator.thenCombineAsync(unit, (comparatorText, unitText) ->
-                Stream
-                        .of(comparatorText, amount, unitText)
-                        .filter(part -> !part.isEmpty())
-                        .collect(Collectors.joining(" "))
-        );
+        var amount = config
+                .getFormatQuantityNumber()
+                .apply(
+                        config.getLocale(),
+                        getValue(quantity));
+
+        return comparator.thenCombineAsync(unit, (comparatorText, unitText) -> Stream
+                .of(comparatorText, amount, unitText)
+                .filter(part -> !part.isEmpty())
+                .collect(Collectors.joining(" ")));
     }
 
     /**
@@ -104,7 +102,7 @@ public interface QuantityToString<Q extends IBase, C extends FDSConfig & Quantit
     String getComparatorCode(Q quantity);
 
     /**
-     * Check if the quantity has a system 
+     * Check if the quantity has a system
      * 
      * @param quantity The quantity object.
      * @return True if the quantity has a system, false otherwise.
@@ -112,7 +110,7 @@ public interface QuantityToString<Q extends IBase, C extends FDSConfig & Quantit
     boolean hasSystem(Q quantity);
 
     /**
-     * Check if the quantity has a code 
+     * Check if the quantity has a code
      * 
      * @param quantity The quantity object.
      * @return True if the quantity has a code, false otherwise.
@@ -138,9 +136,11 @@ public interface QuantityToString<Q extends IBase, C extends FDSConfig & Quantit
     /**
      * Provides enhanced logic for converting units to a human-readable string.
      *
-     * @param translationService The service providing localized string translations.
-     * @param quantity The quantity object.
-     * @return A CompletableFuture that resolves to the human-readable string for the unit.
+     * @param translationService The service providing localized string
+     *                           translations.
+     * @param quantity           The quantity object.
+     * @return A CompletableFuture that resolves to the human-readable string for
+     *         the unit.
      */
     default CompletableFuture<String> enhancedFromUnitToString(TranslationService<C> translationService, Q quantity) {
         var config = translationService.getConfig();
@@ -162,9 +162,11 @@ public interface QuantityToString<Q extends IBase, C extends FDSConfig & Quantit
     /**
      * Converts the comparator of a quantity to a human-readable string.
      *
-     * @param translationService The service providing localized string translations.
+     * @param translationService The service providing localized string
+     *                           translations.
      * @param quantity           The quantity object.
-     * @return A CompletableFuture that resolves to the human-readable string for the comparator.
+     * @return A CompletableFuture that resolves to the human-readable string for
+     *         the comparator.
      */
     default CompletableFuture<String> comparatorToString(TranslationService<C> translationService, Q quantity) {
         if (hasComparator(quantity)) {

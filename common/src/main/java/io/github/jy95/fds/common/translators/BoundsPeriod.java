@@ -13,7 +13,9 @@ import java.util.Map;
  */
 public interface BoundsPeriod<D> extends TranslatorTiming<D> {
 
-    // Key constant for boundsPeriod message
+    /**
+     * Key constant for boundsPeriod message
+     */
     String KEY_BOUNDS_PERIOD = "fields.boundsPeriod";
 
     /**
@@ -38,8 +40,7 @@ public interface BoundsPeriod<D> extends TranslatorTiming<D> {
         return Map.of(
                 "startDate", startDate,
                 "endDate", endDate,
-                "condition", condition
-        );
+                "condition", condition);
     }
 
     /**

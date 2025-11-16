@@ -11,7 +11,9 @@ import io.github.jy95.fds.common.types.Translator;
  */
 public interface MaxDosePerPeriod<D> extends Translator<D> {
 
-    // Key constant for maxDosePerPeriod message
+    /**
+     * Key constant for maxDosePerPeriod message
+     */
     String KEY_MAX_DOSE_PER_PERIOD = "fields.maxDosePerPeriod";
 
 }

@@ -9,7 +9,8 @@ import java.util.stream.Collectors;
 
 /**
  * A utility class for handling sequences of dosages.
- * Provides methods for checking sequential instructions and grouping by sequence.
+ * Provides methods for checking sequential instructions and grouping by
+ * sequence.
  *
  * @author jy95
  * @since 1.0.0
@@ -19,18 +20,24 @@ public final class SequenceUtils {
     /**
      * No constructor for this class
      */
-    private SequenceUtils(){}
+    private SequenceUtils() {
+    }
 
     /**
      * Checks if the given list of dosages contains only sequential instructions.
      *
-     * <p>This method checks if the dosages contain unique sequence numbers,
-     * and determines if the instructions are sequential. A list of dosages is considered sequential
-     * if it either has no sequence numbers or has a sequence number for every dosage in the list.</p>
+     * <p>
+     * This method checks if the dosages contain unique sequence numbers,
+     * and determines if the instructions are sequential. A list of dosages is
+     * considered sequential
+     * if it either has no sequence numbers or has a sequence number for every
+     * dosage in the list.
+     * </p>
      *
-     * @param dosages The list of dosages to check.
-     * @param getSequence A function that extracts the sequence number from each dosage.
-     * @param <T> The type of the dosage object.
+     * @param dosages     The list of dosages to check.
+     * @param getSequence A function that extracts the sequence number from each
+     *                    dosage.
+     * @param <T>         The type of the dosage object.
      * @return {@code true} if the dosages contain only sequential instructions,
      *         {@code false} otherwise.
      */
@@ -47,13 +54,18 @@ public final class SequenceUtils {
     /**
      * Groups the given list of dosages by their sequence number.
      *
-     * <p>This method creates a map of dosages grouped by sequence number,
-     * returning a list of lists where each inner list contains dosages with the same sequence number.</p>
+     * <p>
+     * This method creates a map of dosages grouped by sequence number,
+     * returning a list of lists where each inner list contains dosages with the
+     * same sequence number.
+     * </p>
      *
-     * @param dosages The list of dosages to group.
-     * @param getSequence A function that extracts the sequence number from each dosage.
-     * @param <T> The type of the dosage object.
-     * @return A list of lists, where each inner list contains dosages grouped by their sequence number.
+     * @param dosages     The list of dosages to group.
+     * @param getSequence A function that extracts the sequence number from each
+     *                    dosage.
+     * @param <T>         The type of the dosage object.
+     * @return A list of lists, where each inner list contains dosages grouped by
+     *         their sequence number.
      */
     public static <T> List<List<T>> groupBySequence(List<T> dosages, Function<T, Integer> getSequence) {
         Map<Integer, List<T>> sequencesMap = new HashMap<>();

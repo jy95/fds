@@ -12,9 +12,11 @@ import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 /**
- * Abstract class providing API methods for translating and formatting dosage data.
+ * Abstract class providing API methods for translating and formatting dosage
+ * data.
  *
- * @param <C> the type of configuration extending {@link io.github.jy95.fds.common.config.FDSConfig}
+ * @param <C> the type of configuration extending
+ *            {@link io.github.jy95.fds.common.config.FDSConfig}
  * @param <D> the type of dosage handled by this API
  * @author jy95
  * @since 1.0.0
@@ -25,7 +27,7 @@ public abstract class DosageAPI<C extends FDSConfig, D> {
      * The configuration object used by this API.
      */
     private final C config;
-    
+
     /**
      * The translation service used for localization.
      */
@@ -46,11 +48,13 @@ public abstract class DosageAPI<C extends FDSConfig, D> {
     }
 
     /**
-     * Converts specified dosage fields into a human-readable string representation asynchronously.
+     * Converts specified dosage fields into a human-readable string representation
+     * asynchronously.
      *
      * @param dosage the dosage object to translate
      * @param fields the fields to include in the translation
-     * @return a {@link java.util.concurrent.CompletableFuture} with the combined human-readable string
+     * @return a {@link java.util.concurrent.CompletableFuture} with the combined
+     *         human-readable string
      */
     public CompletableFuture<String> getFields(D dosage, DisplayOrder... fields) {
         var separator = this.config.getDisplaySeparator();
@@ -70,15 +74,15 @@ public abstract class DosageAPI<C extends FDSConfig, D> {
                 .thenApplyAsync(v -> translatorsFields
                         .stream()
                         .map(s -> s.getNow(""))
-                        .collect(Collectors.joining(separator))
-                );
+                        .collect(Collectors.joining(separator)));
     }
 
     /**
      * Retrieves the translator associated with the specified display order.
      *
      * @param displayOrder the display order used to find the translator
-     * @return the corresponding {@link io.github.jy95.fds.common.types.Translator}, or {@code null} if not found
+     * @return the corresponding {@link io.github.jy95.fds.common.types.Translator},
+     *         or {@code null} if not found
      */
     public abstract Translator<D> getTranslator(DisplayOrder displayOrder);
 
@@ -94,7 +98,8 @@ public abstract class DosageAPI<C extends FDSConfig, D> {
      * Converts a single dosage object into human-readable text asynchronously.
      *
      * @param dosage the dosage object to translate
-     * @return a {@link java.util.concurrent.CompletableFuture} with the human-readable string
+     * @return a {@link java.util.concurrent.CompletableFuture} with the
+     *         human-readable string
      */
     public CompletableFuture<String> asHumanReadableText(D dosage) {
         var fields = this.config.getDisplayOrder().toArray(DisplayOrder[]::new);
@@ -106,7 +111,8 @@ public abstract class DosageAPI<C extends FDSConfig, D> {
      * Handles both sequential and grouped dosages appropriately.
      *
      * @param dosages the list of dosage objects to translate
-     * @return a {@link java.util.concurrent.CompletableFuture} with the combined human-readable string
+     * @return a {@link java.util.concurrent.CompletableFuture} with the combined
+     *         human-readable string
      */
     public CompletableFuture<String> asHumanReadableText(List<D> dosages) {
         if (containsOnlySequentialInstructions(dosages)) {
@@ -119,7 +125,8 @@ public abstract class DosageAPI<C extends FDSConfig, D> {
      * Converts sequential dosages into a human-readable text asynchronously.
      *
      * @param dosages the list of sequential dosages
-     * @return a {@link java.util.concurrent.CompletableFuture} with the human-readable string
+     * @return a {@link java.util.concurrent.CompletableFuture} with the
+     *         human-readable string
      */
     protected CompletableFuture<String> convertSequentialDosagesToText(List<D> dosages) {
         List<CompletableFuture<String>> dosagesAsTextFutures = dosages.stream()
@@ -138,7 +145,8 @@ public abstract class DosageAPI<C extends FDSConfig, D> {
      * Converts grouped dosages into a human-readable text asynchronously.
      *
      * @param dosages the list of grouped dosages
-     * @return a {@link java.util.concurrent.CompletableFuture} with the human-readable string
+     * @return a {@link java.util.concurrent.CompletableFuture} with the
+     *         human-readable string
      */
     protected CompletableFuture<String> convertGroupedDosagesToText(List<D> dosages) {
         var sortedDosages = groupBySequence(dosages);
@@ -159,7 +167,8 @@ public abstract class DosageAPI<C extends FDSConfig, D> {
      * Converts concurrent dosages into a human-readable text asynchronously.
      *
      * @param dosages the list of concurrent dosages
-     * @return a {@link java.util.concurrent.CompletableFuture} with the human-readable string
+     * @return a {@link java.util.concurrent.CompletableFuture} with the
+     *         human-readable string
      */
     protected CompletableFuture<String> convertConcurrentDosagesToText(List<D> dosages) {
         List<CompletableFuture<String>> concurrentInstructionsFutures = dosages.stream()
@@ -183,7 +192,9 @@ public abstract class DosageAPI<C extends FDSConfig, D> {
     protected abstract List<List<D>> groupBySequence(List<D> dosages);
 
     /**
-     * Extracts completed results from a list of {@link CompletableFuture} instances.
+     * Extracts completed results from a list of {@link CompletableFuture}
+     * instances.
+     * 
      * @param futures the list of futures to extract results from
      * @return a list of completed results
      */
@@ -195,6 +206,7 @@ public abstract class DosageAPI<C extends FDSConfig, D> {
 
     /**
      * Converts a list of strings into a single formatted string using a link word.
+     * 
      * @param textList the list of strings to combine
      * @param linkWord the linking word to use between strings
      * @return the combined string

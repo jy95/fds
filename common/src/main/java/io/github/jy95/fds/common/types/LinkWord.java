@@ -20,7 +20,7 @@ public enum LinkWord {
     THEN("then");
 
     /**
-     *  Retrieves the value of the link word.
+     * Retrieves the value of the link word.
      */
     private final String value;
 
