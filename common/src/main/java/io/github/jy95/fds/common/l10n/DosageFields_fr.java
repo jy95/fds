@@ -54,9 +54,9 @@ public class DosageFields_fr extends ListResourceBundle {
             { "fields.boundsRange", "pour {0}" },
 
             // Fields - Count
-            { "fields.count", "{0, plural, one{prendre {0} fois} other{{0} fois}}" },
+            { "fields.count", "{0, plural, one{prendre {0} fois} other{prendre {0} fois}}" },
             { "fields.countMax",
-                    "{maxCount, plural, one{prendre {minCount} à {maxCount} fois} other{{minCount} à {maxCount} fois}}" },
+                    "{maxCount, plural, one{prendre {minCount} à {maxCount} fois} other{prendre {minCount} à {maxCount} fois}}" },
 
             // Fields - Event
             { "fields.event", "{eventCondition, plural, one{le {event}} other{les {event}}}" },
