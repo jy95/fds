@@ -2,8 +2,8 @@ publiccodeYmlVersion: "0.4"
 name: FHIR Dosage Support
 url: "https://github.com/jy95/fds"
 landingURL: "https://jy95.github.io/fds/"
-softwareVersion: "2.1.4"
-releaseDate: "2025-11-15"
+softwareVersion: "2.1.5"
+releaseDate: "2025-11-17"
 logo: "src/site/resources/images/logo.png"
 platforms:
   - web
