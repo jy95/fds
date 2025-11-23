@@ -3,13 +3,20 @@ package io.github.jy95.fds.r5.utils;
 import io.github.jy95.fds.common.functions.TranslationService;
 import io.github.jy95.fds.common.types.AbstractTranslatorsMap;
 import io.github.jy95.fds.common.types.DisplayOrder;
+import io.github.jy95.fds.common.types.SpecComponent;
 import io.github.jy95.fds.common.types.Translator;
 import io.github.jy95.fds.r5.config.FDSConfigR5;
-import io.github.jy95.fds.r5.translators.*;
-import org.hl7.fhir.r5.model.Dosage;
+import io.github.jy95.fds.r5.utils.adapters.*;
+import io.github.jy95.fds.r5.utils.maps.DosageTranslatorsMapR5;
+import io.github.jy95.fds.r5.utils.maps.TimingRepeatTranslatorsMapR5;
+import io.github.jy95.fds.r5.utils.maps.TimingTranslatorsMapR5;
 
-import java.util.EnumMap;
+import org.hl7.fhir.r5.model.Dosage;
+import org.hl7.fhir.r5.model.Timing;
+import org.hl7.fhir.r5.model.Timing.TimingRepeatComponent;
+
 import java.util.Map;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 /**
@@ -20,63 +27,65 @@ import java.util.function.Supplier;
 public class TranslatorsMapR5 extends AbstractTranslatorsMap<FDSConfigR5, Dosage> {
 
     /**
+     * Map for delegating components.
+     * The key is the SpecComponent type, and the value is a function
+     * that takes the DisplayOrder and returns the adapted Translator<Dosage>.
+     */
+    private final Map<SpecComponent, Function<DisplayOrder, Translator<Dosage>>> delegationMap;
+
+    /**
      * Constructor for {@code TranslatorsMapR5}.
      *
      * @param translationService The translation service used for translation.
      */
     public TranslatorsMapR5(TranslationService<FDSConfigR5> translationService) {
         super(translationService);
-    }
+        var dosageTranslatorsMapR5 = new DosageTranslatorsMapR5(translationService);
+        var timingTranslatorsMapR5 = new TimingTranslatorsMapR5(translationService);
+        var timingRepeatTranslatorsMapR5 = new TimingRepeatTranslatorsMapR5(translationService);
 
+        delegationMap = Map.of(
+            // Translators directly related to Dosage fields
+            SpecComponent.DOSAGE,
+            displayOrder -> dosageTranslatorsMapR5.getTranslator(displayOrder),
+            // Translators directly related to Timing fields
+            SpecComponent.TIMING,
+            displayOrder -> adaptTimingTranslator(timingTranslatorsMapR5.getTranslator(displayOrder)),
+            // Translators directly related to Timing.repeat fields
+            SpecComponent.TIMING_REPEAT,
+            displayOrder -> adaptRepeatTranslator(timingRepeatTranslatorsMapR5.getTranslator(displayOrder))
+        );
+    }
 
     /** {@inheritDoc} */
     @Override
     protected Map<DisplayOrder, Supplier<Translator<Dosage>>> createTranslatorsSuppliers() {
-        EnumMap<DisplayOrder, Supplier<Translator<Dosage>>> suppliers = new EnumMap<>(DisplayOrder.class);
+        // An empty map as delegation is in place here
+        return Map.of();
+    }
 
-        // All display order supported by R5 are initialized here
-        suppliers.put(DisplayOrder.TEXT, TextR5::new);
-        suppliers.put(DisplayOrder.PATIENT_INSTRUCTION, PatientInstructionR5::new);
-        suppliers.put(DisplayOrder.DAY_OF_WEEK, () -> new DayOfWeekR5(translationService));
-        suppliers.put(DisplayOrder.TIME_OF_DAY, () -> new TimeOfDayR5(translationService));
-        suppliers.put(DisplayOrder.TIMING_CODE, () -> new TimingCodeR5(translationService));
-        suppliers.put(DisplayOrder.TIMING_EVENT, () -> new TimingEventR5(translationService));
-        suppliers.put(DisplayOrder.METHOD, () -> new MethodR5(translationService));
-        suppliers.put(DisplayOrder.ROUTE, () -> new RouteR5(translationService));
-        suppliers.put(DisplayOrder.SITE, () -> new SiteR5(translationService));
-        suppliers.put(DisplayOrder.EXTENSION, () -> new ExtensionR5(translationService));
-        suppliers.put(DisplayOrder.TIMING_EXTENSION, () -> new TimingExtensionR5(translationService));
-        suppliers.put(DisplayOrder.TIMING_REPEAT_EXTENSION, () -> new TimingRepeatExtensionR5(translationService));
-        suppliers.put(DisplayOrder.MODIFIER_EXTENSION, () -> new ModifierExtensionR5(translationService));
-        suppliers.put(DisplayOrder.TIMING_MODIFIER_EXTENSION, () -> new TimingModifierExtensionR5(translationService));
-        suppliers.put(DisplayOrder.ADDITIONAL_INSTRUCTION, () -> new AdditionalInstructionR5(translationService));
-        suppliers.put(DisplayOrder.AS_NEEDED, () -> new AsNeededR5(translationService));
-        suppliers.put(DisplayOrder.BOUNDS_PERIOD, () -> new BoundsPeriodR5(translationService));
-        suppliers.put(DisplayOrder.BOUNDS_RANGE, () -> new BoundsRangeR5(translationService));
-        suppliers.put(DisplayOrder.DURATION_DURATION_MAX, () -> new DurationDurationMaxR5(translationService));
-        suppliers.put(DisplayOrder.FREQUENCY_FREQUENCY_MAX, () -> new FrequencyFrequencyMaxR5(translationService));
-        suppliers.put(DisplayOrder.PERIOD_PERIOD_MAX, () -> new PeriodPeriodMaxR5(translationService));
-        suppliers.put(DisplayOrder.COUNT_COUNT_MAX, () -> new CountCountMaxR5(translationService));
-        suppliers.put(DisplayOrder.DOSE_QUANTITY, () -> new DoseQuantityR5(translationService));
-        suppliers.put(DisplayOrder.DOSE_RANGE, () -> new DoseRangeR5(translationService));
-        suppliers.put(DisplayOrder.RATE_QUANTITY, () -> new RateQuantityR5(translationService));
-        suppliers.put(DisplayOrder.RATE_RANGE, () -> new RateRangeR5(translationService));
-        suppliers.put(DisplayOrder.RATE_RATIO, () -> new RateRatioR5(translationService));
-        suppliers.put(DisplayOrder.OFFSET_WHEN, () -> new OffsetWhenR5(translationService));
-        suppliers.put(DisplayOrder.MAX_DOSE_PER_LIFETIME, () -> new MaxDosePerLifetimeR5(translationService));
-        suppliers.put(DisplayOrder.MAX_DOSE_PER_ADMINISTRATION, () -> new MaxDosePerAdministrationR5(translationService));
-        suppliers.put(DisplayOrder.MAX_DOSE_PER_PERIOD, () -> new MaxDosePerPeriodR5(translationService));
-        suppliers.put(DisplayOrder.BOUNDS_DURATION, () -> new BoundsDurationR5(translationService));
+    /**
+     * Adapt a TimingRepeatComponent Translator into a Dosage Translator
+     * @param reTranslator a TimingRepeatComponent translator
+     * @return a Dosage Translator
+     */
+    private Translator<Dosage> adaptRepeatTranslator(Translator<TimingRepeatComponent> reTranslator) {
+        return new RepeatComponentTranslatorAdapterR5(reTranslator);
+    }
 
-        // Composite translator with dependencies
-        suppliers.put(
-                DisplayOrder.FREQUENCY_FREQUENCY_MAX_PERIOD_PERIOD_MAX,
-                () -> new FrequencyFrequencyMaxPeriodPeriodMaxR5(
-                        suppliers.get(DisplayOrder.FREQUENCY_FREQUENCY_MAX).get(),
-                        suppliers.get(DisplayOrder.PERIOD_PERIOD_MAX).get()
-                )
-        );
+    /**
+     * Adapt a Timing Translator into a Dosage Translator
+     * @param timeTranslator a Timing translator
+     * @return a Dosage Translator
+     */
+    private Translator<Dosage> adaptTimingTranslator(Translator<Timing> timeTranslator) {
+        return new TimingTranslatorAdapterR5(timeTranslator);
+    }
 
-        return suppliers;
+    @Override
+    public Translator<Dosage> getTranslator(DisplayOrder displayOrder) {
+        return translatorCache.computeIfAbsent(displayOrder, key -> {
+            return delegationMap.get(displayOrder.getComponent()).apply(displayOrder);
+        });
     }
 }

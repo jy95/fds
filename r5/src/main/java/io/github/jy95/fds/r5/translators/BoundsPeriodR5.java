@@ -5,7 +5,7 @@ import io.github.jy95.fds.common.translators.timing.repeat.BoundsPeriod;
 import io.github.jy95.fds.r5.config.FDSConfigR5;
 import lombok.RequiredArgsConstructor;
 
-import org.hl7.fhir.r5.model.Dosage;
+import org.hl7.fhir.r5.model.Timing.TimingRepeatComponent;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -15,39 +15,33 @@ import java.util.concurrent.CompletableFuture;
  * @author jy95
  */
 @RequiredArgsConstructor
-public class BoundsPeriodR5 implements BoundsPeriod<Dosage> {
+public class BoundsPeriodR5 implements BoundsPeriod<TimingRepeatComponent> {
 
     /** Translation service */
     private final TranslationService<FDSConfigR5> translationService;
 
     /** {@inheritDoc} */
     @Override
-    public boolean hasRequiredElements(Dosage dosage) {
-        return dosage.getTiming().hasRepeat() && dosage.getTiming().getRepeat().hasBoundsPeriod();
+    public boolean isPresent(TimingRepeatComponent data) {
+        return data.hasBoundsPeriod();
     }
 
     /** {@inheritDoc} */
     @Override
-    public boolean hasStartPeriod(Dosage dosage) {
-        return dosage.getTiming().getRepeat().getBoundsPeriod().hasStart();
+    public boolean hasStartPeriod(TimingRepeatComponent data) {
+        return data.getBoundsPeriod().hasStart();
     }
 
     /** {@inheritDoc} */
     @Override
-    public boolean hasEndPeriod(Dosage dosage) {
-        return dosage.getTiming().getRepeat().getBoundsPeriod().hasEnd();
+    public boolean hasEndPeriod(TimingRepeatComponent data) {
+        return data.getBoundsPeriod().hasEnd();
     }
 
     /** {@inheritDoc} */
     @Override
-    public boolean hasTiming(Dosage dosage) {
-        return dosage.hasTiming();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public String formatStartPeriod(Dosage dosage) {
-        var boundPeriods = dosage.getTiming().getRepeat().getBoundsPeriod();
+    public String formatStartPeriod(TimingRepeatComponent data) {
+        var boundPeriods = data.getBoundsPeriod();
         var start = boundPeriods.getStartElement();
         return translationService.dateTimeToHumanDisplay(
             start.getValue(), 
@@ -58,8 +52,8 @@ public class BoundsPeriodR5 implements BoundsPeriod<Dosage> {
 
     /** {@inheritDoc} */
     @Override
-    public String formatEndPeriod(Dosage dosage) {
-        var boundPeriods = dosage.getTiming().getRepeat().getBoundsPeriod();
+    public String formatEndPeriod(TimingRepeatComponent data) {
+        var boundPeriods = data.getBoundsPeriod();
         var end = boundPeriods.getEndElement();
         return translationService.dateTimeToHumanDisplay(
             end.getValue(), 
@@ -70,9 +64,9 @@ public class BoundsPeriodR5 implements BoundsPeriod<Dosage> {
 
     /** {@inheritDoc} */
     @Override
-    public CompletableFuture<String> convert(Dosage dosage) {
+    public CompletableFuture<String> convert(TimingRepeatComponent data) {
         return CompletableFuture.supplyAsync(() -> {
-            var arguments = extractInformation(dosage);
+            var arguments = extractInformation(data);
             // Format the message with the named arguments
             var boundsPeriodMsg = translationService.getMessage(KEY_BOUNDS_PERIOD);
             return boundsPeriodMsg.format(arguments);

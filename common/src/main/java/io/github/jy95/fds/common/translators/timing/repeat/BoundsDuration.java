@@ -1,6 +1,6 @@
 package io.github.jy95.fds.common.translators.timing.repeat;
 
-import io.github.jy95.fds.common.types.TranslatorTiming;
+import io.github.jy95.fds.common.types.Translator;
 
 /**
  * Interface for translating "timing.repeat.boundsDuration".
@@ -9,7 +9,7 @@ import io.github.jy95.fds.common.types.TranslatorTiming;
  * @author jy95
  * @since 1.0.0
  */
-public interface BoundsDuration<D> extends TranslatorTiming<D> {
+public interface BoundsDuration<D> extends Translator<D> {
 
     /**
      * Key constant for boundsDuration message

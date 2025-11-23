@@ -6,7 +6,7 @@ import io.github.jy95.fds.common.translators.timing.repeat.TimeOfDay;
 import io.github.jy95.fds.r5.config.FDSConfigR5;
 import lombok.RequiredArgsConstructor;
 
-import org.hl7.fhir.r5.model.Dosage;
+import org.hl7.fhir.r5.model.Timing.TimingRepeatComponent;
 import org.hl7.fhir.r5.model.PrimitiveType;
 
 import java.util.List;
@@ -19,17 +19,15 @@ import java.util.concurrent.CompletableFuture;
  * @author jy95
  */
 @RequiredArgsConstructor
-public class TimeOfDayR5 implements TimeOfDay<Dosage> {
+public class TimeOfDayR5 implements TimeOfDay<TimingRepeatComponent> {
 
     /** Translation service */
     private final TranslationService<FDSConfigR5> translationService;
 
     /** {@inheritDoc} */
     @Override
-    public List<String> getTimes(Dosage dosage) {
-        return dosage
-                .getTiming()
-                .getRepeat()
+    public List<String> getTimes(TimingRepeatComponent data) {
+        return data
                 .getTimeOfDay()
                 .stream()
                 .map(PrimitiveType::getValue)
@@ -38,19 +36,18 @@ public class TimeOfDayR5 implements TimeOfDay<Dosage> {
 
     /** {@inheritDoc} */
     @Override
-    public boolean hasRequiredElements(Dosage dosage) {
-        var timing = dosage.getTiming();
-        return timing.hasRepeat() && timing.getRepeat().hasTimeOfDay();
+    public boolean isPresent(TimingRepeatComponent data) {
+        return data.hasTimeOfDay();
     }
 
     /** {@inheritDoc} */
     @Override
-    public CompletableFuture<String> convert(Dosage dosage) {
+    public CompletableFuture<String> convert(TimingRepeatComponent data) {
         var timeOfDayMsg = translationService.getMessage(KEY_TIME_OF_DAY);
 
         return CompletableFuture.supplyAsync(() -> {
 
-            var times = getTimes(dosage);
+            var times = getTimes(data);
             var timeOfDays = times.stream().map(this::formatString).toList();
             var timeOfDaysAsString = ListToString.convert(translationService, timeOfDays);
 
@@ -61,11 +58,5 @@ public class TimeOfDayR5 implements TimeOfDay<Dosage> {
 
             return timeOfDayMsg.format(messageArguments);
         });
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public boolean hasTiming(Dosage dosage) {
-        return dosage.hasTiming();
     }
 }

@@ -6,7 +6,7 @@ import io.github.jy95.fds.r5.config.FDSConfigR5;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
-import org.hl7.fhir.r5.model.Dosage;
+import org.hl7.fhir.r5.model.Timing.TimingRepeatComponent;
 
 /**
  * R5 class for translating "timing.repeat.frequency" / "timing.repeat.frequencyMax"
@@ -14,7 +14,7 @@ import org.hl7.fhir.r5.model.Dosage;
  * @author jy95
  */
 @RequiredArgsConstructor
-public class FrequencyFrequencyMaxR5 implements FrequencyFrequencyMax<Dosage, FDSConfigR5> {
+public class FrequencyFrequencyMaxR5 implements FrequencyFrequencyMax<TimingRepeatComponent, FDSConfigR5> {
 
     /** Translation service */
     @Getter
@@ -22,50 +22,41 @@ public class FrequencyFrequencyMaxR5 implements FrequencyFrequencyMax<Dosage, FD
 
     /** {@inheritDoc} */
     @Override
-    public boolean hasTiming(Dosage dosage) {
-        return dosage.hasTiming();
+    public boolean hasFrequency(TimingRepeatComponent data) {
+        return data.hasFrequency();
     }
 
     /** {@inheritDoc} */
     @Override
-    public boolean hasFrequency(Dosage dosage) {
-        return dosage.getTiming().getRepeat().hasFrequency();
+    public boolean hasFrequencyMax(TimingRepeatComponent data) {
+        return data.hasFrequencyMax();
     }
 
     /** {@inheritDoc} */
     @Override
-    public boolean hasFrequencyMax(Dosage dosage) {
-        return dosage.getTiming().getRepeat().hasFrequencyMax();
+    public boolean isPresent(TimingRepeatComponent data) {
+        return hasFrequency(data) || hasFrequencyMax(data);
     }
 
     /** {@inheritDoc} */
     @Override
-    public boolean hasRequiredElements(Dosage dosage) {
-        return dosage.getTiming().hasRepeat() && (hasFrequency(dosage) || hasFrequencyMax(dosage));
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public String turnFrequencyAndFrequencyMaxToString(Dosage dosage) {
-        var repeat = dosage.getTiming().getRepeat();
-        var frequencyMin = repeat.getFrequency();
-        var frequencyMax = repeat.getFrequencyMax();
+    public String turnFrequencyAndFrequencyMaxToString(TimingRepeatComponent data) {
+        var frequencyMin = data.getFrequency();
+        var frequencyMax = data.getFrequencyMax();
         return formatFrequencyAndFrequencyMaxText(frequencyMin, frequencyMax);
     }
 
     /** {@inheritDoc} */
     @Override
-    public String turnFrequencyMaxToString(Dosage dosage) {
-        var repeat = dosage.getTiming().getRepeat();
-        var frequencyMax = repeat.getFrequencyMax();
+    public String turnFrequencyMaxToString(TimingRepeatComponent data) {
+        var frequencyMax = data.getFrequencyMax();
         return formatFrequencyMaxText(frequencyMax);
     }
 
     /** {@inheritDoc} */
     @Override
-    public String turnFrequencyToString(Dosage dosage) {
-        var repeat = dosage.getTiming().getRepeat();
-        var frequency = repeat.getFrequency();
+    public String turnFrequencyToString(TimingRepeatComponent data) {
+        var frequency = data.getFrequency();
         return formatFrequencyText(frequency);
     }
 }
