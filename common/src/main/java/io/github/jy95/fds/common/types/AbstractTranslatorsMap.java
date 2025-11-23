@@ -64,9 +64,14 @@ public abstract class AbstractTranslatorsMap<C extends FDSConfig, D> {
      *         or {@code null} if no match is found
      */
     public Translator<D> getTranslator(DisplayOrder displayOrder) {
+
+        // If not supported, return null
+        if (!translatorSuppliers.keySet().contains(displayOrder)) {
+            return null;
+        }
+
         return translatorCache.computeIfAbsent(displayOrder, key -> {
-            Supplier<Translator<D>> supplier = translatorSuppliers.get(key);
-            return supplier != null ? supplier.get() : null;
+            return translatorSuppliers.get(key).get();
         });
     }
 

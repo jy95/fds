@@ -3,6 +3,7 @@ package io.github.jy95.fds.r4.utils;
 import io.github.jy95.fds.common.functions.TranslationService;
 import io.github.jy95.fds.common.types.AbstractTranslatorsMap;
 import io.github.jy95.fds.common.types.DisplayOrder;
+import io.github.jy95.fds.common.types.SpecComponent;
 import io.github.jy95.fds.common.types.Translator;
 import io.github.jy95.fds.r4.config.FDSConfigR4;
 import io.github.jy95.fds.r4.utils.adapters.*;
@@ -15,6 +16,7 @@ import org.hl7.fhir.r4.model.Timing;
 import org.hl7.fhir.r4.model.Timing.TimingRepeatComponent;
 
 import java.util.Map;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 /**
@@ -25,17 +27,11 @@ import java.util.function.Supplier;
 public class TranslatorsMapR4 extends AbstractTranslatorsMap<FDSConfigR4, Dosage> {
 
     /**
-     * Translators directly related to Dosage fields
+     * Map for delegating components.
+     * The key is the SpecComponent type, and the value is a function
+     * that takes the DisplayOrder and returns the adapted Translator<Dosage>.
      */
-    private final DosageTranslatorsMapR4 dosageTranslatorsMapR4;
-    /**
-     * Translators directly related to Timing fields
-     */
-    private final TimingTranslatorsMapR4 timingTranslatorsMapR4;
-    /**
-     * Translators directly related to Timing.repeat fields
-     */
-    private final TimingRepeatTranslatorsMapR4 timingRepeatTranslatorsMapR4;
+    private final Map<SpecComponent, Function<DisplayOrder, Translator<Dosage>>> delegationMap;
 
     /**
      * Constructor for {@code TranslatorsMapR4}.
@@ -44,9 +40,21 @@ public class TranslatorsMapR4 extends AbstractTranslatorsMap<FDSConfigR4, Dosage
      */
     public TranslatorsMapR4(TranslationService<FDSConfigR4> translationService) {
         super(translationService);
-        dosageTranslatorsMapR4 = new DosageTranslatorsMapR4(translationService);
-        timingTranslatorsMapR4 = new TimingTranslatorsMapR4(translationService);
-        timingRepeatTranslatorsMapR4 = new TimingRepeatTranslatorsMapR4(translationService);
+        var dosageTranslatorsMapR4 = new DosageTranslatorsMapR4(translationService);
+        var timingTranslatorsMapR4 = new TimingTranslatorsMapR4(translationService);
+        var timingRepeatTranslatorsMapR4 = new TimingRepeatTranslatorsMapR4(translationService);
+
+        delegationMap = Map.of(
+            // Translators directly related to Dosage fields
+            SpecComponent.DOSAGE,
+            displayOrder -> dosageTranslatorsMapR4.getTranslator(displayOrder),
+            // Translators directly related to Timing fields
+            SpecComponent.TIMING,
+            displayOrder -> adaptTimingTranslator(timingTranslatorsMapR4.getTranslator(displayOrder)),
+            // Translators directly related to Timing.repeat fields
+            SpecComponent.TIMING_REPEAT,
+            displayOrder -> adaptRepeatTranslator(timingRepeatTranslatorsMapR4.getTranslator(displayOrder))
+        );
     }
 
     /** {@inheritDoc} */
@@ -77,12 +85,7 @@ public class TranslatorsMapR4 extends AbstractTranslatorsMap<FDSConfigR4, Dosage
     @Override
     public Translator<Dosage> getTranslator(DisplayOrder displayOrder) {
         return translatorCache.computeIfAbsent(displayOrder, key -> {
-            return switch(displayOrder.getComponent()) {
-                case TIMING -> adaptTimingTranslator(timingTranslatorsMapR4.getTranslator(displayOrder));
-                case TIMING_REPEAT -> adaptRepeatTranslator(timingRepeatTranslatorsMapR4.getTranslator(displayOrder));
-                default -> dosageTranslatorsMapR4.getTranslator(displayOrder);
-            };
+            return delegationMap.get(displayOrder.getComponent()).apply(displayOrder);
         });
     }
-
 }
