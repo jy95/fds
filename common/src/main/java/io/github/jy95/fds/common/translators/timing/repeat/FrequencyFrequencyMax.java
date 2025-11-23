@@ -1,4 +1,4 @@
-package io.github.jy95.fds.common.translators;
+package io.github.jy95.fds.common.translators.timing.repeat;
 
 import io.github.jy95.fds.common.config.FDSConfig;
 import io.github.jy95.fds.common.functions.TranslationService;

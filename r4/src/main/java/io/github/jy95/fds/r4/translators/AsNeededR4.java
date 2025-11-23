@@ -2,7 +2,7 @@ package io.github.jy95.fds.r4.translators;
 
 import io.github.jy95.fds.common.functions.ListToString;
 import io.github.jy95.fds.common.functions.TranslationService;
-import io.github.jy95.fds.common.translators.AsNeeded;
+import io.github.jy95.fds.common.translators.dosage.AsNeeded;
 import io.github.jy95.fds.r4.config.FDSConfigR4;
 import lombok.RequiredArgsConstructor;
 

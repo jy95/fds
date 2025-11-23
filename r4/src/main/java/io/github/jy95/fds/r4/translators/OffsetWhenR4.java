@@ -2,7 +2,7 @@ package io.github.jy95.fds.r4.translators;
 
 import io.github.jy95.fds.common.functions.ListToString;
 import io.github.jy95.fds.common.functions.TranslationService;
-import io.github.jy95.fds.common.translators.OffsetWhen;
+import io.github.jy95.fds.common.translators.timing.repeat.OffsetWhen;
 import io.github.jy95.fds.r4.config.FDSConfigR4;
 import lombok.RequiredArgsConstructor;
 import org.hl7.fhir.r4.model.Dosage;

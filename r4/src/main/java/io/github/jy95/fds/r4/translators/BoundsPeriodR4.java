@@ -1,7 +1,7 @@
 package io.github.jy95.fds.r4.translators;
 
 import io.github.jy95.fds.common.functions.TranslationService;
-import io.github.jy95.fds.common.translators.BoundsPeriod;
+import io.github.jy95.fds.common.translators.timing.repeat.BoundsPeriod;
 import io.github.jy95.fds.r4.config.FDSConfigR4;
 import lombok.RequiredArgsConstructor;
 

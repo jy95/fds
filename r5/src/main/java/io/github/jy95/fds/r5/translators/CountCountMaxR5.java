@@ -1,7 +1,7 @@
 package io.github.jy95.fds.r5.translators;
 
 import io.github.jy95.fds.common.functions.TranslationService;
-import io.github.jy95.fds.common.translators.CountCountMax;
+import io.github.jy95.fds.common.translators.timing.repeat.CountCountMax;
 import io.github.jy95.fds.r5.config.FDSConfigR5;
 import lombok.RequiredArgsConstructor;
 

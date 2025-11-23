@@ -2,7 +2,7 @@ package io.github.jy95.fds.r4.translators;
 
 import io.github.jy95.fds.common.functions.TranslationService;
 import io.github.jy95.fds.common.functions.UnitsOfTimeFormatter;
-import io.github.jy95.fds.common.translators.PeriodPeriodMax;
+import io.github.jy95.fds.common.translators.timing.repeat.PeriodPeriodMax;
 import io.github.jy95.fds.r4.config.FDSConfigR4;
 import lombok.RequiredArgsConstructor;
 

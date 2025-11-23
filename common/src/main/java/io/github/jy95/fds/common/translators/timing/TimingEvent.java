@@ -1,4 +1,4 @@
-package io.github.jy95.fds.common.translators;
+package io.github.jy95.fds.common.translators.timing;
 
 import io.github.jy95.fds.common.types.TranslatorTiming;
 import java.util.List;

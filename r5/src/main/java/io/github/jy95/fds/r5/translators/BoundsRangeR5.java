@@ -1,7 +1,7 @@
 package io.github.jy95.fds.r5.translators;
 
 import io.github.jy95.fds.common.functions.TranslationService;
-import io.github.jy95.fds.common.translators.BoundsRange;
+import io.github.jy95.fds.common.translators.timing.repeat.BoundsRange;
 import io.github.jy95.fds.r5.config.FDSConfigR5;
 import io.github.jy95.fds.r5.functions.RangeToStringR5;
 import lombok.RequiredArgsConstructor;

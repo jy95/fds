@@ -1,6 +1,6 @@
 package io.github.jy95.fds.r5.translators;
 
-import io.github.jy95.fds.common.translators.FrequencyFrequencyMaxPeriodPeriodMax;
+import io.github.jy95.fds.common.translators.timing.repeat.FrequencyFrequencyMaxPeriodPeriodMax;
 import io.github.jy95.fds.common.types.Translator;
 import lombok.RequiredArgsConstructor;
 import org.hl7.fhir.r5.model.Dosage;

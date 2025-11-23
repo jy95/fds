@@ -1,4 +1,4 @@
-package io.github.jy95.fds.common.translators;
+package io.github.jy95.fds.common.translators.dosage;
 
 import io.github.jy95.fds.common.functions.ListToString;
 import io.github.jy95.fds.common.functions.TranslationService;
