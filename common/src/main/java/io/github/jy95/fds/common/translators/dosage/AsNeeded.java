@@ -27,17 +27,17 @@ public interface AsNeeded<D> extends Translator<D> {
      * Check if "as needed" is expressed with CodeableConcept ("asNeededFor" /
      * "asNeededCodeableConcept")
      *
-     * @param dosage The dosage to check
+     * @param data The data to check
      * @return true if it is the case, otherwise false
      */
-    boolean hasCodeableConcepts(D dosage);
+    boolean hasCodeableConcepts(D data);
 
     /**
      * Turn CodeableConcept(s) to a human-readable string
      *
-     * @param dosage the dosage field to be converted
+     * @param data the data to be converted
      * @return a {@link java.util.concurrent.CompletableFuture} that will complete
      *         with the human-readable string
      */
-    CompletableFuture<String> convertCodeableConcepts(D dosage);
+    CompletableFuture<String> convertCodeableConcepts(D data);
 }

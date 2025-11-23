@@ -21,10 +21,10 @@ public interface TimeOfDay<D> extends Translator<D> {
     /**
      * Extracts a list of time values from the data object.
      *
-     * @param dosage The data object containing time values.
+     * @param data The data object containing time values.
      * @return A list of times represented as strings in the format hh:mm:ss.
      */
-    List<String> getTimes(D dosage);
+    List<String> getTimes(D data);
 
     /**
      * Formats a time string to remove unnecessary seconds if they are zero.

@@ -26,22 +26,22 @@ public interface FrequencyFrequencyMax<D, C extends FDSConfig> extends Translato
 
     /** {@inheritDoc} */
     @Override
-    default CompletableFuture<String> convert(D dosage) {
+    default CompletableFuture<String> convert(D data) {
         return CompletableFuture.supplyAsync(() -> {
 
-            var hasFrequencyFlag = hasFrequency(dosage);
-            var hasFrequencyMaxFlag = hasFrequencyMax(dosage);
+            var hasFrequencyFlag = hasFrequency(data);
+            var hasFrequencyMaxFlag = hasFrequencyMax(data);
             var hasBoth = hasFrequencyFlag && hasFrequencyMaxFlag;
 
             if (hasBoth) {
-                return turnFrequencyAndFrequencyMaxToString(dosage);
+                return turnFrequencyAndFrequencyMaxToString(data);
             }
 
             if (hasFrequencyMaxFlag) {
-                return turnFrequencyMaxToString(dosage);
+                return turnFrequencyMaxToString(data);
             }
 
-            return turnFrequencyToString(dosage);
+            return turnFrequencyToString(data);
         });
     }
 
@@ -85,43 +85,43 @@ public interface FrequencyFrequencyMax<D, C extends FDSConfig> extends Translato
     }
 
     /**
-     * Checks if the dosage data contains a valid "frequency" value.
+     * Checks if the data data contains a valid "frequency" value.
      *
-     * @param dosage The dosage data.
-     * @return true if the dosage contains a "frequency" value, false otherwise.
+     * @param data The data data.
+     * @return true if the data contains a "frequency" value, false otherwise.
      */
-    boolean hasFrequency(D dosage);
+    boolean hasFrequency(D data);
 
     /**
-     * Checks if the dosage data contains a valid "frequencyMax" value.
+     * Checks if the data data contains a valid "frequencyMax" value.
      *
-     * @param dosage The dosage data.
-     * @return true if the dosage contains a "frequencyMax" value, false otherwise.
+     * @param data The data data.
+     * @return true if the data contains a "frequencyMax" value, false otherwise.
      */
-    boolean hasFrequencyMax(D dosage);
+    boolean hasFrequencyMax(D data);
 
     /**
-     * Converts the dosage data containing both "frequency" and "frequencyMax" into
+     * Converts the data data containing both "frequency" and "frequencyMax" into
      * a formatted string.
      *
-     * @param dosage The dosage data.
+     * @param data The data data.
      * @return A formatted string representing both "frequency" and "frequencyMax".
      */
-    String turnFrequencyAndFrequencyMaxToString(D dosage);
+    String turnFrequencyAndFrequencyMaxToString(D data);
 
     /**
-     * Converts the dosage data containing "frequencyMax" into a formatted string.
+     * Converts the data data containing "frequencyMax" into a formatted string.
      *
-     * @param dosage The dosage data.
+     * @param data The data data.
      * @return A formatted string representing "frequencyMax".
      */
-    String turnFrequencyMaxToString(D dosage);
+    String turnFrequencyMaxToString(D data);
 
     /**
-     * Converts the dosage data containing "frequency" into a formatted string.
+     * Converts the data data containing "frequency" into a formatted string.
      *
-     * @param dosage The dosage data.
+     * @param data The data data.
      * @return A formatted string representing "frequency".
      */
-    String turnFrequencyToString(D dosage);
+    String turnFrequencyToString(D data);
 }

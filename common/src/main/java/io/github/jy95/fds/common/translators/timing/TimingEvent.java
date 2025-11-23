@@ -20,8 +20,8 @@ public interface TimingEvent<D> extends Translator<D> {
     /**
      * Extracts a list of timing events from the data object.
      *
-     * @param dosage The data object containing timing events.
+     * @param data The data object containing timing events.
      * @return A list of timing events represented as strings.
      */
-    List<String> getEvents(D dosage);
+    List<String> getEvents(D data);
 }

@@ -9,7 +9,7 @@ import io.github.jy95.fds.common.types.Translator;
 import lombok.RequiredArgsConstructor;
 
 /**
- * Adapter that allows a Translator<Timing> to be used as a Translator<Dosage>.
+ * Adapter that allows a Timing Translator to be used as a Dosage Translator.
  * It handles the extraction of the Timing object from the Dosage object.
  */
 @RequiredArgsConstructor

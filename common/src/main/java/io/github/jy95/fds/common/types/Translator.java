@@ -26,7 +26,7 @@ public interface Translator<D> {
     /**
      * Checks whether a field is present and can be converted to a string.
      *
-     * @param dosage the fhir element containing field to check
+     * @param data the fhir element containing field to check
      * @return {@code true} if the field is present, {@code false} otherwise
      */
     default boolean isPresent(D data) {
