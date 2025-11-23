@@ -31,6 +31,6 @@ public class TranslatorsMapTest {
     @Test
     void unsupportedOperation() {
         var emptyMap = new TranslatorsMap(null);
-        assertEquals(null, emptyMap.getTranslator(null));
+        assertEquals(null, emptyMap.getTranslator(DisplayOrder.TEXT));
     }
 }
