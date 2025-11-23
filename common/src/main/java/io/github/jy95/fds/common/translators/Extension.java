@@ -14,7 +14,7 @@ public interface Extension<D extends IBaseHasExtensions> extends Translator<D> {
 
     /** {@inheritDoc} */
     @Override
-    default boolean isPresent(D dosage) {
-        return dosage.hasExtension();
+    default boolean isPresent(D data) {
+        return data.hasExtension();
     }
 }
