@@ -84,8 +84,7 @@ public class TranslatorsMapR4 extends AbstractTranslatorsMap<FDSConfigR4, Dosage
 
     @Override
     public Translator<Dosage> getTranslator(DisplayOrder displayOrder) {
-        return translatorCache.computeIfAbsent(displayOrder, key -> {
-            return delegationMap.get(displayOrder.getComponent()).apply(displayOrder);
-        });
+        var componentHandler = delegationMap.get(displayOrder.getComponent());
+        return translatorCache.computeIfAbsent(displayOrder, key -> componentHandler.apply(key));
     }
 }

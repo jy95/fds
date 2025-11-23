@@ -62,7 +62,7 @@ public interface DurationDurationMax<D> extends Translator<D> {
     /**
      * Determines if the data data contains a valid "duration" value.
      *
-     * @param data the data data.
+     * @param data The data to convert.
      * @return true if the data contains a "duration" value, false otherwise.
      */
     boolean hasDuration(D data);
@@ -70,7 +70,7 @@ public interface DurationDurationMax<D> extends Translator<D> {
     /**
      * Determines if the data data contains a valid "durationMax" value.
      *
-     * @param data the data data.
+     * @param data The data to convert.
      * @return true if the data contains a "durationMax" value, false otherwise.
      */
     boolean hasDurationMax(D data);
@@ -78,7 +78,7 @@ public interface DurationDurationMax<D> extends Translator<D> {
     /**
      * Converts the "duration" value in the data data into a formatted string.
      *
-     * @param data the data data.
+     * @param data The data to convert.
      * @return the formatted string representing the "duration".
      */
     String turnDurationToString(D data);
@@ -86,7 +86,7 @@ public interface DurationDurationMax<D> extends Translator<D> {
     /**
      * Converts the "durationMax" value in the data data into a formatted string.
      *
-     * @param data the data data.
+     * @param data The data to convert.
      * @return the formatted string representing the "durationMax".
      */
     String turnDurationMaxToString(D data);

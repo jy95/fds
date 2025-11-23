@@ -16,7 +16,7 @@ import io.github.jy95.fds.r5.translators.*;
 public class DosageTranslatorsMapR5 extends AbstractTranslatorsMap<FDSConfigR5, Dosage> {
 
     /**
-     * Constructor for {@code TimingRepeatTranslatorsMapR5}.
+     * Constructor for {@code DosageTranslatorsMapR5}.
      *
      * @param translationService The translation service used for translation.
      */

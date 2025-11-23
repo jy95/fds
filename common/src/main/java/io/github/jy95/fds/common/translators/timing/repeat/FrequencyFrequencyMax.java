@@ -85,42 +85,42 @@ public interface FrequencyFrequencyMax<D, C extends FDSConfig> extends Translato
     }
 
     /**
-     * Checks if the data data contains a valid "frequency" value.
+     * Checks if the data contains a valid "frequency" value.
      *
-     * @param data The data data.
+     * @param data The data to check.
      * @return true if the data contains a "frequency" value, false otherwise.
      */
     boolean hasFrequency(D data);
 
     /**
-     * Checks if the data data contains a valid "frequencyMax" value.
+     * Checks if the data contains a valid "frequencyMax" value.
      *
-     * @param data The data data.
+     * @param data The data to check.
      * @return true if the data contains a "frequencyMax" value, false otherwise.
      */
     boolean hasFrequencyMax(D data);
 
     /**
-     * Converts the data data containing both "frequency" and "frequencyMax" into
+     * Converts the data containing both "frequency" and "frequencyMax" into
      * a formatted string.
      *
-     * @param data The data data.
+     * @param data The data to convert.
      * @return A formatted string representing both "frequency" and "frequencyMax".
      */
     String turnFrequencyAndFrequencyMaxToString(D data);
 
     /**
-     * Converts the data data containing "frequencyMax" into a formatted string.
+     * Converts the data containing "frequencyMax" into a formatted string.
      *
-     * @param data The data data.
+     * @param data The data to convert.
      * @return A formatted string representing "frequencyMax".
      */
     String turnFrequencyMaxToString(D data);
 
     /**
-     * Converts the data data containing "frequency" into a formatted string.
+     * Converts the data containing "frequency" into a formatted string.
      *
-     * @param data The data data.
+     * @param data The data to convert.
      * @return A formatted string representing "frequency".
      */
     String turnFrequencyToString(D data);
