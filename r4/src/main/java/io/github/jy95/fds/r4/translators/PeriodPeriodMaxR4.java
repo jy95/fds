@@ -36,12 +36,6 @@ public class PeriodPeriodMaxR4 implements PeriodPeriodMax<TimingRepeatComponent>
 
     /** {@inheritDoc} */
     @Override
-    public boolean isPresent(TimingRepeatComponent data) {
-        return hasPeriod(data) || hasPeriodMax(data);
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public String turnPeriodAndPeriodMaxToString(TimingRepeatComponent data) {
 
         var periodMax = data.getPeriodMax();

@@ -73,4 +73,10 @@ public interface PeriodPeriodMax<D> extends Translator<D> {
      * @return A formatted string representing the period.
      */
     String turnPeriodToString(D data);
+
+    /** {@inheritDoc} */
+    @Override
+    default boolean isPresent(D data) {
+        return hasPeriod(data) || hasPeriodMax(data);
+    }
 }
