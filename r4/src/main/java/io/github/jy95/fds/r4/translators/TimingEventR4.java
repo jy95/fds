@@ -6,7 +6,7 @@ import io.github.jy95.fds.common.translators.timing.TimingEvent;
 import io.github.jy95.fds.r4.config.FDSConfigR4;
 import lombok.RequiredArgsConstructor;
 
-import org.hl7.fhir.r4.model.Dosage;
+import org.hl7.fhir.r4.model.Timing;
 
 import java.util.List;
 import java.util.Map;
@@ -18,22 +18,21 @@ import java.util.concurrent.CompletableFuture;
  * @author jy95
  */
 @RequiredArgsConstructor
-public class TimingEventR4 implements TimingEvent<Dosage> {
+public class TimingEventR4 implements TimingEvent<Timing> {
 
     /** Translation service */
     private final TranslationService<FDSConfigR4> translationService;
 
     /** {@inheritDoc} */
     @Override
-    public boolean hasRequiredElements(Dosage dosage) {
-        return dosage.getTiming().hasEvent();
+    public boolean isPresent(Timing data) {
+        return data.hasEvent();
     }
 
     /** {@inheritDoc} */
     @Override
-    public List<String> getEvents(Dosage dosage) {
-        return dosage
-            .getTiming()
+    public List<String> getEvents(Timing data) {
+        return data
             .getEvent()
             .stream()
             .map(event -> translationService.dateTimeToHumanDisplay(
@@ -46,15 +45,9 @@ public class TimingEventR4 implements TimingEvent<Dosage> {
 
     /** {@inheritDoc} */
     @Override
-    public boolean hasTiming(Dosage dosage) {
-        return dosage.hasTiming();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public CompletableFuture<String> convert(Dosage dosage) {
+    public CompletableFuture<String> convert(Timing Timing) {
         return CompletableFuture.supplyAsync(() -> {
-            var eventsList = getEvents(dosage);
+            var eventsList = getEvents(Timing);
 
             String eventsAsString = ListToString.convert(translationService, eventsList);
             var timingEventMsg = translationService.getMessage(KEY_EVENT);

@@ -5,7 +5,7 @@ import io.github.jy95.fds.common.types.TranslatorExtension;
 import io.github.jy95.fds.r4.config.FDSConfigR4;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.hl7.fhir.r4.model.Dosage;
+import org.hl7.fhir.r4.model.Timing.TimingRepeatComponent;
 import org.hl7.fhir.r4.model.Extension;
 
 import java.util.List;
@@ -17,7 +17,7 @@ import java.util.List;
  */
 @RequiredArgsConstructor
 public class TimingRepeatExtensionR4 
-implements TranslatorExtension<Dosage, Extension, FDSConfigR4> {
+implements TranslatorExtension<TimingRepeatComponent, Extension, FDSConfigR4> {
 
     /** Translation service */
     @Getter
@@ -25,13 +25,13 @@ implements TranslatorExtension<Dosage, Extension, FDSConfigR4> {
 
     /** {@inheritDoc} */
     @Override
-    public boolean isPresent(Dosage dosage) {
-        return dosage.hasTiming() && dosage.getTiming().hasRepeat() && dosage.getTiming().getRepeat().hasExtension();
+    public boolean isPresent(TimingRepeatComponent data) {
+        return data.hasExtension();
     }
 
     /** {@inheritDoc} */
     @Override
-    public List<Extension> getExtension(Dosage dosage) {
-        return dosage.getTiming().getRepeat().getExtension();
+    public List<Extension> getExtension(TimingRepeatComponent data) {
+        return data.getExtension();
     }
 }

@@ -1,6 +1,6 @@
 package io.github.jy95.fds.common.translators.timing.repeat;
 
-import io.github.jy95.fds.common.types.TranslatorTiming;
+import io.github.jy95.fds.common.types.Translator;
 
 import java.util.ArrayList;
 import java.util.concurrent.CompletableFuture;
@@ -14,7 +14,7 @@ import java.util.List;
  * @author jy95
  * @since 1.0.0
  */
-public interface DurationDurationMax<D> extends TranslatorTiming<D> {
+public interface DurationDurationMax<D> extends Translator<D> {
 
     /**
      * Key constant for duration message
@@ -27,20 +27,20 @@ public interface DurationDurationMax<D> extends TranslatorTiming<D> {
 
     /** {@inheritDoc} */
     @Override
-    default CompletableFuture<String> convert(D dosage) {
+    default CompletableFuture<String> convert(D data) {
         return CompletableFuture.supplyAsync(() -> {
 
             // Rule: duration SHALL be a non-negative value
             // Rule: if there's a duration, there needs to be duration units
             // Rule: If there's a durationMax, there must be a duration
-            var hasDurationFlag = hasDuration(dosage);
-            var hasDurationMaxFlag = hasDurationMax(dosage);
+            var hasDurationFlag = hasDuration(data);
+            var hasDurationMaxFlag = hasDurationMax(data);
             var hasBoth = hasDurationFlag && hasDurationMaxFlag;
 
             List<String> texts = new ArrayList<>();
 
             if (hasDurationFlag) {
-                texts.add(turnDurationToString(dosage));
+                texts.add(turnDurationToString(data));
             }
 
             if (hasBoth) {
@@ -48,7 +48,7 @@ public interface DurationDurationMax<D> extends TranslatorTiming<D> {
             }
 
             if (hasDurationMaxFlag) {
-                texts.add(turnDurationMaxToString(dosage));
+                texts.add(turnDurationMaxToString(data));
             }
 
             if (hasBoth) {
@@ -60,34 +60,34 @@ public interface DurationDurationMax<D> extends TranslatorTiming<D> {
     }
 
     /**
-     * Determines if the dosage data contains a valid "duration" value.
+     * Determines if the data data contains a valid "duration" value.
      *
-     * @param dosage the dosage data.
-     * @return true if the dosage contains a "duration" value, false otherwise.
+     * @param data the data data.
+     * @return true if the data contains a "duration" value, false otherwise.
      */
-    boolean hasDuration(D dosage);
+    boolean hasDuration(D data);
 
     /**
-     * Determines if the dosage data contains a valid "durationMax" value.
+     * Determines if the data data contains a valid "durationMax" value.
      *
-     * @param dosage the dosage data.
-     * @return true if the dosage contains a "durationMax" value, false otherwise.
+     * @param data the data data.
+     * @return true if the data contains a "durationMax" value, false otherwise.
      */
-    boolean hasDurationMax(D dosage);
+    boolean hasDurationMax(D data);
 
     /**
-     * Converts the "duration" value in the dosage data into a formatted string.
+     * Converts the "duration" value in the data data into a formatted string.
      *
-     * @param dosage the dosage data.
+     * @param data the data data.
      * @return the formatted string representing the "duration".
      */
-    String turnDurationToString(D dosage);
+    String turnDurationToString(D data);
 
     /**
-     * Converts the "durationMax" value in the dosage data into a formatted string.
+     * Converts the "durationMax" value in the data data into a formatted string.
      *
-     * @param dosage the dosage data.
+     * @param data the data data.
      * @return the formatted string representing the "durationMax".
      */
-    String turnDurationMaxToString(D dosage);
+    String turnDurationMaxToString(D data);
 }

@@ -1,6 +1,6 @@
 package io.github.jy95.fds.common.translators.timing.repeat;
 
-import io.github.jy95.fds.common.types.TranslatorTiming;
+import io.github.jy95.fds.common.types.Translator;
 
 /**
  * Interface for translating "timing.repeat.count" / "timing.repeat.countMax".
@@ -9,7 +9,7 @@ import io.github.jy95.fds.common.types.TranslatorTiming;
  * @author jy95
  * @since 1.0.0
  */
-public interface CountCountMax<D> extends TranslatorTiming<D> {
+public interface CountCountMax<D> extends Translator<D> {
 
     /**
      * Key constant for countMax message
@@ -23,8 +23,8 @@ public interface CountCountMax<D> extends TranslatorTiming<D> {
     /**
      * Check if "timing.repeat.countMax" exists
      *
-     * @param dosage the dosage object to check
+     * @param data the data object to check
      * @return True if it is the case, false otherwise
      */
-    boolean hasCountMax(D dosage);
+    boolean hasCountMax(D data);
 }

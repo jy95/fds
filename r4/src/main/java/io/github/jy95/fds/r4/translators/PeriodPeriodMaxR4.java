@@ -6,7 +6,7 @@ import io.github.jy95.fds.common.translators.timing.repeat.PeriodPeriodMax;
 import io.github.jy95.fds.r4.config.FDSConfigR4;
 import lombok.RequiredArgsConstructor;
 
-import org.hl7.fhir.r4.model.Dosage;
+import org.hl7.fhir.r4.model.Timing.TimingRepeatComponent;
 
 import java.math.BigDecimal;
 import java.util.Map;
@@ -17,44 +17,36 @@ import java.util.Map;
  * @author jy95
  */
 @RequiredArgsConstructor
-public class PeriodPeriodMaxR4 implements PeriodPeriodMax<Dosage> {
+public class PeriodPeriodMaxR4 implements PeriodPeriodMax<TimingRepeatComponent> {
 
     /** Translation service */
     private final TranslationService<FDSConfigR4> translationService;
 
     /** {@inheritDoc} */
     @Override
-    public boolean hasPeriod(Dosage dosage) {
-        return dosage.getTiming().getRepeat().hasPeriod();
+    public boolean hasPeriod(TimingRepeatComponent data) {
+        return data.hasPeriod();
     }
 
     /** {@inheritDoc} */
     @Override
-    public boolean hasPeriodMax(Dosage dosage) {
-        return dosage.getTiming().getRepeat().hasPeriodMax();
+    public boolean hasPeriodMax(TimingRepeatComponent data) {
+        return data.hasPeriodMax();
     }
 
     /** {@inheritDoc} */
     @Override
-    public boolean hasRequiredElements(Dosage dosage) {
-        var timing = dosage.getTiming();
-        return timing.hasRepeat() && (hasPeriod(dosage) || hasPeriodMax(dosage));
+    public boolean isPresent(TimingRepeatComponent data) {
+        return hasPeriod(data) || hasPeriodMax(data);
     }
 
     /** {@inheritDoc} */
     @Override
-    public boolean hasTiming(Dosage dosage) {
-        return dosage.hasTiming();
-    }
+    public String turnPeriodAndPeriodMaxToString(TimingRepeatComponent data) {
 
-    /** {@inheritDoc} */
-    @Override
-    public String turnPeriodAndPeriodMaxToString(Dosage dosage) {
-
-        var repeat = dosage.getTiming().getRepeat();
-        var periodMax = repeat.getPeriodMax();
-        var periodMin = repeat.getPeriod();
-        var periodUnit = repeat.getPeriodUnit().toCode();
+        var periodMax = data.getPeriodMax();
+        var periodMin = data.getPeriod();
+        var periodUnit = data.getPeriodUnit().toCode();
 
         var config = translationService.getConfig();
 
@@ -64,12 +56,10 @@ public class PeriodPeriodMaxR4 implements PeriodPeriodMax<Dosage> {
 
     /** {@inheritDoc} */
     @Override
-    public String turnPeriodToString(Dosage dosage) {
+    public String turnPeriodToString(TimingRepeatComponent data) {
 
-        var repeat = dosage.getTiming().getRepeat();
-        var period = repeat.getPeriod();
-        var periodUnit = repeat.getPeriodUnit().toCode();
-
+        var period = data.getPeriod();
+        var periodUnit = data.getPeriodUnit().toCode();
         var config = translationService.getConfig();
 
         var unitText = UnitsOfTimeFormatter.formatWithoutCount(config.getLocale(), periodUnit, period);

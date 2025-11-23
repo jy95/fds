@@ -2,7 +2,7 @@ package io.github.jy95.fds.common.translators.timing.repeat;
 
 import io.github.jy95.fds.common.config.FDSConfig;
 import io.github.jy95.fds.common.functions.TranslationService;
-import io.github.jy95.fds.common.types.TranslatorTiming;
+import io.github.jy95.fds.common.types.Translator;
 
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -15,7 +15,7 @@ import java.util.concurrent.CompletableFuture;
  * @author jy95
  * @since 1.0.0
  */
-public interface FrequencyFrequencyMax<D, C extends FDSConfig> extends TranslatorTiming<D> {
+public interface FrequencyFrequencyMax<D, C extends FDSConfig> extends Translator<D> {
 
     /**
      * Return the TranslationService responsible for handling frequency

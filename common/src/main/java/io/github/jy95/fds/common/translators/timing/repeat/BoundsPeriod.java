@@ -1,6 +1,6 @@
 package io.github.jy95.fds.common.translators.timing.repeat;
 
-import io.github.jy95.fds.common.types.TranslatorTiming;
+import io.github.jy95.fds.common.types.Translator;
 
 import java.util.Map;
 
@@ -11,7 +11,7 @@ import java.util.Map;
  * @author jy95
  * @since 1.0.0
  */
-public interface BoundsPeriod<D> extends TranslatorTiming<D> {
+public interface BoundsPeriod<D> extends Translator<D> {
 
     /**
      * Key constant for boundsPeriod message
@@ -21,17 +21,17 @@ public interface BoundsPeriod<D> extends TranslatorTiming<D> {
     /**
      * Extract information about the boundsPeriod
      *
-     * @param dosage The dosage object to analyze
+     * @param data The data object to analyze
      * @return A map
      */
-    default Map<String, Object> extractInformation(D dosage) {
+    default Map<String, Object> extractInformation(D data) {
         // Check conditions
-        var hasStart = hasStartPeriod(dosage);
-        var hasEnd = hasEndPeriod(dosage);
+        var hasStart = hasStartPeriod(data);
+        var hasEnd = hasEndPeriod(data);
 
         // Prepare date values using FormatDateTimes.convert()
-        String startDate = hasStart ? formatStartPeriod(dosage) : "";
-        String endDate = hasEnd ? formatEndPeriod(dosage) : "";
+        String startDate = hasStart ? formatStartPeriod(data) : "";
+        String endDate = hasEnd ? formatEndPeriod(data) : "";
 
         // Choose the correct condition based on the presence of start and end dates
         String condition = hasStart && hasEnd ? "0" : (hasStart ? "1" : "other");
@@ -44,34 +44,34 @@ public interface BoundsPeriod<D> extends TranslatorTiming<D> {
     }
 
     /**
-     * Check if dosage has a "start" period
+     * Check if data has a "start" period
      *
-     * @param dosage the dosage object to check
+     * @param data the data object to check
      * @return True if it is the case, otherwise false
      */
-    boolean hasStartPeriod(D dosage);
+    boolean hasStartPeriod(D data);
 
     /**
-     * Check if dosage has an "end" period
+     * Check if data has an "end" period
      *
-     * @param dosage the dosage object to check
+     * @param data the data object to check
      * @return True if it is the case, otherwise false
      */
-    boolean hasEndPeriod(D dosage);
+    boolean hasEndPeriod(D data);
 
     /**
      * Format start period to a human-readable string
      *
-     * @param dosage the dosage field to be converted
+     * @param data the data field to be converted
      * @return the formatted start period as a string (e.g., "from May 23, 2011")
      */
-    String formatStartPeriod(D dosage);
+    String formatStartPeriod(D data);
 
     /**
      * Format end period to a human-readable string
      *
-     * @param dosage the dosage field to be converted
+     * @param data the data field to be converted
      * @return the formatted end period as a string (e.g., "to Feb 7, 2015")
      */
-    String formatEndPeriod(D dosage);
+    String formatEndPeriod(D data);
 }

@@ -3,7 +3,7 @@ package io.github.jy95.fds.common.translators.timing.repeat;
 import io.github.jy95.fds.common.functions.TranslationService;
 import io.github.jy95.fds.common.functions.ListToString;
 import io.github.jy95.fds.common.functions.UnitsOfTimeFormatter;
-import io.github.jy95.fds.common.types.TranslatorTiming;
+import io.github.jy95.fds.common.types.Translator;
 
 import java.util.List;
 import java.util.Map;
@@ -16,7 +16,7 @@ import java.util.concurrent.CompletableFuture;
  * @author jy95
  * @since 1.0.0
  */
-public interface OffsetWhen<D> extends TranslatorTiming<D> {
+public interface OffsetWhen<D> extends Translator<D> {
 
     /** Constant <code>order</code> */
     List<String> order = List.of("d", "h", "min");

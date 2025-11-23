@@ -1,6 +1,6 @@
 package io.github.jy95.fds.common.translators.timing.repeat;
 
-import io.github.jy95.fds.common.types.TranslatorTiming;
+import io.github.jy95.fds.common.types.Translator;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ import java.util.List;
  * @author jy95
  * @since 1.0.0
  */
-public interface TimeOfDay<D> extends TranslatorTiming<D> {
+public interface TimeOfDay<D> extends Translator<D> {
 
     /**
      * Key constant for timeOfDay message

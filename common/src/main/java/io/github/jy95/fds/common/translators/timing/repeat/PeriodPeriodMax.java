@@ -1,6 +1,6 @@
 package io.github.jy95.fds.common.translators.timing.repeat;
 
-import io.github.jy95.fds.common.types.TranslatorTiming;
+import io.github.jy95.fds.common.types.Translator;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -10,7 +10,7 @@ import java.util.concurrent.CompletableFuture;
  * @author jy95
  * @since 1.0.0
  */
-public interface PeriodPeriodMax<D> extends TranslatorTiming<D> {
+public interface PeriodPeriodMax<D> extends Translator<D> {
 
     /**
      * Key constant for periodMax message

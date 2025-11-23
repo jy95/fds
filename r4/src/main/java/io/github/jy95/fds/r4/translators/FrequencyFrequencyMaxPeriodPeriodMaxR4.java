@@ -3,7 +3,7 @@ package io.github.jy95.fds.r4.translators;
 import io.github.jy95.fds.common.translators.timing.repeat.FrequencyFrequencyMaxPeriodPeriodMax;
 import io.github.jy95.fds.common.types.Translator;
 import lombok.RequiredArgsConstructor;
-import org.hl7.fhir.r4.model.Dosage;
+import org.hl7.fhir.r4.model.Timing.TimingRepeatComponent;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -13,42 +13,42 @@ import java.util.concurrent.CompletableFuture;
  * @author jy95
  */
 @RequiredArgsConstructor
-public class FrequencyFrequencyMaxPeriodPeriodMaxR4 implements FrequencyFrequencyMaxPeriodPeriodMax<Dosage> {
+public class FrequencyFrequencyMaxPeriodPeriodMaxR4 implements FrequencyFrequencyMaxPeriodPeriodMax<TimingRepeatComponent> {
 
     /**
      * Class implementing the parsing of "timing.repeat.frequency" / "timing.repeat.frequencyMax"
      */
-    protected final Translator<Dosage> frequencyTranslator;
+    protected final Translator<TimingRepeatComponent> frequencyTranslator;
     /**
      * Class implementing the parsing of "timing.repeat.period" / "timing.repeat.periodMax"
      */
-    protected final Translator<Dosage> periodTranslator;
+    protected final Translator<TimingRepeatComponent> periodTranslator;
 
     /** {@inheritDoc} */
     @Override
-    public boolean hasFrequency(Dosage dosage) {
-        return frequencyTranslator.isPresent(dosage);
+    public boolean hasFrequency(TimingRepeatComponent data) {
+        return frequencyTranslator.isPresent(data);
     }
 
     /** {@inheritDoc} */
     @Override
-    public boolean hasPeriod(Dosage dosage) {
-        return periodTranslator.isPresent(dosage);
+    public boolean hasPeriod(TimingRepeatComponent data) {
+        return periodTranslator.isPresent(data);
     }
 
     /** {@inheritDoc} */
     @Override
-    public CompletableFuture<String> extractFrequency(Dosage dosage) {
-        return frequencyTranslator.isPresent(dosage)
-                ? frequencyTranslator.convert(dosage)
+    public CompletableFuture<String> extractFrequency(TimingRepeatComponent data) {
+        return frequencyTranslator.isPresent(data)
+                ? frequencyTranslator.convert(data)
                 : CompletableFuture.completedFuture("");
     }
 
     /** {@inheritDoc} */
     @Override
-    public CompletableFuture<String> extractPeriod(Dosage dosage) {
-        return periodTranslator.isPresent(dosage)
-                ? periodTranslator.convert(dosage)
+    public CompletableFuture<String> extractPeriod(TimingRepeatComponent data) {
+        return periodTranslator.isPresent(data)
+                ? periodTranslator.convert(data)
                 : CompletableFuture.completedFuture("");
     }
 }

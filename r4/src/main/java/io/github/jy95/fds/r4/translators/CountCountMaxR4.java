@@ -5,7 +5,7 @@ import io.github.jy95.fds.common.translators.timing.repeat.CountCountMax;
 import io.github.jy95.fds.r4.config.FDSConfigR4;
 import lombok.RequiredArgsConstructor;
 
-import org.hl7.fhir.r4.model.Dosage;
+import org.hl7.fhir.r4.model.Timing.TimingRepeatComponent;
 
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -16,41 +16,33 @@ import java.util.concurrent.CompletableFuture;
  * @author jy95
  */
 @RequiredArgsConstructor
-public class CountCountMaxR4 implements CountCountMax<Dosage> {
+public class CountCountMaxR4 implements CountCountMax<TimingRepeatComponent> {
 
     /** Translation service */
     private final TranslationService<FDSConfigR4> translationService;
 
     /** {@inheritDoc} */
     @Override
-    public boolean hasRequiredElements(Dosage dosage) {
-        return dosage.getTiming().hasRepeat()
-                && (dosage.getTiming().getRepeat().hasCount()
-                || hasCountMax(dosage));
+    public boolean isPresent(TimingRepeatComponent data) {
+        return data.hasCount() || hasCountMax(data);
     }
 
     /** {@inheritDoc} */
     @Override
-    public boolean hasTiming(Dosage dosage) {
-        return dosage.hasTiming();
+    public boolean hasCountMax(TimingRepeatComponent data) {
+        return data.hasCountMax();
     }
 
     /** {@inheritDoc} */
     @Override
-    public boolean hasCountMax(Dosage dosage) {
-        return dosage.getTiming().getRepeat().hasCountMax();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public CompletableFuture<String> convert(Dosage dosage) {
+    public CompletableFuture<String> convert(TimingRepeatComponent data) {
         return CompletableFuture.supplyAsync(() -> {
 
             // Rule: If there's a countMax, there must be a count
-            if (hasCountMax(dosage)) {
+            if (hasCountMax(data)) {
                 Map<String, Object> arguments = Map.of(
-                        "minCount", dosage.getTiming().getRepeat().getCount(),
-                        "maxCount", dosage.getTiming().getRepeat().getCountMax()
+                        "minCount", data.getCount(),
+                        "maxCount", data.getCountMax()
                 );
                 var countMaxMsg = translationService.getMessage(KEY_COUNT_MAX);
                 return countMaxMsg.format(arguments);
@@ -58,7 +50,7 @@ public class CountCountMaxR4 implements CountCountMax<Dosage> {
 
             var countMsg = translationService.getMessage(KEY_COUNT);
             return countMsg.format(new Object[]{
-                    dosage.getTiming().getRepeat().getCount()
+                    data.getCount()
             });
 
         });
