@@ -33,12 +33,6 @@ public class DurationDurationMaxR4 implements DurationDurationMax<TimingRepeatCo
 
     /** {@inheritDoc} */
     @Override
-    public boolean isPresent(TimingRepeatComponent data) {
-        return data.hasDurationUnit() && (hasDuration(data) || hasDurationMax(data));
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public String turnDurationToString(TimingRepeatComponent data) {
         var durationUnit = data.getDurationUnit().toCode();
         var durationQuantity = data.getDuration();
@@ -61,5 +55,11 @@ public class DurationDurationMaxR4 implements DurationDurationMax<TimingRepeatCo
 
         var durationText = UnitsOfTimeFormatter.formatWithCount(locale, durationUnit, durationQuantity);
         return durationMaxMsg.format(new Object[]{durationText});
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public boolean hasDurationUnit(TimingRepeatComponent data) {
+        return data.hasDurationUnit();
     }
 }

@@ -30,6 +30,13 @@ public interface DurationDurationMax<D> extends Translator<D> {
 
     /** {@inheritDoc} */
     @Override
+    default boolean isPresent(D data) {
+        var hasAnyDuration = Stream.of(hasDuration(data), hasDurationMax(data)).anyMatch(result -> result);
+        return Stream.of(hasDurationUnit(data), hasAnyDuration).allMatch(result -> result);
+    }
+
+    /** {@inheritDoc} */
+    @Override
     default CompletableFuture<String> convert(D data) {
         return CompletableFuture.supplyAsync(() -> {
 
@@ -58,7 +65,7 @@ public interface DurationDurationMax<D> extends Translator<D> {
     /**
      * Determines if the data data contains a valid "duration" value.
      *
-     * @param data The data to convert.
+     * @param data The data to check.
      * @return true if the data contains a "duration" value, false otherwise.
      */
     boolean hasDuration(D data);
@@ -66,10 +73,18 @@ public interface DurationDurationMax<D> extends Translator<D> {
     /**
      * Determines if the data data contains a valid "durationMax" value.
      *
-     * @param data The data to convert.
+     * @param data The data to check.
      * @return true if the data contains a "durationMax" value, false otherwise.
      */
     boolean hasDurationMax(D data);
+
+    /**
+     * Determines if the data data contains a valid "durationUnit" value.
+     * 
+     * @param data The data to check.
+     * @return true if the data contains a "durationUnit" value, false otherwise.
+     */
+    boolean hasDurationUnit(D data);
 
     /**
      * Converts the "duration" value in the data data into a formatted string.

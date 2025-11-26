@@ -33,8 +33,8 @@ public class DurationDurationMaxR5 implements DurationDurationMax<TimingRepeatCo
 
     /** {@inheritDoc} */
     @Override
-    public boolean isPresent(TimingRepeatComponent data) {
-        return data.hasDurationUnit() && (hasDuration(data) || hasDurationMax(data));
+    public boolean hasDurationUnit(TimingRepeatComponent data) {
+        return data.hasDurationUnit();
     }
 
     /** {@inheritDoc} */

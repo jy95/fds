@@ -111,7 +111,7 @@ public interface RatioToString<R, Q extends IBase, C extends FDSConfig & Quantit
 
         var hasNumeratorUnit = hasNumerator(ratio) && solver.hasUnit(getNumerator(ratio));
         var hasDenominatorUnit = hasDenominator(ratio) && solver.hasUnit(getDenominator(ratio));
-        return hasNumeratorUnit || hasDenominatorUnit;
+        return Stream.of(hasNumeratorUnit, hasDenominatorUnit).anyMatch(result -> result);
     }
 
     /**

@@ -72,7 +72,7 @@ public interface RangeToString<R, Q extends IBase, C extends FDSConfig & Quantit
         var hasLowUnit = hasLow(range) && solver.hasUnit(getLow(range));
 
         // Otherwise check low
-        return hasHighUnit || hasLowUnit;
+        return Stream.of(hasHighUnit, hasLowUnit).anyMatch(result -> result);
     }
 
     /**
