@@ -34,12 +34,6 @@ public class FrequencyFrequencyMaxR4 implements FrequencyFrequencyMax<TimingRepe
 
     /** {@inheritDoc} */
     @Override
-    public boolean isPresent(TimingRepeatComponent data) {
-        return hasFrequency(data) || hasFrequencyMax(data);
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public String turnFrequencyAndFrequencyMaxToString(TimingRepeatComponent data) {
         var frequencyMin = data.getFrequency();
         var frequencyMax = data.getFrequencyMax();

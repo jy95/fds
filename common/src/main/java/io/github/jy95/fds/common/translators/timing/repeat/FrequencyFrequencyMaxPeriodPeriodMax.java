@@ -36,7 +36,9 @@ public interface FrequencyFrequencyMaxPeriodPeriodMax<D> extends Translator<D> {
     /** {@inheritDoc} */
     @Override
     default boolean isPresent(D data) {
-        return hasFrequency(data) || hasPeriod(data);
+        return Stream.of(
+                hasFrequency(data),
+                hasPeriod(data)).anyMatch(result -> result);
     }
 
     /** {@inheritDoc} */

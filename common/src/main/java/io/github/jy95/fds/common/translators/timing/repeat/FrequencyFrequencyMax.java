@@ -6,6 +6,7 @@ import io.github.jy95.fds.common.types.Translator;
 
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
+import java.util.stream.Stream;
 
 /**
  * Interface for translating "timing.repeat.frequency" /
@@ -23,6 +24,14 @@ public interface FrequencyFrequencyMax<D, C extends FDSConfig> extends Translato
      * @return the TranslationService
      */
     TranslationService<C> getTranslationService();
+
+    /** {@inheritDoc} */
+    @Override
+    default boolean isPresent(D data) {
+        return Stream.of(
+                hasFrequency(data),
+                hasFrequencyMax(data)).anyMatch(result -> result);
+    }
 
     /** {@inheritDoc} */
     @Override
@@ -56,8 +65,7 @@ public interface FrequencyFrequencyMax<D, C extends FDSConfig> extends Translato
     default String formatFrequencyAndFrequencyMaxText(int frequencyMin, int frequencyMax) {
         Map<String, Object> arguments = Map.of(
                 "frequency", frequencyMin,
-                "maxFrequency", frequencyMax
-        );
+                "maxFrequency", frequencyMax);
         var frequencyAndFrequencyMaxMsg = getTranslationService().getMessage("fields.frequencyAndFrequencyMax");
         return frequencyAndFrequencyMaxMsg.format(arguments);
     }
@@ -70,7 +78,7 @@ public interface FrequencyFrequencyMax<D, C extends FDSConfig> extends Translato
      */
     default String formatFrequencyMaxText(int frequencyMax) {
         var frequencyMaxMsg = getTranslationService().getMessage("fields.frequencyMax");
-        return frequencyMaxMsg.format(new Object[]{frequencyMax});
+        return frequencyMaxMsg.format(new Object[] { frequencyMax });
     }
 
     /**
@@ -81,7 +89,7 @@ public interface FrequencyFrequencyMax<D, C extends FDSConfig> extends Translato
      */
     default String formatFrequencyText(int frequency) {
         var frequencyMsg = getTranslationService().getMessage("fields.frequency");
-        return frequencyMsg.format(new Object[]{frequency});
+        return frequencyMsg.format(new Object[] { frequency });
     }
 
     /**
