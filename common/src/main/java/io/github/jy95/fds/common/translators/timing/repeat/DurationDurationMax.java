@@ -25,7 +25,7 @@ public interface DurationDurationMax<D> extends Translator<D> {
     /**
      * Pattern with both duration are present
      */
-    String DURATION_DURATION_MAX = "%s (%s)";
+    String DURATION_DURATION_MAX = "%s ( %s )";
 
     /** {@inheritDoc} */
     @Override
