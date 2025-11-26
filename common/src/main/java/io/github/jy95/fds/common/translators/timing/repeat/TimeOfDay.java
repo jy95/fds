@@ -35,12 +35,6 @@ public interface TimeOfDay<D> extends Translator<D> {
      * @return A formatted time string with optional seconds removed.
      */
     default String formatString(String time) {
-        String[] parts = time.split(":");
-
-        if (parts.length > 2 && parts[2].equals("00")) {
-            parts = new String[] { parts[0], parts[1] };
-        }
-
-        return String.join(":", parts);
+        return time.replaceFirst("^(\\d{2}:\\d{2}):00$", "$1");
     }
 }
