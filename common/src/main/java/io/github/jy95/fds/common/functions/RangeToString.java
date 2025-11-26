@@ -5,6 +5,8 @@ import io.github.jy95.fds.common.operations.QuantityProcessor;
 
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
+import java.util.function.BiFunction;
+import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 import org.hl7.fhir.instance.model.api.IBase;
@@ -67,9 +69,20 @@ public interface RangeToString<R, Q extends IBase, C extends FDSConfig & Quantit
     default boolean hasUnit(R range) {
         var solver = getQuantityToString();
 
-        // Check high first, more likely to be found in it
-        var hasHighUnit = hasHigh(range) && solver.hasUnit(getHigh(range));
-        var hasLowUnit = hasLow(range) && solver.hasUnit(getLow(range));
+        BiFunction<Boolean, Supplier<Q>, Boolean> checkAndResolve = (exists, quantitySupplier) -> {
+            if (exists) {
+                var quantity = quantitySupplier.get();
+                return solver.hasUnit(quantity);
+            }
+            return false;
+        };
+
+        var hasHighUnit = checkAndResolve.apply(
+                hasHigh(range),
+                () -> getHigh(range));
+        var hasLowUnit = checkAndResolve.apply(
+                hasLow(range),
+                () -> getLow(range));
 
         // Otherwise check low
         return Stream.of(hasHighUnit, hasLowUnit).anyMatch(result -> result);

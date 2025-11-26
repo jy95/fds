@@ -5,6 +5,8 @@ import io.github.jy95.fds.common.operations.QuantityProcessor;
 
 import java.math.BigDecimal;
 import java.util.concurrent.CompletableFuture;
+import java.util.function.BiFunction;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -109,8 +111,21 @@ public interface RatioToString<R, Q extends IBase, C extends FDSConfig & Quantit
     default boolean hasUnitRatio(R ratio) {
         var solver = getQuantityToString();
 
-        var hasNumeratorUnit = hasNumerator(ratio) && solver.hasUnit(getNumerator(ratio));
-        var hasDenominatorUnit = hasDenominator(ratio) && solver.hasUnit(getDenominator(ratio));
+        BiFunction<Boolean, Supplier<Q>, Boolean> checkAndResolve = (exists, quantitySupplier) -> {
+            if (exists) {
+                var quantity = quantitySupplier.get();
+                return solver.hasUnit(quantity);
+            }
+            return false;
+        };
+
+        var hasNumeratorUnit = checkAndResolve.apply(
+                hasNumerator(ratio),
+                () -> getNumerator(ratio));
+        var hasDenominatorUnit = checkAndResolve.apply(
+                hasDenominator(ratio),
+                () -> getDenominator(ratio));
+        ;
         return Stream.of(hasNumeratorUnit, hasDenominatorUnit).anyMatch(result -> result);
     }
 

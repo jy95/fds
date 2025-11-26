@@ -13,6 +13,7 @@ import java.util.stream.Stream;
  * "timing.repeat.frequencyMax".
  *
  * @param <D> The type of the translated data.
+ * @param <C> The configuration type extending FDSConfig.
  * @author jy95
  * @since 1.0.0
  */
