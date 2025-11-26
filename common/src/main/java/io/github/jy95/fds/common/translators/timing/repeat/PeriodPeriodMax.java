@@ -2,6 +2,7 @@ package io.github.jy95.fds.common.translators.timing.repeat;
 
 import io.github.jy95.fds.common.types.Translator;
 import java.util.concurrent.CompletableFuture;
+import java.util.stream.Stream;
 
 /**
  * Interface for translating "timing.repeat.period" / "timing.repeat.periodMax".
@@ -29,9 +30,11 @@ public interface PeriodPeriodMax<D> extends Translator<D> {
             // Rule: if there's a period, there needs to be period units
             // Rule: period SHALL be a non-negative value
             // Rule: If there's a periodMax, there must be a period
-            var hasPeriodFlag = hasPeriod(data);
-            var hasPeriodMaxFlag = hasPeriodMax(data);
-            var hasBoth = hasPeriodFlag && hasPeriodMaxFlag;
+            var hasBoth = Stream
+                    .of(
+                            hasPeriod(data),
+                            hasPeriodMax(data))
+                    .allMatch(resultat -> resultat);
 
             if (hasBoth) {
                 return turnPeriodAndPeriodMaxToString(data);
@@ -77,6 +80,8 @@ public interface PeriodPeriodMax<D> extends Translator<D> {
     /** {@inheritDoc} */
     @Override
     default boolean isPresent(D data) {
-        return hasPeriod(data) || hasPeriodMax(data);
+        return Stream.of(
+                hasPeriod(data),
+                hasPeriodMax(data)).anyMatch(resultat -> resultat);
     }
 }
