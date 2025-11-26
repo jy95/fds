@@ -1,10 +1,7 @@
 package io.github.jy95.fds.common.translators.timing.repeat;
 
 import io.github.jy95.fds.common.types.Translator;
-
-import java.util.ArrayList;
 import java.util.concurrent.CompletableFuture;
-import java.util.List;
 
 /**
  * Interface for translating "timing.repeat.duration" /
@@ -25,6 +22,11 @@ public interface DurationDurationMax<D> extends Translator<D> {
      */
     String KEY_DURATION_MAX = "fields.durationMax";
 
+    /**
+     * Pattern with both duration are present
+     */
+    String DURATION_DURATION_MAX = "%s (%s)";
+
     /** {@inheritDoc} */
     @Override
     default CompletableFuture<String> convert(D data) {
@@ -37,25 +39,19 @@ public interface DurationDurationMax<D> extends Translator<D> {
             var hasDurationMaxFlag = hasDurationMax(data);
             var hasBoth = hasDurationFlag && hasDurationMaxFlag;
 
-            List<String> texts = new ArrayList<>();
-
-            if (hasDurationFlag) {
-                texts.add(turnDurationToString(data));
-            }
-
             if (hasBoth) {
-                texts.add("(");
+                return String.format(
+                    DURATION_DURATION_MAX,
+                    turnDurationToString(data),
+                    turnDurationMaxToString(data)
+                );
             }
 
             if (hasDurationMaxFlag) {
-                texts.add(turnDurationMaxToString(data));
+                return turnDurationMaxToString(data);
             }
 
-            if (hasBoth) {
-                texts.add(")");
-            }
-
-            return String.join(" ", texts);
+            return turnDurationToString(data);
         });
     }
 
