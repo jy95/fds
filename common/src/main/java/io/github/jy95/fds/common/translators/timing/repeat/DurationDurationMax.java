@@ -2,6 +2,7 @@ package io.github.jy95.fds.common.translators.timing.repeat;
 
 import io.github.jy95.fds.common.types.Translator;
 import java.util.concurrent.CompletableFuture;
+import java.util.stream.Stream;
 
 /**
  * Interface for translating "timing.repeat.duration" /
@@ -37,14 +38,13 @@ public interface DurationDurationMax<D> extends Translator<D> {
             // Rule: If there's a durationMax, there must be a duration
             var hasDurationFlag = hasDuration(data);
             var hasDurationMaxFlag = hasDurationMax(data);
-            var hasBoth = hasDurationFlag && hasDurationMaxFlag;
+            var hasBoth = Stream.of(hasDurationFlag, hasDurationMaxFlag).allMatch(result -> result);
 
             if (hasBoth) {
                 return String.format(
-                    DURATION_DURATION_MAX,
-                    turnDurationToString(data),
-                    turnDurationMaxToString(data)
-                );
+                        DURATION_DURATION_MAX,
+                        turnDurationToString(data),
+                        turnDurationMaxToString(data));
             }
 
             if (hasDurationMaxFlag) {

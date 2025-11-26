@@ -40,7 +40,7 @@ public interface FrequencyFrequencyMax<D, C extends FDSConfig> extends Translato
 
             var hasFrequencyFlag = hasFrequency(data);
             var hasFrequencyMaxFlag = hasFrequencyMax(data);
-            var hasBoth = hasFrequencyFlag && hasFrequencyMaxFlag;
+            var hasBoth = Stream.of(hasFrequencyFlag, hasFrequencyMaxFlag).allMatch(result -> result);
 
             if (hasBoth) {
                 return turnFrequencyAndFrequencyMaxToString(data);

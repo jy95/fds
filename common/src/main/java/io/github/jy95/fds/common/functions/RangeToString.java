@@ -5,6 +5,7 @@ import io.github.jy95.fds.common.operations.QuantityProcessor;
 
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
+import java.util.stream.Stream;
 
 import org.hl7.fhir.instance.model.api.IBase;
 
@@ -107,7 +108,9 @@ public interface RangeToString<R, Q extends IBase, C extends FDSConfig & Quantit
      */
     private String getConditionCode(boolean hasLow, boolean hasHigh) {
         // Full range [min - max]
-        if (hasLow && hasHigh) {
+        var hasBoth = Stream.of(hasLow, hasHigh).allMatch(result -> result);
+
+        if (hasBoth) {
             return "0";
         }
 

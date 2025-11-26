@@ -3,6 +3,9 @@ package io.github.jy95.fds.common.translators.timing.repeat;
 import io.github.jy95.fds.common.types.Translator;
 
 import java.util.Map;
+import java.util.function.BiFunction;
+import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 /**
  * Interface for translating "timing.repeat.boundsPeriod".
@@ -28,13 +31,17 @@ public interface BoundsPeriod<D> extends Translator<D> {
         // Check conditions
         var hasStart = hasStartPeriod(data);
         var hasEnd = hasEndPeriod(data);
+        var hasBoth = Stream.of(hasStart, hasEnd).allMatch(result -> result);
 
         // Prepare date values using FormatDateTimes.convert()
-        String startDate = hasStart ? formatStartPeriod(data) : "";
-        String endDate = hasEnd ? formatEndPeriod(data) : "";
+        BiFunction<Boolean, Supplier<String>, String> conditionalFormatter = (hasPeriod,
+                formatLogic) -> hasPeriod ? formatLogic.get() : "";
+
+        String startDate = conditionalFormatter.apply(hasStart, () -> formatStartPeriod(data));
+        String endDate = conditionalFormatter.apply(hasEnd, () -> formatEndPeriod(data));
 
         // Choose the correct condition based on the presence of start and end dates
-        String condition = hasStart && hasEnd ? "0" : (hasStart ? "1" : "other");
+        String condition = hasBoth ? "0" : (hasStart ? "1" : "other");
 
         // Create a map of named arguments
         return Map.of(

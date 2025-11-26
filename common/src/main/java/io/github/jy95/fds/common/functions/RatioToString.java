@@ -82,7 +82,7 @@ public interface RatioToString<R, Q extends IBase, C extends FDSConfig & Quantit
     default String retrieveRatioLinkWord(TranslationService<C> translationService, R ratio) {
         var hasNum = hasNumerator(ratio);
         var hasDen = hasDenominator(ratio);
-        var hasBoth = hasNum && hasDen;
+        var hasBoth = Stream.of(hasNum, hasDen).allMatch(result -> result);
 
         if (!hasBoth) {
             return "";

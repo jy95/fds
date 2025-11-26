@@ -144,7 +144,9 @@ public interface QuantityToString<Q extends IBase, C extends FDSConfig & Quantit
      */
     default CompletableFuture<String> enhancedFromUnitToString(TranslationService<C> translationService, Q quantity) {
         var config = translationService.getConfig();
-        var hasSystemAndCode = hasSystem(quantity) && hasCode(quantity);
+        var hasSystemAndCode = Stream.of(
+                hasSystem(quantity),
+                hasCode(quantity)).allMatch(result -> result);
         var isUnitOfTime = hasSystemAndCode && TIME_SYSTEMS.contains(getSystem(quantity));
 
         if (isUnitOfTime) {
