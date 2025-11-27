@@ -63,7 +63,7 @@ public interface DurationDurationMax<D> extends Translator<D> {
             }
 
             return GenericOperations.conditionalSelect(
-                    hasBoth,
+                    hasDurationMaxFlag,
                     () -> turnDurationMaxToString(data),
                     () -> turnDurationToString(data));
         });

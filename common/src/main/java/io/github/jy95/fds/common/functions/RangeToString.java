@@ -73,7 +73,7 @@ public interface RangeToString<R, Q extends IBase, C extends FDSConfig & Quantit
         );
 
         var hasLowUnit = GenericOperations.conditionalSelect(
-            hasHigh(range), 
+            hasLow(range), 
             () -> solver.hasUnit(getLow(range)), 
             () -> false
         );
