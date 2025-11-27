@@ -1,6 +1,7 @@
 package io.github.jy95.fds.common.config;
 
 import io.github.jy95.fds.common.bundle.MultiResourceBundleControl;
+import io.github.jy95.fds.common.functions.GenericOperations;
 import io.github.jy95.fds.common.types.DisplayOrder;
 import io.github.jy95.fds.common.types.DoseAndRateExtractor;
 import io.github.jy95.fds.common.types.DoseAndRateKey;
@@ -168,7 +169,10 @@ public final class DefaultImplementations {
         var display = coding.getDisplay();
         var code = coding.getCode();
 
-        return (Objects.nonNull(display)) ? display : code;
+        return GenericOperations.conditionalSelect(
+                Objects.nonNull(display),
+                () -> display,
+                () -> code);
     }
 
     /**

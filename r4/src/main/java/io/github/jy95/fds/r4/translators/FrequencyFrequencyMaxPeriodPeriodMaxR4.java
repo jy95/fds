@@ -1,5 +1,6 @@
 package io.github.jy95.fds.r4.translators;
 
+import io.github.jy95.fds.common.functions.GenericOperations;
 import io.github.jy95.fds.common.translators.timing.repeat.FrequencyFrequencyMaxPeriodPeriodMax;
 import io.github.jy95.fds.common.types.Translator;
 import lombok.RequiredArgsConstructor;
@@ -39,16 +40,20 @@ public class FrequencyFrequencyMaxPeriodPeriodMaxR4 implements FrequencyFrequenc
     /** {@inheritDoc} */
     @Override
     public CompletableFuture<String> extractFrequency(TimingRepeatComponent data) {
-        return frequencyTranslator.isPresent(data)
-                ? frequencyTranslator.convert(data)
-                : CompletableFuture.completedFuture("");
+        return GenericOperations.conditionalSelect(
+            frequencyTranslator.isPresent(data),
+            () -> frequencyTranslator.convert(data),
+            () -> CompletableFuture.completedFuture("")
+        );
     }
 
     /** {@inheritDoc} */
     @Override
     public CompletableFuture<String> extractPeriod(TimingRepeatComponent data) {
-        return periodTranslator.isPresent(data)
-                ? periodTranslator.convert(data)
-                : CompletableFuture.completedFuture("");
+        return GenericOperations.conditionalSelect(
+            periodTranslator.isPresent(data),
+            () -> periodTranslator.convert(data),
+            () -> CompletableFuture.completedFuture("")
+        );
     }
 }

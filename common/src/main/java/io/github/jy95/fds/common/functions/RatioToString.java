@@ -55,13 +55,17 @@ public interface RatioToString<R, Q extends IBase, C extends FDSConfig & Quantit
     default CompletableFuture<String> convert(TranslationService<C> translationService, R ratio) {
         var separator = retrieveRatioLinkWord(translationService, ratio);
 
-        var numeratorText = hasNumerator(ratio)
-                ? convertNumerator(translationService, ratio)
-                : CompletableFuture.completedFuture("");
+        var numeratorText = GenericOperations.conditionalSelect(
+            hasNumerator(ratio),
+            () -> convertNumerator(translationService, ratio),
+            () -> CompletableFuture.completedFuture("")
+        );
 
-        var denominatorText = hasDenominator(ratio)
-                ? convertDenominator(translationService, ratio)
-                : CompletableFuture.completedFuture("");
+        var denominatorText = GenericOperations.conditionalSelect(
+            hasDenominator(ratio),
+            () -> convertDenominator(translationService, ratio),
+            () -> CompletableFuture.completedFuture("")
+        );
 
         return numeratorText.thenCombineAsync(denominatorText, (num, dem) -> {
             return Stream
