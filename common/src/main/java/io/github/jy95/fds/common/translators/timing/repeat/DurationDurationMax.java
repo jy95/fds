@@ -1,8 +1,8 @@
 package io.github.jy95.fds.common.translators.timing.repeat;
 
 import io.github.jy95.fds.common.types.Translator;
+import io.github.jy95.fds.common.functions.GenericOperations;
 import java.util.concurrent.CompletableFuture;
-import java.util.stream.Stream;
 
 /**
  * Interface for translating "timing.repeat.duration" /
@@ -31,8 +31,14 @@ public interface DurationDurationMax<D> extends Translator<D> {
     /** {@inheritDoc} */
     @Override
     default boolean isPresent(D data) {
-        var hasAnyDuration = Stream.of(hasDuration(data), hasDurationMax(data)).anyMatch(result -> result);
-        return Stream.of(hasDurationUnit(data), hasAnyDuration).allMatch(result -> result);
+
+        var hasAnyDuration = GenericOperations.anyMatchLazy(
+                () -> hasDuration(data),
+                () -> hasDurationMax(data));
+
+        return GenericOperations.allMatchLazy(
+                () -> hasDurationUnit(data),
+                () -> hasAnyDuration);
     }
 
     /** {@inheritDoc} */
@@ -45,7 +51,9 @@ public interface DurationDurationMax<D> extends Translator<D> {
             // Rule: If there's a durationMax, there must be a duration
             var hasDurationFlag = hasDuration(data);
             var hasDurationMaxFlag = hasDurationMax(data);
-            var hasBoth = Stream.of(hasDurationFlag, hasDurationMaxFlag).allMatch(result -> result);
+            var hasBoth = GenericOperations.allMatchLazy(
+                    () -> hasDurationFlag,
+                    () -> hasDurationMaxFlag);
 
             if (hasBoth) {
                 return String.format(
@@ -54,11 +62,10 @@ public interface DurationDurationMax<D> extends Translator<D> {
                         turnDurationMaxToString(data));
             }
 
-            if (hasDurationMaxFlag) {
-                return turnDurationMaxToString(data);
-            }
-
-            return turnDurationToString(data);
+            return GenericOperations.conditionalSelect(
+                    hasBoth,
+                    () -> turnDurationMaxToString(data),
+                    () -> turnDurationToString(data));
         });
     }
 

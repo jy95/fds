@@ -5,8 +5,6 @@ import io.github.jy95.fds.common.operations.QuantityProcessor;
 
 import java.math.BigDecimal;
 import java.util.concurrent.CompletableFuture;
-import java.util.function.BiFunction;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -84,7 +82,10 @@ public interface RatioToString<R, Q extends IBase, C extends FDSConfig & Quantit
     default String retrieveRatioLinkWord(TranslationService<C> translationService, R ratio) {
         var hasNum = hasNumerator(ratio);
         var hasDen = hasDenominator(ratio);
-        var hasBoth = Stream.of(hasNum, hasDen).allMatch(result -> result);
+        var hasBoth = GenericOperations.allMatchLazy(
+            () -> hasNum,
+            () -> hasDen
+        );
 
         if (!hasBoth) {
             return "";
@@ -111,22 +112,22 @@ public interface RatioToString<R, Q extends IBase, C extends FDSConfig & Quantit
     default boolean hasUnitRatio(R ratio) {
         var solver = getQuantityToString();
 
-        BiFunction<Boolean, Supplier<Q>, Boolean> checkAndResolve = (exists, quantitySupplier) -> {
-            if (exists) {
-                var quantity = quantitySupplier.get();
-                return solver.hasUnit(quantity);
-            }
-            return false;
-        };
+        var hasNumeratorUnit = GenericOperations.conditionalSelect(
+            hasNumerator(ratio), 
+            () -> solver.hasUnit(getNumerator(ratio)), 
+            () -> false
+        );
 
-        var hasNumeratorUnit = checkAndResolve.apply(
-                hasNumerator(ratio),
-                () -> getNumerator(ratio));
-        var hasDenominatorUnit = checkAndResolve.apply(
-                hasDenominator(ratio),
-                () -> getDenominator(ratio));
-        ;
-        return Stream.of(hasNumeratorUnit, hasDenominatorUnit).anyMatch(result -> result);
+        var hasDenominatorUnit = GenericOperations.conditionalSelect(
+            hasDenominator(ratio), 
+            () -> solver.hasUnit(getDenominator(ratio)), 
+            () -> false
+        );
+
+        return GenericOperations.anyMatchLazy(
+            () -> hasNumeratorUnit,
+            () -> hasDenominatorUnit
+        );
     }
 
     /**

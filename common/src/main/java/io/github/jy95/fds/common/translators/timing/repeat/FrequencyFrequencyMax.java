@@ -1,12 +1,12 @@
 package io.github.jy95.fds.common.translators.timing.repeat;
 
 import io.github.jy95.fds.common.config.FDSConfig;
+import io.github.jy95.fds.common.functions.GenericOperations;
 import io.github.jy95.fds.common.functions.TranslationService;
 import io.github.jy95.fds.common.types.Translator;
 
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
-import java.util.stream.Stream;
 
 /**
  * Interface for translating "timing.repeat.frequency" /
@@ -29,9 +29,10 @@ public interface FrequencyFrequencyMax<D, C extends FDSConfig> extends Translato
     /** {@inheritDoc} */
     @Override
     default boolean isPresent(D data) {
-        return Stream.of(
-                hasFrequency(data),
-                hasFrequencyMax(data)).anyMatch(result -> result);
+        return GenericOperations.anyMatchLazy(
+            () -> hasFrequency(data),
+            () -> hasFrequencyMax(data)
+        );
     }
 
     /** {@inheritDoc} */
@@ -41,17 +42,20 @@ public interface FrequencyFrequencyMax<D, C extends FDSConfig> extends Translato
 
             var hasFrequencyFlag = hasFrequency(data);
             var hasFrequencyMaxFlag = hasFrequencyMax(data);
-            var hasBoth = Stream.of(hasFrequencyFlag, hasFrequencyMaxFlag).allMatch(result -> result);
+            var hasBoth = GenericOperations.allMatchLazy(
+                () -> hasFrequencyFlag,
+                () -> hasFrequencyMaxFlag
+            );
 
             if (hasBoth) {
                 return turnFrequencyAndFrequencyMaxToString(data);
             }
 
-            if (hasFrequencyMaxFlag) {
-                return turnFrequencyMaxToString(data);
-            }
-
-            return turnFrequencyToString(data);
+            return GenericOperations.conditionalSelect(
+                hasFrequencyMaxFlag, 
+                () -> turnFrequencyMaxToString(data), 
+                () -> turnFrequencyToString(data)
+            );
         });
     }
 

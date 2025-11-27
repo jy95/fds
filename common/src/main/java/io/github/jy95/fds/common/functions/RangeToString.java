@@ -5,9 +5,6 @@ import io.github.jy95.fds.common.operations.QuantityProcessor;
 
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
-import java.util.function.BiFunction;
-import java.util.function.Supplier;
-import java.util.stream.Stream;
 
 import org.hl7.fhir.instance.model.api.IBase;
 
@@ -69,23 +66,22 @@ public interface RangeToString<R, Q extends IBase, C extends FDSConfig & Quantit
     default boolean hasUnit(R range) {
         var solver = getQuantityToString();
 
-        BiFunction<Boolean, Supplier<Q>, Boolean> checkAndResolve = (exists, quantitySupplier) -> {
-            if (exists) {
-                var quantity = quantitySupplier.get();
-                return solver.hasUnit(quantity);
-            }
-            return false;
-        };
+        var hasHighUnit = GenericOperations.conditionalSelect(
+            hasHigh(range), 
+            () -> solver.hasUnit(getHigh(range)), 
+            () -> false
+        );
 
-        var hasHighUnit = checkAndResolve.apply(
-                hasHigh(range),
-                () -> getHigh(range));
-        var hasLowUnit = checkAndResolve.apply(
-                hasLow(range),
-                () -> getLow(range));
+        var hasLowUnit = GenericOperations.conditionalSelect(
+            hasHigh(range), 
+            () -> solver.hasUnit(getLow(range)), 
+            () -> false
+        );
 
-        // Otherwise check low
-        return Stream.of(hasHighUnit, hasLowUnit).anyMatch(result -> result);
+        return GenericOperations.anyMatchLazy(
+            () -> hasHighUnit,
+            () -> hasLowUnit
+        );
     }
 
     /**
@@ -121,7 +117,10 @@ public interface RangeToString<R, Q extends IBase, C extends FDSConfig & Quantit
      */
     private String getConditionCode(boolean hasLow, boolean hasHigh) {
         // Full range [min - max]
-        var hasBoth = Stream.of(hasLow, hasHigh).allMatch(result -> result);
+        var hasBoth = GenericOperations.allMatchLazy(
+            () -> hasLow,
+            () -> hasHigh
+        );
 
         if (hasBoth) {
             return "0";

@@ -1,5 +1,6 @@
 package io.github.jy95.fds.common.translators.timing.repeat;
 
+import io.github.jy95.fds.common.functions.GenericOperations;
 import io.github.jy95.fds.common.types.Translator;
 
 import java.util.concurrent.CompletableFuture;
@@ -36,9 +37,7 @@ public interface FrequencyFrequencyMaxPeriodPeriodMax<D> extends Translator<D> {
     /** {@inheritDoc} */
     @Override
     default boolean isPresent(D data) {
-        return Stream.of(
-                hasFrequency(data),
-                hasPeriod(data)).anyMatch(result -> result);
+        return GenericOperations.anyMatchLazy(() -> hasFrequency(data), () -> hasPeriod(data));
     }
 
     /** {@inheritDoc} */
