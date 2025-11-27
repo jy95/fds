@@ -1,5 +1,6 @@
 package io.github.jy95.fds.common.translators.timing.repeat;
 
+import io.github.jy95.fds.common.functions.GenericOperations;
 import io.github.jy95.fds.common.types.Translator;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Stream;
@@ -36,11 +37,10 @@ public interface PeriodPeriodMax<D> extends Translator<D> {
                             hasPeriodMax(data))
                     .allMatch(resultat -> resultat);
 
-            if (hasBoth) {
-                return turnPeriodAndPeriodMaxToString(data);
-            }
-
-            return turnPeriodToString(data);
+            return GenericOperations.conditionalSelect(
+                    hasBoth,
+                    () -> turnPeriodAndPeriodMaxToString(data),
+                    () -> turnPeriodToString(data));
         });
     }
 

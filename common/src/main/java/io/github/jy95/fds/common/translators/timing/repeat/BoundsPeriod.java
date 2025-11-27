@@ -29,10 +29,6 @@ public interface BoundsPeriod<D> extends Translator<D> {
         // Check conditions
         var hasStart = hasStartPeriod(data);
         var hasEnd = hasEndPeriod(data);
-        var hasBoth = GenericOperations.allMatchLazy(
-            () -> hasStart,
-            () -> hasEnd
-        );
 
         // Prepare date values using FormatDateTimes.convert()
         String startDate = GenericOperations.conditionalSelect(
@@ -48,13 +44,37 @@ public interface BoundsPeriod<D> extends Translator<D> {
         );
 
         // Choose the correct condition based on the presence of start and end dates
-        String condition = hasBoth ? "0" : (hasStart ? "1" : "other");
+        String condition = getConditionCode(hasStart, hasEnd);
 
         // Create a map of named arguments
         return Map.of(
                 "startDate", startDate,
                 "endDate", endDate,
                 "condition", condition);
+    }
+
+    /**
+     * Determines the formatting condition code for the period.
+     * 
+     * @param hasStart  True if the period has a start date.
+     * @param hasEnd True if the period has a start date.
+     * @return The conditional code ("0", "1" or "other").
+     */
+    private String getConditionCode(boolean hasStart, boolean hasEnd) {
+        var hasBoth = GenericOperations.allMatchLazy(
+            () -> hasStart,
+            () -> hasEnd
+        );
+
+        if (hasBoth) {
+            return "0";
+        }
+
+        return GenericOperations.conditionalSelect(
+            hasStart, 
+            () -> "1", 
+            () -> "other"
+        );
     }
 
     /**
