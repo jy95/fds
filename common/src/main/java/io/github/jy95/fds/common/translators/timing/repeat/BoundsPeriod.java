@@ -57,7 +57,7 @@ public interface BoundsPeriod<D> extends Translator<D> {
      * Determines the formatting condition code for the period.
      * 
      * @param hasStart  True if the period has a start date.
-     * @param hasEnd True if the period has a start date.
+     * @param hasEnd True if the period has an end date.
      * @return The conditional code ("0", "1" or "other").
      */
     private String getConditionCode(boolean hasStart, boolean hasEnd) {
