@@ -5,4 +5,7 @@ io.github.jy95.fds.common.functions
 io.github.jy95.fds.common.l10n
 io.github.jy95.fds.common.operations
 io.github.jy95.fds.common.translators
+io.github.jy95.fds.common.translators.dosage
+io.github.jy95.fds.common.translators.timing
+io.github.jy95.fds.common.translators.timing.repeat
 io.github.jy95.fds.common.types

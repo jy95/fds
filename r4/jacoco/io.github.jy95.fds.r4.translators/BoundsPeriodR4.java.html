@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BoundsPeriodR4.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">FHIR Dosage Support - R4</a> &gt; <a href="index.source.html" class="el_package">io.github.jy95.fds.r4.translators</a> &gt; <span class="el_source">BoundsPeriodR4.java</span></div><h1>BoundsPeriodR4.java</h1><pre class="source lang-java linenums">package io.github.jy95.fds.r4.translators;
 
 import io.github.jy95.fds.common.functions.TranslationService;
-import io.github.jy95.fds.common.translators.BoundsPeriod;
+import io.github.jy95.fds.common.translators.timing.repeat.BoundsPeriod;
 import io.github.jy95.fds.r4.config.FDSConfigR4;
 import lombok.RequiredArgsConstructor;
 
-import org.hl7.fhir.r4.model.Dosage;
+import org.hl7.fhir.r4.model.Timing.TimingRepeatComponent;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -15,67 +15,61 @@ import java.util.concurrent.CompletableFuture;
  * @author jy95
  */
 @RequiredArgsConstructor
-public class BoundsPeriodR4 implements BoundsPeriod&lt;Dosage&gt; {
+public class BoundsPeriodR4 implements BoundsPeriod&lt;TimingRepeatComponent&gt; {
 
     /** Translation service */
     private final TranslationService&lt;FDSConfigR4&gt; translationService;
 
     /** {@inheritDoc} */
     @Override
-    public boolean hasRequiredElements(Dosage dosage) {
-<span class="pc bpc" id="L26" title="1 of 4 branches missed.">        return dosage.getTiming().hasRepeat() &amp;&amp; dosage.getTiming().getRepeat().hasBoundsPeriod();</span>
+    public boolean isPresent(TimingRepeatComponent data) {
+<span class="fc" id="L26">        return data.hasBoundsPeriod();</span>
     }
 
     /** {@inheritDoc} */
     @Override
-    public boolean hasStartPeriod(Dosage dosage) {
-<span class="fc" id="L32">        return dosage.getTiming().getRepeat().getBoundsPeriod().hasStart();</span>
+    public boolean hasStartPeriod(TimingRepeatComponent data) {
+<span class="fc" id="L32">        return data.getBoundsPeriod().hasStart();</span>
     }
 
     /** {@inheritDoc} */
     @Override
-    public boolean hasEndPeriod(Dosage dosage) {
-<span class="fc" id="L38">        return dosage.getTiming().getRepeat().getBoundsPeriod().hasEnd();</span>
+    public boolean hasEndPeriod(TimingRepeatComponent data) {
+<span class="fc" id="L38">        return data.getBoundsPeriod().hasEnd();</span>
     }
 
     /** {@inheritDoc} */
     @Override
-    public boolean hasTiming(Dosage dosage) {
-<span class="fc" id="L44">        return dosage.hasTiming();</span>
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public String formatStartPeriod(Dosage dosage) {
-<span class="fc" id="L50">        var boundPeriods = dosage.getTiming().getRepeat().getBoundsPeriod();</span>
-<span class="fc" id="L51">        var start = boundPeriods.getStartElement();</span>
-<span class="fc" id="L52">        return translationService.dateTimeToHumanDisplay(</span>
-<span class="fc" id="L53">            start.getValue(), </span>
-<span class="fc" id="L54">            start.getTimeZone(), </span>
-<span class="fc" id="L55">            start.getPrecision()</span>
+    public String formatStartPeriod(TimingRepeatComponent data) {
+<span class="fc" id="L44">        var boundPeriods = data.getBoundsPeriod();</span>
+<span class="fc" id="L45">        var start = boundPeriods.getStartElement();</span>
+<span class="fc" id="L46">        return translationService.dateTimeToHumanDisplay(</span>
+<span class="fc" id="L47">            start.getValue(), </span>
+<span class="fc" id="L48">            start.getTimeZone(), </span>
+<span class="fc" id="L49">            start.getPrecision()</span>
         );
     }
 
     /** {@inheritDoc} */
     @Override
-    public String formatEndPeriod(Dosage dosage) {
-<span class="fc" id="L62">        var boundPeriods = dosage.getTiming().getRepeat().getBoundsPeriod();</span>
-<span class="fc" id="L63">        var end = boundPeriods.getEndElement();</span>
-<span class="fc" id="L64">        return translationService.dateTimeToHumanDisplay(</span>
-<span class="fc" id="L65">            end.getValue(), </span>
-<span class="fc" id="L66">            end.getTimeZone(), </span>
-<span class="fc" id="L67">            end.getPrecision()</span>
+    public String formatEndPeriod(TimingRepeatComponent data) {
+<span class="fc" id="L56">        var boundPeriods = data.getBoundsPeriod();</span>
+<span class="fc" id="L57">        var end = boundPeriods.getEndElement();</span>
+<span class="fc" id="L58">        return translationService.dateTimeToHumanDisplay(</span>
+<span class="fc" id="L59">            end.getValue(), </span>
+<span class="fc" id="L60">            end.getTimeZone(), </span>
+<span class="fc" id="L61">            end.getPrecision()</span>
         );
     }
 
     /** {@inheritDoc} */
     @Override
-    public CompletableFuture&lt;String&gt; convert(Dosage dosage) {
-<span class="fc" id="L74">        return CompletableFuture.supplyAsync(() -&gt; {</span>
-<span class="fc" id="L75">            var arguments = extractInformation(dosage);</span>
+    public CompletableFuture&lt;String&gt; convert(TimingRepeatComponent dosage) {
+<span class="fc" id="L68">        return CompletableFuture.supplyAsync(() -&gt; {</span>
+<span class="fc" id="L69">            var arguments = extractInformation(dosage);</span>
             // Format the message with the named arguments
-<span class="fc" id="L77">            var boundsPeriodMsg = translationService.getMessage(KEY_BOUNDS_PERIOD);</span>
-<span class="fc" id="L78">            return boundsPeriodMsg.format(arguments);</span>
+<span class="fc" id="L71">            var boundsPeriodMsg = translationService.getMessage(KEY_BOUNDS_PERIOD);</span>
+<span class="fc" id="L72">            return boundsPeriodMsg.format(arguments);</span>
         });
     }
 }

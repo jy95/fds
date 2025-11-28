@@ -2,11 +2,11 @@
 
 import io.github.jy95.fds.common.functions.ListToString;
 import io.github.jy95.fds.common.functions.TranslationService;
-import io.github.jy95.fds.common.translators.TimingEvent;
+import io.github.jy95.fds.common.translators.timing.TimingEvent;
 import io.github.jy95.fds.r5.config.FDSConfigR5;
 import lombok.RequiredArgsConstructor;
 
-import org.hl7.fhir.r5.model.Dosage;
+import org.hl7.fhir.r5.model.Timing;
 
 import java.util.List;
 import java.util.Map;
@@ -18,21 +18,21 @@ import java.util.concurrent.CompletableFuture;
  * @author jy95
  */
 @RequiredArgsConstructor
-public class TimingEventR5 implements TimingEvent&lt;Dosage&gt; {
+public class TimingEventR5 implements TimingEvent&lt;Timing&gt; {
 
     /** Translation service */
     private final TranslationService&lt;FDSConfigR5&gt; translationService;
 
     /** {@inheritDoc} */
     @Override
-    public boolean hasRequiredElements(Dosage dosage) {
-<span class="fc" id="L29">        return dosage.getTiming().hasEvent();</span>
+    public boolean isPresent(Timing data) {
+<span class="fc" id="L29">        return data.hasEvent();</span>
     }
 
     /** {@inheritDoc} */
     @Override
-    public List&lt;String&gt; getEvents(Dosage dosage) {
-<span class="fc" id="L35">        var events = dosage.getTiming().getEvent();</span>
+    public List&lt;String&gt; getEvents(Timing data) {
+<span class="fc" id="L35">        var events = data.getEvent();</span>
 <span class="fc" id="L36">        return events</span>
 <span class="fc" id="L37">            .stream()</span>
 <span class="fc" id="L38">            .map(event -&gt; translationService.dateTimeToHumanDisplay(</span>
@@ -45,28 +45,22 @@ public class TimingEventR5 implements TimingEvent&lt;Dosage&gt; {
 
     /** {@inheritDoc} */
     @Override
-    public boolean hasTiming(Dosage dosage) {
-<span class="fc" id="L49">        return dosage.hasTiming();</span>
-    }
+    public CompletableFuture&lt;String&gt; convert(Timing data) {
+<span class="fc" id="L49">        var timingEventMsg = translationService.getMessage(KEY_EVENT);</span>
 
-    /** {@inheritDoc} */
-    @Override
-    public CompletableFuture&lt;String&gt; convert(Dosage dosage) {
-<span class="fc" id="L55">        var timingEventMsg = translationService.getMessage(KEY_EVENT);</span>
+<span class="fc" id="L51">        return CompletableFuture.supplyAsync(() -&gt; {</span>
+<span class="fc" id="L52">            var eventsList = getEvents(data);</span>
 
-<span class="fc" id="L57">        return CompletableFuture.supplyAsync(() -&gt; {</span>
-<span class="fc" id="L58">            var eventsList = getEvents(dosage);</span>
-
-<span class="fc" id="L60">            String eventsAsString = ListToString.convert(translationService, eventsList);</span>
+<span class="fc" id="L54">            String eventsAsString = ListToString.convert(translationService, eventsList);</span>
 
             // Create a map of named arguments
-<span class="fc" id="L63">            Map&lt;String, Object&gt; arguments = Map.of(</span>
-<span class="fc" id="L64">                    &quot;eventCondition&quot;, eventsList.size(),</span>
+<span class="fc" id="L57">            Map&lt;String, Object&gt; arguments = Map.of(</span>
+<span class="fc" id="L58">                    &quot;eventCondition&quot;, eventsList.size(),</span>
                     &quot;event&quot;, eventsAsString
             );
 
             // Format the message with the named arguments
-<span class="fc" id="L69">            return timingEventMsg.format(arguments);</span>
+<span class="fc" id="L63">            return timingEventMsg.format(arguments);</span>
         });
     }
 }

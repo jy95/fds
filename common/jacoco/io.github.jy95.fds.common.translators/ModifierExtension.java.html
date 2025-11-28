@@ -14,8 +14,8 @@ public interface ModifierExtension&lt;D extends IBaseHasModifierExtensions&gt; e
 
     /** {@inheritDoc} */
     @Override
-    default boolean isPresent(D dosage) {
-<span class="nc" id="L18">        return dosage.hasModifierExtension();</span>
+    default boolean isPresent(D data) {
+<span class="nc" id="L18">        return data.hasModifierExtension();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

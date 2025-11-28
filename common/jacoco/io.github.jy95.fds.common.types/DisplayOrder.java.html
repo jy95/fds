@@ -15,147 +15,251 @@ public enum DisplayOrder {
     /**
      * Display &quot;method&quot;
      */
-<span class="fc" id="L18">    METHOD(List.of(&quot;method&quot;)),</span>
+<span class="fc" id="L18">    METHOD(</span>
+        SpecComponent.DOSAGE,
+<span class="fc" id="L20">        List.of(&quot;method&quot;)</span>
+    ),
     /**
      * Display &quot;doseAndRate.doseQuantity&quot;
      */
-<span class="fc" id="L22">    DOSE_QUANTITY(List.of(&quot;doseAndRate.doseQuantity&quot;)),</span>
+<span class="fc" id="L25">    DOSE_QUANTITY(</span>
+        SpecComponent.DOSAGE,
+<span class="fc" id="L27">        List.of(&quot;doseAndRate.doseQuantity&quot;)</span>
+    ),
     /**
      * Display &quot;doseAndRate.doseRange&quot;
      */
-<span class="fc" id="L26">    DOSE_RANGE(List.of(&quot;doseAndRate.doseRange&quot;)),</span>
+<span class="fc" id="L32">    DOSE_RANGE(</span>
+        SpecComponent.DOSAGE,
+<span class="fc" id="L34">        List.of(&quot;doseAndRate.doseRange&quot;)</span>
+    ),
     /**
      * Display &quot;doseAndRate.rateRatio&quot;
      */
-<span class="fc" id="L30">    RATE_RATIO(List.of(&quot;doseAndRate.rateRatio&quot;)),</span>
+<span class="fc" id="L39">    RATE_RATIO(</span>
+        SpecComponent.DOSAGE,
+<span class="fc" id="L41">        List.of(&quot;doseAndRate.rateRatio&quot;)</span>
+    ),
     /**
      * Display &quot;doseAndRate.rateQuantity&quot;
      */
-<span class="fc" id="L34">    RATE_QUANTITY(List.of(&quot;doseAndRate.rateQuantity&quot;)),</span>
+<span class="fc" id="L46">    RATE_QUANTITY(</span>
+        SpecComponent.DOSAGE,
+<span class="fc" id="L48">        List.of(&quot;doseAndRate.rateQuantity&quot;)</span>
+    ),
     /**
      * Display &quot;doseAndRate.rateRange&quot;
      */
-<span class="fc" id="L38">    RATE_RANGE(List.of(&quot;doseAndRate.rateRange&quot;)),</span>
+<span class="fc" id="L53">    RATE_RANGE(</span>
+        SpecComponent.DOSAGE,
+<span class="fc" id="L55">        List.of(&quot;doseAndRate.rateRange&quot;)</span>
+    ),
     /**
      * Display &quot;timing.repeat.duration&quot; / &quot;timing.repeat.durationMax&quot;
      */
-<span class="fc" id="L42">    DURATION_DURATION_MAX(List.of(&quot;timing.repeat.duration&quot;, &quot;timing.repeat.durationMax&quot;)),</span>
+<span class="fc" id="L60">    DURATION_DURATION_MAX(</span>
+        SpecComponent.TIMING_REPEAT,
+<span class="fc" id="L62">        List.of(&quot;duration&quot;, &quot;durationMax&quot;)</span>
+    ),
     /**
      * Display &quot;timing.repeat.frequency&quot; / &quot;timing.repeat.frequencyMax&quot;
      */
-<span class="fc" id="L46">    FREQUENCY_FREQUENCY_MAX(List.of(&quot;timing.repeat.frequency&quot;, &quot;timing.repeat.frequencyMax&quot;)),</span>
+<span class="fc" id="L67">    FREQUENCY_FREQUENCY_MAX(</span>
+        SpecComponent.TIMING_REPEAT,
+<span class="fc" id="L69">        List.of(&quot;frequency&quot;, &quot;frequencyMax&quot;)</span>
+    ),
     /**
      * Display &quot;timing.repeat.period&quot; / &quot;timing.repeat.periodMax&quot;
      */
-<span class="fc" id="L50">    PERIOD_PERIOD_MAX(List.of(&quot;timing.repeat.period&quot;, &quot;timing.repeat.periodMax&quot;)),</span>
+<span class="fc" id="L74">    PERIOD_PERIOD_MAX(</span>
+        SpecComponent.TIMING_REPEAT,
+<span class="fc" id="L76">        List.of(&quot;period&quot;, &quot;periodMax&quot;)</span>
+    ),
     /**
      * Display &quot;timing.repeat.frequency&quot; / &quot;timing.repeat.frequencyMax&quot; /
      * &quot;timing.repeat.period&quot; / &quot;timing.repeat.periodMax&quot;
      */
-<span class="fc" id="L55">    FREQUENCY_FREQUENCY_MAX_PERIOD_PERIOD_MAX(List.of(&quot;timing.repeat.frequency&quot;, &quot;timing.repeat.frequencyMax&quot;,</span>
-            &quot;timing.repeat.period&quot;, &quot;timing.repeat.periodMax&quot;)),
+<span class="fc" id="L82">    FREQUENCY_FREQUENCY_MAX_PERIOD_PERIOD_MAX(</span>
+        SpecComponent.TIMING_REPEAT,
+<span class="fc" id="L84">        List.of(&quot;frequency&quot;, &quot;frequencyMax&quot;, &quot;period&quot;, &quot;periodMax&quot;)</span>
+    ),
     /**
      * Display &quot;timing.repeat.offset&quot; / &quot;timing.repeat.when&quot;
      */
-<span class="fc" id="L60">    OFFSET_WHEN(List.of(&quot;timing.repeat.offset&quot;, &quot;timing.repeat.when&quot;)),</span>
+<span class="fc" id="L89">    OFFSET_WHEN(</span>
+        SpecComponent.TIMING_REPEAT,
+<span class="fc" id="L91">        List.of(&quot;offset&quot;, &quot;when&quot;)</span>
+    ),
     /**
      * Display &quot;timing.repeat.dayOfWeek&quot;
      */
-<span class="fc" id="L64">    DAY_OF_WEEK(List.of(&quot;timing.repeat.dayOfWeek&quot;)),</span>
+<span class="fc" id="L96">    DAY_OF_WEEK(</span>
+        SpecComponent.TIMING_REPEAT,
+<span class="fc" id="L98">        List.of(&quot;dayOfWeek&quot;)</span>
+    ),
     /**
      * Display &quot;timing.repeat.timeOfDay&quot;
      */
-<span class="fc" id="L68">    TIME_OF_DAY(List.of(&quot;timing.repeat.timeOfDay&quot;)),</span>
+<span class="fc" id="L103">    TIME_OF_DAY(</span>
+        SpecComponent.TIMING_REPEAT,
+<span class="fc" id="L105">        List.of(&quot;timeOfDay&quot;)</span>
+    ),
     /**
      * Display &quot;route&quot;
      */
-<span class="fc" id="L72">    ROUTE(List.of(&quot;route&quot;)),</span>
+<span class="fc" id="L110">    ROUTE(</span>
+        SpecComponent.DOSAGE,
+<span class="fc" id="L112">        List.of(&quot;route&quot;)</span>
+    ),
     /**
      * Display &quot;site&quot;
      */
-<span class="fc" id="L76">    SITE(List.of(&quot;site&quot;)),</span>
+<span class="fc" id="L117">    SITE(</span>
+        SpecComponent.DOSAGE,
+<span class="fc" id="L119">        List.of(&quot;site&quot;)</span>
+    ),
     /**
      * Display &quot;asNeededBoolean&quot; / &quot;asNeededCodeableConcept&quot; / &quot;asNeeded&quot; /
      * &quot;asNeededFor&quot;
      */
-<span class="fc" id="L81">    AS_NEEDED(List.of(&quot;asNeededBoolean&quot;, &quot;asNeededCodeableConcept&quot;, &quot;asNeeded&quot;, &quot;asNeededFor&quot;)),</span>
+<span class="fc" id="L125">    AS_NEEDED(</span>
+        SpecComponent.DOSAGE,
+<span class="fc" id="L127">        List.of(&quot;asNeededBoolean&quot;, &quot;asNeededCodeableConcept&quot;, &quot;asNeeded&quot;, &quot;asNeededFor&quot;)</span>
+    ),
     /**
      * Display &quot;timing.repeat.boundsDuration&quot;
      */
-<span class="fc" id="L85">    BOUNDS_DURATION(List.of(&quot;timing.repeat.boundsDuration&quot;)),</span>
+<span class="fc" id="L132">    BOUNDS_DURATION(</span>
+        SpecComponent.TIMING_REPEAT,
+<span class="fc" id="L134">        List.of(&quot;boundsDuration&quot;)</span>
+    ),
     /**
      * Display &quot;timing.repeat.boundsPeriod&quot;
      */
-<span class="fc" id="L89">    BOUNDS_PERIOD(List.of(&quot;timing.repeat.boundsPeriod&quot;)),</span>
+<span class="fc" id="L139">    BOUNDS_PERIOD(</span>
+        SpecComponent.TIMING_REPEAT,
+<span class="fc" id="L141">        List.of(&quot;boundsPeriod&quot;)</span>
+    ),
     /**
      * Display &quot;timing.repeat.boundsRange&quot;
      */
-<span class="fc" id="L93">    BOUNDS_RANGE(List.of(&quot;timing.repeat.boundsRange&quot;)),</span>
+<span class="fc" id="L146">    BOUNDS_RANGE(</span>
+        SpecComponent.TIMING_REPEAT,
+<span class="fc" id="L148">        List.of(&quot;boundsRange&quot;)</span>
+    ),
     /**
      * Display &quot;timing.repeat.count&quot; / &quot;timing.repeat.countMax&quot;
      */
-<span class="fc" id="L97">    COUNT_COUNT_MAX(List.of(&quot;timing.repeat.count&quot;, &quot;timing.repeat.countMax&quot;)),</span>
+<span class="fc" id="L153">    COUNT_COUNT_MAX(</span>
+        SpecComponent.TIMING_REPEAT,
+<span class="fc" id="L155">        List.of(&quot;count&quot;, &quot;countMax&quot;)</span>
+    ),
     /**
      * Display &quot;timing.event&quot;
      */
-<span class="fc" id="L101">    TIMING_EVENT(List.of(&quot;timing.event&quot;)),</span>
+<span class="fc" id="L160">    TIMING_EVENT(</span>
+        SpecComponent.TIMING,
+<span class="fc" id="L162">        List.of(&quot;event&quot;)</span>
+    ),
     /**
      * Display &quot;timing.code&quot;
      */
-<span class="fc" id="L105">    TIMING_CODE(List.of(&quot;timing.code&quot;)),</span>
+<span class="fc" id="L167">    TIMING_CODE(</span>
+        SpecComponent.TIMING,
+<span class="fc" id="L169">        List.of(&quot;code&quot;)</span>
+    ),
     /**
      * Display &quot;maxDosePerPeriod&quot;
      */
-<span class="fc" id="L109">    MAX_DOSE_PER_PERIOD(List.of(&quot;maxDosePerPeriod&quot;)),</span>
+<span class="fc" id="L174">    MAX_DOSE_PER_PERIOD(</span>
+        SpecComponent.DOSAGE,
+<span class="fc" id="L176">        List.of(&quot;maxDosePerPeriod&quot;)</span>
+    ),
     /**
      * Display &quot;maxDosePerAdministration&quot;
      */
-<span class="fc" id="L113">    MAX_DOSE_PER_ADMINISTRATION(List.of(&quot;maxDosePerAdministration&quot;)),</span>
+<span class="fc" id="L181">    MAX_DOSE_PER_ADMINISTRATION(</span>
+        SpecComponent.DOSAGE,
+<span class="fc" id="L183">        List.of(&quot;maxDosePerAdministration&quot;)</span>
+    ),
     /**
      * Display &quot;maxDosePerLifetime&quot;
      */
-<span class="fc" id="L117">    MAX_DOSE_PER_LIFETIME(List.of(&quot;maxDosePerLifetime&quot;)),</span>
+<span class="fc" id="L188">    MAX_DOSE_PER_LIFETIME(</span>
+        SpecComponent.DOSAGE,
+<span class="fc" id="L190">        List.of(&quot;maxDosePerLifetime&quot;)</span>
+    ),
     /**
      * Display &quot;additionalInstruction&quot;
      */
-<span class="fc" id="L121">    ADDITIONAL_INSTRUCTION(List.of(&quot;additionalInstruction&quot;)),</span>
+<span class="fc" id="L195">    ADDITIONAL_INSTRUCTION(</span>
+        SpecComponent.DOSAGE,
+<span class="fc" id="L197">        List.of(&quot;additionalInstruction&quot;)</span>
+    ),
     /**
      * Display &quot;patientInstruction&quot;
      */
-<span class="fc" id="L125">    PATIENT_INSTRUCTION(List.of(&quot;patientInstruction&quot;)),</span>
+<span class="fc" id="L202">    PATIENT_INSTRUCTION(</span>
+        SpecComponent.DOSAGE,
+<span class="fc" id="L204">        List.of(&quot;patientInstruction&quot;)</span>
+    ),
     /**
      * Display &quot;text&quot;
      */
-<span class="fc" id="L129">    TEXT(List.of(&quot;text&quot;)),</span>
+<span class="fc" id="L209">    TEXT(</span>
+        SpecComponent.DOSAGE,
+<span class="fc" id="L211">        List.of(&quot;text&quot;)</span>
+    ),
     /**
      * Display &quot;extension&quot;
      */
-<span class="fc" id="L133">    EXTENSION(List.of(&quot;extension&quot;)),</span>
+<span class="fc" id="L216">    EXTENSION(</span>
+        SpecComponent.DOSAGE,
+<span class="fc" id="L218">        List.of(&quot;extension&quot;)</span>
+    ),
     /**
      * Display &quot;timing.extension&quot;
      */
-<span class="fc" id="L137">    TIMING_EXTENSION(List.of(&quot;timing.extension&quot;)),</span>
+<span class="fc" id="L223">    TIMING_EXTENSION(</span>
+        SpecComponent.TIMING,
+<span class="fc" id="L225">        List.of(&quot;extension&quot;)</span>
+    ),
     /**
      * Display &quot;timing.repeat.extension&quot;
      */
-<span class="fc" id="L141">    TIMING_REPEAT_EXTENSION(List.of(&quot;timing.repeat.extension&quot;)),</span>
+<span class="fc" id="L230">    TIMING_REPEAT_EXTENSION(</span>
+        SpecComponent.TIMING_REPEAT,
+<span class="fc" id="L232">        List.of(&quot;extension&quot;)</span>
+    ),
     /**
      * Display &quot;modifierExtension&quot;
      */
-<span class="fc" id="L145">    MODIFIER_EXTENSION(List.of(&quot;modifierExtension&quot;)),</span>
+<span class="fc" id="L237">    MODIFIER_EXTENSION(</span>
+        SpecComponent.DOSAGE,
+<span class="fc" id="L239">        List.of(&quot;modifierExtension&quot;)</span>
+    ),
     /**
      * Display &quot;timing.modifierExtension&quot;
      */
-<span class="fc" id="L149">    TIMING_MODIFIER_EXTENSION(List.of(&quot;timing.modifierExtension&quot;));</span>
+<span class="fc" id="L244">    TIMING_MODIFIER_EXTENSION(</span>
+        SpecComponent.TIMING,
+<span class="fc" id="L246">        List.of(&quot;modifierExtension&quot;)</span>
+    );
 
     /**
      * Getter for the &lt;code&gt;field&lt;/code&gt;(s) covered by the display order
      */
     private final List&lt;String&gt; fields;
 
-<span class="fc" id="L156">    DisplayOrder(List&lt;String&gt; fields) {</span>
-<span class="fc" id="L157">        this.fields = fields;</span>
-<span class="fc" id="L158">    }</span>
+    /**
+     * Getter for the class covered by the display order
+     */
+    private final SpecComponent component;
+
+<span class="fc" id="L259">    DisplayOrder(SpecComponent component, List&lt;String&gt; fields) {</span>
+<span class="fc" id="L260">        this.component = component;</span>
+<span class="fc" id="L261">        this.fields = fields;</span>
+<span class="fc" id="L262">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

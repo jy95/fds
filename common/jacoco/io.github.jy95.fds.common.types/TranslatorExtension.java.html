@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 import org.hl7.fhir.instance.model.api.IBaseExtension;
+import org.hl7.fhir.instance.model.api.IBaseHasExtensions;
 
 import io.github.jy95.fds.common.config.FDSConfig;
 import io.github.jy95.fds.common.functions.TranslationService;
@@ -15,22 +16,22 @@ import io.github.jy95.fds.common.operations.ExtensionProcessor;
  * This class extends {@link io.github.jy95.fds.common.types.Translator} to
  * provide additional reusable code for &quot;extension&quot;
  *
- * @param &lt;D&gt; the type of dosage field to be translated
+ * @param &lt;D&gt; the type of data to be translated
  * @param &lt;E&gt; the type of extension field to be translated
  * @param &lt;C&gt; the type of config supporting the extension processing
  * @author jy95
  * @since 2.1.5
  */
-public interface TranslatorExtension&lt;D, E extends IBaseExtension&lt;E, ?&gt;, C extends FDSConfig &amp; ExtensionProcessor&lt;E&gt;&gt;
+public interface TranslatorExtension&lt;D extends IBaseHasExtensions, E extends IBaseExtension&lt;E, ?&gt;, C extends FDSConfig &amp; ExtensionProcessor&lt;E&gt;&gt;
         extends Translator&lt;D&gt; {
 
     /**
-     * Return a list of extension contained in the dosage field
+     * Return a list of extension contained in the data
      * 
-     * @param dosage the dosage field to be converted
+     * @param data the data to be converted
      * @return The list of extension
      */
-    List&lt;E&gt; getExtension(D dosage);
+    List&lt;E&gt; getExtension(D data);
 
     /**
      * Return the TranslationService responsible for handling extensions
@@ -41,11 +42,11 @@ public interface TranslatorExtension&lt;D, E extends IBaseExtension&lt;E, ?&gt;,
 
     /** {@inheritDoc} */
     @Override
-    default CompletableFuture&lt;String&gt; convert(D dosage) {
-<span class="nc" id="L45">        var extensions = getExtension(dosage);</span>
-<span class="nc" id="L46">        return getTranslationService()</span>
-<span class="nc" id="L47">                .getConfig()</span>
-<span class="nc" id="L48">                .fromExtensionsToString(extensions);</span>
+    default CompletableFuture&lt;String&gt; convert(D data) {
+<span class="nc" id="L46">        var extensions = getExtension(data);</span>
+<span class="nc" id="L47">        return getTranslationService()</span>
+<span class="nc" id="L48">                .getConfig()</span>
+<span class="nc" id="L49">                .fromExtensionsToString(extensions);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

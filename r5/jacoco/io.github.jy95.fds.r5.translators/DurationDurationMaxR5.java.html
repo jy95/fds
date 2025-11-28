@@ -2,11 +2,11 @@
 
 import io.github.jy95.fds.common.functions.TranslationService;
 import io.github.jy95.fds.common.functions.UnitsOfTimeFormatter;
-import io.github.jy95.fds.common.translators.DurationDurationMax;
+import io.github.jy95.fds.common.translators.timing.repeat.DurationDurationMax;
 import io.github.jy95.fds.r5.config.FDSConfigR5;
 import lombok.RequiredArgsConstructor;
 
-import org.hl7.fhir.r5.model.Dosage;
+import org.hl7.fhir.r5.model.Timing.TimingRepeatComponent;
 
 /**
  * R5 class for translating &quot;timing.repeat.duration&quot; / &quot;timing.repeat.durationMax&quot;
@@ -14,63 +14,53 @@ import org.hl7.fhir.r5.model.Dosage;
  * @author jy95
  */
 @RequiredArgsConstructor
-public class DurationDurationMaxR5 implements DurationDurationMax&lt;Dosage&gt; {
+public class DurationDurationMaxR5 implements DurationDurationMax&lt;TimingRepeatComponent&gt; {
 
     /** Translation service */
     private final TranslationService&lt;FDSConfigR5&gt; translationService;
 
     /** {@inheritDoc} */
     @Override
-    public boolean hasDuration(Dosage dosage) {
-<span class="fc" id="L25">        return dosage.getTiming().getRepeat().hasDuration();</span>
+    public boolean hasDuration(TimingRepeatComponent data) {
+<span class="fc" id="L25">        return data.hasDuration();</span>
     }
 
     /** {@inheritDoc} */
     @Override
-    public boolean hasDurationMax(Dosage dosage) {
-<span class="fc" id="L31">        return dosage.getTiming().getRepeat().hasDurationMax();</span>
+    public boolean hasDurationMax(TimingRepeatComponent data) {
+<span class="fc" id="L31">        return data.hasDurationMax();</span>
     }
 
     /** {@inheritDoc} */
     @Override
-    public boolean hasRequiredElements(Dosage dosage) {
-<span class="pc bpc" id="L37" title="1 of 2 branches missed.">        return dosage.getTiming().hasRepeat()</span>
-<span class="fc bfc" id="L38" title="All 2 branches covered.">                &amp;&amp; dosage.getTiming().getRepeat().hasDurationUnit()</span>
-<span class="pc bpc" id="L39" title="1 of 4 branches missed.">                &amp;&amp; (hasDuration(dosage) || hasDurationMax(dosage));</span>
+    public boolean hasDurationUnit(TimingRepeatComponent data) {
+<span class="fc" id="L37">        return data.hasDurationUnit();</span>
     }
 
     /** {@inheritDoc} */
     @Override
-    public boolean hasTiming(Dosage dosage) {
-<span class="fc" id="L45">        return dosage.hasTiming();</span>
+    public String turnDurationToString(TimingRepeatComponent data) {
+<span class="fc" id="L43">        var durationUnit = data.getDurationUnit().toCode();</span>
+<span class="fc" id="L44">        var durationQuantity = data.getDuration();</span>
+
+<span class="fc" id="L46">        var locale = translationService.getConfig().getLocale();</span>
+<span class="fc" id="L47">        var durationMsg = translationService.getMessage(KEY_DURATION);</span>
+
+<span class="fc" id="L49">        var durationText = UnitsOfTimeFormatter.formatWithCount(locale, durationUnit, durationQuantity);</span>
+<span class="fc" id="L50">        return durationMsg.format(new Object[]{durationText});</span>
     }
 
     /** {@inheritDoc} */
     @Override
-    public String turnDurationToString(Dosage dosage) {
-<span class="fc" id="L51">        var repeat = dosage.getTiming().getRepeat();</span>
-<span class="fc" id="L52">        var durationUnit = repeat.getDurationUnit().toCode();</span>
-<span class="fc" id="L53">        var durationQuantity = repeat.getDuration();</span>
+    public String turnDurationMaxToString(TimingRepeatComponent data) {
+<span class="fc" id="L56">        var durationUnit = data.getDurationUnit().toCode();</span>
+<span class="fc" id="L57">        var durationQuantity = data.getDurationMax();</span>
 
-<span class="fc" id="L55">        var locale = translationService.getConfig().getLocale();</span>
-<span class="fc" id="L56">        var durationMsg = translationService.getMessage(KEY_DURATION);</span>
+<span class="fc" id="L59">        var locale = translationService.getConfig().getLocale();</span>
+<span class="fc" id="L60">        var durationMaxMsg = translationService.getMessage(KEY_DURATION_MAX);</span>
 
-<span class="fc" id="L58">        var durationText = UnitsOfTimeFormatter.formatWithCount(locale, durationUnit, durationQuantity);</span>
-<span class="fc" id="L59">        return durationMsg.format(new Object[]{durationText});</span>
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public String turnDurationMaxToString(Dosage dosage) {
-<span class="fc" id="L65">        var repeat = dosage.getTiming().getRepeat();</span>
-<span class="fc" id="L66">        var durationUnit = repeat.getDurationUnit().toCode();</span>
-<span class="fc" id="L67">        var durationQuantity = repeat.getDurationMax();</span>
-
-<span class="fc" id="L69">        var locale = translationService.getConfig().getLocale();</span>
-<span class="fc" id="L70">        var durationMaxMsg = translationService.getMessage(KEY_DURATION_MAX);</span>
-
-<span class="fc" id="L72">        var durationText = UnitsOfTimeFormatter.formatWithCount(locale, durationUnit, durationQuantity);</span>
-<span class="fc" id="L73">        return durationMaxMsg.format(new Object[]{durationText});</span>
+<span class="fc" id="L62">        var durationText = UnitsOfTimeFormatter.formatWithCount(locale, durationUnit, durationQuantity);</span>
+<span class="fc" id="L63">        return durationMaxMsg.format(new Object[]{durationText});</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DosageTranslatorsMapR4.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">FHIR Dosage Support - R4</a> &gt; <a href="index.source.html" class="el_package">io.github.jy95.fds.r4.utils.maps</a> &gt; <span class="el_source">DosageTranslatorsMapR4.java</span></div><h1>DosageTranslatorsMapR4.java</h1><pre class="source lang-java linenums">package io.github.jy95.fds.r4.utils.maps;
+
+import java.util.EnumMap;
+import java.util.Map;
+import java.util.function.Supplier;
+
+import org.hl7.fhir.r4.model.Dosage;
+
+import io.github.jy95.fds.common.functions.TranslationService;
+import io.github.jy95.fds.common.types.AbstractTranslatorsMap;
+import io.github.jy95.fds.common.types.DisplayOrder;
+import io.github.jy95.fds.common.types.Translator;
+import io.github.jy95.fds.r4.config.FDSConfigR4;
+import io.github.jy95.fds.r4.translators.*;
+
+public class DosageTranslatorsMapR4 extends AbstractTranslatorsMap&lt;FDSConfigR4, Dosage&gt; {
+
+    /**
+     * Constructor for {@code DosageTranslatorsMapR4}.
+     *
+     * @param translationService The translation service used for translation.
+     */
+    public DosageTranslatorsMapR4(TranslationService&lt;FDSConfigR4&gt; translationService) {
+<span class="fc" id="L24">        super(translationService);</span>
+<span class="fc" id="L25">    }</span>
+
+    /** {@inheritDoc} */
+    @Override
+    protected Map&lt;DisplayOrder, Supplier&lt;Translator&lt;Dosage&gt;&gt;&gt; createTranslatorsSuppliers() {
+<span class="fc" id="L30">        EnumMap&lt;DisplayOrder, Supplier&lt;Translator&lt;Dosage&gt;&gt;&gt; suppliers = new EnumMap&lt;&gt;(DisplayOrder.class);</span>
+
+<span class="fc" id="L32">        suppliers.put(DisplayOrder.EXTENSION, () -&gt; new ExtensionR4(translationService));</span>
+<span class="fc" id="L33">        suppliers.put(DisplayOrder.MODIFIER_EXTENSION, () -&gt; new ModifierExtensionR4(translationService));</span>
+<span class="fc" id="L34">        suppliers.put(DisplayOrder.TEXT, TextR4::new);</span>
+<span class="fc" id="L35">        suppliers.put(DisplayOrder.ADDITIONAL_INSTRUCTION, () -&gt; new AdditionalInstructionR4(translationService));</span>
+<span class="fc" id="L36">        suppliers.put(DisplayOrder.PATIENT_INSTRUCTION, PatientInstructionR4::new);</span>
+<span class="fc" id="L37">        suppliers.put(DisplayOrder.AS_NEEDED, () -&gt; new AsNeededR4(translationService));</span>
+<span class="fc" id="L38">        suppliers.put(DisplayOrder.SITE, () -&gt; new SiteR4(translationService));</span>
+<span class="fc" id="L39">        suppliers.put(DisplayOrder.ROUTE, () -&gt; new RouteR4(translationService));</span>
+<span class="fc" id="L40">        suppliers.put(DisplayOrder.METHOD, () -&gt; new MethodR4(translationService));</span>
+<span class="fc" id="L41">        suppliers.put(DisplayOrder.DOSE_QUANTITY, () -&gt; new DoseQuantityR4(translationService));</span>
+<span class="fc" id="L42">        suppliers.put(DisplayOrder.DOSE_RANGE, () -&gt; new DoseRangeR4(translationService));</span>
+<span class="fc" id="L43">        suppliers.put(DisplayOrder.RATE_QUANTITY, () -&gt; new RateQuantityR4(translationService));</span>
+<span class="fc" id="L44">        suppliers.put(DisplayOrder.RATE_RANGE, () -&gt; new RateRangeR4(translationService));</span>
+<span class="fc" id="L45">        suppliers.put(DisplayOrder.RATE_RATIO, () -&gt; new RateRatioR4(translationService));</span>
+<span class="fc" id="L46">        suppliers.put(DisplayOrder.MAX_DOSE_PER_LIFETIME, () -&gt; new MaxDosePerLifetimeR4(translationService));</span>
+<span class="fc" id="L47">        suppliers.put(DisplayOrder.MAX_DOSE_PER_ADMINISTRATION, () -&gt; new MaxDosePerAdministrationR4(translationService));</span>
+<span class="fc" id="L48">        suppliers.put(DisplayOrder.MAX_DOSE_PER_PERIOD, () -&gt; new MaxDosePerPeriodR4(translationService));</span>
+
+<span class="fc" id="L50">        return suppliers;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

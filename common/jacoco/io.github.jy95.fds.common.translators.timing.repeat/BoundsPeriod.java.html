@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BoundsPeriod.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">FHIR Dosage Support - Common</a> &gt; <a href="index.source.html" class="el_package">io.github.jy95.fds.common.translators.timing.repeat</a> &gt; <span class="el_source">BoundsPeriod.java</span></div><h1>BoundsPeriod.java</h1><pre class="source lang-java linenums">package io.github.jy95.fds.common.translators.timing.repeat;
+
+import io.github.jy95.fds.common.functions.GenericOperations;
+import io.github.jy95.fds.common.types.Translator;
+
+import java.util.Map;
+
+/**
+ * Interface for translating &quot;timing.repeat.boundsPeriod&quot;.
+ *
+ * @param &lt;D&gt; The type of the translated data.
+ * @author jy95
+ * @since 1.0.0
+ */
+public interface BoundsPeriod&lt;D&gt; extends Translator&lt;D&gt; {
+
+    /**
+     * Key constant for boundsPeriod message
+     */
+    String KEY_BOUNDS_PERIOD = &quot;fields.boundsPeriod&quot;;
+
+    /**
+     * Extract information about the boundsPeriod
+     *
+     * @param data The data object to analyze
+     * @return A map
+     */
+    default Map&lt;String, Object&gt; extractInformation(D data) {
+        // Check conditions
+<span class="nc" id="L30">        var hasStart = hasStartPeriod(data);</span>
+<span class="nc" id="L31">        var hasEnd = hasEndPeriod(data);</span>
+
+        // Prepare date values using FormatDateTimes.convert()
+<span class="nc" id="L34">        String startDate = GenericOperations.conditionalSelect(</span>
+            hasStart, 
+<span class="nc" id="L36">            () -&gt; formatStartPeriod(data), </span>
+<span class="nc" id="L37">            () -&gt; &quot;&quot;</span>
+        );
+
+<span class="nc" id="L40">        String endDate = GenericOperations.conditionalSelect(</span>
+            hasEnd, 
+<span class="nc" id="L42">            () -&gt; formatEndPeriod(data), </span>
+<span class="nc" id="L43">            () -&gt; &quot;&quot;</span>
+        );
+
+        // Choose the correct condition based on the presence of start and end dates
+<span class="nc" id="L47">        String condition = getConditionCode(hasStart, hasEnd);</span>
+
+        // Create a map of named arguments
+<span class="nc" id="L50">        return Map.of(</span>
+                &quot;startDate&quot;, startDate,
+                &quot;endDate&quot;, endDate,
+                &quot;condition&quot;, condition);
+    }
+
+    /**
+     * Determines the formatting condition code for the period.
+     * 
+     * @param hasStart  True if the period has a start date.
+     * @param hasEnd True if the period has an end date.
+     * @return The conditional code (&quot;0&quot;, &quot;1&quot; or &quot;other&quot;).
+     */
+    private String getConditionCode(boolean hasStart, boolean hasEnd) {
+<span class="nc" id="L64">        var hasBoth = GenericOperations.allMatchLazy(</span>
+<span class="nc" id="L65">            () -&gt; hasStart,</span>
+<span class="nc" id="L66">            () -&gt; hasEnd</span>
+        );
+
+<span class="nc bnc" id="L69" title="All 2 branches missed.">        if (hasBoth) {</span>
+<span class="nc" id="L70">            return &quot;0&quot;;</span>
+        }
+
+<span class="nc" id="L73">        return GenericOperations.conditionalSelect(</span>
+            hasStart, 
+<span class="nc" id="L75">            () -&gt; &quot;1&quot;, </span>
+<span class="nc" id="L76">            () -&gt; &quot;other&quot;</span>
+        );
+    }
+
+    /**
+     * Check if data has a &quot;start&quot; period
+     *
+     * @param data the data object to check
+     * @return True if it is the case, otherwise false
+     */
+    boolean hasStartPeriod(D data);
+
+    /**
+     * Check if data has an &quot;end&quot; period
+     *
+     * @param data the data object to check
+     * @return True if it is the case, otherwise false
+     */
+    boolean hasEndPeriod(D data);
+
+    /**
+     * Format start period to a human-readable string
+     *
+     * @param data the data field to be converted
+     * @return the formatted start period as a string (e.g., &quot;from May 23, 2011&quot;)
+     */
+    String formatStartPeriod(D data);
+
+    /**
+     * Format end period to a human-readable string
+     *
+     * @param data the data field to be converted
+     * @return the formatted end period as a string (e.g., &quot;to Feb 7, 2015&quot;)
+     */
+    String formatEndPeriod(D data);
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

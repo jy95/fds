@@ -5,6 +5,9 @@ io.github.jy95.fds.common.functions
 io.github.jy95.fds.common.l10n
 io.github.jy95.fds.common.operations
 io.github.jy95.fds.common.translators
+io.github.jy95.fds.common.translators.dosage
+io.github.jy95.fds.common.translators.timing
+io.github.jy95.fds.common.translators.timing.repeat
 io.github.jy95.fds.common.types
 io.github.jy95.fds.r4
 io.github.jy95.fds.r4.config
@@ -12,9 +15,13 @@ io.github.jy95.fds.r4.functions
 io.github.jy95.fds.r4.internal
 io.github.jy95.fds.r4.translators
 io.github.jy95.fds.r4.utils
+io.github.jy95.fds.r4.utils.adapters
+io.github.jy95.fds.r4.utils.maps
 io.github.jy95.fds.r5
 io.github.jy95.fds.r5.config
 io.github.jy95.fds.r5.functions
 io.github.jy95.fds.r5.internal
 io.github.jy95.fds.r5.translators
 io.github.jy95.fds.r5.utils
+io.github.jy95.fds.r5.utils.adapters
+io.github.jy95.fds.r5.utils.maps

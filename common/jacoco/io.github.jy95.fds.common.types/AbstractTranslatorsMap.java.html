@@ -16,7 +16,7 @@ import java.util.function.Supplier;
  *
  * @param &lt;C&gt; the type of configuration extending
  *            {@link io.github.jy95.fds.common.config.FDSConfig}
- * @param &lt;D&gt; the type of dosage field handled by the translators
+ * @param &lt;D&gt; the type of data handled by the translators
  * @author jy95
  * @since 1.0.0
  */
@@ -39,7 +39,7 @@ public abstract class AbstractTranslatorsMap&lt;C extends FDSConfig, D&gt; {
      * So if you use part of the supported fields, you won't have a bunch of useless
      * new calls to for your needs
      */
-<span class="nc" id="L42">    private final Map&lt;DisplayOrder, Translator&lt;D&gt;&gt; translatorCache = new ConcurrentHashMap&lt;&gt;();</span>
+<span class="fc" id="L42">    protected final Map&lt;DisplayOrder, Translator&lt;D&gt;&gt; translatorCache = new ConcurrentHashMap&lt;&gt;();</span>
 
     /**
      * Constructs a new {@code AbstractTranslatorsMap} with the specified supplier
@@ -48,10 +48,10 @@ public abstract class AbstractTranslatorsMap&lt;C extends FDSConfig, D&gt; {
      * @param translationService the translation service used by translators
      *
      */
-<span class="nc" id="L51">    public AbstractTranslatorsMap(TranslationService&lt;C&gt; translationService) {</span>
-<span class="nc" id="L52">        this.translationService = translationService;</span>
-<span class="nc" id="L53">        this.translatorSuppliers = createTranslatorsSuppliers();</span>
-<span class="nc" id="L54">    }</span>
+<span class="fc" id="L51">    public AbstractTranslatorsMap(TranslationService&lt;C&gt; translationService) {</span>
+<span class="fc" id="L52">        this.translationService = translationService;</span>
+<span class="fc" id="L53">        this.translatorSuppliers = createTranslatorsSuppliers();</span>
+<span class="fc" id="L54">    }</span>
 
     /**
      * Retrieves the {@link io.github.jy95.fds.common.types.Translator} associated
@@ -64,9 +64,14 @@ public abstract class AbstractTranslatorsMap&lt;C extends FDSConfig, D&gt; {
      *         or {@code null} if no match is found
      */
     public Translator&lt;D&gt; getTranslator(DisplayOrder displayOrder) {
-<span class="nc" id="L67">        return translatorCache.computeIfAbsent(displayOrder, key -&gt; {</span>
-<span class="nc" id="L68">            Supplier&lt;Translator&lt;D&gt;&gt; supplier = translatorSuppliers.get(key);</span>
-<span class="nc bnc" id="L69" title="All 2 branches missed.">            return supplier != null ? supplier.get() : null;</span>
+
+        // If not supported, return null
+<span class="pc bpc" id="L69" title="1 of 2 branches missed.">        if (!translatorSuppliers.keySet().contains(displayOrder)) {</span>
+<span class="fc" id="L70">            return null;</span>
+        }
+
+<span class="nc" id="L73">        return translatorCache.computeIfAbsent(displayOrder, key -&gt; {</span>
+<span class="nc" id="L74">            return translatorSuppliers.get(key).get();</span>
         });
     }
 

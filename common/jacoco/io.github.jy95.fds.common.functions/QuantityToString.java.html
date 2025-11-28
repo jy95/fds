@@ -144,19 +144,24 @@ public interface QuantityToString&lt;Q extends IBase, C extends FDSConfig &amp; 
      */
     default CompletableFuture&lt;String&gt; enhancedFromUnitToString(TranslationService&lt;C&gt; translationService, Q quantity) {
 <span class="nc" id="L146">        var config = translationService.getConfig();</span>
-<span class="nc bnc" id="L147" title="All 4 branches missed.">        var hasSystemAndCode = hasSystem(quantity) &amp;&amp; hasCode(quantity);</span>
-<span class="nc bnc" id="L148" title="All 4 branches missed.">        var isUnitOfTime = hasSystemAndCode &amp;&amp; TIME_SYSTEMS.contains(getSystem(quantity));</span>
+<span class="nc" id="L147">        var hasSystemAndCode = GenericOperations.allMatchLazy(</span>
+<span class="nc" id="L148">                () -&gt; hasSystem(quantity),</span>
+<span class="nc" id="L149">                () -&gt; hasCode(quantity));</span>
+<span class="nc" id="L150">        var isUnitOfTime = GenericOperations.allMatchLazy(</span>
+<span class="nc" id="L151">            () -&gt; hasSystemAndCode,</span>
+<span class="nc" id="L152">            () -&gt; TIME_SYSTEMS.contains(getSystem(quantity))</span>
+        );
 
-<span class="nc bnc" id="L150" title="All 2 branches missed.">        if (isUnitOfTime) {</span>
-<span class="nc" id="L151">            return CompletableFuture.supplyAsync(() -&gt; {</span>
-<span class="nc" id="L152">                var code = getCode(quantity);</span>
-<span class="nc bnc" id="L153" title="All 2 branches missed.">                var amount = hasValue(quantity) ? getValue(quantity) : BigDecimal.ONE;</span>
-<span class="nc" id="L154">                return UnitsOfTimeFormatter.formatWithoutCount(config.getLocale(), code, amount);</span>
+<span class="nc bnc" id="L155" title="All 2 branches missed.">        if (isUnitOfTime) {</span>
+<span class="nc" id="L156">            return CompletableFuture.supplyAsync(() -&gt; {</span>
+<span class="nc" id="L157">                var code = getCode(quantity);</span>
+<span class="nc bnc" id="L158" title="All 2 branches missed.">                var amount = hasValue(quantity) ? getValue(quantity) : BigDecimal.ONE;</span>
+<span class="nc" id="L159">                return UnitsOfTimeFormatter.formatWithoutCount(config.getLocale(), code, amount);</span>
             });
         }
 
         // Otherwise, let config do the charm
-<span class="nc" id="L159">        return config.fromFHIRQuantityUnitToString(quantity);</span>
+<span class="nc" id="L164">        return config.fromFHIRQuantityUnitToString(quantity);</span>
     }
 
     /**
@@ -169,12 +174,12 @@ public interface QuantityToString&lt;Q extends IBase, C extends FDSConfig &amp; 
      *         the comparator.
      */
     default CompletableFuture&lt;String&gt; comparatorToString(TranslationService&lt;C&gt; translationService, Q quantity) {
-<span class="nc bnc" id="L172" title="All 2 branches missed.">        if (hasComparator(quantity)) {</span>
-<span class="nc" id="L173">            var code = getComparatorCode(quantity);</span>
-<span class="nc" id="L174">            var comparatorMsg = translationService.getText(code);</span>
-<span class="nc" id="L175">            return CompletableFuture.completedFuture(comparatorMsg);</span>
+<span class="nc bnc" id="L177" title="All 2 branches missed.">        if (hasComparator(quantity)) {</span>
+<span class="nc" id="L178">            var code = getComparatorCode(quantity);</span>
+<span class="nc" id="L179">            var comparatorMsg = translationService.getText(code);</span>
+<span class="nc" id="L180">            return CompletableFuture.completedFuture(comparatorMsg);</span>
         }
-<span class="nc" id="L177">        return CompletableFuture.completedFuture(&quot;&quot;);</span>
+<span class="nc" id="L182">        return CompletableFuture.completedFuture(&quot;&quot;);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -5,7 +5,7 @@ import io.github.jy95.fds.common.types.TranslatorExtension;
 import io.github.jy95.fds.r5.config.FDSConfigR5;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.hl7.fhir.r5.model.Dosage;
+import org.hl7.fhir.r5.model.Timing;
 import org.hl7.fhir.r5.model.Extension;
 
 import java.util.List;
@@ -17,7 +17,7 @@ import java.util.List;
  */
 @RequiredArgsConstructor
 public class TimingModifierExtensionR5 
-implements TranslatorExtension&lt;Dosage, Extension, FDSConfigR5&gt; {
+implements TranslatorExtension&lt;Timing, Extension, FDSConfigR5&gt; {
 
     /** Translation service */
     @Getter
@@ -25,14 +25,14 @@ implements TranslatorExtension&lt;Dosage, Extension, FDSConfigR5&gt; {
 
     /** {@inheritDoc} */
     @Override
-    public boolean isPresent(Dosage dosage) {
-<span class="pc bpc" id="L29" title="1 of 4 branches missed.">        return dosage.hasTiming() &amp;&amp; dosage.getTiming().hasModifierExtension();</span>
+    public boolean isPresent(Timing data) {
+<span class="fc" id="L29">        return data.hasModifierExtension();</span>
     }
 
     /** {@inheritDoc} */
     @Override
-    public List&lt;Extension&gt; getExtension(Dosage dosage) {
-<span class="fc" id="L35">        return dosage.getTiming().getModifierExtension();</span>
+    public List&lt;Extension&gt; getExtension(Timing data) {
+<span class="fc" id="L35">        return data.getModifierExtension();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

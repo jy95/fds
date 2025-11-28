@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GenericOperations.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">FHIR Dosage Support - Common</a> &gt; <a href="index.source.html" class="el_package">io.github.jy95.fds.common.functions</a> &gt; <span class="el_source">GenericOperations.java</span></div><h1>GenericOperations.java</h1><pre class="source lang-java linenums">package io.github.jy95.fds.common.functions;
+
+import java.util.Arrays;
+import java.util.function.BooleanSupplier;
+import java.util.function.Supplier;
+
+/**
+ * Utility class for generic operations.
+ *
+ * @author jy95
+ * @since 2.2.0
+ */
+public final class GenericOperations {
+
+    /**
+     * No constructor for this class
+     */
+    private GenericOperations() {
+    }
+
+    /**
+     * Selects and returns a value from one of two suppliers based on a boolean
+     * condition.
+     * &lt;p&gt;
+     * This method is the equivalent of the ternary operator
+     * ({@code condition ? valueIfTrue : valueIfFalse})
+     * but uses {@link java.util.function.Supplier Suppliers} to ensure **lazy
+     * evaluation**.
+     * Only the {@code Supplier} corresponding to the current state of the condition
+     * will
+     * have its {@code get()} method called, avoiding potentially costly operations
+     * if their result is not needed.
+     * &lt;/p&gt;
+     *
+     * @param &lt;R&gt;             The common return type of both suppliers and the
+     *                        method.
+     * @param condition       The boolean expression to evaluate.
+     * @param supplierIfTrue  The supplier whose {@code get()} method is called and
+     *                        returned if the condition is {@code true}.
+     * @param supplierIfFalse The supplier whose {@code get()} method is called and
+     *                        returned if the condition is {@code false}.
+     * @return The value provided by the selected supplier.
+     * @since 2.2.0
+     */
+    public static &lt;R&gt; R conditionalSelect(
+            boolean condition,
+            Supplier&lt;R&gt; supplierIfTrue,
+            Supplier&lt;R&gt; supplierIfFalse) {
+
+<span class="nc bnc" id="L50" title="All 2 branches missed.">        if (condition) {</span>
+<span class="nc" id="L51">            return supplierIfTrue.get();</span>
+        }
+
+<span class="nc" id="L54">        return supplierIfFalse.get();</span>
+    }
+
+    /**
+     * Performs a lazy logical AND (AllMatch) operation across the provided boolean
+     * expressions.
+     *
+     * &lt;p&gt;
+     * It returns {@code true} only if all boolean expressions supplied return
+     * {@code true}.
+     * This method guarantees **short-circuit evaluation**: it stops and returns
+     * {@code false}
+     * immediately upon finding the first supplier that returns {@code false}.
+     * &lt;/p&gt;
+     *
+     * @param suppliers The BooleanSuppliers containing the boolean expressions to
+     *                  evaluate.
+     * @return {@code true} if all suppliers return true, {@code false} otherwise.
+     */
+    public static boolean allMatchLazy(BooleanSupplier... suppliers) {
+<span class="nc" id="L74">        return Arrays.stream(suppliers)</span>
+<span class="nc" id="L75">                .allMatch(BooleanSupplier::getAsBoolean);</span>
+    }
+
+    /**
+     * Performs a lazy logical OR (AnyMatch) operation across the provided boolean
+     * expressions.
+     *
+     * &lt;p&gt;
+     * It returns {@code true} if at least one boolean expression supplied returns
+     * {@code true}.
+     * This method guarantees **short-circuit evaluation**: it stops and returns
+     * {@code true}
+     * immediately upon finding the first supplier that returns {@code true}.
+     * &lt;/p&gt;
+     *
+     * @param suppliers The BooleanSuppliers containing the boolean expressions to
+     *                  evaluate.
+     * @return {@code true} if at least one supplier returns true, {@code false}
+     *         otherwise.
+     */
+    public static boolean anyMatchLazy(BooleanSupplier... suppliers) {
+        // anyMatch est l'opération de Stream idéale pour l'équivalent du OR logique
+<span class="nc" id="L97">        return Arrays.stream(suppliers)</span>
+<span class="nc" id="L98">                .anyMatch(BooleanSupplier::getAsBoolean);</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

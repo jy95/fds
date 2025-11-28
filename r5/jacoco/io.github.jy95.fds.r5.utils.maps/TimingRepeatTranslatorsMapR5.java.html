@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TimingRepeatTranslatorsMapR5.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">FHIR Dosage Support - R5</a> &gt; <a href="index.source.html" class="el_package">io.github.jy95.fds.r5.utils.maps</a> &gt; <span class="el_source">TimingRepeatTranslatorsMapR5.java</span></div><h1>TimingRepeatTranslatorsMapR5.java</h1><pre class="source lang-java linenums">package io.github.jy95.fds.r5.utils.maps;
+
+import java.util.EnumMap;
+import java.util.Map;
+import java.util.function.Supplier;
+
+import org.hl7.fhir.r5.model.Timing.TimingRepeatComponent;
+
+import io.github.jy95.fds.common.functions.TranslationService;
+import io.github.jy95.fds.common.types.AbstractTranslatorsMap;
+import io.github.jy95.fds.common.types.DisplayOrder;
+import io.github.jy95.fds.common.types.Translator;
+import io.github.jy95.fds.r5.config.FDSConfigR5;
+import io.github.jy95.fds.r5.translators.*;
+
+/**
+ * Map for R5 Timing repeat translators
+ *
+ * @author jy95
+ */
+public class TimingRepeatTranslatorsMapR5 extends AbstractTranslatorsMap&lt;FDSConfigR5, TimingRepeatComponent&gt; {
+
+    /**
+     * Constructor for {@code TimingRepeatTranslatorsMapR5}.
+     *
+     * @param translationService The translation service used for translation.
+     */
+    public TimingRepeatTranslatorsMapR5(TranslationService&lt;FDSConfigR5&gt; translationService) {
+<span class="fc" id="L29">        super(translationService);</span>
+<span class="fc" id="L30">    }</span>
+
+    /** {@inheritDoc} */
+    @Override
+    protected Map&lt;DisplayOrder, Supplier&lt;Translator&lt;TimingRepeatComponent&gt;&gt;&gt; createTranslatorsSuppliers() {
+<span class="fc" id="L35">        EnumMap&lt;DisplayOrder, Supplier&lt;Translator&lt;TimingRepeatComponent&gt;&gt;&gt; suppliers = new EnumMap&lt;&gt;(DisplayOrder.class);</span>
+
+<span class="fc" id="L37">        suppliers.put(DisplayOrder.TIMING_REPEAT_EXTENSION, () -&gt; new TimingRepeatExtensionR5(translationService));</span>
+<span class="fc" id="L38">        suppliers.put(DisplayOrder.BOUNDS_DURATION, () -&gt; new BoundsDurationR5(translationService));</span>
+<span class="fc" id="L39">        suppliers.put(DisplayOrder.BOUNDS_RANGE, () -&gt; new BoundsRangeR5(translationService));</span>
+<span class="fc" id="L40">        suppliers.put(DisplayOrder.BOUNDS_PERIOD, () -&gt; new BoundsPeriodR5(translationService));</span>
+<span class="fc" id="L41">        suppliers.put(DisplayOrder.COUNT_COUNT_MAX, () -&gt; new CountCountMaxR5(translationService));</span>
+<span class="fc" id="L42">        suppliers.put(DisplayOrder.DURATION_DURATION_MAX, () -&gt; new DurationDurationMaxR5(translationService));</span>
+<span class="fc" id="L43">        suppliers.put(DisplayOrder.FREQUENCY_FREQUENCY_MAX, () -&gt; new FrequencyFrequencyMaxR5(translationService));</span>
+<span class="fc" id="L44">        suppliers.put(DisplayOrder.PERIOD_PERIOD_MAX, () -&gt; new PeriodPeriodMaxR5(translationService));</span>
+<span class="fc" id="L45">        suppliers.put(DisplayOrder.DAY_OF_WEEK, () -&gt; new DayOfWeekR5(translationService));</span>
+<span class="fc" id="L46">        suppliers.put(DisplayOrder.TIME_OF_DAY, () -&gt; new TimeOfDayR5(translationService));</span>
+<span class="fc" id="L47">        suppliers.put(DisplayOrder.OFFSET_WHEN, () -&gt; new OffsetWhenR5(translationService));</span>
+
+        // Composite translator with dependencies
+<span class="fc" id="L50">        suppliers.put(</span>
+                DisplayOrder.FREQUENCY_FREQUENCY_MAX_PERIOD_PERIOD_MAX,
+<span class="fc" id="L52">                () -&gt; new FrequencyFrequencyMaxPeriodPeriodMaxR5(</span>
+<span class="fc" id="L53">                        suppliers.get(DisplayOrder.FREQUENCY_FREQUENCY_MAX).get(),</span>
+<span class="fc" id="L54">                        suppliers.get(DisplayOrder.PERIOD_PERIOD_MAX).get()</span>
+                )
+        );
+
+<span class="fc" id="L58">        return suppliers;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FrequencyFrequencyMax.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">FHIR Dosage Support - Common</a> &gt; <a href="index.source.html" class="el_package">io.github.jy95.fds.common.translators.timing.repeat</a> &gt; <span class="el_source">FrequencyFrequencyMax.java</span></div><h1>FrequencyFrequencyMax.java</h1><pre class="source lang-java linenums">package io.github.jy95.fds.common.translators.timing.repeat;
+
+import io.github.jy95.fds.common.config.FDSConfig;
+import io.github.jy95.fds.common.functions.GenericOperations;
+import io.github.jy95.fds.common.functions.TranslationService;
+import io.github.jy95.fds.common.types.Translator;
+
+import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+
+/**
+ * Interface for translating &quot;timing.repeat.frequency&quot; /
+ * &quot;timing.repeat.frequencyMax&quot;.
+ *
+ * @param &lt;D&gt; The type of the translated data.
+ * @param &lt;C&gt; The configuration type extending FDSConfig.
+ * @author jy95
+ * @since 1.0.0
+ */
+public interface FrequencyFrequencyMax&lt;D, C extends FDSConfig&gt; extends Translator&lt;D&gt; {
+
+    /**
+     * Return the TranslationService responsible for handling frequency
+     * 
+     * @return the TranslationService
+     */
+    TranslationService&lt;C&gt; getTranslationService();
+
+    /** {@inheritDoc} */
+    @Override
+    default boolean isPresent(D data) {
+<span class="nc" id="L32">        return GenericOperations.anyMatchLazy(</span>
+<span class="nc" id="L33">            () -&gt; hasFrequency(data),</span>
+<span class="nc" id="L34">            () -&gt; hasFrequencyMax(data)</span>
+        );
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    default CompletableFuture&lt;String&gt; convert(D data) {
+<span class="nc" id="L41">        return CompletableFuture.supplyAsync(() -&gt; {</span>
+
+<span class="nc" id="L43">            var hasFrequencyFlag = hasFrequency(data);</span>
+<span class="nc" id="L44">            var hasFrequencyMaxFlag = hasFrequencyMax(data);</span>
+<span class="nc" id="L45">            var hasBoth = GenericOperations.allMatchLazy(</span>
+<span class="nc" id="L46">                () -&gt; hasFrequencyFlag,</span>
+<span class="nc" id="L47">                () -&gt; hasFrequencyMaxFlag</span>
+            );
+
+<span class="nc bnc" id="L50" title="All 2 branches missed.">            if (hasBoth) {</span>
+<span class="nc" id="L51">                return turnFrequencyAndFrequencyMaxToString(data);</span>
+            }
+
+<span class="nc" id="L54">            return GenericOperations.conditionalSelect(</span>
+                hasFrequencyMaxFlag, 
+<span class="nc" id="L56">                () -&gt; turnFrequencyMaxToString(data), </span>
+<span class="nc" id="L57">                () -&gt; turnFrequencyToString(data)</span>
+            );
+        });
+    }
+
+    /**
+     * Formats the text for cases where both &quot;frequency&quot; and &quot;frequencyMax&quot; are
+     * present.
+     *
+     * @param frequencyMin The minimum frequency.
+     * @param frequencyMax The maximum frequency.
+     * @return A formatted string representing both &quot;frequency&quot; and &quot;frequencyMax&quot;.
+     */
+    default String formatFrequencyAndFrequencyMaxText(int frequencyMin, int frequencyMax) {
+<span class="nc" id="L71">        Map&lt;String, Object&gt; arguments = Map.of(</span>
+<span class="nc" id="L72">                &quot;frequency&quot;, frequencyMin,</span>
+<span class="nc" id="L73">                &quot;maxFrequency&quot;, frequencyMax);</span>
+<span class="nc" id="L74">        var frequencyAndFrequencyMaxMsg = getTranslationService().getMessage(&quot;fields.frequencyAndFrequencyMax&quot;);</span>
+<span class="nc" id="L75">        return frequencyAndFrequencyMaxMsg.format(arguments);</span>
+    }
+
+    /**
+     * Formats the text for cases where only &quot;frequencyMax&quot; is present.
+     *
+     * @param frequencyMax The maximum frequency.
+     * @return A formatted string representing &quot;frequencyMax&quot;.
+     */
+    default String formatFrequencyMaxText(int frequencyMax) {
+<span class="nc" id="L85">        var frequencyMaxMsg = getTranslationService().getMessage(&quot;fields.frequencyMax&quot;);</span>
+<span class="nc" id="L86">        return frequencyMaxMsg.format(new Object[] { frequencyMax });</span>
+    }
+
+    /**
+     * Formats the text for cases where only &quot;frequency&quot; is present.
+     *
+     * @param frequency The frequency.
+     * @return A formatted string representing &quot;frequency&quot;.
+     */
+    default String formatFrequencyText(int frequency) {
+<span class="nc" id="L96">        var frequencyMsg = getTranslationService().getMessage(&quot;fields.frequency&quot;);</span>
+<span class="nc" id="L97">        return frequencyMsg.format(new Object[] { frequency });</span>
+    }
+
+    /**
+     * Checks if the data contains a valid &quot;frequency&quot; value.
+     *
+     * @param data The data to check.
+     * @return true if the data contains a &quot;frequency&quot; value, false otherwise.
+     */
+    boolean hasFrequency(D data);
+
+    /**
+     * Checks if the data contains a valid &quot;frequencyMax&quot; value.
+     *
+     * @param data The data to check.
+     * @return true if the data contains a &quot;frequencyMax&quot; value, false otherwise.
+     */
+    boolean hasFrequencyMax(D data);
+
+    /**
+     * Converts the data containing both &quot;frequency&quot; and &quot;frequencyMax&quot; into
+     * a formatted string.
+     *
+     * @param data The data to convert.
+     * @return A formatted string representing both &quot;frequency&quot; and &quot;frequencyMax&quot;.
+     */
+    String turnFrequencyAndFrequencyMaxToString(D data);
+
+    /**
+     * Converts the data containing &quot;frequencyMax&quot; into a formatted string.
+     *
+     * @param data The data to convert.
+     * @return A formatted string representing &quot;frequencyMax&quot;.
+     */
+    String turnFrequencyMaxToString(D data);
+
+    /**
+     * Converts the data containing &quot;frequency&quot; into a formatted string.
+     *
+     * @param data The data to convert.
+     * @return A formatted string representing &quot;frequency&quot;.
+     */
+    String turnFrequencyToString(D data);
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

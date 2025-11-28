@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FrequencyFrequencyMaxR4.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">FHIR Dosage Support - R4</a> &gt; <a href="index.source.html" class="el_package">io.github.jy95.fds.r4.translators</a> &gt; <span class="el_source">FrequencyFrequencyMaxR4.java</span></div><h1>FrequencyFrequencyMaxR4.java</h1><pre class="source lang-java linenums">package io.github.jy95.fds.r4.translators;
 
 import io.github.jy95.fds.common.functions.TranslationService;
-import io.github.jy95.fds.common.translators.FrequencyFrequencyMax;
+import io.github.jy95.fds.common.translators.timing.repeat.FrequencyFrequencyMax;
 import io.github.jy95.fds.r4.config.FDSConfigR4;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
-import org.hl7.fhir.r4.model.Dosage;
+import org.hl7.fhir.r4.model.Timing.TimingRepeatComponent;
 
 /**
  * R4 class for translating &quot;timing.repeat.frequency&quot; / &quot;timing.repeat.frequencyMax&quot;
@@ -14,7 +14,7 @@ import org.hl7.fhir.r4.model.Dosage;
  * @author jy95
  */
 @RequiredArgsConstructor
-public class FrequencyFrequencyMaxR4 implements FrequencyFrequencyMax&lt;Dosage, FDSConfigR4&gt; {
+public class FrequencyFrequencyMaxR4 implements FrequencyFrequencyMax&lt;TimingRepeatComponent, FDSConfigR4&gt; {
 
     /** Translation service */
     @Getter
@@ -22,51 +22,36 @@ public class FrequencyFrequencyMaxR4 implements FrequencyFrequencyMax&lt;Dosage,
 
     /** {@inheritDoc} */
     @Override
-    public boolean hasTiming(Dosage dosage) {
-<span class="fc" id="L26">        return dosage.hasTiming();</span>
+    public boolean hasFrequency(TimingRepeatComponent data) {
+<span class="fc" id="L26">        return data.hasFrequency();</span>
     }
 
     /** {@inheritDoc} */
     @Override
-    public boolean hasFrequency(Dosage dosage) {
-<span class="fc" id="L32">        return dosage.getTiming().getRepeat().hasFrequency();</span>
+    public boolean hasFrequencyMax(TimingRepeatComponent data) {
+<span class="fc" id="L32">        return data.hasFrequencyMax();</span>
     }
 
     /** {@inheritDoc} */
     @Override
-    public boolean hasFrequencyMax(Dosage dosage) {
-<span class="fc" id="L38">        return dosage.getTiming().getRepeat().hasFrequencyMax();</span>
+    public String turnFrequencyAndFrequencyMaxToString(TimingRepeatComponent data) {
+<span class="fc" id="L38">        var frequencyMin = data.getFrequency();</span>
+<span class="fc" id="L39">        var frequencyMax = data.getFrequencyMax();</span>
+<span class="fc" id="L40">        return formatFrequencyAndFrequencyMaxText(frequencyMin, frequencyMax);</span>
     }
 
     /** {@inheritDoc} */
     @Override
-    public boolean hasRequiredElements(Dosage dosage) {
-<span class="pc bpc" id="L44" title="1 of 6 branches missed.">        return dosage.getTiming().hasRepeat() &amp;&amp; (hasFrequency(dosage) || hasFrequencyMax(dosage));</span>
+    public String turnFrequencyMaxToString(TimingRepeatComponent data) {
+<span class="fc" id="L46">        var frequencyMax = data.getFrequencyMax();</span>
+<span class="fc" id="L47">        return formatFrequencyMaxText(frequencyMax);</span>
     }
 
     /** {@inheritDoc} */
     @Override
-    public String turnFrequencyAndFrequencyMaxToString(Dosage dosage) {
-<span class="fc" id="L50">        var repeat = dosage.getTiming().getRepeat();</span>
-<span class="fc" id="L51">        var frequencyMin = repeat.getFrequency();</span>
-<span class="fc" id="L52">        var frequencyMax = repeat.getFrequencyMax();</span>
-<span class="fc" id="L53">        return formatFrequencyAndFrequencyMaxText(frequencyMin, frequencyMax);</span>
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public String turnFrequencyMaxToString(Dosage dosage) {
-<span class="fc" id="L59">        var repeat = dosage.getTiming().getRepeat();</span>
-<span class="fc" id="L60">        var frequencyMax = repeat.getFrequencyMax();</span>
-<span class="fc" id="L61">        return formatFrequencyMaxText(frequencyMax);</span>
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public String turnFrequencyToString(Dosage dosage) {
-<span class="fc" id="L67">        var repeat = dosage.getTiming().getRepeat();</span>
-<span class="fc" id="L68">        var frequency = repeat.getFrequency();</span>
-<span class="fc" id="L69">        return formatFrequencyText(frequency);</span>
+    public String turnFrequencyToString(TimingRepeatComponent data) {
+<span class="fc" id="L53">        var frequency = data.getFrequency();</span>
+<span class="fc" id="L54">        return formatFrequencyText(frequency);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

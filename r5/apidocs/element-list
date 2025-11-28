@@ -4,3 +4,5 @@ io.github.jy95.fds.r5.functions
 io.github.jy95.fds.r5.internal
 io.github.jy95.fds.r5.translators
 io.github.jy95.fds.r5.utils
+io.github.jy95.fds.r5.utils.adapters
+io.github.jy95.fds.r5.utils.maps

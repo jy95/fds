@@ -2,11 +2,11 @@
 
 import io.github.jy95.fds.common.functions.ListToString;
 import io.github.jy95.fds.common.functions.TranslationService;
-import io.github.jy95.fds.common.translators.TimingEvent;
+import io.github.jy95.fds.common.translators.timing.TimingEvent;
 import io.github.jy95.fds.r4.config.FDSConfigR4;
 import lombok.RequiredArgsConstructor;
 
-import org.hl7.fhir.r4.model.Dosage;
+import org.hl7.fhir.r4.model.Timing;
 
 import java.util.List;
 import java.util.Map;
@@ -18,55 +18,48 @@ import java.util.concurrent.CompletableFuture;
  * @author jy95
  */
 @RequiredArgsConstructor
-public class TimingEventR4 implements TimingEvent&lt;Dosage&gt; {
+public class TimingEventR4 implements TimingEvent&lt;Timing&gt; {
 
     /** Translation service */
     private final TranslationService&lt;FDSConfigR4&gt; translationService;
 
     /** {@inheritDoc} */
     @Override
-    public boolean hasRequiredElements(Dosage dosage) {
-<span class="fc" id="L29">        return dosage.getTiming().hasEvent();</span>
+    public boolean isPresent(Timing data) {
+<span class="fc" id="L29">        return data.hasEvent();</span>
     }
 
     /** {@inheritDoc} */
     @Override
-    public List&lt;String&gt; getEvents(Dosage dosage) {
-<span class="fc" id="L35">        return dosage</span>
-<span class="fc" id="L36">            .getTiming()</span>
-<span class="fc" id="L37">            .getEvent()</span>
-<span class="fc" id="L38">            .stream()</span>
-<span class="fc" id="L39">            .map(event -&gt; translationService.dateTimeToHumanDisplay(</span>
-<span class="fc" id="L40">                event.getValue(), </span>
-<span class="fc" id="L41">                event.getTimeZone(), </span>
-<span class="fc" id="L42">                event.getPrecision()</span>
+    public List&lt;String&gt; getEvents(Timing data) {
+<span class="fc" id="L35">        return data</span>
+<span class="fc" id="L36">            .getEvent()</span>
+<span class="fc" id="L37">            .stream()</span>
+<span class="fc" id="L38">            .map(event -&gt; translationService.dateTimeToHumanDisplay(</span>
+<span class="fc" id="L39">                event.getValue(), </span>
+<span class="fc" id="L40">                event.getTimeZone(), </span>
+<span class="fc" id="L41">                event.getPrecision()</span>
             ))
-<span class="fc" id="L44">            .toList();</span>
+<span class="fc" id="L43">            .toList();</span>
     }
 
     /** {@inheritDoc} */
     @Override
-    public boolean hasTiming(Dosage dosage) {
-<span class="fc" id="L50">        return dosage.hasTiming();</span>
-    }
+    public CompletableFuture&lt;String&gt; convert(Timing Timing) {
+<span class="fc" id="L49">        return CompletableFuture.supplyAsync(() -&gt; {</span>
+<span class="fc" id="L50">            var eventsList = getEvents(Timing);</span>
 
-    /** {@inheritDoc} */
-    @Override
-    public CompletableFuture&lt;String&gt; convert(Dosage dosage) {
-<span class="fc" id="L56">        return CompletableFuture.supplyAsync(() -&gt; {</span>
-<span class="fc" id="L57">            var eventsList = getEvents(dosage);</span>
-
-<span class="fc" id="L59">            String eventsAsString = ListToString.convert(translationService, eventsList);</span>
-<span class="fc" id="L60">            var timingEventMsg = translationService.getMessage(KEY_EVENT);</span>
+<span class="fc" id="L52">            String eventsAsString = ListToString.convert(translationService, eventsList);</span>
+<span class="fc" id="L53">            var timingEventMsg = translationService.getMessage(KEY_EVENT);</span>
 
             // Create a map of named arguments
-<span class="fc" id="L63">            Map&lt;String, Object&gt; arguments = Map.of(</span>
-<span class="fc" id="L64">                    &quot;eventCondition&quot;, eventsList.size(),</span>
+<span class="fc" id="L56">            Map&lt;String, Object&gt; arguments = Map.of(</span>
+<span class="fc" id="L57">                    &quot;eventCondition&quot;, eventsList.size(),</span>
                     &quot;event&quot;, eventsAsString
             );
 
             // Format the message with the named arguments
-<span class="fc" id="L69">            return timingEventMsg.format(arguments);</span>
+<span class="fc" id="L62">            return timingEventMsg.format(arguments);</span>
         });
     }
 }

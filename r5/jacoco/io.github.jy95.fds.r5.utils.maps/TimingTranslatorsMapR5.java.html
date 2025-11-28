@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TimingTranslatorsMapR5.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">FHIR Dosage Support - R5</a> &gt; <a href="index.source.html" class="el_package">io.github.jy95.fds.r5.utils.maps</a> &gt; <span class="el_source">TimingTranslatorsMapR5.java</span></div><h1>TimingTranslatorsMapR5.java</h1><pre class="source lang-java linenums">package io.github.jy95.fds.r5.utils.maps;
+
+import java.util.EnumMap;
+import java.util.Map;
+import java.util.function.Supplier;
+
+import org.hl7.fhir.r5.model.Timing;
+
+import io.github.jy95.fds.common.functions.TranslationService;
+import io.github.jy95.fds.common.types.AbstractTranslatorsMap;
+import io.github.jy95.fds.common.types.DisplayOrder;
+import io.github.jy95.fds.common.types.Translator;
+import io.github.jy95.fds.r5.config.FDSConfigR5;
+import io.github.jy95.fds.r5.translators.*;
+
+public class TimingTranslatorsMapR5 extends AbstractTranslatorsMap&lt;FDSConfigR5, Timing&gt; {
+
+    /**
+     * Constructor for {@code TimingTranslatorsMapR5}.
+     *
+     * @param translationService The translation service used for translation.
+     */
+    public TimingTranslatorsMapR5(TranslationService&lt;FDSConfigR5&gt; translationService) {
+<span class="fc" id="L24">        super(translationService);</span>
+<span class="fc" id="L25">    }</span>
+
+    @Override
+    protected Map&lt;DisplayOrder, Supplier&lt;Translator&lt;Timing&gt;&gt;&gt; createTranslatorsSuppliers() {
+<span class="fc" id="L29">        EnumMap&lt;DisplayOrder, Supplier&lt;Translator&lt;Timing&gt;&gt;&gt; suppliers = new EnumMap&lt;&gt;(DisplayOrder.class);</span>
+
+<span class="fc" id="L31">        suppliers.put(DisplayOrder.TIMING_EXTENSION, () -&gt; new TimingExtensionR5(translationService));</span>
+<span class="fc" id="L32">        suppliers.put(DisplayOrder.TIMING_MODIFIER_EXTENSION, () -&gt; new TimingModifierExtensionR5(translationService));</span>
+<span class="fc" id="L33">        suppliers.put(DisplayOrder.TIMING_CODE, () -&gt; new TimingCodeR5(translationService));</span>
+<span class="fc" id="L34">        suppliers.put(DisplayOrder.TIMING_EVENT, () -&gt; new TimingEventR5(translationService));</span>
+
+<span class="fc" id="L36">        return suppliers;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

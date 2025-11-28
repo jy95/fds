@@ -2,11 +2,11 @@
 
 import io.github.jy95.fds.common.functions.TranslationService;
 import io.github.jy95.fds.common.functions.UnitsOfTimeFormatter;
-import io.github.jy95.fds.common.translators.PeriodPeriodMax;
+import io.github.jy95.fds.common.translators.timing.repeat.PeriodPeriodMax;
 import io.github.jy95.fds.r4.config.FDSConfigR4;
 import lombok.RequiredArgsConstructor;
 
-import org.hl7.fhir.r4.model.Dosage;
+import org.hl7.fhir.r4.model.Timing.TimingRepeatComponent;
 
 import java.math.BigDecimal;
 import java.util.Map;
@@ -17,63 +17,47 @@ import java.util.Map;
  * @author jy95
  */
 @RequiredArgsConstructor
-public class PeriodPeriodMaxR4 implements PeriodPeriodMax&lt;Dosage&gt; {
+public class PeriodPeriodMaxR4 implements PeriodPeriodMax&lt;TimingRepeatComponent&gt; {
 
     /** Translation service */
     private final TranslationService&lt;FDSConfigR4&gt; translationService;
 
     /** {@inheritDoc} */
     @Override
-    public boolean hasPeriod(Dosage dosage) {
-<span class="fc" id="L28">        return dosage.getTiming().getRepeat().hasPeriod();</span>
+    public boolean hasPeriod(TimingRepeatComponent data) {
+<span class="fc" id="L28">        return data.hasPeriod();</span>
     }
 
     /** {@inheritDoc} */
     @Override
-    public boolean hasPeriodMax(Dosage dosage) {
-<span class="fc" id="L34">        return dosage.getTiming().getRepeat().hasPeriodMax();</span>
+    public boolean hasPeriodMax(TimingRepeatComponent data) {
+<span class="fc" id="L34">        return data.hasPeriodMax();</span>
     }
 
     /** {@inheritDoc} */
     @Override
-    public boolean hasRequiredElements(Dosage dosage) {
-<span class="fc" id="L40">        var timing = dosage.getTiming();</span>
-<span class="pc bpc" id="L41" title="2 of 6 branches missed.">        return timing.hasRepeat() &amp;&amp; (hasPeriod(dosage) || hasPeriodMax(dosage));</span>
+    public String turnPeriodAndPeriodMaxToString(TimingRepeatComponent data) {
+
+<span class="fc" id="L41">        var periodMax = data.getPeriodMax();</span>
+<span class="fc" id="L42">        var periodMin = data.getPeriod();</span>
+<span class="fc" id="L43">        var periodUnit = data.getPeriodUnit().toCode();</span>
+
+<span class="fc" id="L45">        var config = translationService.getConfig();</span>
+
+<span class="fc" id="L47">        var unitText = UnitsOfTimeFormatter.formatWithoutCount(config.getLocale(), periodUnit, periodMax);</span>
+<span class="fc" id="L48">        return formatPeriodAndPeriodMaxText(periodMin, periodMax, unitText);</span>
     }
 
     /** {@inheritDoc} */
     @Override
-    public boolean hasTiming(Dosage dosage) {
-<span class="fc" id="L47">        return dosage.hasTiming();</span>
-    }
+    public String turnPeriodToString(TimingRepeatComponent data) {
 
-    /** {@inheritDoc} */
-    @Override
-    public String turnPeriodAndPeriodMaxToString(Dosage dosage) {
+<span class="fc" id="L55">        var period = data.getPeriod();</span>
+<span class="fc" id="L56">        var periodUnit = data.getPeriodUnit().toCode();</span>
+<span class="fc" id="L57">        var config = translationService.getConfig();</span>
 
-<span class="fc" id="L54">        var repeat = dosage.getTiming().getRepeat();</span>
-<span class="fc" id="L55">        var periodMax = repeat.getPeriodMax();</span>
-<span class="fc" id="L56">        var periodMin = repeat.getPeriod();</span>
-<span class="fc" id="L57">        var periodUnit = repeat.getPeriodUnit().toCode();</span>
-
-<span class="fc" id="L59">        var config = translationService.getConfig();</span>
-
-<span class="fc" id="L61">        var unitText = UnitsOfTimeFormatter.formatWithoutCount(config.getLocale(), periodUnit, periodMax);</span>
-<span class="fc" id="L62">        return formatPeriodAndPeriodMaxText(periodMin, periodMax, unitText);</span>
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public String turnPeriodToString(Dosage dosage) {
-
-<span class="fc" id="L69">        var repeat = dosage.getTiming().getRepeat();</span>
-<span class="fc" id="L70">        var period = repeat.getPeriod();</span>
-<span class="fc" id="L71">        var periodUnit = repeat.getPeriodUnit().toCode();</span>
-
-<span class="fc" id="L73">        var config = translationService.getConfig();</span>
-
-<span class="fc" id="L75">        var unitText = UnitsOfTimeFormatter.formatWithoutCount(config.getLocale(), periodUnit, period);</span>
-<span class="fc" id="L76">        return formatPeriodText(period, unitText);</span>
+<span class="fc" id="L59">        var unitText = UnitsOfTimeFormatter.formatWithoutCount(config.getLocale(), periodUnit, period);</span>
+<span class="fc" id="L60">        return formatPeriodText(period, unitText);</span>
     }
 
     /**
@@ -84,12 +68,12 @@ public class PeriodPeriodMaxR4 implements PeriodPeriodMax&lt;Dosage&gt; {
      * @return A formatted string representing the period and its unit.
      */
     private String formatPeriodText(BigDecimal period, String unitText){
-<span class="fc" id="L87">        Map&lt;String, Object&gt; arguments = Map.of(</span>
+<span class="fc" id="L71">        Map&lt;String, Object&gt; arguments = Map.of(</span>
                 &quot;period&quot;, period,
                 &quot;periodUnit&quot;,unitText
         );
-<span class="fc" id="L91">        var periodMsg = translationService.getMessage(KEY_PERIOD);</span>
-<span class="fc" id="L92">        return periodMsg.format(arguments);</span>
+<span class="fc" id="L75">        var periodMsg = translationService.getMessage(KEY_PERIOD);</span>
+<span class="fc" id="L76">        return periodMsg.format(arguments);</span>
     }
 
     /**
@@ -101,13 +85,13 @@ public class PeriodPeriodMaxR4 implements PeriodPeriodMax&lt;Dosage&gt; {
      * @return A formatted string representing the range of periods and their unit.
      */
     private String formatPeriodAndPeriodMaxText(BigDecimal periodMin, BigDecimal periodMax, String unitText) {
-<span class="fc" id="L104">        Map&lt;String, Object&gt; arguments = Map.of(</span>
+<span class="fc" id="L88">        Map&lt;String, Object&gt; arguments = Map.of(</span>
                 &quot;maxPeriod&quot;, periodMax,
                 &quot;minPeriod&quot;, periodMin,
                 &quot;unit&quot;,unitText
         );
-<span class="fc" id="L109">        var periodMaxMsg = translationService.getMessage(KEY_PERIOD_MAX);</span>
-<span class="fc" id="L110">        return periodMaxMsg.format(arguments);</span>
+<span class="fc" id="L93">        var periodMaxMsg = translationService.getMessage(KEY_PERIOD_MAX);</span>
+<span class="fc" id="L94">        return periodMaxMsg.format(arguments);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
