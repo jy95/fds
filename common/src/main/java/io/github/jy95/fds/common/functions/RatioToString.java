@@ -86,6 +86,7 @@ public interface RatioToString<R, Q extends IBase, C extends FDSConfig & Quantit
     default String retrieveRatioLinkWord(TranslationService<C> translationService, R ratio) {
         var hasNum = hasNumerator(ratio);
         var hasDen = hasDenominator(ratio);
+        var hasUnit = hasUnitRatio(ratio);
         var hasBoth = GenericOperations.allMatchLazy(
             () -> hasNum,
             () -> hasDen
@@ -95,7 +96,7 @@ public interface RatioToString<R, Q extends IBase, C extends FDSConfig & Quantit
             return "";
         }
 
-        if (hasUnitRatio(ratio)) {
+        if (hasUnit) {
             var solver = getQuantityToString();
             var denominatorValue = solver.getValue(getDenominator(ratio));
 
