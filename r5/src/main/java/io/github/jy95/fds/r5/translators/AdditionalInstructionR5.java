@@ -1,7 +1,7 @@
 package io.github.jy95.fds.r5.translators;
 
 import io.github.jy95.fds.common.functions.TranslationService;
-import io.github.jy95.fds.common.translators.AdditionalInstruction;
+import io.github.jy95.fds.common.translators.dosage.AdditionalInstruction;
 import io.github.jy95.fds.r5.config.FDSConfigR5;
 import lombok.RequiredArgsConstructor;
 import org.hl7.fhir.r5.model.Dosage;

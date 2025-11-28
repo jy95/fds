@@ -1,8 +1,9 @@
-package io.github.jy95.fds.common.translators;
+package io.github.jy95.fds.common.translators.timing.repeat;
 
 import io.github.jy95.fds.common.config.FDSConfig;
+import io.github.jy95.fds.common.functions.GenericOperations;
 import io.github.jy95.fds.common.functions.TranslationService;
-import io.github.jy95.fds.common.types.TranslatorTiming;
+import io.github.jy95.fds.common.types.Translator;
 
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -12,10 +13,11 @@ import java.util.concurrent.CompletableFuture;
  * "timing.repeat.frequencyMax".
  *
  * @param <D> The type of the translated data.
+ * @param <C> The configuration type extending FDSConfig.
  * @author jy95
  * @since 1.0.0
  */
-public interface FrequencyFrequencyMax<D, C extends FDSConfig> extends TranslatorTiming<D> {
+public interface FrequencyFrequencyMax<D, C extends FDSConfig> extends Translator<D> {
 
     /**
      * Return the TranslationService responsible for handling frequency
@@ -26,22 +28,34 @@ public interface FrequencyFrequencyMax<D, C extends FDSConfig> extends Translato
 
     /** {@inheritDoc} */
     @Override
-    default CompletableFuture<String> convert(D dosage) {
+    default boolean isPresent(D data) {
+        return GenericOperations.anyMatchLazy(
+            () -> hasFrequency(data),
+            () -> hasFrequencyMax(data)
+        );
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    default CompletableFuture<String> convert(D data) {
         return CompletableFuture.supplyAsync(() -> {
 
-            var hasFrequencyFlag = hasFrequency(dosage);
-            var hasFrequencyMaxFlag = hasFrequencyMax(dosage);
-            var hasBoth = hasFrequencyFlag && hasFrequencyMaxFlag;
+            var hasFrequencyFlag = hasFrequency(data);
+            var hasFrequencyMaxFlag = hasFrequencyMax(data);
+            var hasBoth = GenericOperations.allMatchLazy(
+                () -> hasFrequencyFlag,
+                () -> hasFrequencyMaxFlag
+            );
 
             if (hasBoth) {
-                return turnFrequencyAndFrequencyMaxToString(dosage);
+                return turnFrequencyAndFrequencyMaxToString(data);
             }
 
-            if (hasFrequencyMaxFlag) {
-                return turnFrequencyMaxToString(dosage);
-            }
-
-            return turnFrequencyToString(dosage);
+            return GenericOperations.conditionalSelect(
+                hasFrequencyMaxFlag, 
+                () -> turnFrequencyMaxToString(data), 
+                () -> turnFrequencyToString(data)
+            );
         });
     }
 
@@ -56,8 +70,7 @@ public interface FrequencyFrequencyMax<D, C extends FDSConfig> extends Translato
     default String formatFrequencyAndFrequencyMaxText(int frequencyMin, int frequencyMax) {
         Map<String, Object> arguments = Map.of(
                 "frequency", frequencyMin,
-                "maxFrequency", frequencyMax
-        );
+                "maxFrequency", frequencyMax);
         var frequencyAndFrequencyMaxMsg = getTranslationService().getMessage("fields.frequencyAndFrequencyMax");
         return frequencyAndFrequencyMaxMsg.format(arguments);
     }
@@ -70,7 +83,7 @@ public interface FrequencyFrequencyMax<D, C extends FDSConfig> extends Translato
      */
     default String formatFrequencyMaxText(int frequencyMax) {
         var frequencyMaxMsg = getTranslationService().getMessage("fields.frequencyMax");
-        return frequencyMaxMsg.format(new Object[]{frequencyMax});
+        return frequencyMaxMsg.format(new Object[] { frequencyMax });
     }
 
     /**
@@ -81,47 +94,47 @@ public interface FrequencyFrequencyMax<D, C extends FDSConfig> extends Translato
      */
     default String formatFrequencyText(int frequency) {
         var frequencyMsg = getTranslationService().getMessage("fields.frequency");
-        return frequencyMsg.format(new Object[]{frequency});
+        return frequencyMsg.format(new Object[] { frequency });
     }
 
     /**
-     * Checks if the dosage data contains a valid "frequency" value.
+     * Checks if the data contains a valid "frequency" value.
      *
-     * @param dosage The dosage data.
-     * @return true if the dosage contains a "frequency" value, false otherwise.
+     * @param data The data to check.
+     * @return true if the data contains a "frequency" value, false otherwise.
      */
-    boolean hasFrequency(D dosage);
+    boolean hasFrequency(D data);
 
     /**
-     * Checks if the dosage data contains a valid "frequencyMax" value.
+     * Checks if the data contains a valid "frequencyMax" value.
      *
-     * @param dosage The dosage data.
-     * @return true if the dosage contains a "frequencyMax" value, false otherwise.
+     * @param data The data to check.
+     * @return true if the data contains a "frequencyMax" value, false otherwise.
      */
-    boolean hasFrequencyMax(D dosage);
+    boolean hasFrequencyMax(D data);
 
     /**
-     * Converts the dosage data containing both "frequency" and "frequencyMax" into
+     * Converts the data containing both "frequency" and "frequencyMax" into
      * a formatted string.
      *
-     * @param dosage The dosage data.
+     * @param data The data to convert.
      * @return A formatted string representing both "frequency" and "frequencyMax".
      */
-    String turnFrequencyAndFrequencyMaxToString(D dosage);
+    String turnFrequencyAndFrequencyMaxToString(D data);
 
     /**
-     * Converts the dosage data containing "frequencyMax" into a formatted string.
+     * Converts the data containing "frequencyMax" into a formatted string.
      *
-     * @param dosage The dosage data.
+     * @param data The data to convert.
      * @return A formatted string representing "frequencyMax".
      */
-    String turnFrequencyMaxToString(D dosage);
+    String turnFrequencyMaxToString(D data);
 
     /**
-     * Converts the dosage data containing "frequency" into a formatted string.
+     * Converts the data containing "frequency" into a formatted string.
      *
-     * @param dosage The dosage data.
+     * @param data The data to convert.
      * @return A formatted string representing "frequency".
      */
-    String turnFrequencyToString(D dosage);
+    String turnFrequencyToString(D data);
 }

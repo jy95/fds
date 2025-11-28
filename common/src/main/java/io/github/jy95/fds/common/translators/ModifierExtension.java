@@ -14,7 +14,7 @@ public interface ModifierExtension<D extends IBaseHasModifierExtensions> extends
 
     /** {@inheritDoc} */
     @Override
-    default boolean isPresent(D dosage) {
-        return dosage.hasModifierExtension();
+    default boolean isPresent(D data) {
+        return data.hasModifierExtension();
     }
 }

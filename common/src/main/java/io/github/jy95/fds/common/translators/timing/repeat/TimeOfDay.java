@@ -1,6 +1,6 @@
-package io.github.jy95.fds.common.translators;
+package io.github.jy95.fds.common.translators.timing.repeat;
 
-import io.github.jy95.fds.common.types.TranslatorTiming;
+import io.github.jy95.fds.common.types.Translator;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ import java.util.List;
  * @author jy95
  * @since 1.0.0
  */
-public interface TimeOfDay<D> extends TranslatorTiming<D> {
+public interface TimeOfDay<D> extends Translator<D> {
 
     /**
      * Key constant for timeOfDay message
@@ -21,10 +21,10 @@ public interface TimeOfDay<D> extends TranslatorTiming<D> {
     /**
      * Extracts a list of time values from the data object.
      *
-     * @param dosage The data object containing time values.
+     * @param data The data object containing time values.
      * @return A list of times represented as strings in the format hh:mm:ss.
      */
-    List<String> getTimes(D dosage);
+    List<String> getTimes(D data);
 
     /**
      * Formats a time string to remove unnecessary seconds if they are zero.
@@ -35,12 +35,6 @@ public interface TimeOfDay<D> extends TranslatorTiming<D> {
      * @return A formatted time string with optional seconds removed.
      */
     default String formatString(String time) {
-        String[] parts = time.split(":");
-
-        if (parts.length > 2 && parts[2].equals("00")) {
-            parts = new String[] { parts[0], parts[1] };
-        }
-
-        return String.join(":", parts);
+        return time.replaceFirst("^(\\d{2}:\\d{2}):00$", "$1");
     }
 }

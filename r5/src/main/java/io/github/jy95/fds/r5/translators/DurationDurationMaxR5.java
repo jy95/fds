@@ -2,11 +2,11 @@ package io.github.jy95.fds.r5.translators;
 
 import io.github.jy95.fds.common.functions.TranslationService;
 import io.github.jy95.fds.common.functions.UnitsOfTimeFormatter;
-import io.github.jy95.fds.common.translators.DurationDurationMax;
+import io.github.jy95.fds.common.translators.timing.repeat.DurationDurationMax;
 import io.github.jy95.fds.r5.config.FDSConfigR5;
 import lombok.RequiredArgsConstructor;
 
-import org.hl7.fhir.r5.model.Dosage;
+import org.hl7.fhir.r5.model.Timing.TimingRepeatComponent;
 
 /**
  * R5 class for translating "timing.repeat.duration" / "timing.repeat.durationMax"
@@ -14,43 +14,34 @@ import org.hl7.fhir.r5.model.Dosage;
  * @author jy95
  */
 @RequiredArgsConstructor
-public class DurationDurationMaxR5 implements DurationDurationMax<Dosage> {
+public class DurationDurationMaxR5 implements DurationDurationMax<TimingRepeatComponent> {
 
     /** Translation service */
     private final TranslationService<FDSConfigR5> translationService;
 
     /** {@inheritDoc} */
     @Override
-    public boolean hasDuration(Dosage dosage) {
-        return dosage.getTiming().getRepeat().hasDuration();
+    public boolean hasDuration(TimingRepeatComponent data) {
+        return data.hasDuration();
     }
 
     /** {@inheritDoc} */
     @Override
-    public boolean hasDurationMax(Dosage dosage) {
-        return dosage.getTiming().getRepeat().hasDurationMax();
+    public boolean hasDurationMax(TimingRepeatComponent data) {
+        return data.hasDurationMax();
     }
 
     /** {@inheritDoc} */
     @Override
-    public boolean hasRequiredElements(Dosage dosage) {
-        return dosage.getTiming().hasRepeat()
-                && dosage.getTiming().getRepeat().hasDurationUnit()
-                && (hasDuration(dosage) || hasDurationMax(dosage));
+    public boolean hasDurationUnit(TimingRepeatComponent data) {
+        return data.hasDurationUnit();
     }
 
     /** {@inheritDoc} */
     @Override
-    public boolean hasTiming(Dosage dosage) {
-        return dosage.hasTiming();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public String turnDurationToString(Dosage dosage) {
-        var repeat = dosage.getTiming().getRepeat();
-        var durationUnit = repeat.getDurationUnit().toCode();
-        var durationQuantity = repeat.getDuration();
+    public String turnDurationToString(TimingRepeatComponent data) {
+        var durationUnit = data.getDurationUnit().toCode();
+        var durationQuantity = data.getDuration();
 
         var locale = translationService.getConfig().getLocale();
         var durationMsg = translationService.getMessage(KEY_DURATION);
@@ -61,10 +52,9 @@ public class DurationDurationMaxR5 implements DurationDurationMax<Dosage> {
 
     /** {@inheritDoc} */
     @Override
-    public String turnDurationMaxToString(Dosage dosage) {
-        var repeat = dosage.getTiming().getRepeat();
-        var durationUnit = repeat.getDurationUnit().toCode();
-        var durationQuantity = repeat.getDurationMax();
+    public String turnDurationMaxToString(TimingRepeatComponent data) {
+        var durationUnit = data.getDurationUnit().toCode();
+        var durationQuantity = data.getDurationMax();
 
         var locale = translationService.getConfig().getLocale();
         var durationMaxMsg = translationService.getMessage(KEY_DURATION_MAX);

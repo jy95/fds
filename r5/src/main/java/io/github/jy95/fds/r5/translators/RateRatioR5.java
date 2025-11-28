@@ -1,7 +1,7 @@
 package io.github.jy95.fds.r5.translators;
 
 import io.github.jy95.fds.common.functions.TranslationService;
-import io.github.jy95.fds.common.translators.RateRatio;
+import io.github.jy95.fds.common.translators.dosage.RateRatio;
 import io.github.jy95.fds.common.types.DoseAndRateKey;
 import io.github.jy95.fds.r5.config.FDSConfigR5;
 import io.github.jy95.fds.r5.functions.RatioToStringR5;

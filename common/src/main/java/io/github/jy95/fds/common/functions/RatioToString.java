@@ -55,13 +55,17 @@ public interface RatioToString<R, Q extends IBase, C extends FDSConfig & Quantit
     default CompletableFuture<String> convert(TranslationService<C> translationService, R ratio) {
         var separator = retrieveRatioLinkWord(translationService, ratio);
 
-        var numeratorText = hasNumerator(ratio)
-                ? convertNumerator(translationService, ratio)
-                : CompletableFuture.completedFuture("");
+        var numeratorText = GenericOperations.conditionalSelect(
+            hasNumerator(ratio),
+            () -> convertNumerator(translationService, ratio),
+            () -> CompletableFuture.completedFuture("")
+        );
 
-        var denominatorText = hasDenominator(ratio)
-                ? convertDenominator(translationService, ratio)
-                : CompletableFuture.completedFuture("");
+        var denominatorText = GenericOperations.conditionalSelect(
+            hasDenominator(ratio),
+            () -> convertDenominator(translationService, ratio),
+            () -> CompletableFuture.completedFuture("")
+        );
 
         return numeratorText.thenCombineAsync(denominatorText, (num, dem) -> {
             return Stream
@@ -82,13 +86,17 @@ public interface RatioToString<R, Q extends IBase, C extends FDSConfig & Quantit
     default String retrieveRatioLinkWord(TranslationService<C> translationService, R ratio) {
         var hasNum = hasNumerator(ratio);
         var hasDen = hasDenominator(ratio);
-        var hasBoth = hasNum && hasDen;
+        var hasUnit = hasUnitRatio(ratio);
+        var hasBoth = GenericOperations.allMatchLazy(
+            () -> hasNum,
+            () -> hasDen
+        );
 
         if (!hasBoth) {
             return "";
         }
 
-        if (hasUnitRatio(ratio)) {
+        if (hasUnit) {
             var solver = getQuantityToString();
             var denominatorValue = solver.getValue(getDenominator(ratio));
 
@@ -109,9 +117,22 @@ public interface RatioToString<R, Q extends IBase, C extends FDSConfig & Quantit
     default boolean hasUnitRatio(R ratio) {
         var solver = getQuantityToString();
 
-        var hasNumeratorUnit = hasNumerator(ratio) && solver.hasUnit(getNumerator(ratio));
-        var hasDenominatorUnit = hasDenominator(ratio) && solver.hasUnit(getDenominator(ratio));
-        return hasNumeratorUnit || hasDenominatorUnit;
+        var hasNumeratorUnit = GenericOperations.conditionalSelect(
+            hasNumerator(ratio), 
+            () -> solver.hasUnit(getNumerator(ratio)), 
+            () -> false
+        );
+
+        var hasDenominatorUnit = GenericOperations.conditionalSelect(
+            hasDenominator(ratio), 
+            () -> solver.hasUnit(getDenominator(ratio)), 
+            () -> false
+        );
+
+        return GenericOperations.anyMatchLazy(
+            () -> hasNumeratorUnit,
+            () -> hasDenominatorUnit
+        );
     }
 
     /**

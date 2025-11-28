@@ -3,11 +3,11 @@ package io.github.jy95.fds.r4.translators;
 import io.github.jy95.fds.common.functions.DayOfWeekFormatter;
 import io.github.jy95.fds.common.functions.ListToString;
 import io.github.jy95.fds.common.functions.TranslationService;
-import io.github.jy95.fds.common.translators.DayOfWeek;
+import io.github.jy95.fds.common.translators.timing.repeat.DayOfWeek;
 import io.github.jy95.fds.r4.config.FDSConfigR4;
 import lombok.RequiredArgsConstructor;
 
-import org.hl7.fhir.r4.model.Dosage;
+import org.hl7.fhir.r4.model.Timing.TimingRepeatComponent;
 
 import java.util.List;
 import java.util.Map;
@@ -19,22 +19,22 @@ import java.util.concurrent.CompletableFuture;
  * @author jy95
  */
 @RequiredArgsConstructor
-public class DayOfWeekR4 implements DayOfWeek<Dosage> {
+public class DayOfWeekR4 implements DayOfWeek<TimingRepeatComponent> {
 
     /** Translation service */
     private final TranslationService<FDSConfigR4> translationService;
 
     /** {@inheritDoc} */
     @Override
-    public boolean hasRequiredElements(Dosage dosage) {
-        return dosage.getTiming().hasRepeat() && dosage.getTiming().getRepeat().hasDayOfWeek();
+    public boolean isPresent(TimingRepeatComponent data) {
+        return data.hasDayOfWeek();
     }
 
     /** {@inheritDoc} */
     @Override
-    public CompletableFuture<String> convert(Dosage dosage) {
+    public CompletableFuture<String> convert(TimingRepeatComponent data) {
         return CompletableFuture.supplyAsync(() -> {
-            var dayOfWeeks = dosage.getTiming().getRepeat().getDayOfWeek();
+            var dayOfWeeks = data.getDayOfWeek();
             var locale = translationService.getConfig().getLocale();
             var dayOfWeeksCodes = dayOfWeeks
                     .stream()
@@ -48,12 +48,6 @@ public class DayOfWeekR4 implements DayOfWeek<Dosage> {
 
             return daysToText(dayOfWeeksCodes);
         });
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public boolean hasTiming(Dosage dosage) {
-        return dosage.hasTiming();
     }
 
     /**

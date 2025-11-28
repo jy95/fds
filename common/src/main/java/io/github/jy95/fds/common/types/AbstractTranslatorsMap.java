@@ -16,7 +16,7 @@ import java.util.function.Supplier;
  *
  * @param <C> the type of configuration extending
  *            {@link io.github.jy95.fds.common.config.FDSConfig}
- * @param <D> the type of dosage field handled by the translators
+ * @param <D> the type of data handled by the translators
  * @author jy95
  * @since 1.0.0
  */
@@ -39,7 +39,7 @@ public abstract class AbstractTranslatorsMap<C extends FDSConfig, D> {
      * So if you use part of the supported fields, you won't have a bunch of useless
      * new calls to for your needs
      */
-    private final Map<DisplayOrder, Translator<D>> translatorCache = new ConcurrentHashMap<>();
+    protected final Map<DisplayOrder, Translator<D>> translatorCache = new ConcurrentHashMap<>();
 
     /**
      * Constructs a new {@code AbstractTranslatorsMap} with the specified supplier
@@ -64,9 +64,14 @@ public abstract class AbstractTranslatorsMap<C extends FDSConfig, D> {
      *         or {@code null} if no match is found
      */
     public Translator<D> getTranslator(DisplayOrder displayOrder) {
+
+        // If not supported, return null
+        if (!translatorSuppliers.keySet().contains(displayOrder)) {
+            return null;
+        }
+
         return translatorCache.computeIfAbsent(displayOrder, key -> {
-            Supplier<Translator<D>> supplier = translatorSuppliers.get(key);
-            return supplier != null ? supplier.get() : null;
+            return translatorSuppliers.get(key).get();
         });
     }
 

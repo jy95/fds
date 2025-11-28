@@ -15,145 +15,249 @@ public enum DisplayOrder {
     /**
      * Display "method"
      */
-    METHOD(List.of("method")),
+    METHOD(
+        SpecComponent.DOSAGE,
+        List.of("method")
+    ),
     /**
      * Display "doseAndRate.doseQuantity"
      */
-    DOSE_QUANTITY(List.of("doseAndRate.doseQuantity")),
+    DOSE_QUANTITY(
+        SpecComponent.DOSAGE,
+        List.of("doseAndRate.doseQuantity")
+    ),
     /**
      * Display "doseAndRate.doseRange"
      */
-    DOSE_RANGE(List.of("doseAndRate.doseRange")),
+    DOSE_RANGE(
+        SpecComponent.DOSAGE,
+        List.of("doseAndRate.doseRange")
+    ),
     /**
      * Display "doseAndRate.rateRatio"
      */
-    RATE_RATIO(List.of("doseAndRate.rateRatio")),
+    RATE_RATIO(
+        SpecComponent.DOSAGE,
+        List.of("doseAndRate.rateRatio")
+    ),
     /**
      * Display "doseAndRate.rateQuantity"
      */
-    RATE_QUANTITY(List.of("doseAndRate.rateQuantity")),
+    RATE_QUANTITY(
+        SpecComponent.DOSAGE,
+        List.of("doseAndRate.rateQuantity")
+    ),
     /**
      * Display "doseAndRate.rateRange"
      */
-    RATE_RANGE(List.of("doseAndRate.rateRange")),
+    RATE_RANGE(
+        SpecComponent.DOSAGE,
+        List.of("doseAndRate.rateRange")
+    ),
     /**
      * Display "timing.repeat.duration" / "timing.repeat.durationMax"
      */
-    DURATION_DURATION_MAX(List.of("timing.repeat.duration", "timing.repeat.durationMax")),
+    DURATION_DURATION_MAX(
+        SpecComponent.TIMING_REPEAT,
+        List.of("duration", "durationMax")
+    ),
     /**
      * Display "timing.repeat.frequency" / "timing.repeat.frequencyMax"
      */
-    FREQUENCY_FREQUENCY_MAX(List.of("timing.repeat.frequency", "timing.repeat.frequencyMax")),
+    FREQUENCY_FREQUENCY_MAX(
+        SpecComponent.TIMING_REPEAT,
+        List.of("frequency", "frequencyMax")
+    ),
     /**
      * Display "timing.repeat.period" / "timing.repeat.periodMax"
      */
-    PERIOD_PERIOD_MAX(List.of("timing.repeat.period", "timing.repeat.periodMax")),
+    PERIOD_PERIOD_MAX(
+        SpecComponent.TIMING_REPEAT,
+        List.of("period", "periodMax")
+    ),
     /**
      * Display "timing.repeat.frequency" / "timing.repeat.frequencyMax" /
      * "timing.repeat.period" / "timing.repeat.periodMax"
      */
-    FREQUENCY_FREQUENCY_MAX_PERIOD_PERIOD_MAX(List.of("timing.repeat.frequency", "timing.repeat.frequencyMax",
-            "timing.repeat.period", "timing.repeat.periodMax")),
+    FREQUENCY_FREQUENCY_MAX_PERIOD_PERIOD_MAX(
+        SpecComponent.TIMING_REPEAT,
+        List.of("frequency", "frequencyMax", "period", "periodMax")
+    ),
     /**
      * Display "timing.repeat.offset" / "timing.repeat.when"
      */
-    OFFSET_WHEN(List.of("timing.repeat.offset", "timing.repeat.when")),
+    OFFSET_WHEN(
+        SpecComponent.TIMING_REPEAT,
+        List.of("offset", "when")
+    ),
     /**
      * Display "timing.repeat.dayOfWeek"
      */
-    DAY_OF_WEEK(List.of("timing.repeat.dayOfWeek")),
+    DAY_OF_WEEK(
+        SpecComponent.TIMING_REPEAT,
+        List.of("dayOfWeek")
+    ),
     /**
      * Display "timing.repeat.timeOfDay"
      */
-    TIME_OF_DAY(List.of("timing.repeat.timeOfDay")),
+    TIME_OF_DAY(
+        SpecComponent.TIMING_REPEAT,
+        List.of("timeOfDay")
+    ),
     /**
      * Display "route"
      */
-    ROUTE(List.of("route")),
+    ROUTE(
+        SpecComponent.DOSAGE,
+        List.of("route")
+    ),
     /**
      * Display "site"
      */
-    SITE(List.of("site")),
+    SITE(
+        SpecComponent.DOSAGE,
+        List.of("site")
+    ),
     /**
      * Display "asNeededBoolean" / "asNeededCodeableConcept" / "asNeeded" /
      * "asNeededFor"
      */
-    AS_NEEDED(List.of("asNeededBoolean", "asNeededCodeableConcept", "asNeeded", "asNeededFor")),
+    AS_NEEDED(
+        SpecComponent.DOSAGE,
+        List.of("asNeededBoolean", "asNeededCodeableConcept", "asNeeded", "asNeededFor")
+    ),
     /**
      * Display "timing.repeat.boundsDuration"
      */
-    BOUNDS_DURATION(List.of("timing.repeat.boundsDuration")),
+    BOUNDS_DURATION(
+        SpecComponent.TIMING_REPEAT,
+        List.of("boundsDuration")
+    ),
     /**
      * Display "timing.repeat.boundsPeriod"
      */
-    BOUNDS_PERIOD(List.of("timing.repeat.boundsPeriod")),
+    BOUNDS_PERIOD(
+        SpecComponent.TIMING_REPEAT,
+        List.of("boundsPeriod")
+    ),
     /**
      * Display "timing.repeat.boundsRange"
      */
-    BOUNDS_RANGE(List.of("timing.repeat.boundsRange")),
+    BOUNDS_RANGE(
+        SpecComponent.TIMING_REPEAT,
+        List.of("boundsRange")
+    ),
     /**
      * Display "timing.repeat.count" / "timing.repeat.countMax"
      */
-    COUNT_COUNT_MAX(List.of("timing.repeat.count", "timing.repeat.countMax")),
+    COUNT_COUNT_MAX(
+        SpecComponent.TIMING_REPEAT,
+        List.of("count", "countMax")
+    ),
     /**
      * Display "timing.event"
      */
-    TIMING_EVENT(List.of("timing.event")),
+    TIMING_EVENT(
+        SpecComponent.TIMING,
+        List.of("event")
+    ),
     /**
      * Display "timing.code"
      */
-    TIMING_CODE(List.of("timing.code")),
+    TIMING_CODE(
+        SpecComponent.TIMING,
+        List.of("code")
+    ),
     /**
      * Display "maxDosePerPeriod"
      */
-    MAX_DOSE_PER_PERIOD(List.of("maxDosePerPeriod")),
+    MAX_DOSE_PER_PERIOD(
+        SpecComponent.DOSAGE,
+        List.of("maxDosePerPeriod")
+    ),
     /**
      * Display "maxDosePerAdministration"
      */
-    MAX_DOSE_PER_ADMINISTRATION(List.of("maxDosePerAdministration")),
+    MAX_DOSE_PER_ADMINISTRATION(
+        SpecComponent.DOSAGE,
+        List.of("maxDosePerAdministration")
+    ),
     /**
      * Display "maxDosePerLifetime"
      */
-    MAX_DOSE_PER_LIFETIME(List.of("maxDosePerLifetime")),
+    MAX_DOSE_PER_LIFETIME(
+        SpecComponent.DOSAGE,
+        List.of("maxDosePerLifetime")
+    ),
     /**
      * Display "additionalInstruction"
      */
-    ADDITIONAL_INSTRUCTION(List.of("additionalInstruction")),
+    ADDITIONAL_INSTRUCTION(
+        SpecComponent.DOSAGE,
+        List.of("additionalInstruction")
+    ),
     /**
      * Display "patientInstruction"
      */
-    PATIENT_INSTRUCTION(List.of("patientInstruction")),
+    PATIENT_INSTRUCTION(
+        SpecComponent.DOSAGE,
+        List.of("patientInstruction")
+    ),
     /**
      * Display "text"
      */
-    TEXT(List.of("text")),
+    TEXT(
+        SpecComponent.DOSAGE,
+        List.of("text")
+    ),
     /**
      * Display "extension"
      */
-    EXTENSION(List.of("extension")),
+    EXTENSION(
+        SpecComponent.DOSAGE,
+        List.of("extension")
+    ),
     /**
      * Display "timing.extension"
      */
-    TIMING_EXTENSION(List.of("timing.extension")),
+    TIMING_EXTENSION(
+        SpecComponent.TIMING,
+        List.of("extension")
+    ),
     /**
      * Display "timing.repeat.extension"
      */
-    TIMING_REPEAT_EXTENSION(List.of("timing.repeat.extension")),
+    TIMING_REPEAT_EXTENSION(
+        SpecComponent.TIMING_REPEAT,
+        List.of("extension")
+    ),
     /**
      * Display "modifierExtension"
      */
-    MODIFIER_EXTENSION(List.of("modifierExtension")),
+    MODIFIER_EXTENSION(
+        SpecComponent.DOSAGE,
+        List.of("modifierExtension")
+    ),
     /**
      * Display "timing.modifierExtension"
      */
-    TIMING_MODIFIER_EXTENSION(List.of("timing.modifierExtension"));
+    TIMING_MODIFIER_EXTENSION(
+        SpecComponent.TIMING,
+        List.of("modifierExtension")
+    );
 
     /**
      * Getter for the <code>field</code>(s) covered by the display order
      */
     private final List<String> fields;
 
-    DisplayOrder(List<String> fields) {
+    /**
+     * Getter for the class covered by the display order
+     */
+    private final SpecComponent component;
+
+    DisplayOrder(SpecComponent component, List<String> fields) {
+        this.component = component;
         this.fields = fields;
     }
 

@@ -66,12 +66,19 @@ public interface RangeToString<R, Q extends IBase, C extends FDSConfig & Quantit
     default boolean hasUnit(R range) {
         var solver = getQuantityToString();
 
-        // Check high first, more likely to be found in it
-        var hasHighUnit = hasHigh(range) && solver.hasUnit(getHigh(range));
-        var hasLowUnit = hasLow(range) && solver.hasUnit(getLow(range));
+        var hasHighUnit = GenericOperations.conditionalSelect(
+                hasHigh(range),
+                () -> solver.hasUnit(getHigh(range)),
+                () -> false);
 
-        // Otherwise check low
-        return hasHighUnit || hasLowUnit;
+        var hasLowUnit = GenericOperations.conditionalSelect(
+                hasLow(range),
+                () -> solver.hasUnit(getLow(range)),
+                () -> false);
+
+        return GenericOperations.anyMatchLazy(
+                () -> hasHighUnit,
+                () -> hasLowUnit);
     }
 
     /**
@@ -88,8 +95,15 @@ public interface RangeToString<R, Q extends IBase, C extends FDSConfig & Quantit
 
         var condition = getConditionCode(hasLow, hasHigh);
 
-        var minValue = hasLow ? solver.getValue(getLow(range)) : "";
-        var maxValue = hasHigh ? solver.getValue(getHigh(range)) : "";
+        var minValue = GenericOperations.conditionalSelect(
+                hasLow,
+                () -> solver.getValue(getLow(range)),
+                () -> "");
+
+        var maxValue = GenericOperations.conditionalSelect(
+                hasHigh,
+                () -> solver.getValue(getHigh(range)),
+                () -> "");
 
         return Map.of(
                 "minValue", minValue,
@@ -107,17 +121,20 @@ public interface RangeToString<R, Q extends IBase, C extends FDSConfig & Quantit
      */
     private String getConditionCode(boolean hasLow, boolean hasHigh) {
         // Full range [min - max]
-        if (hasLow && hasHigh) {
+        var hasBoth = GenericOperations.allMatchLazy(
+                () -> hasLow,
+                () -> hasHigh);
+
+        if (hasBoth) {
             return "0";
         }
 
-        // Max only [ - max]
-        if (hasHigh) {
-            return "1";
-        }
-
-        // Min only [min - ]
-        return "2";
+        return GenericOperations.conditionalSelect(
+                hasHigh,
+                // Max only [ - max]
+                () -> "1",
+                // Min only [min - ]
+                () -> "2");
     }
 
     /**
@@ -168,7 +185,11 @@ public interface RangeToString<R, Q extends IBase, C extends FDSConfig & Quantit
      */
     default CompletableFuture<String> getUnitText(TranslationService<C> translationService, R range) {
         var solver = getQuantityToString();
-        var quantity = hasHigh(range) ? getHigh(range) : getLow(range);
+        var quantity = GenericOperations.conditionalSelect(
+            hasHigh(range),
+            () -> getHigh(range),
+            () -> getLow(range)
+        );
         return solver.enhancedFromUnitToString(translationService, quantity);
     }
 

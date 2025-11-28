@@ -1,6 +1,6 @@
-package io.github.jy95.fds.common.translators;
+package io.github.jy95.fds.common.translators.timing.repeat;
 
-import io.github.jy95.fds.common.types.TranslatorTiming;
+import io.github.jy95.fds.common.types.Translator;
 
 /**
  * Interface for translating "timing.repeat.dayOfWeek".
@@ -9,7 +9,7 @@ import io.github.jy95.fds.common.types.TranslatorTiming;
  * @author jy95
  * @since 1.0.0
  */
-public interface DayOfWeek<D> extends TranslatorTiming<D> {
+public interface DayOfWeek<D> extends Translator<D> {
 
     /**
      * Key constant for dayOfWeek message

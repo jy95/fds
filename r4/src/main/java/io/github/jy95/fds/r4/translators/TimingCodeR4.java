@@ -1,10 +1,10 @@
 package io.github.jy95.fds.r4.translators;
 
 import io.github.jy95.fds.common.functions.TranslationService;
-import io.github.jy95.fds.common.types.TranslatorTiming;
+import io.github.jy95.fds.common.types.Translator;
 import io.github.jy95.fds.r4.config.FDSConfigR4;
 import lombok.RequiredArgsConstructor;
-import org.hl7.fhir.r4.model.Dosage;
+import org.hl7.fhir.r4.model.Timing;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -14,30 +14,24 @@ import java.util.concurrent.CompletableFuture;
  * @author jy95
  */
 @RequiredArgsConstructor
-public class TimingCodeR4 implements TranslatorTiming<Dosage> {
+public class TimingCodeR4 implements Translator<Timing> {
 
     /** Translation service */
     private final TranslationService<FDSConfigR4> translationService;
 
     /** {@inheritDoc} */
     @Override
-    public boolean hasTiming(Dosage dosage) {
-        return dosage.hasTiming();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public CompletableFuture<String> convert(Dosage dosage) {
+    public CompletableFuture<String> convert(Timing data) {
         return translationService
             .getConfig()
             .fromCodeableConceptToString(
-                dosage.getTiming().getCode()
+                data.getCode()
             );
     }
 
     /** {@inheritDoc} */
     @Override
-    public boolean hasRequiredElements(Dosage dosage) {
-        return dosage.getTiming().hasCode();
+    public boolean isPresent(Timing data) {
+        return data.hasCode();
     }
 }

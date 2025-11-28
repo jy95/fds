@@ -2,10 +2,10 @@ package io.github.jy95.fds.r4.translators;
 
 import io.github.jy95.fds.common.functions.ListToString;
 import io.github.jy95.fds.common.functions.TranslationService;
-import io.github.jy95.fds.common.translators.OffsetWhen;
+import io.github.jy95.fds.common.translators.timing.repeat.OffsetWhen;
 import io.github.jy95.fds.r4.config.FDSConfigR4;
 import lombok.RequiredArgsConstructor;
-import org.hl7.fhir.r4.model.Dosage;
+import org.hl7.fhir.r4.model.Timing.TimingRepeatComponent;
 import org.hl7.fhir.r4.model.Enumeration;
 
 import java.util.concurrent.CompletableFuture;
@@ -18,16 +18,16 @@ import java.util.stream.Stream;
  * @author jy95
  */
 @RequiredArgsConstructor
-public class OffsetWhenR4 implements OffsetWhen<Dosage> {
+public class OffsetWhenR4 implements OffsetWhen<TimingRepeatComponent> {
 
     /** Translation service */
     private final TranslationService<FDSConfigR4> translationService;
 
     /** {@inheritDoc} */
     @Override
-    public CompletableFuture<String> convert(Dosage dosage) {
-        var offsetPart = turnOffsetToText(dosage);
-        var whenPart = turnWhenToText(dosage);
+    public CompletableFuture<String> convert(TimingRepeatComponent data) {
+        var offsetPart = turnOffsetToText(data);
+        var whenPart = turnWhenToText(data);
 
         return offsetPart.thenCombineAsync(whenPart,(offsetText, whenText) -> Stream
                 .of(offsetText, whenText)
@@ -37,27 +37,19 @@ public class OffsetWhenR4 implements OffsetWhen<Dosage> {
 
     /** {@inheritDoc} */
     @Override
-    public boolean hasRequiredElements(Dosage dosage) {
-        var timing = dosage.getTiming();
+    public boolean isPresent(TimingRepeatComponent data) {
         // Rule: If there's an offset, there must be a when (and not C, CM, CD, CV)
-        return timing.hasRepeat() && (timing.getRepeat().hasOffset() || timing.getRepeat().hasWhen());
+        return data.hasOffset() || data.hasWhen();
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public boolean hasTiming(Dosage dosage) {
-        return dosage.hasTiming();
-    }
+    private CompletableFuture<String> turnWhenToText(TimingRepeatComponent data) {
 
-    private CompletableFuture<String> turnWhenToText(Dosage dosage) {
-        var repeat = dosage.getTiming().getRepeat();
-
-        if (!repeat.hasWhen()) {
+        if (!data.hasWhen()) {
             return CompletableFuture.completedFuture("");
         }
 
         return CompletableFuture.supplyAsync(() -> {
-            var events = repeat
+            var events = data
                     .getWhen()
                     .stream()
                     .map(Enumeration::getCode)
@@ -68,11 +60,10 @@ public class OffsetWhenR4 implements OffsetWhen<Dosage> {
         });
     }
 
-    private CompletableFuture<String> turnOffsetToText(Dosage dosage) {
-        var repeat = dosage.getTiming().getRepeat();
-        if (!repeat.hasOffset()) {
+    private CompletableFuture<String> turnOffsetToText(TimingRepeatComponent data) {
+        if (!data.hasOffset()) {
             return CompletableFuture.completedFuture("");
         }
-        return turnOffsetValueToText(translationService, repeat.getOffset());
+        return turnOffsetValueToText(translationService, data.getOffset());
     }
 }

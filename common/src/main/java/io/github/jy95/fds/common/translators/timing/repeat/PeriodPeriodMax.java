@@ -1,7 +1,9 @@
-package io.github.jy95.fds.common.translators;
+package io.github.jy95.fds.common.translators.timing.repeat;
 
-import io.github.jy95.fds.common.types.TranslatorTiming;
+import io.github.jy95.fds.common.functions.GenericOperations;
+import io.github.jy95.fds.common.types.Translator;
 import java.util.concurrent.CompletableFuture;
+import java.util.stream.Stream;
 
 /**
  * Interface for translating "timing.repeat.period" / "timing.repeat.periodMax".
@@ -10,7 +12,7 @@ import java.util.concurrent.CompletableFuture;
  * @author jy95
  * @since 1.0.0
  */
-public interface PeriodPeriodMax<D> extends TranslatorTiming<D> {
+public interface PeriodPeriodMax<D> extends Translator<D> {
 
     /**
      * Key constant for periodMax message
@@ -23,54 +25,63 @@ public interface PeriodPeriodMax<D> extends TranslatorTiming<D> {
 
     /** {@inheritDoc} */
     @Override
-    default CompletableFuture<String> convert(D dosage) {
+    default CompletableFuture<String> convert(D data) {
         return CompletableFuture.supplyAsync(() -> {
 
             // Rule: if there's a period, there needs to be period units
             // Rule: period SHALL be a non-negative value
             // Rule: If there's a periodMax, there must be a period
-            var hasPeriodFlag = hasPeriod(dosage);
-            var hasPeriodMaxFlag = hasPeriodMax(dosage);
-            var hasBoth = hasPeriodFlag && hasPeriodMaxFlag;
+            var hasBoth = Stream
+                    .of(
+                            hasPeriod(data),
+                            hasPeriodMax(data))
+                    .allMatch(resultat -> resultat);
 
-            if (hasBoth) {
-                return turnPeriodAndPeriodMaxToString(dosage);
-            }
-
-            return turnPeriodToString(dosage);
+            return GenericOperations.conditionalSelect(
+                    hasBoth,
+                    () -> turnPeriodAndPeriodMaxToString(data),
+                    () -> turnPeriodToString(data));
         });
     }
 
     /**
      * Checks whether a period value is present in the data object.
      *
-     * @param dosage The data object to check.
+     * @param data The data object to check.
      * @return {@code true} if a period value is present; {@code false} otherwise.
      */
-    boolean hasPeriod(D dosage);
+    boolean hasPeriod(D data);
 
     /**
      * Checks whether a periodMax value is present in the data object.
      *
-     * @param dosage The data object to check.
+     * @param data The data object to check.
      * @return {@code true} if a periodMax value is present; {@code false}
      *         otherwise.
      */
-    boolean hasPeriodMax(D dosage);
+    boolean hasPeriodMax(D data);
 
     /**
      * Converts both period and periodMax values into a formatted string.
      *
-     * @param dosage The data object containing the values.
+     * @param data The data object containing the values.
      * @return A formatted string representing both period and periodMax.
      */
-    String turnPeriodAndPeriodMaxToString(D dosage);
+    String turnPeriodAndPeriodMaxToString(D data);
 
     /**
      * Converts the period value into a formatted string.
      *
-     * @param dosage The data object containing the period value.
+     * @param data The data object containing the period value.
      * @return A formatted string representing the period.
      */
-    String turnPeriodToString(D dosage);
+    String turnPeriodToString(D data);
+
+    /** {@inheritDoc} */
+    @Override
+    default boolean isPresent(D data) {
+        return Stream.of(
+                hasPeriod(data),
+                hasPeriodMax(data)).anyMatch(resultat -> resultat);
+    }
 }
