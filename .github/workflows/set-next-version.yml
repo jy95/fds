@@ -53,7 +53,7 @@ jobs:
           today=$(date +'%Y-%m-%d')
           sed -i "s/^releaseDate: .*/releaseDate: \"$today\"/" publiccode.yml 
       - name: 💅 Create Pull Request
-        uses: peter-evans/create-pull-request@v7.0.9
+        uses: peter-evans/create-pull-request@v7.0.11
         with:
           title: "chore: Update POM version to ${{ needs.extract_version.outputs.next_patch }}-SNAPSHOT 🤖"
           branch: "automated/version-bump-${{ github.run_id }}"
