@@ -43,6 +43,8 @@ public abstract class AbstractTimingEventTest<C extends FDSConfig, D> extends Ab
             assertEquals("le 1 janv. 2024",actual);
         } else if (locale.equals(Locale.GERMAN)) {
             assertEquals("am 01.01.2024", actual);
+        } else if (locale.equals(Locale.forLanguageTag("es"))) {
+            assertEquals("el 1 ene 2024", actual);
         } else {
             // Check across several JDK requires splitting assertions to make them work
             assertTrue(actual.startsWith("op 1 jan"));
@@ -69,6 +71,8 @@ public abstract class AbstractTimingEventTest<C extends FDSConfig, D> extends Ab
             assertEquals("les 1 janv. 2018, 1 juin 1973 et 23 août 1905", actual);
         } else if (locale.equals(Locale.GERMAN)) {
             assertEquals("am 01.01.2018, 01.06.1973 und 23.08.1905", actual);
+        } else if (locale.equals(Locale.forLanguageTag("es"))) {
+            assertEquals("los 1 ene 2018, 1 jun 1973 y 23 ago 1905", actual);
         } else {
             assertTrue(
                     actual.equals("op 1 jan 2018, 1 jun 1973 en 23 aug 1905") ||
