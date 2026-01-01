@@ -42,15 +42,15 @@ public class DosageFields_es extends ListResourceBundle {
 
             // Fields - Day/Time
             { "fields.dayOfWeek", "{dayCondition, plural, one{el {day}} other{el {day}}}" },
-            { "fields.timeOfDay", "a {timeOfDay}" },
+            { "fields.timeOfDay", "a las {timeOfDay}" },
             { "fields.asNeeded", "según sea necesario" },
-            { "fields.asNeededFor", "según sea necesario {0}" },
+            { "fields.asNeededFor", "según sea necesario para {0}" },
 
             // Fields - Bounds
-            { "fields.boundsDuration", "para {0}" },
+            { "fields.boundsDuration", "por {0}" },
             { "fields.boundsPeriod",
                     "{condition, select, 0{desde {startDate} a {endDate}} 1{desde {startDate}} other{a {endDate}}}" },
-            { "fields.boundsRange", "para {0}" },
+            { "fields.boundsRange", "por {0}" },
 
             // Fields - Count
             { "fields.count", "{0, plural, one{Tomar {0} vez} other{Tomar {0} veces}}" },
