@@ -3,7 +3,7 @@ package io.github.jy95.fds.common.l10n;
 import java.util.ListResourceBundle;
 
 /**
- * English (es) resource bundle for event timing codes.
+ * Spanish (es) resource bundle for event timing codes.
  *
  * @see <a href="https://www.hl7.org/fhir/valueset-event-timing.html">FHIR Event
  *      Timing</a>
