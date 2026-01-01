@@ -49,7 +49,7 @@ public class DosageFields_es extends ListResourceBundle {
             // Fields - Bounds
             { "fields.boundsDuration", "por {0}" },
             { "fields.boundsPeriod",
-                    "{condition, select, 0{desde {startDate} a {endDate}} 1{desde {startDate}} other{a {endDate}}}" },
+                    "{condition, select, 0{desde {startDate} hasta {endDate}} 1{desde {startDate}} other{hasta {endDate}}}" },
             { "fields.boundsRange", "por {0}" },
 
             // Fields - Count
