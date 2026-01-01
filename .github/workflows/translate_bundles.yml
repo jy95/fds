@@ -109,6 +109,7 @@ jobs:
             ### 🛠️ Step 1: Registry & Integration
             To activate this new locale, you need to manually register it in the following files:
 
+            - [ ] **publiccode.yml**: Add the BCP 47 code `${{ github.event.inputs.tgt_lang }}` to the `availableLanguages` list.
             - [ ] **DosageMarkdown.java**: Add the new `Locale` to the supported list.
             - [ ] **LocaleProviderBase.java**: Include the locale in the test provider for coverage.
             - [ ] **R4 AbstractFhirTest.java**: Register for R4 validation.
