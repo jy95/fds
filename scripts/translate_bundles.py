@@ -7,7 +7,7 @@ import argostranslate.translate
 
 # --- REGEX CONFIGURATION ---
 # Captures the structure { "key", "value" }
-BUNDLE_ENTRY_PATTERN = re.compile(r'(\{\s*"[^"]+"\s*,\s*")([^"]*)("\s*\})')
+BUNDLE_ENTRY_PATTERN = re.compile(r'(\{\s*"[^"]+"\s*,\s*")((?:[^"\\]|\\.)*)("\s*\})')
 # Captures the class name to add suffix
 CLASS_NAME_PATTERN = re.compile(r'public\s+class\s+([A-Za-z0-9_]+)')
 # Captures Javadoc to update target language
@@ -29,6 +29,8 @@ class FHIRBundleTranslator:
         if pkg:
             print(f"--- Installing model {self.src} -> {self.tgt} ---")
             argostranslate.package.install_from_path(pkg.download())
+        else:
+            raise ValueError(f"Translation package not available for {self.src} -> {self.tgt}. "f"Available languages: {sorted(set(p.to_code for p in available if p.from_code == self.src))}")
 
     def process_text_content(self, text):
         """
@@ -71,7 +73,7 @@ class FHIRBundleTranslator:
         content = CLASS_NAME_PATTERN.sub(r'public class \1_' + self.tgt, content)
         
         # 2. Update Javadoc header
-        content = JAVADOC_PATTERN.sub(f'* Target Translation ({self.tgt}) resource bundle', content)
+        content = JAVADOC_PATTERN.sub(rf'* \1 ({self.tgt}) resource bundle', content)
 
         # 3. Translate contents (unless it is a symbol-only file)
         if is_comparator:
@@ -87,6 +89,9 @@ class FHIRBundleTranslator:
         # 4. Save to new file with language suffix
         new_filename = filename.replace(".java", f"_{self.tgt}.java")
         target_path = os.path.join(os.path.dirname(source_path), new_filename)
+
+        if os.path.exists(target_path):
+            print(f"   [WARN] {new_filename} already exists, overwriting...")
         
         with open(target_path, 'w', encoding='utf-8') as f:
             f.write(content)
