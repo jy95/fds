@@ -85,6 +85,9 @@ public abstract class AbstractDurationDurationMaxTest<C extends FDSConfig, D> ex
     private String getExpectedText3(Locale locale) {
         if (locale.equals(Locale.ENGLISH)) {
             return "over 3 days ( maximum 5 days )";
+        }
+        else if (locale.equals(Locale.forLanguageTag("es"))) {
+            return "más de 3 días ( máximo 5 días )";
         } else if (locale.equals(Locale.FRENCH)) {
             return "durant 3 jours ( maximum 5 jours )";
         } else if (locale.equals(Locale.GERMAN)) {

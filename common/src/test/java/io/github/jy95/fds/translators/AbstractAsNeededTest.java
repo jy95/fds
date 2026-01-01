@@ -63,6 +63,9 @@ public abstract class AbstractAsNeededTest<C extends FDSConfig, D> extends Abstr
     public String getExpectedText2(Locale locale) {
         if (locale.equals(Locale.ENGLISH)) {
             return "as required for head pain";
+        }
+        else if (locale.equals(Locale.forLanguageTag("es"))) {
+            return "como se requiere para el dolor de cabeza";
         } else if (locale.equals(Locale.FRENCH)) {
             return "si nécessaire pour head pain";
         } else if (locale.equals(Locale.GERMAN)) {

@@ -61,6 +61,9 @@ public abstract class AbstractCountCountMaxTest<C extends FDSConfig, D> extends 
     private String getExpectedText2(Locale locale) {
         if (locale.equals(Locale.ENGLISH)) {
             return "take 2 to 3 times";
+        }
+        else if (locale.equals(Locale.forLanguageTag("es"))) {
+            return "tomar 2 a 3 veces";
         } else if (locale.equals(Locale.FRENCH)) {
             return "prendre 2 à 3 fois";
         } else if (locale.equals(Locale.GERMAN)) {

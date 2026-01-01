@@ -98,6 +98,9 @@ public abstract class AbstractBoundsPeriodTest<C extends FDSConfig, D> extends A
     private String getExpectedText3(Locale locale) {
         if (locale.equals(Locale.ENGLISH)) {
             return "from May 23, 2011";
+        }
+        else if (locale.equals(Locale.forLanguageTag("es"))) {
+            return "del 23 de mayo de 2011";
         } else if (locale.equals(Locale.FRENCH)) {
             return "à partir du 23 mai 2011";
         } else if (locale.equals(Locale.GERMAN)) {

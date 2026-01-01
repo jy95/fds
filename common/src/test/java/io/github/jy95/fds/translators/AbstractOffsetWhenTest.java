@@ -85,6 +85,9 @@ public abstract class AbstractOffsetWhenTest<C extends FDSConfig, D> extends Abs
     private String getExpectedText3(Locale locale) {
         if (locale.equals(Locale.ENGLISH)) {
             return "30 minutes";
+        }
+        else if (locale.equals(Locale.forLanguageTag("es"))) {
+            return "30 minutos";
         } else if (locale.equals(Locale.FRENCH)) {
             return "30 minutes";
         } else if (locale.equals(Locale.GERMAN)) {
