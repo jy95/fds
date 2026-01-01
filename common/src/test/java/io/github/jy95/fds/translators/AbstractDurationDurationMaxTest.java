@@ -42,7 +42,7 @@ public abstract class AbstractDurationDurationMaxTest<C extends FDSConfig, D> ex
         } else if (locale.equals(Locale.GERMAN)) {
             return "für 3 Tage";
         } else if (locale.equals(Locale.forLanguageTag("es"))) {
-            return "durante 3 días";
+            return "sobre 3 días";
         } else {
             return "gedurende 3 dagen";
         }
@@ -94,7 +94,7 @@ public abstract class AbstractDurationDurationMaxTest<C extends FDSConfig, D> ex
         } else if (locale.equals(Locale.GERMAN)) {
             return "für 3 Tage ( maximal 5 Tage )";
         } else if (locale.equals(Locale.forLanguageTag("es"))) {
-            return "durante 3 días ( máximo 5 días )";
+            return "sobre 3 días ( máximo 5 días )";
         } else {
             return "gedurende 3 dagen ( maximaal 5 dagen )";
         }

@@ -67,7 +67,7 @@ public abstract class AbstractBoundsPeriodTest<C extends FDSConfig, D> extends A
         } else if (locale.equals(Locale.GERMAN)) {
             return "von 23.05.2011 bis 27.05.2011";
         } else if (locale.equals(Locale.forLanguageTag("es"))) {
-            return "del 23 de mayo de 2011 al 27 de mayo de 2011";
+            return "desde 23 may 2011 a 27 may 2011";
         } else {
             return "van 23 mei 2011 tot 27 mei 2011";
         }
@@ -85,7 +85,7 @@ public abstract class AbstractBoundsPeriodTest<C extends FDSConfig, D> extends A
         } else if (locale.equals(Locale.GERMAN)) {
             assertEquals("bis 07.02.2015, 13:28:17", actual);
         } else if (locale.equals(Locale.forLanguageTag("es"))) {
-            assertTrue(actual.startsWith("hasta el 7 feb 2015") || actual.startsWith("hasta el 7 de feb. de 2015"));
+            assertTrue(actual.startsWith("hasta 7 feb 2015"));
             assertTrue(actual.contains("13:28:17"));
         } else {
             assertTrue(
