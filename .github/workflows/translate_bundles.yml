@@ -82,7 +82,7 @@ jobs:
         run: |
           python scripts/translate_bundles.py --tgt "${{ github.event.inputs.tgt_lang }}"
         env:
-          SRC_DIR: common/src/main/java/io/github/jy95/fds/common/l10n
+          SRC_DIR: common
 
       - name: 🤖 Translate Java Test Files
         run: |
