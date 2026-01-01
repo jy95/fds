@@ -3,7 +3,7 @@ package io.github.jy95.fds.common.l10n;
 import java.util.ListResourceBundle;
 
 /**
- * English (es) resource bundle for structured dosage and field labels.
+ * Spanish (es) resource bundle for structured dosage and field labels.
  *
  * @author jy95
  * @since 2.0.1
