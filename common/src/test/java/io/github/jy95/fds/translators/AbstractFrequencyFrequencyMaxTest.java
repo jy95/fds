@@ -86,6 +86,9 @@ public abstract class AbstractFrequencyFrequencyMaxTest<C extends FDSConfig, D> 
     private String getExpectedText3(Locale locale) {
         if (locale.equals(Locale.ENGLISH)) {
             return "3-5 times";
+        }
+        else if (locale.equals(Locale.forLanguageTag("es"))) {
+            return "3-5 veces";
         } else if (locale.equals(Locale.FRENCH)) {
             return "3-5 fois";
         } else if (locale.equals(Locale.GERMAN)) {

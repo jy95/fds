@@ -144,6 +144,9 @@ public abstract class AbstractRateRatioTest<C extends FDSConfig, D> extends Abst
     private String getExpectedText5(Locale locale) {
         if (locale.equals(Locale.ENGLISH)) {
             return "at a rate of 10 mg every 2 ml";
+        }
+        else if (locale.equals(Locale.forLanguageTag("es"))) {
+            return "a una tasa de 10 mg cada 2 ml";
         } else if (locale.equals(Locale.FRENCH)) {
             return "au taux de 10 mg chaque 2 ml";
         } else if (locale.equals(Locale.GERMAN)) {

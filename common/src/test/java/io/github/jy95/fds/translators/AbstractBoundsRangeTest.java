@@ -164,6 +164,9 @@ public abstract class AbstractBoundsRangeTest<C extends FDSConfig, D> extends Ab
     private String getExpectedText6(Locale locale) {
         if (locale.equals(Locale.ENGLISH)) {
             return "for at least 3 days";
+        }
+        else if (locale.equals(Locale.forLanguageTag("es"))) {
+            return "por lo menos 3 días";
         } else if (locale.equals(Locale.FRENCH)) {
             return "pour au moins 3 jours";
         } else if (locale.equals(Locale.GERMAN)) {

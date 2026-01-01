@@ -61,6 +61,9 @@ public abstract class AbstractPeriodPeriodMaxTest<C extends FDSConfig, D> extend
     private String getExpectedText2(Locale locale) {
         if (locale.equals(Locale.ENGLISH)) {
             return "every 2 to 3 days";
+        }
+        else if (locale.equals(Locale.forLanguageTag("es"))) {
+            return "cada 2 a 3 días";
         } else if (locale.equals(Locale.FRENCH)) {
             return "chaque 2 à 3 jours";
         } else if (locale.equals(Locale.GERMAN)) {
