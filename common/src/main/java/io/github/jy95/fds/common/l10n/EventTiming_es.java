@@ -48,7 +48,7 @@ public class EventTiming_es extends ListResourceBundle {
             { "PCV", "después de cenar" },
     };
 
-    // English version
+    // Spanish version
     /** {@inheritDoc} */
     @Override
     public Object[][] getContents() {
