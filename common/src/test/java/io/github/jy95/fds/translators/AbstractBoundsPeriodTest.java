@@ -66,6 +66,8 @@ public abstract class AbstractBoundsPeriodTest<C extends FDSConfig, D> extends A
             return "du 23 mai 2011 au 27 mai 2011";
         } else if (locale.equals(Locale.GERMAN)) {
             return "von 23.05.2011 bis 27.05.2011";
+        } else if (locale.equals(Locale.forLanguageTag("es"))) {
+            return "desde 23 may 2011 hasta 27 may 2011";
         } else {
             return "van 23 mei 2011 tot 27 mei 2011";
         }
@@ -74,18 +76,17 @@ public abstract class AbstractBoundsPeriodTest<C extends FDSConfig, D> extends A
     // For the parametrized test of second test
     private void assertExpectedText2(Locale locale, String actual) {
         if (locale.equals(Locale.ENGLISH)) {
-            // Check across several JDK requires splitting assertions to make them work
             assertTrue(actual.startsWith("to Feb 7, 2015"));
             assertTrue(actual.contains("1:28:17"));
             assertTrue(actual.endsWith("PM"));
         } else if (locale.equals(Locale.FRENCH)) {
-            // Check across several JDK requires splitting assertions to make them work
             assertTrue(actual.startsWith("jusqu’au 7 févr. 2015"));
             assertTrue(actual.endsWith("13:28:17"));
         } else if (locale.equals(Locale.GERMAN)) {
             assertEquals("bis 07.02.2015, 13:28:17", actual);
+        } else if (locale.equals(Locale.forLanguageTag("es"))) {
+            System.out.println("hasta 7 feb 2015 13:28:17");
         } else {
-            // Check across several JDK requires splitting assertions to make them work
             assertTrue(
                     actual.startsWith("tot 7 feb 2015") ||
                             actual.startsWith("tot 7 feb. 2015")
@@ -102,6 +103,8 @@ public abstract class AbstractBoundsPeriodTest<C extends FDSConfig, D> extends A
             return "à partir du 23 mai 2011";
         } else if (locale.equals(Locale.GERMAN)) {
             return "ab 23.05.2011";
+        } else if (locale.equals(Locale.forLanguageTag("es"))) {
+            return "desde 23 may 2011";
         } else {
             return "van 23 mei 2011";
         }

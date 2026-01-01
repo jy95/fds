@@ -53,6 +53,8 @@ public abstract class AbstractCountCountMaxTest<C extends FDSConfig, D> extends 
             return "prendre 2 fois";
         } else if (locale.equals(Locale.GERMAN)) {
             return "2 Mal nehmen";
+        } else if (locale.equals(Locale.forLanguageTag("es"))) {
+            return "tomar 2 veces";
         } else {
             return "2 keer nemen";
         }
@@ -65,6 +67,8 @@ public abstract class AbstractCountCountMaxTest<C extends FDSConfig, D> extends 
             return "prendre 2 à 3 fois";
         } else if (locale.equals(Locale.GERMAN)) {
             return "von 2 bis 3 Mal nehmen";
+        } else if (locale.equals(Locale.forLanguageTag("es"))) {
+            return "tomar de 2 a 3 veces";
         } else {
             return "2 tot 3 keer nemen";
         }

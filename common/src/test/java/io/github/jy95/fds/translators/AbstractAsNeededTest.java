@@ -54,6 +54,8 @@ public abstract class AbstractAsNeededTest<C extends FDSConfig, D> extends Abstr
             return "si nécessaire";
         } else if (locale.equals(Locale.GERMAN)) {
             return "bei Bedarf";
+        } else if (locale.equals(Locale.forLanguageTag("es"))) {
+            return "según sea necesario";
         } else {
             return "indien nodig";
         }
@@ -67,6 +69,8 @@ public abstract class AbstractAsNeededTest<C extends FDSConfig, D> extends Abstr
             return "si nécessaire pour head pain";
         } else if (locale.equals(Locale.GERMAN)) {
             return "bei Bedarf für head pain";
+        } else if (locale.equals(Locale.forLanguageTag("es"))) {
+            return "según sea necesario para head pain";
         } else {
             return "zoals nodig voor head pain";
         }

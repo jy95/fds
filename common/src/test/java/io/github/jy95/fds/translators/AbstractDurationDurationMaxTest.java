@@ -27,7 +27,7 @@ public abstract class AbstractDurationDurationMaxTest<C extends FDSConfig, D> ex
     void testWithDurationOnly(Locale locale) throws ExecutionException, InterruptedException {
         var dosage = generateWithDurationOnly();
         var dosageUtils = getDosageAPI(locale, DisplayOrder.DURATION_DURATION_MAX);
-        String result = dosageUtils.asHumanReadableText(dosage).get().replace("\u00a0"," ");;
+        String result = dosageUtils.asHumanReadableText(dosage).get().replace("\u00a0"," ");
         String expectedResult = getExpectedText1(locale);
         assertEquals(expectedResult, result);
     }
@@ -41,6 +41,8 @@ public abstract class AbstractDurationDurationMaxTest<C extends FDSConfig, D> ex
             return "durant 3 jours";
         } else if (locale.equals(Locale.GERMAN)) {
             return "für 3 Tage";
+        } else if (locale.equals(Locale.forLanguageTag("es"))) {
+            return "sobre 3 días";
         } else {
             return "gedurende 3 dagen";
         }
@@ -51,7 +53,7 @@ public abstract class AbstractDurationDurationMaxTest<C extends FDSConfig, D> ex
     void testWithDurationMaxOnly(Locale locale) throws ExecutionException, InterruptedException {
         var dosage = generateWithDurationMaxOnly();
         var dosageUtils = getDosageAPI(locale, DisplayOrder.DURATION_DURATION_MAX);
-        String result = dosageUtils.asHumanReadableText(dosage).get().replace("\u00a0"," ");;
+        String result = dosageUtils.asHumanReadableText(dosage).get().replace("\u00a0"," ");
         String expectedResult = getExpectedText2(locale);
         assertEquals(expectedResult, result);
     }
@@ -65,6 +67,8 @@ public abstract class AbstractDurationDurationMaxTest<C extends FDSConfig, D> ex
             return "maximum 3 jours";
         } else if (locale.equals(Locale.GERMAN)) {
             return "maximal 3 Tage";
+        } else if (locale.equals(Locale.forLanguageTag("es"))) {
+            return "máximo 3 días";
         } else {
             return "maximaal 3 dagen";
         }
@@ -75,7 +79,7 @@ public abstract class AbstractDurationDurationMaxTest<C extends FDSConfig, D> ex
     void testWithBothDuration(Locale locale) throws ExecutionException, InterruptedException {
         var dosage = generateWithBothDuration();
         var dosageUtils = getDosageAPI(locale, DisplayOrder.DURATION_DURATION_MAX);
-        String result = dosageUtils.asHumanReadableText(dosage).get().replace("\u00a0"," ");;
+        String result = dosageUtils.asHumanReadableText(dosage).get().replace("\u00a0"," ");
         String expectedResult = getExpectedText3(locale);
         assertEquals(expectedResult, result);
     }
@@ -89,6 +93,8 @@ public abstract class AbstractDurationDurationMaxTest<C extends FDSConfig, D> ex
             return "durant 3 jours ( maximum 5 jours )";
         } else if (locale.equals(Locale.GERMAN)) {
             return "für 3 Tage ( maximal 5 Tage )";
+        } else if (locale.equals(Locale.forLanguageTag("es"))) {
+            return "sobre 3 días ( máximo 5 días )";
         } else {
             return "gedurende 3 dagen ( maximaal 5 dagen )";
         }

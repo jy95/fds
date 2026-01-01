@@ -41,6 +41,8 @@ public abstract class AbstractRateQuantityTest<C extends FDSConfig, D> extends A
             return "au taux de 5 ml";
         } else if (locale.equals(Locale.GERMAN)) {
             return "mit einem Verhältnis von 5 ml";
+        } else if (locale.equals(Locale.forLanguageTag("es"))) {
+            return "a una tasa de 5 ml";
         } else {
             return "met een verhouding van 5 ml";
         }

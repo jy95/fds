@@ -42,6 +42,8 @@ public abstract class AbstractBoundsDurationTest<C extends FDSConfig, D> extends
             return "pour 3 jours";
         } else if (locale.equals(Locale.GERMAN)) {
             return "für 3 Tage";
+        } else if (locale.equals(Locale.forLanguageTag("es"))) {
+            return "por 3 días";
         } else {
             return "gedurende 3 dagen";
         }
