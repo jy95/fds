@@ -38,7 +38,9 @@ public interface DosageMarkdown&lt;A extends DosageAPI&lt;?, B&gt;, B&gt; {
                 Locale.ENGLISH,
                 Locale.FRENCH,
                 Locale.GERMAN,
-<span class="fc" id="L41">                Locale.forLanguageTag(&quot;nl-BE&quot;));</span>
+<span class="fc" id="L41">                Locale.forLanguageTag(&quot;nl-BE&quot;),</span>
+<span class="fc" id="L42">                Locale.forLanguageTag(&quot;es&quot;)</span>
+            );
     }
 
     /**
@@ -50,7 +52,7 @@ public interface DosageMarkdown&lt;A extends DosageAPI&lt;?, B&gt;, B&gt; {
      *         directory.
      */
     default Path getResourcesDir() {
-<span class="fc" id="L53">        return Paths.get(&quot;src&quot;, &quot;site&quot;, &quot;resources&quot;, &quot;examples&quot;);</span>
+<span class="fc" id="L55">        return Paths.get(&quot;src&quot;, &quot;site&quot;, &quot;resources&quot;, &quot;examples&quot;);</span>
     }
 
     /**
@@ -66,7 +68,7 @@ public interface DosageMarkdown&lt;A extends DosageAPI&lt;?, B&gt;, B&gt; {
      *         directory (e.g., src/site/en/markdown/examples).
      */
     default Path getBaseOutputDir(Locale locale) {
-<span class="fc" id="L69">        return Paths.get(&quot;src&quot;, &quot;site&quot;, locale.toString(), &quot;markdown&quot;, &quot;examples&quot;);</span>
+<span class="fc" id="L71">        return Paths.get(&quot;src&quot;, &quot;site&quot;, locale.toString(), &quot;markdown&quot;, &quot;examples&quot;);</span>
     }
 
     /**
@@ -95,10 +97,10 @@ public interface DosageMarkdown&lt;A extends DosageAPI&lt;?, B&gt;, B&gt; {
      *         configured for that locale.
      */
     default Map&lt;Locale, A&gt; getDosageAPIs() {
-<span class="fc" id="L98">        return getLocales()</span>
-<span class="fc" id="L99">                .stream()</span>
-<span class="fc" id="L100">                .collect(Collectors.toMap(</span>
-<span class="fc" id="L101">                        locale -&gt; locale,</span>
+<span class="fc" id="L100">        return getLocales()</span>
+<span class="fc" id="L101">                .stream()</span>
+<span class="fc" id="L102">                .collect(Collectors.toMap(</span>
+<span class="fc" id="L103">                        locale -&gt; locale,</span>
                         this::createDosageAPI // Uses the abstract createDosageAPI method
                 ));
     }
@@ -125,9 +127,9 @@ public interface DosageMarkdown&lt;A extends DosageAPI&lt;?, B&gt;, B&gt; {
      *                             directories.
      */
     default Stream&lt;Path&gt; getJsonFiles() throws IOException {
-<span class="fc" id="L128">        return Files</span>
-<span class="fc" id="L129">                .walk(getResourcesDir())</span>
-<span class="fc" id="L130">                .filter(path -&gt; path.toString().endsWith(&quot;.json&quot;));</span>
+<span class="fc" id="L130">        return Files</span>
+<span class="fc" id="L131">                .walk(getResourcesDir())</span>
+<span class="fc" id="L132">                .filter(path -&gt; path.toString().endsWith(&quot;.json&quot;));</span>
     }
 
     /**
@@ -144,9 +146,9 @@ public interface DosageMarkdown&lt;A extends DosageAPI&lt;?, B&gt;, B&gt; {
      *                             directories.
      */
     default Map&lt;Path, List&lt;Path&gt;&gt; getJsonFilesGroupedByFolder() throws IOException {
-<span class="fc" id="L147">        try (Stream&lt;Path&gt; jsonFilesStream = getJsonFiles()) {</span>
-<span class="fc" id="L148">            return jsonFilesStream</span>
-<span class="fc" id="L149">                    .collect(Collectors.groupingBy(Path::getParent));</span>
+<span class="fc" id="L149">        try (Stream&lt;Path&gt; jsonFilesStream = getJsonFiles()) {</span>
+<span class="fc" id="L150">            return jsonFilesStream</span>
+<span class="fc" id="L151">                    .collect(Collectors.groupingBy(Path::getParent));</span>
         }
     }
 
@@ -162,32 +164,32 @@ public interface DosageMarkdown&lt;A extends DosageAPI&lt;?, B&gt;, B&gt; {
      *                             usage.
      */
     default void generateMarkdown() throws Exception {
-<span class="fc" id="L165">        Map&lt;Locale, A&gt; dosageAPIs = getDosageAPIs();</span>
-<span class="fc" id="L166">        Map&lt;Path, List&lt;Path&gt;&gt; groupedJsonFiles = getJsonFilesGroupedByFolder();</span>
+<span class="fc" id="L167">        Map&lt;Locale, A&gt; dosageAPIs = getDosageAPIs();</span>
+<span class="fc" id="L168">        Map&lt;Path, List&lt;Path&gt;&gt; groupedJsonFiles = getJsonFilesGroupedByFolder();</span>
 
-<span class="fc bfc" id="L168" title="All 2 branches covered.">        for (Locale locale : getLocales()) {</span>
+<span class="fc bfc" id="L170" title="All 2 branches covered.">        for (Locale locale : getLocales()) {</span>
 
             // Prepare the main folder for the locale
-<span class="fc" id="L171">            Path baseOutputDir = getBaseOutputDir(locale);</span>
-<span class="fc" id="L172">            Files.createDirectories(baseOutputDir);</span>
+<span class="fc" id="L173">            Path baseOutputDir = getBaseOutputDir(locale);</span>
+<span class="fc" id="L174">            Files.createDirectories(baseOutputDir);</span>
 
             // Prepare the dosage API for the current locale
-<span class="fc" id="L175">            A dosageApiForLocale = dosageAPIs.get(locale);</span>
+<span class="fc" id="L177">            A dosageApiForLocale = dosageAPIs.get(locale);</span>
 
             // Iterate through the grouped JSON files
-<span class="fc bfc" id="L178" title="All 2 branches covered.">            for (Map.Entry&lt;Path, List&lt;Path&gt;&gt; entry : groupedJsonFiles.entrySet()) {</span>
+<span class="fc bfc" id="L180" title="All 2 branches covered.">            for (Map.Entry&lt;Path, List&lt;Path&gt;&gt; entry : groupedJsonFiles.entrySet()) {</span>
 
-<span class="fc" id="L180">                Path folder = entry.getKey();</span>
-<span class="fc" id="L181">                List&lt;Path&gt; jsonFilesInFolder = entry.getValue();</span>
+<span class="fc" id="L182">                Path folder = entry.getKey();</span>
+<span class="fc" id="L183">                List&lt;Path&gt; jsonFilesInFolder = entry.getValue();</span>
 
                 // Fill in the Markdown file with the JSON files
-<span class="fc" id="L184">                Path markdownFile = baseOutputDir.resolve(getRelativeMarkdownFilePath(folder));</span>
-<span class="fc" id="L185">                Files.createDirectories(markdownFile.getParent()); // Ensure parent directories for the Markdown file</span>
+<span class="fc" id="L186">                Path markdownFile = baseOutputDir.resolve(getRelativeMarkdownFilePath(folder));</span>
+<span class="fc" id="L187">                Files.createDirectories(markdownFile.getParent()); // Ensure parent directories for the Markdown file</span>
                                                                    // exist
-<span class="fc" id="L187">                generateMarkdownForFolderAndLocale(dosageApiForLocale, folder, markdownFile, jsonFilesInFolder);</span>
-<span class="fc" id="L188">            }</span>
-<span class="fc" id="L189">        }</span>
-<span class="fc" id="L190">    }</span>
+<span class="fc" id="L189">                generateMarkdownForFolderAndLocale(dosageApiForLocale, folder, markdownFile, jsonFilesInFolder);</span>
+<span class="fc" id="L190">            }</span>
+<span class="fc" id="L191">        }</span>
+<span class="fc" id="L192">    }</span>
 
     /**
      * Reads the content of a JSON file and returns it as a String.
@@ -200,7 +202,7 @@ public interface DosageMarkdown&lt;A extends DosageAPI&lt;?, B&gt;, B&gt; {
      */
     default String getDosageJsonAsString(Path jsonFile) throws IOException {
         // Read the JSON file content as a String
-<span class="fc" id="L203">        return Files.readString(jsonFile);</span>
+<span class="fc" id="L205">        return Files.readString(jsonFile);</span>
     }
 
     /**
@@ -223,28 +225,28 @@ public interface DosageMarkdown&lt;A extends DosageAPI&lt;?, B&gt;, B&gt; {
      */
     private void generateMarkdownForFolderAndLocale(A dosageApi, Path inputFolder, Path markdownFile,
             List&lt;Path&gt; jsonFilesToProcess) throws IOException, ExecutionException, InterruptedException {
-<span class="fc" id="L226">        try (BufferedWriter writer = Files.newBufferedWriter(markdownFile)) {</span>
+<span class="fc" id="L228">        try (BufferedWriter writer = Files.newBufferedWriter(markdownFile)) {</span>
             // The header should be the name of the folder (e.g., &quot;examples&quot;, &quot;text&quot;,
             // &quot;nested&quot;)
-<span class="fc" id="L229">            String headerName = inputFolder.getFileName().toString();</span>
-<span class="fc" id="L230">            writeMarkdownHeader(writer, headerName);</span>
-<span class="fc" id="L231">            writeMarkdownTableStart(writer);</span>
+<span class="fc" id="L231">            String headerName = inputFolder.getFileName().toString();</span>
+<span class="fc" id="L232">            writeMarkdownHeader(writer, headerName);</span>
+<span class="fc" id="L233">            writeMarkdownTableStart(writer);</span>
 
             // Process each JSON file asynchronously and then write to the Markdown
-<span class="fc" id="L234">            jsonFilesToProcess</span>
-<span class="fc" id="L235">                    .stream()</span>
-<span class="fc" id="L236">                    .forEach(jsonFile -&gt; {</span>
+<span class="fc" id="L236">            jsonFilesToProcess</span>
+<span class="fc" id="L237">                    .stream()</span>
+<span class="fc" id="L238">                    .forEach(jsonFile -&gt; {</span>
                         try {
                             // Extract JSON file content and human-readable text asynchronously
-<span class="fc" id="L239">                            Map&lt;String, String&gt; data = extractJsonFile(dosageApi, jsonFile).get();</span>
-<span class="fc" id="L240">                            writeMarkdownTableRow(writer, data.get(&quot;json&quot;), data.get(&quot;dosage&quot;));</span>
-<span class="fc" id="L241">                        } catch (Exception e) {</span>
-<span class="fc" id="L242">                        }</span>
-<span class="fc" id="L243">                    });</span>
+<span class="fc" id="L241">                            Map&lt;String, String&gt; data = extractJsonFile(dosageApi, jsonFile).get();</span>
+<span class="fc" id="L242">                            writeMarkdownTableRow(writer, data.get(&quot;json&quot;), data.get(&quot;dosage&quot;));</span>
+<span class="fc" id="L243">                        } catch (Exception e) {</span>
+<span class="fc" id="L244">                        }</span>
+<span class="fc" id="L245">                    });</span>
 
-<span class="fc" id="L245">            writeMarkdownTableEnd(writer);</span>
+<span class="fc" id="L247">            writeMarkdownTableEnd(writer);</span>
         }
-<span class="fc" id="L247">    }</span>
+<span class="fc" id="L249">    }</span>
 
     /**
      * Determines the relative path and filename for the markdown output file.
@@ -259,25 +261,25 @@ public interface DosageMarkdown&lt;A extends DosageAPI&lt;?, B&gt;, B&gt; {
     private String getRelativeMarkdownFilePath(Path folder) {
 
         // Get the resources directory and the file name for the markdown output
-<span class="fc" id="L262">        Path resourcesDir = getResourcesDir();</span>
-<span class="fc" id="L263">        String fileName = folder.getFileName().toString() + &quot;.md&quot;;</span>
+<span class="fc" id="L264">        Path resourcesDir = getResourcesDir();</span>
+<span class="fc" id="L265">        String fileName = folder.getFileName().toString() + &quot;.md&quot;;</span>
 
         // Get the relative path from the resources directory to the folder
         // e.g., &quot;&quot;, &quot;text&quot;, &quot;text/nested&quot;
-<span class="fc" id="L267">        Path relativePathFromResources = resourcesDir.relativize(folder);</span>
-<span class="fc" id="L268">        var nameCount = relativePathFromResources.getNameCount();</span>
+<span class="fc" id="L269">        Path relativePathFromResources = resourcesDir.relativize(folder);</span>
+<span class="fc" id="L270">        var nameCount = relativePathFromResources.getNameCount();</span>
 
-<span class="fc bfc" id="L270" title="All 2 branches covered.">        if (nameCount &lt;= 1) {</span>
+<span class="fc bfc" id="L272" title="All 2 branches covered.">        if (nameCount &lt;= 1) {</span>
             // If the folder is the resources directory itself or empty, return the file
             // name only.
-<span class="fc" id="L273">            return fileName;</span>
+<span class="fc" id="L275">            return fileName;</span>
         } else {
             // For subdirectories, we need to combine the relative path - 1 (the folder
             // name) with the filename.
-<span class="fc" id="L277">            return relativePathFromResources</span>
-<span class="fc" id="L278">                    .subpath(0, nameCount - 1)</span>
-<span class="fc" id="L279">                    .resolve(fileName)</span>
-<span class="fc" id="L280">                    .toString();</span>
+<span class="fc" id="L279">            return relativePathFromResources</span>
+<span class="fc" id="L280">                    .subpath(0, nameCount - 1)</span>
+<span class="fc" id="L281">                    .resolve(fileName)</span>
+<span class="fc" id="L282">                    .toString();</span>
         }
     }
 
@@ -289,8 +291,8 @@ public interface DosageMarkdown&lt;A extends DosageAPI&lt;?, B&gt;, B&gt; {
      * @throws java.io.IOException If an I/O error occurs while writing to the file.
      */
     private void writeMarkdownHeader(BufferedWriter writer, String folderName) throws IOException {
-<span class="fc" id="L292">        writer.write(&quot;# &quot; + folderName + &quot; \n\n&quot;);</span>
-<span class="fc" id="L293">    }</span>
+<span class="fc" id="L294">        writer.write(&quot;# &quot; + folderName + &quot; \n\n&quot;);</span>
+<span class="fc" id="L295">    }</span>
 
     /**
      * Writes the start of the Markdown table.
@@ -299,15 +301,15 @@ public interface DosageMarkdown&lt;A extends DosageAPI&lt;?, B&gt;, B&gt; {
      * @throws java.io.IOException If an I/O error occurs while writing to the file.
      */
     private void writeMarkdownTableStart(BufferedWriter writer) throws IOException {
-<span class="fc" id="L302">        writer.write(&quot;&lt;table&gt;\n&quot;);</span>
-<span class="fc" id="L303">        writer.write(&quot;  &lt;thead&gt;\n&quot;);</span>
-<span class="fc" id="L304">        writer.write(&quot;    &lt;tr&gt;\n&quot;);</span>
-<span class="fc" id="L305">        writer.write(&quot;      &lt;th&gt;Dosage&lt;/th&gt;\n&quot;);</span>
-<span class="fc" id="L306">        writer.write(&quot;      &lt;th&gt;Human readable text&lt;/th&gt;\n&quot;);</span>
-<span class="fc" id="L307">        writer.write(&quot;    &lt;/tr&gt;\n&quot;);</span>
-<span class="fc" id="L308">        writer.write(&quot;  &lt;/thead&gt;\n&quot;);</span>
-<span class="fc" id="L309">        writer.write(&quot;  &lt;tbody&gt;\n&quot;);</span>
-<span class="fc" id="L310">    }</span>
+<span class="fc" id="L304">        writer.write(&quot;&lt;table&gt;\n&quot;);</span>
+<span class="fc" id="L305">        writer.write(&quot;  &lt;thead&gt;\n&quot;);</span>
+<span class="fc" id="L306">        writer.write(&quot;    &lt;tr&gt;\n&quot;);</span>
+<span class="fc" id="L307">        writer.write(&quot;      &lt;th&gt;Dosage&lt;/th&gt;\n&quot;);</span>
+<span class="fc" id="L308">        writer.write(&quot;      &lt;th&gt;Human readable text&lt;/th&gt;\n&quot;);</span>
+<span class="fc" id="L309">        writer.write(&quot;    &lt;/tr&gt;\n&quot;);</span>
+<span class="fc" id="L310">        writer.write(&quot;  &lt;/thead&gt;\n&quot;);</span>
+<span class="fc" id="L311">        writer.write(&quot;  &lt;tbody&gt;\n&quot;);</span>
+<span class="fc" id="L312">    }</span>
 
     /**
      * &lt;p&gt;
@@ -319,16 +321,16 @@ public interface DosageMarkdown&lt;A extends DosageAPI&lt;?, B&gt;, B&gt; {
      * @return a {@link java.util.concurrent.CompletableFuture} object
      */
     private CompletableFuture&lt;Map&lt;String, String&gt;&gt; extractJsonFile(A dosageApi, Path jsonFile) {
-<span class="fc" id="L322">        return CompletableFuture.supplyAsync(() -&gt; {</span>
+<span class="fc" id="L324">        return CompletableFuture.supplyAsync(() -&gt; {</span>
             try {
-<span class="fc" id="L324">                List&lt;B&gt; dosages = getDosageFromJson(jsonFile);</span>
-<span class="fc" id="L325">                String outputText = dosageApi.asHumanReadableText(dosages).get();</span>
-<span class="fc" id="L326">                String jsonContent = escapeHtml(getDosageJsonAsString(jsonFile));</span>
-<span class="fc" id="L327">                return Map.of(</span>
+<span class="fc" id="L326">                List&lt;B&gt; dosages = getDosageFromJson(jsonFile);</span>
+<span class="fc" id="L327">                String outputText = dosageApi.asHumanReadableText(dosages).get();</span>
+<span class="fc" id="L328">                String jsonContent = escapeHtml(getDosageJsonAsString(jsonFile));</span>
+<span class="fc" id="L329">                return Map.of(</span>
                         &quot;dosage&quot;, outputText,
                         &quot;json&quot;, jsonContent);
-<span class="fc" id="L330">            } catch (IOException | InterruptedException | ExecutionException e) {</span>
-<span class="fc" id="L331">                throw new RuntimeException(e);</span>
+<span class="fc" id="L332">            } catch (IOException | InterruptedException | ExecutionException e) {</span>
+<span class="fc" id="L333">                throw new RuntimeException(e);</span>
             }
         });
     }
@@ -343,11 +345,11 @@ public interface DosageMarkdown&lt;A extends DosageAPI&lt;?, B&gt;, B&gt; {
      */
     private void writeMarkdownTableRow(BufferedWriter writer, String jsonContent, String outputText)
             throws IOException {
-<span class="fc" id="L346">        writer.write(&quot;    &lt;tr&gt;\n&quot;);</span>
-<span class="fc" id="L347">        writer.write(&quot;      &lt;td&gt;&lt;pre&gt;&lt;code class=\&quot;language-json\&quot;&gt;&quot; + jsonContent + &quot;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;\n&quot;);</span>
-<span class="fc" id="L348">        writer.write(&quot;      &lt;td&gt;&quot; + escapeHtml(outputText).replace(&quot;\n&quot;, &quot;&lt;br&gt;&quot;) + &quot;&lt;/td&gt;\n&quot;);</span>
-<span class="fc" id="L349">        writer.write(&quot;    &lt;/tr&gt;\n&quot;);</span>
-<span class="fc" id="L350">    }</span>
+<span class="fc" id="L348">        writer.write(&quot;    &lt;tr&gt;\n&quot;);</span>
+<span class="fc" id="L349">        writer.write(&quot;      &lt;td&gt;&lt;pre&gt;&lt;code class=\&quot;language-json\&quot;&gt;&quot; + jsonContent + &quot;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;\n&quot;);</span>
+<span class="fc" id="L350">        writer.write(&quot;      &lt;td&gt;&quot; + escapeHtml(outputText).replace(&quot;\n&quot;, &quot;&lt;br&gt;&quot;) + &quot;&lt;/td&gt;\n&quot;);</span>
+<span class="fc" id="L351">        writer.write(&quot;    &lt;/tr&gt;\n&quot;);</span>
+<span class="fc" id="L352">    }</span>
 
     /**
      * Writes the end of the Markdown table.
@@ -356,9 +358,9 @@ public interface DosageMarkdown&lt;A extends DosageAPI&lt;?, B&gt;, B&gt; {
      * @throws java.io.IOException If an I/O error occurs while writing to the file.
      */
     private void writeMarkdownTableEnd(BufferedWriter writer) throws IOException {
-<span class="fc" id="L359">        writer.write(&quot;  &lt;/tbody&gt;\n&quot;);</span>
-<span class="fc" id="L360">        writer.write(&quot;&lt;/table&gt;\n&quot;);</span>
-<span class="fc" id="L361">    }</span>
+<span class="fc" id="L361">        writer.write(&quot;  &lt;/tbody&gt;\n&quot;);</span>
+<span class="fc" id="L362">        writer.write(&quot;&lt;/table&gt;\n&quot;);</span>
+<span class="fc" id="L363">    }</span>
 
     /**
      * Helper method to escape HTML special characters for safe inclusion in HTML
@@ -368,11 +370,11 @@ public interface DosageMarkdown&lt;A extends DosageAPI&lt;?, B&gt;, B&gt; {
      * @return The escaped text.
      */
     default String escapeHtml(String text) {
-<span class="fc" id="L371">        return text.replace(&quot;&amp;&quot;, &quot;&amp;amp;&quot;)</span>
-<span class="fc" id="L372">                .replace(&quot;&lt;&quot;, &quot;&amp;lt;&quot;)</span>
-<span class="fc" id="L373">                .replace(&quot;&gt;&quot;, &quot;&amp;gt;&quot;)</span>
-<span class="fc" id="L374">                .replace(&quot;\&quot;&quot;, &quot;&amp;quot;&quot;)</span>
-<span class="fc" id="L375">                .replace(&quot;'&quot;, &quot;&amp;#039;&quot;);</span>
+<span class="fc" id="L373">        return text.replace(&quot;&amp;&quot;, &quot;&amp;amp;&quot;)</span>
+<span class="fc" id="L374">                .replace(&quot;&lt;&quot;, &quot;&amp;lt;&quot;)</span>
+<span class="fc" id="L375">                .replace(&quot;&gt;&quot;, &quot;&amp;gt;&quot;)</span>
+<span class="fc" id="L376">                .replace(&quot;\&quot;&quot;, &quot;&amp;quot;&quot;)</span>
+<span class="fc" id="L377">                .replace(&quot;'&quot;, &quot;&amp;#039;&quot;);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

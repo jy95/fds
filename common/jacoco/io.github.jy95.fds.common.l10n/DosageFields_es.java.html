@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DosageFields_es.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">FHIR Dosage Support - Common</a> &gt; <a href="index.source.html" class="el_package">io.github.jy95.fds.common.l10n</a> &gt; <span class="el_source">DosageFields_es.java</span></div><h1>DosageFields_es.java</h1><pre class="source lang-java linenums">package io.github.jy95.fds.common.l10n;
+
+import java.util.ListResourceBundle;
+
+/**
+ * Spanish (es) resource bundle for structured dosage and field labels.
+ *
+ * @author jy95
+ * @since 2.0.1
+ */
+<span class="nc" id="L11">public class DosageFields_es extends ListResourceBundle {</span>
+
+    // Static content array holding the key-value pairs
+<span class="nc" id="L14">    static final Object[][] contents = {</span>
+            // Linkwords
+            { &quot;linkwords.and&quot;, &quot;y&quot; },
+            { &quot;linkwords.then&quot;, &quot;luego&quot; },
+
+            // Amount
+            { &quot;amount.range.withUnit&quot;,
+                    &quot;{condition, select, 0{{minValue} a {maxValue} {unit}} 1{hasta {maxValue} {unit}} other{al menos {minValue} {unit}}}&quot; },
+            { &quot;amount.range.withoutUnit&quot;,
+                    &quot;{condition, select, 0{{minValue} a {maxValue}} 1{hasta {maxValue}} other{al menos {minValue}}}&quot; },
+            { &quot;amount.ratio.denominatorLinkword&quot;, &quot;{0, choice, 1#por|1.0&lt;cada}&quot; },
+
+            // Fields - Rate/Duration
+            { &quot;fields.rateQuantity&quot;, &quot;a una tasa de {0}&quot; },
+            { &quot;fields.rateRange&quot;, &quot;a una tasa de {0}&quot; },
+            { &quot;fields.rateRatio&quot;, &quot;a una tasa de {0}&quot; },
+            { &quot;fields.duration&quot;, &quot;sobre {0}&quot; },
+            { &quot;fields.durationMax&quot;, &quot;máximo {0}&quot; },
+
+            // Fields - Frequency
+            { &quot;fields.frequency&quot;, &quot;{0, plural, one{{0} vez} other{{0} veces}}&quot; },
+            { &quot;fields.frequencyAndFrequencyMax&quot;,
+                    &quot;{maxFrequency, plural, one{{frequency}-{maxFrequency} vez} other{{frequency}-{maxFrequency} veces}}&quot; },
+            { &quot;fields.frequencyMax&quot;, &quot;{0, plural, one{hasta {0} vez} other{hasta {0} veces}}&quot; },
+
+            // Fields - Period
+            { &quot;fields.period&quot;, &quot;{period, plural, one{cada {periodUnit}} other{cada {period} {periodUnit}}}&quot; },
+            { &quot;fields.periodMax&quot;, &quot;cada {minPeriod} a {maxPeriod} {unit}&quot; },
+
+            // Fields - Day/Time
+            { &quot;fields.dayOfWeek&quot;, &quot;{dayCondition, plural, one{el {day}} other{los {day}}}&quot; },
+            { &quot;fields.timeOfDay&quot;, &quot;a las {timeOfDay}&quot; },
+            { &quot;fields.asNeeded&quot;, &quot;según sea necesario&quot; },
+            { &quot;fields.asNeededFor&quot;, &quot;según sea necesario para {0}&quot; },
+
+            // Fields - Bounds
+            { &quot;fields.boundsDuration&quot;, &quot;por {0}&quot; },
+            { &quot;fields.boundsPeriod&quot;,
+                    &quot;{condition, select, 0{desde {startDate} hasta {endDate}} 1{desde {startDate}} other{hasta {endDate}}}&quot; },
+            { &quot;fields.boundsRange&quot;, &quot;por {0}&quot; },
+
+            // Fields - Count
+            { &quot;fields.count&quot;, &quot;{0, plural, one{tomar {0} vez} other{tomar {0} veces}}&quot; },
+            { &quot;fields.countMax&quot;, 
+                &quot;{maxCount, plural, one{tomar de {minCount} a {maxCount} vez} other{tomar de {minCount} a {maxCount} veces}}&quot; },
+
+            // Fields - Event
+            { &quot;fields.event&quot;, &quot;{eventCondition, plural, one{el {event}} other{los {event}}}&quot; },
+
+            // Fields - Max Dose
+            { &quot;fields.maxDosePerLifetime&quot;, &quot;hasta un máximo de {0} para la vida del paciente&quot; },
+            { &quot;fields.maxDosePerAdministration&quot;, &quot;hasta un máximo de {0} por dosis&quot; },
+            { &quot;fields.maxDosePerPeriod&quot;, &quot;hasta un máximo de {0}&quot; },
+    };
+
+    // Spanish version
+    /** {@inheritDoc} */
+    @Override
+    public Object[][] getContents() {
+<span class="nc" id="L73">        return contents;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

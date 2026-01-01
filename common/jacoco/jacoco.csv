@@ -1,15 +1,18 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
 FHIR Dosage Support - Common,io.github.jy95.fds.common.translators,ModifierExtension,3,0,0,0,1,0,1,0,1,0
 FHIR Dosage Support - Common,io.github.jy95.fds.common.translators,Extension,3,0,0,0,1,0,1,0,1,0
+FHIR Dosage Support - Common,io.github.jy95.fds.common.l10n,QuantityComparator_es,74,0,0,0,3,0,3,0,3,0
 FHIR Dosage Support - Common,io.github.jy95.fds.common.l10n,QuantityComparator_nl,74,0,0,0,3,0,3,0,3,0
 FHIR Dosage Support - Common,io.github.jy95.fds.common.l10n,EventTiming_nl,360,0,0,0,3,0,3,0,3,0
 FHIR Dosage Support - Common,io.github.jy95.fds.common.l10n,DosageFields_nl,373,0,0,0,3,0,3,0,3,0
+FHIR Dosage Support - Common,io.github.jy95.fds.common.l10n,EventTiming_es,360,0,0,0,3,0,3,0,3,0
 FHIR Dosage Support - Common,io.github.jy95.fds.common.l10n,EventTiming,0,360,0,0,0,3,0,3,0,3
 FHIR Dosage Support - Common,io.github.jy95.fds.common.l10n,DosageFields_fr,373,0,0,0,3,0,3,0,3,0
 FHIR Dosage Support - Common,io.github.jy95.fds.common.l10n,DosageFields,0,373,0,0,0,3,0,3,0,3
 FHIR Dosage Support - Common,io.github.jy95.fds.common.l10n,QuantityComparator_de,74,0,0,0,3,0,3,0,3,0
 FHIR Dosage Support - Common,io.github.jy95.fds.common.l10n,EventTiming_fr,360,0,0,0,3,0,3,0,3,0
 FHIR Dosage Support - Common,io.github.jy95.fds.common.l10n,QuantityComparator,0,74,0,0,0,3,0,3,0,3
+FHIR Dosage Support - Common,io.github.jy95.fds.common.l10n,DosageFields_es,373,0,0,0,3,0,3,0,3,0
 FHIR Dosage Support - Common,io.github.jy95.fds.common.l10n,DosageFields_de,373,0,0,0,3,0,3,0,3,0
 FHIR Dosage Support - Common,io.github.jy95.fds.common.l10n,EventTiming_de,360,0,0,0,3,0,3,0,3,0
 FHIR Dosage Support - Common,io.github.jy95.fds.common.l10n,QuantityComparator_fr,74,0,0,0,3,0,3,0,3,0
@@ -18,7 +21,7 @@ FHIR Dosage Support - Common,io.github.jy95.fds.common.types,LinkWord,0,25,0,0,0
 FHIR Dosage Support - Common,io.github.jy95.fds.common.types,TranslatorExtension,11,0,0,0,4,0,1,0,1,0
 FHIR Dosage Support - Common,io.github.jy95.fds.common.types,Translator,0,2,0,0,0,1,0,1,0,1
 FHIR Dosage Support - Common,io.github.jy95.fds.common.types,AbstractTranslatorsMap,16,23,1,1,2,7,2,2,1,2
-FHIR Dosage Support - Common,io.github.jy95.fds.common.types,DosageMarkdown,0,342,0,6,0,85,0,23,0,20
+FHIR Dosage Support - Common,io.github.jy95.fds.common.types,DosageMarkdown,0,344,0,6,0,86,0,23,0,20
 FHIR Dosage Support - Common,io.github.jy95.fds.common.types,DisplayOrder,0,322,0,0,0,71,0,2,0,2
 FHIR Dosage Support - Common,io.github.jy95.fds.common.types,SpecComponent,0,21,0,0,0,4,0,1,0,1
 FHIR Dosage Support - Common,io.github.jy95.fds.common.types,DosageAPI,66,144,1,1,18,38,7,16,6,16
