@@ -100,7 +100,7 @@ class FHIRBundleTranslator:
 def main():
     parser = argparse.ArgumentParser(description="FHIR Java ResourceBundle Translator")
     parser.add_argument('--tgt', required=True, help='Target language code (e.g., pt, es, hi, ar)')
-    parser.add_argument('--dir', default='common/src/main/java/io/github/jy95/fds/common/l10n', help='Root directory for Java files search')
+    parser.add_argument('--dir', default=os.environ.get('SRC_DIR', 'common/src/main/java/io/github/jy95/fds/common/l10n'), help='Root directory for Java files search')
     args = parser.parse_args()
 
     translator = FHIRBundleTranslator(src_lang='en', tgt_lang=args.tgt)
