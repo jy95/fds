@@ -110,7 +110,7 @@ public class AsHumanReadableTextTest extends AbstractFhirTest {
         } else if (locale.equals(Locale.GERMAN)) {
             return "für 2 Wochen - 2 Mal nehmen dann jede Tag - 1 Mal nehmen und bei Bedarf - 1 Mal nehmen";
         } else if (locale.equals(Locale.forLanguageTag("es"))) {
-            return "durante 2 semanas - tomar 2 veces luego cada día - tomar 1 vez y si es necesario - tomar 1 vez";
+            return "durante 2 semanas - tomar 2 veces luego cada día - tomar 1 vez y según sea necesario - tomar 1 vez";
         } else {
             return "gedurende 2 weken - 2 keer nemen vervolgens elke dag - 1 keer nemen en indien nodig - 1 keer nemen";
         }
