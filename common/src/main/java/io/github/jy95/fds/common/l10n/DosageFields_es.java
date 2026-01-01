@@ -14,7 +14,7 @@ public class DosageFields_es extends ListResourceBundle {
     static final Object[][] contents = {
             // Linkwords
             { "linkwords.and", "y" },
-            { "linkwords.then", "entonces" },
+            { "linkwords.then", "luego" },
 
             // Amount
             { "amount.range.withUnit",
@@ -41,7 +41,7 @@ public class DosageFields_es extends ListResourceBundle {
             { "fields.periodMax", "cada {minPeriod} a {maxPeriod} {unit}" },
 
             // Fields - Day/Time
-            { "fields.dayOfWeek", "{dayCondition, plural, one{el {day}} other{el {day}}}" },
+            { "fields.dayOfWeek", "{dayCondition, plural, one{el {day}} other{los {day}}}" },
             { "fields.timeOfDay", "a las {timeOfDay}" },
             { "fields.asNeeded", "según sea necesario" },
             { "fields.asNeededFor", "según sea necesario para {0}" },
