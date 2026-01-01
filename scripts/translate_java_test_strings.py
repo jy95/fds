@@ -20,42 +20,6 @@ def ensure_model_installed(src_lang, tgt_lang):
 def translate_value(text, src_lang, tgt_lang):
     return argostranslate.translate.translate(text, src_lang, tgt_lang)
 
-
-def update_localeproviderbase(localeprovider_path, tgt_lang):
-    try:
-        with open(localeprovider_path, "r", encoding="utf-8") as f:
-            lines = f.readlines()
-    except FileNotFoundError:
-        print(f"File not found: {localeprovider_path}")
-        return
-
-    new_locale = f'Locale.forLanguageTag("{tgt_lang}")'
-    if any(new_locale in line for line in lines):
-        print(f"Locale {tgt_lang} already present in {localeprovider_path}")
-        return
-
-    # Find end of Stream.of(...), insert before closing `)`
-    for i, line in enumerate(lines):
-        if "Stream.of" in line:
-            start_idx = i
-            break
-    else:
-        print("Stream.of(...) not found!")
-        return
-
-    # Find the closing parenthesis line of Stream.of(...)
-    for j in range(start_idx + 1, len(lines)):
-        if ")" in lines[j]:
-            indent = re.match(r"(\s*)", lines[j]).group(1)
-            lines.insert(j, f"{indent}{new_locale},\n")
-            with open(localeprovider_path, "w", encoding="utf-8") as f:
-                f.writelines(lines)
-            print(f"✅ Added {new_locale} to {localeprovider_path}")
-            return
-
-    print("Could not find closing ')' of Stream.of(...)")
-
-
 def process_java_test_files(test_dir, tgt_lang, src_lang="en"):
     english_string_pattern = re.compile(
         r'^(\s*)if\s*\(\s*locale\.equals\(Locale\.ENGLISH\)\s*\)\s*\{\s*return\s*"((?:\\.|[^"\\])*)";\s*\}',
@@ -102,14 +66,12 @@ def main():
         description="Translate Java test strings using Argos Translate and update LocaleProviderBase."
     )
     parser.add_argument('--test-dir', default="common/src/test/java/io/github/jy95/fds", help='Root directory for Java test files')
-    parser.add_argument('--localeprovider-path', default="common/src/test/java/io/github/jy95/fds/utilities/LocaleProviderBase.java", help='Path to LocaleProviderBase.java')
     parser.add_argument('--src-lang', default="en", help='Source language code (default: en)')
     parser.add_argument('--tgt-lang', required=True, help='Target language code (e.g., fr, es)')
     args = parser.parse_args()
 
     ensure_model_installed(args.src_lang, args.tgt_lang)
     process_java_test_files(args.test_dir, args.tgt_lang, src_lang=args.src_lang)
-    update_localeproviderbase(args.localeprovider_path, args.tgt_lang)
 
 
 if __name__ == "__main__":
