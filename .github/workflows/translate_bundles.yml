@@ -97,6 +97,25 @@ jobs:
           commit-message: "feat: translate l10n bundles to ${{ github.event.inputs.tgt_lang }}"
           branch: "automated/l10n-translation-${{ github.event.inputs.tgt_lang }}"
           base: main
+          draft: true
           body: |
             This is an automated PR to add FHIR translation support for `${{ github.event.inputs.tgt_lang }}`.
-            Generated using Argos Translate.
+            Generated using Argos Translate.  
+
+            To complete this PR : 
+
+            1. Add the locale in several places : 
+
+               - [ ] [DosageMarkdown](https://github.com/jy95/fds/blob/main/common/src/main/java/io/github/jy95/fds/common/types/DosageMarkdown.java)
+               - [ ] [LocaleProviderBase](https://github.com/jy95/fds/blob/main/common/src/test/java/io/github/jy95/fds/utilities/LocaleProviderBase.java)
+               - [ ] [AbstractFhirTest R4](https://github.com/jy95/fds/blob/main/r4/src/test/java/io/github/jy95/fds/r4/AbstractFhirTest.java)
+               - [ ] [AbstractFhirTest R5](https://github.com/jy95/fds/blob/main/r5/src/test/java/io/github/jy95/fds/r4/AbstractFhirTest.java)
+
+            2. Create the ressource bundles for this locale in [l10n](https://github.com/jy95/fds/tree/main/common/src/main/java/io/github/jy95/fds/common/l10n) folder : 
+
+               - [ ] [DosageFields](https://github.com/jy95/fds/blob/main/common/src/main/java/io/github/jy95/fds/common/l10n/DosageFields.java)
+               - [ ] [EventTiming](https://github.com/jy95/fds/blob/main/common/src/main/java/io/github/jy95/fds/common/l10n/EventTiming.java)
+               - [ ] [QuantityComparator](https://github.com/jy95/fds/blob/main/common/src/main/java/io/github/jy95/fds/common/l10n/QuantityComparator.java)
+
+
+            3. Run tests and fix potential translations issues 
