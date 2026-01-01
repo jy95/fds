@@ -98,24 +98,39 @@ jobs:
           branch: "automated/l10n-translation-${{ github.event.inputs.tgt_lang }}"
           base: main
           draft: true
-          body: |
-            This is an automated PR to add FHIR translation support for `${{ github.event.inputs.tgt_lang }}`.
-            Generated using Argos Translate.  
+          body: | 
+            ## 🌍 New Language Support: `${{ github.event.inputs.tgt_lang }}`
 
-            To complete this PR : 
+            This automated PR adds FHIR translation support for the `${{ github.event.inputs.tgt_lang }}` locale.
+            Generated using Argos Translate with recursive ICU parsing to ensure structural integrity.
 
-            1. Add the locale in several places : 
+            ---
 
-               - [ ] [DosageMarkdown](https://github.com/jy95/fds/blob/main/common/src/main/java/io/github/jy95/fds/common/types/DosageMarkdown.java)
-               - [ ] [LocaleProviderBase](https://github.com/jy95/fds/blob/main/common/src/test/java/io/github/jy95/fds/utilities/LocaleProviderBase.java)
-               - [ ] [AbstractFhirTest R4](https://github.com/jy95/fds/blob/main/r4/src/test/java/io/github/jy95/fds/r4/AbstractFhirTest.java)
-               - [ ] [AbstractFhirTest R5](https://github.com/jy95/fds/blob/main/r5/src/test/java/io/github/jy95/fds/r4/AbstractFhirTest.java)
+            ### 🛠️ Step 1: Registry & Integration
+            To activate this new locale, you need to manually register it in the following files:
 
-            2. Create the ressource bundles for this locale in [l10n](https://github.com/jy95/fds/tree/main/common/src/main/java/io/github/jy95/fds/common/l10n) folder : 
+            - [ ] **DosageMarkdown.java**: Add the new `Locale` to the supported list.
+            - [ ] **LocaleProviderBase.java**: Include the locale in the test provider for coverage.
+            - [ ] **R4 AbstractFhirTest.java**: Register for R4 validation.
+            - [ ] **R5 AbstractFhirTest.java**: Register for R5 validation.
 
-               - [ ] [DosageFields](https://github.com/jy95/fds/blob/main/common/src/main/java/io/github/jy95/fds/common/l10n/DosageFields.java)
-               - [ ] [EventTiming](https://github.com/jy95/fds/blob/main/common/src/main/java/io/github/jy95/fds/common/l10n/EventTiming.java)
-               - [ ] [QuantityComparator](https://github.com/jy95/fds/blob/main/common/src/main/java/io/github/jy95/fds/common/l10n/QuantityComparator.java)
+            ---
 
+            ### 🔍 Step 2: Quality Review (Compare with Reference)
+            Verify translations in `common/src/main/java/io/github/jy95/fds/common/l10n/`:
+            
+            | Generated File | English Reference (Original) |
+            | :--- | :--- |
+            | `DosageFields_${{ github.event.inputs.tgt_lang }}.java` | [DosageFields.java](https://github.com/jy95/fds/blob/main/common/src/main/java/io/github/jy95/fds/common/l10n/DosageFields.java) |
+            | `EventTiming_${{ github.event.inputs.tgt_lang }}.java` | [EventTiming.java](https://github.com/jy95/fds/blob/main/common/src/main/java/io/github/jy95/fds/common/l10n/EventTiming.java) |
+            | `QuantityComparator_${{ github.event.inputs.tgt_lang }}.java` | [QuantityComparator.java](https://github.com/jy95/fds/blob/main/common/src/main/java/io/github/jy95/fds/common/l10n/QuantityComparator.java) |
 
-            3. Run tests and fix potential translations issues 
+            ---
+
+            ### 🧪 Step 3: Technical Validation
+            - [ ] **Build**: Run `./mvnw clean install -DskipTests` to check for compilation issues.
+            - [ ] **Tests**: Run `./mvnw test` to ensure `ListResourceBundle` loads `${{ github.event.inputs.tgt_lang }}` correctly.
+            - [ ] **ICU Logic**: Double-check that plural forms (`one`, `other`) and select blocks are correctly translated for this language.
+
+            ---
+            *Note: This PR is in draft mode. Please review the translation quality before merging.*
