@@ -61,9 +61,9 @@ public class DosageFields_es extends ListResourceBundle {
             { "fields.event", "{eventCondition, plural, one{el {event}} other{los {event}}}" },
 
             // Fields - Max Dose
-            { "fields.maxDosePerLifetime", "hasta un máximo {0} para la vida del paciente" },
-            { "fields.maxDosePerAdministration", "hasta un máximo {0} por dosis" },
-            { "fields.maxDosePerPeriod", "hasta un máximo {0}" },
+            { "fields.maxDosePerLifetime", "hasta un máximo de {0} para la vida del paciente" },
+            { "fields.maxDosePerAdministration", "hasta un máximo de {0} por dosis" },
+            { "fields.maxDosePerPeriod", "hasta un máximo de {0}" },
     };
 
     // Spanish version
