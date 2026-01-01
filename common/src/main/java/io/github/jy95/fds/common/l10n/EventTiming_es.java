@@ -16,13 +16,13 @@ public class EventTiming_es extends ListResourceBundle {
     static final Object[][] contents = {
             { "MORN", "durante la mañana" },
             { "MORN.early", "durante la madrugada" },
-            { "MORN.late", "durante la madrugada" },
+            { "MORN.late", "durante la mañana" },
             { "NOON", "alrededor de las 12:00 PM" },
             { "AFT", "durante la tarde" },
             { "AFT.early", "durante la tarde temprana" },
             { "AFT.late", "durante la tarde" },
             { "EVE", "durante la noche" },
-            { "EVE.early", "durante la madrugada" },
+            { "EVE.early", "al anochecer" },
             { "EVE.late", "durante la tarde" },
             { "NIGHT", "durante la noche" },
 

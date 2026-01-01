@@ -3,7 +3,7 @@ package io.github.jy95.fds.common.l10n;
 import java.util.ListResourceBundle;
 
 /**
- * English (es) resource bundle for operator and symbol labels.
+ * Spanish (es) resource bundle for operator and symbol labels.
  *
  * @see <a href=
  *      "https://www.hl7.org/fhir/valueset-quantity-comparator.html">FHIR
@@ -25,7 +25,7 @@ public class QuantityComparator_es extends ListResourceBundle {
             { "ad", "ad" },
     };
 
-    // English version
+    // Spanish version
     /** {@inheritDoc} */
     @Override
     public Object[][] getContents() {
