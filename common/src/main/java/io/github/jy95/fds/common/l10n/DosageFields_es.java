@@ -66,7 +66,7 @@ public class DosageFields_es extends ListResourceBundle {
             { "fields.maxDosePerPeriod", "hasta un máximo {0}" },
     };
 
-    // English version
+    // Spanish version
     /** {@inheritDoc} */
     @Override
     public Object[][] getContents() {
