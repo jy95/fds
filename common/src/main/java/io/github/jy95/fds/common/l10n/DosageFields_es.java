@@ -31,10 +31,10 @@ public class DosageFields_es extends ListResourceBundle {
             { "fields.durationMax", "máximo {0}" },
 
             // Fields - Frequency
-            { "fields.frequency", "{0, plural, one{{0} tiempo} other{{0} veces}}" },
+            { "fields.frequency", "{0, plural, one{{0} vez} other{{0} veces}}" },
             { "fields.frequencyAndFrequencyMax",
-                    "{maxFrequency, plural, one{{frequency}-{maxFrequency} tiempo} other{{frequency}-{maxFrequency} veces}}" },
-            { "fields.frequencyMax", "{0, plural, one{hasta {0} tiempo} other{hasta {0} veces}}" },
+                    "{maxFrequency, plural, one{{frequency}-{maxFrequency} vez} other{{frequency}-{maxFrequency} veces}}" },
+            { "fields.frequencyMax", "{0, plural, one{hasta {0} vez} other{hasta {0} veces}}" },
 
             // Fields - Period
             { "fields.period", "{period, plural, one{cada {periodUnit}} other{cada {period} {periodUnit}}}" },
@@ -53,9 +53,9 @@ public class DosageFields_es extends ListResourceBundle {
             { "fields.boundsRange", "para {0}" },
 
             // Fields - Count
-            { "fields.count", "{0, plural, one{Toma. {0} tiempo} other{Toma. {0} veces}}" },
+            { "fields.count", "{0, plural, one{Toma {0} vez} other{Toma {0} veces}" },
             { "fields.countMax",
-                    "{maxCount, plural, one{Toma. {minCount} a {maxCount} tiempo} other{Toma. {minCount} a {maxCount} veces}}" },
+                    "{maxCount, plural, one{Toma. {minCount} a {maxCount} vez} other{Toma. {minCount} a {maxCount} veces}}" },
 
             // Fields - Event
             { "fields.event", "{eventCondition, plural, one{el {event}} other{el {event}}}" },
