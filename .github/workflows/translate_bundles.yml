@@ -1,7 +1,7 @@
-name: Translate Properties Files
+name: Translate L10n Java Bundles
 
 permissions:
-  contents: read
+  contents: write
   pull-requests: write
 
 on:
@@ -44,7 +44,6 @@ on:
           - ms
           - nb
           - nl
-          - pt-BR
           - pl
           - pt
           - ro
@@ -60,8 +59,7 @@ on:
           - uk
           - ur
           - vi
-          - zh-Hans
-          - zh-Hant
+          - zh
 
 jobs:
   translate:
@@ -69,24 +67,36 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
+
       - name: Set up Python
         uses: actions/setup-python@v6
         with:
           python-version: '3.12'
           cache: 'pip'
-      - name: ☕ Install dependencies
+
+      - name: 📦 Install dependencies
         run: | 
           pip install -r requirements.txt
-      - name: 🤖 Translate _en.properties files
+
+      - name: 🤖 Translate Java Resource Bundles
+        run: |
+          python scripts/translate_bundles.py --tgt "${{ github.event.inputs.tgt_lang }}"
+        env:
+          SRC_DIR: common/src/main/java/io/github/jy95/fds/common/l10n
+
+      - name: 🤖 Translate Java Test Files
         run: |
           python scripts/translate_java_test_strings.py --tgt-lang "${{ github.event.inputs.tgt_lang }}"
-          python scripts/translate_properties.py --tgt-lang "${{ github.event.inputs.tgt_lang }}"
         env:
           SRC_DIR: common/src/main/resources
-      - name: 💅 Commit and push translated files
+
+      - name: 💅 Create Pull Request
         uses: peter-evans/create-pull-request@v8.0.0
         with:
-          title: "Add ${{ github.event.inputs.tgt_lang }} support"
-          commit-message: "feat: Add ${{github.event.inputs.tgt_lang}} support"
-          branch: "automated/translator-${{github.event.inputs.tgt_lang}}-${{ github.run_id }}"
+          title: "feat(l10n): Add ${{ github.event.inputs.tgt_lang }} support"
+          commit-message: "feat: translate l10n bundles to ${{ github.event.inputs.tgt_lang }}"
+          branch: "automated/l10n-translation-${{ github.event.inputs.tgt_lang }}"
           base: main
+          body: |
+            This is an automated PR to add FHIR translation support for `${{ github.event.inputs.tgt_lang }}`.
+            Generated using Argos Translate.
