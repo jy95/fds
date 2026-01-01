@@ -1,19 +1,17 @@
 /**
- * Translators and mappers for dosage-related elements.
+ * Translators and mappers for FHIR dosage-related elements.
  *
  * <p>Contains classes that translate FHIR dosage model elements (text,
- * dose-and-rate, route, method, etc.) into the library's intermediate
- * representations or human-readable strings used by the rendering components.
- * Implementations in this package should focus on dosage-specific semantics
- * and keep conversion logic version-agnostic where possible so the common
- * rendering code can consume a unified shape.</p>
+ * dose-and-rate, route, method, etc.) into intermediate representations 
+ * or human-readable strings. Implementations focus on dosage-specific 
+ * semantics and maintain version-agnostic logic to ensure the common 
+ * rendering components consume a unified data shape.
  *
- * <p>Typical responsibilities:
+ * <p>Typical responsibilities include:
  * <ul>
- *   <li>Extract dosage-specific fields from FHIR structures</li>
- *   <li>Normalize dose and rate representations</li>
- *   <li>Provide best-effort text fallbacks for missing codings</li>
+ * <li>Extracting dosage-specific fields from FHIR structures</li>
+ * <li>Normalizing dose and rate representations</li>
+ * <li>Providing best-effort text fallbacks for missing codings</li>
  * </ul>
- * </p>
  */
 package io.github.jy95.fds.common.translators.dosage;
