@@ -85,6 +85,7 @@ public abstract class AbstractBoundsPeriodTest<C extends FDSConfig, D> extends A
         } else if (locale.equals(Locale.GERMAN)) {
             assertEquals("bis 07.02.2015, 13:28:17", actual);
         } else if (locale.equals(Locale.forLanguageTag("es"))) {
+            System.out.println(actual);
             assertTrue(actual.startsWith("hasta 7 feb 2015"));
             assertTrue(actual.contains("13:28:17"));
         } else {
