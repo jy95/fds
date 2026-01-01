@@ -18,10 +18,10 @@ public class DosageFields_es extends ListResourceBundle {
 
             // Amount
             { "amount.range.withUnit",
-                    "{condition, select, 0{{minValue} a {maxValue} {unit}} 1{hasta {maxValue} {unit}} other{al menos {minValue} {unit}}}" },
+                    "{condition, select, 0{de {minValue} a {maxValue} {unit}} 1{hasta {maxValue} {unit}} other{al menos {minValue} {unit}}}" },
             { "amount.range.withoutUnit",
-                    "{condition, select, 0{{minValue} a {maxValue}} 1{hasta {maxValue}} other{al menos {minValue}}}" },
-            { "amount.ratio.denominatorLinkword", "{0, choice, }" },
+                    "{condition, select, 0{de {minValue} a {maxValue}} 1{hasta {maxValue}} other{al menos {minValue}}}" },
+            { "amount.ratio.denominatorLinkword", "{0, choice, 1#por|1.0<cada}" },
 
             // Fields - Rate/Duration
             { "fields.rateQuantity", "a una tasa de {0}" },
