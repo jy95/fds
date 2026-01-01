@@ -80,7 +80,7 @@ jobs:
       - name: 🤖 Translate _en.properties files
         run: |
           python scripts/translate_java_test_strings.py --tgt-lang "${{ github.event.inputs.tgt_lang }}"
-          python scripts/translate_properties.py --tgt-lang "${{ github.event.inputs.tgt_lang }}"
+          python scripts/translate_bundles.py --tgt "${{ github.event.inputs.tgt_lang }}"
         env:
           SRC_DIR: common/src/main/resources
       - name: 💅 Commit and push translated files
