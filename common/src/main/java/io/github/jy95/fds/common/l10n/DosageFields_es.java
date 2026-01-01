@@ -58,7 +58,7 @@ public class DosageFields_es extends ListResourceBundle {
                 "{maxCount, plural, one{tomar de {minCount} a {maxCount} vez} other{tomar de {minCount} a {maxCount} veces}}" },
 
             // Fields - Event
-            { "fields.event", "{eventCondition, plural, one{el {event}} other{el {event}}}" },
+            { "fields.event", "{eventCondition, plural, one{el {event}} other{los {event}}}" },
 
             // Fields - Max Dose
             { "fields.maxDosePerLifetime", "hasta un máximo {0} para la vida del paciente" },

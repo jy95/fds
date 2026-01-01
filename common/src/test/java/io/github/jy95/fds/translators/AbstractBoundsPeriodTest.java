@@ -105,7 +105,7 @@ public abstract class AbstractBoundsPeriodTest<C extends FDSConfig, D> extends A
         } else if (locale.equals(Locale.GERMAN)) {
             return "ab 23.05.2011";
         } else if (locale.equals(Locale.forLanguageTag("es"))) {
-            return "del 23 de mayo de 2011";
+            return "desde 23 may 2011";
         } else {
             return "van 23 mei 2011";
         }
