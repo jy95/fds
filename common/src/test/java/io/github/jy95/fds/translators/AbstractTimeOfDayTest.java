@@ -54,6 +54,8 @@ public abstract class AbstractTimeOfDayTest<C extends FDSConfig, D> extends Abst
             return "à 15:00";
         } else if (locale.equals(Locale.GERMAN)) {
             return "um 15:00";
+        } else if (locale.equals(Locale.forLanguageTag("es"))) {
+            return "a las 15:00";
         } else {
             return "om 15:00";
         }
@@ -63,13 +65,12 @@ public abstract class AbstractTimeOfDayTest<C extends FDSConfig, D> extends Abst
     private static String getExpectedMultipleTimesText(Locale locale) {
         if (locale.equals(Locale.ENGLISH)) {
             return "at 15:00 and 12:12:12";
-        }
-        else if (locale.equals(Locale.forLanguageTag("es"))) {
-            return "a las 15.00 horas y 12:12:12";
         } else if (locale.equals(Locale.FRENCH)) {
             return "à 15:00 et 12:12:12";
         } else if (locale.equals(Locale.GERMAN)) {
             return "um 15:00 und 12:12:12";
+        } else if (locale.equals(Locale.forLanguageTag("es"))) {
+            return "a las 15:00 y 12:12:12";
         } else {
             return "om 15:00 en 12:12:12";
         }

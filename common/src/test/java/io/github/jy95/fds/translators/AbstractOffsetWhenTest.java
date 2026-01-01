@@ -41,6 +41,8 @@ public abstract class AbstractOffsetWhenTest<C extends FDSConfig, D> extends Abs
             return "durant le matin et durant la nuit";
         } else if (locale.equals(Locale.GERMAN)) {
             return "während des Vormittags und über Nacht";
+        } else if (locale.equals(Locale.forLanguageTag("es"))) {
+            return "durante la mañana y durante la noche";
         } else {
             return "tijdens de ochtend en tijdens de nacht";
         }
@@ -51,7 +53,7 @@ public abstract class AbstractOffsetWhenTest<C extends FDSConfig, D> extends Abs
     void testWithWhenAndCount(Locale locale) throws ExecutionException, InterruptedException {
         var dosage = generateWithWhenAndCount();
         var dosageUtils = getDosageAPI(locale, DisplayOrder.OFFSET_WHEN);
-        String result = dosageUtils.asHumanReadableText(dosage).get().replace("\u00a0"," ");;
+        String result = dosageUtils.asHumanReadableText(dosage).get().replace("\u00a0"," ");
         String expectedResult = getExpectedText2(locale);
         assertEquals(expectedResult, result);
     }
@@ -65,6 +67,8 @@ public abstract class AbstractOffsetWhenTest<C extends FDSConfig, D> extends Abs
             return "1 heure et 30 minutes durant le matin et durant la nuit";
         } else if (locale.equals(Locale.GERMAN)) {
             return "1 Stunde und 30 Minuten während des Vormittags und über Nacht";
+        } else if (locale.equals(Locale.forLanguageTag("es"))) {
+            return "1 hora y 30 minutos durante la mañana y durante la noche";
         } else {
             return "1 uur en 30 minuten tijdens de ochtend en tijdens de nacht";
         }
@@ -85,13 +89,12 @@ public abstract class AbstractOffsetWhenTest<C extends FDSConfig, D> extends Abs
     private String getExpectedText3(Locale locale) {
         if (locale.equals(Locale.ENGLISH)) {
             return "30 minutes";
-        }
-        else if (locale.equals(Locale.forLanguageTag("es"))) {
-            return "30 minutos";
         } else if (locale.equals(Locale.FRENCH)) {
             return "30 minutes";
         } else if (locale.equals(Locale.GERMAN)) {
             return "30 Minuten";
+        } else if (locale.equals(Locale.forLanguageTag("es"))) {
+            return "30 minutos";
         } else {
             return "30 minuten";
         }
