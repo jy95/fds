@@ -30,8 +30,8 @@ def process_java_test_files(test_dir, tgt_lang, src_lang="en"):
     # Group 2: The final 'else {' keyword (used as the insertion anchor)
     chain_pattern = re.compile(
         r'(if\s*\(\s*locale\.equals\(\s*Locale\.ENGLISH\s*\)\s*\{'  # Start of English if
-        r'.*?\}'                                                   # End of English block
-        r'(?:\s*else\s+if\s*\(.*?\)\s*\{.*?\})*'                   # Any existing else-if blocks
+        r'[^}]*\}'                                                   # End of English block (non-greedy alternative)
+        r'(?:\s*else\s+if\s*\([^)]*\)\s*\{[^}]*\})*'                   # Any existing else-if blocks (non-greedy alternative)
         r'\s*)(else\s*\{)',                                        # The final else
         re.DOTALL
     )
