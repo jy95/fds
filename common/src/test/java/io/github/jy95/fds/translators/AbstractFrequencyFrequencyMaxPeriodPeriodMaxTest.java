@@ -101,6 +101,9 @@ public abstract class AbstractFrequencyFrequencyMaxPeriodPeriodMaxTest<C extends
     private String getExpectedText3(Locale locale) {
         if (locale.equals(Locale.ENGLISH)) {
             return "3 times every 2 days";
+        }
+        else if (locale.equals(Locale.forLanguageTag("it"))) {
+            return "3 volte ogni 2 giorni";
         } else if (locale.equals(Locale.FRENCH)) {
             return "3 fois chaque 2 jours";
         } else if (locale.equals(Locale.GERMAN)) {

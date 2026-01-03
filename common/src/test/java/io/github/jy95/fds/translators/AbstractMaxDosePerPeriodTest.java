@@ -37,6 +37,9 @@ public abstract class AbstractMaxDosePerPeriodTest<C extends FDSConfig, D> exten
     private String getExpectedText(Locale locale) {
         if (locale.equals(Locale.ENGLISH)) {
             return "up to a maximum of 10 mg per day";
+        }
+        else if (locale.equals(Locale.forLanguageTag("it"))) {
+            return "fino a un massimo di 10 mg al giorno";
         } else if (locale.equals(Locale.FRENCH)) {
             return "jusqu’à un maximum de 10 mg par jour";
         } else if (locale.equals(Locale.GERMAN)) {

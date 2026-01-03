@@ -38,6 +38,9 @@ public abstract class AbstractMaxDosePerLifetimeTest<C extends FDSConfig, D> ext
         if (locale.equals(Locale.ENGLISH)) {
             return "up to a maximum of 50 mg for the lifetime of the patient";
         }
+        else if (locale.equals(Locale.forLanguageTag("it"))) {
+            return "fino a un massimo di 50 mg per la vita del paziente";
+        }
         else if (locale.equals(Locale.forLanguageTag("es"))) {
             return "hasta un máximo de 50 mg para la vida del paciente";
         } else if (locale.equals(Locale.FRENCH)) {

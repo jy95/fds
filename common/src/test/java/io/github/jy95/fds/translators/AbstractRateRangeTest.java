@@ -38,6 +38,9 @@ public abstract class AbstractRateRangeTest<C extends FDSConfig, D> extends Abst
         if (locale.equals(Locale.ENGLISH)) {
             return "at a rate of 1 to 3";
         }
+        else if (locale.equals(Locale.forLanguageTag("it"))) {
+            return "a tasso da 1 a 3";
+        }
         else if (locale.equals(Locale.forLanguageTag("es"))) {
             return "a una tasa de 1 a 3";
         } else if (locale.equals(Locale.FRENCH)) {
