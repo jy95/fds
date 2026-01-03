@@ -21,8 +21,8 @@ def ensure_model_installed(src_lang, tgt_lang):
 
 def translate_value(text, src_lang, tgt_lang):
     translated = argostranslate.translate.translate(text, src_lang, tgt_lang)
-    # Escape double quotes for Java compatibility
-    return translated.replace('"', '\\"')
+    # Escape backslashes and double quotes for Java compatibility
+    return translated.replace('\\', '\\\\').replace('"', '\\"')
 
 def process_java_test_files(test_dir, tgt_lang, src_lang="en"):
     # Updated Regex: Handles flexible whitespace/newlines and capture groups for indentation
