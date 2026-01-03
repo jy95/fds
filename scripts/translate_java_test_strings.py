@@ -4,25 +4,33 @@ import argparse
 import argostranslate.package
 import argostranslate.translate
 
-
 def ensure_model_installed(src_lang, tgt_lang):
     print(f"Checking/installing Argos model for {src_lang} -> {tgt_lang}...")
-    argostranslate.package.update_package_index()
+    try:
+        argostranslate.package.update_package_index()
+    except Exception as e:
+        print(f"Note: Could not update package index ({e}), attempting to use local cache.")
+        
     available_packages = argostranslate.package.get_available_packages()
     package = next((p for p in available_packages if p.from_code == src_lang and p.to_code == tgt_lang), None)
     if package:
         argostranslate.package.install_from_path(package.download())
-        print(f"Installed model for {src_lang} -> {tgt_lang}")
+        print(f"✅ Installed model for {src_lang} -> {tgt_lang}")
     else:
-        print(f"No model found for {src_lang} -> {tgt_lang}")
-
+        print(f"❌ No model found for {src_lang} -> {tgt_lang}")
 
 def translate_value(text, src_lang, tgt_lang):
-    return argostranslate.translate.translate(text, src_lang, tgt_lang)
+    translated = argostranslate.translate.translate(text, src_lang, tgt_lang)
+    # Escape double quotes for Java compatibility
+    return translated.replace('"', '\\"')
 
 def process_java_test_files(test_dir, tgt_lang, src_lang="en"):
+    # Updated Regex: Handles flexible whitespace/newlines and capture groups for indentation
+    # Group 1: Base Indentation
+    # Group 2: Potential extra indentation inside the block
+    # Group 3: The English string content
     english_string_pattern = re.compile(
-        r'^(\s*)if\s*\(\s*locale\.equals\(Locale\.ENGLISH\)\s*\)\s*\{\s*return\s*"((?:\\.|[^"\\])*)";\s*\}',
+        r'^(\s*)if\s*\(\s*locale\.equals\(\s*Locale\.ENGLISH\s*\)\s*\)\s*\{(\s*)return\s*"((?:\\.|[^"\\])*)";\s*\}',
         re.MULTILINE
     )
 
@@ -40,15 +48,19 @@ def process_java_test_files(test_dir, tgt_lang, src_lang="en"):
                 continue
 
             updated = False
-            for match in reversed(matches):  # reversed = safe offsets
-                indent = match.group(1)
-                eng_text = match.group(2)
+            # Process in reverse to maintain valid string offsets
+            for match in reversed(matches):
+                base_indent = match.group(1)   # Indentation of the 'if'
+                inner_indent = match.group(2)  # Indentation before 'return' (preserves tabs/spaces)
+                eng_text = match.group(3)
+                
                 translated = translate_value(eng_text, src_lang, tgt_lang)
 
+                # Construct the new block using detected indentation
                 new_block = (
-                    f'\n{indent}else if (locale.equals(Locale.forLanguageTag("{tgt_lang}"))) {{\n'
-                    f'{indent}    return "{translated}";\n'
-                    f'{indent}}}'
+                    f'\n{base_indent}else if (locale.equals(Locale.forLanguageTag("{tgt_lang}"))) {{{inner_indent}'
+                    f'return "{translated}";\n'
+                    f'{base_indent}}}'
                 )
 
                 if f'Locale.forLanguageTag("{tgt_lang}")' not in content:
@@ -72,7 +84,6 @@ def main():
 
     ensure_model_installed(args.src_lang, args.tgt_lang)
     process_java_test_files(args.test_dir, args.tgt_lang, src_lang=args.src_lang)
-
 
 if __name__ == "__main__":
     main()
