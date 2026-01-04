@@ -9,7 +9,7 @@ import java.util.ListResourceBundle;
  *      "https://www.hl7.org/fhir/valueset-quantity-comparator.html">FHIR
  *      Quantity Comparator</a>
  * @author jy95
- * @since 2.0.1
+ * @since 2.1.6
  */
 public class QuantityComparator_es extends ListResourceBundle {
 
