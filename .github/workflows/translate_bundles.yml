@@ -78,9 +78,17 @@ jobs:
         run: | 
           pip install -r requirements.txt
 
+      - name: 🔍 Extract Version from POM
+        id: prep
+        run: |
+          # Extract version and strip -SNAPSHOT suffix for @since tag
+          RAW_VERSION=$(grep -oP '(?<=<version>)(.*?)(?=</version>)' pom.xml | head -n 1)
+          CLEAN_VERSION=$(echo $RAW_VERSION | sed 's/-SNAPSHOT//')
+          echo "version=$CLEAN_VERSION" >> $GITHUB_OUTPUT
+
       - name: 🤖 Translate Java Resource Bundles
         run: |
-          python scripts/translate_bundles.py --tgt "${{ github.event.inputs.tgt_lang }}"
+          python scripts/translate_bundles.py --tgt "${{ github.event.inputs.tgt_lang }}" --rev "${{ steps.prep.outputs.version }}"
         env:
           SRC_DIR: common
 
