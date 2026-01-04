@@ -43,7 +43,10 @@ public abstract class AbstractDurationDurationMaxTest<C extends FDSConfig, D> ex
             return "für 3 Tage";
         } else if (locale.equals(Locale.forLanguageTag("es"))) {
             return "sobre 3 días";
-        } else {
+        }         else if (locale.equals(Locale.forLanguageTag("it"))) {
+            return "gedurende 3 dagen";
+        }
+else {
             return "gedurende 3 dagen";
         }
     }
@@ -69,7 +72,10 @@ public abstract class AbstractDurationDurationMaxTest<C extends FDSConfig, D> ex
             return "maximal 3 Tage";
         } else if (locale.equals(Locale.forLanguageTag("es"))) {
             return "máximo 3 días";
-        } else {
+        }         else if (locale.equals(Locale.forLanguageTag("it"))) {
+            return "maximaal 3 dagen";
+        }
+else {
             return "maximaal 3 dagen";
         }
     }
@@ -98,7 +104,10 @@ public abstract class AbstractDurationDurationMaxTest<C extends FDSConfig, D> ex
             return "für 3 Tage ( maximal 5 Tage )";
         } else if (locale.equals(Locale.forLanguageTag("es"))) {
             return "sobre 3 días ( máximo 5 días )";
-        } else {
+        }         else if (locale.equals(Locale.forLanguageTag("it"))) {
+            return "gedurende 3 dagen ( maximaal 5 dagen)";
+        }
+else {
             return "gedurende 3 dagen ( maximaal 5 dagen )";
         }
     }

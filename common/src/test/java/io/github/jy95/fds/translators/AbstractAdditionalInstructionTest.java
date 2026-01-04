@@ -60,7 +60,10 @@ public abstract class AbstractAdditionalInstructionTest<C extends FDSConfig, D> 
             return "Instruction 1 et Instruction 2";
         } else if (locale.equals(Locale.GERMAN)) {
             return "Instruction 1 und Instruction 2";
-        } else {
+        }         else if (locale.equals(Locale.forLanguageTag("it"))) {
+            return "Istruzione 1 en Istruzione 2";
+        }
+else {
             return "Instruction 1 en Instruction 2";
         }
     }

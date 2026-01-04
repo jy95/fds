@@ -44,7 +44,10 @@ public abstract class AbstractFrequencyFrequencyMaxTest<C extends FDSConfig, D> 
             return "3 Mal";
         } else if (locale.equals(Locale.forLanguageTag("es"))) {
             return "3 veces";
-        } else {
+        }         else if (locale.equals(Locale.forLanguageTag("it"))) {
+            return "3 keer";
+        }
+else {
             return "3 keer";
         }
     }
@@ -70,7 +73,10 @@ public abstract class AbstractFrequencyFrequencyMaxTest<C extends FDSConfig, D> 
             return "bis zu 3 Mal";
         } else if (locale.equals(Locale.forLanguageTag("es"))) {
             return "hasta 3 veces";
-        } else {
+        }         else if (locale.equals(Locale.forLanguageTag("it"))) {
+            return "tot 3 keer";
+        }
+else {
             return "tot 3 keer";
         }
     }
@@ -100,7 +106,10 @@ public abstract class AbstractFrequencyFrequencyMaxTest<C extends FDSConfig, D> 
             return "3-5 fois";
         } else if (locale.equals(Locale.GERMAN)) {
             return "3-5 Mal";
-        } else {
+        }         else if (locale.equals(Locale.forLanguageTag("it"))) {
+            return "3-5 keer";
+        }
+else {
             return "3-5 keer";
         }
     }
