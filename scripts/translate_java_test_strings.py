@@ -202,8 +202,20 @@ def process_java_file(path, tgt_lang, src_lang="en"):
                 f'{indent}}}\n'
             )
 
-            # Insert the new code
-            source_text = source_text[:insert_pos] + new_code + source_text[insert_pos:]
+            # Fix spacing: remove only spaces/tabs at insertion point (stop at newline),
+            # and ensure we add a newline before inserted block if we're mid-line so we don't create
+            # "}" followed by many spaces then "else".
+            insert_end = insert_pos
+            while insert_end < len(source_text) and source_text[insert_end] in ' \t':
+                insert_end += 1
+
+            prev_char = source_text[insert_pos - 1] if insert_pos > 0 else '\n'
+            # If we're inserting mid-line (no previous newline), ensure the new block starts on a new line
+            if prev_char != '\n' and prev_char != '\r':
+                new_code = '\n' + new_code
+
+            # Replace the whitespace between insert_pos and insert_end with our new block.
+            source_text = source_text[:insert_pos] + new_code + source_text[insert_end:]
 
         # Write back file only if we made changes
         with open(path, "w", encoding="utf-8") as f:
@@ -248,6 +260,17 @@ def main():
     print(f"⚪ NO TARGET PATTERN: {len(stats.get('SKIPPED_NO_MATCH', []))}")
     print(f"❌ ERRORS: {len(stats.get('ERROR', []))}")
     print("="*50)
+
+    # List files for NO TARGET PATTERN and ERRORS as requested
+    if stats.get('SKIPPED_NO_MATCH'):
+        print("\nNO TARGET PATTERN:")
+        for p in stats['SKIPPED_NO_MATCH']:
+            print(f"- {p}")
+
+    if stats.get('ERROR'):
+        print("\nERRORS:")
+        for p in stats['ERROR']:
+            print(f"- {p}")
 
 
 if __name__ == "__main__":
