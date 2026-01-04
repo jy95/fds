@@ -56,7 +56,7 @@ public abstract class AbstractDayOfWeekTest<C extends FDSConfig, D> extends Abst
             return "am Freitag";
         } else if (locale.equals(Locale.forLanguageTag("es"))) {
             return "el viernes";
-        }         else if (locale.equals(Locale.forLanguageTag("it"))) {
+        } else if (locale.equals(Locale.ITALIAN)) {
             return "op.";
         }
 else {
@@ -74,7 +74,7 @@ else {
             return "am Montag und Freitag";
         } else if (locale.equals(Locale.forLanguageTag("es"))) {
             return "los lunes y viernes";
-        }         else if (locale.equals(Locale.forLanguageTag("it"))) {
+        } else if (locale.equals(Locale.ITALIAN)) {
             return "op maandag en vrijdag";
         }
 else {

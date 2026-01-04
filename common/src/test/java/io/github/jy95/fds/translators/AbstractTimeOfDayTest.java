@@ -56,7 +56,7 @@ public abstract class AbstractTimeOfDayTest<C extends FDSConfig, D> extends Abst
             return "um 15:00";
         } else if (locale.equals(Locale.forLanguageTag("es"))) {
             return "a las 15:00";
-        }         else if (locale.equals(Locale.forLanguageTag("it"))) {
+        } else if (locale.equals(Locale.ITALIAN)) {
             return "15:00";
         }
 else {
@@ -74,7 +74,7 @@ else {
             return "um 15:00 und 12:12:12";
         } else if (locale.equals(Locale.forLanguageTag("es"))) {
             return "a las 15:00 y 12:12:12";
-        }         else if (locale.equals(Locale.forLanguageTag("it"))) {
+        } else if (locale.equals(Locale.ITALIAN)) {
             return "om 15:00 in 12:12:12";
         }
 else {

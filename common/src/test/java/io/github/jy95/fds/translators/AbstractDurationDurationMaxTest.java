@@ -43,7 +43,7 @@ public abstract class AbstractDurationDurationMaxTest<C extends FDSConfig, D> ex
             return "für 3 Tage";
         } else if (locale.equals(Locale.forLanguageTag("es"))) {
             return "sobre 3 días";
-        }         else if (locale.equals(Locale.forLanguageTag("it"))) {
+        } else if (locale.equals(Locale.ITALIAN)) {
             return "gedurende 3 dagen";
         }
 else {
@@ -72,7 +72,7 @@ else {
             return "maximal 3 Tage";
         } else if (locale.equals(Locale.forLanguageTag("es"))) {
             return "máximo 3 días";
-        }         else if (locale.equals(Locale.forLanguageTag("it"))) {
+        } else if (locale.equals(Locale.ITALIAN)) {
             return "maximaal 3 dagen";
         }
 else {
@@ -101,7 +101,7 @@ else {
             return "für 3 Tage ( maximal 5 Tage )";
         } else if (locale.equals(Locale.forLanguageTag("es"))) {
             return "sobre 3 días ( máximo 5 días )";
-        }         else if (locale.equals(Locale.forLanguageTag("it"))) {
+        } else if (locale.equals(Locale.ITALIAN)) {
             return "gedurende 3 dagen ( maximaal 5 dagen)";
         }
 else {

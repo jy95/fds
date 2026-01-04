@@ -79,7 +79,7 @@ public abstract class AbstractFrequencyFrequencyMaxPeriodPeriodMaxTest<C extends
             return "3 Mal";
         } else if (locale.equals(Locale.forLanguageTag("es"))) {
             return "3 veces";
-        }         else if (locale.equals(Locale.forLanguageTag("it"))) {
+        } else if (locale.equals(Locale.ITALIAN)) {
             return "3 keer";
         }
 else {
@@ -96,7 +96,7 @@ else {
             return "alle 2 Tage";
         } else if (locale.equals(Locale.forLanguageTag("es"))) {
             return "cada 2 días";
-        }         else if (locale.equals(Locale.forLanguageTag("it"))) {
+        } else if (locale.equals(Locale.ITALIAN)) {
             return "per 2 dagen";
         }
 else {
@@ -113,7 +113,7 @@ else {
             return "3 Mal alle 2 Tage";
         } else if (locale.equals(Locale.forLanguageTag("es"))) {
             return "3 veces cada 2 días";
-        }         else if (locale.equals(Locale.forLanguageTag("it"))) {
+        } else if (locale.equals(Locale.ITALIAN)) {
             return "3 keer per 2 dagen";
         }
 else {

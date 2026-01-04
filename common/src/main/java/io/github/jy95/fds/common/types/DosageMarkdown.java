@@ -39,7 +39,8 @@ public interface DosageMarkdown<A extends DosageAPI<?, B>, B> {
                 Locale.FRENCH,
                 Locale.GERMAN,
                 Locale.forLanguageTag("nl-BE"),
-                Locale.forLanguageTag("es")
+                Locale.forLanguageTag("es"),
+                Locale.ITALIAN
             );
     }
 

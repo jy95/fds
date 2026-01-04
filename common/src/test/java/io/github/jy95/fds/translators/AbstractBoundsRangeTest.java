@@ -105,7 +105,7 @@ public abstract class AbstractBoundsRangeTest<C extends FDSConfig, D> extends Ab
             return "für zwischen 1 und 3";
         } else if (locale.equals(Locale.forLanguageTag("es"))) {
             return "por 1 a 3";
-        }         else if (locale.equals(Locale.forLanguageTag("it"))) {
+        } else if (locale.equals(Locale.ITALIAN)) {
             return "gedurende tussen 1 en 3";
         }
 else {
@@ -123,7 +123,7 @@ else {
             return "für zwischen 1 und 3 Tage";
         } else if (locale.equals(Locale.forLanguageTag("es"))) {
             return "por 1 a 3 días";
-        }         else if (locale.equals(Locale.forLanguageTag("it"))) {
+        } else if (locale.equals(Locale.ITALIAN)) {
             return "gedurende tussen 1 en 3";
         }
 else {
@@ -141,7 +141,7 @@ else {
             return "für bis 3";
         } else if (locale.equals(Locale.forLanguageTag("es"))) {
             return "por hasta 3";
-        }         else if (locale.equals(Locale.forLanguageTag("it"))) {
+        } else if (locale.equals(Locale.ITALIAN)) {
             return "gedurende tot 3";
         }
 else {
@@ -159,7 +159,7 @@ else {
             return "für bis 3 Tage";
         } else if (locale.equals(Locale.forLanguageTag("es"))) {
             return "por hasta 3 días";
-        }         else if (locale.equals(Locale.forLanguageTag("it"))) {
+        } else if (locale.equals(Locale.ITALIAN)) {
             return "gedurende tot 3 dagen";
         }
 else {
@@ -177,7 +177,7 @@ else {
             return "für mindestens 3";
         } else if (locale.equals(Locale.forLanguageTag("es"))) {
             return "por al menos 3";
-        }         else if (locale.equals(Locale.forLanguageTag("it"))) {
+        } else if (locale.equals(Locale.ITALIAN)) {
             return "gedurende menstens 3";
         }
 else {
@@ -195,7 +195,7 @@ else {
             return "für mindestens 3 Tage";
         } else if (locale.equals(Locale.forLanguageTag("es"))) {
             return "por al menos 3 días";
-        }         else if (locale.equals(Locale.forLanguageTag("it"))) {
+        } else if (locale.equals(Locale.ITALIAN)) {
             return "gedurende menstens 3 dagen";
         }
 else {

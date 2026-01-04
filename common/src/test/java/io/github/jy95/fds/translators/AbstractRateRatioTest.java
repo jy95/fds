@@ -54,7 +54,7 @@ public abstract class AbstractRateRatioTest<C extends FDSConfig, D> extends Abst
             return "mit einem Verhältnis von 10 ml";
         } else if (locale.equals(Locale.forLanguageTag("es"))) {
             return "a una tasa de 10 ml";
-        }         else if (locale.equals(Locale.forLanguageTag("it"))) {
+        } else if (locale.equals(Locale.ITALIAN)) {
             return "incontrato een verhouding van 10 ml";
         }
 else {
@@ -83,7 +83,7 @@ else {
             return "mit einem Verhältnis von 10 ml";
         } else if (locale.equals(Locale.forLanguageTag("es"))) {
             return "a una tasa de 10 ml";
-        }         else if (locale.equals(Locale.forLanguageTag("it"))) {
+        } else if (locale.equals(Locale.ITALIAN)) {
             return "incontrato een verhouding van 10 ml";
         }
 else {
@@ -112,7 +112,7 @@ else {
             return "mit einem Verhältnis von 10 mg pro ml";
         } else if (locale.equals(Locale.forLanguageTag("es"))) {
             return "a una tasa de 10 mg por ml";
-        }         else if (locale.equals(Locale.forLanguageTag("it"))) {
+        } else if (locale.equals(Locale.ITALIAN)) {
             return "met een verhouding van 10 mg per ml";
         }
 else {
@@ -141,7 +141,7 @@ else {
             return "mit einem Verhältnis von 1 : 128";
         } else if (locale.equals(Locale.forLanguageTag("es"))) {
             return "a una tasa de 1 : 128";
-        }         else if (locale.equals(Locale.forLanguageTag("it"))) {
+        } else if (locale.equals(Locale.ITALIAN)) {
             return "1 : 128";
         }
 else {
@@ -170,7 +170,7 @@ else {
             return "mit einem Verhältnis von 10 mg jeder 2 ml";
         } else if (locale.equals(Locale.forLanguageTag("es"))) {
             return "a una tasa de 10 mg cada 2 ml";
-        }         else if (locale.equals(Locale.forLanguageTag("it"))) {
+        } else if (locale.equals(Locale.ITALIAN)) {
             return "met een verhouding van 10 mg elke 2 ml";
         }
 else {
