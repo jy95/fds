@@ -82,7 +82,7 @@ jobs:
         id: prep
         run: |
           # Extract version and strip -SNAPSHOT suffix for @since tag
-          RAW_VERSION=$(grep -oP '(?<=<version>)(.*?)(?=</version>)' pom.xml | head -n 1)
+          RAW_VERSION=$(grep -oP '(?<=<revision>)(.*?)(?=</revision>)' pom.xml)
           CLEAN_VERSION=$(echo $RAW_VERSION | sed 's/-SNAPSHOT//')
           echo "version=$CLEAN_VERSION" >> $GITHUB_OUTPUT
 
