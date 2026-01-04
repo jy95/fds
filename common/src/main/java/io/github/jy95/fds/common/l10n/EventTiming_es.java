@@ -8,7 +8,7 @@ import java.util.ListResourceBundle;
  * @see <a href="https://www.hl7.org/fhir/valueset-event-timing.html">FHIR Event
  *      Timing</a>
  * @author jy95
- * @since 2.0.1
+ * @since 2.1.6
  */
 public class EventTiming_es extends ListResourceBundle {
 
