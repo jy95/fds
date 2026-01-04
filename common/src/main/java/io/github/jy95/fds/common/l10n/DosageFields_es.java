@@ -6,7 +6,7 @@ import java.util.ListResourceBundle;
  * Spanish (es) resource bundle for structured dosage and field labels.
  *
  * @author jy95
- * @since 2.0.1
+ * @since 2.1.6
  */
 public class DosageFields_es extends ListResourceBundle {
 
