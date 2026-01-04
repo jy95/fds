@@ -2,6 +2,7 @@ import os
 import glob
 import argparse
 import re
+from babel import Locale
 import argostranslate.package
 import argostranslate.translate
 
@@ -14,9 +15,17 @@ CLASS_NAME_PATTERN = re.compile(r'public\s+class\s+([A-Za-z0-9_]+)')
 JAVADOC_PATTERN = re.compile(r'\* (.*) \(([a-z]{2})\) resource bundle')
 
 class FHIRBundleTranslator:
-    def __init__(self, src_lang='en', tgt_lang='es'):
+    def __init__(self, src_lang='en', tgt_lang='es', version='1.0.0-SNAPSHOT'):
         self.src = src_lang
         self.tgt = tgt_lang
+
+        # Get the display name (e.g., 'es' -> 'Spanish')
+        # We use the target language itself to name the bundle
+        self.tgt_display_name = Locale.parse(tgt_lang).get_language_name('en')
+
+        # Strip -SNAPSHOT from version
+        self.version = version.split('-')[0]
+        
         self._setup_translator()
 
     def _setup_translator(self):
@@ -129,7 +138,10 @@ class FHIRBundleTranslator:
 
         # Update Class name and Javadoc language header
         content = CLASS_NAME_PATTERN.sub(r'public class \1_' + self.tgt, content)
-        content = JAVADOC_PATTERN.sub(rf'* \1 ({self.tgt}) resource bundle', content)
+        content = JAVADOC_PATTERN.sub(rf'* {self.tgt_display_name} ({self.tgt}) resource bundle', content)
+
+        # Finds "@since X.Y.Z" and replaces with the cleaned version
+        content = re.sub(r'@since\s+[0-9.]+(-SNAPSHOT)?', f'@since {self.version}', content)
 
         if is_comparator:
             print(f"   [SKIP] {filename} (preserving math symbols)")
@@ -156,10 +168,11 @@ def main():
     parser = argparse.ArgumentParser(description="FHIR Java ResourceBundle Translator")
     parser.add_argument('--tgt', required=True, help='Target language code (e.g., es, pt, de)')
     parser.add_argument('--dir', default=os.environ.get('SRC_DIR', '.'), help='Directory to search for Java files')
+    parser.add_argument('--rev', default='1.0.0', help='Revision version from POM')
     args = parser.parse_args()
 
     # Initialize the translator logic
-    translator = FHIRBundleTranslator(src_lang='en', tgt_lang=args.tgt)
+    translator = FHIRBundleTranslator(src_lang='en', tgt_lang=args.tgt, version=args.rev)
 
     # Glob search for Java files in the l10n directory
     search_pattern = os.path.join(args.dir, "**/l10n/*.java")
