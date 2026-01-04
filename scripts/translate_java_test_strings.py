@@ -16,7 +16,7 @@ def ensure_model_installed(src_lang, tgt_lang):
         argostranslate.package.update_package_index()
     except Exception as e:
         print(f"WARNING: Could not update index: {e}")
-    
+
     available = argostranslate.package.get_available_packages()
     package = next((p for p in available if p.from_code == src_lang and p.to_code == tgt_lang), None)
     if package:
@@ -36,9 +36,6 @@ def get_node_text(node, source_bytes):
 
 
 def collect_if_statements(root_node):
-    """
-    Return a list of nodes whose .type == 'if_statement'.
-    """
     result = []
     stack = [root_node]
     while stack:
@@ -50,10 +47,6 @@ def collect_if_statements(root_node):
 
 
 def collect_return_string_literals(root_node):
-    """
-    Return a list of string_literal nodes that are enclosed in a return_statement ancestor.
-    Uses an explicit stack that carries ancestor lists to avoid relying on node.parent.
-    """
     result = []
     stack = [(root_node, [])]  # (node, ancestors_list)
     while stack:
@@ -67,12 +60,7 @@ def collect_return_string_literals(root_node):
 
 
 def find_chain_root(if_node):
-    """
-    Walk up parents (if available) to find the top-most if_statement that contains this node
-    as its 'alternative' descendant. This helps us ensure we only modify each if-else chain once.
-    """
     node = if_node
-    # If parent pointers exist, use them; otherwise fall back to using the node itself.
     while True:
         p = getattr(node, 'parent', None)
         if not p or p.type != 'if_statement':
@@ -80,7 +68,6 @@ def find_chain_root(if_node):
         alt = p.child_by_field_name('alternative')
         if not alt:
             break
-        # If our original if_node lies inside this parent's alternative, promote
         if if_node.start_byte >= alt.start_byte and if_node.end_byte <= alt.end_byte:
             node = p
             continue
@@ -89,10 +76,6 @@ def find_chain_root(if_node):
 
 
 def find_else_keyword_pos(source_text, alt_start):
-    """
-    Try to find the 'else' keyword that begins the alternative by searching backwards
-    from alt_start a modest distance. If not found, fallback to alt_start.
-    """
     start_search = max(0, alt_start - 200)
     snippet = source_text[start_search:alt_start + 20]
     idx = snippet.rfind('else')
@@ -107,70 +90,99 @@ def strip_quotes_once(s):
     return s
 
 
+def gather_chain_nodes(root):
+    """
+    Return the list of if_statement nodes in the chain starting at root,
+    traversing the 'alternative' field while it is an if_statement.
+    """
+    nodes = []
+    cur = root
+    while True:
+        nodes.append(cur)
+        alt = cur.child_by_field_name('alternative')
+        if alt and alt.type == 'if_statement':
+            cur = alt
+            continue
+        break
+    return nodes
+
+
 def process_java_file(path, tgt_lang, src_lang="en"):
     try:
         with open(path, "rb") as f:
             source_bytes = f.read()
-        
+
         if f'Locale.forLanguageTag("{tgt_lang}")'.encode() in source_bytes:
             return "SKIPPED_ALREADY_EXISTS"
 
         tree = parser.parse(source_bytes)
         root_node = tree.root_node
 
-        # Find if_statement nodes and string literals under return statements
         if_nodes = collect_if_statements(root_node)
         str_nodes = collect_return_string_literals(root_node)
 
-        matches = []
+        # Build unique chain roots
+        roots = {}
         for if_node in if_nodes:
-            # Try to get the condition; use field name if available, fallback to searching children
-            cond_node = if_node.child_by_field_name('condition')
-            if not cond_node:
-                # look for a parenthesized_expression child inside the if node
-                stack = [if_node]
-                found = None
-                while stack and not found:
-                    node = stack.pop()
-                    if node.type == 'parenthesized_expression':
-                        found = node
-                        break
-                    stack.extend(node.children)
-                cond_node = found
+            root = find_chain_root(if_node)
+            key = (root.start_byte, root.end_byte)
+            roots[key] = root
 
-            if not cond_node:
-                continue
-
-            cond_text = get_node_text(cond_node, source_bytes)
-
-            # Logic check for Locale.ENGLISH or locale.equals(...)
-            if "Locale.ENGLISH" in cond_text or "locale.equals" in cond_text.lower():
-                eng_text = None
-                # Find a string_literal node that lies inside this if_statement
-                for s_node in str_nodes:
-                    if s_node.start_byte > if_node.start_byte and s_node.end_byte < if_node.end_byte:
-                        text = get_node_text(s_node, source_bytes)
-                        eng_text = strip_quotes_once(text)
-                        break
-
-                if eng_text:
-                    matches.append((if_node, eng_text))
-
-        if not matches:
+        if not roots:
             return "SKIPPED_NO_MATCH"
 
         source_text = source_bytes.decode('utf-8')
-        # We'll modify the source_text; collect unique chains so we only insert once per chain.
         processed_roots = set()
-        # Process from bottom of file to top to keep byte offsets valid as we mutate
-        for if_node, eng_text in reversed(matches):
-            root = find_chain_root(if_node)
-            key = (root.start_byte, root.end_byte)
+        updated = False
+
+        # For each if-else chain root, find the if that specifically checks Locale.ENGLISH
+        for key, root in sorted(roots.items(), reverse=True):  # reverse so we process bottom-up
             if key in processed_roots:
                 continue
             processed_roots.add(key)
 
-            # Walk down to the last 'if' in the else-if chain
+            chain_nodes = gather_chain_nodes(root)
+
+            # Prefer the if node whose condition contains 'Locale.ENGLISH'
+            english_node = None
+            for node in chain_nodes:
+                cond_node = node.child_by_field_name('condition')
+                if not cond_node:
+                    # try to find parenthesized_expression inside the node
+                    stack = [node]
+                    found = None
+                    while stack and not found:
+                        n = stack.pop()
+                        if n.type == 'parenthesized_expression':
+                            found = n
+                            break
+                        stack.extend(n.children)
+                    cond_node = found
+                if not cond_node:
+                    continue
+                cond_text = get_node_text(cond_node, source_bytes)
+                if 'Locale.ENGLISH' in cond_text:
+                    english_node = node
+                    break
+
+            if not english_node:
+                # If there's no explicit Locale.ENGLISH check, skip this chain
+                continue
+
+            # Find the return string literal that's inside english_node
+            eng_text = None
+            for s_node in str_nodes:
+                if s_node.start_byte >= english_node.start_byte and s_node.end_byte <= english_node.end_byte:
+                    eng_text = strip_quotes_once(get_node_text(s_node, source_bytes))
+                    break
+
+            if not eng_text:
+                # No return string found for the English branch; skip
+                continue
+
+            # Now find where to insert the new else-if: before the final else (if present),
+            # otherwise after the last if in the chain.
+            # Walk down to the last if in the else-if chain
             current = root
             while True:
                 alt = current.child_by_field_name('alternative')
@@ -180,47 +192,63 @@ def process_java_file(path, tgt_lang, src_lang="en"):
                     break
 
             final_else = current.child_by_field_name('alternative')
-            if not final_else:
-                # No else branch to insert before, append an else-if after current node's end
-                insert_pos = current.end_byte
-            else:
-                # Find position of the 'else' keyword so insertion is correct (we insert before 'else')
+            if final_else:
                 insert_pos = find_else_keyword_pos(source_text, final_else.start_byte)
+                # Find start of the line containing insert_pos
+                newline_pos = source_text.rfind('\n', 0, insert_pos)
+                ws_start = newline_pos + 1 if newline_pos != -1 else 0
+                # If the characters between ws_start and insert_pos are only spaces/tabs, remove them to avoid "}" + spaces + else
+                between = source_text[ws_start:insert_pos]
+                if all(c in ' \t' for c in between):
+                    remove_start = ws_start
+                else:
+                    remove_start = insert_pos
+                # Determine indentation from the whitespace at ws_start
+                indent = ''
+                if ws_start < len(source_text):
+                    line = source_text[ws_start: source_text.find('\n', ws_start) if source_text.find('\n', ws_start) != -1 else len(source_text)]
+                    indent = line[:len(line) - len(line.lstrip())]
+                else:
+                    indent = ''
 
-            # Determine indentation by looking at the line where we will insert
-            lines_before = source_text[:insert_pos].splitlines()
-            indent = ""
-            if lines_before:
-                last_line = lines_before[-1]
-                indent = last_line[:len(last_line) - len(last_line.lstrip())]
+                translated = translate_value(eng_text, src_lang, tgt_lang)
+                new_code = (
+                    f'{indent}else if (locale.equals(Locale.forLanguageTag("{tgt_lang}"))) {{\n'
+                    f'{indent}    return "{translated}";\n'
+                    f'{indent}}}\n'
+                )
 
-            translated = translate_value(eng_text, src_lang, tgt_lang)
-            # Build new else-if block; ensure it ends so the existing else/else-if remains valid
-            new_code = (
-                f'{indent}else if (locale.equals(Locale.forLanguageTag("{tgt_lang}"))) {{\n'
-                f'{indent}    return "{translated}";\n'
-                f'{indent}}}\n'
-            )
+                # Replace the region [remove_start:insert_pos] with new_code
+                source_text = source_text[:remove_start] + new_code + source_text[insert_pos:]
+                updated = True
 
-            # Fix spacing: remove only spaces/tabs at insertion point (stop at newline),
-            # and ensure we add a newline before inserted block if we're mid-line so we don't create
-            # "}" followed by many spaces then "else".
-            insert_end = insert_pos
-            while insert_end < len(source_text) and source_text[insert_end] in ' \t':
-                insert_end += 1
+            else:
+                # No else branch: insert after current.end_byte. Ensure proper newline separation.
+                insert_pos = current.end_byte
+                # Find if we are mid-line: check previous newline
+                prev_newline = source_text.rfind('\n', 0, insert_pos)
+                prev_char = source_text[insert_pos - 1] if insert_pos > 0 else '\n'
+                # Determine indentation from the line where we're inserting (use current line indent)
+                line_start = prev_newline + 1 if prev_newline != -1 else 0
+                line = source_text[line_start: source_text.find('\n', line_start) if source_text.find('\n', line_start) != -1 else len(source_text)]
+                indent = line[:len(line) - len(line.lstrip())]
 
-            prev_char = source_text[insert_pos - 1] if insert_pos > 0 else '\n'
-            # If we're inserting mid-line (no previous newline), ensure the new block starts on a new line
-            if prev_char != '\n' and prev_char != '\r':
-                new_code = '\n' + new_code
+                translated = translate_value(eng_text, src_lang, tgt_lang)
+                new_code = (
+                    f'\n{indent}else if (locale.equals(Locale.forLanguageTag("{tgt_lang}"))) {{\n'
+                    f'{indent}    return "{translated}";\n'
+                    f'{indent}}}\n'
+                )
 
-            # Replace the whitespace between insert_pos and insert_end with our new block.
-            source_text = source_text[:insert_pos] + new_code + source_text[insert_end:]
+                source_text = source_text[:insert_pos] + new_code + source_text[insert_pos:]
+                updated = True
 
-        # Write back file only if we made changes
-        with open(path, "w", encoding="utf-8") as f:
-            f.write(source_text)
-        return "UPDATED"
+        if updated:
+            with open(path, "w", encoding="utf-8") as f:
+                f.write(source_text)
+            return "UPDATED"
+        else:
+            return "SKIPPED_NO_MATCH"
 
     except Exception as e:
         print(f"ERROR: Error in {path}: {e}")
@@ -251,17 +279,16 @@ def main():
                 status = process_java_file(file_path, args.tgt_lang, args.src_lang)
                 stats.setdefault(status, []).append(file_path)
 
-    print("\n" + "="*50)
+    print("\n" + "=" * 50)
     print(f"DEBUG: Scanned {found_files} .java files")
     print(f"PROCESSING SUMMARY FOR: {args.tgt_lang}")
-    print("="*50)
+    print("=" * 50)
     print(f"✅ UPDATED: {len(stats.get('UPDATED', []))}")
     print(f"⏭️  ALREADY EXISTS: {len(stats.get('SKIPPED_ALREADY_EXISTS', []))}")
     print(f"⚪ NO TARGET PATTERN: {len(stats.get('SKIPPED_NO_MATCH', []))}")
     print(f"❌ ERRORS: {len(stats.get('ERROR', []))}")
-    print("="*50)
+    print("=" * 50)
 
-    # List files for NO TARGET PATTERN and ERRORS as requested
     if stats.get('SKIPPED_NO_MATCH'):
         print("\nNO TARGET PATTERN:")
         for p in stats['SKIPPED_NO_MATCH']:
