@@ -72,7 +72,7 @@ public abstract class AbstractOffsetWhenTest<C extends FDSConfig, D> extends Abs
         } else if (locale.equals(Locale.forLanguageTag("es"))) {
             return "1 hora y 30 minutos durante la mañana y durante la noche";
         } else if (locale.equals(Locale.ITALIAN)) {
-            return "1 ora e 30 minuti la mattina e durante la notte";
+            return "1 ora e 30 minuti durante la mattina e durante la notte";
         } else {
             return "1 uur en 30 minuten tijdens de ochtend en tijdens de nacht";
         }
