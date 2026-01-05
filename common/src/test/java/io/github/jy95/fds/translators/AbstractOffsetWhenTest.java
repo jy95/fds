@@ -44,7 +44,7 @@ public abstract class AbstractOffsetWhenTest<C extends FDSConfig, D> extends Abs
         } else if (locale.equals(Locale.forLanguageTag("es"))) {
             return "durante la mañana y durante la noche";
         } else if (locale.equals(Locale.ITALIAN)) {
-            return "durante il mattino e durante la notte";
+            return "durante la mattina e durante la notte";
         } else {
             return "tijdens de ochtend en tijdens de nacht";
         }

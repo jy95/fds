@@ -113,7 +113,7 @@ public class AsHumanReadableTextTest extends AbstractFhirTest {
         } else if (locale.equals(Locale.forLanguageTag("es"))) {
             return "por 2 semanas - tomar 2 veces luego cada día - tomar 1 vez y según sea necesario - tomar 1 vez";
         } else if (locale.equals(Locale.ITALIAN)) { 
-            return "per 2 settimane - impiegare 2 volte ogni giorno - impiegare 1 volta e come richiesto - impiegare 1 volta";
+            return "per 2 settimane - prendere 2 volte ogni giorno - prendere 1 volta e come richiesto - prendere 1 volta";
         } else {
             return "gedurende 2 weken - 2 keer nemen vervolgens elke dag - 1 keer nemen en indien nodig - 1 keer nemen";
         }
