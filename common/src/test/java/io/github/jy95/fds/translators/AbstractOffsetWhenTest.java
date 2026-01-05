@@ -43,6 +43,8 @@ public abstract class AbstractOffsetWhenTest<C extends FDSConfig, D> extends Abs
             return "während des Vormittags und über Nacht";
         } else if (locale.equals(Locale.forLanguageTag("es"))) {
             return "durante la mañana y durante la noche";
+        } else if (locale.equals(Locale.ITALIAN)) {
+            return "durante la mattina e durante la notte";
         } else {
             return "tijdens de ochtend en tijdens de nacht";
         }
@@ -69,6 +71,8 @@ public abstract class AbstractOffsetWhenTest<C extends FDSConfig, D> extends Abs
             return "1 Stunde und 30 Minuten während des Vormittags und über Nacht";
         } else if (locale.equals(Locale.forLanguageTag("es"))) {
             return "1 hora y 30 minutos durante la mañana y durante la noche";
+        } else if (locale.equals(Locale.ITALIAN)) {
+            return "1 ora e 30 minuti durante la mattina e durante la notte";
         } else {
             return "1 uur en 30 minuten tijdens de ochtend en tijdens de nacht";
         }
@@ -95,6 +99,8 @@ public abstract class AbstractOffsetWhenTest<C extends FDSConfig, D> extends Abs
             return "30 Minuten";
         } else if (locale.equals(Locale.forLanguageTag("es"))) {
             return "30 minutos";
+        } else if (locale.equals(Locale.ITALIAN)) {
+            return "30 minuti";
         } else {
             return "30 minuten";
         }

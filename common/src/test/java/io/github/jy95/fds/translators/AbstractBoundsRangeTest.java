@@ -105,6 +105,8 @@ public abstract class AbstractBoundsRangeTest<C extends FDSConfig, D> extends Ab
             return "für zwischen 1 und 3";
         } else if (locale.equals(Locale.forLanguageTag("es"))) {
             return "por 1 a 3";
+        } else if (locale.equals(Locale.ITALIAN)) {
+            return "per 1 a 3";
         } else {
             return "gedurende tussen 1 en 3";
         }
@@ -120,6 +122,8 @@ public abstract class AbstractBoundsRangeTest<C extends FDSConfig, D> extends Ab
             return "für zwischen 1 und 3 Tage";
         } else if (locale.equals(Locale.forLanguageTag("es"))) {
             return "por 1 a 3 días";
+        } else if (locale.equals(Locale.ITALIAN)) {
+            return "per 1 a 3 giorni";
         } else {
             return "gedurende tussen 1 en 3 dagen";
         }
@@ -135,6 +139,8 @@ public abstract class AbstractBoundsRangeTest<C extends FDSConfig, D> extends Ab
             return "für bis 3";
         } else if (locale.equals(Locale.forLanguageTag("es"))) {
             return "por hasta 3";
+        } else if (locale.equals(Locale.ITALIAN)) {
+            return "per fino a 3";
         } else {
             return "gedurende tot 3";
         }
@@ -150,6 +156,8 @@ public abstract class AbstractBoundsRangeTest<C extends FDSConfig, D> extends Ab
             return "für bis 3 Tage";
         } else if (locale.equals(Locale.forLanguageTag("es"))) {
             return "por hasta 3 días";
+        } else if (locale.equals(Locale.ITALIAN)) {
+            return "per fino a 3 giorni";
         } else {
             return "gedurende tot 3 dagen";
         }
@@ -165,6 +173,8 @@ public abstract class AbstractBoundsRangeTest<C extends FDSConfig, D> extends Ab
             return "für mindestens 3";
         } else if (locale.equals(Locale.forLanguageTag("es"))) {
             return "por al menos 3";
+        } else if (locale.equals(Locale.ITALIAN)) {
+            return "per almeno 3";
         } else {
             return "gedurende minstens 3";
         }
@@ -180,6 +190,8 @@ public abstract class AbstractBoundsRangeTest<C extends FDSConfig, D> extends Ab
             return "für mindestens 3 Tage";
         } else if (locale.equals(Locale.forLanguageTag("es"))) {
             return "por al menos 3 días";
+        } else if (locale.equals(Locale.ITALIAN)) {
+            return "per almeno 3 giorni";
         } else {
             return "gedurende minstens 3 dagen";
         }

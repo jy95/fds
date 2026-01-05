@@ -43,6 +43,8 @@ public abstract class AbstractPeriodPeriodMaxTest<C extends FDSConfig, D> extend
             return "alle 2 Tage";
         } else if (locale.equals(Locale.forLanguageTag("es"))) {
             return "cada 2 días";
+        } else if (locale.equals(Locale.ITALIAN)) {
+            return "ogni 2 giorni";
         } else {
             return "per 2 dagen";
         }
@@ -69,6 +71,8 @@ public abstract class AbstractPeriodPeriodMaxTest<C extends FDSConfig, D> extend
             return "jede 2 bis zu 3 Tage";
         } else if (locale.equals(Locale.forLanguageTag("es"))) {
             return "cada 2 a 3 días";
+        } else if (locale.equals(Locale.ITALIAN)) {
+            return "ogni 2 a 3 giorni";
         } else {
             return "elke 2 tot 3 dagen";
         }
