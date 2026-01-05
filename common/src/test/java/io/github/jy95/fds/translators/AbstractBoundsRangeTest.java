@@ -106,9 +106,8 @@ public abstract class AbstractBoundsRangeTest<C extends FDSConfig, D> extends Ab
         } else if (locale.equals(Locale.forLanguageTag("es"))) {
             return "por 1 a 3";
         } else if (locale.equals(Locale.ITALIAN)) {
-            return "gedurende tussen 1 en 3";
-        }
-else {
+            return "da 1 a 3";
+        } else {
             return "gedurende tussen 1 en 3";
         }
     }
@@ -124,9 +123,8 @@ else {
         } else if (locale.equals(Locale.forLanguageTag("es"))) {
             return "por 1 a 3 días";
         } else if (locale.equals(Locale.ITALIAN)) {
-            return "gedurende tussen 1 en 3";
-        }
-else {
+            return "da 1 a 3 giorni";
+        } else {
             return "gedurende tussen 1 en 3 dagen";
         }
     }
@@ -142,9 +140,8 @@ else {
         } else if (locale.equals(Locale.forLanguageTag("es"))) {
             return "por hasta 3";
         } else if (locale.equals(Locale.ITALIAN)) {
-            return "gedurende tot 3";
-        }
-else {
+            return "fino a 3";
+        } else {
             return "gedurende tot 3";
         }
     }
@@ -160,9 +157,8 @@ else {
         } else if (locale.equals(Locale.forLanguageTag("es"))) {
             return "por hasta 3 días";
         } else if (locale.equals(Locale.ITALIAN)) {
-            return "gedurende tot 3 dagen";
-        }
-else {
+            return "fino a 3 giorni";
+        } else {
             return "gedurende tot 3 dagen";
         }
     }
@@ -178,9 +174,8 @@ else {
         } else if (locale.equals(Locale.forLanguageTag("es"))) {
             return "por al menos 3";
         } else if (locale.equals(Locale.ITALIAN)) {
-            return "gedurende menstens 3";
-        }
-else {
+            return "almeno 3";
+        } else {
             return "gedurende minstens 3";
         }
     }
@@ -196,9 +191,8 @@ else {
         } else if (locale.equals(Locale.forLanguageTag("es"))) {
             return "por al menos 3 días";
         } else if (locale.equals(Locale.ITALIAN)) {
-            return "gedurende menstens 3 dagen";
-        }
-else {
+            return "per almeno 3 giorni";
+        } else {
             return "gedurende minstens 3 dagen";
         }
     }
