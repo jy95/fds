@@ -44,9 +44,8 @@ public abstract class AbstractMaxDosePerPeriodTest<C extends FDSConfig, D> exten
         } else if (locale.equals(Locale.forLanguageTag("es"))) {
             return "hasta un máximo de 10 mg por día";
         } else if (locale.equals(Locale.ITALIAN)) {
-            return "tot een massimo van 10 mg per dag";
-        }
-else {
+            return "fino a un massimo di 10 mg per giorno";
+        } else {
             return "tot een maximum van 10 mg per dag";
         }
     }

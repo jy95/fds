@@ -45,9 +45,8 @@ public abstract class AbstractMaxDosePerAdministrationTest<C extends FDSConfig, 
         } else if (locale.equals(Locale.GERMAN)) {
             return "bis zu einer maximalen Menge von 50 mg pro Dosis";
         } else if (locale.equals(Locale.ITALIAN)) {
-            return "tot een massimo van 50 mg per dosi";
-        }
-else {
+            return "fino a un massimo di 50 mg per dosi";
+        } else {
             return "tot een maximum van 50 mg per dosis";
         }
     }
