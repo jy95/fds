@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EventTiming_it.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">FHIR Dosage Support - Common</a> &gt; <a href="index.source.html" class="el_package">io.github.jy95.fds.common.l10n</a> &gt; <span class="el_source">EventTiming_it.java</span></div><h1>EventTiming_it.java</h1><pre class="source lang-java linenums">package io.github.jy95.fds.common.l10n;
+
+import java.util.ListResourceBundle;
+
+/**
+ * Italian (it) resource bundle for event timing codes.
+ *
+ * @see &lt;a href=&quot;https://www.hl7.org/fhir/valueset-event-timing.html&quot;&gt;FHIR Event
+ *      Timing&lt;/a&gt;
+ * @author jy95
+ * @since 2.1.7
+ */
+<span class="nc" id="L13">public class EventTiming_it extends ListResourceBundle {</span>
+
+    // Static content array holding the key-value pairs
+<span class="nc" id="L16">    static final Object[][] contents = {</span>
+            { &quot;MORN&quot;, &quot;durante la mattina&quot; },
+            { &quot;MORN.early&quot;, &quot;durante la mattina presto&quot; },
+            { &quot;MORN.late&quot;, &quot;durante la tarda mattinata&quot; },
+            { &quot;NOON&quot;, &quot;intorno alle 12:00&quot; },
+            { &quot;AFT&quot;, &quot;durante il pomeriggio&quot; },
+            { &quot;AFT.early&quot;, &quot;durante il primo pomeriggio&quot; },
+            { &quot;AFT.late&quot;, &quot;durante il tardo pomeriggio&quot; },
+            { &quot;EVE&quot;, &quot;durante la serata&quot; },
+            { &quot;EVE.early&quot;, &quot;durante la prima sera&quot; },
+            { &quot;EVE.late&quot;, &quot;durante la tarda sera&quot; },
+            { &quot;NIGHT&quot;, &quot;durante la notte&quot; },
+
+            { &quot;PHS&quot;, &quot;dopo il sonno&quot; },
+            { &quot;IMD&quot;, &quot;una volta sola&quot; },
+            { &quot;HS&quot;, &quot;prima di dormire&quot; },
+            { &quot;WAKE&quot;, &quot;a vegliare&quot; },
+
+            // Meal-related timings
+            { &quot;C&quot;, &quot;a pranzo&quot; },
+            { &quot;CM&quot;, &quot;a colazione&quot; },
+            { &quot;CD&quot;, &quot;a pranzo&quot; },
+            { &quot;CV&quot;, &quot;a cena&quot; },
+
+            { &quot;AC&quot;, &quot;prima del pasto&quot; },
+            { &quot;ACM&quot;, &quot;prima colazione&quot; },
+            { &quot;ACD&quot;, &quot;prima di pranzo&quot; },
+            { &quot;ACV&quot;, &quot;prima di cena&quot; },
+
+            { &quot;PC&quot;, &quot;dopo pasto&quot; },
+            { &quot;PCM&quot;, &quot;dopo colazione&quot; },
+            { &quot;PCD&quot;, &quot;dopo pranzo&quot; },
+            { &quot;PCV&quot;, &quot;dopo cena&quot; },
+    };
+
+    // English version
+    /** {@inheritDoc} */
+    @Override
+    public Object[][] getContents() {
+<span class="nc" id="L55">        return contents;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
