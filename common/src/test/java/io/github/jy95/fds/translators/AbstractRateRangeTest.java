@@ -45,9 +45,8 @@ public abstract class AbstractRateRangeTest<C extends FDSConfig, D> extends Abst
         } else if (locale.equals(Locale.GERMAN)) {
             return "mit einem Verhältnis von zwischen 1 und 3";
         } else if (locale.equals(Locale.ITALIAN)) {
-            return "een verhouding van tussen 1 en 3";
-        }
-else {
+            return "ad un tasso da 1 a 3";
+        } else {
             return "met een verhouding van tussen 1 en 3";
         }
     }

@@ -24,9 +24,9 @@ public class DosageFields_it extends ListResourceBundle {
             { "amount.ratio.denominatorLinkword", "{0, choice, 1#per|1.0<ogni}" },
 
             // Fields - Rate/Duration
-            { "fields.rateQuantity", "ad un tasso {0}" },
-            { "fields.rateRange", "ad un tasso {0}" },
-            { "fields.rateRatio", "ad un tasso {0}" },
+            { "fields.rateQuantity", "ad un tasso di {0}" },
+            { "fields.rateRange", "ad un tasso da {0}" },
+            { "fields.rateRatio", "ad un tasso di {0}" },
             { "fields.duration", "su {0}" },
             { "fields.durationMax", "massimo {0}" },
 
