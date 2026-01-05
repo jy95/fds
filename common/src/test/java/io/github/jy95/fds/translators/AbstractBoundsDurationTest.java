@@ -34,7 +34,7 @@ public abstract class AbstractBoundsDurationTest<C extends FDSConfig, D> extends
     protected abstract D generateWithBoundsDuration();
 
     private static String getExpectedText(Locale locale) {
-        return switch (locale.getLanguage()) {
+        return switch (locale.toLanguageTag()) {
             case "fr" -> "pour 3 jours";
             case "de" -> "für 3 Tage";
             case "es" -> "por 3 días";

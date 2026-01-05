@@ -48,12 +48,12 @@ public abstract class AbstractAsNeededTest<C extends FDSConfig, D> extends Abstr
      * Expected text for boolean 'as needed' flag
      */
     public static String getExpectedText1(Locale locale) {
-        return switch (locale.getLanguage()) {
+        return switch (locale.toLanguageTag()) {
             case "fr" -> "si nécessaire";
             case "de" -> "bei Bedarf";
             case "es" -> "según sea necesario";
             case "it" -> "se necessario";
-            case "nl" -> "indien nodig";
+            case "nl-BE" -> "indien nodig";
             default   -> "as required";
         };
     }
@@ -62,12 +62,12 @@ public abstract class AbstractAsNeededTest<C extends FDSConfig, D> extends Abstr
      * Expected text for 'as needed' with a specific reason
      */
     public String getExpectedText2(Locale locale) {
-        return switch (locale.getLanguage()) {
+        return switch (locale.toLanguageTag()) {
             case "fr" -> "si nécessaire pour head pain";
             case "de" -> "bei Bedarf für head pain";
             case "es" -> "según sea necesario para head pain";
             case "it" -> "se necessario per head pain";
-            case "nl" -> "zoals nodig voor head pain";
+            case "nl-BE" -> "zoals nodig voor head pain";
             default   -> "as required for head pain";
         };
     }
