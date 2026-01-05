@@ -48,19 +48,13 @@ public abstract class AbstractAdditionalInstructionTest<C extends FDSConfig, D> 
 
     // Expected result
     protected String getExpectedMultipleAdditionalInstruction(Locale locale) {
-        if (locale.equals(Locale.ENGLISH)) {
-            return "Instruction 1 and Instruction 2";
-        }
-        else if (locale.equals(Locale.forLanguageTag("es"))) {
-            return "Instruction 1 y Instruction 2";
-        } else if (locale.equals(Locale.FRENCH)) {
-            return "Instruction 1 et Instruction 2";
-        } else if (locale.equals(Locale.GERMAN)) {
-            return "Instruction 1 und Instruction 2";
-        } else if (locale.equals(Locale.ITALIAN)) {
-            return "Instruction 1 e Instruction 2";
-        } else {
-            return "Instruction 1 en Instruction 2";
-        }
+        return switch (locale.toLanguageTag()) {
+            case "nl" -> "Instruction 1 en Instruction 2";
+            case "es" -> "Instruction 1 y Instruction 2";
+            case "fr" -> "Instruction 1 et Instruction 2";
+            case "de" -> "Instruction 1 und Instruction 2";
+            case "it" -> "Instruction 1 e Instruction 2";
+            default -> "Instruction 1 and Instruction 2";
+        };
     }
 }
