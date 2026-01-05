@@ -18,7 +18,7 @@ public abstract class AbstractRateRatioTest<C extends FDSConfig, D> extends Abst
     void testNoRateRatio(Locale locale) throws ExecutionException, InterruptedException {
         var dosage = generateEmptyDosage();
         var dosageUtils = getDosageAPI(locale, DisplayOrder.RATE_RATIO);
-        String result = dosageUtils.asHumanReadableText(dosage).get();
+        var result = dosageUtils.asHumanReadableText(dosage).get();
         assertEquals("", result);
     }
 
@@ -27,7 +27,7 @@ public abstract class AbstractRateRatioTest<C extends FDSConfig, D> extends Abst
     void testEmptyRateRatio(Locale locale) throws ExecutionException, InterruptedException {
         var dosage = generateEmptyRateRatio();
         var dosageUtils = getDosageAPI(locale, DisplayOrder.RATE_RATIO);
-        String result = dosageUtils.asHumanReadableText(dosage).get();
+        var result = dosageUtils.asHumanReadableText(dosage).get();
         assertEquals("", result);
     }
 
@@ -38,27 +38,21 @@ public abstract class AbstractRateRatioTest<C extends FDSConfig, D> extends Abst
     void testOnlyNumerator(Locale locale) throws ExecutionException, InterruptedException {
         var dosage = generateOnlyNumerator();
         var dosageUtils = getDosageAPI(locale, DisplayOrder.RATE_RATIO);
-        String result = dosageUtils.asHumanReadableText(dosage).get();
-        String expected = getExpectedText1(locale);
-        assertEquals(expected, result);
+        var result = dosageUtils.asHumanReadableText(dosage).get();
+        assertEquals(getExpectedText1(locale), result);
     }
 
     protected abstract D generateOnlyNumerator();
 
     private String getExpectedText1(Locale locale) {
-        if (locale.equals(Locale.ENGLISH)) {
-            return "at a rate of 10 ml";
-        } else if (locale.equals(Locale.FRENCH)) {
-            return "au taux de 10 ml";
-        } else if (locale.equals(Locale.GERMAN)) {
-            return "mit einem Verhältnis von 10 ml";
-        } else if (locale.equals(Locale.forLanguageTag("es"))) {
-            return "a una tasa de 10 ml";
-        } else if (locale.equals(Locale.ITALIAN)) {
-            return "ad un tasso di 10 ml";
-        } else {
-            return "met een verhouding van 10 ml";
-        }
+        return switch (locale.toLanguageTag()) {
+            case "fr"    -> "au taux de 10 ml";
+            case "de"    -> "mit einem Verhältnis von 10 ml";
+            case "es"    -> "a una tasa de 10 ml";
+            case "it"    -> "ad un tasso di 10 ml";
+            case "nl-BE" -> "met een verhouding van 10 ml";
+            default      -> "at a rate of 10 ml";
+        };
     }
 
     @ParameterizedTest
@@ -66,27 +60,14 @@ public abstract class AbstractRateRatioTest<C extends FDSConfig, D> extends Abst
     void testOnlyDenominator(Locale locale) throws ExecutionException, InterruptedException {
         var dosage = generateOnlyDenominator();
         var dosageUtils = getDosageAPI(locale, DisplayOrder.RATE_RATIO);
-        String result = dosageUtils.asHumanReadableText(dosage).get();
-        String expected = getExpectedText2(locale);
-        assertEquals(expected, result);
+        var result = dosageUtils.asHumanReadableText(dosage).get();
+        assertEquals(getExpectedText2(locale), result);
     }
 
     protected abstract D generateOnlyDenominator();
 
     private String getExpectedText2(Locale locale) {
-        if (locale.equals(Locale.ENGLISH)) {
-            return "at a rate of 10 ml";
-        } else if (locale.equals(Locale.FRENCH)) {
-            return "au taux de 10 ml";
-        } else if (locale.equals(Locale.GERMAN)) {
-            return "mit einem Verhältnis von 10 ml";
-        } else if (locale.equals(Locale.forLanguageTag("es"))) {
-            return "a una tasa de 10 ml";
-        } else if (locale.equals(Locale.ITALIAN)) {
-            return "ad un tasso di 10 ml";
-        } else {
-            return "met een verhouding van 10 ml";
-        }
+        return getExpectedText1(locale);
     }
 
     @ParameterizedTest
@@ -94,27 +75,21 @@ public abstract class AbstractRateRatioTest<C extends FDSConfig, D> extends Abst
     void testNumeratorAndDenominator(Locale locale) throws ExecutionException, InterruptedException {
         var dosage = generateNumeratorAndDenominator();
         var dosageUtils = getDosageAPI(locale, DisplayOrder.RATE_RATIO);
-        String result = dosageUtils.asHumanReadableText(dosage).get();
-        String expected = getExpectedText3(locale);
-        assertEquals(expected, result);
+        var result = dosageUtils.asHumanReadableText(dosage).get();
+        assertEquals(getExpectedText3(locale), result);
     }
 
     protected abstract D generateNumeratorAndDenominator();
 
     private String getExpectedText3(Locale locale) {
-        if (locale.equals(Locale.ENGLISH)) {
-            return "at a rate of 10 mg per ml";
-        } else if (locale.equals(Locale.FRENCH)) {
-            return "au taux de 10 mg par ml";
-        } else if (locale.equals(Locale.GERMAN)) {
-            return "mit einem Verhältnis von 10 mg pro ml";
-        } else if (locale.equals(Locale.forLanguageTag("es"))) {
-            return "a una tasa de 10 mg por ml";
-        } else if (locale.equals(Locale.ITALIAN)) {
-            return "ad un tasso di 10 mg per ml";
-        } else {
-            return "met een verhouding van 10 mg per ml";
-        }
+        return switch (locale.toLanguageTag()) {
+            case "fr"    -> "au taux de 10 mg par ml";
+            case "de"    -> "mit einem Verhältnis von 10 mg pro ml";
+            case "es"    -> "a una tasa de 10 mg por ml";
+            case "it"    -> "ad un tasso di 10 mg per ml";
+            case "nl-BE" -> "met een verhouding van 10 mg per ml";
+            default      -> "at a rate of 10 mg per ml";
+        };
     }
 
     @ParameterizedTest
@@ -122,27 +97,21 @@ public abstract class AbstractRateRatioTest<C extends FDSConfig, D> extends Abst
     void testTiterCase(Locale locale) throws ExecutionException, InterruptedException {
         var dosage = generateTiterCase();
         var dosageUtils = getDosageAPI(locale, DisplayOrder.RATE_RATIO);
-        String result = dosageUtils.asHumanReadableText(dosage).get();
-        String expected = getExpectedText4(locale);
-        assertEquals(expected, result);
+        var result = dosageUtils.asHumanReadableText(dosage).get();
+        assertEquals(getExpectedText4(locale), result);
     }
 
     protected abstract D generateTiterCase();
 
     private String getExpectedText4(Locale locale) {
-        if (locale.equals(Locale.ENGLISH)) {
-            return "at a rate of 1 : 128";
-        } else if (locale.equals(Locale.FRENCH)) {
-            return "au taux de 1 : 128";
-        } else if (locale.equals(Locale.GERMAN)) {
-            return "mit einem Verhältnis von 1 : 128";
-        } else if (locale.equals(Locale.forLanguageTag("es"))) {
-            return "a una tasa de 1 : 128";
-        } else if (locale.equals(Locale.ITALIAN)) {
-            return "ad un tasso di 1 : 128";
-        } else {
-            return "met een verhouding van 1 : 128";
-        }
+        return switch (locale.toLanguageTag()) {
+            case "fr"    -> "au taux de 1 : 128";
+            case "de"    -> "mit einem Verhältnis von 1 : 128";
+            case "es"    -> "a una tasa de 1 : 128";
+            case "it"    -> "ad un tasso di 1 : 128";
+            case "nl-BE" -> "met een verhouding van 1 : 128";
+            default      -> "at a rate of 1 : 128";
+        };
     }
 
     @ParameterizedTest
@@ -150,26 +119,20 @@ public abstract class AbstractRateRatioTest<C extends FDSConfig, D> extends Abst
     void testCommon(Locale locale) throws ExecutionException, InterruptedException {
         var dosage = generateCommonCase();
         var dosageUtils = getDosageAPI(locale, DisplayOrder.RATE_RATIO);
-        String result = dosageUtils.asHumanReadableText(dosage).get();
-        String expected = getExpectedText5(locale);
-        assertEquals(expected, result);
+        var result = dosageUtils.asHumanReadableText(dosage).get();
+        assertEquals(getExpectedText5(locale), result);
     }
 
     protected abstract D generateCommonCase();
 
     private String getExpectedText5(Locale locale) {
-        if (locale.equals(Locale.ENGLISH)) {
-            return "at a rate of 10 mg every 2 ml";
-        } else if (locale.equals(Locale.FRENCH)) {
-            return "au taux de 10 mg chaque 2 ml";
-        } else if (locale.equals(Locale.GERMAN)) {
-            return "mit einem Verhältnis von 10 mg jeder 2 ml";
-        } else if (locale.equals(Locale.forLanguageTag("es"))) {
-            return "a una tasa de 10 mg cada 2 ml";
-        } else if (locale.equals(Locale.ITALIAN)) {
-            return "ad un tasso di 10 mg ogni 2 ml";
-        } else {
-            return "met een verhouding van 10 mg elke 2 ml";
-        }
+        return switch (locale.toLanguageTag()) {
+            case "fr"    -> "au taux de 10 mg chaque 2 ml";
+            case "de"    -> "mit einem Verhältnis von 10 mg jeder 2 ml";
+            case "es"    -> "a una tasa de 10 mg cada 2 ml";
+            case "it"    -> "ad un tasso di 10 mg ogni 2 ml";
+            case "nl-BE" -> "met een verhouding van 10 mg elke 2 ml";
+            default      -> "at a rate of 10 mg every 2 ml";
+        };
     }
 }

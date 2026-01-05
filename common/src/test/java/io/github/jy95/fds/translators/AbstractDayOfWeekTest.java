@@ -18,7 +18,7 @@ public abstract class AbstractDayOfWeekTest<C extends FDSConfig, D> extends Abst
     void testNoDayOfWeek(Locale locale) throws ExecutionException, InterruptedException {
         var dosage = generateEmptyDosage();
         var dosageUtils = getDosageAPI(locale, DisplayOrder.DAY_OF_WEEK);
-        String result = dosageUtils.asHumanReadableText(dosage).get();
+        var result = dosageUtils.asHumanReadableText(dosage).get();
         assertEquals("", result);
     }
 
@@ -27,9 +27,8 @@ public abstract class AbstractDayOfWeekTest<C extends FDSConfig, D> extends Abst
     void testSingleDayOfWeek(Locale locale) throws ExecutionException, InterruptedException {
         var dosage = generateSingleDayOfWeek();
         var dosageUtils = getDosageAPI(locale, DisplayOrder.DAY_OF_WEEK);
-        String result = dosageUtils.asHumanReadableText(dosage).get();
-        String expectedResult = getExpectedSingleDayText(locale);
-        assertEquals(expectedResult, result);
+        var result = dosageUtils.asHumanReadableText(dosage).get();
+        assertEquals(getExpectedSingleDayText(locale), result);
     }
 
     protected abstract D generateSingleDayOfWeek();
@@ -39,44 +38,31 @@ public abstract class AbstractDayOfWeekTest<C extends FDSConfig, D> extends Abst
     void testMultipleDayOfWeek(Locale locale) throws ExecutionException, InterruptedException {
         var dosage = generateMultipleDayOfWeek();
         var dosageUtils = getDosageAPI(locale, DisplayOrder.DAY_OF_WEEK);
-        String result = dosageUtils.asHumanReadableText(dosage).get();
-        String expectedResult = getExpectedMultipleDaysText(locale);
-        assertEquals(expectedResult, result);
+        var result = dosageUtils.asHumanReadableText(dosage).get();
+        assertEquals(getExpectedMultipleDaysText(locale), result);
     }
 
     protected abstract D generateMultipleDayOfWeek();
 
-    // For the parametrized test of single form
     private static String getExpectedSingleDayText(Locale locale) {
-        if (locale.equals(Locale.ENGLISH)) {
-            return "on Friday";
-        } else if (locale.equals(Locale.FRENCH)) {
-            return "le vendredi";
-        } else if (locale.equals(Locale.GERMAN)) {
-            return "am Freitag";
-        } else if (locale.equals(Locale.forLanguageTag("es"))) {
-            return "el viernes";
-        } else if (locale.equals(Locale.ITALIAN)) {
-            return "su venerdì";
-        } else {
-            return "op vrijdag";
-        }
+        return switch (locale.toLanguageTag()) {
+            case "fr"    -> "le vendredi";
+            case "de"    -> "am Freitag";
+            case "es"    -> "el viernes";
+            case "it"    -> "su venerdì";
+            case "nl-BE" -> "op vrijdag";
+            default      -> "on Friday";
+        };
     }
 
-    // For the parametrized test of multiple form
     private String getExpectedMultipleDaysText(Locale locale) {
-        if (locale.equals(Locale.ENGLISH)) {
-            return "on Monday and Friday";
-        } else if (locale.equals(Locale.FRENCH)) {
-            return "les lundi et vendredi";
-        } else if (locale.equals(Locale.GERMAN)) {
-            return "am Montag und Freitag";
-        } else if (locale.equals(Locale.forLanguageTag("es"))) {
-            return "los lunes y viernes";
-        } else if (locale.equals(Locale.ITALIAN)) {
-            return "su lunedì e venerdì";
-        } else {
-            return "op maandag en vrijdag";
-        }
+        return switch (locale.toLanguageTag()) {
+            case "fr"    -> "les lundi et vendredi";
+            case "de"    -> "am Montag und Freitag";
+            case "es"    -> "los lunes y viernes";
+            case "it"    -> "su lunedì e venerdì";
+            case "nl-BE" -> "op maandag en vrijdag";
+            default      -> "on Monday and Friday";
+        };
     }
 }

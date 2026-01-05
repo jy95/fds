@@ -18,7 +18,7 @@ public abstract class AbstractCountCountMaxTest<C extends FDSConfig, D> extends 
     void testNoCount(Locale locale) throws ExecutionException, InterruptedException {
         var dosage = generateEmptyDosage();
         var dosageUtils = getDosageAPI(locale, DisplayOrder.COUNT_COUNT_MAX);
-        String result = dosageUtils.asHumanReadableText(dosage).get();
+        var result = dosageUtils.asHumanReadableText(dosage).get();
         assertEquals("", result);
     }
 
@@ -27,9 +27,8 @@ public abstract class AbstractCountCountMaxTest<C extends FDSConfig, D> extends 
     void testWithCountOnly(Locale locale) throws ExecutionException, InterruptedException {
         var dosage = generateWithCountOnly();
         var dosageUtils = getDosageAPI(locale, DisplayOrder.COUNT_COUNT_MAX);
-        String result = dosageUtils.asHumanReadableText(dosage).get();
-        String expectedResult = getExpectedText1(locale);
-        assertEquals(expectedResult, result);
+        var result = dosageUtils.asHumanReadableText(dosage).get();
+        assertEquals(getExpectedText1(locale), result);
     }
 
     protected abstract D generateWithCountOnly();
@@ -39,42 +38,31 @@ public abstract class AbstractCountCountMaxTest<C extends FDSConfig, D> extends 
     void testWithBothCount(Locale locale) throws ExecutionException, InterruptedException {
         var dosage = generateWithBothCount();
         var dosageUtils = getDosageAPI(locale, DisplayOrder.COUNT_COUNT_MAX);
-        String result = dosageUtils.asHumanReadableText(dosage).get();
-        String expectedResult = getExpectedText2(locale);
-        assertEquals(expectedResult, result);
+        var result = dosageUtils.asHumanReadableText(dosage).get();
+        assertEquals(getExpectedText2(locale), result);
     }
 
     protected abstract D generateWithBothCount();
 
     private String getExpectedText1(Locale locale) {
-        if (locale.equals(Locale.ENGLISH)) {
-            return "take 2 times";
-        } else if (locale.equals(Locale.FRENCH)) {
-            return "prendre 2 fois";
-        } else if (locale.equals(Locale.GERMAN)) {
-            return "2 Mal nehmen";
-        } else if (locale.equals(Locale.forLanguageTag("es"))) {
-            return "tomar 2 veces";
-        } else if (locale.equals(Locale.ITALIAN)) {
-            return "prendere 2 volte";
-        } else {
-            return "2 keer nemen";
-        }
+        return switch (locale.toLanguageTag()) {
+            case "fr"    -> "prendre 2 fois";
+            case "de"    -> "2 Mal nehmen";
+            case "es"    -> "tomar 2 veces";
+            case "it"    -> "prendere 2 volte";
+            case "nl-BE" -> "2 keer nemen";
+            default      -> "take 2 times";
+        };
     }
 
     private String getExpectedText2(Locale locale) {
-        if (locale.equals(Locale.ENGLISH)) {
-            return "take 2 to 3 times";
-        } else if (locale.equals(Locale.FRENCH)) {
-            return "prendre 2 à 3 fois";
-        } else if (locale.equals(Locale.GERMAN)) {
-            return "von 2 bis 3 Mal nehmen";
-        } else if (locale.equals(Locale.forLanguageTag("es"))) {
-            return "tomar de 2 a 3 veces";
-        } else if (locale.equals(Locale.ITALIAN)) {
-            return "prendere 2 a 3 volte";
-        } else {
-            return "2 tot 3 keer nemen";
-        }
+        return switch (locale.toLanguageTag()) {
+            case "fr"    -> "prendre 2 à 3 fois";
+            case "de"    -> "von 2 bis 3 Mal nehmen";
+            case "es"    -> "tomar de 2 a 3 veces";
+            case "it"    -> "prendere 2 a 3 volte";
+            case "nl-BE" -> "2 tot 3 keer nemen";
+            default      -> "take 2 to 3 times";
+        };
     }
 }

@@ -18,7 +18,7 @@ public abstract class AbstractTimeOfDayTest<C extends FDSConfig, D> extends Abst
     void testNoTimeOfDay(Locale locale) throws ExecutionException, InterruptedException {
         var dosage = generateEmptyDosage();
         var dosageUtils = getDosageAPI(locale, DisplayOrder.TIME_OF_DAY);
-        String result = dosageUtils.asHumanReadableText(dosage).get();
+        var result = dosageUtils.asHumanReadableText(dosage).get();
         assertEquals("", result);
     }
 
@@ -27,9 +27,8 @@ public abstract class AbstractTimeOfDayTest<C extends FDSConfig, D> extends Abst
     void testSingleTimeOfDay(Locale locale) throws ExecutionException, InterruptedException {
         var dosage = generateSingleTimeOfDay();
         var dosageUtils = getDosageAPI(locale, DisplayOrder.TIME_OF_DAY);
-        String result = dosageUtils.asHumanReadableText(dosage).get();
-        String expectedResult = getExpectedSingleTimeText(locale);
-        assertEquals(expectedResult, result);
+        var result = dosageUtils.asHumanReadableText(dosage).get();
+        assertEquals(getExpectedSingleTimeText(locale), result);
     }
 
     protected abstract D generateSingleTimeOfDay();
@@ -39,44 +38,33 @@ public abstract class AbstractTimeOfDayTest<C extends FDSConfig, D> extends Abst
     void testMultipleTimeOfDay(Locale locale) throws ExecutionException, InterruptedException {
         var dosage = generateMultipleTimeOfDay();
         var dosageUtils = getDosageAPI(locale, DisplayOrder.TIME_OF_DAY);
-        String result = dosageUtils.asHumanReadableText(dosage).get();
-        String expectedResult = getExpectedMultipleTimesText(locale);
-        assertEquals(expectedResult, result);
+        var result = dosageUtils.asHumanReadableText(dosage).get();
+        assertEquals(getExpectedMultipleTimesText(locale), result);
     }
 
     protected abstract D generateMultipleTimeOfDay();
 
     // Expected text for single timeOfDay
     private static String getExpectedSingleTimeText(Locale locale) {
-        if (locale.equals(Locale.ENGLISH)) {
-            return "at 15:00";
-        } else if (locale.equals(Locale.FRENCH)) {
-            return "à 15:00";
-        } else if (locale.equals(Locale.GERMAN)) {
-            return "um 15:00";
-        } else if (locale.equals(Locale.forLanguageTag("es"))) {
-            return "a las 15:00";
-        } else if (locale.equals(Locale.ITALIAN)) {
-            return "a 15:00";
-        } else {
-            return "om 15:00";
-        }
+        return switch (locale.toLanguageTag()) {
+            case "fr"    -> "à 15:00";
+            case "de"    -> "um 15:00";
+            case "es"    -> "a las 15:00";
+            case "it"    -> "a 15:00";
+            case "nl-BE" -> "om 15:00";
+            default      -> "at 15:00";
+        };
     }
 
     // Expected text for multiple timeOfDay
     private static String getExpectedMultipleTimesText(Locale locale) {
-        if (locale.equals(Locale.ENGLISH)) {
-            return "at 15:00 and 12:12:12";
-        } else if (locale.equals(Locale.FRENCH)) {
-            return "à 15:00 et 12:12:12";
-        } else if (locale.equals(Locale.GERMAN)) {
-            return "um 15:00 und 12:12:12";
-        } else if (locale.equals(Locale.forLanguageTag("es"))) {
-            return "a las 15:00 y 12:12:12";
-        } else if (locale.equals(Locale.ITALIAN)) {
-            return "a 15:00 e 12:12:12";
-        } else {
-            return "om 15:00 en 12:12:12";
-        }
+        return switch (locale.toLanguageTag()) {
+            case "fr"    -> "à 15:00 et 12:12:12";
+            case "de"    -> "um 15:00 und 12:12:12";
+            case "es"    -> "a las 15:00 y 12:12:12";
+            case "it"    -> "a 15:00 e 12:12:12";
+            case "nl-BE" -> "om 15:00 en 12:12:12";
+            default      -> "at 15:00 and 12:12:12";
+        };
     }
 }

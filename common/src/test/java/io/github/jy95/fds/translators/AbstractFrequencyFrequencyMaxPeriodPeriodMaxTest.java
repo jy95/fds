@@ -16,12 +16,12 @@ public abstract class AbstractFrequencyFrequencyMaxPeriodPeriodMaxTest<C extends
     @ParameterizedTest
     @MethodSource("localeProvider")
     void testNoFrequencyOrPeriod(Locale locale) throws ExecutionException, InterruptedException {
-        var dosage= generateEmptyDosage();
+        var dosage = generateEmptyDosage();
         var dosageUtils = getDosageAPI(
                 locale,
                 DisplayOrder.FREQUENCY_FREQUENCY_MAX_PERIOD_PERIOD_MAX
         );
-        String result = dosageUtils.asHumanReadableText(dosage).get();
+        var result = dosageUtils.asHumanReadableText(dosage).get();
         assertEquals("", result);
     }
 
@@ -33,9 +33,8 @@ public abstract class AbstractFrequencyFrequencyMaxPeriodPeriodMaxTest<C extends
                 locale,
                 DisplayOrder.FREQUENCY_FREQUENCY_MAX_PERIOD_PERIOD_MAX
         );
-        String result = dosageUtils.asHumanReadableText(dosage).get();
-        String expectedResult = getExpectedText1(locale);
-        assertEquals(expectedResult, result);
+        var result = dosageUtils.asHumanReadableText(dosage).get();
+        assertEquals(getExpectedText1(locale), result);
     }
 
     protected abstract D generateWithFrequencyOnly();
@@ -48,9 +47,8 @@ public abstract class AbstractFrequencyFrequencyMaxPeriodPeriodMaxTest<C extends
                 locale,
                 DisplayOrder.FREQUENCY_FREQUENCY_MAX_PERIOD_PERIOD_MAX
         );
-        String result = dosageUtils.asHumanReadableText(dosage).get();
-        String expectedResult = getExpectedText2(locale);
-        assertEquals(expectedResult, result);
+        var result = dosageUtils.asHumanReadableText(dosage).get();
+        assertEquals(getExpectedText2(locale), result);
     }
 
     protected abstract D generateWithPeriodOnly();
@@ -63,58 +61,42 @@ public abstract class AbstractFrequencyFrequencyMaxPeriodPeriodMaxTest<C extends
                 locale,
                 DisplayOrder.FREQUENCY_FREQUENCY_MAX_PERIOD_PERIOD_MAX
         );
-        String result = dosageUtils.asHumanReadableText(dosage).get();
-        String expectedResult = getExpectedText3(locale);
-        assertEquals(expectedResult, result);
+        var result = dosageUtils.asHumanReadableText(dosage).get();
+        assertEquals(getExpectedText3(locale), result);
     }
 
     protected abstract D generateBothFrequencyAndPeriod();
 
     private String getExpectedText1(Locale locale) {
-        if (locale.equals(Locale.ENGLISH)) {
-            return "3 times";
-        } else if (locale.equals(Locale.FRENCH)) {
-            return "3 fois";
-        } else if (locale.equals(Locale.GERMAN)) {
-            return "3 Mal";
-        } else if (locale.equals(Locale.forLanguageTag("es"))) {
-            return "3 veces";
-        } else if (locale.equals(Locale.ITALIAN)) {
-            return "3 volte";
-        } else {
-            return "3 keer";
-        }
+        return switch (locale.toLanguageTag()) {
+            case "fr"    -> "3 fois";
+            case "de"    -> "3 Mal";
+            case "es"    -> "3 veces";
+            case "it"    -> "3 volte";
+            case "nl-BE" -> "3 keer";
+            default      -> "3 times";
+        };
     }
 
     private String getExpectedText2(Locale locale) {
-        if (locale.equals(Locale.ENGLISH)) {
-            return "every 2 days";
-        } else if (locale.equals(Locale.FRENCH)) {
-            return "chaque 2 jours";
-        } else if (locale.equals(Locale.GERMAN)) {
-            return "alle 2 Tage";
-        } else if (locale.equals(Locale.forLanguageTag("es"))) {
-            return "cada 2 días";
-        } else if (locale.equals(Locale.ITALIAN)) {
-            return "ogni 2 giorni";
-        } else {
-            return "per 2 dagen";
-        }
+        return switch (locale.toLanguageTag()) {
+            case "fr"    -> "chaque 2 jours";
+            case "de"    -> "alle 2 Tage";
+            case "es"    -> "cada 2 días";
+            case "it"    -> "ogni 2 giorni";
+            case "nl-BE" -> "per 2 dagen";
+            default      -> "every 2 days";
+        };
     }
 
     private String getExpectedText3(Locale locale) {
-        if (locale.equals(Locale.ENGLISH)) {
-            return "3 times every 2 days";
-        } else if (locale.equals(Locale.FRENCH)) {
-            return "3 fois chaque 2 jours";
-        } else if (locale.equals(Locale.GERMAN)) {
-            return "3 Mal alle 2 Tage";
-        } else if (locale.equals(Locale.forLanguageTag("es"))) {
-            return "3 veces cada 2 días";
-        } else if (locale.equals(Locale.ITALIAN)) {
-            return "3 volte ogni 2 giorni";
-        } else {
-            return "3 keer per 2 dagen";
-        }
+        return switch (locale.toLanguageTag()) {
+            case "fr"    -> "3 fois chaque 2 jours";
+            case "de"    -> "3 Mal alle 2 Tage";
+            case "es"    -> "3 veces cada 2 días";
+            case "it"    -> "3 volte ogni 2 giorni";
+            case "nl-BE" -> "3 keer per 2 dagen";
+            default      -> "3 times every 2 days";
+        };
     }
 }

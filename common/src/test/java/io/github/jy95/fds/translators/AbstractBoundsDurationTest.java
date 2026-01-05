@@ -18,7 +18,7 @@ public abstract class AbstractBoundsDurationTest<C extends FDSConfig, D> extends
     void testNoBoundsDuration(Locale locale) throws ExecutionException, InterruptedException {
         var dosage = generateEmptyDosage();
         var dosageUtils = getDosageAPI(locale, DisplayOrder.BOUNDS_DURATION);
-        String result = dosageUtils.asHumanReadableText(dosage).get();
+        var result = dosageUtils.asHumanReadableText(dosage).get();
         assertEquals("", result);
     }
 
@@ -27,28 +27,20 @@ public abstract class AbstractBoundsDurationTest<C extends FDSConfig, D> extends
     void testWithBoundsDuration(Locale locale) throws ExecutionException, InterruptedException {
         var dosage = generateWithBoundsDuration();
         var dosageUtils = getDosageAPI(locale, DisplayOrder.BOUNDS_DURATION);
-        String result = dosageUtils.asHumanReadableText(dosage).get();
-        String expected = getExpectedText(locale);
-        assertEquals(expected, result);
+        var result = dosageUtils.asHumanReadableText(dosage).get();
+        assertEquals(getExpectedText(locale), result);
     }
 
     protected abstract D generateWithBoundsDuration();
 
-    // For the parametrized test of first test
     private static String getExpectedText(Locale locale) {
-        if (locale.equals(Locale.ENGLISH)) {
-            return "for 3 days";
-        } else if (locale.equals(Locale.FRENCH)) {
-            return "pour 3 jours";
-        } else if (locale.equals(Locale.GERMAN)) {
-            return "für 3 Tage";
-        } else if (locale.equals(Locale.forLanguageTag("es"))) {
-            return "por 3 días";
-        } else if (locale.equals(Locale.ITALIAN)) {
-            return "per 3 giorni";
-        }
-else {
-            return "gedurende 3 dagen";
-        }
+        return switch (locale.getLanguage()) {
+            case "fr" -> "pour 3 jours";
+            case "de" -> "für 3 Tage";
+            case "es" -> "por 3 días";
+            case "it" -> "per 3 giorni";
+            case "nl-BE" -> "gedurende 3 dagen";
+            default   -> "for 3 days";
+        };
     }
 }

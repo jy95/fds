@@ -18,7 +18,7 @@ public abstract class AbstractRateQuantityTest<C extends FDSConfig, D> extends A
     void testNoRateQuantity(Locale locale) throws ExecutionException, InterruptedException {
         var dosage = generateEmptyDosage();
         var dosageUtils = getDosageAPI(locale, DisplayOrder.RATE_QUANTITY);
-        String result = dosageUtils.asHumanReadableText(dosage).get();
+        var result = dosageUtils.asHumanReadableText(dosage).get();
         assertEquals("", result);
     }
 
@@ -27,26 +27,20 @@ public abstract class AbstractRateQuantityTest<C extends FDSConfig, D> extends A
     void testSimpleRateQuantity(Locale locale) throws ExecutionException, InterruptedException {
         var dosage = generateSimpleRateQuantity();
         var dosageUtils = getDosageAPI(locale, DisplayOrder.RATE_QUANTITY);
-        String result = dosageUtils.asHumanReadableText(dosage).get();
-        String expected = getExpectedText(locale);
-        assertEquals(expected, result);
+        var result = dosageUtils.asHumanReadableText(dosage).get();
+        assertEquals(getExpectedText(locale), result);
     }
 
     protected abstract D generateSimpleRateQuantity();
 
     private String getExpectedText(Locale locale) {
-        if (locale.equals(Locale.ENGLISH)) {
-            return "at a rate of 5 ml";
-        } else if (locale.equals(Locale.FRENCH)) {
-            return "au taux de 5 ml";
-        } else if (locale.equals(Locale.GERMAN)) {
-            return "mit einem Verhältnis von 5 ml";
-        } else if (locale.equals(Locale.forLanguageTag("es"))) {
-            return "a una tasa de 5 ml";
-        } else if (locale.equals(Locale.ITALIAN)) {
-            return "ad un tasso di 5 ml";
-        } else {
-            return "met een verhouding van 5 ml";
-        }
+        return switch (locale.toLanguageTag()) {
+            case "fr"    -> "au taux de 5 ml";
+            case "de"    -> "mit einem Verhältnis von 5 ml";
+            case "es"    -> "a una tasa de 5 ml";
+            case "it"    -> "ad un tasso di 5 ml";
+            case "nl-BE" -> "met een verhouding van 5 ml";
+            default      -> "at a rate of 5 ml";
+        };
     }
 }

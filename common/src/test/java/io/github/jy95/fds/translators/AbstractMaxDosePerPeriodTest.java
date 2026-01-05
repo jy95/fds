@@ -18,7 +18,7 @@ public abstract class AbstractMaxDosePerPeriodTest<C extends FDSConfig, D> exten
     void testNoMaxDosePerPeriod(Locale locale) throws ExecutionException, InterruptedException {
         var dosage = generateEmptyDosage();
         var dosageUtils = getDosageAPI(locale, DisplayOrder.MAX_DOSE_PER_PERIOD);
-        String result = dosageUtils.asHumanReadableText(dosage).get();
+        var result = dosageUtils.asHumanReadableText(dosage).get();
         assertEquals("", result);
     }
 
@@ -27,26 +27,20 @@ public abstract class AbstractMaxDosePerPeriodTest<C extends FDSConfig, D> exten
     void testWithMaxDosePerPeriod(Locale locale) throws ExecutionException, InterruptedException {
         var dosage = generateWithMaxDosePerPeriod();
         var dosageUtils = getDosageAPI(locale, DisplayOrder.MAX_DOSE_PER_PERIOD);
-        String result = dosageUtils.asHumanReadableText(dosage).get();
-        String expected = getExpectedText(locale);
-        assertEquals(expected, result);
+        var result = dosageUtils.asHumanReadableText(dosage).get();
+        assertEquals(getExpectedText(locale), result);
     }
 
     protected abstract D generateWithMaxDosePerPeriod();
 
     private String getExpectedText(Locale locale) {
-        if (locale.equals(Locale.ENGLISH)) {
-            return "up to a maximum of 10 mg per day";
-        } else if (locale.equals(Locale.FRENCH)) {
-            return "jusqu’à un maximum de 10 mg par jour";
-        } else if (locale.equals(Locale.GERMAN)) {
-            return "bis zu einer maximalen Menge von 10 mg pro Tag";
-        } else if (locale.equals(Locale.forLanguageTag("es"))) {
-            return "hasta un máximo de 10 mg por día";
-        } else if (locale.equals(Locale.ITALIAN)) {
-            return "fino a un massimo di 10 mg per giorno";
-        } else {
-            return "tot een maximum van 10 mg per dag";
-        }
+        return switch (locale.toLanguageTag()) {
+            case "fr"    -> "jusqu’à un maximum de 10 mg par jour";
+            case "de"    -> "bis zu einer maximalen Menge von 10 mg pro Tag";
+            case "es"    -> "hasta un máximo de 10 mg por día";
+            case "it"    -> "fino a un massimo di 10 mg per giorno";
+            case "nl-BE" -> "tot een maximum van 10 mg per dag";
+            default      -> "up to a maximum of 10 mg per day";
+        };
     }
 }
