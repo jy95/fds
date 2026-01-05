@@ -14,7 +14,7 @@ public class DosageFields_it extends ListResourceBundle {
     static final Object[][] contents = {
             // Linkwords
             { "linkwords.and", "e" },
-            { "linkwords.then", "allora" },
+            { "linkwords.then", "quindi" },
 
             // Amount
             { "amount.range.withUnit",

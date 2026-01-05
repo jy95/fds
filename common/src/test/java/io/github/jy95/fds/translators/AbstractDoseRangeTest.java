@@ -44,7 +44,7 @@ public abstract class AbstractDoseRangeTest<C extends FDSConfig, D> extends Abst
          } else if (locale.equals(Locale.forLanguageTag("es"))) {
             return "1 a 3";
         } else if (locale.equals(Locale.ITALIAN)) {
-            return "1 su 3";
+            return "1 a 3";
         }
 else {
             return "tussen 1 en 3";
