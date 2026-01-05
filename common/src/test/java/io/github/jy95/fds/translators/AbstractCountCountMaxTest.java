@@ -56,9 +56,8 @@ public abstract class AbstractCountCountMaxTest<C extends FDSConfig, D> extends 
         } else if (locale.equals(Locale.forLanguageTag("es"))) {
             return "tomar 2 veces";
         } else if (locale.equals(Locale.ITALIAN)) {
-            return "2 keer nemen";
-        }
-else {
+            return "prendere 2 volte";
+        } else {
             return "2 keer nemen";
         }
     }
@@ -73,9 +72,8 @@ else {
         } else if (locale.equals(Locale.forLanguageTag("es"))) {
             return "tomar de 2 a 3 veces";
         } else if (locale.equals(Locale.ITALIAN)) {
-            return "2 tot 3 keer nemen";
-        }
-else {
+            return "prendere 2 a 3 volte";
+        } else {
             return "2 tot 3 keer nemen";
         }
     }

@@ -106,7 +106,7 @@ public abstract class AbstractBoundsRangeTest<C extends FDSConfig, D> extends Ab
         } else if (locale.equals(Locale.forLanguageTag("es"))) {
             return "por 1 a 3";
         } else if (locale.equals(Locale.ITALIAN)) {
-            return "da 1 a 3";
+            return "per da 1 a 3";
         } else {
             return "gedurende tussen 1 en 3";
         }

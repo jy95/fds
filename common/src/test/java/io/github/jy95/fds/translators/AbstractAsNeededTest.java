@@ -57,9 +57,8 @@ public abstract class AbstractAsNeededTest<C extends FDSConfig, D> extends Abstr
         } else if (locale.equals(Locale.forLanguageTag("es"))) {
             return "según sea necesario";
         } else if (locale.equals(Locale.ITALIAN)) {
-            return "Indien nodig";
-        }
-else {
+            return "se necessario";
+        } else {
             return "indien nodig";
         }
     }
