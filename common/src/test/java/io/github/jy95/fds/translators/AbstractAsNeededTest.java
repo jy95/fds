@@ -75,7 +75,7 @@ else {
         } else if (locale.equals(Locale.forLanguageTag("es"))) {
             return "según sea necesario para head pain";
         } else if (locale.equals(Locale.ITALIAN)) {
-            return "zoals nodig voor dolore alla testa";
+            return "se necessario per dolore alla testa";
         }
 else {
             return "zoals nodig voor head pain";
