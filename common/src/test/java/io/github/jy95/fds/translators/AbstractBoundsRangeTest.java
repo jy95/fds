@@ -123,7 +123,7 @@ public abstract class AbstractBoundsRangeTest<C extends FDSConfig, D> extends Ab
         } else if (locale.equals(Locale.forLanguageTag("es"))) {
             return "por 1 a 3 días";
         } else if (locale.equals(Locale.ITALIAN)) {
-            return "da 1 a 3 giorni";
+            return "per da 1 a 3 giorni";
         } else {
             return "gedurende tussen 1 en 3 dagen";
         }
@@ -140,7 +140,7 @@ public abstract class AbstractBoundsRangeTest<C extends FDSConfig, D> extends Ab
         } else if (locale.equals(Locale.forLanguageTag("es"))) {
             return "por hasta 3";
         } else if (locale.equals(Locale.ITALIAN)) {
-            return "fino a 3";
+            return "per fino a 3";
         } else {
             return "gedurende tot 3";
         }
@@ -157,7 +157,7 @@ public abstract class AbstractBoundsRangeTest<C extends FDSConfig, D> extends Ab
         } else if (locale.equals(Locale.forLanguageTag("es"))) {
             return "por hasta 3 días";
         } else if (locale.equals(Locale.ITALIAN)) {
-            return "fino a 3 giorni";
+            return "per fino a 3 giorni";
         } else {
             return "gedurende tot 3 dagen";
         }
@@ -174,7 +174,7 @@ public abstract class AbstractBoundsRangeTest<C extends FDSConfig, D> extends Ab
         } else if (locale.equals(Locale.forLanguageTag("es"))) {
             return "por al menos 3";
         } else if (locale.equals(Locale.ITALIAN)) {
-            return "almeno 3";
+            return "per almeno 3";
         } else {
             return "gedurende minstens 3";
         }

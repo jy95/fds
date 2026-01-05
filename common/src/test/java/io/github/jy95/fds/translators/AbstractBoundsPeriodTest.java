@@ -70,8 +70,7 @@ public abstract class AbstractBoundsPeriodTest<C extends FDSConfig, D> extends A
             return "desde 23 may 2011 hasta 27 may 2011";
         } else if (locale.equals(Locale.ITALIAN)) {
             return "da 23 mag 2011 a 27 mag 2011";
-        }
-else {
+        } else {
             return "van 23 mei 2011 tot 27 mei 2011";
         }
     }
@@ -109,9 +108,8 @@ else {
         } else if (locale.equals(Locale.forLanguageTag("es"))) {
             return "desde 23 may 2011";
         } else if (locale.equals(Locale.ITALIAN)) {
-            return "van 23 mei 2011";
-        }
-else {
+            return "da 23 mag 2011";
+        } else {
             return "van 23 mei 2011";
         }
     }

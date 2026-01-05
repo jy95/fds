@@ -75,8 +75,7 @@ public abstract class AbstractAsNeededTest<C extends FDSConfig, D> extends Abstr
             return "según sea necesario para head pain";
         } else if (locale.equals(Locale.ITALIAN)) {
             return "se necessario per dolore alla testa";
-        }
-else {
+        } else {
             return "zoals nodig voor head pain";
         }
     }
