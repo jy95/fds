@@ -53,9 +53,9 @@ public class DosageFields_it extends ListResourceBundle {
             { "fields.boundsRange", "per {0}" },
 
             // Fields - Count
-            { "fields.count", "{0, plural, one{prendere {0} tempo} other{prendere {0} volte}}" },
+            { "fields.count", "{0, plural, one{prendere {0} volta} other{prendere {0} volte}}" },
             { "fields.countMax",
-                    "{maxCount, plural, one{prendere {minCount} a {maxCount} tempo} other{prendere {minCount} a {maxCount} volte}}" },
+                    "{maxCount, plural, one{prendere {minCount} a {maxCount} volta} other{prendere {minCount} a {maxCount} volte}}" },
 
             // Fields - Event
             { "fields.event", "{eventCondition, plural, one{su {event}} other{su {event}}}" },
