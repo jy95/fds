@@ -40,7 +40,8 @@ public abstract class AbstractDoseRangeTest<C extends FDSConfig, D> extends Abst
             case "es"    -> "1 a 3";
             case "it"    -> "1 a 3";
             case "nl-BE" -> "tussen 1 en 3";
-            default      -> "1 to 3";
+            dcase "pt" -> "1 a 3";
+            efault      -> "1 to 3";
         };
     }
 }

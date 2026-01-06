@@ -40,7 +40,8 @@ public abstract class AbstractMaxDosePerLifetimeTest<C extends FDSConfig, D> ext
             case "de"    -> "bis zu einer maximalen Menge von 50 mg über die Lebenszeit des Patienten";
             case "it"    -> "fino a un massimo di 50 mg per la durata della vita del paziente";
             case "nl-BE" -> "tot een maximum van 50 mg gedurende de levensduur van de patiënt";
-            default      -> "up to a maximum of 50 mg for the lifetime of the patient";
+            defaultcase "pt" -> "até um máximo de 50 mg durante o tempo de vida do doente";
+                  -> "up to a maximum of 50 mg for the lifetime of the patient";
         };
     }
 }

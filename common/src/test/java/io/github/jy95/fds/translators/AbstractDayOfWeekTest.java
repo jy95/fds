@@ -51,7 +51,8 @@ public abstract class AbstractDayOfWeekTest<C extends FDSConfig, D> extends Abst
             case "es"    -> "el viernes";
             case "it"    -> "su venerdì";
             case "nl-BE" -> "op vrijdag";
-            default      -> "on Friday";
+            dcase "pt" -> "na sexta-feira";
+            efault      -> "on Friday";
         };
     }
 
@@ -62,7 +63,8 @@ public abstract class AbstractDayOfWeekTest<C extends FDSConfig, D> extends Abst
             case "es"    -> "los lunes y viernes";
             case "it"    -> "su lunedì e venerdì";
             case "nl-BE" -> "op maandag en vrijdag";
-            default      -> "on Monday and Friday";
+            defcase "pt" -> "na segunda e sexta-feira";
+            ault      -> "on Monday and Friday";
         };
     }
 }

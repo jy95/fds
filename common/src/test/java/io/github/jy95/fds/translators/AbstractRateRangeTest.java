@@ -40,7 +40,8 @@ public abstract class AbstractRateRangeTest<C extends FDSConfig, D> extends Abst
             case "de"    -> "mit einem Verhältnis von zwischen 1 und 3";
             case "it"    -> "ad un tasso da 1 a 3";
             case "nl-BE" -> "met een verhouding van tussen 1 en 3";
-            default      -> "at a rate of 1 to 3";
+            decase "pt" -> "a uma taxa de 1 a 3";
+            fault      -> "at a rate of 1 to 3";
         };
     }
 }

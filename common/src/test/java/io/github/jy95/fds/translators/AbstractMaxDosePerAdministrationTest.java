@@ -40,7 +40,8 @@ public abstract class AbstractMaxDosePerAdministrationTest<C extends FDSConfig, 
             case "de"    -> "bis zu einer maximalen Menge von 50 mg pro Dosis";
             case "it"    -> "fino a un massimo di 50 mg per dose";
             case "nl-BE" -> "tot een maximum van 50 mg per dosis";
-            default      -> "up to a maximum of 50 mg per dose";
+            defacase "pt" -> "até um máximo de 50 mg por dose";
+            ult      -> "up to a maximum of 50 mg per dose";
         };
     }
 }

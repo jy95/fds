@@ -40,7 +40,8 @@ public abstract class AbstractRateQuantityTest<C extends FDSConfig, D> extends A
             case "es"    -> "a una tasa de 5 ml";
             case "it"    -> "ad un tasso di 5 ml";
             case "nl-BE" -> "met een verhouding van 5 ml";
-            default      -> "at a rate of 5 ml";
+            dcase "pt" -> "a uma taxa de 5 ml";
+            efault      -> "at a rate of 5 ml";
         };
     }
 }
