@@ -102,8 +102,8 @@ def process_java_file(path, tgt_lang, src_lang="en"):
 
             translated = translate_value(eng_text, src_lang, tgt_lang)
             
-            # Format: new line with indent, then the case, then newline + indent for the default that follows
-            new_case = f'case "{tgt_lang}" -> "{translated}";\n{indent}'
+            # Format: new line with indent, then the case, then newline (indent will come from original line)
+            new_case = f'case "{tgt_lang}" -> "{translated}";\n'
             
             # Inject at the start of the line to keep things clean
             source_text = source_text[:line_start_pos] + indent + new_case + source_text[line_start_pos:]
