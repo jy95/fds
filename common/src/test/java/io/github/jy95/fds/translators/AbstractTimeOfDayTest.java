@@ -52,7 +52,8 @@ public abstract class AbstractTimeOfDayTest<C extends FDSConfig, D> extends Abst
             case "es"    -> "a las 15:00";
             case "it"    -> "a 15:00";
             case "nl-BE" -> "om 15:00";
-            default      -> "at 15:00";
+            case "pt" -> "às 15:00";
+                        default      -> "at 15:00";
         };
     }
 
@@ -64,7 +65,8 @@ public abstract class AbstractTimeOfDayTest<C extends FDSConfig, D> extends Abst
             case "es"    -> "a las 15:00 y 12:12:12";
             case "it"    -> "a 15:00 e 12:12:12";
             case "nl-BE" -> "om 15:00 en 12:12:12";
-            default      -> "at 15:00 and 12:12:12";
+            case "pt" -> "às 15:00 e 12:12:12";
+                        default      -> "at 15:00 and 12:12:12";
         };
     }
 }

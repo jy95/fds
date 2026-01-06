@@ -40,7 +40,8 @@ public abstract class AbstractFrequencyFrequencyMaxTest<C extends FDSConfig, D> 
             case "es"    -> "3 veces";
             case "it"    -> "3 volte";
             case "nl-BE" -> "3 keer";
-            default      -> "3 times";
+            case "pt" -> "3 vezes";
+                        default      -> "3 times";
         };
     }
 
@@ -62,7 +63,8 @@ public abstract class AbstractFrequencyFrequencyMaxTest<C extends FDSConfig, D> 
             case "es"    -> "hasta 3 veces";
             case "it"    -> "fino a 3 volte";
             case "nl-BE" -> "tot 3 keer";
-            default      -> "up to 3 times";
+            case "pt" -> "até 3 vezes";
+                        default      -> "up to 3 times";
         };
     }
 
@@ -84,7 +86,8 @@ public abstract class AbstractFrequencyFrequencyMaxTest<C extends FDSConfig, D> 
             case "es"    -> "3-5 veces";
             case "it"    -> "3-5 volte";
             case "nl-BE" -> "3-5 keer";
-            default      -> "3-5 times";
+            case "pt" -> "3-5 vezes";
+                        default      -> "3-5 times";
         };
     }
 }

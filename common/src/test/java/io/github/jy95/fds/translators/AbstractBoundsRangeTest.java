@@ -95,7 +95,8 @@ public abstract class AbstractBoundsRangeTest<C extends FDSConfig, D> extends Ab
             case "es" -> "por 1 a 3";
             case "it" -> "per 1 a 3";
             case "nl-BE" -> "gedurende tussen 1 en 3";
-            default -> "for 1 to 3";
+            case "pt" -> "1 a 3";
+                        default -> "for 1 to 3";
         };
     }
 
@@ -106,7 +107,8 @@ public abstract class AbstractBoundsRangeTest<C extends FDSConfig, D> extends Ab
             case "es" -> "por 1 a 3 días";
             case "it" -> "per 1 a 3 giorni";
             case "nl-BE" -> "gedurende tussen 1 en 3 dagen";
-            default -> "for 1 to 3 days";
+            case "pt" -> "durante 1 a 3 dias";
+                        default -> "for 1 to 3 days";
         };
     }
 
@@ -117,7 +119,8 @@ public abstract class AbstractBoundsRangeTest<C extends FDSConfig, D> extends Ab
             case "es" -> "por hasta 3";
             case "it" -> "per fino a 3";
             case "nl-BE" -> "gedurende tot 3";
-            default -> "for up to 3";
+            case "pt" -> "até 3";
+                        default -> "for up to 3";
         };
     }
 
@@ -128,7 +131,8 @@ public abstract class AbstractBoundsRangeTest<C extends FDSConfig, D> extends Ab
             case "es" -> "por hasta 3 días";
             case "it" -> "per fino a 3 giorni";
             case "nl-BE" -> "gedurende tot 3 dagen";
-            default -> "for up to 3 days";
+            case "pt" -> "até 3 dias";
+                        default -> "for up to 3 days";
         };
     }
 
@@ -139,7 +143,8 @@ public abstract class AbstractBoundsRangeTest<C extends FDSConfig, D> extends Ab
             case "es" -> "por al menos 3";
             case "it" -> "per almeno 3";
             case "nl-BE" -> "gedurende minstens 3";
-            default -> "for at least 3";
+            case "pt" -> "para pelo menos 3";
+                        default -> "for at least 3";
         };
     }
 
@@ -150,7 +155,8 @@ public abstract class AbstractBoundsRangeTest<C extends FDSConfig, D> extends Ab
             case "es" -> "por al menos 3 días";
             case "it" -> "per almeno 3 giorni";
             case "nl-BE" -> "gedurende minstens 3 dagen";
-            default -> "for at least 3 days";
+            case "pt" -> "durante pelo menos 3 dias";
+                        default -> "for at least 3 days";
         };
     }
 }

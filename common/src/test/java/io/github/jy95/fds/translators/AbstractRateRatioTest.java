@@ -51,7 +51,8 @@ public abstract class AbstractRateRatioTest<C extends FDSConfig, D> extends Abst
             case "es"    -> "a una tasa de 10 ml";
             case "it"    -> "ad un tasso di 10 ml";
             case "nl-BE" -> "met een verhouding van 10 ml";
-            default      -> "at a rate of 10 ml";
+            case "pt" -> "a uma taxa de 10 ml";
+                        default      -> "at a rate of 10 ml";
         };
     }
 
@@ -88,7 +89,8 @@ public abstract class AbstractRateRatioTest<C extends FDSConfig, D> extends Abst
             case "es"    -> "a una tasa de 10 mg por ml";
             case "it"    -> "ad un tasso di 10 mg per ml";
             case "nl-BE" -> "met een verhouding van 10 mg per ml";
-            default      -> "at a rate of 10 mg per ml";
+            case "pt" -> "a uma taxa de 10 mg por ml";
+                        default      -> "at a rate of 10 mg per ml";
         };
     }
 
@@ -110,7 +112,8 @@ public abstract class AbstractRateRatioTest<C extends FDSConfig, D> extends Abst
             case "es"    -> "a una tasa de 1 : 128";
             case "it"    -> "ad un tasso di 1 : 128";
             case "nl-BE" -> "met een verhouding van 1 : 128";
-            default      -> "at a rate of 1 : 128";
+            case "pt" -> "a uma taxa de 1 : 128";
+                        default      -> "at a rate of 1 : 128";
         };
     }
 
@@ -132,7 +135,8 @@ public abstract class AbstractRateRatioTest<C extends FDSConfig, D> extends Abst
             case "es"    -> "a una tasa de 10 mg cada 2 ml";
             case "it"    -> "ad un tasso di 10 mg ogni 2 ml";
             case "nl-BE" -> "met een verhouding van 10 mg elke 2 ml";
-            default      -> "at a rate of 10 mg every 2 ml";
+            case "pt" -> "a uma taxa de 10 mg cada 2 ml";
+                        default      -> "at a rate of 10 mg every 2 ml";
         };
     }
 }

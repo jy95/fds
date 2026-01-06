@@ -74,7 +74,8 @@ public abstract class AbstractFrequencyFrequencyMaxPeriodPeriodMaxTest<C extends
             case "es"    -> "3 veces";
             case "it"    -> "3 volte";
             case "nl-BE" -> "3 keer";
-            default      -> "3 times";
+            case "pt" -> "3 vezes";
+                        default      -> "3 times";
         };
     }
 
@@ -85,7 +86,8 @@ public abstract class AbstractFrequencyFrequencyMaxPeriodPeriodMaxTest<C extends
             case "es"    -> "cada 2 días";
             case "it"    -> "ogni 2 giorni";
             case "nl-BE" -> "per 2 dagen";
-            default      -> "every 2 days";
+            case "pt" -> "a cada 2 dias";
+                        default      -> "every 2 days";
         };
     }
 
@@ -96,7 +98,8 @@ public abstract class AbstractFrequencyFrequencyMaxPeriodPeriodMaxTest<C extends
             case "es"    -> "3 veces cada 2 días";
             case "it"    -> "3 volte ogni 2 giorni";
             case "nl-BE" -> "3 keer per 2 dagen";
-            default      -> "3 times every 2 days";
+            case "pt" -> "3 vezes a cada 2 dias";
+                        default      -> "3 times every 2 days";
         };
     }
 }

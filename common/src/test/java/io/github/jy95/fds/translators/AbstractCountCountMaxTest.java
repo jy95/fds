@@ -51,7 +51,8 @@ public abstract class AbstractCountCountMaxTest<C extends FDSConfig, D> extends 
             case "es"    -> "tomar 2 veces";
             case "it"    -> "prendere 2 volte";
             case "nl-BE" -> "2 keer nemen";
-            default      -> "take 2 times";
+            case "pt" -> "tomar 2 vezes";
+                        default      -> "take 2 times";
         };
     }
 
@@ -62,7 +63,8 @@ public abstract class AbstractCountCountMaxTest<C extends FDSConfig, D> extends 
             case "es"    -> "tomar de 2 a 3 veces";
             case "it"    -> "prendere 2 a 3 volte";
             case "nl-BE" -> "2 tot 3 keer nemen";
-            default      -> "take 2 to 3 times";
+            case "pt" -> "tomar 2 a 3 vezes";
+                        default      -> "take 2 to 3 times";
         };
     }
 }
