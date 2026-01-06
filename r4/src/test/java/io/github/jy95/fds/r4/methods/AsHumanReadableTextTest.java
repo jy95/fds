@@ -28,8 +28,7 @@ public class AsHumanReadableTextTest extends AbstractFhirTest {
     @MethodSource("localeProvider")
     void testOneItem(Locale locale) throws ExecutionException, InterruptedException {
         DosageAPIR4 dosageUtils = getDosageAPI(
-                FDSConfigR4
-                        .builder()
+                FDSConfigR4.builder()
                         .locale(locale)
                         .build()
         );
@@ -44,8 +43,7 @@ public class AsHumanReadableTextTest extends AbstractFhirTest {
     @MethodSource("localeProvider")
     void testMultipleItems(Locale locale) throws ExecutionException, InterruptedException {
         DosageAPIR4 dosageUtils = getDosageAPI(
-                FDSConfigR4
-                        .builder()
+                FDSConfigR4.builder()
                         .locale(locale)
                         .build()
         );
@@ -54,11 +52,9 @@ public class AsHumanReadableTextTest extends AbstractFhirTest {
         Dosage dosage3 = getThirdDosage();
         List<Dosage> dosageList = List.of(dosage1, dosage2, dosage3);
         String result = dosageUtils.asHumanReadableText(dosageList).get();
-        String expected = getExpectedText(locale);
-        assertEquals(expected, result);
+        assertEquals(getExpectedText(locale), result);
     }
 
-    // For the setup of testMultipleItems
     private static Dosage getFirstDosage() {
         Dosage dosage = new Dosage();
         Timing timing = new Timing();
@@ -75,7 +71,6 @@ public class AsHumanReadableTextTest extends AbstractFhirTest {
         return dosage;
     }
 
-    // For the setup of testMultipleItems
     private static Dosage getSecondDosage() {
         Dosage dosage = new Dosage();
         Timing timing = new Timing();
@@ -89,7 +84,6 @@ public class AsHumanReadableTextTest extends AbstractFhirTest {
         return dosage;
     }
 
-    // For the setup of testMultipleItems
     private static Dosage getThirdDosage() {
         Dosage dosage = new Dosage();
         Timing timing = new Timing();
@@ -104,19 +98,13 @@ public class AsHumanReadableTextTest extends AbstractFhirTest {
     }
 
     private static String getExpectedText(Locale locale) {
-        if (locale.equals(Locale.ENGLISH)) {
-            return "for 2 weeks - take 2 times then every day - take 1 time and as required - take 1 time";
-        } else if (locale.equals(Locale.FRENCH)) {
-            return "pour 2 semaines - prendre 2 fois puis chaque jour - prendre 1 fois et si nécessaire - prendre 1 fois";
-        } else if (locale.equals(Locale.GERMAN)) {
-            return "für 2 Wochen - 2 Mal nehmen dann jede Tag - 1 Mal nehmen und bei Bedarf - 1 Mal nehmen";
-        } else if (locale.equals(Locale.forLanguageTag("es"))) {
-            return "por 2 semanas - tomar 2 veces luego cada día - tomar 1 vez y según sea necesario - tomar 1 vez";
-        } else if (locale.equals(Locale.ITALIAN)) { 
-            return "per 2 settimane - prendere 2 volte quindi ogni giorno - prendere 1 volta e se necessario - prendere 1 volta";
-        } else {
-            return "gedurende 2 weken - 2 keer nemen vervolgens elke dag - 1 keer nemen en indien nodig - 1 keer nemen";
-        }
+        return switch (locale.toLanguageTag()) {
+            case "fr"    -> "pour 2 semaines - prendre 2 fois puis chaque jour - prendre 1 fois et si nécessaire - prendre 1 fois";
+            case "de"    -> "für 2 Wochen - 2 Mal nehmen dann jede Tag - 1 Mal nehmen und bei Bedarf - 1 Mal nehmen";
+            case "es"    -> "por 2 semanas - tomar 2 veces luego cada día - tomar 1 vez y según sea necesario - tomar 1 vez";
+            case "it"    -> "per 2 settimane - prendere 2 volte quindi ogni giorno - prendere 1 volta e se necessario - prendere 1 volta";
+            case "nl-BE" -> "gedurende 2 weken - 2 keer nemen vervolgens elke dag - 1 keer nemen en indien nodig - 1 keer nemen";
+            default      -> "for 2 weeks - take 2 times then every day - take 1 time and as required - take 1 time";
+        };
     }
-
 }
