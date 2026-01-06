@@ -41,7 +41,6 @@ def collect_switch_expressions(root_node):
     stack = [root_node]
     while stack:
         node = stack.pop()
-        # Check for both switch_expression (return switch) and switch_statement
         if node.type in ('switch_expression', 'switch_block'):
             result.append(node)
         for child in reversed(node.children):
@@ -59,7 +58,6 @@ def process_java_file(path, tgt_lang, src_lang="en"):
         tree = parser.parse(source_bytes)
         source_text = source_bytes.decode('utf-8')
         
-        # Look for switch expressions or blocks
         switches = collect_switch_expressions(tree.root_node)
         if not switches:
             return "SKIPPED_NO_MATCH"
@@ -69,10 +67,8 @@ def process_java_file(path, tgt_lang, src_lang="en"):
 
         for switch_node in switches:
             default_rule = None
-            # Find the switch_rule that contains the 'default' label
             for child in switch_node.children:
                 if child.type == 'switch_rule':
-                    # Check labels within the rule
                     labels = [c for c in child.children if c.type == 'switch_label']
                     for l in labels:
                         if 'default' in get_node_text(l, source_bytes):
@@ -83,37 +79,34 @@ def process_java_file(path, tgt_lang, src_lang="en"):
             if not default_rule:
                 continue
 
-            # Find the string literal on the right side of the arrow ->
+            # Find the string literal in the default rule
             eng_text = None
-            for child in reversed(default_rule.children):
-                if child.type == 'string_literal':
-                    eng_text = strip_quotes_once(get_node_text(child, source_bytes))
+            curr_stack = [default_rule]
+            while curr_stack:
+                curr = curr_stack.pop()
+                if curr.type == 'string_literal':
+                    eng_text = strip_quotes_once(get_node_text(curr, source_bytes))
                     break
-                # Handle cases where the string is inside a block or expression
-                if child.type in ('expression_statement', 'block'):
-                    # Deep search for the first string literal
-                    curr_stack = [child]
-                    while curr_stack:
-                        curr = curr_stack.pop()
-                        if curr.type == 'string_literal':
-                            eng_text = strip_quotes_once(get_node_text(curr, source_bytes))
-                            break
-                        curr_stack.extend(reversed(curr.children))
-                    if eng_text: break
+                curr_stack.extend(reversed(curr.children))
 
             if not eng_text:
                 continue
 
-            # Get indentation
-            line_start = source_text.rfind('\n', 0, default_rule.start_byte) + 1
-            full_line = source_text[line_start:default_rule.start_byte]
-            indent = full_line[:len(full_line) - len(full_line.lstrip())]
+            # FIX: Find the absolute start of the line containing the 'default' rule
+            # This prevents splitting the 'default' keyword
+            line_start_pos = source_text.rfind('\n', 0, default_rule.start_byte) + 1
+            
+            # Extract indentation from that specific line
+            line_to_default = source_text[line_start_pos:default_rule.start_byte]
+            indent = line_to_default[:len(line_to_default) - len(line_to_default.lstrip())]
 
             translated = translate_value(eng_text, src_lang, tgt_lang)
+            
+            # Format: new line with indent, then the case, then newline + indent for the default that follows
             new_case = f'case "{tgt_lang}" -> "{translated}";\n{indent}'
             
-            insert_pos = default_rule.start_byte
-            source_text = source_text[:insert_pos] + new_case + source_text[insert_pos:]
+            # Inject at the start of the line to keep things clean
+            source_text = source_text[:line_start_pos] + indent + new_case + source_text[line_start_pos:]
             updated = True
 
         if updated:
@@ -141,23 +134,21 @@ def main():
     ensure_model_installed(args.src_lang, args.tgt_lang)
 
     stats = {"UPDATED": [], "SKIPPED_ALREADY_EXISTS": [], "SKIPPED_NO_MATCH": [], "ERROR": []}
-    found_files = 0
-
+    
     for root, _, files in os.walk(args.test_dir):
         for f in files:
             if f.endswith(".java"):
-                found_files += 1
                 file_path = os.path.join(root, f)
                 status = process_java_file(file_path, args.tgt_lang, args.src_lang)
-                stats[status].append(file_path)
+                stats.setdefault(status, []).append(file_path)
 
     print("\n" + "=" * 50)
     print(f"PROCESSING SUMMARY FOR: {args.tgt_lang}")
     print("=" * 50)
-    print(f"✅ UPDATED: {len(stats['UPDATED'])}")
-    print(f"⏭️  ALREADY EXISTS: {len(stats['SKIPPED_ALREADY_EXISTS'])}")
-    print(f"⚪ NO TARGET PATTERN: {len(stats['SKIPPED_NO_MATCH'])}")
-    print(f"❌ ERRORS: {len(stats['ERROR'])}")
+    print(f"✅ UPDATED: {len(stats.get('UPDATED', []))}")
+    print(f"⏭️  ALREADY EXISTS: {len(stats.get('SKIPPED_ALREADY_EXISTS', []))}")
+    print(f"⚪ NO TARGET: {len(stats.get('SKIPPED_NO_MATCH', []))}")
+    print(f"❌ ERRORS: {len(stats.get('ERROR', []))}")
     print("=" * 50)
 
 if __name__ == "__main__":
