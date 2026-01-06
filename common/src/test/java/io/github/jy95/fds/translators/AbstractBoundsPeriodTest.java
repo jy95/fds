@@ -60,19 +60,14 @@ public abstract class AbstractBoundsPeriodTest<C extends FDSConfig, D> extends A
 
     // For the parametrized test of first test
     private static String getExpectedText1(Locale locale) {
-        if (locale.equals(Locale.ENGLISH)) {
-            return "from May 23, 2011 to May 27, 2011";
-        } else if (locale.equals(Locale.FRENCH)) {
-            return "du 23 mai 2011 au 27 mai 2011";
-        } else if (locale.equals(Locale.GERMAN)) {
-            return "von 23.05.2011 bis 27.05.2011";
-        } else if (locale.equals(Locale.forLanguageTag("es"))) {
-            return "desde 23 may 2011 hasta 27 may 2011";
-        } else if (locale.equals(Locale.ITALIAN)) {
-            return "da 23 mag 2011 a 27 mag 2011";
-        } else {
-            return "van 23 mei 2011 tot 27 mei 2011";
-        }
+        return switch (locale.toLanguageTag()) {
+            case "fr"    -> "du 23 mai 2011 au 27 mai 2011";
+            case "de"    -> "von 23.05.2011 bis 27.05.2011";
+            case "es"    -> "desde 23 may 2011 hasta 27 may 2011";
+            case "it"    -> "da 23 mag 2011 a 27 mag 2011";
+            case "nl-BE" -> "van 23 mei 2011 tot 27 mei 2011";
+            default      -> "from May 23, 2011 to May 27, 2011";
+        };
     }
 
     // For the parametrized test of second test
@@ -102,18 +97,13 @@ public abstract class AbstractBoundsPeriodTest<C extends FDSConfig, D> extends A
 
     // For the parametrized test of third test
     private String getExpectedText3(Locale locale) {
-        if (locale.equals(Locale.ENGLISH)) {
-            return "from May 23, 2011";
-        } else if (locale.equals(Locale.FRENCH)) {
-            return "à partir du 23 mai 2011";
-        } else if (locale.equals(Locale.GERMAN)) {
-            return "ab 23.05.2011";
-        } else if (locale.equals(Locale.forLanguageTag("es"))) {
-            return "desde 23 may 2011";
-        } else if (locale.equals(Locale.ITALIAN)) {
-            return "da 23 mag 2011";
-        } else {
-            return "van 23 mei 2011";
-        }
+        return switch (locale.toLanguageTag()) {
+            case "fr"    -> "à partir du 23 mai 2011";
+            case "de"    -> "ab 23.05.2011";
+            case "es"    -> "desde 23 may 2011";
+            case "it"    -> "da 23 mag 2011";
+            case "nl-BE" -> "van 23 mei 2011";
+            default      -> "from May 23, 2011";
+        };
     }
 }
