@@ -18,7 +18,7 @@ public abstract class AbstractPeriodPeriodMaxTest<C extends FDSConfig, D> extend
     void testNoPeriod(Locale locale) throws ExecutionException, InterruptedException {
         var dosage = generateEmptyDosage();
         var dosageUtils = getDosageAPI(locale, DisplayOrder.PERIOD_PERIOD_MAX);
-        String result = dosageUtils.asHumanReadableText(dosage).get();
+        var result = dosageUtils.asHumanReadableText(dosage).get();
         assertEquals("", result);
     }
 
@@ -27,27 +27,21 @@ public abstract class AbstractPeriodPeriodMaxTest<C extends FDSConfig, D> extend
     void testWithPeriodOnly(Locale locale) throws ExecutionException, InterruptedException {
         var dosage = generateWithPeriodOnly();
         var dosageUtils = getDosageAPI(locale, DisplayOrder.PERIOD_PERIOD_MAX);
-        String result = dosageUtils.asHumanReadableText(dosage).get();
-        String expectedResult = getExpectedText1(locale);
-        assertEquals(expectedResult, result);
+        var result = dosageUtils.asHumanReadableText(dosage).get();
+        assertEquals(getExpectedText1(locale), result);
     }
 
     protected abstract D generateWithPeriodOnly();
 
     private String getExpectedText1(Locale locale) {
-        if (locale.equals(Locale.ENGLISH)) {
-            return "every 2 days";
-        } else if (locale.equals(Locale.FRENCH)) {
-            return "chaque 2 jours";
-        } else if (locale.equals(Locale.GERMAN)) {
-            return "alle 2 Tage";
-        } else if (locale.equals(Locale.forLanguageTag("es"))) {
-            return "cada 2 días";
-        } else if (locale.equals(Locale.ITALIAN)) {
-            return "ogni 2 giorni";
-        } else {
-            return "per 2 dagen";
-        }
+        return switch (locale.toLanguageTag()) {
+            case "fr"    -> "chaque 2 jours";
+            case "de"    -> "alle 2 Tage";
+            case "es"    -> "cada 2 días";
+            case "it"    -> "ogni 2 giorni";
+            case "nl-BE" -> "per 2 dagen";
+            default      -> "every 2 days";
+        };
     }
 
     @ParameterizedTest
@@ -55,26 +49,20 @@ public abstract class AbstractPeriodPeriodMaxTest<C extends FDSConfig, D> extend
     void testWithBothPeriod(Locale locale) throws ExecutionException, InterruptedException {
         var dosage = generateWithBothPeriod();
         var dosageUtils = getDosageAPI(locale, DisplayOrder.PERIOD_PERIOD_MAX);
-        String result = dosageUtils.asHumanReadableText(dosage).get();
-        String expectedResult = getExpectedText2(locale);
-        assertEquals(expectedResult, result);
+        var result = dosageUtils.asHumanReadableText(dosage).get();
+        assertEquals(getExpectedText2(locale), result);
     }
 
     protected abstract D generateWithBothPeriod();
 
     private String getExpectedText2(Locale locale) {
-        if (locale.equals(Locale.ENGLISH)) {
-            return "every 2 to 3 days";
-        } else if (locale.equals(Locale.FRENCH)) {
-            return "chaque 2 à 3 jours";
-        } else if (locale.equals(Locale.GERMAN)) {
-            return "jede 2 bis zu 3 Tage";
-        } else if (locale.equals(Locale.forLanguageTag("es"))) {
-            return "cada 2 a 3 días";
-        } else if (locale.equals(Locale.ITALIAN)) {
-            return "ogni 2 a 3 giorni";
-        } else {
-            return "elke 2 tot 3 dagen";
-        }
+        return switch (locale.toLanguageTag()) {
+            case "fr"    -> "chaque 2 à 3 jours";
+            case "de"    -> "jede 2 bis zu 3 Tage";
+            case "es"    -> "cada 2 a 3 días";
+            case "it"    -> "ogni 2 a 3 giorni";
+            case "nl-BE" -> "elke 2 tot 3 dagen";
+            default      -> "every 2 to 3 days";
+        };
     }
 }

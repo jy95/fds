@@ -18,7 +18,7 @@ public abstract class AbstractDoseRangeTest<C extends FDSConfig, D> extends Abst
     void testNoDoseRange(Locale locale) throws ExecutionException, InterruptedException {
         var dosage = generateEmptyDosage();
         var dosageUtils = getDosageAPI(locale, DisplayOrder.DOSE_RANGE);
-        String result = dosageUtils.asHumanReadableText(dosage).get();
+        var result = dosageUtils.asHumanReadableText(dosage).get();
         assertEquals("", result);
     }
 
@@ -27,28 +27,20 @@ public abstract class AbstractDoseRangeTest<C extends FDSConfig, D> extends Abst
     void testSimpleDoseRange(Locale locale) throws ExecutionException, InterruptedException {
         var dosage = generateSimpleDoseRange();
         var dosageUtils = getDosageAPI(locale, DisplayOrder.DOSE_RANGE);
-        String result = dosageUtils.asHumanReadableText(dosage).get();
-        String expected = getExpectedText(locale);
-        assertEquals(expected, result);
+        var result = dosageUtils.asHumanReadableText(dosage).get();
+        assertEquals(getExpectedText(locale), result);
     }
 
     protected abstract D generateSimpleDoseRange();
 
     private String getExpectedText(Locale locale) {
-        if (locale.equals(Locale.ENGLISH)) {
-            return "1 to 3";
-        } else if (locale.equals(Locale.FRENCH)) {
-            return "1 à 3";
-        } else if (locale.equals(Locale.GERMAN)) {
-            return "zwischen 1 und 3";
-         } else if (locale.equals(Locale.forLanguageTag("es"))) {
-            return "1 a 3";
-        } else if (locale.equals(Locale.ITALIAN)) {
-            return "1 a 3";
-        }
-else {
-            return "tussen 1 en 3";
-        }
+        return switch (locale.toLanguageTag()) {
+            case "fr"    -> "1 à 3";
+            case "de"    -> "zwischen 1 und 3";
+            case "es"    -> "1 a 3";
+            case "it"    -> "1 a 3";
+            case "nl-BE" -> "tussen 1 en 3";
+            default      -> "1 to 3";
+        };
     }
-
 }

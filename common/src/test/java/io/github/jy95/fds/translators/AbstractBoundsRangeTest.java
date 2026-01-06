@@ -13,13 +13,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public abstract class AbstractBoundsRangeTest<C extends FDSConfig, D> extends AbstractTranslatorTest<C, D> {
 
-
     @ParameterizedTest
     @MethodSource("localeProvider")
     void testNoBoundsRange(Locale locale) throws ExecutionException, InterruptedException {
         var dosage = generateEmptyDosage();
         var dosageUtils = getDosageAPI(locale, DisplayOrder.BOUNDS_RANGE);
-        String result = dosageUtils.asHumanReadableText(dosage).get();
+        var result = dosageUtils.asHumanReadableText(dosage).get();
         assertEquals("", result);
     }
 
@@ -28,9 +27,8 @@ public abstract class AbstractBoundsRangeTest<C extends FDSConfig, D> extends Ab
     void testBothLowAndHighWithoutUnit(Locale locale) throws ExecutionException, InterruptedException {
         var dosage = generateBothLowAndHighWithoutUnit();
         var dosageUtils = getDosageAPI(locale, DisplayOrder.BOUNDS_RANGE);
-        String result = dosageUtils.asHumanReadableText(dosage).get();
-        String expected = getExpectedText1(locale);
-        assertEquals(expected, result);
+        var result = dosageUtils.asHumanReadableText(dosage).get();
+        assertEquals(getExpectedText1(locale), result);
     }
 
     protected abstract D generateBothLowAndHighWithoutUnit();
@@ -40,9 +38,8 @@ public abstract class AbstractBoundsRangeTest<C extends FDSConfig, D> extends Ab
     void testBothLowAndHighWithUnit(Locale locale) throws ExecutionException, InterruptedException {
         var dosage = generateBothLowAndHighWithUnit();
         var dosageUtils = getDosageAPI(locale, DisplayOrder.BOUNDS_RANGE);
-        String result = dosageUtils.asHumanReadableText(dosage).get();
-        String expected = getExpectedText2(locale);
-        assertEquals(expected, result);
+        var result = dosageUtils.asHumanReadableText(dosage).get();
+        assertEquals(getExpectedText2(locale), result);
     }
 
     protected abstract D generateBothLowAndHighWithUnit();
@@ -52,9 +49,8 @@ public abstract class AbstractBoundsRangeTest<C extends FDSConfig, D> extends Ab
     void testOnlyHighWithoutUnit(Locale locale) throws ExecutionException, InterruptedException {
         var dosage = generateOnlyHighWithoutUnit();
         var dosageUtils = getDosageAPI(locale, DisplayOrder.BOUNDS_RANGE);
-        String result = dosageUtils.asHumanReadableText(dosage).get();
-        String expected = getExpectedText3(locale);
-        assertEquals(expected, result);
+        var result = dosageUtils.asHumanReadableText(dosage).get();
+        assertEquals(getExpectedText3(locale), result);
     }
 
     protected abstract D generateOnlyHighWithoutUnit();
@@ -64,9 +60,8 @@ public abstract class AbstractBoundsRangeTest<C extends FDSConfig, D> extends Ab
     void testOnlyHighWithUnit(Locale locale) throws ExecutionException, InterruptedException {
         var dosage = generateOnlyHighWithUnit();
         var dosageUtils = getDosageAPI(locale, DisplayOrder.BOUNDS_RANGE);
-        String result = dosageUtils.asHumanReadableText(dosage).get();
-        String expected = getExpectedText4(locale);
-        assertEquals(expected, result);
+        var result = dosageUtils.asHumanReadableText(dosage).get();
+        assertEquals(getExpectedText4(locale), result);
     }
 
     protected abstract D generateOnlyHighWithUnit();
@@ -76,9 +71,8 @@ public abstract class AbstractBoundsRangeTest<C extends FDSConfig, D> extends Ab
     void testOnlyLowWithoutUnit(Locale locale) throws ExecutionException, InterruptedException {
         var dosage = generateOnlyLowWithoutUnit();
         var dosageUtils = getDosageAPI(locale, DisplayOrder.BOUNDS_RANGE);
-        String result = dosageUtils.asHumanReadableText(dosage).get();
-        String expected = getExpectedText5(locale);
-        assertEquals(expected, result);
+        var result = dosageUtils.asHumanReadableText(dosage).get();
+        assertEquals(getExpectedText5(locale), result);
     }
 
     protected abstract D generateOnlyLowWithoutUnit();
@@ -88,112 +82,75 @@ public abstract class AbstractBoundsRangeTest<C extends FDSConfig, D> extends Ab
     void testOnlyLowWithUnit(Locale locale) throws ExecutionException, InterruptedException {
         var dosage = generateOnlyLowWithUnit();
         var dosageUtils = getDosageAPI(locale, DisplayOrder.BOUNDS_RANGE);
-        String result = dosageUtils.asHumanReadableText(dosage).get();
-        String expected = getExpectedText6(locale);
-        assertEquals(expected, result);
+        var result = dosageUtils.asHumanReadableText(dosage).get();
+        assertEquals(getExpectedText6(locale), result);
     }
 
     protected abstract D generateOnlyLowWithUnit();
 
-    // For the parametrized test of first test
     private static String getExpectedText1(Locale locale) {
-        if (locale.equals(Locale.ENGLISH)) {
-            return "for 1 to 3";
-        } else if (locale.equals(Locale.FRENCH)) {
-            return "pour 1 à 3";
-        } else if (locale.equals(Locale.GERMAN)) {
-            return "für zwischen 1 und 3";
-        } else if (locale.equals(Locale.forLanguageTag("es"))) {
-            return "por 1 a 3";
-        } else if (locale.equals(Locale.ITALIAN)) {
-            return "per 1 a 3";
-        } else {
-            return "gedurende tussen 1 en 3";
-        }
+        return switch (locale.toLanguageTag()) {
+            case "fr" -> "pour 1 à 3";
+            case "de" -> "für zwischen 1 und 3";
+            case "es" -> "por 1 a 3";
+            case "it" -> "per 1 a 3";
+            case "nl-BE" -> "gedurende tussen 1 en 3";
+            default -> "for 1 to 3";
+        };
     }
 
-    // For the parametrized test of second test
     private String getExpectedText2(Locale locale) {
-        if (locale.equals(Locale.ENGLISH)) {
-            return "for 1 to 3 days";
-        } else if (locale.equals(Locale.FRENCH)) {
-            return "pour 1 à 3 jours";
-        } else if (locale.equals(Locale.GERMAN)) {
-            return "für zwischen 1 und 3 Tage";
-        } else if (locale.equals(Locale.forLanguageTag("es"))) {
-            return "por 1 a 3 días";
-        } else if (locale.equals(Locale.ITALIAN)) {
-            return "per 1 a 3 giorni";
-        } else {
-            return "gedurende tussen 1 en 3 dagen";
-        }
+        return switch (locale.toLanguageTag()) {
+            case "fr" -> "pour 1 à 3 jours";
+            case "de" -> "für zwischen 1 und 3 Tage";
+            case "es" -> "por 1 a 3 días";
+            case "it" -> "per 1 a 3 giorni";
+            case "nl-BE" -> "gedurende tussen 1 en 3 dagen";
+            default -> "for 1 to 3 days";
+        };
     }
 
-    // For the parametrized test of third test
     private String getExpectedText3(Locale locale) {
-        if (locale.equals(Locale.ENGLISH)) {
-            return "for up to 3";
-        } else if (locale.equals(Locale.FRENCH)) {
-            return "pour 3 maximum";
-        } else if (locale.equals(Locale.GERMAN)) {
-            return "für bis 3";
-        } else if (locale.equals(Locale.forLanguageTag("es"))) {
-            return "por hasta 3";
-        } else if (locale.equals(Locale.ITALIAN)) {
-            return "per fino a 3";
-        } else {
-            return "gedurende tot 3";
-        }
+        return switch (locale.toLanguageTag()) {
+            case "fr" -> "pour 3 maximum";
+            case "de" -> "für bis 3";
+            case "es" -> "por hasta 3";
+            case "it" -> "per fino a 3";
+            case "nl-BE" -> "gedurende tot 3";
+            default -> "for up to 3";
+        };
     }
 
-    // For the parametrized test of fourth test
     private String getExpectedText4(Locale locale) {
-        if (locale.equals(Locale.ENGLISH)) {
-            return "for up to 3 days";
-        } else if (locale.equals(Locale.FRENCH)) {
-            return "pour 3 jours maximum";
-        } else if (locale.equals(Locale.GERMAN)) {
-            return "für bis 3 Tage";
-        } else if (locale.equals(Locale.forLanguageTag("es"))) {
-            return "por hasta 3 días";
-        } else if (locale.equals(Locale.ITALIAN)) {
-            return "per fino a 3 giorni";
-        } else {
-            return "gedurende tot 3 dagen";
-        }
+        return switch (locale.toLanguageTag()) {
+            case "fr" -> "pour 3 jours maximum";
+            case "de" -> "für bis 3 Tage";
+            case "es" -> "por hasta 3 días";
+            case "it" -> "per fino a 3 giorni";
+            case "nl-BE" -> "gedurende tot 3 dagen";
+            default -> "for up to 3 days";
+        };
     }
 
-    // For the parametrized test of fifth test
     private String getExpectedText5(Locale locale) {
-        if (locale.equals(Locale.ENGLISH)) {
-            return "for at least 3";
-        } else if (locale.equals(Locale.FRENCH)) {
-            return "pour au moins 3";
-        } else if (locale.equals(Locale.GERMAN)) {
-            return "für mindestens 3";
-        } else if (locale.equals(Locale.forLanguageTag("es"))) {
-            return "por al menos 3";
-        } else if (locale.equals(Locale.ITALIAN)) {
-            return "per almeno 3";
-        } else {
-            return "gedurende minstens 3";
-        }
+        return switch (locale.toLanguageTag()) {
+            case "fr" -> "pour au moins 3";
+            case "de" -> "für mindestens 3";
+            case "es" -> "por al menos 3";
+            case "it" -> "per almeno 3";
+            case "nl-BE" -> "gedurende minstens 3";
+            default -> "for at least 3";
+        };
     }
 
-    // For the parametrized test of sixth test
     private String getExpectedText6(Locale locale) {
-        if (locale.equals(Locale.ENGLISH)) {
-            return "for at least 3 days";
-        } else if (locale.equals(Locale.FRENCH)) {
-            return "pour au moins 3 jours";
-        } else if (locale.equals(Locale.GERMAN)) {
-            return "für mindestens 3 Tage";
-        } else if (locale.equals(Locale.forLanguageTag("es"))) {
-            return "por al menos 3 días";
-        } else if (locale.equals(Locale.ITALIAN)) {
-            return "per almeno 3 giorni";
-        } else {
-            return "gedurende minstens 3 dagen";
-        }
+        return switch (locale.toLanguageTag()) {
+            case "fr" -> "pour au moins 3 jours";
+            case "de" -> "für mindestens 3 Tage";
+            case "es" -> "por al menos 3 días";
+            case "it" -> "per almeno 3 giorni";
+            case "nl-BE" -> "gedurende minstens 3 dagen";
+            default -> "for at least 3 days";
+        };
     }
 }

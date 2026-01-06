@@ -18,7 +18,7 @@ public abstract class AbstractMaxDosePerAdministrationTest<C extends FDSConfig, 
     void testNoMaxDosePerAdministration(Locale locale) throws ExecutionException, InterruptedException {
         var dosage = generateEmptyDosage();
         var dosageUtils = getDosageAPI(locale, DisplayOrder.MAX_DOSE_PER_ADMINISTRATION);
-        String result = dosageUtils.asHumanReadableText(dosage).get();
+        var result = dosageUtils.asHumanReadableText(dosage).get();
         assertEquals("", result);
     }
 
@@ -27,27 +27,20 @@ public abstract class AbstractMaxDosePerAdministrationTest<C extends FDSConfig, 
     void testWithMaxDosePerAdministration(Locale locale) throws ExecutionException, InterruptedException {
         var dosage = generateWithMaxDosePerAdministration();
         var dosageUtils = getDosageAPI(locale, DisplayOrder.MAX_DOSE_PER_ADMINISTRATION);
-        String result = dosageUtils.asHumanReadableText(dosage).get();
-        String expected = getExpectedText(locale);
-        assertEquals(expected, result);
+        var result = dosageUtils.asHumanReadableText(dosage).get();
+        assertEquals(getExpectedText(locale), result);
     }
 
     protected abstract D generateWithMaxDosePerAdministration();
 
     private String getExpectedText(Locale locale) {
-        if (locale.equals(Locale.ENGLISH)) {
-            return "up to a maximum of 50 mg per dose";
-        }
-        else if (locale.equals(Locale.forLanguageTag("es"))) {
-            return "hasta un máximo de 50 mg por dosis";
-        } else if (locale.equals(Locale.FRENCH)) {
-            return "jusqu’à un maximum de 50 mg par dose";
-        } else if (locale.equals(Locale.GERMAN)) {
-            return "bis zu einer maximalen Menge von 50 mg pro Dosis";
-        } else if (locale.equals(Locale.ITALIAN)) {
-            return "fino a un massimo di 50 mg per dose";
-        } else {
-            return "tot een maximum van 50 mg per dosis";
-        }
+        return switch (locale.toLanguageTag()) {
+            case "es"    -> "hasta un máximo de 50 mg por dosis";
+            case "fr"    -> "jusqu’à un maximum de 50 mg par dose";
+            case "de"    -> "bis zu einer maximalen Menge von 50 mg pro Dosis";
+            case "it"    -> "fino a un massimo di 50 mg per dose";
+            case "nl-BE" -> "tot een maximum van 50 mg per dosis";
+            default      -> "up to a maximum of 50 mg per dose";
+        };
     }
 }

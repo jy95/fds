@@ -13,13 +13,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public abstract class AbstractFrequencyFrequencyMaxTest<C extends FDSConfig, D> extends AbstractTranslatorTest<C, D> {
 
-
     @ParameterizedTest
     @MethodSource("localeProvider")
     void testNoFrequency(Locale locale) throws ExecutionException, InterruptedException {
         var dosage = generateEmptyDosage();
         var dosageUtils = getDosageAPI(locale, DisplayOrder.FREQUENCY_FREQUENCY_MAX);
-        String result = dosageUtils.asHumanReadableText(dosage).get();
+        var result = dosageUtils.asHumanReadableText(dosage).get();
         assertEquals("", result);
     }
 
@@ -28,27 +27,21 @@ public abstract class AbstractFrequencyFrequencyMaxTest<C extends FDSConfig, D> 
     void testWithFrequencyOnly(Locale locale) throws ExecutionException, InterruptedException {
         var dosage = generateWithFrequencyOnly();
         var dosageUtils = getDosageAPI(locale, DisplayOrder.FREQUENCY_FREQUENCY_MAX);
-        String result = dosageUtils.asHumanReadableText(dosage).get();
-        String expectedResult = getExpectedText1(locale);
-        assertEquals(expectedResult, result);
+        var result = dosageUtils.asHumanReadableText(dosage).get();
+        assertEquals(getExpectedText1(locale), result);
     }
 
     protected abstract D generateWithFrequencyOnly();
 
     private String getExpectedText1(Locale locale) {
-        if (locale.equals(Locale.ENGLISH)) {
-            return "3 times";
-        } else if (locale.equals(Locale.FRENCH)) {
-            return "3 fois";
-        } else if (locale.equals(Locale.GERMAN)) {
-            return "3 Mal";
-        } else if (locale.equals(Locale.forLanguageTag("es"))) {
-            return "3 veces";
-        } else if (locale.equals(Locale.ITALIAN)) {
-            return "3 volte";
-        } else {
-            return "3 keer";
-        }
+        return switch (locale.toLanguageTag()) {
+            case "fr"    -> "3 fois";
+            case "de"    -> "3 Mal";
+            case "es"    -> "3 veces";
+            case "it"    -> "3 volte";
+            case "nl-BE" -> "3 keer";
+            default      -> "3 times";
+        };
     }
 
     @ParameterizedTest
@@ -56,27 +49,21 @@ public abstract class AbstractFrequencyFrequencyMaxTest<C extends FDSConfig, D> 
     void testWithFrequencyMaxOnly(Locale locale) throws ExecutionException, InterruptedException {
         var dosage = generateWithFrequencyMaxOnly();
         var dosageUtils = getDosageAPI(locale, DisplayOrder.FREQUENCY_FREQUENCY_MAX);
-        String result = dosageUtils.asHumanReadableText(dosage).get();
-        String expectedResult = getExpectedText2(locale);
-        assertEquals(expectedResult, result);
+        var result = dosageUtils.asHumanReadableText(dosage).get();
+        assertEquals(getExpectedText2(locale), result);
     }
 
     protected abstract D generateWithFrequencyMaxOnly();
 
     private String getExpectedText2(Locale locale) {
-        if (locale.equals(Locale.ENGLISH)) {
-            return "up to 3 times";
-        } else if (locale.equals(Locale.FRENCH)) {
-            return "jusqu'à 3 fois";
-        } else if (locale.equals(Locale.GERMAN)) {
-            return "bis zu 3 Mal";
-        } else if (locale.equals(Locale.forLanguageTag("es"))) {
-            return "hasta 3 veces";
-        } else if (locale.equals(Locale.ITALIAN)) {
-            return "fino a 3 volte";
-        } else {
-            return "tot 3 keer";
-        }
+        return switch (locale.toLanguageTag()) {
+            case "fr"    -> "jusqu'à 3 fois";
+            case "de"    -> "bis zu 3 Mal";
+            case "es"    -> "hasta 3 veces";
+            case "it"    -> "fino a 3 volte";
+            case "nl-BE" -> "tot 3 keer";
+            default      -> "up to 3 times";
+        };
     }
 
     @ParameterizedTest
@@ -84,27 +71,20 @@ public abstract class AbstractFrequencyFrequencyMaxTest<C extends FDSConfig, D> 
     void testWithBothFrequency(Locale locale) throws ExecutionException, InterruptedException {
         var dosage = generateWithBothFrequency();
         var dosageUtils = getDosageAPI(locale, DisplayOrder.FREQUENCY_FREQUENCY_MAX);
-        String result = dosageUtils.asHumanReadableText(dosage).get();
-        String expectedResult = getExpectedText3(locale);
-        assertEquals(expectedResult, result);
+        var result = dosageUtils.asHumanReadableText(dosage).get();
+        assertEquals(getExpectedText3(locale), result);
     }
 
     protected abstract D generateWithBothFrequency();
 
     private String getExpectedText3(Locale locale) {
-        if (locale.equals(Locale.ENGLISH)) {
-            return "3-5 times";
-        }
-        else if (locale.equals(Locale.forLanguageTag("es"))) {
-            return "3-5 veces";
-        } else if (locale.equals(Locale.FRENCH)) {
-            return "3-5 fois";
-        } else if (locale.equals(Locale.GERMAN)) {
-            return "3-5 Mal";
-        } else if (locale.equals(Locale.ITALIAN)) {
-            return "3-5 volte";
-        } else {
-            return "3-5 keer";
-        }
+        return switch (locale.toLanguageTag()) {
+            case "fr"    -> "3-5 fois";
+            case "de"    -> "3-5 Mal";
+            case "es"    -> "3-5 veces";
+            case "it"    -> "3-5 volte";
+            case "nl-BE" -> "3-5 keer";
+            default      -> "3-5 times";
+        };
     }
 }

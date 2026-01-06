@@ -27,9 +27,8 @@ public abstract class AbstractAsNeededTest<C extends FDSConfig, D> extends Abstr
     void testAsNeededBoolean(Locale locale) throws ExecutionException, InterruptedException {
         var dosageUtils = getDosageAPI(locale, DisplayOrder.AS_NEEDED);
         var dosage = generateAsNeededBoolean();
-        String result = dosageUtils.asHumanReadableText(dosage).get();
-        String expected = getExpectedText1(locale);
-        assertEquals(expected, result);
+        var result = dosageUtils.asHumanReadableText(dosage).get();
+        assertEquals(getExpectedText1(locale), result);
     }
 
     public abstract D generateAsNeededBoolean();
@@ -39,44 +38,37 @@ public abstract class AbstractAsNeededTest<C extends FDSConfig, D> extends Abstr
     void testAsNeededCodeableConcept(Locale locale) throws ExecutionException, InterruptedException {
         var dosageUtils = getDosageAPI(locale, DisplayOrder.AS_NEEDED);
         var dosage = generateAsNeededCodeableConcept();
-        String result = dosageUtils.asHumanReadableText(dosage).get();
-        String expected = getExpectedText2(locale);
-        assertEquals(expected, result);
+        var result = dosageUtils.asHumanReadableText(dosage).get();
+        assertEquals(getExpectedText2(locale), result);
     }
 
     public abstract D generateAsNeededCodeableConcept();
 
-    // For the parametrized test of single form
+    /**
+     * Expected text for boolean 'as needed' flag
+     */
     public static String getExpectedText1(Locale locale) {
-        if (locale.equals(Locale.ENGLISH)) {
-            return "as required";
-        } else if (locale.equals(Locale.FRENCH)) {
-            return "si nécessaire";
-        } else if (locale.equals(Locale.GERMAN)) {
-            return "bei Bedarf";
-        } else if (locale.equals(Locale.forLanguageTag("es"))) {
-            return "según sea necesario";
-        } else if (locale.equals(Locale.ITALIAN)) {
-            return "se necessario";
-        } else {
-            return "indien nodig";
-        }
+        return switch (locale.toLanguageTag()) {
+            case "fr" -> "si nécessaire";
+            case "de" -> "bei Bedarf";
+            case "es" -> "según sea necesario";
+            case "it" -> "se necessario";
+            case "nl-BE" -> "indien nodig";
+            default   -> "as required";
+        };
     }
 
-    // For the parametrized test of multiple form
+    /**
+     * Expected text for 'as needed' with a specific reason
+     */
     public String getExpectedText2(Locale locale) {
-        if (locale.equals(Locale.ENGLISH)) {
-            return "as required for head pain";
-        } else if (locale.equals(Locale.FRENCH)) {
-            return "si nécessaire pour head pain";
-        } else if (locale.equals(Locale.GERMAN)) {
-            return "bei Bedarf für head pain";
-        } else if (locale.equals(Locale.forLanguageTag("es"))) {
-            return "según sea necesario para head pain";
-        } else if (locale.equals(Locale.ITALIAN)) {
-            return "se necessario per head pain";
-        } else {
-            return "zoals nodig voor head pain";
-        }
+        return switch (locale.toLanguageTag()) {
+            case "fr" -> "si nécessaire pour head pain";
+            case "de" -> "bei Bedarf für head pain";
+            case "es" -> "según sea necesario para head pain";
+            case "it" -> "se necessario per head pain";
+            case "nl-BE" -> "zoals nodig voor head pain";
+            default   -> "as required for head pain";
+        };
     }
 }

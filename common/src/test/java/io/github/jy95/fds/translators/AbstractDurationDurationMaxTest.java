@@ -18,7 +18,7 @@ public abstract class AbstractDurationDurationMaxTest<C extends FDSConfig, D> ex
     void testNoDuration(Locale locale) throws ExecutionException, InterruptedException {
         var dosage = generateEmptyDosage();
         var dosageUtils = getDosageAPI(locale, DisplayOrder.DURATION_DURATION_MAX);
-        String result = dosageUtils.asHumanReadableText(dosage).get();
+        var result = dosageUtils.asHumanReadableText(dosage).get();
         assertEquals("", result);
     }
 
@@ -27,27 +27,21 @@ public abstract class AbstractDurationDurationMaxTest<C extends FDSConfig, D> ex
     void testWithDurationOnly(Locale locale) throws ExecutionException, InterruptedException {
         var dosage = generateWithDurationOnly();
         var dosageUtils = getDosageAPI(locale, DisplayOrder.DURATION_DURATION_MAX);
-        String result = dosageUtils.asHumanReadableText(dosage).get().replace("\u00a0"," ");
-        String expectedResult = getExpectedText1(locale);
-        assertEquals(expectedResult, result);
+        var result = dosageUtils.asHumanReadableText(dosage).get().replace("\u00a0", " ");
+        assertEquals(getExpectedText1(locale), result);
     }
 
     protected abstract D generateWithDurationOnly();
 
     private String getExpectedText1(Locale locale) {
-        if (locale.equals(Locale.ENGLISH)) {
-            return "over 3 days";
-        } else if (locale.equals(Locale.FRENCH)) {
-            return "durant 3 jours";
-        } else if (locale.equals(Locale.GERMAN)) {
-            return "für 3 Tage";
-        } else if (locale.equals(Locale.forLanguageTag("es"))) {
-            return "sobre 3 días";
-        } else if (locale.equals(Locale.ITALIAN)) {
-            return "su 3 giorni";
-        } else {
-            return "gedurende 3 dagen";
-        }
+        return switch (locale.toLanguageTag()) {
+            case "fr"    -> "durant 3 jours";
+            case "de"    -> "für 3 Tage";
+            case "es"    -> "sobre 3 días";
+            case "it"    -> "su 3 giorni";
+            case "nl-BE" -> "gedurende 3 dagen";
+            default      -> "over 3 days";
+        };
     }
 
     @ParameterizedTest
@@ -55,27 +49,21 @@ public abstract class AbstractDurationDurationMaxTest<C extends FDSConfig, D> ex
     void testWithDurationMaxOnly(Locale locale) throws ExecutionException, InterruptedException {
         var dosage = generateWithDurationMaxOnly();
         var dosageUtils = getDosageAPI(locale, DisplayOrder.DURATION_DURATION_MAX);
-        String result = dosageUtils.asHumanReadableText(dosage).get().replace("\u00a0"," ");
-        String expectedResult = getExpectedText2(locale);
-        assertEquals(expectedResult, result);
+        var result = dosageUtils.asHumanReadableText(dosage).get().replace("\u00a0", " ");
+        assertEquals(getExpectedText2(locale), result);
     }
 
     protected abstract D generateWithDurationMaxOnly();
 
     private String getExpectedText2(Locale locale) {
-        if (locale.equals(Locale.ENGLISH)) {
-            return "maximum 3 days";
-        } else if (locale.equals(Locale.FRENCH)) {
-            return "maximum 3 jours";
-        } else if (locale.equals(Locale.GERMAN)) {
-            return "maximal 3 Tage";
-        } else if (locale.equals(Locale.forLanguageTag("es"))) {
-            return "máximo 3 días";
-        } else if (locale.equals(Locale.ITALIAN)) {
-            return "massimo 3 giorni";
-        } else {
-            return "maximaal 3 dagen";
-        }
+        return switch (locale.toLanguageTag()) {
+            case "fr"    -> "maximum 3 jours";
+            case "de"    -> "maximal 3 Tage";
+            case "es"    -> "máximo 3 días";
+            case "it"    -> "massimo 3 giorni";
+            case "nl-BE" -> "maximaal 3 dagen";
+            default      -> "maximum 3 days";
+        };
     }
 
     @ParameterizedTest
@@ -83,26 +71,20 @@ public abstract class AbstractDurationDurationMaxTest<C extends FDSConfig, D> ex
     void testWithBothDuration(Locale locale) throws ExecutionException, InterruptedException {
         var dosage = generateWithBothDuration();
         var dosageUtils = getDosageAPI(locale, DisplayOrder.DURATION_DURATION_MAX);
-        String result = dosageUtils.asHumanReadableText(dosage).get().replace("\u00a0"," ");
-        String expectedResult = getExpectedText3(locale);
-        assertEquals(expectedResult, result);
+        var result = dosageUtils.asHumanReadableText(dosage).get().replace("\u00a0", " ");
+        assertEquals(getExpectedText3(locale), result);
     }
 
     protected abstract D generateWithBothDuration();
 
     private String getExpectedText3(Locale locale) {
-        if (locale.equals(Locale.ENGLISH)) {
-            return "over 3 days ( maximum 5 days )";
-        } else if (locale.equals(Locale.FRENCH)) {
-            return "durant 3 jours ( maximum 5 jours )";
-        } else if (locale.equals(Locale.GERMAN)) {
-            return "für 3 Tage ( maximal 5 Tage )";
-        } else if (locale.equals(Locale.forLanguageTag("es"))) {
-            return "sobre 3 días ( máximo 5 días )";
-        } else if (locale.equals(Locale.ITALIAN)) {
-            return "su 3 giorni ( massimo 5 giorni )";
-        } else {
-            return "gedurende 3 dagen ( maximaal 5 dagen )";
-        }
+        return switch (locale.toLanguageTag()) {
+            case "fr"    -> "durant 3 jours ( maximum 5 jours )";
+            case "de"    -> "für 3 Tage ( maximal 5 Tage )";
+            case "es"    -> "sobre 3 días ( máximo 5 días )";
+            case "it"    -> "su 3 giorni ( massimo 5 giorni )";
+            case "nl-BE" -> "gedurende 3 dagen ( maximaal 5 dagen )";
+            default      -> "over 3 days ( maximum 5 days )";
+        };
     }
 }
