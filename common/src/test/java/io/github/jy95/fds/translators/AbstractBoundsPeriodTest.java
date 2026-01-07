@@ -73,12 +73,12 @@ public abstract class AbstractBoundsPeriodTest<C extends FDSConfig, D> extends A
     // For the parametrized test of second test
     private static String getExpectedText2(Locale locale) {
         return switch (locale.toLanguageTag()) {
-            case "fr"    -> "jusqu’au 7 févr. 2015 à 13:28:17";
+            case "fr"    -> "jusqu’au 7 févr. 2015, 13:28:17";
             case "de"    -> "bis 07.02.2015, 13:28:17";
-            case "es"    -> "hasta 7 feb 2015 a las 13:28:17";
+            case "es"    -> "hasta 7 feb 2015, 13:28:17";
             case "it"    -> "a 7 feb 2015, 13:28:17";
-            case "nl-BE" -> "tot 7 feb 2015 om 13:28:17";
-            default      -> "to Feb 7, 2015 at 1:28:17 PM";
+            case "nl-BE" -> "tot 7 feb 2015 13:28:17";
+            default      -> "to Feb 7, 2015, 1:28:17 PM";
         };
     }
 
