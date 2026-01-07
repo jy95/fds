@@ -8,6 +8,7 @@ on:
 env:
   JAVA_VERSION: '21'
   DISTRIBUTION: 'temurin'
+  TZ: "Europe/Brussels"
 
 jobs:
 
