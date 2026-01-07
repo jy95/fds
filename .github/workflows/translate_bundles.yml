@@ -4,6 +4,9 @@ permissions:
   contents: write
   pull-requests: write
 
+env:
+  TZ: "Europe/Brussels"
+
 on:
   workflow_dispatch:
     inputs:
