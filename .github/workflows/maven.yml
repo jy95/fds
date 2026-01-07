@@ -4,6 +4,9 @@ on:
   pull_request:
   workflow_dispatch:
 
+env:
+  TZ: "Europe/Brussels"
+
 jobs:
   support_java_lts_versions:
     runs-on: ${{ matrix.os }}
