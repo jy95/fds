@@ -10,7 +10,6 @@ import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public abstract class AbstractBoundsPeriodTest<C extends FDSConfig, D> extends AbstractTranslatorTest<C, D> {
 
@@ -41,7 +40,8 @@ public abstract class AbstractBoundsPeriodTest<C extends FDSConfig, D> extends A
         var dosage = generateOnlyEnd();
         var dosageUtils = getDosageAPI(locale, DisplayOrder.BOUNDS_PERIOD);
         String result = dosageUtils.asHumanReadableText(dosage).get();
-        assertExpectedText2(locale, result);
+        String expected = getExpectedText2(locale);
+        assertEquals(expected, result);
     }
 
     protected abstract D generateOnlyEnd();
@@ -71,28 +71,15 @@ public abstract class AbstractBoundsPeriodTest<C extends FDSConfig, D> extends A
     }
 
     // For the parametrized test of second test
-    private void assertExpectedText2(Locale locale, String actual) {
-        if (locale.equals(Locale.ENGLISH)) {
-            assertTrue(actual.startsWith("to Feb 7, 2015"));
-            assertTrue(actual.contains("1:28:17"));
-            assertTrue(actual.endsWith("PM"));
-        } else if (locale.equals(Locale.FRENCH)) {
-            assertTrue(actual.startsWith("jusqu’au 7 févr. 2015"));
-            assertTrue(actual.endsWith("13:28:17"));
-        } else if (locale.equals(Locale.GERMAN)) {
-            assertEquals("bis 07.02.2015, 13:28:17", actual);
-        } else if (locale.equals(Locale.forLanguageTag("es"))) {
-            assertTrue(actual.startsWith("hasta 7 feb 2015"));
-            assertTrue(actual.endsWith("13:28:17"));
-        } else if (locale.equals(Locale.ITALIAN)) {
-            assertEquals("a 7 feb 2015, 13:28:17", actual);
-        } else {
-            assertTrue(
-                    actual.startsWith("tot 7 feb 2015") ||
-                            actual.startsWith("tot 7 feb. 2015")
-            );
-            assertTrue(actual.contains("13:28:17"));
-        }
+    private static String getExpectedText2(Locale locale) {
+        return switch (locale.toLanguageTag()) {
+            case "fr"    -> "jusqu’au 7 févr. 2015 à 13:28:17";
+            case "de"    -> "bis 07.02.2015, 13:28:17";
+            case "es"    -> "hasta 7 feb 2015 a las 13:28:17";
+            case "it"    -> "a 7 feb 2015, 13:28:17";
+            case "nl-BE" -> "tot 7 feb 2015 om 13:28:17";
+            default      -> "to Feb 7, 2015 at 1:28:17 PM";
+        };
     }
 
     // For the parametrized test of third test
