@@ -4,8 +4,7 @@
 
 <h1 align="center">FHIR Dosage Support</h1>
 
-Turn [FHIR Dosage](https://build.fhir.org/dosage.html) into human-readable text in your desired language 
-(English, French, Dutch, German, ...) and much more.
+Turn [FHIR Dosage](https://build.fhir.org/dosage.html) into human-readable text in your desired language and much more.
 
 [![Build Status](https://github.com/jy95/fds/actions/workflows/maven.yml/badge.svg)](https://github.com/jy95/fds/actions/workflows/maven.yml)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/56beb6b5e12a4de481cd74ad164989f9)](https://app.codacy.com/gh/jy95/fds/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
@@ -30,6 +29,16 @@ Key Features:
 - **Integration Ease** Works effortlessly in various environments like server, client, ...
 
 Read more on: https://jy95.github.io/fds/
+
+## Supported Locales
+
+The library currently provides out-of-the-box support for the following languages:
+- <img src="https://raw.githubusercontent.com/lipis/flag-icons/main/flags/4x3/us.svg" width="20"/> **English** (`en`)
+- <img src="https://raw.githubusercontent.com/lipis/flag-icons/main/flags/4x3/fr.svg" width="20"/> **French** (`fr`)
+- <img src="https://raw.githubusercontent.com/lipis/flag-icons/main/flags/4x3/nl.svg" width="20"/> **Dutch** (`nl`)
+- <img src="https://raw.githubusercontent.com/lipis/flag-icons/main/flags/4x3/de.svg" width="20"/> **German** (`de`)
+- <img src="https://raw.githubusercontent.com/lipis/flag-icons/main/flags/4x3/es.svg" width="20"/> **Spanish** (`es`)
+- <img src="https://raw.githubusercontent.com/lipis/flag-icons/main/flags/4x3/it.svg" width="20"/> **Italian** (`it`)
 
 ## Credits
 
