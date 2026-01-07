@@ -1,7 +1,8 @@
 name: Add JavaDoc
 on:
   workflow_dispatch:
-
+env:
+  TZ: "Europe/Brussels"
 jobs:
   javadoc:
     runs-on: ubuntu-latest
