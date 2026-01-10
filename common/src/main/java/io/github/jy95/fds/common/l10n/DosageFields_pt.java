@@ -41,27 +41,27 @@ public class DosageFields_pt extends ListResourceBundle {
             { "fields.periodMax", "cada {minPeriod} para {maxPeriod} {unit}" },
 
             // Fields - Day/Time
-            { "fields.dayOfWeek", "{dayCondition, plural, one{em {day}} other{em {day}}}" },
+            { "fields.dayOfWeek", "{dayCondition, plural, one{na {day}} other{na {day}}}" },
             { "fields.timeOfDay", "às {timeOfDay}" },
             { "fields.asNeeded", "como necessário" },
-            { "fields.asNeededFor", "conforme exigido para {0}" },
+            { "fields.asNeededFor", "como necessário para {0}" },
 
             // Fields - Bounds
             { "fields.boundsDuration", "por {0}" },
             { "fields.boundsPeriod",
-                    "{condition, select, 0{de {startDate} para {endDate}} 1{de {startDate}} other{para {endDate}}}" },
+                    "{condition, select, 0{de {startDate} a {endDate}} 1{de {startDate}} other{a {endDate}}}" },
             { "fields.boundsRange", "por {0}" },
 
             // Fields - Count
             { "fields.count", "{0, plural, one{tomar {0} vez} other{tomar {0} vezes}}" },
             { "fields.countMax",
-                    "{maxCount, plural, one{tomar {minCount} para {maxCount} vez} other{tomar {minCount} para {maxCount} vezes}}" },
+                    "{maxCount, plural, one{tomar {minCount} a {maxCount} vez} other{tomar {minCount} a {maxCount} vezes}}" },
 
             // Fields - Event
             { "fields.event", "{eventCondition, plural, one{em {event}} other{em {event}}}" },
 
             // Fields - Max Dose
-            { "fields.maxDosePerLifetime", "até um máximo de {0} durante a vida do doente" },
+            { "fields.maxDosePerLifetime", "até um máximo de {0} durante o tempo de vida do doente" },
             { "fields.maxDosePerAdministration", "até um máximo de {0} por dose" },
             { "fields.maxDosePerPeriod", "até um máximo de {0}" },
     };
