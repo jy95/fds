@@ -40,6 +40,7 @@ public abstract class AbstractPeriodPeriodMaxTest<C extends FDSConfig, D> extend
             case "es"    -> "cada 2 días";
             case "it"    -> "ogni 2 giorni";
             case "nl-BE" -> "per 2 dagen";
+            case "pt" -> "a cada 2 dias";
             default      -> "every 2 days";
         };
     }
@@ -62,6 +63,7 @@ public abstract class AbstractPeriodPeriodMaxTest<C extends FDSConfig, D> extend
             case "es"    -> "cada 2 a 3 días";
             case "it"    -> "ogni 2 a 3 giorni";
             case "nl-BE" -> "elke 2 tot 3 dagen";
+            case "pt" -> "a cada 2 a 3 dias";
             default      -> "every 2 to 3 days";
         };
     }

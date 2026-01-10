@@ -66,6 +66,7 @@ public abstract class AbstractBoundsPeriodTest<C extends FDSConfig, D> extends A
             case "es"    -> "desde 23 may 2011 hasta 27 may 2011";
             case "it"    -> "da 23 mag 2011 a 27 mag 2011";
             case "nl-BE" -> "van 23 mei 2011 tot 27 mei 2011";
+            case "pt" -> "de 23 de maio de 2011 a 27 de maio de 2011";
             default      -> "from May 23, 2011 to May 27, 2011";
         };
     }
@@ -78,6 +79,7 @@ public abstract class AbstractBoundsPeriodTest<C extends FDSConfig, D> extends A
             case "es"    -> "hasta 7 feb 2015, 13:28:17";
             case "it"    -> "a 7 feb 2015, 13:28:17";
             case "nl-BE" -> "tot 7 feb. 2015, 13:28:17";
+            case "pt" -> "a 7 de fevereiro de 2015, 1:28:17";
             default      -> "to Feb 7, 2015, 1:28:17 PM";
         };
     }
@@ -90,6 +92,7 @@ public abstract class AbstractBoundsPeriodTest<C extends FDSConfig, D> extends A
             case "es"    -> "desde 23 may 2011";
             case "it"    -> "da 23 mag 2011";
             case "nl-BE" -> "van 23 mei 2011";
+            case "pt" -> "de 23 de maio de 2011";
             default      -> "from May 23, 2011";
         };
     }
