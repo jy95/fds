@@ -22,9 +22,9 @@ public class EventTiming_pt extends ListResourceBundle {
             { "AFT.early", "durante o início da tarde" },
             { "AFT.late", "durante o final da tarde" },
             { "EVE", "durante a noite" },
-            { "EVE.early", "durante o início da noite" },
-            { "EVE.late", "durante a tarde" },
-            { "NIGHT", "durante a noite" },
+            { "EVE.early", "no início da noite" },
+            { "EVE.late", "no fim da noite" },
+            { "NIGHT", "durante a madrugada" },
 
             { "PHS", "após o sono" },
             { "IMD", "uma única vez" },

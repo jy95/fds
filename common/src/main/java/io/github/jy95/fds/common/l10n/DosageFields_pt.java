@@ -21,7 +21,7 @@ public class DosageFields_pt extends ListResourceBundle {
                     "{condition, select, 0{{minValue} para {maxValue} {unit}} 1{até {maxValue} {unit}} other{pelo menos {minValue} {unit}}}" },
             { "amount.range.withoutUnit",
                     "{condition, select, 0{{minValue} para {maxValue}} 1{até {maxValue}} other{pelo menos {minValue}}}" },
-            { "amount.ratio.denominatorLinkword", "{0, choice, }" },
+            { "amount.ratio.denominatorLinkword", "{0, choice, 1#por|1.0<cada}" },
 
             // Fields - Rate/Duration
             { "fields.rateQuantity", "a uma taxa de {0}" },
@@ -47,15 +47,15 @@ public class DosageFields_pt extends ListResourceBundle {
             { "fields.asNeededFor", "conforme exigido para {0}" },
 
             // Fields - Bounds
-            { "fields.boundsDuration", "em vez {0}" },
+            { "fields.boundsDuration", "por {0}" },
             { "fields.boundsPeriod",
                     "{condition, select, 0{de {startDate} para {endDate}} 1{de {startDate}} other{para {endDate}}}" },
-            { "fields.boundsRange", "em vez {0}" },
+            { "fields.boundsRange", "por {0}" },
 
             // Fields - Count
-            { "fields.count", "{0, plural, one{tomar {0} tempo} other{tomar {0} vezes}}" },
+            { "fields.count", "{0, plural, one{tomar {0} vez} other{tomar {0} vezes}}" },
             { "fields.countMax",
-                    "{maxCount, plural, one{tomar {minCount} para {maxCount} tempo} other{tomar {minCount} para {maxCount} vezes}}" },
+                    "{maxCount, plural, one{tomar {minCount} para {maxCount} vez} other{tomar {minCount} para {maxCount} vezes}}" },
 
             // Fields - Event
             { "fields.event", "{eventCondition, plural, one{em {event}} other{em {event}}}" },
