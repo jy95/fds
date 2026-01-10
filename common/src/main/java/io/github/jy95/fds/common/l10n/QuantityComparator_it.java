@@ -25,7 +25,7 @@ public class QuantityComparator_it extends ListResourceBundle {
             { "ad", "ad" },
     };
 
-    // English version
+    
     /** {@inheritDoc} */
     @Override
     public Object[][] getContents() {
