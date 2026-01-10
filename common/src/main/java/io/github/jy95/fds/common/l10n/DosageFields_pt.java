@@ -41,7 +41,7 @@ public class DosageFields_pt extends ListResourceBundle {
             { "fields.periodMax", "cada {minPeriod} para {maxPeriod} {unit}" },
 
             // Fields - Day/Time
-            { "fields.dayOfWeek", "{dayCondition, plural, one{ligado {day}} other{ligado {day}}}" },
+            { "fields.dayOfWeek", "{dayCondition, plural, one{em {day}} other{em {day}}}" },
             { "fields.timeOfDay", "em {timeOfDay}" },
             { "fields.asNeeded", "como necessário" },
             { "fields.asNeededFor", "conforme exigido para {0}" },
@@ -58,7 +58,7 @@ public class DosageFields_pt extends ListResourceBundle {
                     "{maxCount, plural, one{tomar {minCount} para {maxCount} tempo} other{tomar {minCount} para {maxCount} vezes}}" },
 
             // Fields - Event
-            { "fields.event", "{eventCondition, plural, one{ligado {event}} other{ligado {event}}}" },
+            { "fields.event", "{eventCondition, plural, one{em {event}} other{em {event}}}" },
 
             // Fields - Max Dose
             { "fields.maxDosePerLifetime", "até um máximo de {0} durante a vida do doente" },
