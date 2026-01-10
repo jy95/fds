@@ -69,7 +69,7 @@ public abstract class AbstractAsNeededTest<C extends FDSConfig, D> extends Abstr
             case "es" -> "según sea necesario para head pain";
             case "it" -> "se necessario per head pain";
             case "nl-BE" -> "zoals nodig voor head pain";
-            case "pt" -> "como necessário para dor na cabeça";
+            case "pt" -> "como necessário para head pain";
             default   -> "as required for head pain";
         };
     }
