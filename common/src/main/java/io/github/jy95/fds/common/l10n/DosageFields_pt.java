@@ -27,7 +27,7 @@ public class DosageFields_pt extends ListResourceBundle {
             { "fields.rateQuantity", "a uma taxa de {0}" },
             { "fields.rateRange", "a uma taxa de {0}" },
             { "fields.rateRatio", "a uma taxa de {0}" },
-            { "fields.duration", "sobre {0}" },
+            { "fields.duration", "durante {0}" },
             { "fields.durationMax", "máximo {0}" },
 
             // Fields - Frequency

@@ -119,7 +119,7 @@ public abstract class AbstractBoundsRangeTest<C extends FDSConfig, D> extends Ab
             case "es" -> "por hasta 3";
             case "it" -> "per fino a 3";
             case "nl-BE" -> "gedurende tot 3";
-            case "pt" -> "até 3";
+            case "pt" -> "por até 3";
             default -> "for up to 3";
         };
     }
@@ -131,7 +131,7 @@ public abstract class AbstractBoundsRangeTest<C extends FDSConfig, D> extends Ab
             case "es" -> "por hasta 3 días";
             case "it" -> "per fino a 3 giorni";
             case "nl-BE" -> "gedurende tot 3 dagen";
-            case "pt" -> "até 3 dias";
+            case "pt" -> "por até 3 dias";
             default -> "for up to 3 days";
         };
     }
@@ -143,7 +143,7 @@ public abstract class AbstractBoundsRangeTest<C extends FDSConfig, D> extends Ab
             case "es" -> "por al menos 3";
             case "it" -> "per almeno 3";
             case "nl-BE" -> "gedurende minstens 3";
-            case "pt" -> "para pelo menos 3";
+            case "pt" -> "por pelo menos 3";
             default -> "for at least 3";
         };
     }

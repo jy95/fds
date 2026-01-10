@@ -86,7 +86,7 @@ public abstract class AbstractDurationDurationMaxTest<C extends FDSConfig, D> ex
             case "es"    -> "sobre 3 días ( máximo 5 días )";
             case "it"    -> "su 3 giorni ( massimo 5 giorni )";
             case "nl-BE" -> "gedurende 3 dagen ( maximaal 5 dagen )";
-            case "pt" -> "por 3 dias ( máximo 5 dias )";
+            case "pt" -> "durante 3 dias ( máximo 5 dias )";
             default      -> "over 3 days ( maximum 5 days )";
         };
     }
