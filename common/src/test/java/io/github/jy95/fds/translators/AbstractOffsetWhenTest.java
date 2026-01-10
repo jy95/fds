@@ -40,7 +40,7 @@ public abstract class AbstractOffsetWhenTest<C extends FDSConfig, D> extends Abs
             case "es"    -> "durante la mañana y durante la noche";
             case "it"    -> "durante la mattina e durante la notte";
             case "nl-BE" -> "tijdens de ochtend en tijdens de nacht";
-            case "pt" -> "durante a manhã e durante a noite";
+            case "pt" -> "durante a manhã e durante a madrugada";
             default      -> "during the morning and during the night";
         };
     }
@@ -63,7 +63,7 @@ public abstract class AbstractOffsetWhenTest<C extends FDSConfig, D> extends Abs
             case "es"    -> "1 hora y 30 minutos durante la mañana y durante la noche";
             case "it"    -> "1 ora e 30 minuti durante la mattina e durante la notte";
             case "nl-BE" -> "1 uur en 30 minuten tijdens de ochtend en tijdens de nacht";
-            case "pt" -> "1 hora e 30 minutos durante a manhã e durante a noite";
+            case "pt" -> "1 hora e 30 minutos durante a manhã e durante a madrugada";
             default      -> "1 hour and 30 minutes during the morning and during the night";
         };
     }

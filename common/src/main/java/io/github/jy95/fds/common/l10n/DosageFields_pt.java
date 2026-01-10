@@ -42,7 +42,7 @@ public class DosageFields_pt extends ListResourceBundle {
 
             // Fields - Day/Time
             { "fields.dayOfWeek", "{dayCondition, plural, one{em {day}} other{em {day}}}" },
-            { "fields.timeOfDay", "em {timeOfDay}" },
+            { "fields.timeOfDay", "às {timeOfDay}" },
             { "fields.asNeeded", "como necessário" },
             { "fields.asNeededFor", "conforme exigido para {0}" },
 

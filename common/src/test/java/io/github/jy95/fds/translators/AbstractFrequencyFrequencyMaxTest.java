@@ -86,7 +86,7 @@ public abstract class AbstractFrequencyFrequencyMaxTest<C extends FDSConfig, D> 
             case "es"    -> "3-5 veces";
             case "it"    -> "3-5 volte";
             case "nl-BE" -> "3-5 keer";
-            case "pt" -> "3-5 vezes";
+            case "pt" -> "3 a 5 vezes";
             default      -> "3-5 times";
         };
     }
