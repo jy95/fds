@@ -37,8 +37,8 @@ public class DosageFields_pt extends ListResourceBundle {
             { "fields.frequencyMax", "{0, plural, one{até {0} vez} other{até {0} vezes}}" },
 
             // Fields - Period
-            { "fields.period", "{period, plural, one{cada {periodUnit}} other{cada {period} {periodUnit}}}" },
-            { "fields.periodMax", "cada {minPeriod} para {maxPeriod} {unit}" },
+            { "fields.period", "{period, plural, one{a cada {periodUnit}} other{a cada {period} {periodUnit}}}" },
+            { "fields.periodMax", "a cada {minPeriod} a {maxPeriod} {unit}" },
 
             // Fields - Day/Time
             { "fields.dayOfWeek", "{dayCondition, plural, one{na {day}} other{na {day}}}" },

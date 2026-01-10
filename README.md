@@ -39,6 +39,7 @@ The library currently provides out-of-the-box support for the following language
 - <img src="https://raw.githubusercontent.com/lipis/flag-icons/main/flags/4x3/de.svg" width="20"/> **German** (`de`)
 - <img src="https://raw.githubusercontent.com/lipis/flag-icons/main/flags/4x3/es.svg" width="20"/> **Spanish** (`es`)
 - <img src="https://raw.githubusercontent.com/lipis/flag-icons/main/flags/4x3/it.svg" width="20"/> **Italian** (`it`)
+- <img src="https://raw.githubusercontent.com/lipis/flag-icons/main/flags/4x3/pt.svg" width="20"/> **Portuguese** (`pt`)
 
 ## Credits
 
