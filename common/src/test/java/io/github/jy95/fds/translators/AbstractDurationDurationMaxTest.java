@@ -40,6 +40,7 @@ public abstract class AbstractDurationDurationMaxTest<C extends FDSConfig, D> ex
             case "es"    -> "sobre 3 días";
             case "it"    -> "su 3 giorni";
             case "nl-BE" -> "gedurende 3 dagen";
+            case "pt" -> "durante 3 dias";
             default      -> "over 3 days";
         };
     }
@@ -62,6 +63,7 @@ public abstract class AbstractDurationDurationMaxTest<C extends FDSConfig, D> ex
             case "es"    -> "máximo 3 días";
             case "it"    -> "massimo 3 giorni";
             case "nl-BE" -> "maximaal 3 dagen";
+            case "pt" -> "máximo 3 dias";
             default      -> "maximum 3 days";
         };
     }
@@ -84,6 +86,7 @@ public abstract class AbstractDurationDurationMaxTest<C extends FDSConfig, D> ex
             case "es"    -> "sobre 3 días ( máximo 5 días )";
             case "it"    -> "su 3 giorni ( massimo 5 giorni )";
             case "nl-BE" -> "gedurende 3 dagen ( maximaal 5 dagen )";
+            case "pt" -> "durante 3 dias ( máximo 5 dias )";
             default      -> "over 3 days ( maximum 5 days )";
         };
     }

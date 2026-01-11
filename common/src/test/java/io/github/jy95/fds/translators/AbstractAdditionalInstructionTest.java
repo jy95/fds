@@ -54,6 +54,7 @@ public abstract class AbstractAdditionalInstructionTest<C extends FDSConfig, D> 
             case "fr" -> "Instruction 1 et Instruction 2";
             case "de" -> "Instruction 1 und Instruction 2";
             case "it" -> "Instruction 1 e Instruction 2";
+            case "pt" -> "Instruction 1 e Instruction 2";
             default -> "Instruction 1 and Instruction 2";
         };
     }

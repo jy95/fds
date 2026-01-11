@@ -43,6 +43,7 @@ public abstract class AbstractTimingEventTest<C extends FDSConfig, D> extends Ab
             case "es"    -> "el 1 ene 2024";
             case "it"    -> "su 1 gen 2024";
             case "nl-BE" -> "op 1 jan. 2024";
+            case "pt" -> "em 1 de jan de 2024";
             default      -> "on Jan 1, 2024";
         };
     }
@@ -67,6 +68,7 @@ public abstract class AbstractTimingEventTest<C extends FDSConfig, D> extends Ab
             case "es"    -> "los 1 ene 2018, 1 jun 1973 y 23 ago 1905";
             case "it"    -> "su 1 gen 2018, 1 giu 1973 e 23 ago 1905";
             case "nl-BE" -> "op 1 jan. 2018, 1 jun. 1973 en 23 aug. 1905";
+            case "pt" -> "em 1 de jan de 2018, 1 de jun de 1973 e 23 de ago de 1905";
             default      -> "on Jan 1, 2018, Jun 1, 1973 and Aug 23, 1905";
         };
     }

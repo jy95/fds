@@ -104,6 +104,7 @@ public class AsHumanReadableTextTest extends AbstractFhirTest {
             case "es"    -> "por 2 semanas - tomar 2 veces luego cada día - tomar 1 vez y según sea necesario - tomar 1 vez";
             case "it"    -> "per 2 settimane - prendere 2 volte quindi ogni giorno - prendere 1 volta e se necessario - prendere 1 volta";
             case "nl-BE" -> "gedurende 2 weken - 2 keer nemen vervolgens elke dag - 1 keer nemen en indien nodig - 1 keer nemen";
+            case "pt" -> "por 2 semanas - tomar 2 vezes então a cada dia - tomar 1 vez e como necessário - tomar 1 vez";
             default      -> "for 2 weeks - take 2 times then every day - take 1 time and as required - take 1 time";
         };
     }

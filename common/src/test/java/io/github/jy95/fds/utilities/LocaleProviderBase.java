@@ -14,7 +14,8 @@ public class LocaleProviderBase {
                         Locale.forLanguageTag("nl-BE"),
                         Locale.GERMAN,
                         Locale.forLanguageTag("es"),
-                        Locale.ITALIAN
+                        Locale.ITALIAN,
+                        Locale.forLanguageTag("pt")
                 );
     }
 }

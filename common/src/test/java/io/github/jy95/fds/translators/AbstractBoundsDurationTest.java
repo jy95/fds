@@ -40,6 +40,7 @@ public abstract class AbstractBoundsDurationTest<C extends FDSConfig, D> extends
             case "es" -> "por 3 días";
             case "it" -> "per 3 giorni";
             case "nl-BE" -> "gedurende 3 dagen";
+            case "pt" -> "por 3 dias";
             default   -> "for 3 days";
         };
     }

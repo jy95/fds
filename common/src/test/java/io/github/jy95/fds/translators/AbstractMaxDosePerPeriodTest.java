@@ -40,6 +40,7 @@ public abstract class AbstractMaxDosePerPeriodTest<C extends FDSConfig, D> exten
             case "es"    -> "hasta un máximo de 10 mg por día";
             case "it"    -> "fino a un massimo di 10 mg per giorno";
             case "nl-BE" -> "tot een maximum van 10 mg per dag";
+            case "pt" -> "até um máximo de 10 mg por dia";
             default      -> "up to a maximum of 10 mg per day";
         };
     }
