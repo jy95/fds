@@ -22,7 +22,7 @@ jobs:
         run: |
           mvn javadoc:fix
       - name: 💅 Create Pull Request
-        uses: peter-evans/create-pull-request@v8.0.0
+        uses: peter-evans/create-pull-request@v8.1.0
         with:
           title: "chore: Add missing Javadoc 🤖"
           branch: "automated/JavaDoc-${{ github.run_id }}"
