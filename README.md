@@ -28,7 +28,8 @@ Key Features:
 - **Internationalization** Seamlessly extendable to other languages thanks to [`ICU4J`](https://unicode-org.github.io/icu/userguide/icu4j/)
 - **Integration Ease** Works effortlessly in various environments like server, client, ...
 
-Read more on: https://jy95.github.io/fds/
+Read more on: https://jy95.github.io/fds/   
+Demo Spring Boot project : https://github.com/jy95/spring-fhir-humanizer-api
 
 ## Supported Locales
 
