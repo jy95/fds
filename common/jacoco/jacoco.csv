@@ -7,8 +7,8 @@ FHIR Dosage Support - Common,io.github.jy95.fds.common.l10n,QuantityComparator_n
 FHIR Dosage Support - Common,io.github.jy95.fds.common.l10n,EventTiming_pt,360,0,0,0,3,0,3,0,3,0
 FHIR Dosage Support - Common,io.github.jy95.fds.common.l10n,EventTiming_nl,360,0,0,0,3,0,3,0,3,0
 FHIR Dosage Support - Common,io.github.jy95.fds.common.l10n,DosageFields_nl,373,0,0,0,3,0,3,0,3,0
-FHIR Dosage Support - Common,io.github.jy95.fds.common.l10n,EventTiming,0,360,0,0,0,3,0,3,0,3
 FHIR Dosage Support - Common,io.github.jy95.fds.common.l10n,EventTiming_es,360,0,0,0,3,0,3,0,3,0
+FHIR Dosage Support - Common,io.github.jy95.fds.common.l10n,EventTiming,0,360,0,0,0,3,0,3,0,3
 FHIR Dosage Support - Common,io.github.jy95.fds.common.l10n,DosageFields_fr,373,0,0,0,3,0,3,0,3,0
 FHIR Dosage Support - Common,io.github.jy95.fds.common.l10n,EventTiming_it,360,0,0,0,3,0,3,0,3,0
 FHIR Dosage Support - Common,io.github.jy95.fds.common.l10n,DosageFields,0,373,0,0,0,3,0,3,0,3
@@ -18,8 +18,8 @@ FHIR Dosage Support - Common,io.github.jy95.fds.common.l10n,EventTiming_fr,360,0
 FHIR Dosage Support - Common,io.github.jy95.fds.common.l10n,QuantityComparator,0,74,0,0,0,3,0,3,0,3
 FHIR Dosage Support - Common,io.github.jy95.fds.common.l10n,DosageFields_es,373,0,0,0,3,0,3,0,3,0
 FHIR Dosage Support - Common,io.github.jy95.fds.common.l10n,DosageFields_it,373,0,0,0,3,0,3,0,3,0
-FHIR Dosage Support - Common,io.github.jy95.fds.common.l10n,DosageFields_de,373,0,0,0,3,0,3,0,3,0
 FHIR Dosage Support - Common,io.github.jy95.fds.common.l10n,EventTiming_de,360,0,0,0,3,0,3,0,3,0
+FHIR Dosage Support - Common,io.github.jy95.fds.common.l10n,DosageFields_de,373,0,0,0,3,0,3,0,3,0
 FHIR Dosage Support - Common,io.github.jy95.fds.common.l10n,QuantityComparator_fr,74,0,0,0,3,0,3,0,3,0
 FHIR Dosage Support - Common,io.github.jy95.fds.common.l10n,DosageFields_pt,373,0,0,0,3,0,3,0,3,0
 FHIR Dosage Support - Common,io.github.jy95.fds.common.types,DoseAndRateKey,33,0,0,0,6,0,1,0,1,0
