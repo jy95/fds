@@ -7,10 +7,9 @@ import java.util.function.Predicate;
 import lombok.RequiredArgsConstructor;
 
 /**
- * Interface for translating text fields into human-readable representations.
- * This class provides base functionality for configuration and resource bundle
- * handling,
- * while requiring subclasses to define specific translation behavior.
+ * Translator for simple string fields extracted from a FHIR element.
+ * The supplied extractor returns the string value, and the supplied predicate
+ * determines whether the value is present.
  *
  * @param <D> the type of fhir element containing field to be translated
  * @author jy95
