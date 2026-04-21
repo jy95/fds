@@ -14,28 +14,28 @@ import lombok.RequiredArgsConstructor;
 /**
  * A translator for converting CodeableConcept instances to strings.
  *
- * @param <D> The type of the data being translated.
- * @param <CC> The type of the CodeableConcept being translated.
+ * @param <T> The type of the data being translated.
+ * @param <U> The type of the CodeableConcept being translated.
  * @param <C> The type of the configuration used for translation.
  * @author jy95
  * @since 2.1.9
  */
 @RequiredArgsConstructor
 public class CodeableConceptTranslator<
-    D, 
-    CC extends IBase,
-    C extends FDSConfig & CodeableConceptProcessor<CC>
-> implements Translator<D> {
+    T, 
+    U extends IBase,
+    C extends FDSConfig & CodeableConceptProcessor<U>
+> implements Translator<T> {
 
     /* Translator for converting CodeableConcept to string */
     private final TranslationService<C> translationService;
     /* Function to extract the CodeableConcept from the data */
-    private final Function<D, CC> extractor;
+    private final Function<T, U> extractor;
     /* Predicate to check if the CodeableConcept is present in the data */
-    private final Predicate<D> presence;
+    private final Predicate<T> presence;
 
     @Override
-    public CompletableFuture<String> convert(D data) {
+    public CompletableFuture<String> convert(T data) {
         return translationService
                 .getConfig()
                 .fromCodeableConceptToString(
@@ -44,7 +44,7 @@ public class CodeableConceptTranslator<
     }
 
     @Override
-    public boolean isPresent(D data) {
+    public boolean isPresent(T data) {
         return presence.test(data);
     }
     
