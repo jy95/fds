@@ -10,6 +10,7 @@ import io.github.jy95.fds.common.functions.TranslationService;
 import io.github.jy95.fds.common.types.AbstractTranslatorsMap;
 import io.github.jy95.fds.common.types.DisplayOrder;
 import io.github.jy95.fds.common.types.Translator;
+import io.github.jy95.fds.common.types.SimpleStringTranslator;
 import io.github.jy95.fds.r5.config.FDSConfigR5;
 import io.github.jy95.fds.r5.translators.*;
 
@@ -31,9 +32,9 @@ public class DosageTranslatorsMapR5 extends AbstractTranslatorsMap<FDSConfigR5, 
 
         suppliers.put(DisplayOrder.EXTENSION, () -> new ExtensionR5(translationService));
         suppliers.put(DisplayOrder.MODIFIER_EXTENSION, () -> new ModifierExtensionR5(translationService));
-        suppliers.put(DisplayOrder.TEXT, TextR5::new);
+        suppliers.put(DisplayOrder.TEXT, () -> new SimpleStringTranslator<Dosage>(Dosage::getText, Dosage::hasText));
         suppliers.put(DisplayOrder.ADDITIONAL_INSTRUCTION, () -> new AdditionalInstructionR5(translationService));
-        suppliers.put(DisplayOrder.PATIENT_INSTRUCTION, PatientInstructionR5::new);
+        suppliers.put(DisplayOrder.PATIENT_INSTRUCTION, () -> new SimpleStringTranslator<Dosage>(Dosage::getPatientInstruction, Dosage::hasPatientInstruction));
         suppliers.put(DisplayOrder.AS_NEEDED, () -> new AsNeededR5(translationService));
         suppliers.put(DisplayOrder.SITE, () -> new SiteR5(translationService));
         suppliers.put(DisplayOrder.ROUTE, () -> new RouteR5(translationService));
