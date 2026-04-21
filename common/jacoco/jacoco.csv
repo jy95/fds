@@ -22,6 +22,7 @@ FHIR Dosage Support - Common,io.github.jy95.fds.common.l10n,EventTiming_de,360,0
 FHIR Dosage Support - Common,io.github.jy95.fds.common.l10n,DosageFields_de,373,0,0,0,3,0,3,0,3,0
 FHIR Dosage Support - Common,io.github.jy95.fds.common.l10n,QuantityComparator_fr,74,0,0,0,3,0,3,0,3,0
 FHIR Dosage Support - Common,io.github.jy95.fds.common.l10n,DosageFields_pt,373,0,0,0,3,0,3,0,3,0
+FHIR Dosage Support - Common,io.github.jy95.fds.common.types,SimpleStringTranslator,12,0,0,0,2,0,2,0,2,0
 FHIR Dosage Support - Common,io.github.jy95.fds.common.types,DoseAndRateKey,33,0,0,0,6,0,1,0,1,0
 FHIR Dosage Support - Common,io.github.jy95.fds.common.types,LinkWord,0,25,0,0,0,6,0,2,0,2
 FHIR Dosage Support - Common,io.github.jy95.fds.common.types,TranslatorExtension,11,0,0,0,4,0,1,0,1,0

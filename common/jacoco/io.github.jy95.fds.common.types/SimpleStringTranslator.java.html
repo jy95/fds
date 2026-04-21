@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SimpleStringTranslator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">FHIR Dosage Support - Common</a> &gt; <a href="index.source.html" class="el_package">io.github.jy95.fds.common.types</a> &gt; <span class="el_source">SimpleStringTranslator.java</span></div><h1>SimpleStringTranslator.java</h1><pre class="source lang-java linenums">package io.github.jy95.fds.common.types;
+
+import java.util.concurrent.CompletableFuture;
+import java.util.function.Function;
+import java.util.function.Predicate;
+
+import lombok.RequiredArgsConstructor;
+
+/**
+ * Translator for simple string fields extracted from a FHIR element.
+ * The supplied extractor returns the string value, and the supplied predicate
+ * determines whether the value is present.
+ *
+ * @param &lt;D&gt; the type of fhir element containing field to be translated
+ * @author jy95
+ * @since 2.1.9
+ */
+@RequiredArgsConstructor
+public class SimpleStringTranslator&lt;D&gt; implements Translator&lt;D&gt; {
+
+    /* The function to extract the string value from the data. */
+    private final Function&lt;D, String&gt; extractor;
+    /* The predicate to check if the string value is present in the data. */
+    private final Predicate&lt;D&gt; presence;
+
+    @Override
+    public CompletableFuture&lt;String&gt; convert(D data) {
+<span class="nc" id="L28">        return CompletableFuture.completedFuture(extractor.apply(data));</span>
+    }
+
+    @Override
+    public boolean isPresent(D data) {
+<span class="nc" id="L33">        return presence.test(data);</span>
+    }
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
