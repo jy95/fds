@@ -11,6 +11,7 @@ import io.github.jy95.fds.common.types.AbstractTranslatorsMap;
 import io.github.jy95.fds.common.types.DisplayOrder;
 import io.github.jy95.fds.common.types.Translator;
 import io.github.jy95.fds.common.types.SimpleStringTranslator;
+import io.github.jy95.fds.common.types.CodeableConceptTranslator;
 import io.github.jy95.fds.r4.config.FDSConfigR4;
 import io.github.jy95.fds.r4.translators.*;
 
@@ -36,9 +37,21 @@ public class DosageTranslatorsMapR4 extends AbstractTranslatorsMap<FDSConfigR4, 
         suppliers.put(DisplayOrder.ADDITIONAL_INSTRUCTION, () -> new AdditionalInstructionR4(translationService));
         suppliers.put(DisplayOrder.PATIENT_INSTRUCTION, () -> new SimpleStringTranslator<Dosage>(Dosage::getPatientInstruction, Dosage::hasPatientInstruction));
         suppliers.put(DisplayOrder.AS_NEEDED, () -> new AsNeededR4(translationService));
-        suppliers.put(DisplayOrder.SITE, () -> new SiteR4(translationService));
-        suppliers.put(DisplayOrder.ROUTE, () -> new RouteR4(translationService));
-        suppliers.put(DisplayOrder.METHOD, () -> new MethodR4(translationService));
+        suppliers.put(DisplayOrder.SITE, () -> new CodeableConceptTranslator<>(
+                translationService,
+                Dosage::getSite,
+                Dosage::hasSite
+        ));
+        suppliers.put(DisplayOrder.ROUTE, () -> new CodeableConceptTranslator<>(
+                translationService,
+                Dosage::getRoute,
+                Dosage::hasRoute
+        ));
+        suppliers.put(DisplayOrder.METHOD, () -> new CodeableConceptTranslator<>(
+                translationService,
+                Dosage::getMethod,
+                Dosage::hasMethod
+        ));
         suppliers.put(DisplayOrder.DOSE_QUANTITY, () -> new DoseQuantityR4(translationService));
         suppliers.put(DisplayOrder.DOSE_RANGE, () -> new DoseRangeR4(translationService));
         suppliers.put(DisplayOrder.RATE_QUANTITY, () -> new RateQuantityR4(translationService));
