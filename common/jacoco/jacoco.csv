@@ -32,6 +32,7 @@ FHIR Dosage Support - Common,io.github.jy95.fds.common.types,DosageMarkdown,0,34
 FHIR Dosage Support - Common,io.github.jy95.fds.common.types,DisplayOrder,0,322,0,0,0,71,0,2,0,2
 FHIR Dosage Support - Common,io.github.jy95.fds.common.types,SpecComponent,0,21,0,0,0,4,0,1,0,1
 FHIR Dosage Support - Common,io.github.jy95.fds.common.types,DosageAPI,66,144,1,1,18,38,7,16,6,16
+FHIR Dosage Support - Common,io.github.jy95.fds.common.types,CodeableConceptTranslator,16,0,0,0,5,0,2,0,2,0
 FHIR Dosage Support - Common,io.github.jy95.fds.common.translators.dosage,AdditionalInstruction,28,0,0,0,8,0,4,0,4,0
 FHIR Dosage Support - Common,io.github.jy95.fds.common.functions,RangeToString,243,0,4,0,50,0,27,0,25,0
 FHIR Dosage Support - Common,io.github.jy95.fds.common.functions,TranslationService,35,0,0,0,5,0,4,0,4,0

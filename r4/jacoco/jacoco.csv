@@ -6,11 +6,9 @@ FHIR Dosage Support - R4,io.github.jy95.fds.r4.functions,RatioToStringR4,0,23,0,
 FHIR Dosage Support - R4,io.github.jy95.fds.r4.functions,QuantityToStringR4,0,44,0,4,0,11,0,12,0,10
 FHIR Dosage Support - R4,io.github.jy95.fds.r4,DosageAPIR4,0,29,0,0,0,8,0,5,0,5
 FHIR Dosage Support - R4,io.github.jy95.fds.r4.utils.maps,TimingRepeatTranslatorsMapR4,0,165,0,0,0,19,0,14,0,14
-FHIR Dosage Support - R4,io.github.jy95.fds.r4.utils.maps,DosageTranslatorsMapR4,0,213,0,0,0,21,0,19,0,19
+FHIR Dosage Support - R4,io.github.jy95.fds.r4.utils.maps,DosageTranslatorsMapR4,0,219,0,0,0,21,0,19,0,19
 FHIR Dosage Support - R4,io.github.jy95.fds.r4.utils.maps,TimingTranslatorsMapR4,0,59,0,0,0,8,0,6,0,6
-FHIR Dosage Support - R4,io.github.jy95.fds.r4.translators,SiteR4,0,11,0,0,0,5,0,2,0,2
 FHIR Dosage Support - R4,io.github.jy95.fds.r4.translators,PeriodPeriodMaxR4,0,88,0,0,0,19,0,6,0,6
-FHIR Dosage Support - R4,io.github.jy95.fds.r4.translators,RouteR4,0,11,0,0,0,5,0,2,0,2
 FHIR Dosage Support - R4,io.github.jy95.fds.r4.translators,FrequencyFrequencyMaxPeriodPeriodMaxR4,0,48,0,0,0,10,0,8,0,8
 FHIR Dosage Support - R4,io.github.jy95.fds.r4.translators,AdditionalInstructionR4,0,25,0,0,0,8,0,2,0,2
 FHIR Dosage Support - R4,io.github.jy95.fds.r4.translators,AsNeededR4,0,65,0,2,0,14,0,8,0,7
@@ -32,7 +30,6 @@ FHIR Dosage Support - R4,io.github.jy95.fds.r4.translators,DurationDurationMaxR4
 FHIR Dosage Support - R4,io.github.jy95.fds.r4.translators,TimingRepeatExtensionR4,0,6,0,0,0,2,0,2,0,2
 FHIR Dosage Support - R4,io.github.jy95.fds.r4.translators,TimingExtensionR4,0,6,0,0,0,2,0,2,0,2
 FHIR Dosage Support - R4,io.github.jy95.fds.r4.translators,BoundsDurationR4,0,29,0,0,0,6,0,3,0,3
-FHIR Dosage Support - R4,io.github.jy95.fds.r4.translators,MethodR4,0,11,0,0,0,5,0,2,0,2
 FHIR Dosage Support - R4,io.github.jy95.fds.r4.translators,ExtensionR4,0,3,0,0,0,1,0,1,0,1
 FHIR Dosage Support - R4,io.github.jy95.fds.r4.translators,DoseRangeR4,0,28,0,0,0,8,0,2,0,2
 FHIR Dosage Support - R4,io.github.jy95.fds.r4.translators,BoundsRangeR4,0,29,0,0,0,6,0,3,0,3
