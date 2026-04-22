@@ -10,6 +10,7 @@ import io.github.jy95.fds.common.functions.TranslationService;
 import io.github.jy95.fds.common.types.AbstractTranslatorsMap;
 import io.github.jy95.fds.common.types.DisplayOrder;
 import io.github.jy95.fds.common.types.Translator;
+import io.github.jy95.fds.common.types.CodeableConceptTranslator;
 import io.github.jy95.fds.r4.config.FDSConfigR4;
 import io.github.jy95.fds.r4.translators.*;
 
@@ -30,7 +31,7 @@ public class TimingTranslatorsMapR4 extends AbstractTranslatorsMap<FDSConfigR4, 
 
         suppliers.put(DisplayOrder.TIMING_EXTENSION, () -> new TimingExtensionR4(translationService));
         suppliers.put(DisplayOrder.TIMING_MODIFIER_EXTENSION, () -> new TimingModifierExtensionR4(translationService));
-        suppliers.put(DisplayOrder.TIMING_CODE, () -> new TimingCodeR4(translationService));
+        suppliers.put(DisplayOrder.TIMING_CODE, () -> new CodeableConceptTranslator<>(translationService, Timing::getCode, Timing::hasCode));
         suppliers.put(DisplayOrder.TIMING_EVENT, () -> new TimingEventR4(translationService));
 
         return suppliers;
