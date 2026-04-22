@@ -10,6 +10,7 @@ import io.github.jy95.fds.common.functions.TranslationService;
 import io.github.jy95.fds.common.types.AbstractTranslatorsMap;
 import io.github.jy95.fds.common.types.DisplayOrder;
 import io.github.jy95.fds.common.types.Translator;
+import io.github.jy95.fds.common.types.CodeableConceptTranslator;
 import io.github.jy95.fds.r4.config.FDSConfigR4;
 import io.github.jy95.fds.r4.translators.*;
 
@@ -21,19 +22,19 @@ public class TimingTranslatorsMapR4 extends AbstractTranslatorsMap&lt;FDSConfigR
      * @param translationService The translation service used for translation.
      */
     public TimingTranslatorsMapR4(TranslationService&lt;FDSConfigR4&gt; translationService) {
-<span class="fc" id="L24">        super(translationService);</span>
-<span class="fc" id="L25">    }</span>
+<span class="fc" id="L25">        super(translationService);</span>
+<span class="fc" id="L26">    }</span>
 
     @Override
     protected Map&lt;DisplayOrder, Supplier&lt;Translator&lt;Timing&gt;&gt;&gt; createTranslatorsSuppliers() {
-<span class="fc" id="L29">        EnumMap&lt;DisplayOrder, Supplier&lt;Translator&lt;Timing&gt;&gt;&gt; suppliers = new EnumMap&lt;&gt;(DisplayOrder.class);</span>
+<span class="fc" id="L30">        EnumMap&lt;DisplayOrder, Supplier&lt;Translator&lt;Timing&gt;&gt;&gt; suppliers = new EnumMap&lt;&gt;(DisplayOrder.class);</span>
 
-<span class="fc" id="L31">        suppliers.put(DisplayOrder.TIMING_EXTENSION, () -&gt; new TimingExtensionR4(translationService));</span>
-<span class="fc" id="L32">        suppliers.put(DisplayOrder.TIMING_MODIFIER_EXTENSION, () -&gt; new TimingModifierExtensionR4(translationService));</span>
-<span class="fc" id="L33">        suppliers.put(DisplayOrder.TIMING_CODE, () -&gt; new TimingCodeR4(translationService));</span>
-<span class="fc" id="L34">        suppliers.put(DisplayOrder.TIMING_EVENT, () -&gt; new TimingEventR4(translationService));</span>
+<span class="fc" id="L32">        suppliers.put(DisplayOrder.TIMING_EXTENSION, () -&gt; new TimingExtensionR4(translationService));</span>
+<span class="fc" id="L33">        suppliers.put(DisplayOrder.TIMING_MODIFIER_EXTENSION, () -&gt; new TimingModifierExtensionR4(translationService));</span>
+<span class="fc" id="L34">        suppliers.put(DisplayOrder.TIMING_CODE, () -&gt; new CodeableConceptTranslator&lt;&gt;(translationService, Timing::getCode, Timing::hasCode));</span>
+<span class="fc" id="L35">        suppliers.put(DisplayOrder.TIMING_EVENT, () -&gt; new TimingEventR4(translationService));</span>
 
-<span class="fc" id="L36">        return suppliers;</span>
+<span class="fc" id="L37">        return suppliers;</span>
     }
 
 }
