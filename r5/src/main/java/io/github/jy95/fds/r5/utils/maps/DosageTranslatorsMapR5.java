@@ -12,6 +12,7 @@ import io.github.jy95.fds.common.types.DisplayOrder;
 import io.github.jy95.fds.common.types.Translator;
 import io.github.jy95.fds.common.types.SimpleStringTranslator;
 import io.github.jy95.fds.common.types.CodeableConceptTranslator;
+import io.github.jy95.fds.common.types.ExtensionTranslator;
 import io.github.jy95.fds.r5.config.FDSConfigR5;
 import io.github.jy95.fds.r5.translators.*;
 
@@ -31,8 +32,16 @@ public class DosageTranslatorsMapR5 extends AbstractTranslatorsMap<FDSConfigR5, 
     protected Map<DisplayOrder, Supplier<Translator<Dosage>>> createTranslatorsSuppliers() {
         EnumMap<DisplayOrder, Supplier<Translator<Dosage>>> suppliers = new EnumMap<>(DisplayOrder.class);
 
-        suppliers.put(DisplayOrder.EXTENSION, () -> new ExtensionR5(translationService));
-        suppliers.put(DisplayOrder.MODIFIER_EXTENSION, () -> new ModifierExtensionR5(translationService));
+        suppliers.put(DisplayOrder.EXTENSION, () -> new ExtensionTranslator<>(
+                translationService,
+                Dosage::getExtension,
+                Dosage::hasExtension
+        ));
+        suppliers.put(DisplayOrder.MODIFIER_EXTENSION, () -> new ExtensionTranslator<>(
+                translationService,
+                Dosage::getModifierExtension,
+                Dosage::hasModifierExtension
+        ));
         suppliers.put(DisplayOrder.TEXT, () -> new SimpleStringTranslator<Dosage>(Dosage::getText, Dosage::hasText));
         suppliers.put(DisplayOrder.ADDITIONAL_INSTRUCTION, () -> new AdditionalInstructionR5(translationService));
         suppliers.put(DisplayOrder.PATIENT_INSTRUCTION, () -> new SimpleStringTranslator<Dosage>(Dosage::getPatientInstruction, Dosage::hasPatientInstruction));
