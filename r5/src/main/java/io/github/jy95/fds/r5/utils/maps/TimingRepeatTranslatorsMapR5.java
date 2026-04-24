@@ -10,6 +10,7 @@ import io.github.jy95.fds.common.functions.TranslationService;
 import io.github.jy95.fds.common.types.AbstractTranslatorsMap;
 import io.github.jy95.fds.common.types.DisplayOrder;
 import io.github.jy95.fds.common.types.Translator;
+import io.github.jy95.fds.common.types.ExtensionTranslator;
 import io.github.jy95.fds.r5.config.FDSConfigR5;
 import io.github.jy95.fds.r5.translators.*;
 
@@ -34,7 +35,11 @@ public class TimingRepeatTranslatorsMapR5 extends AbstractTranslatorsMap<FDSConf
     protected Map<DisplayOrder, Supplier<Translator<TimingRepeatComponent>>> createTranslatorsSuppliers() {
         EnumMap<DisplayOrder, Supplier<Translator<TimingRepeatComponent>>> suppliers = new EnumMap<>(DisplayOrder.class);
 
-        suppliers.put(DisplayOrder.TIMING_REPEAT_EXTENSION, () -> new TimingRepeatExtensionR5(translationService));
+        suppliers.put(DisplayOrder.TIMING_REPEAT_EXTENSION, () -> new ExtensionTranslator<>(
+                translationService,
+                TimingRepeatComponent::getExtension,
+                TimingRepeatComponent::hasExtension
+        ));
         suppliers.put(DisplayOrder.BOUNDS_DURATION, () -> new BoundsDurationR5(translationService));
         suppliers.put(DisplayOrder.BOUNDS_RANGE, () -> new BoundsRangeR5(translationService));
         suppliers.put(DisplayOrder.BOUNDS_PERIOD, () -> new BoundsPeriodR5(translationService));
