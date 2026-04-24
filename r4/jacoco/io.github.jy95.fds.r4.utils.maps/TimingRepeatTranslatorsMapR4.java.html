@@ -10,6 +10,7 @@ import io.github.jy95.fds.common.functions.TranslationService;
 import io.github.jy95.fds.common.types.AbstractTranslatorsMap;
 import io.github.jy95.fds.common.types.DisplayOrder;
 import io.github.jy95.fds.common.types.Translator;
+import io.github.jy95.fds.common.types.ExtensionTranslator;
 import io.github.jy95.fds.r4.config.FDSConfigR4;
 import io.github.jy95.fds.r4.translators.*;
 
@@ -26,36 +27,40 @@ public class TimingRepeatTranslatorsMapR4 extends AbstractTranslatorsMap&lt;FDSC
      * @param translationService The translation service used for translation.
      */
     public TimingRepeatTranslatorsMapR4(TranslationService&lt;FDSConfigR4&gt; translationService) {
-<span class="fc" id="L29">        super(translationService);</span>
-<span class="fc" id="L30">    }</span>
+<span class="fc" id="L30">        super(translationService);</span>
+<span class="fc" id="L31">    }</span>
 
     /** {@inheritDoc} */
     @Override
     protected Map&lt;DisplayOrder, Supplier&lt;Translator&lt;TimingRepeatComponent&gt;&gt;&gt; createTranslatorsSuppliers() {
-<span class="fc" id="L35">        EnumMap&lt;DisplayOrder, Supplier&lt;Translator&lt;TimingRepeatComponent&gt;&gt;&gt; suppliers = new EnumMap&lt;&gt;(DisplayOrder.class);</span>
+<span class="fc" id="L36">        EnumMap&lt;DisplayOrder, Supplier&lt;Translator&lt;TimingRepeatComponent&gt;&gt;&gt; suppliers = new EnumMap&lt;&gt;(DisplayOrder.class);</span>
 
-<span class="fc" id="L37">        suppliers.put(DisplayOrder.TIMING_REPEAT_EXTENSION, () -&gt; new TimingRepeatExtensionR4(translationService));</span>
-<span class="fc" id="L38">        suppliers.put(DisplayOrder.BOUNDS_DURATION, () -&gt; new BoundsDurationR4(translationService));</span>
-<span class="fc" id="L39">        suppliers.put(DisplayOrder.BOUNDS_RANGE, () -&gt; new BoundsRangeR4(translationService));</span>
-<span class="fc" id="L40">        suppliers.put(DisplayOrder.BOUNDS_PERIOD, () -&gt; new BoundsPeriodR4(translationService));</span>
-<span class="fc" id="L41">        suppliers.put(DisplayOrder.COUNT_COUNT_MAX, () -&gt; new CountCountMaxR4(translationService));</span>
-<span class="fc" id="L42">        suppliers.put(DisplayOrder.DURATION_DURATION_MAX, () -&gt; new DurationDurationMaxR4(translationService));</span>
-<span class="fc" id="L43">        suppliers.put(DisplayOrder.FREQUENCY_FREQUENCY_MAX, () -&gt; new FrequencyFrequencyMaxR4(translationService));</span>
-<span class="fc" id="L44">        suppliers.put(DisplayOrder.PERIOD_PERIOD_MAX, () -&gt; new PeriodPeriodMaxR4(translationService));</span>
-<span class="fc" id="L45">        suppliers.put(DisplayOrder.DAY_OF_WEEK, () -&gt; new DayOfWeekR4(translationService));</span>
-<span class="fc" id="L46">        suppliers.put(DisplayOrder.TIME_OF_DAY, () -&gt; new TimeOfDayR4(translationService));</span>
-<span class="fc" id="L47">        suppliers.put(DisplayOrder.OFFSET_WHEN, () -&gt; new OffsetWhenR4(translationService));</span>
+<span class="fc" id="L38">        suppliers.put(DisplayOrder.TIMING_REPEAT_EXTENSION, () -&gt; new ExtensionTranslator&lt;&gt;(</span>
+                translationService,
+                TimingRepeatComponent::getExtension,
+                TimingRepeatComponent::hasExtension
+        ));
+<span class="fc" id="L43">        suppliers.put(DisplayOrder.BOUNDS_DURATION, () -&gt; new BoundsDurationR4(translationService));</span>
+<span class="fc" id="L44">        suppliers.put(DisplayOrder.BOUNDS_RANGE, () -&gt; new BoundsRangeR4(translationService));</span>
+<span class="fc" id="L45">        suppliers.put(DisplayOrder.BOUNDS_PERIOD, () -&gt; new BoundsPeriodR4(translationService));</span>
+<span class="fc" id="L46">        suppliers.put(DisplayOrder.COUNT_COUNT_MAX, () -&gt; new CountCountMaxR4(translationService));</span>
+<span class="fc" id="L47">        suppliers.put(DisplayOrder.DURATION_DURATION_MAX, () -&gt; new DurationDurationMaxR4(translationService));</span>
+<span class="fc" id="L48">        suppliers.put(DisplayOrder.FREQUENCY_FREQUENCY_MAX, () -&gt; new FrequencyFrequencyMaxR4(translationService));</span>
+<span class="fc" id="L49">        suppliers.put(DisplayOrder.PERIOD_PERIOD_MAX, () -&gt; new PeriodPeriodMaxR4(translationService));</span>
+<span class="fc" id="L50">        suppliers.put(DisplayOrder.DAY_OF_WEEK, () -&gt; new DayOfWeekR4(translationService));</span>
+<span class="fc" id="L51">        suppliers.put(DisplayOrder.TIME_OF_DAY, () -&gt; new TimeOfDayR4(translationService));</span>
+<span class="fc" id="L52">        suppliers.put(DisplayOrder.OFFSET_WHEN, () -&gt; new OffsetWhenR4(translationService));</span>
 
         // Composite translator with dependencies
-<span class="fc" id="L50">        suppliers.put(</span>
+<span class="fc" id="L55">        suppliers.put(</span>
                 DisplayOrder.FREQUENCY_FREQUENCY_MAX_PERIOD_PERIOD_MAX,
-<span class="fc" id="L52">                () -&gt; new FrequencyFrequencyMaxPeriodPeriodMaxR4(</span>
-<span class="fc" id="L53">                        suppliers.get(DisplayOrder.FREQUENCY_FREQUENCY_MAX).get(),</span>
-<span class="fc" id="L54">                        suppliers.get(DisplayOrder.PERIOD_PERIOD_MAX).get()</span>
+<span class="fc" id="L57">                () -&gt; new FrequencyFrequencyMaxPeriodPeriodMaxR4(</span>
+<span class="fc" id="L58">                        suppliers.get(DisplayOrder.FREQUENCY_FREQUENCY_MAX).get(),</span>
+<span class="fc" id="L59">                        suppliers.get(DisplayOrder.PERIOD_PERIOD_MAX).get()</span>
                 )
         );
 
-<span class="fc" id="L58">        return suppliers;</span>
+<span class="fc" id="L63">        return suppliers;</span>
     }
 
 }
