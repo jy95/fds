@@ -7,6 +7,7 @@ import java.util.function.Supplier;
 import org.hl7.fhir.r5.model.Timing.TimingRepeatComponent;
 
 import io.github.jy95.fds.common.functions.TranslationService;
+import io.github.jy95.fds.common.translators.timing.repeat.TimeOfDay;
 import io.github.jy95.fds.common.types.AbstractTranslatorsMap;
 import io.github.jy95.fds.common.types.DisplayOrder;
 import io.github.jy95.fds.common.types.Translator;
@@ -48,7 +49,11 @@ public class TimingRepeatTranslatorsMapR5 extends AbstractTranslatorsMap<FDSConf
         suppliers.put(DisplayOrder.FREQUENCY_FREQUENCY_MAX, () -> new FrequencyFrequencyMaxR5(translationService));
         suppliers.put(DisplayOrder.PERIOD_PERIOD_MAX, () -> new PeriodPeriodMaxR5(translationService));
         suppliers.put(DisplayOrder.DAY_OF_WEEK, () -> new DayOfWeekR5(translationService));
-        suppliers.put(DisplayOrder.TIME_OF_DAY, () -> new TimeOfDayR5(translationService));
+        suppliers.put(DisplayOrder.TIME_OF_DAY, () -> new TimeOfDay<>(
+                translationService,
+                TimingRepeatComponent::getTimeOfDay,
+                TimingRepeatComponent::hasTimeOfDay
+        ));
         suppliers.put(DisplayOrder.OFFSET_WHEN, () -> new OffsetWhenR5(translationService));
 
         // Composite translator with dependencies
