@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DayOfWeek.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">FHIR Dosage Support - Common</a> &gt; <a href="index.source.html" class="el_package">io.github.jy95.fds.common.translators.timing.repeat</a> &gt; <span class="el_source">DayOfWeek.java</span></div><h1>DayOfWeek.java</h1><pre class="source lang-java linenums">package io.github.jy95.fds.common.translators.timing.repeat;
+
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+import java.util.function.Function;
+import java.util.function.Predicate;
+
+import io.github.jy95.fds.common.config.FDSConfig;
+import io.github.jy95.fds.common.functions.DayOfWeekFormatter;
+import io.github.jy95.fds.common.functions.ListToString;
+import io.github.jy95.fds.common.functions.TranslationService;
+import io.github.jy95.fds.common.types.Translator;
+import lombok.RequiredArgsConstructor;
+
+import org.hl7.fhir.instance.model.api.IPrimitiveType;
+import org.hl7.fhir.instance.model.api.IBaseEnumeration;
+
+/**
+ * Translator for the dayOfWeek field in Timing repeat components.
+ *
+ * @param &lt;D&gt; The type of data being translated.
+ * @param &lt;V&gt; The type of the dayOfWeek values, which must be an enumeration.
+ * @param &lt;C&gt; The type of the configuration used for translation.
+ * @author jy95
+ * @since 2.1.9
+ */
+@RequiredArgsConstructor
+public class DayOfWeek&lt;
+D,
+V extends IBaseEnumeration&lt;?&gt;,
+C extends FDSConfig&gt; implements Translator&lt;D&gt; {
+
+    /* The translation service used for translation. */
+    private final TranslationService&lt;C&gt; translationService;
+    /* Function to extract the list of dayOfWeek values from the data. */
+    private final Function&lt;D, List&lt;V&gt;&gt; extractor;
+    /* Predicate to check the presence of dayOfWeek values in the data. */
+    private final Predicate&lt;D&gt; presence;
+
+    @Override
+    public CompletableFuture&lt;String&gt; convert(D data) {
+<span class="nc" id="L43">        var locale = translationService.getConfig().getLocale();</span>
+
+<span class="nc" id="L45">        return CompletableFuture.supplyAsync(() -&gt; {</span>
+
+<span class="nc" id="L47">            var dayOfWeekMsg = translationService.getMessage(&quot;fields.dayOfWeek&quot;);</span>
+
+            // Internal mapping from FHIR Enumeration to String codes
+<span class="nc" id="L50">            var dayOfWeeksCodes = extractor</span>
+<span class="nc" id="L51">                .apply(data)</span>
+<span class="nc" id="L52">                .stream()</span>
+<span class="nc" id="L53">                .map(IPrimitiveType::getValue)</span>
+<span class="nc" id="L54">                .map(String::valueOf)</span>
+<span class="nc" id="L55">                .map(code -&gt; DayOfWeekFormatter.codeToLongText(code.toLowerCase(), locale))</span>
+<span class="nc" id="L56">                .toList();</span>
+
+<span class="nc" id="L58">            var dayOfWeeksAsString = ListToString.convert(translationService, dayOfWeeksCodes);</span>
+
+<span class="nc" id="L60">            Map&lt;String, Object&gt; messageArguments = Map.of(</span>
+<span class="nc" id="L61">                    &quot;dayCondition&quot;, dayOfWeeksCodes.size(),</span>
+                    &quot;day&quot;, dayOfWeeksAsString
+            );
+
+<span class="nc" id="L65">            return dayOfWeekMsg.format(messageArguments);</span>
+        });
+    }
+
+    @Override
+    public boolean isPresent(D data) {
+<span class="nc" id="L71">        return presence.test(data);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
