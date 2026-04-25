@@ -30,11 +30,6 @@ C extends FDSConfig & DosageAndRateProcessor<D, E, ?>,
 T extends IBase
 > implements Translator<D> {
     
-    @FunctionalInterface
-    public interface ValueConverter<C extends FDSConfig, T> {
-        CompletableFuture<String> convert(TranslationService<C> service, T value);
-    }
-
     /* TranslationService for handling the translation of extensions */
     private final TranslationService<C> translationService;
     /* Key to identify the specific field in the dosage and rate component */
@@ -46,6 +41,11 @@ T extends IBase
     /* BiFunction to convert the specific field to a human-readable string */
     private final ValueConverter<C, T> valueConverter;
 
+    @FunctionalInterface
+    public interface ValueConverter<C extends FDSConfig, T> {
+        CompletableFuture<String> convert(TranslationService<C> service, T value);
+    }
+    
     @Override
     public CompletableFuture<String> convert(D data) {
         var config = translationService.getConfig();
