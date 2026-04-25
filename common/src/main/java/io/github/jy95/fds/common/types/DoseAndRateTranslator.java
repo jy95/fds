@@ -38,11 +38,19 @@ T extends IBase
     private final Predicate<E> predicate;
     /* Function to extract the list of components from the dosage */
     private final Function<D, List<E>> extractor;
-    /* BiFunction to convert the specific field to a human-readable string */
+    /* Converter to translate the specific field to a human-readable string */
     private final ValueConverter<C, T> valueConverter;
 
+    /* Functional interface for converting specific field values to human-readable strings */
     @FunctionalInterface
     public interface ValueConverter<C extends FDSConfig, T> {
+        /**
+         * Converts a specific field value to a human-readable string.
+         *
+         * @param service The translation service providing access to configuration and messages.
+         * @param value The specific field value to be converted.
+         * @return A CompletableFuture that will complete with the translated string.
+         */
         CompletableFuture<String> convert(TranslationService<C> service, T value);
     }
     
