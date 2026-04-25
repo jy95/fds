@@ -5,15 +5,19 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 import org.hl7.fhir.r4.model.Dosage;
+import org.hl7.fhir.r4.model.Quantity;
 
 import io.github.jy95.fds.common.functions.TranslationService;
 import io.github.jy95.fds.common.types.AbstractTranslatorsMap;
 import io.github.jy95.fds.common.types.DisplayOrder;
+import io.github.jy95.fds.common.types.DoseAndRateKey;
 import io.github.jy95.fds.common.types.Translator;
 import io.github.jy95.fds.common.types.SimpleStringTranslator;
 import io.github.jy95.fds.common.types.CodeableConceptTranslator;
 import io.github.jy95.fds.common.types.ExtensionTranslator;
+import io.github.jy95.fds.common.types.DoseAndRateTranslator;
 import io.github.jy95.fds.r4.config.FDSConfigR4;
+import io.github.jy95.fds.r4.functions.QuantityToStringR4;
 import io.github.jy95.fds.r4.translators.*;
 
 public class DosageTranslatorsMapR4 extends AbstractTranslatorsMap<FDSConfigR4, Dosage> {
@@ -61,7 +65,13 @@ public class DosageTranslatorsMapR4 extends AbstractTranslatorsMap<FDSConfigR4, 
                 Dosage::getMethod,
                 Dosage::hasMethod
         ));
-        suppliers.put(DisplayOrder.DOSE_QUANTITY, () -> new DoseQuantityR4(translationService));
+        suppliers.put(DisplayOrder.DOSE_QUANTITY, () -> new DoseAndRateTranslator<>(
+                translationService,
+                DoseAndRateKey.DOSE_QUANTITY,
+                Dosage.DosageDoseAndRateComponent::hasDoseQuantity,
+                Dosage::getDoseAndRate,
+                QuantityToStringR4.INSTANCE::convert
+        ));
         suppliers.put(DisplayOrder.DOSE_RANGE, () -> new DoseRangeR4(translationService));
         suppliers.put(DisplayOrder.RATE_QUANTITY, () -> new RateQuantityR4(translationService));
         suppliers.put(DisplayOrder.RATE_RANGE, () -> new RateRangeR4(translationService));
