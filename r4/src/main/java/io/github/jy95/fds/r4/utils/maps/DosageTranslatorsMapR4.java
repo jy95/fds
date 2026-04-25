@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 import org.hl7.fhir.r4.model.Dosage;
-import org.hl7.fhir.r4.model.Quantity;
 
 import io.github.jy95.fds.common.functions.TranslationService;
 import io.github.jy95.fds.common.types.AbstractTranslatorsMap;
@@ -18,6 +17,8 @@ import io.github.jy95.fds.common.types.ExtensionTranslator;
 import io.github.jy95.fds.common.types.DoseAndRateTranslator;
 import io.github.jy95.fds.r4.config.FDSConfigR4;
 import io.github.jy95.fds.r4.functions.QuantityToStringR4;
+import io.github.jy95.fds.r4.functions.RangeToStringR4;
+import io.github.jy95.fds.r4.functions.RatioToStringR4;
 import io.github.jy95.fds.r4.translators.*;
 
 public class DosageTranslatorsMapR4 extends AbstractTranslatorsMap<FDSConfigR4, Dosage> {
@@ -72,10 +73,34 @@ public class DosageTranslatorsMapR4 extends AbstractTranslatorsMap<FDSConfigR4, 
                 Dosage::getDoseAndRate,
                 QuantityToStringR4.INSTANCE::convert
         ));
-        suppliers.put(DisplayOrder.DOSE_RANGE, () -> new DoseRangeR4(translationService));
-        suppliers.put(DisplayOrder.RATE_QUANTITY, () -> new RateQuantityR4(translationService));
-        suppliers.put(DisplayOrder.RATE_RANGE, () -> new RateRangeR4(translationService));
-        suppliers.put(DisplayOrder.RATE_RATIO, () -> new RateRatioR4(translationService));
+        suppliers.put(DisplayOrder.DOSE_RANGE, () -> new DoseAndRateTranslator<>(
+                translationService,
+                DoseAndRateKey.DOSE_RANGE,
+                Dosage.DosageDoseAndRateComponent::hasDoseRange,
+                Dosage::getDoseAndRate,
+                RangeToStringR4.INSTANCE::convert
+        ));
+        suppliers.put(DisplayOrder.RATE_QUANTITY, () -> new DoseAndRateTranslator<>(
+                translationService,
+                DoseAndRateKey.RATE_QUANTITY,
+                Dosage.DosageDoseAndRateComponent::hasRateQuantity,
+                Dosage::getDoseAndRate,
+                QuantityToStringR4.INSTANCE::convert
+        ));
+        suppliers.put(DisplayOrder.RATE_RANGE, () -> new DoseAndRateTranslator<>(
+                translationService,
+                DoseAndRateKey.RATE_RANGE,
+                Dosage.DosageDoseAndRateComponent::hasRateRange,
+                Dosage::getDoseAndRate,
+                RangeToStringR4.INSTANCE::convert
+        ));
+        suppliers.put(DisplayOrder.RATE_RATIO, () -> new DoseAndRateTranslator<>(
+                translationService,
+                DoseAndRateKey.RATE_RATIO,
+                Dosage.DosageDoseAndRateComponent::hasRateRatio,
+                Dosage::getDoseAndRate,
+                RatioToStringR4.INSTANCE::convert
+        ));
         suppliers.put(DisplayOrder.MAX_DOSE_PER_LIFETIME, () -> new MaxDosePerLifetimeR4(translationService));
         suppliers.put(DisplayOrder.MAX_DOSE_PER_ADMINISTRATION, () -> new MaxDosePerAdministrationR4(translationService));
         suppliers.put(DisplayOrder.MAX_DOSE_PER_PERIOD, () -> new MaxDosePerPeriodR4(translationService));
