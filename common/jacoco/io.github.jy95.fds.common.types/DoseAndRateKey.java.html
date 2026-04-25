@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DoseAndRateKey.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">FHIR Dosage Support - Common</a> &gt; <a href="index.source.html" class="el_package">io.github.jy95.fds.common.types</a> &gt; <span class="el_source">DoseAndRateKey.java</span></div><h1>DoseAndRateKey.java</h1><pre class="source lang-java linenums">package io.github.jy95.fds.common.types;
 
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
 /**
  * Enum representing the different keys for dose and rate components.
  * These keys are used to identify the various attributes in a dose and rate
@@ -8,31 +12,35 @@
  * @author jy95
  * @since 1.0.0
  */
-<span class="nc" id="L11">public enum DoseAndRateKey {</span>
+<span class="nc" id="L15">@Getter</span>
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
+public enum DoseAndRateKey {
     /**
      * Refers to the FHIR dosage field {@code doseAndRate.doseQuantity}.
      * Represents a specific dose quantity.
      */
-<span class="nc" id="L16">    DOSE_QUANTITY,</span>
+<span class="nc" id="L22">    DOSE_QUANTITY(null),</span>
     /**
      * Refers to the FHIR dosage field {@code doseAndRate.doseRange}.
      * Represents a range of doses.
      */
-<span class="nc" id="L21">    DOSE_RANGE,</span>
+<span class="nc" id="L27">    DOSE_RANGE(null),</span>
     /**
      * Refers to the FHIR dosage field {@code doseAndRate.rateQuantity}.
      * Represents a specific rate quantity.
      */
-<span class="nc" id="L26">    RATE_QUANTITY,</span>
+<span class="nc" id="L32">    RATE_QUANTITY(&quot;fields.rateQuantity&quot;),</span>
     /**
      * Refers to the FHIR dosage field {@code doseAndRate.rateRange}.
      * Represents a range of rates.
      */
-<span class="nc" id="L31">    RATE_RANGE,</span>
+<span class="nc" id="L37">    RATE_RANGE(&quot;fields.rateRange&quot;),</span>
     /**
      * Refers to the FHIR dosage field {@code doseAndRate.rateRatio}.
      * Represents a ratio defining the rate.
      */
-<span class="nc" id="L36">    RATE_RATIO</span>
+<span class="nc" id="L42">    RATE_RATIO(&quot;fields.rateRatio&quot;);</span>
+
+    private final String messageKey;
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

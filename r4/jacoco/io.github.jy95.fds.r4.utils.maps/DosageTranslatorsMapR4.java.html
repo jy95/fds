@@ -9,11 +9,16 @@ import org.hl7.fhir.r4.model.Dosage;
 import io.github.jy95.fds.common.functions.TranslationService;
 import io.github.jy95.fds.common.types.AbstractTranslatorsMap;
 import io.github.jy95.fds.common.types.DisplayOrder;
+import io.github.jy95.fds.common.types.DoseAndRateKey;
 import io.github.jy95.fds.common.types.Translator;
 import io.github.jy95.fds.common.types.SimpleStringTranslator;
 import io.github.jy95.fds.common.types.CodeableConceptTranslator;
 import io.github.jy95.fds.common.types.ExtensionTranslator;
+import io.github.jy95.fds.common.types.DoseAndRateTranslator;
 import io.github.jy95.fds.r4.config.FDSConfigR4;
+import io.github.jy95.fds.r4.functions.QuantityToStringR4;
+import io.github.jy95.fds.r4.functions.RangeToStringR4;
+import io.github.jy95.fds.r4.functions.RatioToStringR4;
 import io.github.jy95.fds.r4.translators.*;
 
 public class DosageTranslatorsMapR4 extends AbstractTranslatorsMap&lt;FDSConfigR4, Dosage&gt; {
@@ -24,53 +29,83 @@ public class DosageTranslatorsMapR4 extends AbstractTranslatorsMap&lt;FDSConfigR
      * @param translationService The translation service used for translation.
      */
     public DosageTranslatorsMapR4(TranslationService&lt;FDSConfigR4&gt; translationService) {
-<span class="fc" id="L27">        super(translationService);</span>
-<span class="fc" id="L28">    }</span>
+<span class="fc" id="L32">        super(translationService);</span>
+<span class="fc" id="L33">    }</span>
 
     /** {@inheritDoc} */
     @Override
     protected Map&lt;DisplayOrder, Supplier&lt;Translator&lt;Dosage&gt;&gt;&gt; createTranslatorsSuppliers() {
-<span class="fc" id="L33">        EnumMap&lt;DisplayOrder, Supplier&lt;Translator&lt;Dosage&gt;&gt;&gt; suppliers = new EnumMap&lt;&gt;(DisplayOrder.class);</span>
+<span class="fc" id="L38">        EnumMap&lt;DisplayOrder, Supplier&lt;Translator&lt;Dosage&gt;&gt;&gt; suppliers = new EnumMap&lt;&gt;(DisplayOrder.class);</span>
 
-<span class="fc" id="L35">        suppliers.put(DisplayOrder.EXTENSION, () -&gt; new ExtensionTranslator&lt;&gt;(</span>
+<span class="fc" id="L40">        suppliers.put(DisplayOrder.EXTENSION, () -&gt; new ExtensionTranslator&lt;&gt;(</span>
                 translationService,
                 Dosage::getExtension,
                 Dosage::hasExtension
         ));
-<span class="fc" id="L40">        suppliers.put(DisplayOrder.MODIFIER_EXTENSION, () -&gt; new ExtensionTranslator&lt;&gt;(</span>
+<span class="fc" id="L45">        suppliers.put(DisplayOrder.MODIFIER_EXTENSION, () -&gt; new ExtensionTranslator&lt;&gt;(</span>
                 translationService,
                 Dosage::getModifierExtension,
                 Dosage::hasModifierExtension
         ));
-<span class="fc" id="L45">        suppliers.put(DisplayOrder.TEXT, () -&gt; new SimpleStringTranslator&lt;Dosage&gt;(Dosage::getText, Dosage::hasText));</span>
-<span class="fc" id="L46">        suppliers.put(DisplayOrder.ADDITIONAL_INSTRUCTION, () -&gt; new AdditionalInstructionR4(translationService));</span>
-<span class="fc" id="L47">        suppliers.put(DisplayOrder.PATIENT_INSTRUCTION, () -&gt; new SimpleStringTranslator&lt;Dosage&gt;(Dosage::getPatientInstruction, Dosage::hasPatientInstruction));</span>
-<span class="fc" id="L48">        suppliers.put(DisplayOrder.AS_NEEDED, () -&gt; new AsNeededR4(translationService));</span>
-<span class="fc" id="L49">        suppliers.put(DisplayOrder.SITE, () -&gt; new CodeableConceptTranslator&lt;&gt;(</span>
+<span class="fc" id="L50">        suppliers.put(DisplayOrder.TEXT, () -&gt; new SimpleStringTranslator&lt;Dosage&gt;(Dosage::getText, Dosage::hasText));</span>
+<span class="fc" id="L51">        suppliers.put(DisplayOrder.ADDITIONAL_INSTRUCTION, () -&gt; new AdditionalInstructionR4(translationService));</span>
+<span class="fc" id="L52">        suppliers.put(DisplayOrder.PATIENT_INSTRUCTION, () -&gt; new SimpleStringTranslator&lt;Dosage&gt;(Dosage::getPatientInstruction, Dosage::hasPatientInstruction));</span>
+<span class="fc" id="L53">        suppliers.put(DisplayOrder.AS_NEEDED, () -&gt; new AsNeededR4(translationService));</span>
+<span class="fc" id="L54">        suppliers.put(DisplayOrder.SITE, () -&gt; new CodeableConceptTranslator&lt;&gt;(</span>
                 translationService,
                 Dosage::getSite,
                 Dosage::hasSite
         ));
-<span class="fc" id="L54">        suppliers.put(DisplayOrder.ROUTE, () -&gt; new CodeableConceptTranslator&lt;&gt;(</span>
+<span class="fc" id="L59">        suppliers.put(DisplayOrder.ROUTE, () -&gt; new CodeableConceptTranslator&lt;&gt;(</span>
                 translationService,
                 Dosage::getRoute,
                 Dosage::hasRoute
         ));
-<span class="fc" id="L59">        suppliers.put(DisplayOrder.METHOD, () -&gt; new CodeableConceptTranslator&lt;&gt;(</span>
+<span class="fc" id="L64">        suppliers.put(DisplayOrder.METHOD, () -&gt; new CodeableConceptTranslator&lt;&gt;(</span>
                 translationService,
                 Dosage::getMethod,
                 Dosage::hasMethod
         ));
-<span class="fc" id="L64">        suppliers.put(DisplayOrder.DOSE_QUANTITY, () -&gt; new DoseQuantityR4(translationService));</span>
-<span class="fc" id="L65">        suppliers.put(DisplayOrder.DOSE_RANGE, () -&gt; new DoseRangeR4(translationService));</span>
-<span class="fc" id="L66">        suppliers.put(DisplayOrder.RATE_QUANTITY, () -&gt; new RateQuantityR4(translationService));</span>
-<span class="fc" id="L67">        suppliers.put(DisplayOrder.RATE_RANGE, () -&gt; new RateRangeR4(translationService));</span>
-<span class="fc" id="L68">        suppliers.put(DisplayOrder.RATE_RATIO, () -&gt; new RateRatioR4(translationService));</span>
-<span class="fc" id="L69">        suppliers.put(DisplayOrder.MAX_DOSE_PER_LIFETIME, () -&gt; new MaxDosePerLifetimeR4(translationService));</span>
-<span class="fc" id="L70">        suppliers.put(DisplayOrder.MAX_DOSE_PER_ADMINISTRATION, () -&gt; new MaxDosePerAdministrationR4(translationService));</span>
-<span class="fc" id="L71">        suppliers.put(DisplayOrder.MAX_DOSE_PER_PERIOD, () -&gt; new MaxDosePerPeriodR4(translationService));</span>
+<span class="fc" id="L69">        suppliers.put(DisplayOrder.DOSE_QUANTITY, () -&gt; new DoseAndRateTranslator&lt;&gt;(</span>
+                translationService,
+                DoseAndRateKey.DOSE_QUANTITY,
+                Dosage.DosageDoseAndRateComponent::hasDoseQuantity,
+                Dosage::getDoseAndRate,
+<span class="fc" id="L74">                QuantityToStringR4.INSTANCE::convert</span>
+        ));
+<span class="fc" id="L76">        suppliers.put(DisplayOrder.DOSE_RANGE, () -&gt; new DoseAndRateTranslator&lt;&gt;(</span>
+                translationService,
+                DoseAndRateKey.DOSE_RANGE,
+                Dosage.DosageDoseAndRateComponent::hasDoseRange,
+                Dosage::getDoseAndRate,
+<span class="fc" id="L81">                RangeToStringR4.INSTANCE::convert</span>
+        ));
+<span class="fc" id="L83">        suppliers.put(DisplayOrder.RATE_QUANTITY, () -&gt; new DoseAndRateTranslator&lt;&gt;(</span>
+                translationService,
+                DoseAndRateKey.RATE_QUANTITY,
+                Dosage.DosageDoseAndRateComponent::hasRateQuantity,
+                Dosage::getDoseAndRate,
+<span class="fc" id="L88">                QuantityToStringR4.INSTANCE::convert</span>
+        ));
+<span class="fc" id="L90">        suppliers.put(DisplayOrder.RATE_RANGE, () -&gt; new DoseAndRateTranslator&lt;&gt;(</span>
+                translationService,
+                DoseAndRateKey.RATE_RANGE,
+                Dosage.DosageDoseAndRateComponent::hasRateRange,
+                Dosage::getDoseAndRate,
+<span class="fc" id="L95">                RangeToStringR4.INSTANCE::convert</span>
+        ));
+<span class="fc" id="L97">        suppliers.put(DisplayOrder.RATE_RATIO, () -&gt; new DoseAndRateTranslator&lt;&gt;(</span>
+                translationService,
+                DoseAndRateKey.RATE_RATIO,
+                Dosage.DosageDoseAndRateComponent::hasRateRatio,
+                Dosage::getDoseAndRate,
+<span class="fc" id="L102">                RatioToStringR4.INSTANCE::convert</span>
+        ));
+<span class="fc" id="L104">        suppliers.put(DisplayOrder.MAX_DOSE_PER_LIFETIME, () -&gt; new MaxDosePerLifetimeR4(translationService));</span>
+<span class="fc" id="L105">        suppliers.put(DisplayOrder.MAX_DOSE_PER_ADMINISTRATION, () -&gt; new MaxDosePerAdministrationR4(translationService));</span>
+<span class="fc" id="L106">        suppliers.put(DisplayOrder.MAX_DOSE_PER_PERIOD, () -&gt; new MaxDosePerPeriodR4(translationService));</span>
 
-<span class="fc" id="L73">        return suppliers;</span>
+<span class="fc" id="L108">        return suppliers;</span>
     }
 
 }
