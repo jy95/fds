@@ -20,6 +20,7 @@ import io.github.jy95.fds.r5.functions.QuantityToStringR5;
 import io.github.jy95.fds.r5.functions.RangeToStringR5;
 import io.github.jy95.fds.r5.functions.RatioToStringR5;
 import io.github.jy95.fds.r5.translators.*;
+import io.github.jy95.fds.common.translators.dosage.*;
 
 public class DosageTranslatorsMapR5 extends AbstractTranslatorsMap<FDSConfigR5, Dosage> {
 
@@ -48,7 +49,11 @@ public class DosageTranslatorsMapR5 extends AbstractTranslatorsMap<FDSConfigR5, 
                 Dosage::hasModifierExtension
         ));
         suppliers.put(DisplayOrder.TEXT, () -> new SimpleStringTranslator<Dosage>(Dosage::getText, Dosage::hasText));
-        suppliers.put(DisplayOrder.ADDITIONAL_INSTRUCTION, () -> new AdditionalInstructionR5(translationService));
+        suppliers.put(DisplayOrder.ADDITIONAL_INSTRUCTION, () -> new AdditionalInstruction<>(
+                translationService,
+                Dosage::getAdditionalInstruction,
+                Dosage::hasAdditionalInstruction
+        ));
         suppliers.put(DisplayOrder.PATIENT_INSTRUCTION, () -> new SimpleStringTranslator<Dosage>(Dosage::getPatientInstruction, Dosage::hasPatientInstruction));
         suppliers.put(DisplayOrder.AS_NEEDED, () -> new AsNeededR5(translationService));
         suppliers.put(DisplayOrder.SITE, () -> new CodeableConceptTranslator<>(
