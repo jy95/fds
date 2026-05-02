@@ -50,25 +50,24 @@ C extends FDSConfig&gt; implements Translator&lt;D&gt; {
 <span class="nc" id="L50">            var dayOfWeeksCodes = extractor</span>
 <span class="nc" id="L51">                .apply(data)</span>
 <span class="nc" id="L52">                .stream()</span>
-<span class="nc" id="L53">                .map(IPrimitiveType::getValue)</span>
-<span class="nc" id="L54">                .map(String::valueOf)</span>
-<span class="nc" id="L55">                .map(code -&gt; DayOfWeekFormatter.codeToLongText(code.toLowerCase(), locale))</span>
-<span class="nc" id="L56">                .toList();</span>
+<span class="nc" id="L53">                .map(IPrimitiveType::getValueAsString)</span>
+<span class="nc" id="L54">                .map(code -&gt; DayOfWeekFormatter.codeToLongText(code.toLowerCase(), locale))</span>
+<span class="nc" id="L55">                .toList();</span>
 
-<span class="nc" id="L58">            var dayOfWeeksAsString = ListToString.convert(translationService, dayOfWeeksCodes);</span>
+<span class="nc" id="L57">            var dayOfWeeksAsString = ListToString.convert(translationService, dayOfWeeksCodes);</span>
 
-<span class="nc" id="L60">            Map&lt;String, Object&gt; messageArguments = Map.of(</span>
-<span class="nc" id="L61">                    &quot;dayCondition&quot;, dayOfWeeksCodes.size(),</span>
+<span class="nc" id="L59">            Map&lt;String, Object&gt; messageArguments = Map.of(</span>
+<span class="nc" id="L60">                    &quot;dayCondition&quot;, dayOfWeeksCodes.size(),</span>
                     &quot;day&quot;, dayOfWeeksAsString
             );
 
-<span class="nc" id="L65">            return dayOfWeekMsg.format(messageArguments);</span>
+<span class="nc" id="L64">            return dayOfWeekMsg.format(messageArguments);</span>
         });
     }
 
     @Override
     public boolean isPresent(D data) {
-<span class="nc" id="L71">        return presence.test(data);</span>
+<span class="nc" id="L70">        return presence.test(data);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
