@@ -75,7 +75,7 @@ public class TimingRepeatTranslatorsMapR4 extends AbstractTranslatorsMap<FDSConf
         // Composite translator with dependencies
         suppliers.put(
                 DisplayOrder.FREQUENCY_FREQUENCY_MAX_PERIOD_PERIOD_MAX,
-                () -> new FrequencyFrequencyMaxPeriodPeriodMaxR4(
+                () -> new FrequencyFrequencyMaxPeriodPeriodMax<>(
                         suppliers.get(DisplayOrder.FREQUENCY_FREQUENCY_MAX).get(),
                         suppliers.get(DisplayOrder.PERIOD_PERIOD_MAX).get()
                 )
