@@ -7,14 +7,13 @@ import java.util.function.Supplier;
 import org.hl7.fhir.r5.model.Timing.TimingRepeatComponent;
 
 import io.github.jy95.fds.common.functions.TranslationService;
-import io.github.jy95.fds.common.translators.timing.repeat.DayOfWeek;
-import io.github.jy95.fds.common.translators.timing.repeat.TimeOfDay;
 import io.github.jy95.fds.common.types.AbstractTranslatorsMap;
 import io.github.jy95.fds.common.types.DisplayOrder;
 import io.github.jy95.fds.common.types.Translator;
 import io.github.jy95.fds.common.types.ExtensionTranslator;
 import io.github.jy95.fds.r5.config.FDSConfigR5;
 import io.github.jy95.fds.r5.translators.*;
+import io.github.jy95.fds.common.translators.timing.repeat.*;
 
 /**
  * Map for R5 Timing repeat translators
@@ -45,7 +44,13 @@ public class TimingRepeatTranslatorsMapR5 extends AbstractTranslatorsMap<FDSConf
         suppliers.put(DisplayOrder.BOUNDS_DURATION, () -> new BoundsDurationR5(translationService));
         suppliers.put(DisplayOrder.BOUNDS_RANGE, () -> new BoundsRangeR5(translationService));
         suppliers.put(DisplayOrder.BOUNDS_PERIOD, () -> new BoundsPeriodR5(translationService));
-        suppliers.put(DisplayOrder.COUNT_COUNT_MAX, () -> new CountCountMaxR5(translationService));
+        suppliers.put(DisplayOrder.COUNT_COUNT_MAX, () -> new CountCountMax<>(
+                translationService,
+                TimingRepeatComponent::hasCount,
+                TimingRepeatComponent::hasCountMax,
+                TimingRepeatComponent::getCount,
+                TimingRepeatComponent::getCountMax
+        ));
         suppliers.put(DisplayOrder.DURATION_DURATION_MAX, () -> new DurationDurationMaxR5(translationService));
         suppliers.put(DisplayOrder.FREQUENCY_FREQUENCY_MAX, () -> new FrequencyFrequencyMaxR5(translationService));
         suppliers.put(DisplayOrder.PERIOD_PERIOD_MAX, () -> new PeriodPeriodMaxR5(translationService));
