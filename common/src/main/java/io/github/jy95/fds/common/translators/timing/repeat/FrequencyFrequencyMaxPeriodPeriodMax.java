@@ -2,6 +2,7 @@ package io.github.jy95.fds.common.translators.timing.repeat;
 
 import io.github.jy95.fds.common.functions.GenericOperations;
 import io.github.jy95.fds.common.types.Translator;
+import lombok.RequiredArgsConstructor;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
@@ -14,35 +15,25 @@ import java.util.stream.Stream;
  *
  * @param <D> The type of the translated data.
  * @author jy95
- * @since 1.0.0
+ * @since 2.1.9
  */
-public interface FrequencyFrequencyMaxPeriodPeriodMax<D> extends Translator<D> {
+@RequiredArgsConstructor
+public class FrequencyFrequencyMaxPeriodPeriodMax<D> implements Translator<D> {
 
-    /**
-     * Check if data contains some frequency fields (frequency / frequencyMax)
-     *
-     * @param data The data to check
-     * @return True if present, otherwise false
-     */
-    boolean hasFrequency(D data);
-
-    /**
-     * Check if data contains some period fields (period / periodMax)
-     *
-     * @param data The data to check
-     * @return True if present, otherwise false
-     */
-    boolean hasPeriod(D data);
+    /* Translator for frequency fields */
+    private final Translator<D> frequencyTranslator;
+    /* Translator for period fields */
+    private final Translator<D> periodTranslator;
 
     /** {@inheritDoc} */
     @Override
-    default boolean isPresent(D data) {
-        return GenericOperations.anyMatchLazy(() -> hasFrequency(data), () -> hasPeriod(data));
+    public boolean isPresent(D data) {
+        return GenericOperations.anyMatchLazy(() -> frequencyTranslator.isPresent(data), () -> periodTranslator.isPresent(data));
     }
 
     /** {@inheritDoc} */
     @Override
-    default CompletableFuture<String> convert(D data) {
+    public CompletableFuture<String> convert(D data) {
         var frequencyPart = extractFrequency(data);
         var periodPart = extractPeriod(data);
 
@@ -52,22 +43,30 @@ public interface FrequencyFrequencyMaxPeriodPeriodMax<D> extends Translator<D> {
     }
 
     /**
-     * <p>
-     * extractFrequency.
-     * </p>
+     * This method extracts the frequency part of the timing repeat component. It checks if the frequency field is present and, if so, converts it. If not, it returns an empty string.
      *
      * @param data a D object
      * @return a {@link java.util.concurrent.CompletableFuture} object
      */
-    CompletableFuture<String> extractFrequency(D data);
+    private CompletableFuture<String> extractFrequency(D data) {
+        return GenericOperations.conditionalSelect(
+            frequencyTranslator.isPresent(data),
+            () -> frequencyTranslator.convert(data),
+            () -> CompletableFuture.completedFuture("")
+        );
+    }
 
     /**
-     * <p>
-     * extractPeriod.
-     * </p>
+     * This method extracts the period part of the timing repeat component. It checks if the period field is present and, if so, converts it. If not, it returns an empty string.
      *
      * @param data a D object
      * @return a {@link java.util.concurrent.CompletableFuture} object
      */
-    CompletableFuture<String> extractPeriod(D data);
+    private CompletableFuture<String> extractPeriod(D data) {
+        return GenericOperations.conditionalSelect(
+            periodTranslator.isPresent(data),
+            () -> periodTranslator.convert(data),
+            () -> CompletableFuture.completedFuture("")
+        );
+    }
 }

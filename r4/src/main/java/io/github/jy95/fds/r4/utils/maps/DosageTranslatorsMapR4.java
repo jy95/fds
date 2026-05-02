@@ -20,6 +20,7 @@ import io.github.jy95.fds.r4.functions.QuantityToStringR4;
 import io.github.jy95.fds.r4.functions.RangeToStringR4;
 import io.github.jy95.fds.r4.functions.RatioToStringR4;
 import io.github.jy95.fds.r4.translators.*;
+import io.github.jy95.fds.common.translators.dosage.*;
 
 public class DosageTranslatorsMapR4 extends AbstractTranslatorsMap<FDSConfigR4, Dosage> {
 
@@ -48,7 +49,11 @@ public class DosageTranslatorsMapR4 extends AbstractTranslatorsMap<FDSConfigR4, 
                 Dosage::hasModifierExtension
         ));
         suppliers.put(DisplayOrder.TEXT, () -> new SimpleStringTranslator<Dosage>(Dosage::getText, Dosage::hasText));
-        suppliers.put(DisplayOrder.ADDITIONAL_INSTRUCTION, () -> new AdditionalInstructionR4(translationService));
+        suppliers.put(DisplayOrder.ADDITIONAL_INSTRUCTION, () -> new AdditionalInstruction<>(
+                translationService,
+                Dosage::getAdditionalInstruction,
+                Dosage::hasAdditionalInstruction
+        ));
         suppliers.put(DisplayOrder.PATIENT_INSTRUCTION, () -> new SimpleStringTranslator<Dosage>(Dosage::getPatientInstruction, Dosage::hasPatientInstruction));
         suppliers.put(DisplayOrder.AS_NEEDED, () -> new AsNeededR4(translationService));
         suppliers.put(DisplayOrder.SITE, () -> new CodeableConceptTranslator<>(
