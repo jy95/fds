@@ -50,8 +50,7 @@ C extends FDSConfig> implements Translator<D> {
             var dayOfWeeksCodes = extractor
                 .apply(data)
                 .stream()
-                .map(IPrimitiveType::getValue)
-                .map(String::valueOf)
+                .map(IPrimitiveType::getValueAsString)
                 .map(code -> DayOfWeekFormatter.codeToLongText(code.toLowerCase(), locale))
                 .toList();
 

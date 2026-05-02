@@ -87,8 +87,7 @@ public class OffsetWhen<D, C extends FDSConfig, V extends IBaseEnumeration<?>> i
             var events = whenExtractor
                     .apply(data)
                     .stream()
-                    .map(IPrimitiveType::getValue)
-                    .map(String::valueOf)
+                    .map(IPrimitiveType::getValueAsString)
                     .map(translationService::getText)
                     .toList();
 
