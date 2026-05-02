@@ -22,6 +22,7 @@ import lombok.RequiredArgsConstructor;
  * @param <C> The type of the FDS configuration.
  * @param <T> The type of the timing event elements (e.g., IPrimitiveType<Date>).
  * @author jy95
+ * @since 2.1.9
  */
 @RequiredArgsConstructor
 public class TimingEvent<
