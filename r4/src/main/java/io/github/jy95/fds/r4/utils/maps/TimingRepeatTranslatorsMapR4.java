@@ -64,7 +64,13 @@ public class TimingRepeatTranslatorsMapR4 extends AbstractTranslatorsMap<FDSConf
                 TimingRepeatComponent::getTimeOfDay,
                 TimingRepeatComponent::hasTimeOfDay
         ));
-        suppliers.put(DisplayOrder.OFFSET_WHEN, () -> new OffsetWhenR4(translationService));
+        suppliers.put(DisplayOrder.OFFSET_WHEN, () -> new OffsetWhen<>(
+                translationService,
+                TimingRepeatComponent::getWhen,
+                TimingRepeatComponent::hasWhen,
+                TimingRepeatComponent::getOffset,
+                TimingRepeatComponent::hasOffset
+        ));
 
         // Composite translator with dependencies
         suppliers.put(
