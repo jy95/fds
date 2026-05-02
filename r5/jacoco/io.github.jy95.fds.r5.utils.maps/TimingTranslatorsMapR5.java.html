@@ -13,7 +13,7 @@ import io.github.jy95.fds.common.types.ExtensionTranslator;
 import io.github.jy95.fds.common.types.DisplayOrder;
 import io.github.jy95.fds.common.types.Translator;
 import io.github.jy95.fds.r5.config.FDSConfigR5;
-import io.github.jy95.fds.r5.translators.*;
+import io.github.jy95.fds.common.translators.timing.TimingEvent;
 
 public class TimingTranslatorsMapR5 extends AbstractTranslatorsMap&lt;FDSConfigR5, Timing&gt; {
 
@@ -41,9 +41,14 @@ public class TimingTranslatorsMapR5 extends AbstractTranslatorsMap&lt;FDSConfigR
                 Timing::hasModifierExtension
         ));
 <span class="fc" id="L43">        suppliers.put(DisplayOrder.TIMING_CODE, () -&gt; new CodeableConceptTranslator&lt;&gt;(translationService, Timing::getCode, Timing::hasCode));</span>
-<span class="fc" id="L44">        suppliers.put(DisplayOrder.TIMING_EVENT, () -&gt; new TimingEventR5(translationService));</span>
+<span class="fc" id="L44">        suppliers.put(DisplayOrder.TIMING_EVENT, () -&gt; new TimingEvent&lt;&gt;(</span>
+                translationService,
+                Timing::getEvent,
+                Timing::hasEvent,
+<span class="fc" id="L48">                event -&gt; translationService.dateTimeToHumanDisplay(event.getValue(), event.getTimeZone(), event.getPrecision())</span>
+        ));
 
-<span class="fc" id="L46">        return suppliers;</span>
+<span class="fc" id="L51">        return suppliers;</span>
     }
 
 }

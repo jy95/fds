@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CountCountMax.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">FHIR Dosage Support - Common</a> &gt; <a href="index.source.html" class="el_package">io.github.jy95.fds.common.translators.timing.repeat</a> &gt; <span class="el_source">CountCountMax.java</span></div><h1>CountCountMax.java</h1><pre class="source lang-java linenums">package io.github.jy95.fds.common.translators.timing.repeat;
+
+import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+import java.util.function.Function;
+import java.util.function.Predicate;
+
+import io.github.jy95.fds.common.config.FDSConfig;
+import io.github.jy95.fds.common.functions.TranslationService;
+import io.github.jy95.fds.common.types.Translator;
+import lombok.RequiredArgsConstructor;
+
+/**
+ * Translator for &quot;timing.repeat.count&quot; / &quot;timing.repeat.countMax&quot;.
+ *
+ * @param &lt;D&gt; The type of the data to translate.
+ * @param &lt;C&gt; The type of the configuration.
+ * @author jy95
+ * @since 2.1.9
+ */
+@RequiredArgsConstructor
+public class CountCountMax&lt;D, C extends FDSConfig&gt; implements Translator&lt;D&gt; {
+    
+    /* The translation service used for translation. */
+    private final TranslationService&lt;C&gt; translationService;
+    /* Predicate to check the presence of &quot;timing.repeat.count&quot;. */
+    private final Predicate&lt;D&gt; hasCount;  
+    /* Predicate to check the presence of &quot;timing.repeat.countMax&quot;. */
+    private final Predicate&lt;D&gt; hasCountMax;  
+    /* Function to extract &quot;timing.repeat.count&quot; from the data object. */
+    private final Function&lt;D, Integer&gt; getCount;  
+    /* Function to extract &quot;timing.repeat.countMax&quot; from the data object. */
+    private final Function&lt;D, Integer&gt; getCountMax;
+
+    @Override
+    public boolean isPresent(D data) {
+<span class="nc bnc" id="L37" title="All 4 branches missed.">        return hasCount.test(data) || hasCountMax.test(data);</span>
+    }
+
+    @Override
+    public CompletableFuture&lt;String&gt; convert(D data) {
+<span class="nc" id="L42">        return CompletableFuture.supplyAsync(() -&gt; {</span>
+
+            // Rule: If there's a countMax, there must be a count
+<span class="nc bnc" id="L45" title="All 2 branches missed.">            if (hasCountMax.test(data)) {</span>
+<span class="nc" id="L46">                var arguments = Map.of(</span>
+<span class="nc" id="L47">                        &quot;minCount&quot;, getCount.apply(data),</span>
+<span class="nc" id="L48">                        &quot;maxCount&quot;, getCountMax.apply(data)</span>
+                );
+<span class="nc" id="L50">                var countMaxMsg = translationService.getMessage(&quot;fields.countMax&quot;);</span>
+<span class="nc" id="L51">                return countMaxMsg.format(arguments);</span>
+            }
+
+<span class="nc" id="L54">            var countMsg = translationService.getMessage(&quot;fields.count&quot;);</span>
+<span class="nc" id="L55">            return countMsg.format(new Object[]{</span>
+<span class="nc" id="L56">                    getCount.apply(data)</span>
+            });
+
+        });
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
