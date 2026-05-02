@@ -2,6 +2,7 @@
 
 import io.github.jy95.fds.common.functions.GenericOperations;
 import io.github.jy95.fds.common.types.Translator;
+import lombok.RequiredArgsConstructor;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
@@ -14,61 +15,59 @@ import java.util.stream.Stream;
  *
  * @param &lt;D&gt; The type of the translated data.
  * @author jy95
- * @since 1.0.0
+ * @since 2.1.9
  */
-public interface FrequencyFrequencyMaxPeriodPeriodMax&lt;D&gt; extends Translator&lt;D&gt; {
+@RequiredArgsConstructor
+public class FrequencyFrequencyMaxPeriodPeriodMax&lt;D&gt; implements Translator&lt;D&gt; {
 
-    /**
-     * Check if data contains some frequency fields (frequency / frequencyMax)
-     *
-     * @param data The data to check
-     * @return True if present, otherwise false
-     */
-    boolean hasFrequency(D data);
-
-    /**
-     * Check if data contains some period fields (period / periodMax)
-     *
-     * @param data The data to check
-     * @return True if present, otherwise false
-     */
-    boolean hasPeriod(D data);
+    /* Translator for frequency fields */
+    private final Translator&lt;D&gt; frequencyTranslator;
+    /* Translator for period fields */
+    private final Translator&lt;D&gt; periodTranslator;
 
     /** {@inheritDoc} */
     @Override
-    default boolean isPresent(D data) {
-<span class="nc" id="L40">        return GenericOperations.anyMatchLazy(() -&gt; hasFrequency(data), () -&gt; hasPeriod(data));</span>
+    public boolean isPresent(D data) {
+<span class="nc" id="L31">        return GenericOperations.anyMatchLazy(() -&gt; frequencyTranslator.isPresent(data), () -&gt; periodTranslator.isPresent(data));</span>
     }
 
     /** {@inheritDoc} */
     @Override
-    default CompletableFuture&lt;String&gt; convert(D data) {
-<span class="nc" id="L46">        var frequencyPart = extractFrequency(data);</span>
-<span class="nc" id="L47">        var periodPart = extractPeriod(data);</span>
+    public CompletableFuture&lt;String&gt; convert(D data) {
+<span class="nc" id="L37">        var frequencyPart = extractFrequency(data);</span>
+<span class="nc" id="L38">        var periodPart = extractPeriod(data);</span>
 
-<span class="nc" id="L49">        return frequencyPart.thenCombineAsync(periodPart, (freq, period) -&gt; Stream.of(freq, period)</span>
-<span class="nc bnc" id="L50" title="All 2 branches missed.">                .filter(part -&gt; !part.isEmpty())</span>
-<span class="nc" id="L51">                .collect(Collectors.joining(&quot; &quot;)));</span>
+<span class="nc" id="L40">        return frequencyPart.thenCombineAsync(periodPart, (freq, period) -&gt; Stream.of(freq, period)</span>
+<span class="nc bnc" id="L41" title="All 2 branches missed.">                .filter(part -&gt; !part.isEmpty())</span>
+<span class="nc" id="L42">                .collect(Collectors.joining(&quot; &quot;)));</span>
     }
 
     /**
-     * &lt;p&gt;
-     * extractFrequency.
-     * &lt;/p&gt;
+     * This method extracts the frequency part of the timing repeat component. It checks if the frequency field is present and, if so, converts it. If not, it returns an empty string.
      *
      * @param data a D object
      * @return a {@link java.util.concurrent.CompletableFuture} object
      */
-    CompletableFuture&lt;String&gt; extractFrequency(D data);
+    private CompletableFuture&lt;String&gt; extractFrequency(D data) {
+<span class="nc" id="L52">        return GenericOperations.conditionalSelect(</span>
+<span class="nc" id="L53">            frequencyTranslator.isPresent(data),</span>
+<span class="nc" id="L54">            () -&gt; frequencyTranslator.convert(data),</span>
+<span class="nc" id="L55">            () -&gt; CompletableFuture.completedFuture(&quot;&quot;)</span>
+        );
+    }
 
     /**
-     * &lt;p&gt;
-     * extractPeriod.
-     * &lt;/p&gt;
+     * This method extracts the period part of the timing repeat component. It checks if the period field is present and, if so, converts it. If not, it returns an empty string.
      *
      * @param data a D object
      * @return a {@link java.util.concurrent.CompletableFuture} object
      */
-    CompletableFuture&lt;String&gt; extractPeriod(D data);
+    private CompletableFuture&lt;String&gt; extractPeriod(D data) {
+<span class="nc" id="L66">        return GenericOperations.conditionalSelect(</span>
+<span class="nc" id="L67">            periodTranslator.isPresent(data),</span>
+<span class="nc" id="L68">            () -&gt; periodTranslator.convert(data),</span>
+<span class="nc" id="L69">            () -&gt; CompletableFuture.completedFuture(&quot;&quot;)</span>
+        );
+    }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -1,20 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AdditionalInstruction.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">FHIR Dosage Support - Common</a> &gt; <a href="index.source.html" class="el_package">io.github.jy95.fds.common.translators.dosage</a> &gt; <span class="el_source">AdditionalInstruction.java</span></div><h1>AdditionalInstruction.java</h1><pre class="source lang-java linenums">package io.github.jy95.fds.common.translators.dosage;
 
+import io.github.jy95.fds.common.config.FDSConfig;
 import io.github.jy95.fds.common.functions.ListToString;
 import io.github.jy95.fds.common.functions.TranslationService;
+import io.github.jy95.fds.common.operations.CodeableConceptProcessor;
 import io.github.jy95.fds.common.types.Translator;
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.function.Function;
+import java.util.function.Predicate;
+
+import org.hl7.fhir.instance.model.api.IBase;
 
 /**
- * An interface for translating &quot;additionalInstruction&quot;.
+ * Translator for &quot;additionalInstruction&quot; field.
  *
  * @param &lt;D&gt; The type of the translated data.
+ * @param &lt;U&gt; The type of the additional instruction.
  * @author jy95
- * @since 1.0.0
+ * @since 2.1.9
  */
-public interface AdditionalInstruction&lt;D&gt; extends Translator&lt;D&gt; {
+@RequiredArgsConstructor
+public class AdditionalInstruction&lt;
+D, 
+U extends IBase,
+C extends FDSConfig &amp; CodeableConceptProcessor&lt;U&gt; 
+&gt; implements Translator&lt;D&gt; {
+
+    /** Translation service for obtaining configuration and resources. */
+    private final TranslationService&lt;C&gt; translationService;
+    /** Extractor for obtaining additional instructions from the translated data. */
+    private final Function&lt;D, List&lt;U&gt;&gt; extractor;
+    /** Predicate to check the presence of additional instructions in the translated data. */
+    private final Predicate&lt;D&gt; presence; 
+
+    @Override
+    public boolean isPresent(D data) {
+<span class="nc" id="L41">        return presence.test(data);</span>
+    }
+
+    @Override
+    public CompletableFuture&lt;String&gt; convert(D data) {
+
+<span class="nc" id="L47">        var additionalInstructions = extractor</span>
+<span class="nc" id="L48">                .apply(data)</span>
+<span class="nc" id="L49">                .stream()</span>
+<span class="nc" id="L50">                .map(translationService.getConfig()::fromCodeableConceptToString)</span>
+<span class="nc" id="L51">                .toList();</span>
+
+<span class="nc" id="L53">        return instructionsFuture(additionalInstructions);</span>
+    }
 
     /**
      * Processes a list of asynchronous additional instructions and converts them to
@@ -28,8 +65,6 @@ public interface AdditionalInstruction&lt;D&gt; extends Translator&lt;D&gt; {
      * to combine them into a single string representation.
      * &lt;/p&gt;
      *
-     * @param translationService     The translation service used for obtaining
-     *                               configuration and resources.
      * @param additionalInstructions A list of
      *                               {@link java.util.concurrent.CompletableFuture}
      *                               objects representing
@@ -38,19 +73,17 @@ public interface AdditionalInstruction&lt;D&gt; extends Translator&lt;D&gt; {
      *         completed, returns a string
      *         representing all the additional instructions combined.
      */
-    default CompletableFuture&lt;String&gt; instructionsFuture(
-            TranslationService&lt;?&gt; translationService,
-            List&lt;CompletableFuture&lt;String&gt;&gt; additionalInstructions) {
-<span class="nc" id="L44">        return CompletableFuture</span>
-<span class="nc" id="L45">                .allOf(additionalInstructions.toArray(CompletableFuture[]::new))</span>
-<span class="nc" id="L46">                .thenApplyAsync(v -&gt; {</span>
-<span class="nc" id="L47">                    var additionalInstructionsAsText = additionalInstructions</span>
-<span class="nc" id="L48">                            .stream()</span>
-<span class="nc" id="L49">                            .map(future -&gt; future.getNow(&quot;&quot;))</span>
-<span class="nc" id="L50">                            .toList();</span>
+    private CompletableFuture&lt;String&gt; instructionsFuture(List&lt;CompletableFuture&lt;String&gt;&gt; additionalInstructions) {
+<span class="nc" id="L77">        return CompletableFuture</span>
+<span class="nc" id="L78">                .allOf(additionalInstructions.toArray(CompletableFuture[]::new))</span>
+<span class="nc" id="L79">                .thenApplyAsync(v -&gt; {</span>
+<span class="nc" id="L80">                    var additionalInstructionsAsText = additionalInstructions</span>
+<span class="nc" id="L81">                            .stream()</span>
+<span class="nc" id="L82">                            .map(future -&gt; future.getNow(&quot;&quot;))</span>
+<span class="nc" id="L83">                            .toList();</span>
 
                     // Use ListToString.convert with the translators' resources
-<span class="nc" id="L53">                    return ListToString.convert(translationService, additionalInstructionsAsText);</span>
+<span class="nc" id="L86">                    return ListToString.convert(translationService, additionalInstructionsAsText);</span>
                 });
     }
 }
