@@ -4,9 +4,12 @@ import io.github.jy95.fds.common.config.FDSConfig;
 import io.github.jy95.fds.common.functions.GenericOperations;
 import io.github.jy95.fds.common.functions.TranslationService;
 import io.github.jy95.fds.common.types.Translator;
+import lombok.RequiredArgsConstructor;
 
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 /**
  * Interface for translating "timing.repeat.frequency" /
@@ -15,33 +18,38 @@ import java.util.concurrent.CompletableFuture;
  * @param <D> The type of the translated data.
  * @param <C> The configuration type extending FDSConfig.
  * @author jy95
- * @since 1.0.0
+ * @since 2.1.9
  */
-public interface FrequencyFrequencyMax<D, C extends FDSConfig> extends Translator<D> {
+@RequiredArgsConstructor
+public class FrequencyFrequencyMax<D, C extends FDSConfig> implements Translator<D> {
 
-    /**
-     * Return the TranslationService responsible for handling frequency
-     * 
-     * @return the TranslationService
-     */
-    TranslationService<C> getTranslationService();
+    /* The translation service used for fetching localized messages. */
+    private final TranslationService<C> translationService;
+    /* Predicate to check if the data contains a valid "frequency" value. */
+    private final Predicate<D> hasFrequency;
+    /* Predicate to check if the data contains a valid "frequencyMax" value. */
+    private final Predicate<D> hasFrequencyMax;
+    /* Function to extract the "frequency" value from the data. */
+    private final Function<D, Integer> getFrequency;
+    /* Function to extract the "frequencyMax" value from the data. */
+    private final Function<D, Integer> getFrequencyMax;
 
     /** {@inheritDoc} */
     @Override
-    default boolean isPresent(D data) {
+    public boolean isPresent(D data) {
         return GenericOperations.anyMatchLazy(
-            () -> hasFrequency(data),
-            () -> hasFrequencyMax(data)
+            () -> hasFrequency.test(data),
+            () -> hasFrequencyMax.test(data)
         );
     }
 
     /** {@inheritDoc} */
     @Override
-    default CompletableFuture<String> convert(D data) {
+    public CompletableFuture<String> convert(D data) {
         return CompletableFuture.supplyAsync(() -> {
 
-            var hasFrequencyFlag = hasFrequency(data);
-            var hasFrequencyMaxFlag = hasFrequencyMax(data);
+            var hasFrequencyFlag = hasFrequency.test(data);
+            var hasFrequencyMaxFlag = hasFrequencyMax.test(data);
             var hasBoth = GenericOperations.allMatchLazy(
                 () -> hasFrequencyFlag,
                 () -> hasFrequencyMaxFlag
@@ -67,11 +75,11 @@ public interface FrequencyFrequencyMax<D, C extends FDSConfig> extends Translato
      * @param frequencyMax The maximum frequency.
      * @return A formatted string representing both "frequency" and "frequencyMax".
      */
-    default String formatFrequencyAndFrequencyMaxText(int frequencyMin, int frequencyMax) {
+    private String formatFrequencyAndFrequencyMaxText(int frequencyMin, int frequencyMax) {
         Map<String, Object> arguments = Map.of(
                 "frequency", frequencyMin,
                 "maxFrequency", frequencyMax);
-        var frequencyAndFrequencyMaxMsg = getTranslationService().getMessage("fields.frequencyAndFrequencyMax");
+        var frequencyAndFrequencyMaxMsg = translationService.getMessage("fields.frequencyAndFrequencyMax");
         return frequencyAndFrequencyMaxMsg.format(arguments);
     }
 
@@ -81,8 +89,8 @@ public interface FrequencyFrequencyMax<D, C extends FDSConfig> extends Translato
      * @param frequencyMax The maximum frequency.
      * @return A formatted string representing "frequencyMax".
      */
-    default String formatFrequencyMaxText(int frequencyMax) {
-        var frequencyMaxMsg = getTranslationService().getMessage("fields.frequencyMax");
+    private String formatFrequencyMaxText(int frequencyMax) {
+        var frequencyMaxMsg = translationService.getMessage("fields.frequencyMax");
         return frequencyMaxMsg.format(new Object[] { frequencyMax });
     }
 
@@ -92,26 +100,10 @@ public interface FrequencyFrequencyMax<D, C extends FDSConfig> extends Translato
      * @param frequency The frequency.
      * @return A formatted string representing "frequency".
      */
-    default String formatFrequencyText(int frequency) {
-        var frequencyMsg = getTranslationService().getMessage("fields.frequency");
+    private String formatFrequencyText(int frequency) {
+        var frequencyMsg = translationService.getMessage("fields.frequency");
         return frequencyMsg.format(new Object[] { frequency });
     }
-
-    /**
-     * Checks if the data contains a valid "frequency" value.
-     *
-     * @param data The data to check.
-     * @return true if the data contains a "frequency" value, false otherwise.
-     */
-    boolean hasFrequency(D data);
-
-    /**
-     * Checks if the data contains a valid "frequencyMax" value.
-     *
-     * @param data The data to check.
-     * @return true if the data contains a "frequencyMax" value, false otherwise.
-     */
-    boolean hasFrequencyMax(D data);
 
     /**
      * Converts the data containing both "frequency" and "frequencyMax" into
@@ -120,7 +112,11 @@ public interface FrequencyFrequencyMax<D, C extends FDSConfig> extends Translato
      * @param data The data to convert.
      * @return A formatted string representing both "frequency" and "frequencyMax".
      */
-    String turnFrequencyAndFrequencyMaxToString(D data);
+    private String turnFrequencyAndFrequencyMaxToString(D data) {
+        int frequency = getFrequency.apply(data);
+        int frequencyMax = getFrequencyMax.apply(data);
+        return formatFrequencyAndFrequencyMaxText(frequency, frequencyMax);
+    }
 
     /**
      * Converts the data containing "frequencyMax" into a formatted string.
@@ -128,7 +124,10 @@ public interface FrequencyFrequencyMax<D, C extends FDSConfig> extends Translato
      * @param data The data to convert.
      * @return A formatted string representing "frequencyMax".
      */
-    String turnFrequencyMaxToString(D data);
+    private String turnFrequencyMaxToString(D data) {
+        int frequencyMax = getFrequencyMax.apply(data);
+        return formatFrequencyMaxText(frequencyMax);
+    }
 
     /**
      * Converts the data containing "frequency" into a formatted string.
@@ -136,5 +135,8 @@ public interface FrequencyFrequencyMax<D, C extends FDSConfig> extends Translato
      * @param data The data to convert.
      * @return A formatted string representing "frequency".
      */
-    String turnFrequencyToString(D data);
+    private String turnFrequencyToString(D data) {
+        int frequency = getFrequency.apply(data);
+        return formatFrequencyText(frequency);
+    }
 }
