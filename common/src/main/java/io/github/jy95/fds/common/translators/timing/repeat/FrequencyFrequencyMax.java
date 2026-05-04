@@ -12,7 +12,7 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 /**
- * Interface for translating "timing.repeat.frequency" /
+ * Translator for "timing.repeat.frequency" /
  * "timing.repeat.frequencyMax".
  *
  * @param <D> The type of the translated data.
