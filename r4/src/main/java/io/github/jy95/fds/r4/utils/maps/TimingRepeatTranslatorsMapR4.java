@@ -52,7 +52,13 @@ public class TimingRepeatTranslatorsMapR4 extends AbstractTranslatorsMap<FDSConf
                 TimingRepeatComponent::getCountMax
         ));
         suppliers.put(DisplayOrder.DURATION_DURATION_MAX, () -> new DurationDurationMaxR4(translationService));
-        suppliers.put(DisplayOrder.FREQUENCY_FREQUENCY_MAX, () -> new FrequencyFrequencyMaxR4(translationService));
+        suppliers.put(DisplayOrder.FREQUENCY_FREQUENCY_MAX, () -> new FrequencyFrequencyMax<>(
+                translationService,
+                TimingRepeatComponent::hasFrequency,
+                TimingRepeatComponent::hasFrequencyMax,
+                TimingRepeatComponent::getFrequency,
+                TimingRepeatComponent::getFrequencyMax
+        ));
         suppliers.put(DisplayOrder.PERIOD_PERIOD_MAX, () -> new PeriodPeriodMaxR4(translationService));
         suppliers.put(DisplayOrder.DAY_OF_WEEK, () -> new DayOfWeek<>(
                 translationService,
