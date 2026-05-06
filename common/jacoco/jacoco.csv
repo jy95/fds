@@ -46,10 +46,12 @@ FHIR Dosage Support - Common,io.github.jy95.fds.common.functions,ListToString,45
 FHIR Dosage Support - Common,io.github.jy95.fds.common.translators.timing.repeat,PeriodPeriodMax,69,0,0,0,12,0,7,0,7,0
 FHIR Dosage Support - Common,io.github.jy95.fds.common.translators.timing.repeat,FrequencyFrequencyMaxPeriodPeriodMax,102,0,2,0,14,0,13,0,12,0
 FHIR Dosage Support - Common,io.github.jy95.fds.common.translators.timing.repeat,CountCountMax,64,0,6,0,11,0,6,0,3,0
+FHIR Dosage Support - Common,io.github.jy95.fds.common.translators.timing.repeat,BoundsRange,35,0,0,0,6,0,3,0,3,0
 FHIR Dosage Support - Common,io.github.jy95.fds.common.translators.timing.repeat,DurationDurationMax,191,0,2,0,31,0,14,0,13,0
 FHIR Dosage Support - Common,io.github.jy95.fds.common.translators.timing.repeat,TimeOfDay,59,0,0,0,14,0,5,0,5,0
 FHIR Dosage Support - Common,io.github.jy95.fds.common.translators.timing.repeat,BoundsPeriod,81,0,2,0,18,0,11,0,10,0
 FHIR Dosage Support - Common,io.github.jy95.fds.common.translators.timing.repeat,DayOfWeek,56,0,0,0,14,0,4,0,4,0
+FHIR Dosage Support - Common,io.github.jy95.fds.common.translators.timing.repeat,BoundsDuration,35,0,0,0,6,0,3,0,3,0
 FHIR Dosage Support - Common,io.github.jy95.fds.common.translators.timing.repeat,FrequencyFrequencyMax,171,0,2,0,30,0,16,0,15,0
 FHIR Dosage Support - Common,io.github.jy95.fds.common.translators.timing.repeat,OffsetWhen,184,0,12,0,39,0,18,0,12,0
 FHIR Dosage Support - Common,io.github.jy95.fds.common.bundle,MultiResourceBundle,23,29,0,2,5,8,3,4,3,3

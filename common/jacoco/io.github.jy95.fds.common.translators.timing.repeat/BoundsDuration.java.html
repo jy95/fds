@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BoundsDuration.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">FHIR Dosage Support - Common</a> &gt; <a href="index.source.html" class="el_package">io.github.jy95.fds.common.translators.timing.repeat</a> &gt; <span class="el_source">BoundsDuration.java</span></div><h1>BoundsDuration.java</h1><pre class="source lang-java linenums">package io.github.jy95.fds.common.translators.timing.repeat;
+
+import java.util.concurrent.CompletableFuture;
+import java.util.function.Function;
+import java.util.function.Predicate;
+
+import org.hl7.fhir.instance.model.api.IBase;
+
+import io.github.jy95.fds.common.config.FDSConfig;
+import io.github.jy95.fds.common.functions.QuantityToString;
+import io.github.jy95.fds.common.functions.TranslationService;
+import io.github.jy95.fds.common.operations.QuantityProcessor;
+import io.github.jy95.fds.common.types.Translator;
+import lombok.RequiredArgsConstructor;
+
+/**
+ * Translator for converting a boundsDuration quantity into a human-readable string format.
+ * This class utilizes a translation service to fetch localized messages and a quantity-to-string converter
+ * to handle the conversion of the quantity value. It also checks for the presence of the boundsDuration field
+ * in the data before attempting conversion.
+ *
+ * @param &lt;D&gt; The type of data being translated.
+ * @param &lt;Q&gt; The type of quantity being processed, which must implement IBase.
+ * @param &lt;C&gt; The type of configuration used for processing quantities, which must extend FDSConfig and implement QuantityProcessor.
+ * 
+ * @author jy95
+ * @since 2.1.9
+ */
+@RequiredArgsConstructor
+public class BoundsDuration&lt;
+D, 
+Q extends IBase, 
+C extends FDSConfig &amp; QuantityProcessor&lt;Q&gt;
+&gt; implements Translator&lt;D&gt; {
+
+    /* Translation service for handling translation logic */
+    private final TranslationService&lt;C&gt; translationService;
+    /* Configuration object for processing quantities */
+    private final QuantityToString&lt;Q, C&gt; quantityToString;
+    /* Predicate to check the presence of the boundsDuration field in the data */
+    private final Predicate&lt;D&gt; presenceChecker;
+    /* Function to extract the boundsDuration quantity from the data */
+    private final Function&lt;D, Q&gt; extractor;
+
+    @Override
+    public CompletableFuture&lt;String&gt; convert(D data) {
+
+<span class="nc" id="L48">        var boundsDuration = extractor.apply(data);</span>
+<span class="nc" id="L49">        var boundsDurationMsg = translationService.getMessage(&quot;fields.boundsDuration&quot;);</span>
+
+<span class="nc" id="L51">        return quantityToString</span>
+<span class="nc" id="L52">            .convert(translationService, boundsDuration)</span>
+<span class="nc" id="L53">            .thenApplyAsync((durationText) -&gt; boundsDurationMsg.format(new Object[]{durationText}));</span>
+    }
+
+    @Override
+    public boolean isPresent(D data) {
+<span class="nc" id="L58">        return presenceChecker.test(data);</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BoundsRange.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">FHIR Dosage Support - Common</a> &gt; <a href="index.source.html" class="el_package">io.github.jy95.fds.common.translators.timing.repeat</a> &gt; <span class="el_source">BoundsRange.java</span></div><h1>BoundsRange.java</h1><pre class="source lang-java linenums">package io.github.jy95.fds.common.translators.timing.repeat;
+
+import java.util.concurrent.CompletableFuture;
+import java.util.function.Function;
+import java.util.function.Predicate;
+
+import org.hl7.fhir.instance.model.api.IBase;
+
+import io.github.jy95.fds.common.config.FDSConfig;
+import io.github.jy95.fds.common.functions.RangeToString;
+import io.github.jy95.fds.common.functions.TranslationService;
+import io.github.jy95.fds.common.operations.QuantityProcessor;
+import io.github.jy95.fds.common.types.Translator;
+import lombok.RequiredArgsConstructor;
+
+/**
+ * Translator for converting a boundsRange quantity into a human-readable string format.
+ * This class utilizes a translation service to fetch localized messages and a range-to-string converter
+ * to handle the conversion of the range value. It also checks for the presence of the boundsRange field
+ * in the data before attempting conversion.
+ *
+ * @param &lt;D&gt; The type of data being translated.
+ * @param &lt;R&gt; The type of range being processed, which must implement IBase.
+ * @param &lt;Q&gt; The type of quantity being processed within the range, which must implement IBase.
+ * @param &lt;C&gt; The type of configuration used for processing quantities, which must extend FDSConfig and implement QuantityProcessor.
+ * 
+ * @author jy95
+ * @since 2.1.9
+ */
+@RequiredArgsConstructor
+public class BoundsRange&lt;
+D,
+R extends IBase,
+Q extends IBase,
+C extends FDSConfig &amp; QuantityProcessor&lt;Q&gt;
+&gt; implements Translator&lt;D&gt; {
+
+
+    /* Translation service for handling translation logic */
+    private final TranslationService&lt;C&gt; translationService;
+    /* Range to string converter for converting the boundsRange quantity into a human-readable format */
+    private final RangeToString&lt;R, Q, C&gt; rangeToString;
+    /* Predicate to check the presence of the boundsRange field in the data */
+    private final Predicate&lt;D&gt; presenceChecker;
+    /* Function to extract the boundsRange quantity from the data */
+    private final Function&lt;D, R&gt; extractor;
+
+    @Override
+    public CompletableFuture&lt;String&gt; convert(D data) {
+        
+<span class="nc" id="L51">        var boundsRange = extractor.apply(data);</span>
+<span class="nc" id="L52">        var boundsRangeMsg = translationService.getMessage(&quot;fields.boundsRange&quot;);</span>
+
+<span class="nc" id="L54">        return rangeToString</span>
+<span class="nc" id="L55">            .convert(translationService, boundsRange)</span>
+<span class="nc" id="L56">            .thenApplyAsync((rangeText) -&gt; boundsRangeMsg.format(new Object[]{rangeText}));</span>
+    }
+
+    @Override
+    public boolean isPresent(D data) {
+<span class="nc" id="L61">        return presenceChecker.test(data);</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
