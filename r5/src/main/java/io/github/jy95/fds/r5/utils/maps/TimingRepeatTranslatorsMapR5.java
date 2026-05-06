@@ -12,6 +12,7 @@ import io.github.jy95.fds.common.types.DisplayOrder;
 import io.github.jy95.fds.common.types.Translator;
 import io.github.jy95.fds.common.types.ExtensionTranslator;
 import io.github.jy95.fds.r5.config.FDSConfigR5;
+import io.github.jy95.fds.r5.functions.*;
 import io.github.jy95.fds.r5.translators.*;
 import io.github.jy95.fds.common.translators.timing.repeat.*;
 
@@ -41,8 +42,18 @@ public class TimingRepeatTranslatorsMapR5 extends AbstractTranslatorsMap<FDSConf
                 TimingRepeatComponent::getExtension,
                 TimingRepeatComponent::hasExtension
         ));
-        suppliers.put(DisplayOrder.BOUNDS_DURATION, () -> new BoundsDurationR5(translationService));
-        suppliers.put(DisplayOrder.BOUNDS_RANGE, () -> new BoundsRangeR5(translationService));
+        suppliers.put(DisplayOrder.BOUNDS_DURATION, () -> new BoundsDuration<>(
+                translationService,
+                QuantityToStringR5.INSTANCE,
+                TimingRepeatComponent::hasBoundsDuration,
+                TimingRepeatComponent::getBoundsDuration
+        ));
+        suppliers.put(DisplayOrder.BOUNDS_RANGE, () -> new BoundsRange<>(
+                translationService,
+                RangeToStringR5.INSTANCE,
+                TimingRepeatComponent::hasBoundsRange,
+                TimingRepeatComponent::getBoundsRange
+        ));
         suppliers.put(DisplayOrder.BOUNDS_PERIOD, () -> new BoundsPeriodR5(translationService));
         suppliers.put(DisplayOrder.COUNT_COUNT_MAX, () -> new CountCountMax<>(
                 translationService,
