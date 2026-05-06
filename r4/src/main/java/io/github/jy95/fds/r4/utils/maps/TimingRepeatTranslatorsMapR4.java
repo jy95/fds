@@ -12,7 +12,7 @@ import io.github.jy95.fds.common.types.DisplayOrder;
 import io.github.jy95.fds.common.types.Translator;
 import io.github.jy95.fds.common.types.ExtensionTranslator;
 import io.github.jy95.fds.r4.config.FDSConfigR4;
-import io.github.jy95.fds.r4.functions.QuantityToStringR4;
+import io.github.jy95.fds.r4.functions.*;
 import io.github.jy95.fds.r4.translators.*;
 import io.github.jy95.fds.common.translators.timing.repeat.*;
 
@@ -48,7 +48,12 @@ public class TimingRepeatTranslatorsMapR4 extends AbstractTranslatorsMap<FDSConf
                 TimingRepeatComponent::hasBoundsDuration,
                 TimingRepeatComponent::getBoundsDuration
         ));
-        suppliers.put(DisplayOrder.BOUNDS_RANGE, () -> new BoundsRangeR4(translationService));
+        suppliers.put(DisplayOrder.BOUNDS_RANGE, () -> new BoundsRange<>(
+                translationService,
+                RangeToStringR4.INSTANCE,
+                TimingRepeatComponent::hasBoundsRange,
+                TimingRepeatComponent::getBoundsRange
+        ));
         suppliers.put(DisplayOrder.BOUNDS_PERIOD, () -> new BoundsPeriodR4(translationService));
         suppliers.put(DisplayOrder.COUNT_COUNT_MAX, () -> new CountCountMax<>(
                 translationService,
