@@ -21,7 +21,7 @@ import lombok.RequiredArgsConstructor;
  *
  * @param <D> The type of data being translated.
  * @param <Q> The type of quantity being processed, which must implement IBase.
- * @param <C> The type of configuration used for processing quantities, which must extend FDSConfig and implement QuantityProcessor<Q>.
+ * @param <C> The type of configuration used for processing quantities, which must extend FDSConfig and implement QuantityProcessor.
  * 
  * @author jy95
  * @since 2.1.9
