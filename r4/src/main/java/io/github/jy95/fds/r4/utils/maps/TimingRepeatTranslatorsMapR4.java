@@ -54,7 +54,12 @@ public class TimingRepeatTranslatorsMapR4 extends AbstractTranslatorsMap<FDSConf
                 TimingRepeatComponent::hasBoundsRange,
                 TimingRepeatComponent::getBoundsRange
         ));
-        suppliers.put(DisplayOrder.BOUNDS_PERIOD, () -> new BoundsPeriodR4(translationService));
+        suppliers.put(DisplayOrder.BOUNDS_PERIOD, () -> new BoundsPeriod<>(
+                translationService,
+                PeriodToStringR4.INSTANCE,
+                TimingRepeatComponent::hasBoundsPeriod,
+                TimingRepeatComponent::getBoundsPeriod
+        ));
         suppliers.put(DisplayOrder.COUNT_COUNT_MAX, () -> new CountCountMax<>(
                 translationService,
                 TimingRepeatComponent::hasCount,
