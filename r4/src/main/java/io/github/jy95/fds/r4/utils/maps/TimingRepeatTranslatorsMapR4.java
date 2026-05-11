@@ -13,7 +13,6 @@ import io.github.jy95.fds.common.types.Translator;
 import io.github.jy95.fds.common.types.ExtensionTranslator;
 import io.github.jy95.fds.r4.config.FDSConfigR4;
 import io.github.jy95.fds.r4.functions.*;
-import io.github.jy95.fds.r4.translators.*;
 import io.github.jy95.fds.common.translators.timing.repeat.*;
 
 /**
@@ -84,7 +83,16 @@ public class TimingRepeatTranslatorsMapR4 extends AbstractTranslatorsMap<FDSConf
                 TimingRepeatComponent::getFrequency,
                 TimingRepeatComponent::getFrequencyMax
         ));
-        suppliers.put(DisplayOrder.PERIOD_PERIOD_MAX, () -> new PeriodPeriodMaxR4(translationService));
+        suppliers.put(DisplayOrder.PERIOD_PERIOD_MAX, () -> PeriodPeriodMax.<TimingRepeatComponent, FDSConfigR4>builder()
+                .translationService(translationService)
+                .hasPeriod(t -> t.hasPeriod())
+                .hasPeriodMax(t -> t.hasPeriodMax())
+                .hasPeriodUnit(t -> t.hasPeriodUnit())
+                .getPeriod(t -> t.getPeriod())
+                .getPeriodMax(t -> t.getPeriodMax())
+                .getPeriodUnit(t -> t.getPeriodUnit().toCode())
+                .build()
+        );
         suppliers.put(DisplayOrder.DAY_OF_WEEK, () -> new DayOfWeek<>(
                 translationService,
                 TimingRepeatComponent::getDayOfWeek,
