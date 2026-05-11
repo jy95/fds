@@ -1,65 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PeriodPeriodMax.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">FHIR Dosage Support - Common</a> &gt; <a href="index.source.html" class="el_package">io.github.jy95.fds.common.translators.timing.repeat</a> &gt; <span class="el_source">PeriodPeriodMax.java</span></div><h1>PeriodPeriodMax.java</h1><pre class="source lang-java linenums">package io.github.jy95.fds.common.translators.timing.repeat;
 
-import io.github.jy95.fds.common.functions.GenericOperations;
-import io.github.jy95.fds.common.types.Translator;
+import java.math.BigDecimal;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
-import java.util.stream.Stream;
+import java.util.function.Function;
+import java.util.function.Predicate;
+
+import io.github.jy95.fds.common.config.FDSConfig;
+import io.github.jy95.fds.common.functions.GenericOperations;
+import io.github.jy95.fds.common.functions.TranslationService;
+import io.github.jy95.fds.common.functions.UnitsOfTimeFormatter;
+import io.github.jy95.fds.common.types.Translator;
+import lombok.Builder;
 
 /**
- * Interface for translating &quot;timing.repeat.period&quot; / &quot;timing.repeat.periodMax&quot;.
+ * Generic class for translating &quot;timing.repeat.period&quot; / &quot;timing.repeat.periodMax&quot; across different FHIR versions.
  *
- * @param &lt;D&gt; The type of the translated data.
+ * @param &lt;D&gt; The type of the data object containing the period and periodMax fields.
+ * @param &lt;C&gt; The type of the FDSConfig used for translation.
  * @author jy95
- * @since 1.0.0
+ * @since 2.1.9
  */
-public interface PeriodPeriodMax&lt;D&gt; extends Translator&lt;D&gt; {
+@Builder
+public class PeriodPeriodMax&lt;D, C extends FDSConfig&gt; implements Translator&lt;D&gt; {
+    
+    /** Translation service */
+    private final TranslationService&lt;C&gt; translationService;
+    /** Function to check the presence of a period value in the data object */
+    private final Predicate&lt;D&gt; hasPeriod;
+    /** Function to check the presence of a periodMax value in the data object */
+    private final Predicate&lt;D&gt; hasPeriodMax;
+    /** Function to check the presence of period units in the data object */
+    private final Predicate&lt;D&gt; hasPeriodUnit;
+    /** Function to extract the period value from the data object */
+    private final Function&lt;D, BigDecimal&gt; getPeriod;
+    /** Function to extract the periodMax value from the data object */
+    private final Function&lt;D, BigDecimal&gt; getPeriodMax;
+    /** Function to extract the period unit from the data object */
+    private final Function&lt;D, String&gt; getPeriodUnit;
 
-    /**
-     * Key constant for periodMax message
-     */
-    String KEY_PERIOD_MAX = &quot;fields.periodMax&quot;;
-    /**
-     * Key constant for period message
-     */
-    String KEY_PERIOD = &quot;fields.period&quot;;
 
-    /** {@inheritDoc} */
     @Override
-    default CompletableFuture&lt;String&gt; convert(D data) {
-<span class="nc" id="L29">        return CompletableFuture.supplyAsync(() -&gt; {</span>
-
-            // Rule: if there's a period, there needs to be period units
-            // Rule: period SHALL be a non-negative value
-            // Rule: If there's a periodMax, there must be a period
-<span class="nc" id="L34">            var hasBoth = Stream</span>
-<span class="nc" id="L35">                    .of(</span>
-<span class="nc" id="L36">                            hasPeriod(data),</span>
-<span class="nc" id="L37">                            hasPeriodMax(data))</span>
-<span class="nc" id="L38">                    .allMatch(resultat -&gt; resultat);</span>
-
-<span class="nc" id="L40">            return GenericOperations.conditionalSelect(</span>
-                    hasBoth,
-<span class="nc" id="L42">                    () -&gt; turnPeriodAndPeriodMaxToString(data),</span>
-<span class="nc" id="L43">                    () -&gt; turnPeriodToString(data));</span>
-        });
+    public boolean isPresent(D data) {
+<span class="nc" id="L45">        var hasValue = GenericOperations.anyMatchLazy(</span>
+<span class="nc" id="L46">            () -&gt; hasPeriod.test(data), </span>
+<span class="nc" id="L47">            () -&gt; hasPeriodMax.test(data)</span>
+        );
+<span class="nc" id="L49">        return GenericOperations.allMatchLazy(</span>
+<span class="nc" id="L50">            () -&gt; hasValue, </span>
+<span class="nc" id="L51">            () -&gt; hasPeriodUnit.test(data)</span>
+        );
     }
 
-    /**
-     * Checks whether a period value is present in the data object.
-     *
-     * @param data The data object to check.
-     * @return {@code true} if a period value is present; {@code false} otherwise.
-     */
-    boolean hasPeriod(D data);
+    @Override
+    public CompletableFuture&lt;String&gt; convert(D data) {
+<span class="nc" id="L57">        return CompletableFuture.supplyAsync(() -&gt; {</span>
 
-    /**
-     * Checks whether a periodMax value is present in the data object.
-     *
-     * @param data The data object to check.
-     * @return {@code true} if a periodMax value is present; {@code false}
-     *         otherwise.
-     */
-    boolean hasPeriodMax(D data);
+<span class="nc" id="L59">            var hasBoth = GenericOperations.allMatchLazy(</span>
+<span class="nc" id="L60">                () -&gt; hasPeriod.test(data), </span>
+<span class="nc" id="L61">                () -&gt; hasPeriodMax.test(data)</span>
+            );
+
+<span class="nc" id="L64">            return GenericOperations.conditionalSelect(</span>
+                    hasBoth,
+<span class="nc" id="L66">                    () -&gt; turnPeriodAndPeriodMaxToString(data),</span>
+<span class="nc" id="L67">                    () -&gt; turnPeriodToString(data)</span>
+                );
+        });
+    }
 
     /**
      * Converts both period and periodMax values into a formatted string.
@@ -67,7 +75,17 @@ public interface PeriodPeriodMax&lt;D&gt; extends Translator&lt;D&gt; {
      * @param data The data object containing the values.
      * @return A formatted string representing both period and periodMax.
      */
-    String turnPeriodAndPeriodMaxToString(D data);
+    private String turnPeriodAndPeriodMaxToString(D data) {
+        
+<span class="nc" id="L80">        var periodMax = getPeriodMax.apply(data);</span>
+<span class="nc" id="L81">        var periodMin = getPeriod.apply(data);</span>
+<span class="nc" id="L82">        var periodUnit = getPeriodUnit.apply(data);</span>
+
+<span class="nc" id="L84">        var config = translationService.getConfig();</span>
+
+<span class="nc" id="L86">        var unitText = UnitsOfTimeFormatter.formatWithoutCount(config.getLocale(), periodUnit, periodMax);</span>
+<span class="nc" id="L87">        return formatPeriodAndPeriodMaxText(periodMin, periodMax, unitText);</span>
+    }
 
     /**
      * Converts the period value into a formatted string.
@@ -75,14 +93,48 @@ public interface PeriodPeriodMax&lt;D&gt; extends Translator&lt;D&gt; {
      * @param data The data object containing the period value.
      * @return A formatted string representing the period.
      */
-    String turnPeriodToString(D data);
+    private String turnPeriodToString(D data) {
+        
+<span class="nc" id="L98">        var period = getPeriod.apply(data);</span>
+<span class="nc" id="L99">        var periodUnit = getPeriodUnit.apply(data);</span>
+<span class="nc" id="L100">        var config = translationService.getConfig();</span>
 
-    /** {@inheritDoc} */
-    @Override
-    default boolean isPresent(D data) {
-<span class="nc" id="L83">        return Stream.of(</span>
-<span class="nc" id="L84">                hasPeriod(data),</span>
-<span class="nc" id="L85">                hasPeriodMax(data)).anyMatch(resultat -&gt; resultat);</span>
+<span class="nc" id="L102">        var unitText = UnitsOfTimeFormatter.formatWithoutCount(config.getLocale(), periodUnit, period);</span>
+<span class="nc" id="L103">        return formatPeriodText(period, unitText);</span>
+    }
+
+    /**
+     * Formats a single-period value with its unit.
+     *
+     * @param period The period value.
+     * @param unitText The localized unit of the period.
+     * @return A formatted string representing the period and its unit.
+     */
+    private String formatPeriodText(BigDecimal period, String unitText){
+<span class="nc" id="L114">        Map&lt;String, Object&gt; arguments = Map.of(</span>
+                &quot;period&quot;, period,
+                &quot;periodUnit&quot;,unitText
+        );
+<span class="nc" id="L118">        var periodMsg = translationService.getMessage(&quot;fields.period&quot;);</span>
+<span class="nc" id="L119">        return periodMsg.format(arguments);</span>
+    }
+
+    /**
+     * Formats both period and periodMax values with their shared unit.
+     *
+     * @param periodMin The minimum period value.
+     * @param periodMax The maximum period value.
+     * @param unitText The localized unit of the periods.
+     * @return A formatted string representing the range of periods and their unit.
+     */
+    private String formatPeriodAndPeriodMaxText(BigDecimal periodMin, BigDecimal periodMax, String unitText) {
+<span class="nc" id="L131">        Map&lt;String, Object&gt; arguments = Map.of(</span>
+                &quot;maxPeriod&quot;, periodMax,
+                &quot;minPeriod&quot;, periodMin,
+                &quot;unit&quot;,unitText
+        );
+<span class="nc" id="L136">        var periodMaxMsg = translationService.getMessage(&quot;fields.periodMax&quot;);</span>
+<span class="nc" id="L137">        return periodMaxMsg.format(arguments);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
