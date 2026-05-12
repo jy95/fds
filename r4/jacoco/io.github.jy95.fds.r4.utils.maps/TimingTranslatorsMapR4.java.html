@@ -26,29 +26,30 @@ public class TimingTranslatorsMapR4 extends AbstractTranslatorsMap&lt;FDSConfigR
 <span class="fc" id="L26">        super(translationService);</span>
 <span class="fc" id="L27">    }</span>
 
+    /** {@inheritDoc} */
     @Override
     protected Map&lt;DisplayOrder, Supplier&lt;Translator&lt;Timing&gt;&gt;&gt; createTranslatorsSuppliers() {
-<span class="fc" id="L31">        EnumMap&lt;DisplayOrder, Supplier&lt;Translator&lt;Timing&gt;&gt;&gt; suppliers = new EnumMap&lt;&gt;(DisplayOrder.class);</span>
+<span class="fc" id="L32">        EnumMap&lt;DisplayOrder, Supplier&lt;Translator&lt;Timing&gt;&gt;&gt; suppliers = new EnumMap&lt;&gt;(DisplayOrder.class);</span>
 
-<span class="fc" id="L33">        suppliers.put(DisplayOrder.TIMING_EXTENSION, () -&gt; new ExtensionTranslator&lt;&gt;(</span>
+<span class="fc" id="L34">        suppliers.put(DisplayOrder.TIMING_EXTENSION, () -&gt; new ExtensionTranslator&lt;&gt;(</span>
                 translationService,
                 Timing::getExtension,
                 Timing::hasExtension
         ));
-<span class="fc" id="L38">        suppliers.put(DisplayOrder.TIMING_MODIFIER_EXTENSION, () -&gt; new ExtensionTranslator&lt;&gt;(</span>
+<span class="fc" id="L39">        suppliers.put(DisplayOrder.TIMING_MODIFIER_EXTENSION, () -&gt; new ExtensionTranslator&lt;&gt;(</span>
                 translationService,
                 Timing::getModifierExtension,
                 Timing::hasModifierExtension
         ));
-<span class="fc" id="L43">        suppliers.put(DisplayOrder.TIMING_CODE, () -&gt; new CodeableConceptTranslator&lt;&gt;(translationService, Timing::getCode, Timing::hasCode));</span>
-<span class="fc" id="L44">        suppliers.put(DisplayOrder.TIMING_EVENT, () -&gt; new TimingEvent&lt;&gt;(</span>
+<span class="fc" id="L44">        suppliers.put(DisplayOrder.TIMING_CODE, () -&gt; new CodeableConceptTranslator&lt;&gt;(translationService, Timing::getCode, Timing::hasCode));</span>
+<span class="fc" id="L45">        suppliers.put(DisplayOrder.TIMING_EVENT, () -&gt; new TimingEvent&lt;&gt;(</span>
                 translationService,
                 Timing::getEvent,
                 Timing::hasEvent,
-<span class="fc" id="L48">                event -&gt; translationService.dateTimeToHumanDisplay(event.getValue(), event.getTimeZone(), event.getPrecision())</span>
+<span class="fc" id="L49">                event -&gt; translationService.dateTimeToHumanDisplay(event.getValue(), event.getTimeZone(), event.getPrecision())</span>
         ));
 
-<span class="fc" id="L51">        return suppliers;</span>
+<span class="fc" id="L52">        return suppliers;</span>
     }
 
 }

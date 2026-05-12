@@ -36,21 +36,23 @@ C extends FDSConfig &amp; CodeableConceptProcessor&lt;U&gt;
     /** Predicate to check the presence of additional instructions in the translated data. */
     private final Predicate&lt;D&gt; presence; 
 
+    /** {@inheritDoc} */
     @Override
     public boolean isPresent(D data) {
-<span class="nc" id="L41">        return presence.test(data);</span>
+<span class="nc" id="L42">        return presence.test(data);</span>
     }
 
+    /** {@inheritDoc} */
     @Override
     public CompletableFuture&lt;String&gt; convert(D data) {
 
-<span class="nc" id="L47">        var additionalInstructions = extractor</span>
-<span class="nc" id="L48">                .apply(data)</span>
-<span class="nc" id="L49">                .stream()</span>
-<span class="nc" id="L50">                .map(translationService.getConfig()::fromCodeableConceptToString)</span>
-<span class="nc" id="L51">                .toList();</span>
+<span class="nc" id="L49">        var additionalInstructions = extractor</span>
+<span class="nc" id="L50">                .apply(data)</span>
+<span class="nc" id="L51">                .stream()</span>
+<span class="nc" id="L52">                .map(translationService.getConfig()::fromCodeableConceptToString)</span>
+<span class="nc" id="L53">                .toList();</span>
 
-<span class="nc" id="L53">        return instructionsFuture(additionalInstructions);</span>
+<span class="nc" id="L55">        return instructionsFuture(additionalInstructions);</span>
     }
 
     /**
@@ -74,16 +76,16 @@ C extends FDSConfig &amp; CodeableConceptProcessor&lt;U&gt;
      *         representing all the additional instructions combined.
      */
     private CompletableFuture&lt;String&gt; instructionsFuture(List&lt;CompletableFuture&lt;String&gt;&gt; additionalInstructions) {
-<span class="nc" id="L77">        return CompletableFuture</span>
-<span class="nc" id="L78">                .allOf(additionalInstructions.toArray(CompletableFuture[]::new))</span>
-<span class="nc" id="L79">                .thenApplyAsync(v -&gt; {</span>
-<span class="nc" id="L80">                    var additionalInstructionsAsText = additionalInstructions</span>
-<span class="nc" id="L81">                            .stream()</span>
-<span class="nc" id="L82">                            .map(future -&gt; future.getNow(&quot;&quot;))</span>
-<span class="nc" id="L83">                            .toList();</span>
+<span class="nc" id="L79">        return CompletableFuture</span>
+<span class="nc" id="L80">                .allOf(additionalInstructions.toArray(CompletableFuture[]::new))</span>
+<span class="nc" id="L81">                .thenApplyAsync(v -&gt; {</span>
+<span class="nc" id="L82">                    var additionalInstructionsAsText = additionalInstructions</span>
+<span class="nc" id="L83">                            .stream()</span>
+<span class="nc" id="L84">                            .map(future -&gt; future.getNow(&quot;&quot;))</span>
+<span class="nc" id="L85">                            .toList();</span>
 
                     // Use ListToString.convert with the translators' resources
-<span class="nc" id="L86">                    return ListToString.convert(translationService, additionalInstructionsAsText);</span>
+<span class="nc" id="L88">                    return ListToString.convert(translationService, additionalInstructionsAsText);</span>
                 });
     }
 }

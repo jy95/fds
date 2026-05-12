@@ -40,31 +40,33 @@ public class PeriodPeriodMax&lt;D, C extends FDSConfig&gt; implements Translator
     private final Function&lt;D, String&gt; getPeriodUnit;
 
 
+    /** {@inheritDoc} */
     @Override
     public boolean isPresent(D data) {
-<span class="nc" id="L45">        var hasValue = GenericOperations.anyMatchLazy(</span>
-<span class="nc" id="L46">            () -&gt; hasPeriod.test(data), </span>
-<span class="nc" id="L47">            () -&gt; hasPeriodMax.test(data)</span>
+<span class="nc" id="L46">        var hasValue = GenericOperations.anyMatchLazy(</span>
+<span class="nc" id="L47">            () -&gt; hasPeriod.test(data), </span>
+<span class="nc" id="L48">            () -&gt; hasPeriodMax.test(data)</span>
         );
-<span class="nc" id="L49">        return GenericOperations.allMatchLazy(</span>
-<span class="nc" id="L50">            () -&gt; hasValue, </span>
-<span class="nc" id="L51">            () -&gt; hasPeriodUnit.test(data)</span>
+<span class="nc" id="L50">        return GenericOperations.allMatchLazy(</span>
+<span class="nc" id="L51">            () -&gt; hasValue, </span>
+<span class="nc" id="L52">            () -&gt; hasPeriodUnit.test(data)</span>
         );
     }
 
+    /** {@inheritDoc} */
     @Override
     public CompletableFuture&lt;String&gt; convert(D data) {
-<span class="nc" id="L57">        return CompletableFuture.supplyAsync(() -&gt; {</span>
+<span class="nc" id="L59">        return CompletableFuture.supplyAsync(() -&gt; {</span>
 
-<span class="nc" id="L59">            var hasBoth = GenericOperations.allMatchLazy(</span>
-<span class="nc" id="L60">                () -&gt; hasPeriod.test(data), </span>
-<span class="nc" id="L61">                () -&gt; hasPeriodMax.test(data)</span>
+<span class="nc" id="L61">            var hasBoth = GenericOperations.allMatchLazy(</span>
+<span class="nc" id="L62">                () -&gt; hasPeriod.test(data), </span>
+<span class="nc" id="L63">                () -&gt; hasPeriodMax.test(data)</span>
             );
 
-<span class="nc" id="L64">            return GenericOperations.conditionalSelect(</span>
+<span class="nc" id="L66">            return GenericOperations.conditionalSelect(</span>
                     hasBoth,
-<span class="nc" id="L66">                    () -&gt; turnPeriodAndPeriodMaxToString(data),</span>
-<span class="nc" id="L67">                    () -&gt; turnPeriodToString(data)</span>
+<span class="nc" id="L68">                    () -&gt; turnPeriodAndPeriodMaxToString(data),</span>
+<span class="nc" id="L69">                    () -&gt; turnPeriodToString(data)</span>
                 );
         });
     }
@@ -77,14 +79,14 @@ public class PeriodPeriodMax&lt;D, C extends FDSConfig&gt; implements Translator
      */
     private String turnPeriodAndPeriodMaxToString(D data) {
         
-<span class="nc" id="L80">        var periodMax = getPeriodMax.apply(data);</span>
-<span class="nc" id="L81">        var periodMin = getPeriod.apply(data);</span>
-<span class="nc" id="L82">        var periodUnit = getPeriodUnit.apply(data);</span>
+<span class="nc" id="L82">        var periodMax = getPeriodMax.apply(data);</span>
+<span class="nc" id="L83">        var periodMin = getPeriod.apply(data);</span>
+<span class="nc" id="L84">        var periodUnit = getPeriodUnit.apply(data);</span>
 
-<span class="nc" id="L84">        var config = translationService.getConfig();</span>
+<span class="nc" id="L86">        var config = translationService.getConfig();</span>
 
-<span class="nc" id="L86">        var unitText = UnitsOfTimeFormatter.formatWithoutCount(config.getLocale(), periodUnit, periodMax);</span>
-<span class="nc" id="L87">        return formatPeriodAndPeriodMaxText(periodMin, periodMax, unitText);</span>
+<span class="nc" id="L88">        var unitText = UnitsOfTimeFormatter.formatWithoutCount(config.getLocale(), periodUnit, periodMax);</span>
+<span class="nc" id="L89">        return formatPeriodAndPeriodMaxText(periodMin, periodMax, unitText);</span>
     }
 
     /**
@@ -95,12 +97,12 @@ public class PeriodPeriodMax&lt;D, C extends FDSConfig&gt; implements Translator
      */
     private String turnPeriodToString(D data) {
         
-<span class="nc" id="L98">        var period = getPeriod.apply(data);</span>
-<span class="nc" id="L99">        var periodUnit = getPeriodUnit.apply(data);</span>
-<span class="nc" id="L100">        var config = translationService.getConfig();</span>
+<span class="nc" id="L100">        var period = getPeriod.apply(data);</span>
+<span class="nc" id="L101">        var periodUnit = getPeriodUnit.apply(data);</span>
+<span class="nc" id="L102">        var config = translationService.getConfig();</span>
 
-<span class="nc" id="L102">        var unitText = UnitsOfTimeFormatter.formatWithoutCount(config.getLocale(), periodUnit, period);</span>
-<span class="nc" id="L103">        return formatPeriodText(period, unitText);</span>
+<span class="nc" id="L104">        var unitText = UnitsOfTimeFormatter.formatWithoutCount(config.getLocale(), periodUnit, period);</span>
+<span class="nc" id="L105">        return formatPeriodText(period, unitText);</span>
     }
 
     /**
@@ -111,12 +113,12 @@ public class PeriodPeriodMax&lt;D, C extends FDSConfig&gt; implements Translator
      * @return A formatted string representing the period and its unit.
      */
     private String formatPeriodText(BigDecimal period, String unitText){
-<span class="nc" id="L114">        Map&lt;String, Object&gt; arguments = Map.of(</span>
+<span class="nc" id="L116">        Map&lt;String, Object&gt; arguments = Map.of(</span>
                 &quot;period&quot;, period,
                 &quot;periodUnit&quot;,unitText
         );
-<span class="nc" id="L118">        var periodMsg = translationService.getMessage(&quot;fields.period&quot;);</span>
-<span class="nc" id="L119">        return periodMsg.format(arguments);</span>
+<span class="nc" id="L120">        var periodMsg = translationService.getMessage(&quot;fields.period&quot;);</span>
+<span class="nc" id="L121">        return periodMsg.format(arguments);</span>
     }
 
     /**
@@ -128,13 +130,13 @@ public class PeriodPeriodMax&lt;D, C extends FDSConfig&gt; implements Translator
      * @return A formatted string representing the range of periods and their unit.
      */
     private String formatPeriodAndPeriodMaxText(BigDecimal periodMin, BigDecimal periodMax, String unitText) {
-<span class="nc" id="L131">        Map&lt;String, Object&gt; arguments = Map.of(</span>
+<span class="nc" id="L133">        Map&lt;String, Object&gt; arguments = Map.of(</span>
                 &quot;maxPeriod&quot;, periodMax,
                 &quot;minPeriod&quot;, periodMin,
                 &quot;unit&quot;,unitText
         );
-<span class="nc" id="L136">        var periodMaxMsg = translationService.getMessage(&quot;fields.periodMax&quot;);</span>
-<span class="nc" id="L137">        return periodMaxMsg.format(arguments);</span>
+<span class="nc" id="L138">        var periodMaxMsg = translationService.getMessage(&quot;fields.periodMax&quot;);</span>
+<span class="nc" id="L139">        return periodMaxMsg.format(arguments);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

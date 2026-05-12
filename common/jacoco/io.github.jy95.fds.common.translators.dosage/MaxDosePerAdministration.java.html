@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MaxDosePerAdministration.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">FHIR Dosage Support - Common</a> &gt; <a href="index.source.html" class="el_package">io.github.jy95.fds.common.translators.dosage</a> &gt; <span class="el_source">MaxDosePerAdministration.java</span></div><h1>MaxDosePerAdministration.java</h1><pre class="source lang-java linenums">package io.github.jy95.fds.common.translators.dosage;
+
+import java.util.concurrent.CompletableFuture;
+import java.util.function.Function;
+import java.util.function.Predicate;
+
+import org.hl7.fhir.instance.model.api.IBase;
+
+import io.github.jy95.fds.common.config.FDSConfig;
+import io.github.jy95.fds.common.functions.QuantityToString;
+import io.github.jy95.fds.common.functions.TranslationService;
+import io.github.jy95.fds.common.operations.QuantityProcessor;
+import io.github.jy95.fds.common.types.Translator;
+import lombok.RequiredArgsConstructor;
+
+/**
+ * Translator for maximum dose per administration.
+ *
+ * @param &lt;D&gt; The type of the data object containing the dosage information.
+ * @param &lt;Q&gt; The type of the quantity representing the maximum dose.
+ * @param &lt;C&gt; The type of the configuration used for translation.
+ * @author jy95
+ * @since 2.1.9
+ */
+@RequiredArgsConstructor
+public class MaxDosePerAdministration&lt;
+D, 
+Q extends IBase, 
+C extends FDSConfig &amp; QuantityProcessor&lt;Q&gt;&gt;
+implements Translator&lt;D&gt; {
+    
+    /** Translation service */
+    private final TranslationService&lt;C&gt; translationService;
+    /** Presence checker */
+    private final Predicate&lt;D&gt; presenceChecker;
+    /** Quantity extractor */
+    private final Function&lt;D, Q&gt; extractor;
+    /** Quantity to string converter */
+    private final QuantityToString&lt;Q, C&gt; quantityToString;
+
+    /** {@inheritDoc} */
+    @Override
+    public CompletableFuture&lt;String&gt; convert(D data) {
+<span class="nc" id="L44">        var quantity = extractor.apply(data);</span>
+<span class="nc" id="L45">        var maxDosePerAdministrationMsg = translationService.getMessage(&quot;fields.maxDosePerAdministration&quot;);</span>
+
+<span class="nc" id="L47">        return quantityToString</span>
+<span class="nc" id="L48">                .convert(translationService, quantity)</span>
+<span class="nc" id="L49">                .thenApplyAsync(</span>
+<span class="nc" id="L50">                        (quantityText) -&gt; maxDosePerAdministrationMsg.format(new Object[] { quantityText })</span>
+                );
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public boolean isPresent(D data) {
+<span class="nc" id="L57">        return presenceChecker.test(data);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

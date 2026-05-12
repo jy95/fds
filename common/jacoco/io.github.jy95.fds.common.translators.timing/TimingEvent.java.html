@@ -40,27 +40,29 @@ T extends IPrimitiveType&lt;Date&gt;
     /* Function to convert a timing event element to a human-readable string. */
     private final Function&lt;T, String&gt; dateTimeToHumanDisplay;
     
+    /** {@inheritDoc} */
     @Override
     public boolean isPresent(D data) {
-<span class="nc" id="L45">        return presence.test(data);</span>
+<span class="nc" id="L46">        return presence.test(data);</span>
     }
 
+    /** {@inheritDoc} */
     @Override
     public CompletableFuture&lt;String&gt; convert(D data) {
-<span class="nc" id="L50">        return CompletableFuture.supplyAsync(() -&gt; {</span>
-<span class="nc" id="L51">            var eventsList = getEvents(data);</span>
+<span class="nc" id="L52">        return CompletableFuture.supplyAsync(() -&gt; {</span>
+<span class="nc" id="L53">            var eventsList = getEvents(data);</span>
 
-<span class="nc" id="L53">            String eventsAsString = ListToString.convert(translationService, eventsList);</span>
-<span class="nc" id="L54">            var timingEventMsg = translationService.getMessage(&quot;fields.event&quot;);</span>
+<span class="nc" id="L55">            String eventsAsString = ListToString.convert(translationService, eventsList);</span>
+<span class="nc" id="L56">            var timingEventMsg = translationService.getMessage(&quot;fields.event&quot;);</span>
 
             // Create a map of named arguments
-<span class="nc" id="L57">            Map&lt;String, Object&gt; arguments = Map.of(</span>
-<span class="nc" id="L58">                    &quot;eventCondition&quot;, eventsList.size(),</span>
+<span class="nc" id="L59">            Map&lt;String, Object&gt; arguments = Map.of(</span>
+<span class="nc" id="L60">                    &quot;eventCondition&quot;, eventsList.size(),</span>
                     &quot;event&quot;, eventsAsString
             );
 
             // Format the message with the named arguments
-<span class="nc" id="L63">            return timingEventMsg.format(arguments);</span>
+<span class="nc" id="L65">            return timingEventMsg.format(arguments);</span>
         });
     }
 
@@ -72,11 +74,11 @@ T extends IPrimitiveType&lt;Date&gt;
      */
     List&lt;String&gt; getEvents(D data) {
 
-<span class="nc" id="L75">        return extractor</span>
-<span class="nc" id="L76">            .apply(data)</span>
-<span class="nc" id="L77">            .stream()</span>
-<span class="nc" id="L78">            .map(dateTimeToHumanDisplay)</span>
-<span class="nc" id="L79">            .toList();</span>
+<span class="nc" id="L77">        return extractor</span>
+<span class="nc" id="L78">            .apply(data)</span>
+<span class="nc" id="L79">            .stream()</span>
+<span class="nc" id="L80">            .map(dateTimeToHumanDisplay)</span>
+<span class="nc" id="L81">            .toList();</span>
     }
 
 }

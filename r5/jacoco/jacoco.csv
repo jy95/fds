@@ -5,8 +5,7 @@ FHIR Dosage Support - R5,io.github.jy95.fds.r5,DosageAPIR5,0,29,0,0,0,8,0,5,0,5
 FHIR Dosage Support - R5,io.github.jy95.fds.r5.translators,MaxDosePerPeriodR5,0,63,0,0,0,16,0,7,0,7
 FHIR Dosage Support - R5,io.github.jy95.fds.r5.translators,MaxDosePerLifetimeR5,0,29,0,0,0,6,0,3,0,3
 FHIR Dosage Support - R5,io.github.jy95.fds.r5.translators,AsNeededR5,0,97,0,6,0,22,0,12,0,9
-FHIR Dosage Support - R5,io.github.jy95.fds.r5.translators,MaxDosePerAdministrationR5,0,29,0,0,0,7,0,3,0,3
-FHIR Dosage Support - R5,io.github.jy95.fds.r5.utils.maps,DosageTranslatorsMapR5,0,265,0,0,0,26,0,19,0,19
+FHIR Dosage Support - R5,io.github.jy95.fds.r5.utils.maps,DosageTranslatorsMapR5,0,268,0,0,0,26,0,19,0,19
 FHIR Dosage Support - R5,io.github.jy95.fds.r5.utils.maps,TimingTranslatorsMapR5,0,80,0,0,0,9,0,7,0,7
 FHIR Dosage Support - R5,io.github.jy95.fds.r5.utils.maps,TimingRepeatTranslatorsMapR5,0,254,0,0,0,35,0,26,0,26
 FHIR Dosage Support - R5,io.github.jy95.fds.r5.utils,TranslatorsMapR5,0,81,0,0,0,14,0,9,0,9

@@ -82,10 +82,11 @@ public class TranslatorsMapR5 extends AbstractTranslatorsMap&lt;FDSConfigR5, Dos
 <span class="fc" id="L82">        return new TimingTranslatorAdapterR5(timeTranslator);</span>
     }
 
+    /** {@inheritDoc} */
     @Override
     public Translator&lt;Dosage&gt; getTranslator(DisplayOrder displayOrder) {
-<span class="fc" id="L87">        var componentHandler = delegationMap.get(displayOrder.getComponent());</span>
-<span class="fc" id="L88">        return translatorCache.computeIfAbsent(displayOrder, key -&gt; componentHandler.apply(key));</span>
+<span class="fc" id="L88">        var componentHandler = delegationMap.get(displayOrder.getComponent());</span>
+<span class="fc" id="L89">        return translatorCache.computeIfAbsent(displayOrder, key -&gt; componentHandler.apply(key));</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -8,11 +8,10 @@ FHIR Dosage Support - R4,io.github.jy95.fds.r4.functions,PeriodToStringR4,0,31,0
 FHIR Dosage Support - R4,io.github.jy95.fds.r4,DosageAPIR4,0,29,0,0,0,8,0,5,0,5
 FHIR Dosage Support - R4,io.github.jy95.fds.r4.utils.maps,TimingTranslatorsMapR4,0,80,0,0,0,9,0,7,0,7
 FHIR Dosage Support - R4,io.github.jy95.fds.r4.utils.maps,TimingRepeatTranslatorsMapR4,0,254,0,0,0,35,0,26,0,26
-FHIR Dosage Support - R4,io.github.jy95.fds.r4.utils.maps,DosageTranslatorsMapR4,0,265,0,0,0,26,0,19,0,19
+FHIR Dosage Support - R4,io.github.jy95.fds.r4.utils.maps,DosageTranslatorsMapR4,0,268,0,0,0,26,0,19,0,19
 FHIR Dosage Support - R4,io.github.jy95.fds.r4.translators,AsNeededR4,0,65,0,2,0,14,0,8,0,7
 FHIR Dosage Support - R4,io.github.jy95.fds.r4.translators,MaxDosePerLifetimeR4,0,29,0,0,0,6,0,3,0,3
 FHIR Dosage Support - R4,io.github.jy95.fds.r4.translators,MaxDosePerPeriodR4,0,29,0,0,0,6,0,3,0,3
-FHIR Dosage Support - R4,io.github.jy95.fds.r4.translators,MaxDosePerAdministrationR4,0,29,0,0,0,7,0,3,0,3
 FHIR Dosage Support - R4,io.github.jy95.fds.r4.utils,TranslatorsMapR4,0,81,0,0,0,14,0,9,0,9
 FHIR Dosage Support - R4,io.github.jy95.fds.r4.utils,DosageMarkdownR4,0,78,0,2,0,22,0,6,0,5
 FHIR Dosage Support - R4,io.github.jy95.fds.r4.config,DefaultImplementationsR4,0,78,1,15,0,22,1,13,0,6

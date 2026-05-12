@@ -34,18 +34,20 @@ public class CodeableConceptTranslator&lt;
     /* Predicate to check if the CodeableConcept is present in the data */
     private final Predicate&lt;T&gt; presence;
 
+    /** {@inheritDoc} */
     @Override
     public CompletableFuture&lt;String&gt; convert(T data) {
-<span class="nc" id="L39">        return translationService</span>
-<span class="nc" id="L40">                .getConfig()</span>
-<span class="nc" id="L41">                .fromCodeableConceptToString(</span>
-<span class="nc" id="L42">                        extractor.apply(data)</span>
+<span class="nc" id="L40">        return translationService</span>
+<span class="nc" id="L41">                .getConfig()</span>
+<span class="nc" id="L42">                .fromCodeableConceptToString(</span>
+<span class="nc" id="L43">                        extractor.apply(data)</span>
                 );
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean isPresent(T data) {
-<span class="nc" id="L48">        return presence.test(data);</span>
+<span class="nc" id="L50">        return presence.test(data);</span>
     }
     
 }

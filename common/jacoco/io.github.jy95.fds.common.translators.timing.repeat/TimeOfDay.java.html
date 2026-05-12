@@ -32,22 +32,23 @@ public class TimeOfDay&lt;D, C extends FDSConfig&gt; implements Translator&lt;D&
     /** Predicate to check the presence of timeOfDay values in the data object */
     private final Predicate&lt;D&gt; presence;
 
+    /** {@inheritDoc} */
     @Override
     public CompletableFuture&lt;String&gt; convert(D data) {
         // Capture the message outside the async block for consistency
-<span class="nc" id="L38">        var timeOfDayMsg = translationService.getMessage(&quot;fields.timeOfDay&quot;);</span>
+<span class="nc" id="L39">        var timeOfDayMsg = translationService.getMessage(&quot;fields.timeOfDay&quot;);</span>
 
-<span class="nc" id="L40">        return CompletableFuture.supplyAsync(() -&gt; {</span>
-<span class="nc" id="L41">            var times = getTimes(data);</span>
-<span class="nc" id="L42">            var formattedTimes = times.stream().map(this::formatString).toList();</span>
-<span class="nc" id="L43">            var timeOfDaysAsString = ListToString.convert(translationService, formattedTimes);</span>
+<span class="nc" id="L41">        return CompletableFuture.supplyAsync(() -&gt; {</span>
+<span class="nc" id="L42">            var times = getTimes(data);</span>
+<span class="nc" id="L43">            var formattedTimes = times.stream().map(this::formatString).toList();</span>
+<span class="nc" id="L44">            var timeOfDaysAsString = ListToString.convert(translationService, formattedTimes);</span>
 
-<span class="nc" id="L45">            Map&lt;String, Object&gt; messageArguments = Map.of(</span>
+<span class="nc" id="L46">            Map&lt;String, Object&gt; messageArguments = Map.of(</span>
                     &quot;timeOfDay&quot;, timeOfDaysAsString,
-<span class="nc" id="L47">                    &quot;count&quot;, formattedTimes.size()</span>
+<span class="nc" id="L48">                    &quot;count&quot;, formattedTimes.size()</span>
             );
 
-<span class="nc" id="L50">            return timeOfDayMsg.format(messageArguments);</span>
+<span class="nc" id="L51">            return timeOfDayMsg.format(messageArguments);</span>
         });
     }
 
@@ -58,10 +59,10 @@ public class TimeOfDay&lt;D, C extends FDSConfig&gt; implements Translator&lt;D&
      * @return A list of times represented as strings in the format hh:mm:ss.
      */
     private List&lt;String&gt; getTimes(D data) {
-<span class="nc" id="L61">        return extractor.apply(data)</span>
-<span class="nc" id="L62">            .stream()</span>
-<span class="nc" id="L63">            .map(IPrimitiveType::getValue)</span>
-<span class="nc" id="L64">            .toList();</span>
+<span class="nc" id="L62">        return extractor.apply(data)</span>
+<span class="nc" id="L63">            .stream()</span>
+<span class="nc" id="L64">            .map(IPrimitiveType::getValue)</span>
+<span class="nc" id="L65">            .toList();</span>
     }
 
     /**
@@ -73,12 +74,13 @@ public class TimeOfDay&lt;D, C extends FDSConfig&gt; implements Translator&lt;D&
      * @return A formatted time string with optional seconds removed.
      */
     private String formatString(String time) {
-<span class="nc" id="L76">        return time.replaceFirst(&quot;^(\\d{2}:\\d{2}):00$&quot;, &quot;$1&quot;);</span>
+<span class="nc" id="L77">        return time.replaceFirst(&quot;^(\\d{2}:\\d{2}):00$&quot;, &quot;$1&quot;);</span>
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean isPresent(D data) {
-<span class="nc" id="L81">        return presence.test(data);</span>
+<span class="nc" id="L83">        return presence.test(data);</span>
     }
 
 }

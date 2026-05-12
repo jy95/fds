@@ -41,15 +41,17 @@ C extends FDSConfig
     /* Function to extract the boundsPeriod from the data */
     private final Function&lt;D, P&gt; extractor;
 
+    /** {@inheritDoc} */
     @Override
     public boolean isPresent(D data) {
-<span class="nc" id="L46">        return presenceChecker.test(data);</span>
+<span class="nc" id="L47">        return presenceChecker.test(data);</span>
     }
 
+    /** {@inheritDoc} */
     @Override
     public CompletableFuture&lt;String&gt; convert(D data) {
-<span class="nc" id="L51">        var period = extractor.apply(data);</span>
-<span class="nc" id="L52">        return periodToString.convert(translationService, period);</span>
+<span class="nc" id="L53">        var period = extractor.apply(data);</span>
+<span class="nc" id="L54">        return periodToString.convert(translationService, period);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

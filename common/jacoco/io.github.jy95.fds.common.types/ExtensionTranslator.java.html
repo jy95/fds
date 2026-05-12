@@ -36,18 +36,20 @@ public class ExtensionTranslator&lt;
     /* Function to check if extensions are present in the data */
     private final Function&lt;T, Boolean&gt; presence;
 
+    /** {@inheritDoc} */
     @Override
     public CompletableFuture&lt;String&gt; convert(T data) {
-<span class="nc" id="L41">        return translationService</span>
-<span class="nc" id="L42">                .getConfig()</span>
-<span class="nc" id="L43">                .fromExtensionsToString(</span>
-<span class="nc" id="L44">                        extractor.apply(data)</span>
+<span class="nc" id="L42">        return translationService</span>
+<span class="nc" id="L43">                .getConfig()</span>
+<span class="nc" id="L44">                .fromExtensionsToString(</span>
+<span class="nc" id="L45">                        extractor.apply(data)</span>
                 );
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean isPresent(T data) {
-<span class="nc" id="L50">        return presence.apply(data);</span>
+<span class="nc" id="L52">        return presence.apply(data);</span>
     }
 
 }

@@ -45,20 +45,22 @@ C extends FDSConfig &amp; QuantityProcessor&lt;Q&gt;
     /* Function to extract the boundsRange quantity from the data */
     private final Function&lt;D, R&gt; extractor;
 
+    /** {@inheritDoc} */
     @Override
     public CompletableFuture&lt;String&gt; convert(D data) {
         
-<span class="nc" id="L51">        var boundsRange = extractor.apply(data);</span>
-<span class="nc" id="L52">        var boundsRangeMsg = translationService.getMessage(&quot;fields.boundsRange&quot;);</span>
+<span class="nc" id="L52">        var boundsRange = extractor.apply(data);</span>
+<span class="nc" id="L53">        var boundsRangeMsg = translationService.getMessage(&quot;fields.boundsRange&quot;);</span>
 
-<span class="nc" id="L54">        return rangeToString</span>
-<span class="nc" id="L55">            .convert(translationService, boundsRange)</span>
-<span class="nc" id="L56">            .thenApplyAsync((rangeText) -&gt; boundsRangeMsg.format(new Object[]{rangeText}));</span>
+<span class="nc" id="L55">        return rangeToString</span>
+<span class="nc" id="L56">            .convert(translationService, boundsRange)</span>
+<span class="nc" id="L57">            .thenApplyAsync((rangeText) -&gt; boundsRangeMsg.format(new Object[]{rangeText}));</span>
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean isPresent(D data) {
-<span class="nc" id="L61">        return presenceChecker.test(data);</span>
+<span class="nc" id="L63">        return presenceChecker.test(data);</span>
     }
 
 }

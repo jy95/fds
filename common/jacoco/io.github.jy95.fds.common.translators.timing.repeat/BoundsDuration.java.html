@@ -42,20 +42,22 @@ C extends FDSConfig &amp; QuantityProcessor&lt;Q&gt;
     /* Function to extract the boundsDuration quantity from the data */
     private final Function&lt;D, Q&gt; extractor;
 
+    /** {@inheritDoc} */
     @Override
     public CompletableFuture&lt;String&gt; convert(D data) {
 
-<span class="nc" id="L48">        var boundsDuration = extractor.apply(data);</span>
-<span class="nc" id="L49">        var boundsDurationMsg = translationService.getMessage(&quot;fields.boundsDuration&quot;);</span>
+<span class="nc" id="L49">        var boundsDuration = extractor.apply(data);</span>
+<span class="nc" id="L50">        var boundsDurationMsg = translationService.getMessage(&quot;fields.boundsDuration&quot;);</span>
 
-<span class="nc" id="L51">        return quantityToString</span>
-<span class="nc" id="L52">            .convert(translationService, boundsDuration)</span>
-<span class="nc" id="L53">            .thenApplyAsync((durationText) -&gt; boundsDurationMsg.format(new Object[]{durationText}));</span>
+<span class="nc" id="L52">        return quantityToString</span>
+<span class="nc" id="L53">            .convert(translationService, boundsDuration)</span>
+<span class="nc" id="L54">            .thenApplyAsync((durationText) -&gt; boundsDurationMsg.format(new Object[]{durationText}));</span>
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean isPresent(D data) {
-<span class="nc" id="L58">        return presenceChecker.test(data);</span>
+<span class="nc" id="L60">        return presenceChecker.test(data);</span>
     }
 
 }
