@@ -43,6 +43,7 @@ public enum RangeToStringR4 implements RangeToString<Range, Quantity, FDSConfigR
         return range.getLow();
     }
 
+    /** {@inheritDoc} */
     @Override
     public QuantityToString<Quantity, FDSConfigR4> getQuantityToString() {
         return QuantityToStringR4.INSTANCE;

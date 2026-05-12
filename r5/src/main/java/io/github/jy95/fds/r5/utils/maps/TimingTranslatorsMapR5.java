@@ -26,6 +26,7 @@ public class TimingTranslatorsMapR5 extends AbstractTranslatorsMap<FDSConfigR5, 
         super(translationService);
     }
 
+    /** {@inheritDoc} */
     @Override
     protected Map<DisplayOrder, Supplier<Translator<Timing>>> createTranslatorsSuppliers() {
         EnumMap<DisplayOrder, Supplier<Translator<Timing>>> suppliers = new EnumMap<>(DisplayOrder.class);

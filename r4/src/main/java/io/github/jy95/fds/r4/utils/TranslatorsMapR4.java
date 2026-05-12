@@ -82,6 +82,7 @@ public class TranslatorsMapR4 extends AbstractTranslatorsMap<FDSConfigR4, Dosage
         return new TimingTranslatorAdapterR4(timeTranslator);
     }
 
+    /** {@inheritDoc} */
     @Override
     public Translator<Dosage> getTranslator(DisplayOrder displayOrder) {
         var componentHandler = delegationMap.get(displayOrder.getComponent());

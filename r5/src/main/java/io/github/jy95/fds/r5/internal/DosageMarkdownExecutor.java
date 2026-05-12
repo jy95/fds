@@ -121,6 +121,7 @@ public class DosageMarkdownExecutor {
             super(config);
         }
 
+        /** {@inheritDoc} */
         @Override
         public CompletableFuture<String> asHumanReadableText(Dosage dosage) {
             // Use the default implementation for now
