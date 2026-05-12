@@ -34,6 +34,7 @@ public class CodeableConceptTranslator<
     /* Predicate to check if the CodeableConcept is present in the data */
     private final Predicate<T> presence;
 
+    /** {@inheritDoc} */
     @Override
     public CompletableFuture<String> convert(T data) {
         return translationService
@@ -43,6 +44,7 @@ public class CodeableConceptTranslator<
                 );
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean isPresent(T data) {
         return presence.test(data);

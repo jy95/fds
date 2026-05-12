@@ -39,12 +39,14 @@ public class OffsetWhen<D, C extends FDSConfig, V extends IBaseEnumeration<?>> i
     private final Function<D, Integer>  offsetExtractor;  
     private final Predicate<D>          offsetPresence;  
 
+    /** {@inheritDoc} */
     @Override
     public boolean isPresent(D data) {
         // Rule: If there's an offset, there must be a when (and not C, CM, CD, CV)
         return offsetPresence.test(data) || whenPresence.test(data);
     }
 
+    /** {@inheritDoc} */
     @Override
     public CompletableFuture<String> convert(D data) {
         var offsetPart = turnOffsetToText(data);

@@ -38,6 +38,7 @@ C extends FDSConfig> implements Translator<D> {
     /* Predicate to check the presence of dayOfWeek values in the data. */
     private final Predicate<D> presence;
 
+    /** {@inheritDoc} */
     @Override
     public CompletableFuture<String> convert(D data) {
         var locale = translationService.getConfig().getLocale();
@@ -65,6 +66,7 @@ C extends FDSConfig> implements Translator<D> {
         });
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean isPresent(D data) {
         return presence.test(data);

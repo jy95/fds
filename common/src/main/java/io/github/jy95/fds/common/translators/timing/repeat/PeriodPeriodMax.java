@@ -40,6 +40,7 @@ public class PeriodPeriodMax<D, C extends FDSConfig> implements Translator<D> {
     private final Function<D, String> getPeriodUnit;
 
 
+    /** {@inheritDoc} */
     @Override
     public boolean isPresent(D data) {
         var hasValue = GenericOperations.anyMatchLazy(
@@ -52,6 +53,7 @@ public class PeriodPeriodMax<D, C extends FDSConfig> implements Translator<D> {
         );
     }
 
+    /** {@inheritDoc} */
     @Override
     public CompletableFuture<String> convert(D data) {
         return CompletableFuture.supplyAsync(() -> {

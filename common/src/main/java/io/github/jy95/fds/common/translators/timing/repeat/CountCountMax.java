@@ -32,11 +32,13 @@ public class CountCountMax<D, C extends FDSConfig> implements Translator<D> {
     /* Function to extract "timing.repeat.countMax" from the data object. */
     private final Function<D, Integer> getCountMax;
 
+    /** {@inheritDoc} */
     @Override
     public boolean isPresent(D data) {
         return hasCount.test(data) || hasCountMax.test(data);
     }
 
+    /** {@inheritDoc} */
     @Override
     public CompletableFuture<String> convert(D data) {
         return CompletableFuture.supplyAsync(() -> {

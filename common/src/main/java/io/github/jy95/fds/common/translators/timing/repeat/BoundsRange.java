@@ -45,6 +45,7 @@ C extends FDSConfig & QuantityProcessor<Q>
     /* Function to extract the boundsRange quantity from the data */
     private final Function<D, R> extractor;
 
+    /** {@inheritDoc} */
     @Override
     public CompletableFuture<String> convert(D data) {
         
@@ -56,6 +57,7 @@ C extends FDSConfig & QuantityProcessor<Q>
             .thenApplyAsync((rangeText) -> boundsRangeMsg.format(new Object[]{rangeText}));
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean isPresent(D data) {
         return presenceChecker.test(data);

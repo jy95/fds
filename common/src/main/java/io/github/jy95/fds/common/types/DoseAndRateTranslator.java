@@ -54,6 +54,7 @@ T extends IBase
         CompletableFuture<String> convert(TranslationService<C> service, T value);
     }
     
+    /** {@inheritDoc} */
     @Override
     public CompletableFuture<String> convert(D data) {
         var config = translationService.getConfig();
@@ -75,6 +76,7 @@ T extends IBase
             });
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean isPresent(D data) {
         return translationService

@@ -41,11 +41,13 @@ C extends FDSConfig
     /* Function to extract the boundsPeriod from the data */
     private final Function<D, P> extractor;
 
+    /** {@inheritDoc} */
     @Override
     public boolean isPresent(D data) {
         return presenceChecker.test(data);
     }
 
+    /** {@inheritDoc} */
     @Override
     public CompletableFuture<String> convert(D data) {
         var period = extractor.apply(data);
