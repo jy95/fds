@@ -42,6 +42,7 @@ C extends FDSConfig & QuantityProcessor<Q>
     /* Function to extract the boundsDuration quantity from the data */
     private final Function<D, Q> extractor;
 
+    /** {@inheritDoc} */
     @Override
     public CompletableFuture<String> convert(D data) {
 
@@ -53,6 +54,7 @@ C extends FDSConfig & QuantityProcessor<Q>
             .thenApplyAsync((durationText) -> boundsDurationMsg.format(new Object[]{durationText}));
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean isPresent(D data) {
         return presenceChecker.test(data);

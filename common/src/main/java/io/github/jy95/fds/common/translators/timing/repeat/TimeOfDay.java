@@ -32,6 +32,7 @@ public class TimeOfDay<D, C extends FDSConfig> implements Translator<D> {
     /** Predicate to check the presence of timeOfDay values in the data object */
     private final Predicate<D> presence;
 
+    /** {@inheritDoc} */
     @Override
     public CompletableFuture<String> convert(D data) {
         // Capture the message outside the async block for consistency
@@ -76,6 +77,7 @@ public class TimeOfDay<D, C extends FDSConfig> implements Translator<D> {
         return time.replaceFirst("^(\\d{2}:\\d{2}):00$", "$1");
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean isPresent(D data) {
         return presence.test(data);

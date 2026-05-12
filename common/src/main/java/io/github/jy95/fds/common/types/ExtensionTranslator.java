@@ -36,6 +36,7 @@ public class ExtensionTranslator<
     /* Function to check if extensions are present in the data */
     private final Function<T, Boolean> presence;
 
+    /** {@inheritDoc} */
     @Override
     public CompletableFuture<String> convert(T data) {
         return translationService
@@ -45,6 +46,7 @@ public class ExtensionTranslator<
                 );
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean isPresent(T data) {
         return presence.apply(data);

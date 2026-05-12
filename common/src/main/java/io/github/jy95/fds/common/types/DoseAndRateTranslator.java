@@ -75,6 +75,7 @@ T extends IBase
             });
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean isPresent(D data) {
         return translationService

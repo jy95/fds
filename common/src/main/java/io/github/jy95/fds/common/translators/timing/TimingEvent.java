@@ -40,11 +40,13 @@ T extends IPrimitiveType<Date>
     /* Function to convert a timing event element to a human-readable string. */
     private final Function<T, String> dateTimeToHumanDisplay;
     
+    /** {@inheritDoc} */
     @Override
     public boolean isPresent(D data) {
         return presence.test(data);
     }
 
+    /** {@inheritDoc} */
     @Override
     public CompletableFuture<String> convert(D data) {
         return CompletableFuture.supplyAsync(() -> {

@@ -23,11 +23,13 @@ public class SimpleStringTranslator<D> implements Translator<D> {
     /* The predicate to check if the string value is present in the data. */
     private final Predicate<D> presence;
 
+    /** {@inheritDoc} */
     @Override
     public CompletableFuture<String> convert(D data) {
         return CompletableFuture.completedFuture(extractor.apply(data));
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean isPresent(D data) {
         return presence.test(data);

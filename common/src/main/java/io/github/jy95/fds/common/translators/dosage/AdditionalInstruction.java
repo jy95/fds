@@ -36,11 +36,13 @@ C extends FDSConfig & CodeableConceptProcessor<U>
     /** Predicate to check the presence of additional instructions in the translated data. */
     private final Predicate<D> presence; 
 
+    /** {@inheritDoc} */
     @Override
     public boolean isPresent(D data) {
         return presence.test(data);
     }
 
+    /** {@inheritDoc} */
     @Override
     public CompletableFuture<String> convert(D data) {
 
