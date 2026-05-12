@@ -42,22 +42,26 @@ public class DosageMarkdownExecutor {
      */
     static class SpecsR4 extends DosageMarkdownR4 {
 
+        /** {@inheritDoc} */
         @Override
         public Path getResourcesDir() {
             return Paths.get(BASE_PATH,ROOT_PATH, "src", "site", "resources", "specs");
         }
 
+        /** {@inheritDoc} */
         @Override
         public Path getBaseOutputDir(Locale locale) {
             return Paths.get(BASE_PATH,ROOT_PATH, "src", "site", "markdown", "specs");
         }
 
+        /** {@inheritDoc} */
         @Override
         public List<Locale> getLocales() {
             // Only English at the moment
             return List.of(Locale.ENGLISH);
         }
 
+        /** {@inheritDoc} */
         @Override
         public DosageAPIR4 createDosageAPI(Locale locale) {
 
@@ -88,11 +92,14 @@ public class DosageMarkdownExecutor {
      * A custom implementation for the timing examples
      */
     static class TimingR4 extends SpecsR4 {
+
+        /** {@inheritDoc} */
         @Override
         public Path getResourcesDir() {
             return Paths.get(BASE_PATH,ROOT_PATH, "src", "site", "resources", "timing");
         }
 
+        /** {@inheritDoc} */
         @Override
         public Path getBaseOutputDir(Locale locale) {
             return Paths.get(BASE_PATH,ROOT_PATH, "src", "site", "markdown", "timing");
@@ -114,6 +121,7 @@ public class DosageMarkdownExecutor {
             super(config);
         }
 
+        /** {@inheritDoc} */
         @Override
         public CompletableFuture<String> asHumanReadableText(Dosage dosage) {
             // Use the default implementation for now
@@ -133,16 +141,19 @@ public class DosageMarkdownExecutor {
          */
         private static final IParser JSON_PARSER = FhirContext.forR4().newJsonParser();
 
+        /** {@inheritDoc} */
         @Override
         public Path getResourcesDir() {
             return Paths.get(BASE_PATH,ROOT_PATH, "src", "site", "resources", "medicationrequest");
         }
 
+        /** {@inheritDoc} */
         @Override
         public Path getBaseOutputDir(Locale locale) {
             return Paths.get(BASE_PATH,ROOT_PATH, "src", "site", "markdown", "medicationrequest");
         }
 
+        /** {@inheritDoc} */
         @Override
         public DosageAPIR4 createDosageAPI(Locale locale) {
             return new DosageAPIR4Custom(
@@ -154,6 +165,7 @@ public class DosageMarkdownExecutor {
             );
         }
 
+        /** {@inheritDoc} */
         @Override
         public List<Dosage> getDosageFromJson(Path jsonFile) throws IOException {
             String finalJson = Files.readString(jsonFile).trim();
@@ -162,6 +174,7 @@ public class DosageMarkdownExecutor {
             return mr.getDosageInstruction();
         }
 
+        /** {@inheritDoc} */
         @Override
         public String getDosageJsonAsString(Path jsonFile) throws IOException {
             String finalJson = super.getDosageJsonAsString(jsonFile);
