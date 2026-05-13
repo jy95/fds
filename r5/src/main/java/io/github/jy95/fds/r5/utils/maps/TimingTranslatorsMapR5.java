@@ -4,6 +4,7 @@ import java.util.EnumMap;
 import java.util.Map;
 import java.util.function.Supplier;
 
+import org.hl7.fhir.r5.model.Extension;
 import org.hl7.fhir.r5.model.Timing;
 
 import io.github.jy95.fds.common.functions.TranslationService;
@@ -31,16 +32,16 @@ public class TimingTranslatorsMapR5 extends AbstractTranslatorsMap<FDSConfigR5, 
     protected Map<DisplayOrder, Supplier<Translator<Timing>>> createTranslatorsSuppliers() {
         EnumMap<DisplayOrder, Supplier<Translator<Timing>>> suppliers = new EnumMap<>(DisplayOrder.class);
 
-        suppliers.put(DisplayOrder.TIMING_EXTENSION, () -> new ExtensionTranslator<>(
-                translationService,
-                Timing::getExtension,
-                Timing::hasExtension
-        ));
-        suppliers.put(DisplayOrder.TIMING_MODIFIER_EXTENSION, () -> new ExtensionTranslator<>(
-                translationService,
-                Timing::getModifierExtension,
-                Timing::hasModifierExtension
-        ));
+        suppliers.put(DisplayOrder.TIMING_EXTENSION, () -> ExtensionTranslator.<Timing, Extension, FDSConfigR5>builder()
+                .translationService(translationService)
+                .build()
+        );
+        suppliers.put(DisplayOrder.TIMING_MODIFIER_EXTENSION, () -> ExtensionTranslator.<Timing, Extension, FDSConfigR5>builder()
+                .translationService(translationService)
+                .extractor(Timing::getModifierExtension)
+                .presence(Timing::hasModifierExtension)
+                .build()
+        );
         suppliers.put(DisplayOrder.TIMING_CODE, () -> new CodeableConceptTranslator<>(translationService, Timing::getCode, Timing::hasCode));
         suppliers.put(DisplayOrder.TIMING_EVENT, () -> new TimingEvent<>(
                 translationService,
