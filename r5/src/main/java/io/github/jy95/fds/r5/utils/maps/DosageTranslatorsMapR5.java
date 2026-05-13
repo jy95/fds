@@ -41,6 +41,7 @@ public class DosageTranslatorsMapR5 extends AbstractTranslatorsMap<FDSConfigR5, 
 
         suppliers.put(DisplayOrder.EXTENSION, () -> ExtensionTranslator.<Dosage, Extension, FDSConfigR5>builder()
                 .translationService(translationService)
+                .extractor(Dosage::getExtension)
                 .build()
         );
         suppliers.put(DisplayOrder.MODIFIER_EXTENSION, () -> ExtensionTranslator.<Dosage, Extension, FDSConfigR5>builder()

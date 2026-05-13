@@ -34,8 +34,7 @@ public class ExtensionTranslator<
     /* TranslationService for handling the translation of extensions */
     private final TranslationService<C> translationService;
     /* Function to extract the list of extensions from the data */
-    @Builder.Default
-    private final Function<T, List<E>> extractor = data -> (List<E>) data.getExtension();
+    private final Function<T, List<E>> extractor;
     /* Function to check if extensions are present in the data */
     @Builder.Default
     private final Function<T, Boolean> presence = T::hasExtension;

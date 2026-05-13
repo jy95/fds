@@ -34,6 +34,7 @@ public class TimingTranslatorsMapR4 extends AbstractTranslatorsMap<FDSConfigR4, 
 
         suppliers.put(DisplayOrder.TIMING_EXTENSION, () -> ExtensionTranslator.<Timing, Extension, FDSConfigR4>builder()
                 .translationService(translationService)
+                .extractor(Timing::getExtension)
                 .build()
         );
         suppliers.put(DisplayOrder.TIMING_MODIFIER_EXTENSION, () -> ExtensionTranslator.<Timing, Extension, FDSConfigR4>builder()
