@@ -72,6 +72,6 @@ QuantityProcessor<Quantity>
     /** {@inheritDoc} */
     @Override
     public CompletableFuture<String> fromExtensionsToString(List<Extension> extensions) {
-        return this.fromExtensionsToString(extensions);
+        return this.fromExtensionsToString.apply(extensions);
     }
 }
