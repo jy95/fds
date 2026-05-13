@@ -19,5 +19,5 @@ public interface ExtensionProcessor<E extends IBaseExtension<E, ?>> {
      * @return a {@link java.util.concurrent.CompletableFuture} that resolves to a
      *         JSON-like string representing the extensions.
      */
-    CompletableFuture<String> fromExtensionsToString(List<E> extensions);
+    CompletableFuture<String> fromExtensionsToString(List<? extends IBaseExtension<?, ?>> extensions);
 }
