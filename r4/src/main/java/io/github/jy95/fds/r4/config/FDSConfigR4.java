@@ -15,6 +15,7 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
+import org.hl7.fhir.instance.model.api.IBaseExtension;
 import org.hl7.fhir.r4.model.*;
 import org.hl7.fhir.r4.model.Dosage.DosageDoseAndRateComponent;
 
@@ -59,12 +60,6 @@ QuantityProcessor<Quantity>
 
     /** {@inheritDoc} */
     @Override
-    public CompletableFuture<String> fromExtensionsToString(List<Extension> extensions) {
-        return this.fromExtensionsToString.apply(extensions);
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public Type selectDosageAndRateField(List<DosageDoseAndRateComponent> doseAndRateComponentList, DoseAndRateKey doseAndRateKey) {
         return this.selectDosageAndRateField.apply(doseAndRateComponentList, doseAndRateKey);
     }
@@ -73,5 +68,11 @@ QuantityProcessor<Quantity>
     @Override
     public boolean hasMatchingComponent(Dosage dosage, Predicate<DosageDoseAndRateComponent> predicate) {
         return this.hasMatchingComponent.apply(dosage, predicate);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public CompletableFuture<String> fromExtensionsToString(List<? extends IBaseExtension<?, ?>> extensions) {
+        return this.fromExtensionsToString(extensions);
     }
 }
