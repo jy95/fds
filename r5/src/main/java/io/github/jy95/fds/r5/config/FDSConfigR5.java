@@ -15,7 +15,6 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-import org.hl7.fhir.instance.model.api.IBaseExtension;
 import org.hl7.fhir.r5.model.*;
 import org.hl7.fhir.r5.model.Dosage.DosageDoseAndRateComponent;
 
@@ -72,7 +71,7 @@ QuantityProcessor<Quantity>
 
     /** {@inheritDoc} */
     @Override
-    public CompletableFuture<String> fromExtensionsToString(List<? extends IBaseExtension<?, ?>> extensions) {
+    public CompletableFuture<String> fromExtensionsToString(List<Extension> extensions) {
         return this.fromExtensionsToString(extensions);
     }
 }

@@ -4,6 +4,7 @@ import java.util.EnumMap;
 import java.util.Map;
 import java.util.function.Supplier;
 
+import org.hl7.fhir.r4.model.Extension;
 import org.hl7.fhir.r4.model.Timing;
 
 import io.github.jy95.fds.common.functions.TranslationService;
@@ -31,11 +32,11 @@ public class TimingTranslatorsMapR4 extends AbstractTranslatorsMap<FDSConfigR4, 
     protected Map<DisplayOrder, Supplier<Translator<Timing>>> createTranslatorsSuppliers() {
         EnumMap<DisplayOrder, Supplier<Translator<Timing>>> suppliers = new EnumMap<>(DisplayOrder.class);
 
-        suppliers.put(DisplayOrder.TIMING_EXTENSION, () -> ExtensionTranslator.<Timing, FDSConfigR4>builder()
+        suppliers.put(DisplayOrder.TIMING_EXTENSION, () -> ExtensionTranslator.<Timing, Extension, FDSConfigR4>builder()
                 .translationService(translationService)
                 .build()
         );
-        suppliers.put(DisplayOrder.TIMING_MODIFIER_EXTENSION, () -> ExtensionTranslator.<Timing, FDSConfigR4>builder()
+        suppliers.put(DisplayOrder.TIMING_MODIFIER_EXTENSION, () -> ExtensionTranslator.<Timing, Extension, FDSConfigR4>builder()
                 .translationService(translationService)
                 .extractor(Timing::getModifierExtension)
                 .presence(Timing::hasModifierExtension)

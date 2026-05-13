@@ -27,14 +27,15 @@ import lombok.Value;
 @Value
 public class ExtensionTranslator<
     T extends IBaseHasExtensions,
-    C extends FDSConfig & ExtensionProcessor<?>
+    E extends IBaseExtension<E, ?>,
+    C extends FDSConfig & ExtensionProcessor<E>
 > implements Translator<T> {
     
     /* TranslationService for handling the translation of extensions */
     private final TranslationService<C> translationService;
     /* Function to extract the list of extensions from the data */
     @Builder.Default
-    private final Function<T, List<? extends IBaseExtension<?, ?>>> extractor = T::getExtension;
+    private final Function<T, List<E>> extractor = data -> (List<E>) data.getExtension();
     /* Function to check if extensions are present in the data */
     @Builder.Default
     private final Function<T, Boolean> presence = T::hasExtension;
