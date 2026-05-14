@@ -39,6 +39,7 @@ public class TimingRepeatTranslatorsMapR4 extends AbstractTranslatorsMap<FDSConf
 
         suppliers.put(DisplayOrder.TIMING_REPEAT_EXTENSION, () -> ExtensionTranslator.<TimingRepeatComponent, Extension, FDSConfigR4>builder()
                 .translationService(translationService)
+                .extractor(TimingRepeatComponent::getExtension)
                 .build()
         );
         suppliers.put(DisplayOrder.BOUNDS_DURATION, () -> new BoundsDuration<>(
