@@ -4,13 +4,14 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Function;
 
-import org.hl7.fhir.instance.model.api.IBase;
 import org.hl7.fhir.instance.model.api.IBaseExtension;
+import org.hl7.fhir.instance.model.api.IBaseHasExtensions;
 
 import io.github.jy95.fds.common.config.FDSConfig;
 import io.github.jy95.fds.common.functions.TranslationService;
 import io.github.jy95.fds.common.operations.ExtensionProcessor;
-import lombok.RequiredArgsConstructor;
+import lombok.Builder;
+import lombok.Value;
 
 
 /**
@@ -22,9 +23,10 @@ import lombok.RequiredArgsConstructor;
  * @author jy95
  * @since 2.1.9
  */
-@RequiredArgsConstructor
+@Builder
+@Value
 public class ExtensionTranslator&lt;
-    T extends IBase,
+    T extends IBaseHasExtensions,
     E extends IBaseExtension&lt;E, ?&gt;,
     C extends FDSConfig &amp; ExtensionProcessor&lt;E&gt;
 &gt; implements Translator&lt;T&gt; {
@@ -34,22 +36,21 @@ public class ExtensionTranslator&lt;
     /* Function to extract the list of extensions from the data */
     private final Function&lt;T, List&lt;E&gt;&gt; extractor;
     /* Function to check if extensions are present in the data */
-    private final Function&lt;T, Boolean&gt; presence;
+    @Builder.Default
+    private final Function&lt;T, Boolean&gt; presence = T::hasExtension;
 
     /** {@inheritDoc} */
     @Override
     public CompletableFuture&lt;String&gt; convert(T data) {
-<span class="nc" id="L42">        return translationService</span>
-<span class="nc" id="L43">                .getConfig()</span>
-<span class="nc" id="L44">                .fromExtensionsToString(</span>
-<span class="nc" id="L45">                        extractor.apply(data)</span>
-                );
+<span class="nc" id="L45">        var extensions = extractor.apply(data);</span>
+<span class="nc" id="L46">        var config = translationService.getConfig();</span>
+<span class="nc" id="L47">        return config.fromExtensionsToString(extensions);</span>
     }
 
     /** {@inheritDoc} */
     @Override
     public boolean isPresent(T data) {
-<span class="nc" id="L52">        return presence.apply(data);</span>
+<span class="nc" id="L53">        return presence.apply(data);</span>
     }
 
 }

@@ -59,20 +59,20 @@ QuantityProcessor&lt;Quantity&gt;
 
     /** {@inheritDoc} */
     @Override
-    public CompletableFuture&lt;String&gt; fromExtensionsToString(List&lt;Extension&gt; extensions) {
-<span class="fc" id="L63">        return this.fromExtensionsToString.apply(extensions);</span>
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public DataType selectDosageAndRateField(List&lt;DosageDoseAndRateComponent&gt; doseAndRateComponentList, DoseAndRateKey doseAndRateKey) {
-<span class="fc" id="L69">        return this.selectDosageAndRateField.apply(doseAndRateComponentList, doseAndRateKey);</span>
+<span class="fc" id="L63">        return this.selectDosageAndRateField.apply(doseAndRateComponentList, doseAndRateKey);</span>
     }
 
     /** {@inheritDoc} */
     @Override
     public boolean hasMatchingComponent(Dosage dosage, Predicate&lt;DosageDoseAndRateComponent&gt; predicate) {
-<span class="fc" id="L75">        return this.hasMatchingComponent.apply(dosage, predicate);</span>
+<span class="fc" id="L69">        return this.hasMatchingComponent.apply(dosage, predicate);</span>
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public CompletableFuture&lt;String&gt; fromExtensionsToString(List&lt;Extension&gt; extensions) {
+<span class="fc" id="L75">        return this.fromExtensionsToString.apply(extensions);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
