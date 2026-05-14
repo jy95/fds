@@ -4,6 +4,7 @@ import java.util.EnumMap;
 import java.util.Map;
 import java.util.function.Supplier;
 
+import org.hl7.fhir.r5.model.Extension;
 import org.hl7.fhir.r5.model.Timing.TimingRepeatComponent;
 
 import io.github.jy95.fds.common.functions.TranslationService;
@@ -36,11 +37,11 @@ public class TimingRepeatTranslatorsMapR5 extends AbstractTranslatorsMap<FDSConf
     protected Map<DisplayOrder, Supplier<Translator<TimingRepeatComponent>>> createTranslatorsSuppliers() {
         EnumMap<DisplayOrder, Supplier<Translator<TimingRepeatComponent>>> suppliers = new EnumMap<>(DisplayOrder.class);
 
-        suppliers.put(DisplayOrder.TIMING_REPEAT_EXTENSION, () -> new ExtensionTranslator<>(
-                translationService,
-                TimingRepeatComponent::getExtension,
-                TimingRepeatComponent::hasExtension
-        ));
+        suppliers.put(DisplayOrder.TIMING_REPEAT_EXTENSION, () -> ExtensionTranslator.<TimingRepeatComponent, Extension, FDSConfigR5>builder()
+                .translationService(translationService)
+                .extractor(TimingRepeatComponent::getExtension)
+                .build()
+        );
         suppliers.put(DisplayOrder.BOUNDS_DURATION, () -> new BoundsDuration<>(
                 translationService,
                 QuantityToStringR5.INSTANCE,

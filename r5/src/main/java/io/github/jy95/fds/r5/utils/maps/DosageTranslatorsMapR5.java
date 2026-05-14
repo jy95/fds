@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 import org.hl7.fhir.r5.model.Dosage;
+import org.hl7.fhir.r5.model.Extension;
 
 import io.github.jy95.fds.common.functions.TranslationService;
 import io.github.jy95.fds.common.types.AbstractTranslatorsMap;
@@ -38,16 +39,17 @@ public class DosageTranslatorsMapR5 extends AbstractTranslatorsMap<FDSConfigR5, 
     protected Map<DisplayOrder, Supplier<Translator<Dosage>>> createTranslatorsSuppliers() {
         EnumMap<DisplayOrder, Supplier<Translator<Dosage>>> suppliers = new EnumMap<>(DisplayOrder.class);
 
-        suppliers.put(DisplayOrder.EXTENSION, () -> new ExtensionTranslator<>(
-                translationService,
-                Dosage::getExtension,
-                Dosage::hasExtension
-        ));
-        suppliers.put(DisplayOrder.MODIFIER_EXTENSION, () -> new ExtensionTranslator<>(
-                translationService,
-                Dosage::getModifierExtension,
-                Dosage::hasModifierExtension
-        ));
+        suppliers.put(DisplayOrder.EXTENSION, () -> ExtensionTranslator.<Dosage, Extension, FDSConfigR5>builder()
+                .translationService(translationService)
+                .extractor(Dosage::getExtension)
+                .build()
+        );
+        suppliers.put(DisplayOrder.MODIFIER_EXTENSION, () -> ExtensionTranslator.<Dosage, Extension, FDSConfigR5>builder()
+                .translationService(translationService)
+                .extractor(Dosage::getModifierExtension)
+                .presence(Dosage::hasModifierExtension)
+                .build()
+        );
         suppliers.put(DisplayOrder.TEXT, () -> new SimpleStringTranslator<Dosage>(Dosage::getText, Dosage::hasText));
         suppliers.put(DisplayOrder.ADDITIONAL_INSTRUCTION, () -> new AdditionalInstruction<>(
                 translationService,
