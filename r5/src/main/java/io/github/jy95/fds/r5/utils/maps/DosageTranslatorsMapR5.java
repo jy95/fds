@@ -108,7 +108,12 @@ public class DosageTranslatorsMapR5 extends AbstractTranslatorsMap<FDSConfigR5, 
                 Dosage::getDoseAndRate,
                 RatioToStringR5.INSTANCE::convert
         ));
-        suppliers.put(DisplayOrder.MAX_DOSE_PER_LIFETIME, () -> new MaxDosePerLifetimeR5(translationService));
+        suppliers.put(DisplayOrder.MAX_DOSE_PER_LIFETIME, () -> new MaxDosePerLifetime<>(
+                translationService,
+                QuantityToStringR5.INSTANCE,
+                Dosage::hasMaxDosePerLifetime,
+                Dosage::getMaxDosePerLifetime
+        ));
         suppliers.put(DisplayOrder.MAX_DOSE_PER_ADMINISTRATION, () -> new MaxDosePerAdministration<>(
                 translationService,
                 Dosage::hasMaxDosePerAdministration,
