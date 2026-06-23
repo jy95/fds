@@ -20,7 +20,7 @@ jobs:
       packages: write
     steps:
       # Check out the repository code
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       # Set up Maven Central Repository with GPG signing
       - name: ☕ Set up Maven Central Repository
@@ -53,7 +53,7 @@ jobs:
     steps:
 
       # Check out the repository code
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       # Set up
       - name: ☕ Set up JDK 21
