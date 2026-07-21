@@ -12,6 +12,6 @@ FHIR Dosage Support - R5,io.github.jy95.fds.r5.utils,DosageMarkdownR5,0,78,0,2,0
 FHIR Dosage Support - R5,io.github.jy95.fds.r5.config,FDSConfigR5,0,39,0,0,0,6,0,6,0,6
 FHIR Dosage Support - R5,io.github.jy95.fds.r5.config,DefaultImplementationsR5,0,78,1,15,0,22,1,13,0,6
 FHIR Dosage Support - R5,io.github.jy95.fds.r5.functions,QuantityToStringR5,0,44,0,4,0,11,0,12,0,10
-FHIR Dosage Support - R5,io.github.jy95.fds.r5.functions,RangeToStringR5,0,23,0,0,0,7,0,6,0,6
 FHIR Dosage Support - R5,io.github.jy95.fds.r5.functions,PeriodToStringR5,0,31,0,0,0,10,0,6,0,6
+FHIR Dosage Support - R5,io.github.jy95.fds.r5.functions,RangeToStringR5,0,23,0,0,0,7,0,6,0,6
 FHIR Dosage Support - R5,io.github.jy95.fds.r5.functions,RatioToStringR5,0,23,0,0,0,7,0,6,0,6
