@@ -7,7 +7,7 @@ import io.github.jy95.fds.common.operations.*;
 import io.github.jy95.fds.common.types.DoseAndRateKey;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.experimental.SuperBuilder;
+import lombok.SuperBuilder;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
