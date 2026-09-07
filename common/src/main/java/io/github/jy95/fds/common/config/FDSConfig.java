@@ -2,7 +2,7 @@ package io.github.jy95.fds.common.config;
 
 import lombok.Builder;
 import lombok.Getter;
-import lombok.experimental.SuperBuilder;
+import lombok.SuperBuilder;
 
 import java.util.Locale;
 import java.util.List;
