@@ -84,17 +84,134 @@
 <pre class="prettyprint"><code class="language-json">{
   &quot;timing&quot;: {
     &quot;repeat&quot;: {
-      &quot;frequency&quot;: 2,
+      &quot;frequency&quot;: 1,
       &quot;period&quot;: 1,
       &quot;periodUnit&quot;: &quot;d&quot;,
-      &quot;boundsPeriod&quot;: {
-        &quot;start&quot;: &quot;2015-07-01T13:00:00&quot;
-      }
+      &quot;dayOfWeek&quot;: [
+        &quot;mon&quot;,
+        &quot;wed&quot;,
+        &quot;fri&quot;
+      ],
+      &quot;when&quot;: [
+        &quot;MORN&quot;
+      ]
     }
   }
 }</code></pre></td>
 
-<td>2 times every day - from Jul 1, 2015, 1:00:00&#x202f;PM</td>
+<td>1 time every day - during the morning - on Monday, Wednesday and Friday</td>
+</tr>
+
+<tr class="a">
+
+<td>
+<pre class="prettyprint"><code class="language-json">{
+  &quot;doseAndRate&quot;: [
+    {
+      &quot;doseQuantity&quot;: {
+        &quot;value&quot;: 1,
+        &quot;unit&quot;: &quot;tablet&quot;
+      }
+    }
+  ],
+  &quot;timing&quot;: {
+    &quot;repeat&quot;: {
+      &quot;frequency&quot;: 3,
+      &quot;period&quot;: 1,
+      &quot;periodUnit&quot;: &quot;d&quot;,
+      &quot;when&quot;: [
+        &quot;AC&quot;
+      ],
+      &quot;offset&quot;: 30
+    }
+  }
+}</code></pre></td>
+
+<td>1 tablet - 3 times every day - 30 minutes before meal</td>
+</tr>
+
+<tr class="b">
+
+<td>
+<pre class="prettyprint"><code class="language-json">{
+  &quot;timing&quot;: {
+    &quot;repeat&quot;: {
+      &quot;when&quot;: [
+        &quot;CM&quot;
+      ]
+    }
+  }
+}</code></pre></td>
+
+<td>at breakfast</td>
+</tr>
+
+<tr class="a">
+
+<td>
+<pre class="prettyprint"><code class="language-json">{
+  &quot;timing&quot;: {
+    &quot;repeat&quot;: {
+      &quot;frequency&quot;: 1,
+      &quot;period&quot;: 1,
+      &quot;periodUnit&quot;: &quot;d&quot;,
+      &quot;timeOfDay&quot;: [
+        &quot;10:00:00&quot;
+      ]
+    }
+  }
+}</code></pre></td>
+
+<td>1 time every day - at 10:00</td>
+</tr>
+
+<tr class="b">
+
+<td>
+<pre class="prettyprint"><code class="language-json">{
+  &quot;timing&quot;: {
+    &quot;repeat&quot;: {
+      &quot;frequency&quot;: 1,
+      &quot;period&quot;: 7,
+      &quot;periodUnit&quot;: &quot;d&quot;
+    }
+  }
+}</code></pre></td>
+
+<td>1 time every 7 days</td>
+</tr>
+
+<tr class="a">
+
+<td>
+<pre class="prettyprint"><code class="language-json">{
+  &quot;timing&quot;: {
+    &quot;repeat&quot;: {
+      &quot;frequency&quot;: 3,
+      &quot;period&quot;: 1,
+      &quot;periodUnit&quot;: &quot;d&quot;
+    }
+  }
+}</code></pre></td>
+
+<td>3 times every day</td>
+</tr>
+
+<tr class="b">
+
+<td>
+<pre class="prettyprint"><code class="language-json">{
+  &quot;timing&quot;: {
+    &quot;repeat&quot;: {
+      &quot;frequency&quot;: 3,
+      &quot;frequencyMax&quot;: 4,
+      &quot;period&quot;: 1,
+      &quot;periodUnit&quot;: &quot;d&quot;
+    }
+  }
+}</code></pre></td>
+
+<td>3-4 times every day</td>
 </tr>
 
 <tr class="a">
@@ -126,28 +243,16 @@
 
 <td>
 <pre class="prettyprint"><code class="language-json">{
-  &quot;doseAndRate&quot;: [
-    {
-      &quot;doseQuantity&quot;: {
-        &quot;value&quot;: 1,
-        &quot;unit&quot;: &quot;tablet&quot;
-      }
-    }
-  ],
   &quot;timing&quot;: {
     &quot;repeat&quot;: {
-      &quot;frequency&quot;: 3,
-      &quot;period&quot;: 1,
-      &quot;periodUnit&quot;: &quot;d&quot;,
-      &quot;when&quot;: [
-        &quot;AC&quot;
-      ],
-      &quot;offset&quot;: 30
+      &quot;frequency&quot;: 1,
+      &quot;period&quot;: 8,
+      &quot;periodUnit&quot;: &quot;h&quot;
     }
   }
 }</code></pre></td>
 
-<td>1 tablet - 3 times every day - 30 minutes before meal</td>
+<td>1 time every 8 hours</td>
 </tr>
 
 <tr class="a">
@@ -156,14 +261,16 @@
 <pre class="prettyprint"><code class="language-json">{
   &quot;timing&quot;: {
     &quot;repeat&quot;: {
+      &quot;duration&quot;: 0.5,
+      &quot;durationUnit&quot;: &quot;h&quot;,
       &quot;frequency&quot;: 3,
       &quot;period&quot;: 1,
-      &quot;periodUnit&quot;: &quot;d&quot;
+      &quot;periodUnit&quot;: &quot;wk&quot;
     }
   }
 }</code></pre></td>
 
-<td>3 times every day</td>
+<td>over 0.5 hours - 3 times every week</td>
 </tr>
 
 <tr class="b">
@@ -172,22 +279,12 @@
 <pre class="prettyprint"><code class="language-json">{
   &quot;timing&quot;: {
     &quot;repeat&quot;: {
-      &quot;frequency&quot;: 1,
-      &quot;period&quot;: 1,
-      &quot;periodUnit&quot;: &quot;d&quot;,
-      &quot;dayOfWeek&quot;: [
-        &quot;mon&quot;,
-        &quot;wed&quot;,
-        &quot;fri&quot;
-      ],
-      &quot;when&quot;: [
-        &quot;MORN&quot;
-      ]
+      &quot;count&quot;: 1
     }
   }
 }</code></pre></td>
 
-<td>1 time every day - during the morning - on Monday, Wednesday and Friday</td>
+<td>take 1 time</td>
 </tr>
 
 <tr class="a">
@@ -196,16 +293,17 @@
 <pre class="prettyprint"><code class="language-json">{
   &quot;timing&quot;: {
     &quot;repeat&quot;: {
-      &quot;duration&quot;: 1,
-      &quot;durationUnit&quot;: &quot;h&quot;,
-      &quot;frequency&quot;: 1,
-      &quot;period&quot;: 21,
-      &quot;periodUnit&quot;: &quot;d&quot;
+      &quot;frequency&quot;: 2,
+      &quot;period&quot;: 1,
+      &quot;periodUnit&quot;: &quot;d&quot;,
+      &quot;boundsPeriod&quot;: {
+        &quot;start&quot;: &quot;2015-07-01T13:00:00&quot;
+      }
     }
   }
 }</code></pre></td>
 
-<td>over 1 hour - 1 time every 21 days</td>
+<td>2 times every day - from Jul 1, 2015, 1:00:00&#x202f;PM</td>
 </tr>
 
 <tr class="b">
@@ -226,75 +324,6 @@
 }</code></pre></td>
 
 <td>1 time every 2 days - during the morning - take 20 times</td>
-</tr>
-
-<tr class="a">
-
-<td>
-<pre class="prettyprint"><code class="language-json">{
-  &quot;timing&quot;: {
-    &quot;repeat&quot;: {
-      &quot;duration&quot;: 5,
-      &quot;durationUnit&quot;: &quot;min&quot;,
-      &quot;when&quot;: [
-        &quot;AC&quot;
-      ],
-      &quot;offset&quot;: 10
-    }
-  }
-}</code></pre></td>
-
-<td>over 5 minutes - 10 minutes before meal</td>
-</tr>
-
-<tr class="b">
-
-<td>
-<pre class="prettyprint"><code class="language-json">{
-  &quot;timing&quot;: {
-    &quot;repeat&quot;: {
-      &quot;frequency&quot;: 3,
-      &quot;frequencyMax&quot;: 4,
-      &quot;period&quot;: 1,
-      &quot;periodUnit&quot;: &quot;d&quot;
-    }
-  }
-}</code></pre></td>
-
-<td>3-4 times every day</td>
-</tr>
-
-<tr class="a">
-
-<td>
-<pre class="prettyprint"><code class="language-json">{
-  &quot;timing&quot;: {
-    &quot;repeat&quot;: {
-      &quot;frequency&quot;: 1,
-      &quot;period&quot;: 4,
-      &quot;periodMax&quot;: 6,
-      &quot;periodUnit&quot;: &quot;h&quot;
-    }
-  }
-}</code></pre></td>
-
-<td>1 time every 4 to 6 hours</td>
-</tr>
-
-<tr class="b">
-
-<td>
-<pre class="prettyprint"><code class="language-json">{
-  &quot;timing&quot;: {
-    &quot;repeat&quot;: {
-      &quot;frequency&quot;: 1,
-      &quot;period&quot;: 7,
-      &quot;periodUnit&quot;: &quot;d&quot;
-    }
-  }
-}</code></pre></td>
-
-<td>1 time every 7 days</td>
 </tr>
 
 <tr class="a">
@@ -324,47 +353,17 @@
 <pre class="prettyprint"><code class="language-json">{
   &quot;timing&quot;: {
     &quot;repeat&quot;: {
-      &quot;count&quot;: 1
-    }
-  }
-}</code></pre></td>
-
-<td>take 1 time</td>
-</tr>
-
-<tr class="a">
-
-<td>
-<pre class="prettyprint"><code class="language-json">{
-  &quot;timing&quot;: {
-    &quot;repeat&quot;: {
-      &quot;frequency&quot;: 1,
-      &quot;period&quot;: 1,
-      &quot;periodUnit&quot;: &quot;d&quot;,
-      &quot;timeOfDay&quot;: [
-        &quot;10:00:00&quot;
-      ]
-    }
-  }
-}</code></pre></td>
-
-<td>1 time every day - at 10:00</td>
-</tr>
-
-<tr class="b">
-
-<td>
-<pre class="prettyprint"><code class="language-json">{
-  &quot;timing&quot;: {
-    &quot;repeat&quot;: {
+      &quot;duration&quot;: 5,
+      &quot;durationUnit&quot;: &quot;min&quot;,
       &quot;when&quot;: [
-        &quot;CM&quot;
-      ]
+        &quot;AC&quot;
+      ],
+      &quot;offset&quot;: 10
     }
   }
 }</code></pre></td>
 
-<td>at breakfast</td>
+<td>over 5 minutes - 10 minutes before meal</td>
 </tr>
 
 <tr class="a">
@@ -373,16 +372,16 @@
 <pre class="prettyprint"><code class="language-json">{
   &quot;timing&quot;: {
     &quot;repeat&quot;: {
-      &quot;duration&quot;: 0.5,
+      &quot;duration&quot;: 1,
       &quot;durationUnit&quot;: &quot;h&quot;,
-      &quot;frequency&quot;: 3,
-      &quot;period&quot;: 1,
-      &quot;periodUnit&quot;: &quot;wk&quot;
+      &quot;frequency&quot;: 1,
+      &quot;period&quot;: 21,
+      &quot;periodUnit&quot;: &quot;d&quot;
     }
   }
 }</code></pre></td>
 
-<td>over 0.5 hours - 3 times every week</td>
+<td>over 1 hour - 1 time every 21 days</td>
 </tr>
 
 <tr class="b">
@@ -392,13 +391,14 @@
   &quot;timing&quot;: {
     &quot;repeat&quot;: {
       &quot;frequency&quot;: 1,
-      &quot;period&quot;: 8,
+      &quot;period&quot;: 4,
+      &quot;periodMax&quot;: 6,
       &quot;periodUnit&quot;: &quot;h&quot;
     }
   }
 }</code></pre></td>
 
-<td>1 time every 8 hours</td>
+<td>1 time every 4 to 6 hours</td>
 </tr>
 </tbody>
 </table>
