@@ -50,3 +50,4 @@ jobs:
           title: "chore: Update POM version to ${{ needs.extract_version.outputs.next_patch }} 🤖"
           branch: "automated/version-bump-${{ github.run_id }}"
           base: main
+          add-paths: pom.xml
