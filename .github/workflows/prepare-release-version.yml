@@ -44,6 +44,8 @@ jobs:
       - name: Update Maven POM
         run: |
           mvn versions:set-property -Dproperty=revision -DnewVersion=${{ needs.extract_version.outputs.next_patch }} -DgenerateBackupPoms=false
+      - name: Discard unrelated Maven wrapper changes
+        run: git restore -- mvnw.cmd
       - name: 💅 Create Pull Request
         uses: peter-evans/create-pull-request@v8.1.3
         with:
