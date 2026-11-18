@@ -36,7 +36,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - name: Make Maven wrapper scripts executable
-        run: chmod u+x mvnw mvnw.cmd
+        run: chmod u+x mvnw
       - name: ☕ Set up JDK 21
         uses: actions/setup-java@v6
         with:
