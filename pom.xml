@@ -186,7 +186,7 @@
                     </annotationProcessorPaths>
                 </configuration>
             </plugin>
-            <!-- https://maven.apache.org/surefire/maven-surefire-plugin/ -->
+            <!-- https://maven.apache.org/plugins/maven-surefire-plugin/ -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -225,7 +225,7 @@
                 <artifactId>maven-site-plugin</artifactId>
                 <version>${maven.site.plugin.version}</version>
             </plugin>
-            <!-- https://maven.apache.org/plugins/maven-scm-publish-plugin/index.html -->
+            <!-- https://www.apache.org/plugins/maven-scm-publish-plugin/index.html -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-scm-publish-plugin</artifactId>
